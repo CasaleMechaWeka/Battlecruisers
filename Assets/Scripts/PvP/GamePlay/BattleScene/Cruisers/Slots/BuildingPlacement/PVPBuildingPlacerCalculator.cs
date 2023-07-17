@@ -1,4 +1,6 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement
@@ -18,6 +20,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return parentSlot.BuildingPlacementPoint
                 + (parentSlot.Transform.Up * verticalChange)
                 + (parentSlot.Transform.Right * horizontalChange);
+        }
+
+        public Vector3 FindOutlineSpawnPosition(PvPBuildableOutlineController outlineToPlace, IPvPSlot parentSlot)
+        {
+            float verticalChange = outlineToPlace.Position.y - outlineToPlace.PuzzleRootPoint.y;
+            float horizontalChange = outlineToPlace.Position.x - outlineToPlace.PuzzleRootPoint.x;
+
+            Vector3 pos = parentSlot.BuildingPlacementPoint
+                + (parentSlot.Transform.Up * verticalChange)
+                + (parentSlot.Transform.Right * horizontalChange);
+
+            return pos;
         }
 
         public Vector2 FindHealthBarOffset(IPvPBuilding building, IPvPSlot parentSlot)

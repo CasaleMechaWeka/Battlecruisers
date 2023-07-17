@@ -54,9 +54,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
-
-
-
         }
 
 
@@ -68,9 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Activate(PvPBuildingActivationArgs activationArgs)
         {
-
             base.Activate(activationArgs);
-
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
@@ -81,21 +76,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.StartConstruction();
 
 
-            PlayPlacementSound();
-/*            if (ParentCruiser.IsPlayerCruiser)
-            {
-                //   _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
-            
-            }*/
+            //     PlayPlacementSound();
+
+            /*            if (ParentCruiser.IsPlayerCruiser)
+                        {
+                            //   _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+
+                        }*/
         }
 
         protected virtual void PlayPlacementSound()
         {
             if (IsClient && IsOwner)
             {
-                _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);                
+                _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
             }
-         
         }
 
         protected override void OnSingleClick()

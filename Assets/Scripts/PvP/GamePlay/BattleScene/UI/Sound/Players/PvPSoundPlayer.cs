@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -20,19 +21,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
             _soundFetcher = soundFetcher;
             _audioSourcePool = audioSourcePool;
-            _audioSourcePool.SetMaxLimit(10);
+            _audioSourcePool.SetMaxLimit(21);
         }
 
         public async Task PlaySoundAsync(IPvPSoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
-
             IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
             PlaySound(sound, position);
         }
 
         public void PlaySound(IPvPAudioClipWrapper sound, Vector2 position)
         {
+            Assert.IsNotNull(sound);
             PvPAudioSourceActivationArgs activationArgs = new PvPAudioSourceActivationArgs(sound, position);
             _audioSourcePool.GetItem(activationArgs);
         }

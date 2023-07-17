@@ -117,13 +117,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             {
                 m_SynchedServerData.playerAPrefabName.Value = userData.hullPrefabName;
                 m_SynchedServerData.playerAClientNetworkId.Value = userData.networkId;
-
             }
             else if (m_clientData.Count == 1)
             {
                 m_SynchedServerData.playerBPrefabName.Value = userData.hullPrefabName;
                 m_SynchedServerData.playerBClientNetworkId.Value = userData.networkId;
-
             }
 
             Debug.Log($"Host ApprovalCheck: connecting client: ({request.ClientNetworkId}) - {userData}");
@@ -169,8 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                     m_clientData.Remove(authId);
                 }
             }
-            var matchPlayerIntance = GetNetworkedMatchPlayer(networkId);
-            OnServerPlayerDespawned?.Invoke(matchPlayerIntance);
+/*            var matchPlayerIntance = GetNetworkedMatchPlayer(networkId);
+            OnServerPlayerDespawned?.Invoke(matchPlayerIntance);*/
         }
 
 

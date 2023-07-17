@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System;
 using System.Diagnostics;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             private get { return _buildable; }
             set
             {
+
                 if (_buildable != null)
                 {
                     _buildable.ToggleDroneConsumerFocusCommand.CanExecuteChanged -= ToggleDroneConsumerFocusCommand_CanExecuteChanged;
@@ -23,8 +25,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 if (_buildable != null)
                 {
                     _buildable.ToggleDroneConsumerFocusCommand.CanExecuteChanged += ToggleDroneConsumerFocusCommand_CanExecuteChanged;
-                    UpdateVisibility();
+                    //  UpdateVisibility();
                 }
+                UpdateVisibility();
             }
         }
 
@@ -34,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             get
             {
                 return
-                    _buildable.Faction == PvPFaction.Blues
+                   _buildable != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _buildable.Faction == PvPFaction.Blues : _buildable.Faction == PvPFaction.Reds)
                     && _buildable.ToggleDroneConsumerFocusCommand.CanExecute;
             }
         }
@@ -42,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         protected override void OnClicked()
         {
             base.OnClicked();
-            _buildable.ToggleDroneConsumerFocusCommand.Execute();
+            _buildable?.ToggleDroneConsumerFocusCommand.ExecuteIfPossible();
         }
 
         private void ToggleDroneConsumerFocusCommand_CanExecuteChanged(object sender, EventArgs e)

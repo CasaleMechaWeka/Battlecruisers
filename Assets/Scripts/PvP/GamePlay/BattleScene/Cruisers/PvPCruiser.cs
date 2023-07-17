@@ -14,13 +14,10 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -32,19 +29,13 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using Unity.Netcode;
-using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.UI.BattleScene.Cruisers;
-using BattleCruisers.Cruisers.Construction;
 using System.Linq;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Utils.Factories;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -87,7 +78,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Sprite Sprite => _renderer.sprite;
 
         // ICruiser
-        public IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
+        public PvPBuildableOutlineController SelectedBuildableOutlinePrefab { get; set; }
+        private IPvPBuildableWrapper<IPvPBuilding> _selectedBuildingPrefab;
+        public IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab
+        {
+            get
+            {
+                return _selectedBuildingPrefab;
+            }
+            set
+            {
+                _selectedBuildingPrefab = value;
+                SelectedBuildableOutlinePrefab = FactoryProvider.PrefabFactory.GetOutline(new PvPBuildableOutlineKey(value.Buildable.PrefabName + "Outline"));
+            }
+        }
         public IPvPDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public PvPDirection Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
@@ -133,6 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool>();
 
+        private IPvPBroadcastingProperty<bool> _CruiserHasActiveDrones;
 
 
         private void Start()
@@ -159,6 +164,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FactoryProvider = factoryProvider;
             _uiManager = uiManager;
             _helper = helper;
+
             SlotAccessor = _slotWrapperController.Initialise(this);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
@@ -166,6 +172,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
             _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
+            if (IsClient && IsOwner)
+            {
+                BuildingMonitor = new PvPCruiserBuildingMonitor(this);
+                UnitMonitor = new PvPCruiserUnitMonitor(BuildingMonitor);
+
+                PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
+                Assert.IsNotNull(unitReadySignalInitialiser);
+                _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
+                // PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
+            }
             //   }
         }
 
@@ -181,7 +197,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
-
 
             _slotWrapperController = GetComponentInChildren<PvPSlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
@@ -205,10 +220,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UnitTargets = new PvPUnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
-
-
-
         }
+
+
+        protected override void CallRpc_ClickedRepairButton()
+        {
+            PvP_RepairableButtonClickedServerRpc();
+        }
+
 
         public PvPSlotWrapperController GetSlotWrapperController()
         {
@@ -220,11 +239,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             pvp_NumOfDrones.Value = DroneManager.NumOfDrones;
         }
 
-        public async virtual void Initialise(IPvPCruiserArgs args)
+        public virtual void Initialise(IPvPCruiserArgs args)
         {
             Faction = args.Faction;
             // client rpc call
-            PvP_SetFactionClientRpc();
+            PvP_SetFactionClientRpc(Faction);
 
             _enemyCruiser = args.EnemyCruiser;
             _uiManager = args.UiManager;
@@ -258,13 +277,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
                     PvPHelper.GetOppositeFaction(Faction));
 
-            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
-            Assert.IsNotNull(unitReadySignalInitialiser);
-            _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
+            /*            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
+                        Assert.IsNotNull(unitReadySignalInitialiser);
+                        _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);*/
 
-            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
-            Assert.IsNotNull(droneSoundFeedbackInitialiser);
-            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones,  /* FactoryProvider.SettingsManager*/ null);
+            _CruiserHasActiveDrones = args.HasActiveDrones;
+            _CruiserHasActiveDrones.ValueChanged += CruiserHasActiveDrones_ValueChanged;
+
+            /*            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
+                        Assert.IsNotNull(droneSoundFeedbackInitialiser);
+                        _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);*/
+
+
 
 
 
@@ -292,6 +316,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         }
 
+
+        private void CruiserHasActiveDrones_ValueChanged(object sender, EventArgs e)
+        {
+            PvP_PlayDroneFeedbackSoundClientRpc();
+        }
+
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             // Logging.LogMethod(Tags.CRUISER);
@@ -308,7 +338,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
-        public Task<IPvPBuilding> ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
+        public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
         {
             // Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
@@ -316,13 +346,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return ConstructSelectedBuilding(slot);
         }
 
-        public async Task<IPvPBuilding> ConstructSelectedBuilding(IPvPSlot slot)
+        public IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot)
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IPvPBuilding building = await FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
+            IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
 
-
+            Assert.IsNotNull(building);
             building.Activate(
                 new PvPBuildingActivationArgs(
                     this,
@@ -333,16 +363,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             slot.SetBuilding(building);
 
-
-
             building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
 
             building.StartConstruction();
 
-            //   _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
+            OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
             BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
+
+            ulong objectId = (ulong)(building.GameObject.GetComponent<PvPBuilding>()?._parent.GetComponent<NetworkObject>()?.NetworkObjectId);
+            BuildingStartedClientRpc(objectId);
 
             slot.controlBuildingPlacementFeedback(true);
 
@@ -365,6 +396,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
 
             return building;
+        }
+
+        private void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter)
+        {
+            if (!slotAccessor.IsSlotAvailableForPlayer(buildingStarted.SlotSpecification))
+            {
+                // _uiManager?.HideCurrentlyShownMenu();
+                PvP_HideCurrentlyShownMenuClientRpc();
+            }
+            else
+            {
+                // Unhighlight the one slot that has just been taken
+                slotHighlighter.HighlightAvailableSlots(buildingStarted.SlotSpecification);
+            }
         }
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
@@ -413,6 +458,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
+            _CruiserHasActiveDrones.ValueChanged -= CruiserHasActiveDrones_ValueChanged;
             if (Faction == PvPFaction.Reds)
             {
                 //Debug.Log(maxHealth);
@@ -445,6 +491,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         }
 
+        protected override void OnDamagedEventCalled(ulong objectId)
+        {
+            if (IsClient)
+                base.OnDamagedEventCalled(objectId);
+            if (IsServer)
+                OnDamagedEventCalledClientRpc(objectId);
+        }
+
+        protected override void OnDestroyedEvent()
+        {
+            if (IsClient)
+                base.OnDestroyedEvent();
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+        }
+
+        [ClientRpc]
+        private void OnDestroyedEventClientRpc()
+        {
+            OnDestroyedEvent();
+        }
         [ServerRpc(RequireOwnership = true)]
         public void PvP_HighlightAvailableSlotsServerRpc(PvPSlotType SlotType, PvPBuildingFunction BuildingFunction, bool PreferFromFront, ServerRpcParams serverRpcParams = default)
         {
@@ -466,7 +533,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_PrioritisedSoundClientRpc(PvPSoundType soundType, string name, PvPSoundPriority priority)
         {
 
-            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new PvPSoundKey(soundType, "no-building-slots-left"), priority));
+            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new PvPSoundKey(soundType, name), priority));
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -488,13 +555,67 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         [ClientRpc]
-        private void PvP_SetFactionClientRpc()
+        private void PvP_SetFactionClientRpc(PvPFaction faction)
+        {
+            /*            if (IsOwner)
+                            Faction = PvPFaction.Blues;
+                        else
+                            Faction = PvPFaction.Reds;*/
+            Faction = faction;
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        private void PvP_RepairableButtonClickedServerRpc()
+        {
+            IPvPDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
+            PvPPrioritisedSoundKey sound = DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+            PvP_PrioritisedSoundClientRpc(sound.Key.Type, sound.Key.Name, sound.Priority);
+        }
+
+        [ClientRpc]
+        private void PvP_PlayDroneFeedbackSoundClientRpc()
+        {
+            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
+            Assert.IsNotNull(droneSoundFeedbackInitialiser);
+            AudioSource audioSource = droneSoundFeedbackInitialiser.gameObject.GetComponentInChildren<AudioSource>();
+
+            IPvPAudioSource _audioSource = new PvPEffectVolumeAudioSource(
+                        new PvPAudioSourceBC(audioSource),
+                        PvPBattleSceneGodClient.Instance.factoryProvider.SettingsManager, 2);
+            _audioSource?.Play(isSpatial: true);
+            //   _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
+        }
+
+        [ClientRpc]
+        private void PvP_HideCurrentlyShownMenuClientRpc()
         {
             if (IsOwner)
-                Faction = PvPFaction.Blues;
-            else
-                Faction = PvPFaction.Reds;
+                _uiManager?.HideCurrentlyShownMenu();
         }
+
+        [ClientRpc]
+        private void OnDamagedEventCalledClientRpc(ulong objectId)
+        {
+            OnDamagedEventCalled(objectId);
+        }
+
+        [ClientRpc]
+        private void BuildingStartedClientRpc(ulong objectId)
+        {
+            if (IsClient && IsOwner)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPBuilding building = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>().Buildable.Parse<IPvPBuilding>();
+                        BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
+                    }
+                }
+            }
+        }
+
     }
 
     public enum Team { LEFT, RIGHT }

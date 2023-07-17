@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public interface IPvPSoundFactoryProvider
     {
         IPvPSoundFetcher SoundFetcher { get; }
-        IPvPSoundPlayer SoundPlayer { get; }
+        IPvPSoundPlayer SoundPlayer { get; set; }
 
         /// <summary>
         /// Plays a single sound at a time.  Used by in game events, such as

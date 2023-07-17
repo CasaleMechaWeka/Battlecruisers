@@ -36,19 +36,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             switch (aircraft.PrefabName)
             {
-                case "Bomber":
+                case "PvPBomber":
                     return _unitPoolProvider.BomberPool;
 
-                case "Fighter":
+                case "PvPFighter":
                     return _unitPoolProvider.FighterPool;
 
-                case "Gunship":
+                case "PvPGunship":
                     return _unitPoolProvider.GunshipPool;
 
-                case "SteamCopter":
+                case "PvPSteamCopter":
                     return _unitPoolProvider.SteamCopterPool;
 
-                case "TestAircraft":
+                case "PvPTestAircraft":
                     return _unitPoolProvider.TestAircraftPool;
 
                 default:
@@ -60,19 +60,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             switch (ship.PrefabName)
             {
-                case "AttackBoat":
+                case "PvPAttackBoat":
                     return _unitPoolProvider.AttackBoatPool;
 
-                case "Frigate":
+                case "PvPFrigate":
                     return _unitPoolProvider.FrigatePool;
 
-                case "Destroyer":
+                case "PvPDestroyer":
                     return _unitPoolProvider.DestroyerPool;
 
-                case "ArchonBattleship":
+                case "PvPArchonBattleship":
                     return _unitPoolProvider.ArchonPool;
 
-                case "AttackRIB":
+                case "PvPAttackRIB":
                     return _unitPoolProvider.AttackRIBPool;
 
                 default:

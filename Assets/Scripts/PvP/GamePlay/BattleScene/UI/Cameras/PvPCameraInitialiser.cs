@@ -320,7 +320,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPInput input = PvPInputBC.Instance;
             IPvPPinchTracker pinchTracker = new PvPPinchTracker(input, updater);
 
-            float zoomScale = PvPSystemInfoBC.Instance.IsHandheld ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
+            float zoomScale = PvPSystemInfoBC.Instance.IsHandheld ? PvPZoomScale.SWIPE : PvPZoomScale.SCROLL_WHEEL;
             float zoomSettingsMultiplier = new PvPZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
 
             PvPZoomCalculator zoomCalculator

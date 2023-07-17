@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IPvPAccuracyAdjuster CreateAccuracyAdjuster(IPvPAngleCalculator angleCalculator, IPvPBarrelController barrel)
         {
-            if (barrel.pvpTurretStats.Accuracy >= Constants.MAX_ACCURACY)
+            if (barrel.pvpTurretStats.Accuracy >= PvPConstants.MAX_ACCURACY)
             {
                 return _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster();
             }

@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPPoolProviders PoolProviders { get; private set; }
         public IPvPSoundFactoryProvider Sound { get; private set; }
 
-
+        // should be called by server
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
             IPvPPrefabFactory prefabFactory,
@@ -73,6 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Turrets = new PvPTurretFactoryProvider();
         }
 
+        // should be called by client
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
             IPvPPrefabFactory prefabFactory,
@@ -80,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             ISettingsManager settingsManager
             )
         {
-            PvPHelper.AssertIsNotNull(components, prefabFactory, spriteProvider /*, settingsManager*/);
+            PvPHelper.AssertIsNotNull(components, prefabFactory, spriteProvider , settingsManager);
 
             _components = components;
             PrefabFactory = prefabFactory;
@@ -101,7 +102,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             Turrets = new PvPTurretFactoryProvider();
         }
-
         // Not in constructor because of circular dependency
         public async Task Initialise( /* IPvPUIManager uiManager */)
         {

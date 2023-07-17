@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             if (_parentCruiserHasActiveDrones.Value)
             {
-                _audioSource.Play(isSpatial: true);
+                _audioSource?.Play(isSpatial: true);
             }
         }
 

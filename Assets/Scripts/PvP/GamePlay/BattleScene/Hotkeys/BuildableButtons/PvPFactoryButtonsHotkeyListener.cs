@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private readonly IPvPBuildableButton _droneStationButton, _airFactoryButton, _navalFactoryButtons, _droneStation4Button, _droneStation8Button;
 
         public PvPFactoryButtonsHotkeyListener(
-            IPvPHotkeyDetector hotkeyDetector,
+            IHotkeyDetector hotkeyDetector,
             IPvPBuildableButton droneStationButton,
             IPvPBuildableButton airFactoryButton,
             IPvPBuildableButton navalFactoryButton,
@@ -25,11 +26,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _droneStation4Button = droneStation4Button;
             _droneStation8Button = droneStation8Button;
 
-            _hotkeyDetector.DroneStation += _hotkeyDetector_DroneStation;
-            _hotkeyDetector.AirFactory += _hotkeyDetector_AirFactory;
-            _hotkeyDetector.NavalFactory += _hotkeyDetector_NavalFactory;
-            _hotkeyDetector.DroneStation4 += _hotkeyDetector_DroneStation4;
-            _hotkeyDetector.DroneStation8 += _hotkeyDetector_DroneStation8;
+            _hotkeyDetector.FactoryButton1 += _hotkeyDetector_DroneStation;
+            _hotkeyDetector.FactoryButton2 += _hotkeyDetector_AirFactory;
+            _hotkeyDetector.FactoryButton3 += _hotkeyDetector_NavalFactory;
+            _hotkeyDetector.FactoryButton4 += _hotkeyDetector_DroneStation4;
+            _hotkeyDetector.FactoryButton5 += _hotkeyDetector_DroneStation8;
         }
 
         private void _hotkeyDetector_DroneStation(object sender, EventArgs e)
@@ -59,11 +60,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.DroneStation -= _hotkeyDetector_DroneStation;
-            _hotkeyDetector.AirFactory -= _hotkeyDetector_AirFactory;
-            _hotkeyDetector.NavalFactory -= _hotkeyDetector_NavalFactory;
-            _hotkeyDetector.DroneStation4 -= _hotkeyDetector_DroneStation4;
-            _hotkeyDetector.DroneStation8 -= _hotkeyDetector_DroneStation8;
+            _hotkeyDetector.FactoryButton1 -= _hotkeyDetector_DroneStation;
+            _hotkeyDetector.FactoryButton2 -= _hotkeyDetector_AirFactory;
+            _hotkeyDetector.FactoryButton3 -= _hotkeyDetector_NavalFactory;
+            _hotkeyDetector.FactoryButton4 -= _hotkeyDetector_DroneStation4;
+            _hotkeyDetector.FactoryButton5 -= _hotkeyDetector_DroneStation8;
         }
     }
 }

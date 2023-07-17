@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPHealthTrackerState State { private get; set; }
 
         private float _health;
-        private PvPTarget _playerCruiser;
+        private PvPTarget _targetBuildable;
         public float Health
         {
             get { return _health; }
@@ -32,20 +32,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
 
                 HealthChanged?.Invoke(this, EventArgs.Empty);
-                if (_playerCruiser != null)
-                    _playerCruiser.pvp_Health.Value = _health;
+                if (_targetBuildable != null)
+                    _targetBuildable.pvp_Health.Value = _health;
             }
         }
 
         public event EventHandler HealthChanged;
         public event EventHandler HealthGone;
 
-        public PvPHealthTracker(PvPTarget playerCruiser, float maxHealth)
+        public PvPHealthTracker(PvPTarget targetBuildable, float maxHealth)
         {
             MaxHealth = maxHealth;
             Health = maxHealth;
             State = PvPHealthTrackerState.Mutable;
-            _playerCruiser = playerCruiser;
+            _targetBuildable = targetBuildable;
         }
 
         public bool RemoveHealth(float amountToRemove)

@@ -23,11 +23,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
         }
 
-        public override Task<IPvPState> Start()
-        {
-            return (Task<IPvPState>)(IPvPState)this;
-        }
+        /*        public override Task<IPvPState> Start()
+                {
+                    return (Task<IPvPState>)(IPvPState)this;
+                }*/
 
+        public override IPvPState Start()
+        {
+            return this;
+        }
         public override IPvPState Stop()
         {
             _task.Stop();

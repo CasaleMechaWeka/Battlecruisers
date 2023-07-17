@@ -36,6 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// 0-1
         /// </summary>
         float BuildProgress { get; }
+        // string outlineName { get; set; }
         PvPBuildableState BuildableState { get; }
         int NumOfDronesRequired { get; }
         float BuildTimeInS { get; }
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; }
         IPvPBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
-        IPvPCruiser ParentCruiser { get; }
+        IPvPCruiser ParentCruiser { get; set; }
         IPvPCruiser EnemyCruiser { get; }
         IPvPHealthBar HealthBar { get; }
         string PrefabName { get; }

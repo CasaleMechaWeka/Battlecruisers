@@ -98,12 +98,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 
         protected virtual void ShowClickedState()
         {
-            SetAlpha(Alpha.PRESSED);
+            SetAlpha(PvPAlpha.PRESSED);
         }
 
         protected virtual void ShowHoverState()
         {
-            SetAlpha(Alpha.HOVER);
+            SetAlpha(PvPAlpha.HOVER);
         }
 
         protected void Reset()

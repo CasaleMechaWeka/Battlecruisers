@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
     public enum PvPTargetType
     {
-        Aircraft, Ships, Cruiser, Buildings, Rocket, Satellite, PaddleMine
+        Aircraft, Ships, Cruiser, Buildings, Rocket, Satellite, PaddleMine, PlayedTime
     }
 
     /// <summary>
@@ -39,11 +39,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }
-   
+
 
         bool IsShield();
         void SetBuildingImmunity(bool boo);
         bool IsBuildingImmune();
-        
+
+        Action clickedRepairButton { get; set; }
     }
 }

@@ -15,6 +15,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEditor;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -31,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPAudioClipWrapper _impactSound;
         private IPvPPool<IPvPExplosion, Vector3> _explosionPool;
 
-        private bool _isActiveAndAlive;
+        protected bool _isActiveAndAlive;
         protected IPvPFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -70,6 +72,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public Vector3 Position => transform.position;
 
+
+        // should be called by server
         public virtual void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
         {
             Logging.LogMethod(Tags.SHELLS);
@@ -87,6 +91,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _isActiveAndAlive = false;
             gameObject.SetActive(false);
+            OnSetPosition_Visible(Position, false);
+        }
+
+        // should be called by client
+        public virtual void Initialise()
+        {
+            Logging.LogMethod(Tags.SHELLS);
+
+            _rigidBody = GetComponent<Rigidbody2D>();
+            Assert.IsNotNull(_rigidBody);
+            _isActiveAndAlive = false;
         }
 
         public virtual void Activate(TPvPActivationArgs activationArgs)
@@ -95,6 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
+            OnSetPosition_Visible(Position, true);
 
             _targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
@@ -103,6 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _rigidBody.velocity = activationArgs.InitialVelocityInMPerS;
             _rigidBody.gravityScale = activationArgs.ProjectileStats.GravityScale;
             _targetToDamage = null;
+            OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale);
 
             AdjustGameObjectDirection();
 
@@ -166,8 +183,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 && _targetToDamage == null)
             {
                 _targetToDamage = target;
-
-
             }
         }
 
@@ -182,6 +197,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
+            /*            string filePath = AssetDatabase.GetAssetPath(_impactSound.AudioClip);
+                        string fileName = System.IO.Path.GetFileName(filePath);
+                        OnPlayExplosionSound(PvPSoundType.Explosions, fileName.Split(".")[0], transform.position);*/
+            OnPlayExplosionSound(PvPSoundType.Explosions, _impactSound.AudioClip.name, transform.position);
             // _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
         }
 
@@ -206,6 +225,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             MovementController = null;
             gameObject.SetActive(false);
+            OnSetPosition_Visible(Position, false);
             InvokeDestroyed();
             InvokeDeactivated();
         }
@@ -218,6 +238,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void InvokeDeactivated()
         {
             Deactivated?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnSetPosition_Visible(Vector3 position, bool visible)
+        {
+
+        }
+
+        protected virtual void OnActiveClient(Vector3 velocity, float gravityScale)
+        {
+        }
+
+        protected virtual void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
+        {
+
         }
     }
 }

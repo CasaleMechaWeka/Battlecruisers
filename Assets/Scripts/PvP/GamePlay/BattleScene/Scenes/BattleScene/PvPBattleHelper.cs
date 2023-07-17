@@ -20,7 +20,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
-
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.AI;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Static.Strategies.Helper;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -141,7 +147,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager /*, soundPlayer, targetIndicator*/);
         }
 
-
+        public override IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum)
+        {
+            IPvPLevelInfo levelInfo = new PvPLevelInfo(aiCruiser, playerCruiser, PvPBattleSceneGodServer.Instance._battleSceneGodTunnel, _prefabFactory);
+            IPvPStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
+            IPvPAIManager aiManager = new PvPAIManager(_prefabFactory, DataProvider, PvPBattleSceneGodServer.Instance._battleSceneGodTunnel, _deferrer, playerCruiser, strategyFactory);
+            return aiManager.CreateAI(levelInfo, FindDifficulty() /* should be modified in production*/);
+        }
 
         public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager,
@@ -154,7 +166,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
 
+        public override IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IPvPDeferrer deferrer)
+        {
+            return
+                new PvPDroneEventSoundPlayer(
+                    new PvPDroneManagerMonitor(playerCruiser.DroneManager, deferrer),
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    new PvPDebouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
+        }
 
+        protected virtual IPvPStrategyFactory CreateStrategyFactory(int currentLevelNum)
+        {
+            return new PvPDefaultStrategyFactory(PvPBattleSceneGodServer.Instance.dataProvider.StaticData.PvPStrategies, currentLevelNum);
+        }
 
     }
 }

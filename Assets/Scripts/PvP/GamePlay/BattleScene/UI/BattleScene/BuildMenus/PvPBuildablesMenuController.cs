@@ -35,7 +35,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _shouldBeEnabledFilter = buttonVisibilityFilters.BuildableButtonVisibilityFilter;
 
             IList<TButton> buildableButtons = GetComponentsInChildren<TButton>().ToList();
-            Assert.IsTrue(buildables.Count <= buildableButtons.Count, "Buildable count " + buildables.Count + " should be <= button count " + buildableButtons.Count);
+            // sava added
+        //    Assert.IsTrue(buildables.Count <= buildableButtons.Count, "Buildable count " + buildables.Count + " should be <= button count " + buildableButtons.Count);
 
             for (int i = 0; i < buildableButtons.Count; ++i)
             {

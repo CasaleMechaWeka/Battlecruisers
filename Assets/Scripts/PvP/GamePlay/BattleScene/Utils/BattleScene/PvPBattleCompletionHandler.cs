@@ -4,6 +4,8 @@ using BattleCruisers.Scenes;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using System;
 using UnityEngine;
+using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -11,13 +13,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private bool _isCompleted;
 
         public event EventHandler BattleCompleted;
 
         public PvPBattleCompletionHandler(
             IApplicationModel applicationModel,
-            ISceneNavigator sceneNavigator)
+            ISceneNavigator sceneNavigator,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel)
         {
             PvPHelper.AssertIsNotNull(applicationModel, sceneNavigator);
 
@@ -25,6 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _sceneNavigator = sceneNavigator;
 
             _isCompleted = false;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
+
         }
 
         public void CompleteBattle(bool wasVictory, bool retryLevel)
@@ -37,20 +43,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
+            //   _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
+            // _battleSceneGodTunnel.ChangeBattleCompletedValue(Tunnel_BattleCompletedState.Completed);
+            PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
+            if (NetworkManager.Singleton.IsConnectedClient)
+                NetworkManager.Singleton.Shutdown(true);
 
-            switch (_applicationModel.Mode)
-            {
-                case GameMode.Campaign:
-                    // Completing the tutorial does not count as a real level, so 
-                    // only save battle result if this was not the tutorial.
-                    BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
-                    break;
+            /*            switch (_applicationModel.Mode)
+                        {
+                            case GameMode.Campaign:
+                                // Completing the tutorial does not count as a real level, so 
+                                // only save battle result if this was not the tutorial.
+                                BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
+                                _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                                break;
 
-                case GameMode.Skirmish:
-                    _applicationModel.UserWonSkirmish = wasVictory;
-                    break;
-            }
+                            case GameMode.Skirmish:
+                                _applicationModel.UserWonSkirmish = wasVictory;
+                                break;
+                        }*/
 
 
             _applicationModel.DataProvider.SaveGame();
@@ -58,14 +69,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _applicationModel.ShowPostBattleScreen = true;
             PvPTimeBC.Instance.TimeScale = 1;
 
-            if (retryLevel)
-            {
-                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
-            }
-            else
-            {
-                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
-            }
+        //    if (retryLevel)
+        //    {
+        //        _sceneNavigator.GoToScene(PvPSceneNames.BATTLE_SCENE, true);
+        //    }
+        //    else
+        //    {
+                _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+        //    }
         }
 
         public void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
@@ -76,22 +87,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
             _isCompleted = true;
-
             BattleCompleted?.Invoke(this, EventArgs.Empty);
+            //   _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
+            // _battleSceneGodTunnel.ChangeBattleCompletedValue(Tunnel_BattleCompletedState.Completed);
+            PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
+            if (NetworkManager.Singleton.IsConnectedClient)
+                NetworkManager.Singleton.Shutdown(true);
 
-            switch (_applicationModel.Mode)
-            {
-                case GameMode.Campaign:
-                    // Completing the tutorial does not count as a real level, so 
-                    // only save battle result if this was not the tutorial.
-                    BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
-                    break;
+            /*            switch (_applicationModel.Mode)
+                        {
+                            case GameMode.Campaign:
+                                // Completing the tutorial does not count as a real level, so 
+                                // only save battle result if this was not the tutorial.
+                                BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
+                                _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                                break;
 
-                case GameMode.Skirmish:
-                    _applicationModel.UserWonSkirmish = wasVictory;
-                    break;
-            }
+                            case GameMode.Skirmish:
+                                _applicationModel.UserWonSkirmish = wasVictory;
+                                break;
+                        }*/
 
 
             //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
@@ -99,26 +114,51 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _applicationModel.ShowPostBattleScreen = true;
             PvPTimeBC.Instance.TimeScale = 1;
 
-            if (retryLevel)
+            /*            if (retryLevel)
+                        {
+                            _sceneNavigator.GoToScene(PvPSceneNames.BATTLE_SCENE, true);
+                        }
+                        else if (wasVictory)*/
+            if (wasVictory)
             {
-                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
-            }
-            else if (wasVictory)
-            {
-                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - before");
-                _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
-                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - after");
-                if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                if (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
                 {
-                    _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                    //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - before");
+                    _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                    //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - after");
+                    if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                    {
+                        _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                    }
+                    _applicationModel.DataProvider.SaveGame();
+                    _sceneNavigator.GoToScene(PvPSceneNames.DESTRUCTION_SCENE, true);
                 }
-                _applicationModel.DataProvider.SaveGame();
-                _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
+                else
+                {
+                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                }
+
 
             }
             else
             {
-                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                if (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
+                {
+                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                }
+                else
+                {
+                    //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - before");
+                    _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                    //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - after");
+                    if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                    {
+                        _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                    }
+                    _applicationModel.DataProvider.SaveGame();
+                    _sceneNavigator.GoToScene(PvPSceneNames.DESTRUCTION_SCENE, true);
+                }
+
             }
         }
     }

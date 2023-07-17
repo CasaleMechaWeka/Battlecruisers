@@ -5,15 +5,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPTopPanelComponents
     {
-        public IPvPHighlightable PlayerCruiserHealthBar { get; }
-        public IPvPHighlightable AICruiserHealthBar { get; }
+        public IPvPHighlightable PlayerLeftCruiserHealthBar { get; }
+        public IPvPHighlightable PlayerRightCruiserHealthBar { get; }
 
-        public PvPTopPanelComponents(IPvPHighlightable playerCruiserHealthBar, IPvPHighlightable aiCruiserHealthBar)
+        public PvPTopPanelComponents(IPvPHighlightable playerLeftCruiserHealthBar, IPvPHighlightable playerRightCruiserHealthBar)
         {
-            PvPHelper.AssertIsNotNull(playerCruiserHealthBar, aiCruiserHealthBar);
+            PvPHelper.AssertIsNotNull(playerLeftCruiserHealthBar, playerRightCruiserHealthBar);
 
-            PlayerCruiserHealthBar = playerCruiserHealthBar;
-            AICruiserHealthBar = aiCruiserHealthBar;
+            PlayerLeftCruiserHealthBar = playerLeftCruiserHealthBar;
+            PlayerRightCruiserHealthBar = playerRightCruiserHealthBar;
         }
     }
 }

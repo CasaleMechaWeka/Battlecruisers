@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _nullButton = new PvPDummyBuildingCategoryButton();
         }
 
-        public void Initialise(IPvPHotkeyDetector hotkeyDetector)
+        public void Initialise(IHotkeyDetector hotkeyDetector)
         {
             Assert.IsNotNull(hotkeyDetector);
 

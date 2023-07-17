@@ -12,10 +12,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             _inProgressState = inProgressState;
         }
 
-        public override Task<IPvPState> Start()
+        /*        public override Task<IPvPState> Start()
+                {
+                    _task.Resume();
+                    return (Task<IPvPState>)_inProgressState;
+                }*/
+
+        public override IPvPState Start()
         {
             _task.Resume();
-            return (Task<IPvPState>)_inProgressState;
+            return _inProgressState;
         }
 
         public override IPvPState Stop()

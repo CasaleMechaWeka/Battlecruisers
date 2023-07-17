@@ -102,14 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Utils
             }
 
             Debug.Log($"Loading dynamic prefab {guid.Value}");
-            // var op = Addressables.LoadAssetAsync<GameObject>(guid.ToString());
-            // var prefab = await op.Task;
 
-            // #if ENABLE_ARTIFICIAL_DELAY
-            //             // THIS IS FOR EDUCATIONAL PURPOSES AND SHOULDN'T BE INCLUDED IN YOUR PROJECT
-            //             await Task.Delay(artificialDelayMilliseconds);
-            // #endif
-            Debug.Log("Dynamically loaded ---> " + iPrefab.gameObject);
             s_NetworkManager.AddNetworkPrefab(iPrefab.gameObject);
             s_LoadedDynamicPrefabResourceHandles.Add(guid, iPrefab);
 
@@ -121,21 +114,7 @@ namespace BattleCruisers.Network.Multiplay.Utils
             return iPrefab;
         }
 
-        // public static async Task<IList<GameObject>> LoadDynamicPrefabs(AddressableGUID[] guids,
-        //     int artificialDelaySeconds = 0)
-        // {
-        //     var tasks = new List<Task<GameObject>>();
 
-        //     foreach (var guid in guids)
-        //     {
-        //         tasks.Add(LoadDynamicPrefab(guid /*, artificialDelaySeconds*/, recomputeHash: false));
-        //     }
-
-        //     var prefabs = await Task.WhenAll(tasks);
-        //     CalculateDynamicPrefabArrayHash();
-
-        //     return prefabs;
-        // }
 
         public static void RefreshLoadedPrefabGuids()
         {
@@ -149,7 +128,6 @@ namespace BattleCruisers.Network.Multiplay.Utils
             RefreshLoadedPrefabGuids();
             s_DynamicPrefabGUIDs.Sort((a, b) => a.Value.CompareTo(b.Value));
             HashOfDynamicPrefabGUIDs = k_EmptyDynamicPrefabHash;
-
 
             unchecked
             {
@@ -171,8 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Utils
 
             foreach (var handle in s_LoadedDynamicPrefabResourceHandles.Values)
             {
-                s_NetworkManager.RemoveNetworkPrefab(handle.gameObject);
-                // Addressables.Release(handle);
+                s_NetworkManager.RemoveNetworkPrefab(handle.gameObject);      
             }
 
             s_LoadedDynamicPrefabResourceHandles.Clear();

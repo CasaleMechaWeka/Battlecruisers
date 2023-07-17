@@ -22,15 +22,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             retryButton.Initialise(soundPlayer, menuManager.RetryLevel);
             settingsButton.Initialise(soundPlayer, menuManager.ShowSettings);
 
-            if (isTutorial)
-            {
-                Destroy(endGameButton.gameObject);
-                Destroy(retryButton.gameObject);
-            }
-            else
-            {
-                Destroy(skipTutorialButton.gameObject);
-            }
+            /*            if (isTutorial)
+                        {
+                            Destroy(endGameButton.gameObject);
+                            Destroy(retryButton.gameObject);
+                        }
+                        else
+                        {
+                            Destroy(skipTutorialButton.gameObject);
+                        }*/
+
+            // pvp
+            Destroy(skipTutorialButton.gameObject);
+            Destroy(retryButton.gameObject);
         }
     }
 }

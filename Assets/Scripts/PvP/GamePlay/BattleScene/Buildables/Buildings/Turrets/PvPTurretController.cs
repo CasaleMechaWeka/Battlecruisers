@@ -48,6 +48,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _parentSlot.BoostProviders,
                     TurretFireRateBoostProviders,
                     _barrelAnimation);
+
+        }
+
+        protected override void OnBuildableCompleted_PvPClient()
+        {
+            base.OnBuildableCompleted_PvPClient();
+           
+            _barrelWrapper
+            .Initialise(
+                this,
+                _factoryProvider,
+                FiringSound,
+                _barrelAnimation);
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()

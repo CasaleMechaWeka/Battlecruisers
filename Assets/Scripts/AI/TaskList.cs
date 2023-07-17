@@ -20,7 +20,7 @@ namespace BattleCruisers.AI
         private readonly IList<IPrioritisedTask> _tasks;
 
         public bool IsEmpty => _tasks.Count == 0;
-		
+
         public IPrioritisedTask HighestPriorityTask => _tasks.LastOrDefault();
 
         public event EventHandler HighestPriorityTaskChanged;
@@ -58,8 +58,8 @@ namespace BattleCruisers.AI
 
             if (wasEmpty)
             {
-				EmitIsEmptyChangedEvent();
-			}
+                EmitIsEmptyChangedEvent();
+            }
         }
 
         public void Remove(IPrioritisedTask taskToRemove)

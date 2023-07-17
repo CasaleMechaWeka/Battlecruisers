@@ -14,6 +14,8 @@ using System;
 using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode.Components;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -29,10 +31,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler<PvPUnitCompletedEventArgs> UnitCompleted;
         public event EventHandler NewUnitChosen;
         public event EventHandler UnitUnderConstructionDestroyed;
+        // public event EventHandler<PvPUnitStartedEventArgs> NewFactoryChosen;
 
         #region Properties
         public abstract LayerMask UnitLayerMask { get; }
-        public IPvPUnit UnitUnderConstruction { get; private set; }
+        public IPvPUnit UnitUnderConstruction { get; set; }
         public override bool IsBoostable => true;
 
         private PvPObservableValue<bool> _isUnitPaused;
@@ -44,30 +47,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBuildableWrapper<IPvPUnit> _unitWrapper;
         public IPvPBuildableWrapper<IPvPUnit> UnitWrapper
         {
-            private set
+            set
             {
                 // Logging.Log(Tags.FACTORY, $"{_unitWrapper} > {value}");
                 Assert.AreEqual(PvPBuildableState.Completed, BuildableState);
-
                 if (!ReferenceEquals(_unitWrapper, value))
                 {
-                    if (_unitWrapper != null)
+                    if (IsServer && _unitWrapper != null)
                     {
                         CleanUpDroneConsumer();
                         DestroyUnitUnderConstruction();
                         _isUnitPaused.Value = false;
+                        OnIsUnitPausedValueChanged(false);
                         _unitPool = null;
                     }
 
                     _unitWrapper = value;
 
-                    if (_unitWrapper != null)
+                    if (IsServer && _unitWrapper != null)
                     {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
                         EnsureDroneConsumerHasHighestPriority();
                         _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
-
+                        Assert.IsNotNull(_unitPool);
                         NewUnitChosen?.Invoke(this, EventArgs.Empty);
+                        OnNewUnitChosen();
                     }
                 }
             }
@@ -116,9 +120,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnSingleClick();
 
-            if (Faction == PvPFaction.Blues)
+            if (/* Faction == PvPFaction.Blues && */ IsClient && IsOwner)
             {
-                // _uiManager.ShowFactoryUnits(this);
+                _uiManager.ShowFactoryUnits(this);
             }
         }
 
@@ -130,7 +134,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 // Logging.Verbose(Tags.FACTORY, $"Can spawn: {_unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable)}");
             }
-
             if (UnitWrapper != null
                 && !_isUnitPaused.Value
                 && (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == PvPBuildableState.Completed)
@@ -143,18 +146,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private async void StartBuildingUnit()
         {
             // Logging.LogMethod(Tags.FACTORY);
+
             if (EnemyCruiser == null || ParentCruiser == null)
             {
                 return;
             }
             PvPBuildableActivationArgs activationArgs = new PvPBuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories);
             UnitUnderConstruction = await _unitPool.GetItem(activationArgs);
-
+            Assert.IsNotNull(UnitUnderConstruction);
             UnitUnderConstruction.DroneConsumerProvider = this;
 
             Vector3 spawnPosition = _unitSpawnPositionFinder.FindSpawnPosition(UnitUnderConstruction);
             UnitUnderConstruction.Position = spawnPosition;
             UnitUnderConstruction.Rotation = transform.rotation;
+
+            if (UnitUnderConstruction.GameObject.GetComponent<NetworkTransform>() != null)
+            {
+                UnitUnderConstruction.GameObject.GetComponent<NetworkTransform>().Teleport(spawnPosition, transform.rotation, UnitUnderConstruction.GameObject.transform.localScale);
+            }
 
             UnitUnderConstruction.StartedConstruction += Unit_BuildingStarted;
             UnitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
@@ -163,24 +172,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             UnitUnderConstruction.AddBuildRateBoostProviders(_parentSlot.BoostProviders);
             UnitUnderConstruction.StartConstruction();
 
-            if (UnitUnderConstruction.ParentCruiser.IsPlayerCruiser)
-            {
-                string logName = UnitUnderConstruction.PrefabName.ToUpper().Replace("(CLONE)", "");
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-                try
-                {
-                    AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                    AnalyticsService.Instance.Flush();
-                }
-                catch (ConsentCheckException ex)
-                {
-                    Debug.Log(ex.Message);
-                }
-
-            }
+            /*            if (UnitUnderConstruction.ParentCruiser.IsPlayerCruiser)
+                        {
+                            string logName = UnitUnderConstruction.PrefabName.ToUpper().Replace("(CLONE)", "");
+            #if LOG_ANALYTICS
+                Debug.Log("Analytics: " + logName);
+            #endif
+                            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                            try
+                            {
+                                AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                AnalyticsService.Instance.Flush();
+                            }
+                            catch (ConsentCheckException ex)
+                            {
+                                Debug.Log(ex.Message);
+                            }
+                        }*/
 
         }
 
@@ -189,7 +197,55 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Log(Tags.FACTORY, sender.ToString());
 
             IPvPUnit unit = sender.Parse<IPvPUnit>();
+
+
             UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
+            if (IsServer)
+            {
+                PvPBuildable<PvPBuildableActivationArgs> buildable_building = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
+                if (buildable_building != null && buildable_building._parent.GetComponent<NetworkObject>() != null)
+                {
+                    OnUnit_BuildingStarted(buildable_building._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                }
+                /*                else
+                                {
+                                    PvPUnit buildable_unit = sender.Parse<PvPUnit>();
+                                    if (buildable_unit != null && buildable_unit._parent.GetComponent<NetworkObject>() != null)
+                                    {
+                                        OnUnit_BuildingStarted(buildable_unit._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                                    }
+                                }*/
+
+
+            }
+        }
+
+        protected virtual void OnUnit_BuildingStarted(ulong objectId)
+        {
+            if (IsClient)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                        UnitUnderConstruction = unit;
+                        UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
+                    }
+                }
+            }
+        }
+
+        /*        void OnNewFactoryChosen()
+                {
+                    NewFactoryChosen?.Invoke();
+                }*/
+
+        protected virtual void OnNewUnitChosen()
+        {
+            if (IsServer)
+                NewUnitChosen?.Invoke(this, EventArgs.Empty);
         }
 
         private void Unit_CompletedBuildable(object sender, EventArgs e)
@@ -198,6 +254,39 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             UnitCompleted?.Invoke(this, new PvPUnitCompletedEventArgs(UnitUnderConstruction));
             CleanUpUnitUnderConstruction();
+            if (IsServer)
+            {
+                PvPBuildable<PvPBuildableActivationArgs> buildable_building = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
+                if (buildable_building != null && buildable_building._parent.GetComponent<NetworkObject>() != null)
+                {
+                    OnUnit_CompletedBuildable(buildable_building._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                }
+                // else
+                // {
+                //     PvPUnit buildable_unit = sender.Parse<PvPUnit>();
+                //     if (buildable_unit != null && buildable_unit._parent.GetComponent<NetworkObject>() != null)
+                //     {
+                //         OnUnit_CompletedBuildable(buildable_unit._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                //     }
+                // }
+            }
+        }
+
+        protected virtual void OnUnit_CompletedBuildable(ulong objectId)
+        {
+            if (IsClient)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                        UnitCompleted?.Invoke(this, new PvPUnitCompletedEventArgs(unit));
+                    }
+                }
+
+            }
         }
 
         private void UnitUnderConstruction_Destroyed(object sender, PvPDestroyedEventArgs e)
@@ -206,6 +295,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             CleanUpUnitUnderConstruction();
             UnitUnderConstructionDestroyed?.Invoke(this, EventArgs.Empty);
+            OnUnitUnderConstruction_Destroyed();
+        }
+
+        protected virtual void OnUnitUnderConstruction_Destroyed()
+        {
+            if (IsClient)
+            {
+                UnitUnderConstructionDestroyed?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -260,7 +358,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.Log(Tags.FACTORY, unit?.ToString());
             UnitWrapper = unit;
+            if (IsClient)
+            {
+                OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName);
+            }
+
         }
+
+
 
         public void StopBuildingUnit()
         {
@@ -271,26 +376,56 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void PauseBuildingUnit()
         {
             // Logging.LogMethod(Tags.FACTORY);
-
-            if (UnitWrapper != null
-                && !_isUnitPaused.Value)
+            if (IsClient)
+                OnPauseBuildingUnit();
+            if (IsServer)
             {
-                _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
-                _isUnitPaused.Value = true;
+                if (UnitWrapper != null
+                    && !_isUnitPaused.Value)
+                {
+                    _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
+                    _isUnitPaused.Value = true;
+                    OnIsUnitPausedValueChanged(true);
+                }
             }
+        }
+
+        protected virtual void OnPauseBuildingUnit()
+        {
+            if (IsServer)
+                PauseBuildingUnit();
+        }
+
+        protected virtual void OnIsUnitPausedValueChanged(bool isUnitPaused)
+        {
+            if (IsClient)
+                _isUnitPaused.Value = isUnitPaused;
         }
 
         public void ResumeBuildingUnit()
         {
             // Logging.LogMethod(Tags.FACTORY);
 
-            if (_isUnitPaused.Value)
+            if (IsClient)
+                OnResumeBuildingUnit();
+            if (IsServer)
             {
-                Assert.IsNotNull(UnitWrapper);
+                if (_isUnitPaused.Value)
+                {
+                    Assert.IsNotNull(UnitWrapper);
+                    _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+                    EnsureDroneConsumerHasHighestPriority();
+                    _isUnitPaused.Value = false;
+                    OnIsUnitPausedValueChanged(false);
+                }
+            }
+        }
 
-                _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
-                EnsureDroneConsumerHasHighestPriority();
-                _isUnitPaused.Value = false;
+        protected virtual void OnResumeBuildingUnit()
+        {
+            if (IsServer)
+            {
+                ResumeBuildingUnit();
             }
         }
 
@@ -308,15 +443,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.Log(Tags.FACTORY, $"_isUnitPaused.Value: {_isUnitPaused.Value}");
 
-            if (_isUnitPaused.Value)
+            if (_isUnitPaused.Value && IsServer)
             {
                 // Cannot focus on drone consumer if they are not activated.
                 // Hence, activate drone consumer before focusing on them :)
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
                 _isUnitPaused.Value = false;
+                OnIsUnitPausedValueChanged(false);
             }
 
             base.ToggleDroneConsumerFocusCommandExecute();
         }
+
+
+        protected virtual void OnStartBuildingUnit(PvPUnitCategory category, string prefabName)
+        {
+        }
+
     }
 }

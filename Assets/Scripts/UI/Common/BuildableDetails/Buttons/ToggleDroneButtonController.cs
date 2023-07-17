@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using System;
+using System.Diagnostics;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
@@ -21,26 +22,27 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
                 if (_buildable != null)
                 {
                     _buildable.ToggleDroneConsumerFocusCommand.CanExecuteChanged += ToggleDroneConsumerFocusCommand_CanExecuteChanged;
-					UpdateVisibility();
+                    //  UpdateVisibility();
                 }
+                UpdateVisibility();
             }
         }
 
         // Should only be visible for player buildables, not AI buildables
-        private bool ShowToggleDroneButton 
-        { 
-            get 
+        private bool ShowToggleDroneButton
+        {
+            get
             {
                 return
-                    _buildable.Faction == Faction.Blues
+                  _buildable != null && _buildable.Faction == Faction.Blues
                     && _buildable.ToggleDroneConsumerFocusCommand.CanExecute;
-            } 
+            }
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
-			_buildable.ToggleDroneConsumerFocusCommand.Execute();
+            _buildable?.ToggleDroneConsumerFocusCommand.Execute();
         }
 
         private void ToggleDroneConsumerFocusCommand_CanExecuteChanged(object sender, EventArgs e)

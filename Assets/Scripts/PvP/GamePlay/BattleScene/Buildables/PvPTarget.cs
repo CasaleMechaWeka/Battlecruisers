@@ -12,6 +12,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -23,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float maxHealth;
 
         public float MaxHealth => maxHealth;
-        public bool IsDestroyed => Health == 0;
+        public bool IsDestroyed => IsServer ? Health == 0 : pvp_Health.Value == 0;
         public PvPFaction Faction { get; protected set; }
         public GameObject GameObject => gameObject;
         public abstract PvPTargetType TargetType { get; }
@@ -34,10 +38,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IPvPTransform Transform { get; private set; }
 
+        public Action clickedRepairButton { get; set; }
 
+        private const float NotZero = 100.0f;
 
         // network variables
-        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = 0f };
+        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = NotZero };
         public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };
 
         public Quaternion Rotation
@@ -47,6 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
 
                 transform.rotation = value;
+                if (IsServer)
+                    CallRpc_SetRotation(value);
 
             }
         }
@@ -59,9 +67,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             get { return transform.position; }
             set
             {
-       
                 transform.position = value;
-  
+                if (IsServer)
+                    CallRpc_SetPosition(value);
             }
         }
 
@@ -72,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public Vector2 HealthBarOffset
         {
-            get;set;
+            get; set;
         }
 
 
@@ -98,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private bool IsFullHealth => Health == maxHealth;
         public virtual Color Color { set { /* empty */ } }
         public bool IsInScene => gameObject.scene.IsValid();
-        public float Health => _healthTracker.Health;
+        public float Health => _healthTracker.Health; /*IsServer ? (_healthTracker.Health >= 0f ? _healthTracker.Health : maxHealth) : (pvp_Health.Value >= 0 ? pvp_Health.Value : maxHealth);*/
         public IPvPRepairCommand RepairCommand { get; private set; }
         public float HealthGainPerDroneS { get; protected set; }
 
@@ -106,6 +114,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; private set; }
         public IPvPTarget LastDamagedSource { get; private set; }
         IPvPTarget IPvPTargetProxy.Target => this;
+
+
+        protected virtual void CallRpc_SetPosition(Vector3 pos)
+        {
+
+        }
+
+        protected virtual void CallRpc_SetRotation(Quaternion rotation)
+        {
+
+        }
+
+        protected virtual void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+
+        }
 
         protected void AddAttackCapability(PvPTargetType attackCapability)
         {
@@ -129,6 +153,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 
             Transform = new PvPTransformBC(transform);
+            clickedRepairButton += OnClickedRepairButton;
+        }
+
+        private void OnClickedRepairButton()
+        {
+            CallRpc_ClickedRepairButton();
         }
 
 
@@ -146,6 +176,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void Destroy()
         {
+            clickedRepairButton -= OnClickedRepairButton;
             DestroyMe();
         }
 
@@ -160,8 +191,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         protected virtual void InternalDestroy()
-        {            
-            Destroy(gameObject);            
+        {
+            Destroy(gameObject);
         }
 
         protected virtual void OnDestroyed() { }
@@ -171,6 +202,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Log(Tags.TARGET, $"{this} destroyed :/");
             pvp_Destroyed.Value = true;
             Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
+            OnDestroyedEvent();
+            CallRpc_ProgressControllerVisible(false);
+        }
+
+        protected virtual void OnDestroyedEvent()
+        {
+            if (IsClient)
+                Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
         }
 
         public void TakeDamage(float damageAmount, IPvPTarget damageSource)
@@ -189,6 +228,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnTakeDamage();
 
                 Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                try
+                {
+                    ulong objectId = ulong.MaxValue;
+                    if (damageSource.GameObject.GetComponent<PvPBuilding>() != null)
+                        objectId = (ulong)(damageSource.GameObject.GetComponent<PvPBuilding>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    if (damageSource.GameObject.GetComponent<PvPUnit>() != null)
+                        objectId = (ulong)(damageSource.GameObject.GetComponent<PvPUnit>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    OnDamagedEventCalled(objectId);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("Cruiser maybe not have _parent " + damageSource.GameObject.name);
+                }
 
                 if (wasFullHealth)
                 {
@@ -197,16 +249,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-/*        private void LateUpdate()
-        {
-            if (IsClient)
-            {
-                
-                Position = PvP_Position.Value;
-                Rotation = PvP_Rotation.Value;
-                Debug.Log("aaa");
-            }
-        }*/
+        /*        private void LateUpdate()
+                {
+                    if (IsClient)
+                    {
+
+                        Position = PvP_Position.Value;
+                        Rotation = PvP_Rotation.Value;
+                        Debug.Log("aaa");
+                    }
+                }*/
 
         protected virtual void OnTakeDamage() { }
 
@@ -225,7 +277,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual bool CanRepairCommandExecute()
         {
-            return Health < maxHealth;
+            if (IsServer)
+                return Health < maxHealth;
+            return pvp_Health.Value < maxHealth;
         }
 
         public PvPHighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
@@ -261,6 +315,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual bool IsBuildingImmune()
         {
             return false;
+        }
+
+        protected virtual void CallRpc_ClickedRepairButton()
+        {
+
+        }
+
+        protected virtual void OnDamagedEventCalled(ulong objectId)
+        {
+            if (IsClient)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                        if (damageSource == null)
+                        {
+                            damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPUnit>();
+                        }
+                        if (damageSource != null)
+                            Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                    }
+                }
+            }
+
         }
     }
 }

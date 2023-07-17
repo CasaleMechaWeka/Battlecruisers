@@ -15,6 +15,8 @@ using UnityEngine.EventSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using Unity.Netcode;
 using System.Linq;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -54,7 +56,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public ObservableCollection<IPvPBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; private set; }
         public IPvPTransform Transform { get; private set; }
-        public Vector3 BuildingPlacementPoint { get; private set; }
+        private Vector3 _buildingPlacementPoint;
+        public Vector3 BuildingPlacementPoint
+        {
+            get
+            {
+                Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+                _buildingPlacementPoint = buildingPlacementPoint.position;
+                return _buildingPlacementPoint;
+            }
+            set
+            {
+                _buildingPlacementPoint = value;
+            }
+        }
         public Vector2 Position => transform.position;
 
         private IPvPSettableBroadcastingProperty<IPvPBuilding> _baseBuilding;
@@ -62,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private Transform _buildingPlacementFeedback;
         private Transform _buildingPlacementBeacon;
-
+        private bool isShowingFeedback = false;
         private PvPBuildableClickAndDrag _clickAndDrag;
 
         /// <summary>
@@ -73,8 +88,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             get { return _renderer.gameObject.activeSelf; }
             set
             {
-
-                _renderer.gameObject.SetActive(value);
+                if (!isShowingFeedback)
+                    _renderer.gameObject.SetActive(value);
                 if (IsServer)
                     pvp_IsVisibleRenderer.Value = value;
             }
@@ -86,6 +101,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public NetworkVariable<bool> pvp_IsVisibleRenderer = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_IsFree = new NetworkVariable<bool>();
+
+        private PvPBuildableOutlineController _outline;
 
         public override void OnNetworkSpawn()
         {
@@ -142,9 +159,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _buildingPlacementFeedback.gameObject.SetActive(active);
             Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
             _buildingPlacementBeacon.gameObject.SetActive(false);
-
-         
-
         }
 
 
@@ -153,8 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             _buildingPlacementFeedback.gameObject.SetActive(false);
             _renderer.gameObject.SetActive(false);
-       
-
+            if (IsClient)
+                isShowingFeedback = false;
         }
 
         public void controlBuildingPlacementBeacon(bool active)
@@ -186,6 +200,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
+        private void SetSlotBuildingOutline(PvPBuildableOutlineController outline)
+        {
+            _buildingPlacer.PlaceOutline(outline, this);
+        }
+
         public event EventHandler Clicked;
 
         public void Initialise(IPvPCruiser parentCruiser, ReadOnlyCollection<IPvPSlot> neighbouringSlots, IPvPBuildingPlacer buildingPlacer)
@@ -198,8 +217,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _explosion = _explosionController.Initialise();
-            Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
-            BuildingPlacementPoint = buildingPlacementPoint.position;
+            /*            Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+                        BuildingPlacementPoint = buildingPlacementPoint.position;*/
 
             SpriteRenderer slotRenderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _size = slotRenderer.bounds.size;
@@ -242,7 +261,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     controlBuildingPlacementBeacon(true);
                 }
             }
-
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -261,12 +279,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 if (pvp_IsVisibleRenderer.Value && pvp_IsFree.Value)
                 {
-                    //   _parentCruiser.ConstructSelectedBuilding(this);
+                    //  _parentCruiser.ConstructSelectedBuilding(this);
+                    _outline = _parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab);
+                    SetSlotBuildingOutline(_outline);
+
+                    IPvPAudioClipWrapper _placementSound = new PvPAudioClipWrapper(_outline.placementSound);
+                    _parentCruiser.FactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
 
                     //  ServerRpc call
                     OnPointerClickServerRpc(gameObject.name);
                 }
-
                 Clicked?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -300,6 +322,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsNotNull(building);
             SlotBuilding = building;
+            OnBuildablePlaceOnSlotClientRpc();
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -307,8 +330,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
             if (NetworkManager.ConnectedClientsIds.Contains(clientId))
-            {            
-                    _parentCruiser.ConstructSelectedBuilding(_parentCruiser.GetSlotWrapperController()._slotsByName[slotName]);
+            {
+                _parentCruiser.ConstructSelectedBuilding(_parentCruiser.GetSlotWrapperController()._slotsByName[slotName]);
             }
         }
 
@@ -316,20 +339,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void controlBuildingPlacementFeedbackClientRpc(bool active)
         {
-         
-                _renderer.gameObject.SetActive(active);
-      
-                _buildingPlacementFeedback.gameObject.SetActive(active);
-         
-                Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
-           
-                _buildingPlacementBeacon.gameObject.SetActive(false);      
+            isShowingFeedback = true;
+            _renderer.gameObject.SetActive(active);
+
+            _buildingPlacementFeedback.gameObject.SetActive(active);
+
+            Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
+
+            _buildingPlacementBeacon.gameObject.SetActive(false);
         }
 
         [ClientRpc]
         private void BuildingDestroyedClientRpc()
         {
             OnBuildingDestroyed_PvPClient();
+        }
+
+        [ClientRpc]
+        private void OnBuildablePlaceOnSlotClientRpc()
+        {
+            _outline?.BuildableCreated?.Invoke();
         }
     }
 }

@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -22,13 +23,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             set
             {
                 _target = value;
-
                 gameObject.SetActive(ShowButton);
                 UpdateActiveFeedback();
             }
         }
 
-        private bool ShowButton => _buttonVisibilityFilter.IsMatch(Target);
+        private bool ShowButton => Target != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _target.Faction == PvPFaction.Reds : _target.Faction == PvPFaction.Blues) && _buttonVisibilityFilter.IsMatch(Target);
 
         public void Initialise(
             IPvPSingleSoundPlayer soundPlayer,

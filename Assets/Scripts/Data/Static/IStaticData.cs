@@ -3,6 +3,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Collections.ObjectModel;
 
@@ -27,6 +28,7 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
+        IPvPLevelStrategies PvPStrategies { get; }
 
         ILoot GetLevelLoot(int levelCompleted);
         int LevelFirstAvailableIn(UnitKey unitKey);

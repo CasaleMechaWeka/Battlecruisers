@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 chooseTargetButton.Target = value;
 
                 // Ok to not be buildable (eg: ICruiser)
-                IPvPBuildable buildable = value as IPvPBuildable;
+                IPvPBuildable buildable = value as IPvPBuildable;                
                 toggleDronesButton.Buildable = buildable;
                 deleteButton.Buildable = buildable;
             }
@@ -57,44 +57,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
         }
 
-        public void Initialise(
-            // IPvPDroneFocuser droneFocuser,
-            // IPvPRepairManager repairManager,
-            // IPvPUserChosenTargetHelper userChosenTargetHelper,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            IPvPSingleSoundPlayer soundPlayer,
-            IPvPSlidingPanel informatorPanel,
-            IPvPUpdater updater,
-            IPvPUIManager uiManager)
-        {
-            PvPHelper.AssertIsNotNull(buttonVisibilityFilters, soundPlayer, informatorPanel, updater, uiManager);
-            PvPHelper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairButton, deleteButton);
 
-            extendButton.Initialise(soundPlayer, informatorPanel);
-            toggleDronesButton.Initialise(soundPlayer);
-            chooseTargetButton.Initialise(soundPlayer, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
-            // repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
-            deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
-        }
 
-/*        public void Initialise(
-             IPvPDroneFocuser droneFocuser,
-             IPvPRepairManager repairManager,
-            IPvPUserChosenTargetHelper userChosenTargetHelper,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            IPvPSingleSoundPlayer soundPlayer,
-            IPvPSlidingPanel informatorPanel,
-            IPvPUpdater updater,
-            IPvPUIManager uiManager)
-        {
-            PvPHelper.AssertIsNotNull(buttonVisibilityFilters, soundPlayer, informatorPanel, uiManager);
-            PvPHelper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairButton, deleteButton);
 
-            extendButton.Initialise(soundPlayer, informatorPanel);
-            toggleDronesButton.Initialise(soundPlayer);
-            chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
-            repairButton.Initialise(soundPlayer *//*, droneFocuser, repairManager*//*);
-            deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
-        }*/
     }
 }

@@ -11,6 +11,8 @@ using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -90,15 +92,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 {
                     pvp_buildingKeys.Add(ConvertToPvP(bKey));
                 }
-
-
                 IList<IPvPBuildableWrapper<IPvPBuilding>> buildings = new List<IPvPBuildableWrapper<IPvPBuilding>>();
                 categoryToBuildings.Add(convertToPvP(category), buildings);
 
                 foreach (PvPBuildingKey buildingKey in pvp_buildingKeys)
                 {
                     IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
-                    categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
+                    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
+                    categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);         
                 }
             }
 

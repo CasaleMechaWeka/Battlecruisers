@@ -34,38 +34,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public PvPInformatorButtons buttons;
         public IPvPInformatorButtons Buttons => buttons;
 
-
-        // public void Initialise(
-        //     IPvPUIManager uiManager,
-        //     IPvPCruiser playerCruiser,
-        //     IPvPUserChosenTargetHelper userChosenTargetHelper,
-        //     IPvPButtonVisibilityFilters visibilityFilters,
-        //     IPvPSingleSoundPlayer soundPlayer)
-        // {
-        //     base.Initialise();
-        //     PvPHelper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer);
-        //     PvPHelper.AssertIsNotNull(informatorPanelExtended, buttons, buildingDetails, unitDetails, cruiserDetails);
-
-        //     informatorPanelExtended.Initialise();
-        //     buttons
-        //         .Initialise(
-        //             playerCruiser.DroneFocuser,
-        //             playerCruiser.RepairManager,
-        //             userChosenTargetHelper,
-        //             visibilityFilters,
-        //             soundPlayer,
-        //             informatorPanelExtended,
-        //             playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
-        //             uiManager);
-
-        //     buildingDetails.Initialise();
-        //     unitDetails.Initialise();
-        //     cruiserDetails.Initialise();
-        //     dismissButton.Initialise(soundPlayer, uiManager, new PvPStaticBroadcastingFilter(isMatch: true));
-        // }
-
-
-
         public void Initialise(
             IPvPUIManager uiManager,
             IPvPCruiser playerCruiser,
@@ -81,8 +49,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             informatorPanelExtended.Initialise();
             buttons
                 .Initialise(
-                     playerCruiser.DroneFocuser,
-                     playerCruiser.RepairManager,
+                    playerCruiser.DroneFocuser,
+                    playerCruiser.RepairManager,
                     userChosenTargetHelper,
                     visibilityFilters,
                     soundPlayer,
@@ -105,8 +73,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public void Show(IPvPTarget item)
         {
             base.Show();
-
-            Assert.IsNotNull(item);
+   
+            Assert.IsNotNull(item);            
             buttons.SelectedItem = item;
         }
     }

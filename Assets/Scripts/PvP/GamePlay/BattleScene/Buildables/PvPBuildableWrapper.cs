@@ -31,7 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnVisibleChanged(bool oldVal, bool newVal)
         {
             if (IsClient)
-                gameObject.SetActive(newVal);
+                // gameObject.SetActive(newVal);
+                IsVisible = newVal;
         }
 
         public override void StaticInitialise(ILocTable commonStrings)
@@ -50,7 +51,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnNetworkSpawn();
             if (IsClient)
             {
-
                 Buildable = GetComponentInChildren<TPvPBuildable>();
                 Assert.IsNotNull(Buildable);
 
@@ -61,8 +61,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Buildable.Initialise(PvPBattleSceneGodClient.Instance.factoryProvider, PvPBattleSceneGodClient.Instance.uiManager);
 
                 PvP_IsVisible.OnValueChanged += OnVisibleChanged;
-            }
 
+                if (IsOwner)
+                {
+                    Buildable.ParentCruiser = PvPBattleSceneGodClient.Instance.playerCruiser;
+                }
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             _eventEmitter = eventEmitter;
         }
 
-        public abstract Task<IPvPState> Start();
+        public abstract IPvPState Start();
 
         public abstract IPvPState Stop();
 

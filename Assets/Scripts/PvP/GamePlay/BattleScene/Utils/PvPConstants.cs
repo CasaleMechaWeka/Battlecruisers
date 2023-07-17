@@ -1,23 +1,23 @@
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
 {
-    public static class Constants
+    public static class PvPConstants
     {
         public const float GRAVITY = 9.81f;  // m/s^2  => Match unity physics setting!
         public const float PI = 3.14f;
         public const int MS_PER_S = 1000;
         public const float MAX_ACCURACY = 1;
         public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
-        public const int POPULATION_LIMIT = 30;
+        public const int POPULATION_LIMIT = 10;
         public const float WATER_LINE = -1.4f;
     }
 
-    public static class ZoomScale
+    public static class PvPZoomScale
     {
         public const float SCROLL_WHEEL = 1200;
         public const float SWIPE = 60;
     }
 
-    public static class Alpha
+    public static class PvPAlpha
     {
         public const float DISABLED = 0.4f;
         public const float PRESSED = 0.6f;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public const float ENABLED = 1.0f;
     }
 
-    public static class BuildSpeedMultipliers
+    public static class PvPBuildSpeedMultipliers
     {
         public const float HALF_DEFAULT = 1;
         public const float POINT_65_DEFAULT = 1.3f;
@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public const float VERY_FAST = 500;
     }
 
-    public static class SceneNames
+    public static class PvPSceneNames
     {
         public const string LANDING_SCENE = "LandingScene";
         public const string LOADING_SCENE = "LoadingScene";
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public const string PvP_INITIALIZE_SCENE = "PvPInitializeScene";
     }
 
-    public static class GameObjectTags
+    public static class PvPGameObjectTags
     {
         public const string AIRCRAFT = "Aircraft";
         public const string SHIP = "Ship";
@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
     }
 
     //these should be the same as specified in the LevelSets in screens scene, but are unlinked right now, so if changes to the level sets occur these must be updated.
-    public static class LevelStages
+    public static class PvPLevelStages
     {
         public const int STAGE_1 = 0;
         public const int STAGE_2 = 3;

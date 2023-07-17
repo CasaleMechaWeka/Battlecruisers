@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+// using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States
 {
@@ -11,10 +12,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             _eventEmitter.EmitCompletedEvent();
         }
 
-        public override Task<IPvPState> Start()
+        /*        public override Task<IPvPState> Start()
+                {
+                    _eventEmitter.EmitCompletedEvent();
+                    return (Task<IPvPState>)(IPvPState)this;
+                }*/
+
+        public override IPvPState Start()
         {
             _eventEmitter.EmitCompletedEvent();
-            return (Task<IPvPState>)(IPvPState)this;
+            return this;
         }
 
         public override IPvPState Stop()

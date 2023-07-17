@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public enum PvPUnitCategory
     {
-        Naval, Aircraft, Untouchable
+        Naval, Aircraft//, Untouchable
     }
 
     public enum PvPDirection

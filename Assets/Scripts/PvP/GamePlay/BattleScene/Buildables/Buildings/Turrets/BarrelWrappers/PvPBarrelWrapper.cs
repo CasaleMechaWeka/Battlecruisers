@@ -106,6 +106,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+
+        // should be called by server
         public void Initialise(
             IPvPBuildable parent,
             IPvPFactoryProvider factoryProvider,
@@ -157,8 +159,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_targetProcessorWrapper);
             _targetProcessor = _targetProcessorWrapper.CreateTargetProcessor(args);
             _targetProcessor.AddTargetConsumer(this);
+
         }
 
+        // should be called by client
+        public void Initialise(
+            IPvPBuildable parent,
+            IPvPFactoryProvider factoryProvider,
+            IPvPSoundKey firingSound = null,
+            IPvPAnimation barrelFiringAnimation = null)
+        {
+            PvPHelper.AssertIsNotNull(parent, factoryProvider);
+
+            _parent = parent;
+            //    _enemyFaction = _parent.EnemyCruiser.Faction;
+            _factoryProvider = factoryProvider;
+            foreach (PvPBarrelController barrel in _barrels)
+            {
+                IPvPBarrelControllerArgs barrelArgs
+                    = CreateBarrelControllerArgs(
+                        barrel,
+                        parent,
+                        firingSound,
+                        barrelFiringAnimation ?? GetBarrelAnimation());
+                InitialiseBarrelController_PvPClient(barrel, barrelArgs);
+            }
+
+        }
+
+
+        // should be called by Server
         private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
             IPvPBarrelController barrel,
             IPvPBuildable parent,
@@ -192,9 +222,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 barrelFiringAnimation);
         }
 
+        // should be called by Client
+        private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
+            IPvPBarrelController barrel,
+            IPvPBuildable parent,
+            IPvPSoundKey firingSound,
+            IPvPAnimation barrelFiringAnimation)
+        {
+            return new PvPBarrelControllerArgs(
+                _factoryProvider,
+                parent,
+                firingSound,
+                barrelFiringAnimation);
+        }
+
+        // should be called by Server
         protected virtual void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
         {
             barrel.InitialiseAsync(args);
+        }
+
+        // should be called by Client
+        protected virtual void InitialiseBarrelController_PvPClient(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
+        {
+            barrel.InitialiseAsync_PvPClient(args);
         }
 
         protected virtual IPvPTargetFilter CreateTargetFilter()

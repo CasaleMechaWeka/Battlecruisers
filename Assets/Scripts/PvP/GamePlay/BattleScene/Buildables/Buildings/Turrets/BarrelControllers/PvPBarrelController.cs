@@ -11,15 +11,17 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
-    public abstract class PvPBarrelController : MonoBehaviour, IPvPBarrelController
+    public abstract class PvPBarrelController : NetworkBehaviour, IPvPBarrelController
     {
         private IPvPBarrelAdjustmentHelper _adjustmentHelper;
         private IPvPBarrelFiringHelper _firingHelper;
         private IPvPUpdater _updater;
-        private IPvPParticleSystemGroup _muzzleFlash;
+        protected IPvPParticleSystemGroup _muzzleFlash;
+        protected IPvPAnimation _barrelAnimation;
         private IPvPTarget _parent;
         protected IPvPTargetFilter _targetFilter;
         protected IPvPFireIntervalManager _fireIntervalManager;
@@ -99,8 +101,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPDamageCapability(damagePerS, pvpTurretStats.AttackCapabilities);
         }
 
+
+        // should be called by Server
         public async Task InitialiseAsync(IPvPBarrelControllerArgs args)
         {
+
             Assert.IsNotNull(args);
 
             _parent = args.Parent;
@@ -131,7 +136,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             await InternalInitialiseAsync(args);
 
             _updater = args.Updater;
+            
             _updater.Updated += _updater_Updated;
+    
+        }
+
+
+        // should be called by Client
+        public async Task InitialiseAsync_PvPClient(IPvPBarrelControllerArgs args)
+        {
+            Assert.IsNotNull(args);
+            _parent = args.Parent;
+            _barrelAnimation = GetBarrelFiringAnimation(args);
         }
 
         protected virtual IPvPBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)

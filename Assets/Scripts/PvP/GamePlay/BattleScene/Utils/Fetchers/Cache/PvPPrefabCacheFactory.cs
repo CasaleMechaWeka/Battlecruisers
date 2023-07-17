@@ -1,3 +1,4 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -65,7 +66,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPContainer<PvPAudioSourceInitialiser> audioSourceContainer = new PvPContainer<PvPAudioSourceInitialiser>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, PvPStaticPrefabKeys.AudioSource, audioSourceContainer));
 
-
+            IDictionary<IPvPPrefabKey, PvPBuildableOutlineController> keyToOutline = new ConcurrentDictionary<IPvPPrefabKey, PvPBuildableOutlineController>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPBuildableOutlines.AllKeys, keyToOutline));
 
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
@@ -80,7 +82,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     new PvPMultiCache<PvPShipDeathInitialiser>(keyToDeath),
                     new PvPUntypedMultiCache<PvPProjectile>(keyToProjectile),
                     droneContainer.Value,
-                    audioSourceContainer.Value);
+                    audioSourceContainer.Value,
+                    new PvPMultiCache<PvPBuildableOutlineController>(keyToOutline));
         }
 
         private async Task GetPrefabs<TPrefab>(

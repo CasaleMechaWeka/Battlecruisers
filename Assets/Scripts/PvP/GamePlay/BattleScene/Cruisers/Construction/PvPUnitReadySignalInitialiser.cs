@@ -26,10 +26,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     parentCruiser.UnitMonitor,
                     new PvPEffectVolumeAudioSource(
                         new PvPAudioSourceBC(navalAudioSource),
-                        /*parentCruiser.FactoryProvider.SettingsManager*/ null),
+                        parentCruiser.FactoryProvider.SettingsManager),
                     new PvPEffectVolumeAudioSource(
                         new PvPAudioSourceBC(aircraftAudioSource),
-                        /*parentCruiser.FactoryProvider.SettingsManager*/ null));
+                        parentCruiser.FactoryProvider.SettingsManager));
         }
     }
 }

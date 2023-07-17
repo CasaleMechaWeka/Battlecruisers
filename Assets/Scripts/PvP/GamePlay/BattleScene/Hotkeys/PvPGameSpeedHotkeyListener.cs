@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -6,10 +7,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 {
     public class PvPGameSpeedHotkeyListener : IPvPManagedDisposable
     {
-        private readonly IPvPHotkeyDetector _hotkeyDetector;
+        private readonly IHotkeyDetector _hotkeyDetector;
         private readonly IPvPSpeedComponents _speedComponents;
 
-        public PvPGameSpeedHotkeyListener(IPvPHotkeyDetector hotkeyDetector, IPvPSpeedComponents speedComponents)
+        public PvPGameSpeedHotkeyListener(IHotkeyDetector hotkeyDetector, IPvPSpeedComponents speedComponents)
         {
             PvPHelper.AssertIsNotNull(hotkeyDetector, speedComponents);
 

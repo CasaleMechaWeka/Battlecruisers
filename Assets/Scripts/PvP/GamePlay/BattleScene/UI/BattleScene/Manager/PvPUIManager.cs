@@ -120,7 +120,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
-        public async void SelectBuildingFromMenu(IPvPBuildableWrapper<IPvPBuilding> buildingWrapper)
+        public void SelectBuildingFromMenu(IPvPBuildableWrapper<IPvPBuilding> buildingWrapper)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
 
@@ -149,11 +149,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // }
 
 
-    /*        if (!wasAnySlotHighlighted)
-            {
-                _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
-                _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
-            }*/
+            /*        if (!wasAnySlotHighlighted)
+                    {
+                        _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
+                        _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
+                    }*/
         }
 
         public virtual void SelectBuilding(IPvPBuilding building)
@@ -205,13 +205,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void PeakBuildingDetails(IPvPBuilding building)
         {
             _detailsManager.ShowDetails(building);
-            //ShownItem = building;
+            ShownItem = building;
         }
 
         public void PeakUnitDetails(IPvPUnit unit)
         {
             _detailsManager.ShowDetails(unit);
-            //ShownItem = unit;
+            ShownItem = unit;
         }
 
         public void UnpeakBuildingDetails()
@@ -254,7 +254,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 {
                     _detailsManager.ShowDetails(lastClickedCruiser);
                 }
-
             }
             else
             {

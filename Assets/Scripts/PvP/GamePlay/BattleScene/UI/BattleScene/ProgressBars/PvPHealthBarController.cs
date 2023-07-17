@@ -2,6 +2,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Utils;
 using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars
@@ -13,6 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private bool _followDamagable;
 
         private Vector2 _offset;
+        public Action OffsetChanged;
         public Vector2 Offset
         {
             get => _offset;
@@ -20,6 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 _offset = value;
                 UpdatePosition();
+                OffsetChanged?.Invoke();
             }
         }
 
@@ -38,24 +41,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             damagable.HealthChanged += Damagable_HealthChanged;
         }
 
-        public void Initialise(IPvPDamagable damagable /*,  bool followDamagable = false */)
-        {
-            Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
-
-            Assert.IsNotNull(damagable);
-        //  Assert.IsTrue(damagable.Health > 0);
-
-            _damagable = damagable;
-        //    _maxHealth = _damagable.Health;
-            Offset = transform.position;
-        //    _followDamagable = followDamagable;
-
-        //    damagable.HealthChanged += Damagable_HealthChanged;
-        }
 
         private void Damagable_HealthChanged(object sender, EventArgs e)
         {
-            OnProgressChanged(_damagable.Health / _maxHealth);
+            if (IsServer)
+            {
+                float hp = _damagable.Health / _maxHealth;
+                OnProgressChanged(hp);
+                Damagable_HealthChangedClientRpc(hp);
+            }
+                
         }
 
         void LateUpdate()
@@ -74,6 +69,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     parentPosition.x + Offset.x,
                     parentPosition.y + Offset.y,
                     transform.position.z);
+        }
+
+        [ClientRpc]
+        private void Damagable_HealthChangedClientRpc(float hp)
+        {
+            OnProgressChanged(hp);
         }
     }
 }

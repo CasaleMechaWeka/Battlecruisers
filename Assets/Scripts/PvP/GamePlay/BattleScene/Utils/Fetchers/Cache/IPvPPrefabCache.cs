@@ -1,3 +1,4 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -26,6 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         PvPExplosionController GetExplosion(IPvPPrefabKey key);
         PvPShipDeathInitialiser GetShipDeath(IPvPPrefabKey key);
         PvPPrefab GetPrefab(string prefabPath);
+        PvPBuildableOutlineController GetOutline(IPvPPrefabKey key);
 
         // Multiple untyped prefab caches
         TProjectile GetProjectile<TProjectile>(IPvPPrefabKey prefabKey) where TProjectile : PvPProjectile;
