@@ -282,17 +282,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                foreach (NetworkObject obj in objs)
-                {
-                    if (obj.NetworkObjectId == objectId)
-                    {
-                        IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
-                        UnitCompleted?.Invoke(this, new PvPUnitCompletedEventArgs(unit));
-                        //   CleanUpUnitUnderConstruction();
-                        UnitUnderConstruction = null;
-                    }
-                }
+                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                // foreach (NetworkObject obj in objs)
+                // {
+                //     if (obj.NetworkObjectId == objectId)
+                //     {
+                NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
+                IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                UnitCompleted?.Invoke(this, new PvPUnitCompletedEventArgs(unit));
+                //   CleanUpUnitUnderConstruction();
+                UnitUnderConstruction = null;
+                //     }
+                // }
             }
         }
 

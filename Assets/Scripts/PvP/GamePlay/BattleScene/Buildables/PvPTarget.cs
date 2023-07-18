@@ -314,20 +314,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                foreach (NetworkObject obj in objs)
+                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                // foreach (NetworkObject obj in objs)
+                // {
+                //     if (obj.NetworkObjectId == objectId)
+                //     {
+                NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
+                IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                if (damageSource == null)
                 {
-                    if (obj.NetworkObjectId == objectId)
-                    {
-                        IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
-                        if (damageSource == null)
-                        {
-                            damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPUnit>();
-                        }
-                        if (damageSource != null)
-                            Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
-                    }
+                    damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPUnit>();
                 }
+                if (damageSource != null)
+                    Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                //     }
+                // }
             }
 
         }
