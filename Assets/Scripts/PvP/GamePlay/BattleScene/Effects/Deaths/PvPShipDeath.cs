@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPShipDeath : IPvPShipDeath
     {
-        private readonly PvPGameObjectBC _shipDeathController;
+        private readonly PvPMonoBehaviourWrapper _shipDeathController;
         private readonly IPvPBroadcastingAnimation _sinkingAnimation;
         private readonly IList<IPvPParticleSystemGroup> _effects;
 
         public event EventHandler Deactivated;
 
         public PvPShipDeath(
-            PvPGameObjectBC shipDeathController,
+            PvPMonoBehaviourWrapper shipDeathController,
             IPvPBroadcastingAnimation sinkingAnimation,
             IList<IPvPParticleSystemGroup> effects)
         {
@@ -47,9 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
-
             _sinkingAnimation.Play();
-
             foreach (IPvPParticleSystemGroup effect in _effects)
             {
                 effect.Play();
@@ -65,9 +63,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Vector3 pos = _shipDeathController.Position;
             if (faction == PvPFaction.Reds)
             {
-                Vector3 newScale = _shipDeathController._platformObject.transform.localScale;
+                Vector3 newScale = _shipDeathController.transform.localScale;
                 newScale.x *= -1;
-                _shipDeathController._platformObject.transform.localScale = newScale;
+                _shipDeathController.transform.localScale = newScale;
             }
 
             _sinkingAnimation.Play();

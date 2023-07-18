@@ -1,3 +1,5 @@
+using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,6 +20,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             get { return _platformObject.transform.position; }
             set { _platformObject.transform.position = value; }
         }
+
+        /*        public Vector3 Position
+                {
+                    get { return _platformObject.transform.position; }
+                    set
+                    {
+                        _platformObject.transform.position = value;
+                        if (NetworkManager.Singleton.IsServer)
+                            CallRpc_SetPosition(value);
+                    }
+                }*/
 
         public PvPGameObjectBC(GameObject platformObject)
         {
