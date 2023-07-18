@@ -13,6 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelWrapper _antiSeaTurret;
 
         public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
+        protected override bool ShowSmokeWhenDestroyed => true;
 
         protected override Vector2 MaskHighlightableSize
         {
@@ -69,6 +70,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
+        }
+
         // Visibility 
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
@@ -97,6 +104,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnSetRotationClientRpc(rotation);
         }
 
+        // BuildableStatus
+        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
+        {
+            OnBuildableStateValueChangedClientRpc(state);
+        }
 
         protected override void OnBuildableProgressEvent()
         {
@@ -187,6 +199,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnBuildableCompletedClientRpc()
         {
             OnBuildableCompleted();
+        }
+
+        [ClientRpc]
+        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
+        {
+            BuildableState = state;
         }
     }
 }

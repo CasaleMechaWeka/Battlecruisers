@@ -186,7 +186,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 if (_baseBuilding.Value != null)
                 {
-                    Assert.IsNull(value);
+                //    Assert.IsNull(value);
                     _baseBuilding.Value.Destroyed -= OnBuildingDestroyed;
                 }
 

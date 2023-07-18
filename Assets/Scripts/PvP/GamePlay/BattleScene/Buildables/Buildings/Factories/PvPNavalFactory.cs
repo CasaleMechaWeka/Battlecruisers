@@ -201,7 +201,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnUnit_BuildingStarted(ulong objectId)
         {
-            if (IsClient)
+            if (IsClient && IsOwner)
                 base.OnUnit_BuildingStarted(objectId);
             if (IsServer)
                 OnUnit_BuildingStartedClientRpc(objectId);
@@ -247,6 +247,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
+        }
 
         // Rpcs
 
@@ -343,7 +348,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ServerRpc(RequireOwnership = true)]
         private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName)
         {
-            
+
             PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
             UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
 

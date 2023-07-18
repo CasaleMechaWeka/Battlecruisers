@@ -178,6 +178,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
+        }
+
         [ClientRpc]
         private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
         {

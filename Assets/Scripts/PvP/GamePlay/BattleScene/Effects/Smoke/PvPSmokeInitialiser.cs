@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         private PvPSmokeEmitter _smokeEmitter;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        public void Initialise(PvPTarget parentDamagable, bool showSmokeWhenDestroyed)
+        public void Initialise(PvPBuildable<PvPBuildableActivationArgs> parentDamagable, bool showSmokeWhenDestroyed)
         {
             PvPSmoke smoke = GetComponent<PvPSmoke>();
             Assert.IsNotNull(smoke);
@@ -20,6 +21,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             _smokeEmitter
                 = new PvPSmokeEmitter(
+                    parentDamagable,
+                    new PvPHealthStateMonitor(parentDamagable),
+                    smoke,
+                    showSmokeWhenDestroyed);
+        }
+
+        public void Initialise(PvPBuildable<PvPBuildingActivationArgs> parentDamagable, bool showSmokeWhenDestroyed)
+        {
+            PvPSmoke smoke = GetComponent<PvPSmoke>();
+            Assert.IsNotNull(smoke);
+            smoke.Initialise(new PvPSmokeChanger());
+
+            _smokeEmitter
+                = new PvPSmokeEmitter(
+                    parentDamagable,
                     new PvPHealthStateMonitor(parentDamagable),
                     smoke,
                     showSmokeWhenDestroyed);

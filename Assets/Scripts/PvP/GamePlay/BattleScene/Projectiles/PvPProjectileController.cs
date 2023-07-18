@@ -27,9 +27,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private void Awake()
         {
-            Initialise();            
+            Initialise();
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+        }
+        public override void OnNetworkDespawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
+        }
         protected override void OnActiveClient(Vector3 velocity, float gravityScale)
         {
             OnActiveClientRpc(velocity, gravityScale);

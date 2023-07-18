@@ -112,6 +112,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _unitSpawnPositionFinder = CreateSpawnPositionFinder();
             _unitSpawnDecider = _factoryProvider.SpawnDeciderFactory.CreateSpawnDecider(this, _unitSpawnPositionFinder);
+
+            // sava added
+            UnitUnderConstruction = null;
         }
 
         protected abstract IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder();
@@ -224,16 +227,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                foreach (NetworkObject obj in objs)
-                {
-                    if (obj.NetworkObjectId == objectId)
-                    {
-                        IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
-                        UnitUnderConstruction = unit;
-                        UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
-                    }
-                }
+                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                // Debug.Log("=======> UnitStarted? object counts = " + objs.Length);
+                // foreach (NetworkObject obj in objs)
+                // {
+                //     if (obj.NetworkObjectId == objectId)
+                //     {
+                NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
+                IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                UnitUnderConstruction = unit;
+                UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
+                Debug.Log("=======> UnitStarted? event called");
+                //     }
+                // }
             }
         }
 
@@ -283,9 +289,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     {
                         IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
                         UnitCompleted?.Invoke(this, new PvPUnitCompletedEventArgs(unit));
+                        //   CleanUpUnitUnderConstruction();
+                        UnitUnderConstruction = null;
                     }
                 }
-
             }
         }
 

@@ -30,6 +30,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private string _name;
         private Vector3 _pos;
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+        }
+        public override void OnNetworkDespawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
+        }
 
         // Set Position
         protected override void OnSetPosition_Visible(Vector3 position, bool visible)

@@ -66,7 +66,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 {
                     Buildable.ParentCruiser = PvPBattleSceneGodClient.Instance.playerCruiser;
                 }
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
             }
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
         }
     }
 }

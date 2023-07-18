@@ -103,6 +103,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPInformatorDismisser _informatorDismisser;
         private IPvPWindManager windManager;
         ISceneNavigator sceneNavigator;
+        IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -124,7 +125,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
+        public void AddNetworkObject(NetworkObject obj)
+        {
+            Assert.IsNotNull(obj);
+            Assert.IsFalse(storageOfNetworkObject.ContainsKey(obj.NetworkObjectId));
+            storageOfNetworkObject.Add(obj.NetworkObjectId, obj);
+        }
 
+        public void RemoveNetworkObject(NetworkObject obj)
+        {
+            Assert.IsNotNull(obj);
+            Assert.IsTrue(storageOfNetworkObject.ContainsKey(obj.NetworkObjectId));
+            storageOfNetworkObject.Remove(obj.NetworkObjectId);
+        }
+
+        public NetworkObject GetNetworkObject(ulong networkObjectId)
+        {
+            return storageOfNetworkObject[networkObjectId];
+        }
 
         static PvPBattleSceneGodClient s_pvpBattleSceneGodClient;
 
@@ -185,7 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-       //     _battleSceneGodTunnel.BattleCompleted.OnValueChanged += OnTunnelBattleCompleted_ValueChanged;
+            //     _battleSceneGodTunnel.BattleCompleted.OnValueChanged += OnTunnelBattleCompleted_ValueChanged;
             Assert.IsNotNull(components);
             components.Initialise_Client(applicationModel.DataProvider.SettingsManager);
 
@@ -362,12 +380,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public void OnTunnelBattleCompleted_ValueChanged(/*Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal*/)
         {
-/*            if (newVal == Tunnel_BattleCompletedState.Completed)
-            {*/
-                windManager?.Stop();
-                windManager?.DisposeManagedState();
-               // _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= OnTunnelBattleCompleted_ValueChanged;
-           // }
+            /*            if (newVal == Tunnel_BattleCompletedState.Completed)
+                        {*/
+            windManager?.Stop();
+            windManager?.DisposeManagedState();
+            // _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= OnTunnelBattleCompleted_ValueChanged;
+            // }
         }
 
         private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)

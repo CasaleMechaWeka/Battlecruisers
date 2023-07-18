@@ -240,6 +240,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
+        }
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
             return _factoryProvider.SpawnDeciderFactory.CreateAircraftSpawnPositionFinder(this);

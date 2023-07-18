@@ -102,13 +102,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
+            
             base.OnBuildableCompleted();
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
            // _coreEngineAudioSource.Play(isSpatial: true, loop: true);
         }
         protected override void OnBuildableCompleted_PvPClient()
         {
             _coreEngineAudioSource.Play(isSpatial: true, loop: true);
             base.OnBuildableCompleted_PvPClient();
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
         }
         void FixedUpdate()
         {

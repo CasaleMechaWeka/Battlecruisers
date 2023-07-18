@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private PvPSmokeInitialiser _smokeInitialiser;
+        protected PvPSmokeInitialiser _smokeInitialiser;
 #pragma warning restore CS0414  // Variable is assigned but never used
         // All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
         // both the target and the health bar.
@@ -357,9 +357,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
             }
-
-
-
         }
 
         public virtual void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
@@ -602,7 +599,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             EnableRenderers(true);
             BuildableState = PvPBuildableState.Completed;
 
-            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+          //  _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
 
             if (ConstructionCompletedSoundKey != null)
             {
@@ -618,7 +615,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void OnBuildableCompleted_PvPClient()
         {
             BuildableState = PvPBuildableState.Completed;
-            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+        //    _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
