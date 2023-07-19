@@ -34,11 +34,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public override void OnNetworkSpawn()
         {
+
             if (IsClient)
                 _audioSource
                     = new PvPEffectVolumeAudioSource(
                         new PvPAudioSourceBC(_platformAudioSource),
                         PvPBattleSceneGodClient.Instance.dataProvider.SettingsManager);
+
+            base.OnNetworkSpawn();
         }
 
         protected void Initialise(IPvPTargetFilter targetFilter, IPvPTarget parent, ISettingsManager settingsManager)

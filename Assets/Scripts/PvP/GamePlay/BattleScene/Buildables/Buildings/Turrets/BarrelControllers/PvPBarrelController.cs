@@ -132,13 +132,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.AccuracyAdjuster,
                     _fireIntervalManager,
                     CreateFirer(args));
-
             await InternalInitialiseAsync(args);
 
             _updater = args.Updater;
             
             _updater.Updated += _updater_Updated;
-    
         }
 
 
