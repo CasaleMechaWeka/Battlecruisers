@@ -206,7 +206,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
-            EnableRenderers(isEnabled);
+            if (IsClient)
+                EnableRenderers(isEnabled);
         }
 
         protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
@@ -599,7 +600,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             EnableRenderers(true);
             BuildableState = PvPBuildableState.Completed;
 
-          //  _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+            //  _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
 
             if (ConstructionCompletedSoundKey != null)
             {
@@ -615,7 +616,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void OnBuildableCompleted_PvPClient()
         {
             BuildableState = PvPBuildableState.Completed;
-        //    _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+            //    _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);

@@ -159,9 +159,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         // Rpcs
-
-
-
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
