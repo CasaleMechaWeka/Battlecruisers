@@ -84,7 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public Dictionary<string, AudioClip> projectileImpactSounds = new Dictionary<string, AudioClip>();
 
         private IApplicationModel applicationModel;
-        private IDataProvider dataProvider;
+        public IDataProvider dataProvider;
         public IPvPPrefabFactory prefabFactory;
         private IPvPSpriteProvider spriteProvider;
         public PvPFactoryProvider factoryProvider;

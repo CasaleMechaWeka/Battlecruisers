@@ -7,10 +7,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
+using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
 {
-    public abstract class PvPBeamEmitter : MonoBehaviour, IPvPBeamEmitter
+    public abstract class PvPBeamEmitter : NetworkBehaviour, IPvPBeamEmitter
     {
         private IPvPBeamCollisionDetector _collisionDetector;
         protected IPvPTarget _parent;
@@ -30,16 +32,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsNotNull(_platformAudioSource);
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient)
+                _audioSource
+                    = new PvPEffectVolumeAudioSource(
+                        new PvPAudioSourceBC(_platformAudioSource),
+                        PvPBattleSceneGodClient.Instance.dataProvider.SettingsManager);
+        }
+
         protected void Initialise(IPvPTargetFilter targetFilter, IPvPTarget parent, ISettingsManager settingsManager)
         {
             // Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             PvPHelper.AssertIsNotNull(targetFilter, parent, settingsManager);
 
             _parent = parent;
-            _audioSource
-                = new PvPEffectVolumeAudioSource(
-                    new PvPAudioSourceBC(_platformAudioSource),
-                    settingsManager);
+            /*            _audioSource
+                            = new PvPEffectVolumeAudioSource(
+                                new PvPAudioSourceBC(_platformAudioSource),
+                                settingsManager);*/
 
             ContactFilter2D contactFilter = new ContactFilter2D()
             {
@@ -50,6 +61,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _collisionDetector = new PvPBeamCollisionDetector(contactFilter, targetFilter);
 
             constantSparks.Play();
+            PlaySparks_PvP();
+        }
+
+        protected virtual void PlaySparks_PvP()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual void StopSparks_PvP()
+        {
+            throw new NotImplementedException();
         }
 
         public void FireBeam(float angleInDegrees, bool isSourceMirrored)
@@ -72,6 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public virtual void DisposeManagedState()
         {
             constantSparks.Stop();
+            StopSparks_PvP();
         }
     }
 }
