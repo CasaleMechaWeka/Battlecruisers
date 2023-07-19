@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEditor;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using Unity.Netcode.Components;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -35,6 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected bool _isActiveAndAlive;
         protected IPvPFactoryProvider _factoryProvider;
+        protected virtual bool needToTeleport { get => false; }
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -112,20 +114,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             transform.position = activationArgs.Position;
             OnSetPosition_Visible(Position, true);
 
+            if(needToTeleport)
+                GetComponent<NetworkTransform>().Teleport(Position, transform.rotation, transform.localScale);
+
             _targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
             _impactSound = activationArgs.ImpactSound;
 
             _rigidBody.velocity = activationArgs.InitialVelocityInMPerS;
             _rigidBody.gravityScale = activationArgs.ProjectileStats.GravityScale;
-            _targetToDamage = null;
-            OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale);
+            _targetToDamage = null;        
 
             AdjustGameObjectDirection();
 
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
+            OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale, _isActiveAndAlive);
         }
 
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
@@ -245,7 +250,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         }
 
-        protected virtual void OnActiveClient(Vector3 velocity, float gravityScale)
+        protected virtual void OnActiveClient(Vector3 velocity, float gravityScale, bool isAlive)
         {
         }
 

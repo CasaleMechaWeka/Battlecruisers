@@ -10,6 +10,8 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -21,7 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPMovementController _dummyMovementController;
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
-
+        protected override float timeToActiveTrail => 0.1f;
+        protected override bool needToTeleport => true;
         public SpriteRenderer missile;
 
         protected override float TrailLifetimeInS => 3;
@@ -80,6 +83,94 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             missile.enabled = false;
             Target.Destroyed -= Target_Destroyed;
             base.DestroyProjectile();
+        }
+
+
+        // Sava added these fields and methods
+
+        private PvPSoundType _type;
+        private string _name;
+        private Vector3 _pos;
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+        }
+        public override void OnNetworkDespawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
+        }
+
+        // Set Position
+        protected override void OnSetPosition_Visible(Vector3 position, bool visible)
+        {
+            OnSetPosition_VisibleClientRpc(position, visible);
+        }
+
+        // PlayExplosionSound
+        protected override void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
+        {
+            OnPlayExplosionSoundClientRpc(type, name, position);
+        }
+
+        private async void PlayExplosionSound()
+        {
+            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(_type, _name), _pos);
+        }
+
+        // should be called by client
+
+        private void Awake()
+        {
+            InitialiseTril();
+        }
+
+        protected override void ShowAllEffects()
+        {
+            if (IsClient)
+                base.ShowAllEffects();
+            if (IsServer)
+                ShowAllEffectsClientRpc();
+        }
+
+        protected override void HideEffects()
+        {
+            if (IsClient)
+                base.HideEffects();
+            if (IsServer)
+                HideEffectsClientRpc();
+        }
+        //----------------------------- Rpcs -----------------------------
+
+        [ClientRpc]
+        private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
+        {
+            //   transform.position = position;
+            //   GetComponent<NetworkTransform>().Teleport(position,transform.rotation, transform.localScale);
+            gameObject.SetActive(visible);
+        }
+
+        [ClientRpc]
+        private void OnPlayExplosionSoundClientRpc(PvPSoundType type, string name, Vector3 position)
+        {
+            _type = type;
+            _name = name;
+            _pos = position;
+            Invoke("PlayExplosionSound", 0.05f);
+        }
+
+        [ClientRpc]
+        private void ShowAllEffectsClientRpc()
+        {
+            ShowAllEffects();
+        }
+
+        [ClientRpc]
+        private void HideEffectsClientRpc()
+        {
+            HideEffects();
         }
     }
 }

@@ -21,6 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.OnImpactCleanUp();
             _rigidBody.velocity = Vector2.zero;
             _rigidBody.gravityScale = 0;
+            OnActiveClient(Vector2.zero, 0f, false);
         }
 
 
@@ -56,10 +57,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void Awake()
         {
             Initialise();
+            InitialiseTril();
         }
-        protected override void OnActiveClient(Vector3 velocity, float gravityScale)
+        protected override void OnActiveClient(Vector3 velocity, float gravityScale, bool isAlive)
         {
-            OnActiveClientRpc(velocity, gravityScale);
+            OnActiveClientRpc(velocity, gravityScale, isAlive);
         }
 
         private async void PlayExplosionSound()
@@ -85,11 +87,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         }
 
         [ClientRpc]
-        private void OnActiveClientRpc(Vector3 velocity, float gravityScale)
+        private void OnActiveClientRpc(Vector2 velocity, float gravityScale, bool isAlive)
         {
             _rigidBody.velocity = velocity;
             _rigidBody.gravityScale = gravityScale;
-            _isActiveAndAlive = true;
+            _isActiveAndAlive = isAlive;
+            if (velocity == Vector2.zero && gravityScale == 0f)
+                base.OnImpactCleanUp();
         }
     }
 }

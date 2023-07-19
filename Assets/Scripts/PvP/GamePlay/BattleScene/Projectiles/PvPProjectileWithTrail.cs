@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private Collider2D _collider;
         private IPvPDeferrer _deferrer;
         private IPvPProjectileTrail _trail;
-
+        protected virtual float timeToActiveTrail { get => 0.05f; }
         protected virtual float TrailLifetimeInS { get => 10; }
 
         public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
@@ -46,9 +46,45 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public override void Activate(TPvPActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
-
             _collider.enabled = true;
             _trail.ShowAllEffects();
+            ShowAllEffects();
+        }
+
+        protected virtual void ShowAllEffects()
+        {
+            if (IsClient)
+            {
+                _trail.ShowAllEffects();
+                Invoke("ActiveTrail", timeToActiveTrail);
+            }
+        }
+
+        protected virtual void HideEffects()
+        {
+            if (IsClient)
+            {
+                _trail.HideEffects();
+                _trail.SetVisibleTrail(false);
+            }
+        }
+
+        private void ActiveTrail()
+        {
+            _trail.SetVisibleTrail(true);
+        }
+        public override void Initialise()
+        {
+            base.Initialise();
+            _collider = GetComponent<Collider2D>();
+            Assert.IsNotNull(_collider);
+        }
+        public void InitialiseTril ()
+        {
+            _trail = GetComponentInChildren<IPvPProjectileTrail>();
+            Assert.IsNotNull(_trail);
+            _trail.Initialise();
+            _trail.SetVisibleTrail(false);
         }
 
         protected override void DestroyProjectile()
@@ -70,6 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             MovementController = null;
             _collider.enabled = false;
             _trail.HideEffects();
+            HideEffects();
         }
 
         private void OnTrailsDoneCleanup()
