@@ -62,6 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             lightningBolt.StartPosition = startPos;
             lightningBolt.EndPosition = endPos;
+            lightningBolt.Trigger();
             _audioSource.Play();
         }
     }

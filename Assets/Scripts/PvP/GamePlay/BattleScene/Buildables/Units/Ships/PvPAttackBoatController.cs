@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelWrapper _antiSeaTurret;
 
         public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
-        protected override bool ShowSmokeWhenDestroyed => true;
+    //    protected override bool ShowSmokeWhenDestroyed => true;
 
         protected override Vector2 MaskHighlightableSize
         {

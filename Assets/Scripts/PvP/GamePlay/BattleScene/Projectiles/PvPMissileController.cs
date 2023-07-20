@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Projectiles;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -23,8 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPMovementController _dummyMovementController;
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
-        protected override float timeToActiveTrail => 0.1f;
-        protected override bool needToTeleport => true;
+
         public SpriteRenderer missile;
 
         protected override float TrailLifetimeInS => 3;
@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;
-
+            SetMissileVisibleClientRpc(true);
             activationArgs.Target.Destroyed += Target_Destroyed;
         }
 
@@ -81,6 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override void DestroyProjectile()
         {
             missile.enabled = false;
+            SetMissileVisibleClientRpc(false);
             Target.Destroyed -= Target_Destroyed;
             base.DestroyProjectile();
         }
@@ -88,6 +89,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         // Sava added these fields and methods
 
+        protected override float timeToActiveTrail => 0.1f;
+        protected override bool needToTeleport => true;
         private PvPSoundType _type;
         private string _name;
         private Vector3 _pos;
@@ -127,31 +130,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             InitialiseTril();
         }
 
-        protected override void ShowAllEffects()
+        protected override void HideEffectsOfClient()
         {
             if (IsClient)
-                base.ShowAllEffects();
-            if (IsServer)
-                ShowAllEffectsClientRpc();
+                base.HideEffectsOfClient();
+            else
+                HideEffectsOfClientRpc();
         }
 
-        protected override void HideEffects()
+        protected override void ShowAllEffectsOfClient()
         {
-            if (IsClient)
-                base.HideEffects();
-            if (IsServer)
-                HideEffectsClientRpc();
+            if(IsClient)
+                base.ShowAllEffectsOfClient();
+            else
+                ShowAllEffectsOfClientRpc();
         }
+
         //----------------------------- Rpcs -----------------------------
 
         [ClientRpc]
         private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
         {
-            //   transform.position = position;
-            //   GetComponent<NetworkTransform>().Teleport(position,transform.rotation, transform.localScale);
-            gameObject.SetActive(visible);
+            if (!visible)
+                gameObject.SetActive(false);
+            else
+                Invoke("iSetActive", timeToActiveTrail);
         }
-
+        private void iSetActive()
+        {
+            gameObject.SetActive(true);
+        }
         [ClientRpc]
         private void OnPlayExplosionSoundClientRpc(PvPSoundType type, string name, Vector3 position)
         {
@@ -161,16 +169,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Invoke("PlayExplosionSound", 0.05f);
         }
 
+        // missile
         [ClientRpc]
-        private void ShowAllEffectsClientRpc()
+        private void SetMissileVisibleClientRpc(bool visible)
         {
-            ShowAllEffects();
+            missile.enabled = visible;
         }
 
         [ClientRpc]
-        private void HideEffectsClientRpc()
+        protected void HideEffectsOfClientRpc()
         {
-            HideEffects();
+            HideEffectsOfClient();
+        }
+
+        [ClientRpc]
+        protected void ShowAllEffectsOfClientRpc()
+        {
+            ShowAllEffectsOfClient();
         }
     }
 }

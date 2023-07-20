@@ -9,6 +9,8 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
+using System.Collections;
+using Unity.Netcode.Components;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -48,30 +50,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.Activate(activationArgs);
             _collider.enabled = true;
             _trail.ShowAllEffects();
-            ShowAllEffects();
+            ShowAllEffectsOfClient();
         }
 
-        protected virtual void ShowAllEffects()
+
+
+        protected virtual void ShowAllEffectsOfClient()
         {
             if (IsClient)
             {
                 _trail.ShowAllEffects();
-                Invoke("ActiveTrail", timeToActiveTrail);
             }
-        }
-
-        protected virtual void HideEffects()
-        {
-            if (IsClient)
-            {
-                _trail.HideEffects();
-                _trail.SetVisibleTrail(false);
-            }
-        }
-
-        private void ActiveTrail()
-        {
-            _trail.SetVisibleTrail(true);
         }
         public override void Initialise()
         {
@@ -79,12 +68,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
         }
-        public void InitialiseTril ()
+        public void InitialiseTril()
         {
             _trail = GetComponentInChildren<IPvPProjectileTrail>();
             Assert.IsNotNull(_trail);
             _trail.Initialise();
-            _trail.SetVisibleTrail(false);
         }
 
         protected override void DestroyProjectile()
@@ -106,13 +94,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             MovementController = null;
             _collider.enabled = false;
             _trail.HideEffects();
-            HideEffects();
+            HideEffectsOfClient();
         }
+
+        protected virtual void HideEffectsOfClient()
+        {
+            if (IsClient)
+            {
+                _trail.HideEffects();
+            }
+        }
+
+
 
         private void OnTrailsDoneCleanup()
         {
             // Logging.LogMethod(Tags.SHELLS);
 
+            OnSetPosition_Visible(Position, false);
             gameObject.SetActive(false);
             InvokeDeactivated();
         }

@@ -69,6 +69,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(_type, _name), _pos);
         }
 
+
+        protected override void HideEffectsOfClient()
+        {
+            if (IsClient)
+                base.HideEffectsOfClient();
+            else
+                HideEffectsOfClientRpc();
+        }
+
+        protected override void ShowAllEffectsOfClient()
+        {
+            if (IsClient)
+                base.ShowAllEffectsOfClient();
+            else
+                ShowAllEffectsOfClientRpc();
+        }
         //----------------------------- Rpcs -----------------------------
 
         [ClientRpc]
@@ -94,6 +110,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _isActiveAndAlive = isAlive;
             if (velocity == Vector2.zero && gravityScale == 0f)
                 base.OnImpactCleanUp();
+        }
+
+        [ClientRpc]
+        protected void HideEffectsOfClientRpc()
+        {
+            HideEffectsOfClient();
+        }
+
+        [ClientRpc]
+        protected void ShowAllEffectsOfClientRpc()
+        {
+            ShowAllEffectsOfClient();
         }
     }
 }
