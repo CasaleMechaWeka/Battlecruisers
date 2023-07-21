@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             await InternalInitialiseAsync(args);
 
             _updater = args.Updater;
-            
+
             _updater.Updated += _updater_Updated;
         }
 
@@ -172,10 +172,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _fireIntervalManager.ProcessTimeInterval(_updater.DeltaTime);
             PvPBarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
             bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
-            Debug.Log(" ======> AAA");
             if (!wasFireSuccessful)
             {
-                Debug.Log(" ======> BBB");
                 CeaseFire();
             }
         }
