@@ -122,7 +122,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         protected async override void OnBuildableCompleted()
         {
-            if(IsServer)
+            if (IsServer)
             {
                 base.OnBuildableCompleted();
                 Assert.IsTrue(cruisingAltitudeInM > transform.position.y);

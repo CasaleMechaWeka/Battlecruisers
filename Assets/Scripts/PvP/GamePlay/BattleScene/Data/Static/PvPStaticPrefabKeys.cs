@@ -84,6 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPSteamCopter { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSteamCopter");
             public static PvPUnitKey PvPBroadsword { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBroadsword");
             public static PvPUnitKey PvPTestAircraft { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPTestAircraft");
+            public static PvPUnitKey PvPSpySatellite { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpySatellite");
 
             // Ships
             public static PvPUnitKey PvPAttackBoat { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackBoat");
@@ -99,7 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     return new List<IPvPPrefabKey>()
                     {
                         // Aircraft
-                        PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPTestAircraft,
+                        PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPTestAircraft,PvPSpySatellite,
                         // Ships
                         PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPArchonBattleship
                     };
@@ -264,7 +265,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildableOutlineKey PvPStealthGeneratorOutline { get; } = new PvPBuildableOutlineKey("PvPStealthGeneratorOutline");
             public static PvPBuildableOutlineKey PvPTeslaCoilOutline { get; } = new PvPBuildableOutlineKey("PvPTeslaCoilOutline");
             public static PvPBuildableOutlineKey PvPUltraliskOutline { get; } = new PvPBuildableOutlineKey("PvPUltraliskOutline");
-
+            public static PvPBuildableOutlineKey PvPSpySatelliteLauncherOutline { get; } = new PvPBuildableOutlineKey("PvPSpySatelliteLauncherOutline");
             public static IList<IPvPPrefabKey> AllKeys
             {
                 get
@@ -294,7 +295,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPShieldGeneratorOutline,
                         PvPStealthGeneratorOutline,
                         PvPTeslaCoilOutline,
-                        PvPUltraliskOutline
+                        PvPUltraliskOutline,
+                        PvPSpySatelliteLauncherOutline
                     };
                 }
             }

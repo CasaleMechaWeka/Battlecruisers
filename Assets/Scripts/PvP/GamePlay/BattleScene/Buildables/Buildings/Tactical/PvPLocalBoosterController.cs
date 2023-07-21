@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _boosterGlow.gameObject.SetActive(true);
 
-            OnEnableShieldClientRpc(true);
+            OnEnableBoosterGlowClientRpc(true);
         }
 
         protected override void OnDestroyed()
@@ -286,7 +286,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnEnableShieldClientRpc(bool enabled)
+        private void OnEnableBoosterGlowClientRpc(bool enabled)
         {
             _boosterGlow.gameObject.SetActive(enabled);
         }
