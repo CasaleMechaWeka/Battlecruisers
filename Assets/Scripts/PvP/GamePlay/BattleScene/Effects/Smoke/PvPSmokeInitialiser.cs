@@ -17,6 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             PvPSmoke smoke = GetComponent<PvPSmoke>();
             Assert.IsNotNull(smoke);
+            smoke._particleSystem.Clear();
             smoke.Initialise(new PvPSmokeChanger());
 
             _smokeEmitter
@@ -31,6 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             PvPSmoke smoke = GetComponent<PvPSmoke>();
             Assert.IsNotNull(smoke);
+            smoke._particleSystem.Clear();
             smoke.Initialise(new PvPSmokeChanger());
 
             _smokeEmitter

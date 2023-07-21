@@ -220,7 +220,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat start to build.
-                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Stop();
+                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
         }
 
         private void OnHealthbarOffsetChanged()
@@ -260,9 +260,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsNotNull(deathSound);
             _deathSound = new PvPAudioClipWrapper(deathSound);
-
-
-
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }
 
@@ -524,7 +521,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual void StartConstruction()
         {
             Logging.Log(Tags.BUILDABLE, this);
-            
+
             _healthTracker.SetMinHealth();
 
             SetupDroneConsumer(numOfDronesRequired, showDroneFeedback: true);
@@ -647,7 +644,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             foreach (Renderer renderer in InGameRenderers)
             {
                 renderer.enabled = enabled;
-            }            
+            }
         }
 
         protected override void InternalDestroy()
@@ -760,11 +757,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsClient)
             {
                 _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
-
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
-                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Stop();
+                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
             }
-                
+
         }
 
         protected virtual void CallRpc_SyncFaction(PvPFaction faction)
