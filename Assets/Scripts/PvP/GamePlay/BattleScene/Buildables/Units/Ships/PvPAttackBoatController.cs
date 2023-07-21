@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelWrapper _antiSeaTurret;
 
         public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
-    //    protected override bool ShowSmokeWhenDestroyed => true;
+        //    protected override bool ShowSmokeWhenDestroyed => true;
 
         protected override Vector2 MaskHighlightableSize
         {
@@ -88,7 +88,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // ProgressController Visible
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
-            OnProgressControllerVisibleClientRpc(isEnabled);
+            if (IsServer)
+                OnProgressControllerVisibleClientRpc(isEnabled);
+            if (IsClient)
+                base.CallRpc_ProgressControllerVisible(isEnabled);
         }
 
 
@@ -145,6 +148,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted_PvPClient();
         }
 
+        protected override void StartMovementEffectsOfClient()
+        {
+            if (IsClient)
+                base.StartMovementEffectsOfClient();
+            else
+                StartMovementEffectsClientRpc();
+
+        }
+
+        protected override void StopMovementEffectsOfClient()
+        {
+            if (IsClient)
+                base.StopMovementEffectsOfClient();
+            else
+                StopMovementEffectsClientRpc();
+        }
+
+        protected override void ResetAndHideOfClient()
+        {
+            if (IsClient)
+                base.ResetAndHideOfClient();
+            else
+                ResetHideClientRpc();
+        }
+
         //-------------------------------------- RPCs -------------------------------------------------//
 
         [ClientRpc]
@@ -157,6 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
             _buildableProgress.gameObject.SetActive(isEnabled);
+            CallRpc_ProgressControllerVisible(isEnabled);
         }
 
         [ClientRpc]
@@ -202,9 +231,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
+        private void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
         {
             BuildableState = state;
+        }
+        [ClientRpc]
+        private void StartMovementEffectsClientRpc()
+        {
+            StartMovementEffectsOfClient();
+        }
+        [ClientRpc]
+        private void StopMovementEffectsClientRpc()
+        {
+            StopMovementEffectsOfClient();
+        }
+
+        [ClientRpc]
+        private void ResetHideClientRpc()
+        {
+            ResetAndHideOfClient();
         }
     }
 }

@@ -31,6 +31,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Effects.Smoke;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -217,6 +218,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
+            if (IsClient)
+                // in some case, smoke strong is not removed from scene in client side, so force stop it when boat start to build.
+                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Stop();
         }
 
         private void OnHealthbarOffsetChanged()
@@ -520,7 +524,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual void StartConstruction()
         {
             Logging.Log(Tags.BUILDABLE, this);
-
+            
             _healthTracker.SetMinHealth();
 
             SetupDroneConsumer(numOfDronesRequired, showDroneFeedback: true);
@@ -643,7 +647,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             foreach (Renderer renderer in InGameRenderers)
             {
                 renderer.enabled = enabled;
-            }
+            }            
         }
 
         protected override void InternalDestroy()
@@ -754,7 +758,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void CallRpc_PlayDeathSound()
         {
             if (IsClient)
+            {
                 _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+
+                // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
+                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Stop();
+            }
+                
         }
 
         protected virtual void CallRpc_SyncFaction(PvPFaction faction)

@@ -113,6 +113,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnBuildableCompleted_PvPClient();
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
         }
+
+        
         void FixedUpdate()
         {
             if (IsClient)
@@ -162,7 +164,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-            _coreEngineAudioSource.Stop();
+        //    _coreEngineAudioSource.Stop();
+        }
+
+        protected override void OnDestroyedEvent()
+        {
+            base.OnDestroyedEvent();
+            if(IsClient)
+                _coreEngineAudioSource.Stop();
         }
 
         protected override void InternalDestroy()
