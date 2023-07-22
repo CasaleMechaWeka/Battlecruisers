@@ -9,8 +9,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPStealthGenerator : PvPTacticalBuilding, IPvPStealthGenerator
     {
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.StealthGenerator;
-        
-        
+
+
+        protected override void OnBuildableCompleted()
+        {
+            if (IsServer)
+            {
+                base.OnBuildableCompleted();
+                OnBuildableCompletedClientRpc();
+            }
+            if (IsClient)
+                OnBuildableCompletedClientRpc();
+        }
+
+
         // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
@@ -229,7 +241,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnEnableStealthGenClientRpc(bool enabled)
         {
-          
+
         }
 
         [ClientRpc]

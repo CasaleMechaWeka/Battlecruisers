@@ -19,14 +19,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Initialise(IPvPFactoryProvider factoryProvider)
         {
-             base.Initialise(/*uiManager,*/ factoryProvider);
+            base.Initialise(/*uiManager,*/ factoryProvider);
             _boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
         }
 
         protected override void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
-            _cruiserSpecificFactories.GlobalBoostProviders.AircraftBoostProviders.Add(_boostProvider);
+            if (IsServer)
+            {
+                base.OnBuildableCompleted();
+                _cruiserSpecificFactories.GlobalBoostProviders.AircraftBoostProviders.Add(_boostProvider);
+                OnBuildableCompletedClientRpc();
+            }
+
+            if (IsClient)
+                OnBuildableCompleted_PvPClient();
         }
 
         protected override void OnDestroyed()
@@ -254,7 +261,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnEnableBoosterGlowClientRpc(bool enabled)
         {
-          //  _boosterGlow.gameObject.SetActive(enabled);
+            //  _boosterGlow.gameObject.SetActive(enabled);
         }
 
         [ClientRpc]

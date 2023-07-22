@@ -34,18 +34,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
-
-            // Logging.Log(Tags.LOCAL_BOOSTER, $"About to boost {_parentSlot.NeighbouringSlots.Count} slots :D");
-
-            foreach (IPvPSlot slot in _parentSlot.NeighbouringSlots)
+            if (IsServer)
             {
-                slot.BoostProviders.Add(_boostProvider);
+                base.OnBuildableCompleted();
+
+                // Logging.Log(Tags.LOCAL_BOOSTER, $"About to boost {_parentSlot.NeighbouringSlots.Count} slots :D");
+
+                foreach (IPvPSlot slot in _parentSlot.NeighbouringSlots)
+                {
+                    slot.BoostProviders.Add(_boostProvider);
+                }
+
+                _boosterGlow.gameObject.SetActive(true);
+
+                OnEnableBoosterGlowClientRpc(true);
+                OnBuildableCompletedClientRpc();
+            }
+            if (IsClient)
+            {
+                OnBuildableCompleted_PvPClient();
             }
 
-            _boosterGlow.gameObject.SetActive(true);
-
-            OnEnableBoosterGlowClientRpc(true);
         }
 
         protected override void OnDestroyed()
