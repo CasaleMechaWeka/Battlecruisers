@@ -20,9 +20,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
             Assert.IsNotNull(satellitePrefab);
-
-            // sava added
-            satellitePrefab.UnityObject.StaticInitialise(commonStrings);
         }
 
         protected override async void OnBuildableCompleted()

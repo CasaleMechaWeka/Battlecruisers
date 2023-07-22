@@ -5,11 +5,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical
 {
@@ -25,6 +28,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders);
+        }
+
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        {
+            base.StaticInitialise(parent, healthBar, commonStrings);
+            Assert.IsNotNull(satellitePrefab);
+            // Need satellite to be initialised to be able to access damage capabilities.
+            satellitePrefab.StaticInitialise(commonStrings);
         }
 
 
@@ -268,7 +279,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName)
         {
             PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
-        //    UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
+            //    UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
         }
 
         [ClientRpc]
