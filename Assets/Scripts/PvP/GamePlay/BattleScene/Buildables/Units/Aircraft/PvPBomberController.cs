@@ -117,8 +117,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Activate_PvPClient()
         {
             base.Activate_PvPClient();
-            /*            _haveDroppedBombOnRun = false;
-                        _isAtCruisingHeight = false;*/
         }
         protected async override void OnBuildableCompleted()
         {
