@@ -758,7 +758,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
-                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
+                //   _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
             }
 
         }

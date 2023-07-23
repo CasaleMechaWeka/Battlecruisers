@@ -67,8 +67,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
                 case PvPHealthState.NoHealth:
                     // sava added
-                    //     return _showSmokeWhenDestroyed ? PvPSmokeStrength.Strong : PvPSmokeStrength.None;
-                    return PvPSmokeStrength.None;
+                    return _showSmokeWhenDestroyed ? PvPSmokeStrength.Strong : PvPSmokeStrength.None;
+                //   return PvPSmokeStrength.None;
 
                 default:
                     throw new ArgumentException();

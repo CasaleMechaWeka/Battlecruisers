@@ -48,19 +48,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void _factory_UnitStarted(object sender, PvPUnitStartedEventArgs e)
         {
-            UnityEngine.Debug.Log(" =====> UnitStarted!!!");
             ShowBuildProgressIfNecessary(e.StartedUnit);
         }
 
         private void _factory_NewUnitChosen(object sender, EventArgs e)
         {
-            UnityEngine.Debug.Log(" =====> NewUnitChosen!!!");
             ShowBuildProgressIfNecessary(_factory.UnitWrapper?.Buildable);
         }
 
         private void _factory_UnitUnderConstructionDestroyed(object sender, EventArgs e)
         {
-            UnityEngine.Debug.Log(" =====> UnitUnderConstructionDestroyed!!!");
             ShowBuildProgressIfNecessary(_factory.UnitWrapper?.Buildable);
         }
 

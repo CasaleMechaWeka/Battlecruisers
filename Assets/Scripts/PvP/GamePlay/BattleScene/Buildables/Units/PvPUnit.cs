@@ -115,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         
-        void FixedUpdate()
+       protected virtual void FixedUpdate()
         {
             if (IsClient)
                 return;

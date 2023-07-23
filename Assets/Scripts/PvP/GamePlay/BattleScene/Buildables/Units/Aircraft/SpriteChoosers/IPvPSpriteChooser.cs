@@ -5,6 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public interface IPvPSpriteChooser
     {
-        IPvPSpriteWrapper ChooseSprite(Vector2 velocity);
+        (IPvPSpriteWrapper, int) ChooseSprite(Vector2 velocity);
+        IPvPSpriteWrapper ChooseSprite(int index);
     }
 }

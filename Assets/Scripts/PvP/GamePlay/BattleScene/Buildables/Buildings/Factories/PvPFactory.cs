@@ -210,16 +210,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 {
                     OnUnit_BuildingStarted(buildable_building._parent.GetComponent<NetworkObject>().NetworkObjectId);
                 }
-                /*                else
-                                {
-                                    PvPUnit buildable_unit = sender.Parse<PvPUnit>();
-                                    if (buildable_unit != null && buildable_unit._parent.GetComponent<NetworkObject>() != null)
-                                    {
-                                        OnUnit_BuildingStarted(buildable_unit._parent.GetComponent<NetworkObject>().NetworkObjectId);
-                                    }
-                                }*/
-
-
             }
         }
 
@@ -227,26 +217,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                // Debug.Log("=======> UnitStarted? object counts = " + objs.Length);
-                // foreach (NetworkObject obj in objs)
-                // {
-                //     if (obj.NetworkObjectId == objectId)
-                //     {
+
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
                 IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
                 UnitUnderConstruction = unit;
-                UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
-                Debug.Log("=======> UnitStarted? event called");
-                //     }
-                // }
+                UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));                
+
             }
         }
-
-        /*        void OnNewFactoryChosen()
-                {
-                    NewFactoryChosen?.Invoke();
-                }*/
 
         protected virtual void OnNewUnitChosen()
         {

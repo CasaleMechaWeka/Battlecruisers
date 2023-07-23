@@ -181,7 +181,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Logging.LogMethod(Tags.SHELLS);
 
             IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
-            Debug.Log("======> name : " + collider.gameObject.name);
             if (target != null
                 && !target.IsDestroyed
                 && _targetFilter != null

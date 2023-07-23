@@ -20,6 +20,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
+using Unity.Netcode;
+using Unity.Netcode.Components;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -77,6 +79,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
         }
 
+        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        {
+            base.Initialise(factoryProvider, uiManager);
+            _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
+        }
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
@@ -93,40 +100,52 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             transform.rotation = baseRotation;
             rigidBody.rotation = 0;
             // Logging.Verbose(Tags.FIGHTER, $"Id: {GameObject.GetInstanceID()}  After reset rotation: {rigidBody.rotation}");
+            OnActivatePvPClientRpc();
         }
 
         protected async override void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
+            if (IsServer)
+            {
+                base.OnBuildableCompleted();
 
-            PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
-            IPvPTarget parent = this;
-            IPvPUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
+                PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
+                IPvPTarget parent = this;
+                IPvPUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
 
-            IPvPBarrelControllerArgs args
-                = new PvPBarrelControllerArgs(
-                    updater,
-                    _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
-                    _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
-                    _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
-                    _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
-                    _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
-                    _movementControllerFactory.CreateRotationMovementController(_barrelController.pvpTurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
-                    _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
-                    _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
-                    _factoryProvider,
-                    _cruiserSpecificFactories,
-                    parent,
-                    _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                    _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                    EnemyCruiser,
-                    PvPSoundKeys.PvPFiring.BigCannon);
+                IPvPBarrelControllerArgs args
+                    = new PvPBarrelControllerArgs(
+                        updater,
+                        _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
+                        _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
+                        _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
+                        _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
+                        _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
+                        _movementControllerFactory.CreateRotationMovementController(_barrelController.pvpTurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
+                        _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
+                        _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
+                        _factoryProvider,
+                        _cruiserSpecificFactories,
+                        parent,
+                        _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                        _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                        EnemyCruiser,
+                        PvPSoundKeys.PvPFiring.BigCannon);
 
-            _barrelController.InitialiseAsync(args);
+                _barrelController.InitialiseAsync(args);
 
-            SetupTargetDetection();
+                SetupTargetDetection();
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+                OnBuildableCompletedClientRpc();
+            }
+
+            if (IsClient)
+            {
+                OnBuildableCompleted_PvPClient();
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+            }
+
         }
 
         /// <summary>
@@ -194,6 +213,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 float zRotationInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
                 Quaternion rotation = rigidBody.transform.rotation;
                 rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, zRotationInDegrees);
+/*                if (transform.rotation != rotation)
+                {
+                    Debug.Log(" ===========> calling me now!!!");
+                    // sava added for PvP
+                    GetComponent<NetworkTransform>()?.Teleport(transform.position, transform.rotation, transform.localScale);                    
+                }*/
                 transform.rotation = rotation;
             }
         }
@@ -225,6 +250,154 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             // Do not set to null, only created once in StaticInitialise(), so reused by unit pools.
             _barrelController.CleanUp();
+        }
+
+        // BuildableStatus
+        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
+        {
+            OnBuildableStateValueChangedClientRpc(state);
+        }
+
+        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
+        // only for PvPFighter :(
+        public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
+        private void LateUpdate()
+        {
+            if (IsServer)
+            {
+                if (PvP_BuildProgress.Value != BuildProgress)
+                    PvP_BuildProgress.Value = BuildProgress;
+                if(pvp_RotationY.Value != transform.eulerAngles.y)
+                    pvp_RotationY.Value = transform.eulerAngles.y;
+            }
+            if (IsClient)
+            {
+                BuildProgress = PvP_BuildProgress.Value;
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, pvp_RotationY.Value, transform.eulerAngles.z);
+            }
+        }
+
+        //------------------------------------ methods for sync, written by Sava ------------------------------//
+
+        // Visibility 
+        protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
+        {
+            if (IsClient)
+                base.OnValueChangedIsEnableRenderes(isEnabled);
+            if (IsServer)
+                OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+        }
+
+        // ProgressController Visible
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            OnProgressControllerVisibleClientRpc(isEnabled);
+        }
+
+        // set Position of PvPBuildable
+        protected override void CallRpc_SetPosition(Vector3 pos)
+        {
+            //  OnSetPositionClientRpc(pos);
+        }
+
+        // Set Rotation of PvPBuildable
+        protected override void CallRpc_SetRotation(Quaternion rotation)
+        {
+            OnSetRotationClientRpc(rotation);
+        }
+        private void ActiveTrail()
+        {
+            _aircraftTrailObj.SetActive(true);
+        }
+
+        protected override void OnBuildableProgressEvent()
+        {
+            if (IsClient)
+                base.OnBuildableProgressEvent();
+            if (IsServer)
+                OnBuildableProgressEventClientRpc();
+        }
+        protected override void OnCompletedBuildableEvent()
+        {
+            if (IsClient)
+                base.OnCompletedBuildableEvent();
+            if (IsServer)
+                OnCompletedBuildableEventClientRpc();
+        }
+        protected override void OnDestroyedEvent()
+        {
+            if (IsClient)
+                base.OnDestroyedEvent();
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+        }
+
+        //-------------------------------------- RPCs -------------------------------------------------//
+
+        [ClientRpc]
+        private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
+        {
+            OnValueChangedIsEnableRenderes(isEnabled);
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            if (!isEnabled)
+            {
+                Invoke("ActiveTrail", 0.5f);
+            }
+
+        }
+
+        [ClientRpc]
+        private void OnSetPositionClientRpc(Vector3 pos)
+        {
+            Position = pos;
+        }
+
+        [ClientRpc]
+        private void OnSetRotationClientRpc(Quaternion rotation)
+        {
+            Rotation = rotation;
+        }
+
+        [ClientRpc]
+        private void OnActivatePvPClientRpc()
+        {
+            Activate_PvPClient();
+        }
+
+        [ClientRpc]
+        private void OnBuildableProgressEventClientRpc()
+        {
+            OnBuildableProgressEvent();
+        }
+
+
+        [ClientRpc]
+        private void OnCompletedBuildableEventClientRpc()
+        {
+            OnCompletedBuildableEvent();
+        }
+
+        [ClientRpc]
+        private void OnDestroyedEventClientRpc()
+        {
+            OnDestroyedEvent();
+        }
+
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            OnBuildableCompleted();
+        }
+
+        [ClientRpc]
+        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
+        {
+            BuildableState = state;
         }
     }
 }

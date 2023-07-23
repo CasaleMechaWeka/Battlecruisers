@@ -14,7 +14,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _sprite = new PvPSpriteWrapper(sprite);
         }
 
-        public IPvPSpriteWrapper ChooseSprite(Vector2 velocity)
+        public (IPvPSpriteWrapper, int) ChooseSprite(Vector2 velocity)
+        {
+            return (_sprite, 0);
+        }
+        public IPvPSpriteWrapper ChooseSprite(int index)
         {
             return _sprite;
         }

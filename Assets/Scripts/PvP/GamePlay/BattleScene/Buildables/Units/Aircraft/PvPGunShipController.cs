@@ -82,9 +82,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
-        public override void Initialise(  IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
-            base.Initialise( factoryProvider, uiManager);
+            base.Initialise(factoryProvider, uiManager);
 
             _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
@@ -110,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override async void OnBuildableCompleted()
         {
-            if(IsServer)
+            if (IsServer)
             {
                 base.OnBuildableCompleted();
 
@@ -127,9 +127,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 OnBuildableCompletedClientRpc();
             }
-            if(IsClient)
+            if (IsClient)
             {
                 OnBuildableCompleted_PvPClient();
+                List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
+                foreach (Sprite sprite in allSprites)
+                {
+                    allSpriteWrappers.Add(new PvPSpriteWrapper(sprite));
+                }
+                //create Sprite Chooser
+                _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
             }
 
         }
@@ -248,6 +255,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsClient)
             {
                 BuildProgress = PvP_BuildProgress.Value;
+
             }
         }
 

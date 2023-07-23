@@ -131,7 +131,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompletedClientRpc();
             }
             if (IsClient)
+            {
                 OnBuildableCompleted_PvPClient();
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
+
+            }
+
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
