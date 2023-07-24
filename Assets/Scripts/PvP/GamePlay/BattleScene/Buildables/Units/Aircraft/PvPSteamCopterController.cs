@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.U2D;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -82,27 +83,59 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
+        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        {
+            base.Initialise(factoryProvider, uiManager);
+            _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
+
+            IPvPVelocityProvider inRangeVelocityProvider
+                = _movementControllerFactory.CreateMultiplyingVelocityProvider(
+                    providerToWrap: this,
+                    multiplier: WITHTIN_RANGE_VELOCITY_MULTIPLIER);
+            _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
+        }
+
+
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
             _isAtCruisingHeight = false;
+
+            OnActivatePvPClientRpc();
         }
 
         protected override async void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
 
-            SetupTargetDetection();
-
-            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.BigCannon);
-
-            List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
-            foreach (Sprite sprite in allSprites)
+            if(IsServer)
             {
-                allSpriteWrappers.Add(new PvPSpriteWrapper(sprite));
+                base.OnBuildableCompleted();
+
+                SetupTargetDetection();
+
+                _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.BigCannon);
+
+                List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
+                foreach (Sprite sprite in allSprites)
+                {
+                    allSpriteWrappers.Add(new PvPSpriteWrapper(sprite));
+                }
+                //create Sprite Chooser
+                _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+
+                OnBuildableCompletedClientRpc();
             }
-            //create Sprite Chooser
-            _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+            if(IsClient)
+            {
+                OnBuildableCompleted_PvPClient();
+
+                List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
+                foreach (Sprite sprite in allSprites)
+                {
+                    allSpriteWrappers.Add(new PvPSpriteWrapper(sprite));
+                }
+                _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+            }
         }
 
         private void SetupTargetDetection()
@@ -219,6 +252,158 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             List<SpriteRenderer> renderers = base.GetInGameRenderers();
             renderers.AddRange(_barrelWrapper.Renderers);
             return renderers;
+        }
+
+
+        // sava added
+
+
+        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
+        // only for PvPFighter :(
+        public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
+
+        // BuildableStatus
+        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
+        {
+            OnBuildableStateValueChangedClientRpc(state);
+        }
+        private void LateUpdate()
+        {
+            if (IsServer)
+            {
+                if (PvP_BuildProgress.Value != BuildProgress)
+                    PvP_BuildProgress.Value = BuildProgress;
+                if (pvp_RotationY.Value != transform.eulerAngles.y)
+                    pvp_RotationY.Value = transform.eulerAngles.y;
+            }
+            if (IsClient)
+            {
+                BuildProgress = PvP_BuildProgress.Value;
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, pvp_RotationY.Value, transform.eulerAngles.z);
+            }
+        }
+
+        //------------------------------------ methods for sync, written by Sava ------------------------------//
+
+        // Visibility 
+        protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
+        {
+            if (IsClient)
+                base.OnValueChangedIsEnableRenderes(isEnabled);
+            if (IsServer)
+                OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+        }
+
+        // ProgressController Visible
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            OnProgressControllerVisibleClientRpc(isEnabled);
+        }
+
+        // set Position of PvPBuildable
+        protected override void CallRpc_SetPosition(Vector3 pos)
+        {
+            //  OnSetPositionClientRpc(pos);
+        }
+
+        // Set Rotation of PvPBuildable
+        protected override void CallRpc_SetRotation(Quaternion rotation)
+        {
+            OnSetRotationClientRpc(rotation);
+        }
+        private void ActiveTrail()
+        {
+            _aircraftTrailObj.SetActive(true);
+        }
+
+        protected override void OnBuildableProgressEvent()
+        {
+            if (IsClient)
+                base.OnBuildableProgressEvent();
+            if (IsServer)
+                OnBuildableProgressEventClientRpc();
+        }
+        protected override void OnCompletedBuildableEvent()
+        {
+            if (IsClient)
+                base.OnCompletedBuildableEvent();
+            if (IsServer)
+                OnCompletedBuildableEventClientRpc();
+        }
+        protected override void OnDestroyedEvent()
+        {
+            if (IsClient)
+                base.OnDestroyedEvent();
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+        }
+
+        //-------------------------------------- RPCs -------------------------------------------------//
+
+        [ClientRpc]
+        private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
+        {
+            OnValueChangedIsEnableRenderes(isEnabled);
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            if (!isEnabled)
+            {
+                Invoke("ActiveTrail", 0.5f);
+            }
+
+        }
+
+        [ClientRpc]
+        private void OnSetPositionClientRpc(Vector3 pos)
+        {
+            Position = pos;
+        }
+
+        [ClientRpc]
+        private void OnSetRotationClientRpc(Quaternion rotation)
+        {
+            Rotation = rotation;
+        }
+
+        [ClientRpc]
+        private void OnActivatePvPClientRpc()
+        {
+            Activate_PvPClient();
+        }
+
+        [ClientRpc]
+        private void OnBuildableProgressEventClientRpc()
+        {
+            OnBuildableProgressEvent();
+        }
+
+
+        [ClientRpc]
+        private void OnCompletedBuildableEventClientRpc()
+        {
+            OnCompletedBuildableEvent();
+        }
+
+        [ClientRpc]
+        private void OnDestroyedEventClientRpc()
+        {
+            OnDestroyedEvent();
+        }
+
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            OnBuildableCompleted();
+        }
+
+        [ClientRpc]
+        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
+        {
+            BuildableState = state;
         }
     }
 }

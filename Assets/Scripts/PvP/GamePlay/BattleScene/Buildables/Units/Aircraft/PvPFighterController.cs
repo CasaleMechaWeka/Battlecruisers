@@ -213,12 +213,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 float zRotationInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
                 Quaternion rotation = rigidBody.transform.rotation;
                 rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, zRotationInDegrees);
-/*                if (transform.rotation != rotation)
-                {
-                    Debug.Log(" ===========> calling me now!!!");
-                    // sava added for PvP
-                    GetComponent<NetworkTransform>()?.Teleport(transform.position, transform.rotation, transform.localScale);                    
-                }*/
+                /*                if (transform.rotation != rotation)
+                                {
+                                    Debug.Log(" ===========> calling me now!!!");
+                                    // sava added for PvP
+                                    GetComponent<NetworkTransform>()?.Teleport(transform.position, transform.rotation, transform.localScale);                    
+                                }*/
                 transform.rotation = rotation;
             }
         }
@@ -258,6 +258,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnBuildableStateValueChangedClientRpc(state);
         }
 
+
+        // sava added
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         // only for PvPFighter :(
         public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
@@ -267,7 +269,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 if (PvP_BuildProgress.Value != BuildProgress)
                     PvP_BuildProgress.Value = BuildProgress;
-                if(pvp_RotationY.Value != transform.eulerAngles.y)
+                if (pvp_RotationY.Value != transform.eulerAngles.y)
                     pvp_RotationY.Value = transform.eulerAngles.y;
             }
             if (IsClient)
