@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public const int MS_PER_S = 1000;
         public const float MAX_ACCURACY = 1;
         public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
-        public const int POPULATION_LIMIT = 10;
+        public const int POPULATION_LIMIT = 30;
         public const float WATER_LINE = -1.4f;
     }
 

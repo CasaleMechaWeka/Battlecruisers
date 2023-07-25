@@ -281,6 +281,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 CleanUp();
             }
+            _aircraftTrail.Clear();
         }
 
         protected override bool ShouldShowDeathEffects()
