@@ -140,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected override void ShowAllEffectsOfClient()
         {
-            if(IsClient)
+            if (IsClient)
                 base.ShowAllEffectsOfClient();
             else
                 ShowAllEffectsOfClientRpc();
