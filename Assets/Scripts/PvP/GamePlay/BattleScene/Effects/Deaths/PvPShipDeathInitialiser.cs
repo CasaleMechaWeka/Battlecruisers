@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPShipDeathInitialiser : PvPMonoBehaviourWrapper
     {
-        private GameObject effects_parent;
+        public GameObject effects_parent;
         private PvPShipDeath shipDeath;
         private PvPBroadcastingAnimationController sinkingAnimation;
         private IList<IPvPParticleSystemGroup> effects;
@@ -36,7 +36,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         }
         protected virtual void Awake()
         {
-            effects_parent = transform.Find("Effects").gameObject;
+            if (effects_parent == null)
+                effects_parent = transform.Find("Effects").gameObject;
             sinkingAnimation = GetComponent<PvPBroadcastingAnimationController>();
             Assert.IsNotNull(sinkingAnimation);
 
@@ -55,8 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         protected override void SetVisible(bool isVisible)
         {
             //   StartCoroutine(iSetVisible(isVisible));
-
-            effects_parent.SetActive(isVisible);
+            if (effects_parent != null)
+                effects_parent.SetActive(isVisible);
         }
 
 

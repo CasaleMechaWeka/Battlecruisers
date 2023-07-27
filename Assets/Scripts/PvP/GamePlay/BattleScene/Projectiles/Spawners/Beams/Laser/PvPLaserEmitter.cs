@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
@@ -26,6 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private IPvPSettableBroadcastingProperty<bool> _isLaserFiring;
         public IPvPBroadcastingProperty<bool> IsLaserFiring { get; private set; }
+
+        public PvPArchonBattleshipController archonBattleShip;
 
         protected override void Awake()
         {

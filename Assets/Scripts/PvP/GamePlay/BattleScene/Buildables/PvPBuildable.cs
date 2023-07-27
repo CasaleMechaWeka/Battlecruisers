@@ -629,7 +629,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (ConstructionCompletedSoundKey != null)
             {
-                if (IsOwner)
+                if (IsClient && IsOwner)
                     _factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
             }
         }

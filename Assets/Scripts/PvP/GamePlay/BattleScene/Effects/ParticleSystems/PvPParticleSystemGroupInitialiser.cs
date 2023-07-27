@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPParticleSystemGroupInitialiser : PvPMonoBehaviourWrapper, IPvPParticleSystemGroupInitialiser
     {
-        private GameObject effects_parent;
+        public GameObject effects_parent;
         public IPvPParticleSystemGroup CreateParticleSystemGroup()
         {
             return
@@ -43,7 +43,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         protected virtual void Awake()
         {
-            effects_parent = transform.Find("Effects").gameObject;
+            if (effects_parent == null)
+                effects_parent = transform.Find("Effects").gameObject;
         }
 
         protected override void SetVisible(bool isVisible)
