@@ -3,9 +3,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static BattleCruisers.Data.Static.StaticPrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths
 {
@@ -83,10 +85,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             if (IsVisible)
             {
                 sinkingAnimation.Play();
-                foreach (IPvPParticleSystemGroup effect in effects)
-                {
-                    effect.Play();
-                }
+                /*            foreach (IPvPParticleSystemGroup effect in effects)
+                            {
+                                effect.Play();
+                            }*/
+                iPlayEffects();
+            }
+        }
+
+
+        private async Task iPlayEffects()
+        {
+            await Task.Yield();
+            foreach (IPvPParticleSystemGroup effect in effects)
+            {
+                await effect.Play();
             }
         }
 

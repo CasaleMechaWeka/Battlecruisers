@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _explosionController.IsVisible = true;
             _explosionController.Position = position;
 
-            Play();
+        //    Play();   // server does not need to play effects  :)
         }
 
         public void Activate(Vector3 position, PvPFaction faction)

@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths
@@ -49,10 +50,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _shipDeathController.Position = activationArgs;
 
 
-            _sinkingAnimation.Play();
-            foreach (IPvPParticleSystemGroup effect in _effects)
+         //    _sinkingAnimation.Play();                          // server does not need to play effects
+         //    iPlayEffects();
+/*            foreach (IPvPParticleSystemGroup effect in _effects)
             {
                 effect.Play();
+            }*/
+        }
+
+        private async Task iPlayEffects()
+        {
+            await Task.Yield();
+            foreach (IPvPParticleSystemGroup effect in _effects)
+            {
+               await effect.Play();
             }
         }
 
@@ -72,10 +83,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             _sinkingAnimation.Play();
 
-            foreach (IPvPParticleSystemGroup effect in _effects)
+       //     iPlayEffects();                                     // server does not need to play effects.
+/*            foreach (IPvPParticleSystemGroup effect in _effects)
             {
                 effect.Play();
-            }
+            }*/
         }
     }
 }
