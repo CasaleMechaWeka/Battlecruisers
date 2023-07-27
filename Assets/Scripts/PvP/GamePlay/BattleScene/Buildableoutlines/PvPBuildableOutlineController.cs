@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +38,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             BuildableCreated -= OnBuildableCreated;
             Destroy(gameObject);
+        }
+
+
+        public override void StaticInitialise(ILocTable commonStrings)
+        {
+            base.StaticInitialise(commonStrings);
         }
 
 

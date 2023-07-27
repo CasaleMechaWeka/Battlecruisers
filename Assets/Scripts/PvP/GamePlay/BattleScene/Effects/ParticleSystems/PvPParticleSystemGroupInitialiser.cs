@@ -2,12 +2,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Ex
 using Unity.Netcode;
 using UnityEngine.Assertions;
 using UnityEngine;
+using System.Collections;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
     public class PvPParticleSystemGroupInitialiser : PvPMonoBehaviourWrapper, IPvPParticleSystemGroupInitialiser
     {
-        private Transform[] trans;
+        private GameObject effects_parent;
         public IPvPParticleSystemGroup CreateParticleSystemGroup()
         {
             return
@@ -42,17 +43,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         protected virtual void Awake()
         {
-            trans = transform.GetComponentsInChildren<Transform>(includeInactive: true);            
+            effects_parent = transform.Find("Effects").gameObject;
         }
 
         protected override void SetVisible(bool isVisible)
         {
-            foreach (Transform t in trans)
-            {
-                if (t != transform)
-                    t.gameObject.SetActive(isVisible);
-            }
+            // StartCoroutine(iSetVisible(isVisible));
+            effects_parent.SetActive(isVisible);
         }
+
 
     }
 }

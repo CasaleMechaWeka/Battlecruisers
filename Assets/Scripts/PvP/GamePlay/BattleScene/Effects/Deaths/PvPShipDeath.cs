@@ -47,6 +47,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
+
+
             _sinkingAnimation.Play();
             foreach (IPvPParticleSystemGroup effect in _effects)
             {

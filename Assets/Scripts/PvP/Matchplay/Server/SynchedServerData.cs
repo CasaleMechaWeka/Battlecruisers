@@ -205,7 +205,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(networkObjectId);
             obj.gameObject.SetActive(true);
-            Debug.Log("=======> Activate");
+            
         }
 
         [ClientRpc]
@@ -213,7 +213,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(networkObjectId);
             obj.gameObject.SetActive(false);
-            Debug.Log("=======> Deactivate");
+            
         }
     }
 }

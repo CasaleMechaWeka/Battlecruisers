@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPShipDeathInitialiser : PvPMonoBehaviourWrapper
     {
-        private Transform[] trans;
+        private GameObject effects_parent;
         private PvPShipDeath shipDeath;
         private PvPBroadcastingAnimationController sinkingAnimation;
         private IList<IPvPParticleSystemGroup> effects;
@@ -33,32 +34,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         }
         protected virtual void Awake()
         {
+            effects_parent = transform.Find("Effects").gameObject;
+            sinkingAnimation = GetComponent<PvPBroadcastingAnimationController>();
+            Assert.IsNotNull(sinkingAnimation);
 
-                trans = transform.GetComponentsInChildren<Transform>(includeInactive: true);
-                sinkingAnimation = GetComponent<PvPBroadcastingAnimationController>();
-                Assert.IsNotNull(sinkingAnimation);
+            PvPParticleSystemGroupInitialiser[] particleSystemGroupInitialisers = GetComponentsInChildren<PvPParticleSystemGroupInitialiser>();
+            effects
+                = particleSystemGroupInitialisers
+                    .Select(initialiser => initialiser.CreateParticleSystemGroup())
+                    .ToList();
 
-                PvPParticleSystemGroupInitialiser[] particleSystemGroupInitialisers = GetComponentsInChildren<PvPParticleSystemGroupInitialiser>();
-                effects
-                    = particleSystemGroupInitialisers
-                        .Select(initialiser => initialiser.CreateParticleSystemGroup())
-                        .ToList();
-
-                shipDeath =
-                    new PvPShipDeath(
-                        this,
-                        sinkingAnimation,
-                        effects);    
-
+            shipDeath =
+                new PvPShipDeath(
+                    this,
+                    sinkingAnimation,
+                    effects);
         }
         protected override void SetVisible(bool isVisible)
         {
-            foreach (Transform t in trans)
-            {
-                if (t != transform)
-                    t.gameObject.SetActive(isVisible);
-            }
+            //   StartCoroutine(iSetVisible(isVisible));
+
+            effects_parent.SetActive(isVisible);
         }
+
+
 
 
         protected override void CallRpc_SetVisible(bool isVisible)
