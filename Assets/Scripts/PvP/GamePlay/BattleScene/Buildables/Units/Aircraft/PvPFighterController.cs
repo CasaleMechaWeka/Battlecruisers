@@ -213,12 +213,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 float zRotationInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
                 Quaternion rotation = rigidBody.transform.rotation;
                 rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, zRotationInDegrees);
-                /*                if (transform.rotation != rotation)
-                                {
-                                    Debug.Log(" ===========> calling me now!!!");
-                                    // sava added for PvP
-                                    GetComponent<NetworkTransform>()?.Teleport(transform.position, transform.rotation, transform.localScale);                    
-                                }*/
                 transform.rotation = rotation;
             }
         }

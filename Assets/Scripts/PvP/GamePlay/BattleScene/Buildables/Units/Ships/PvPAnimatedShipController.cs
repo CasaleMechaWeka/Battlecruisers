@@ -27,6 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted_PvPClient()
         {
+
             base.OnBuildableCompleted_PvPClient();
             _movementEffects.Show();
         }

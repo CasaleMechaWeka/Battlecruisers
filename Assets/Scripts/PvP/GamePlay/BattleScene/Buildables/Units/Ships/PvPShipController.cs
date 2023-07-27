@@ -136,10 +136,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected void SetupMovement()
         {
-            _directionMultiplier = FacingDirection == PvPDirection.Right ? 1 : -1;
-            _movementTargetProcessor = SetupTargetProcessorWrapper();
-            _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
-            _movementTargetProcessor.AddTargetConsumer(_movementDecider);
+                _directionMultiplier = FacingDirection == PvPDirection.Right ? 1 : -1;
+                _movementTargetProcessor = SetupTargetProcessorWrapper();
+                _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
+                _movementTargetProcessor.AddTargetConsumer(_movementDecider);
         }
 
         protected override void AddBuildRateBoostProviders(
