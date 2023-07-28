@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnBuildableCreated()
         {
             BuildableCreated -= OnBuildableCreated;
-            Destroy(gameObject);
+            //    Destroy(gameObject);
         }
 
 

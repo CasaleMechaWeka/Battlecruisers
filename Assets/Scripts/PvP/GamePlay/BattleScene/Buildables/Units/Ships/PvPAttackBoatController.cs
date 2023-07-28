@@ -37,6 +37,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return turrets;
         }
 
+        protected override void OnShipCompleted()
+        {
+            if(IsServer)
+                base.OnShipCompleted();
+        }
+
         protected override void InitialiseTurrets()
         {
             _antiSeaTurret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.AttackBoat);

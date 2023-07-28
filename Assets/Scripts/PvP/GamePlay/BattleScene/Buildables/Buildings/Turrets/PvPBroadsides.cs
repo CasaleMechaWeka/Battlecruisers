@@ -22,6 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
+
+
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
         // Visibility 
@@ -75,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             if (IsClient)
                 OnBuildableCompleted_PvPClient();
-              
+
         }
 
         // Placement Sound

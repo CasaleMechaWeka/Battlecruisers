@@ -114,7 +114,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _baseTurretStats,
                     args.LocalBoostProviders,
                     args.GlobalFireRateBoostProviders);
-            
+
             _adjustmentHelper
                 = new PvPBarrelAdjustmentHelper(
                     this,
@@ -131,8 +131,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.AccuracyAdjuster,
                     _fireIntervalManager,
                     CreateFirer(args));
-            
+
             await InternalInitialiseAsync(args);
+
             _updater = args.Updater;
             
             _updater.Updated += _updater_Updated;
