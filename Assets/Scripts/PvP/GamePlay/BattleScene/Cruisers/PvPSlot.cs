@@ -187,7 +187,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 if (_baseBuilding.Value != null)
                 {
-                //    Assert.IsNull(value);
+                    //    Assert.IsNull(value);
                     _baseBuilding.Value.Destroyed -= OnBuildingDestroyed;
                 }
 
@@ -198,9 +198,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     // pvp
                     ulong objectId = ulong.MaxValue;
                     if (_baseBuilding.Value.GameObject.GetComponent<PvPBuilding>() != null)
+                    {
                         objectId = (ulong)(_baseBuilding.Value.GameObject.GetComponent<PvPBuilding>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    }
+
                     if (_baseBuilding.Value.GameObject.GetComponent<PvPUnit>() != null)
+                    {
                         objectId = (ulong)(_baseBuilding.Value.GameObject.GetComponent<PvPUnit>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    }
+
                     pvp_Building_NetworkObjectID.Value = objectId;
 
 

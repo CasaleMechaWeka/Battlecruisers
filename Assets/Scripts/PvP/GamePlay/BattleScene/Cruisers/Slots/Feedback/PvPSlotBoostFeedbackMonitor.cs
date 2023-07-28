@@ -38,9 +38,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void UpdateSlotBoostFeedback_PvP_NetworkObjectID(ulong oldVal, ulong newVal)
         {
-            if (_parentSlot.pvp_Building_NetworkObjectID.Value == 0)
+            if (newVal == 0)
                 return;
-            NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(_parentSlot.pvp_Building_NetworkObjectID.Value);
+            NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(newVal);
             if (obj != null)
             {
                 IPvPBuilding building = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPBuilding>();
@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 IPvPBuilding building = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPBuilding>();
                 if (building != null)
                 {
-                    _boostFeedback.State = _boostStateFinder.FindState(_parentSlot.pvp_BoostProviders_Num.Value, building);
+                    _boostFeedback.State = _boostStateFinder.FindState(newVal, building);
                 }
             }
         }

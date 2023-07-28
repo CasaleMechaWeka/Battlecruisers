@@ -66,6 +66,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
+        protected override void OnShipCompleted()
+        {
+            if (IsServer)
+                base.OnShipCompleted();
+        }
         private void LateUpdate()
         {
             if (IsServer)

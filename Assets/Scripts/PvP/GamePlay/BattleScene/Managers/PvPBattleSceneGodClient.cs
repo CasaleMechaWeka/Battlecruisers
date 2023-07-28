@@ -141,6 +141,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public NetworkObject GetNetworkObject(ulong networkObjectId)
         {
+            if (!storageOfNetworkObject.ContainsKey(networkObjectId))
+                return null;
             return storageOfNetworkObject[networkObjectId];
         }
 
