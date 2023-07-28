@@ -64,7 +64,7 @@ namespace BattleCruisers.Utils.Debugging
                 if (!dataProvider.GameModel.UnlockedBuildings.Contains(building))
                 {
                     dataProvider.GameModel.AddUnlockedBuilding(building);
-                    dataProvider.GameModel.PlayerLoadout.AddBuilding(building);
+                //    dataProvider.GameModel.PlayerLoadout.AddBuilding(building);
                 }
             }
 
@@ -74,7 +74,7 @@ namespace BattleCruisers.Utils.Debugging
                 if (!dataProvider.GameModel.UnlockedUnits.Contains(unit))
                 {
                     dataProvider.GameModel.AddUnlockedUnit(unit);
-                    dataProvider.GameModel.PlayerLoadout.AddUnit(unit);
+                //    dataProvider.GameModel.PlayerLoadout.AddUnit(unit);
                 }
             }
 

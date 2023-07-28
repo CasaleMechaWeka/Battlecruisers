@@ -267,6 +267,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildableOutlineKey PvPTeslaCoilOutline { get; } = new PvPBuildableOutlineKey("PvPTeslaCoilOutline");
             public static PvPBuildableOutlineKey PvPUltraliskOutline { get; } = new PvPBuildableOutlineKey("PvPUltraliskOutline");
             public static PvPBuildableOutlineKey PvPSpySatelliteLauncherOutline { get; } = new PvPBuildableOutlineKey("PvPSpySatelliteLauncherOutline");
+            public static PvPBuildableOutlineKey PvPIonCannonOutline { get; } = new PvPBuildableOutlineKey("PvPIonCannonOutline");
+            public static PvPBuildableOutlineKey PvPMissilePodOutline { get; } = new PvPBuildableOutlineKey("PvPMissilePodOutline");
+            public static PvPBuildableOutlineKey PvPNovaArtilleryOutline { get; } = new PvPBuildableOutlineKey("PvPNovaArtilleryOutline");
+            public static PvPBuildableOutlineKey PvPCoastguardOutline { get; } = new PvPBuildableOutlineKey("PvPCoastguardOutline");
             public static IList<IPvPPrefabKey> AllKeys
             {
                 get
@@ -297,7 +301,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPStealthGeneratorOutline,
                         PvPTeslaCoilOutline,
                         PvPUltraliskOutline,
-                        PvPSpySatelliteLauncherOutline
+                        PvPSpySatelliteLauncherOutline,
+                        PvPIonCannonOutline,
+                        PvPMissilePodOutline,
+                        PvPNovaArtilleryOutline,
+                        PvPCoastguardOutline
                     };
                 }
             }
