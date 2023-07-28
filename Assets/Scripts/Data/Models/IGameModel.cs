@@ -10,6 +10,9 @@ namespace BattleCruisers.Data.Models
     public interface IGameModel
     {
         public int Coins { get; set; }
+        public CaptainExoKey CurrentCaptain { get; set; }
+
+        IReadOnlyList<string> OwnedExosKeys { get; }
 
         int NumOfLevelsCompleted { get; }
         int XPToNextLevel { get; set; }
@@ -26,12 +29,13 @@ namespace BattleCruisers.Data.Models
         int SelectedPvPLevel { get; set; }
         HotkeysModel Hotkeys { get; }
         SkirmishModel Skirmish { get; set; }
+        CoinBattleModel CoinBattle { get; set; }
 
         ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
-        ReadOnlyCollection<CaptainExoList> UnlockedCaptainExos { get; }
+        //ReadOnlyCollection<CaptainExoKey> UnlockedCaptainExos { get; }
 
         NewItems<HullKey> NewHulls { get; }
         NewItems<BuildingKey> NewBuildings { get; }
@@ -50,5 +54,8 @@ namespace BattleCruisers.Data.Models
 
         bool IsUnitUnlocked(UnitKey unitKey);
         bool IsBuildingUnlocked(BuildingKey buildingKey);
+
+        bool OwnsExo(string exoKey);
+        void PurchaseExo(string exoKey);
     }
 }

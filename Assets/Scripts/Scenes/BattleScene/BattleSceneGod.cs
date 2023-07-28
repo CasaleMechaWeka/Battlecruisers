@@ -346,9 +346,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
             //Code that uses current level to set the image of the enemy robot on the enemy nav button
             //Make sure to add more images to the EnemyCharacterImages prefab if more enemies are added
-            Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
-            Assert.IsTrue(enemyImages.Length >= currentLevel.Num);
-            enemyImages[currentLevel.Num - 1].enabled = true;
+            if(enemyCharacterImages != null)
+            {
+                Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
+                Assert.IsTrue(enemyImages.Length >= currentLevel.Num);
+                enemyImages[currentLevel.Num - 1].enabled = true;
+            }
 
             toolTipActivator.Initialise();
 
@@ -388,9 +391,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 difficultyDestructionScoreMultiplier = 2.0f;
             }
 
-
-
-
             GameOver = false;
             string logName = "Battle_Begin";
 #if LOG_ANALYTICS
@@ -405,9 +405,7 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 Debug.Log(ex.Message);
             }
-
         }
-
 
         /*        private void OnEnable()
                 {
@@ -434,6 +432,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
                 case GameMode.Skirmish:
                     return new SkirmishHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+
+                case GameMode.CoinBattle:
+                    return new CoinBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");

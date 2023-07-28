@@ -1,6 +1,7 @@
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
@@ -15,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public int captainExoCost;
         public int CaptainExoCost => captainExoCost;
 
-        public string stringKeyBase;
+        private string stringKeyBase;
         public string StringKeyBase => stringKeyBase;
 
         // CaptainIndex is the order of which the captains appear in the story mode.
@@ -24,10 +25,5 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public bool IsOwned { get; set; }//To check if player owns them
                                         
-        //public void Initialise(ILocTable captainStrings)
-        //{
-        //    Assert.IsNotNull(captainStrings);
-        //    captainName = 
-        //}
     }
 }

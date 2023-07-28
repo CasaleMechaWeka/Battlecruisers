@@ -1,11 +1,8 @@
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
-//using BattleCruisers.Utils.Properties;
 using UnityEngine;
-using TMPro;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using UnityEngine.UI;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Properties;
 
@@ -13,27 +10,31 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
     public class CaptainExoButton : MonoBehaviour
     {
-        [SerializeField]
-        private CaptainExoData _captainExoData;
-        private IBroadcastingProperty<CaptainExoData> _selectedCaptainExo;
-        private RectTransform _selectedFeedback;
-        public TextMeshProUGUI _unitName;
+        public Button button;
+        public Image captainImage;
+        public Image activeCaptainImage;
 
-        public GameObject clickedFeedBack;
+        private CaptainExoKey captainKey;
+        private Action<CaptainExoKey> setCurrentCaptainAction;
 
-        public void Initialise(
-            ISingleSoundPlayer soundPlayer,
-            CaptainExoData captainExoData,
-            IBroadcastingProperty<CaptainExoData> selectedCaptainExo)
+        public void Initialize(CaptainExoKey key, Sprite captainSprite, bool isActiveCaptain, Action<CaptainExoKey> setCurrentCaptainAction)
         {
-            _captainExoData = captainExoData;
-            _selectedCaptainExo = selectedCaptainExo;
+            captainKey = key;
+            captainImage.sprite = captainSprite;
+            activeCaptainImage.gameObject.SetActive(isActiveCaptain);
+            this.setCurrentCaptainAction = setCurrentCaptainAction;
 
+            button.onClick.AddListener(SetCurrentCaptain);
         }
-        private void ShowDetails()
+
+        private void SetCurrentCaptain()
         {
-            
+            setCurrentCaptainAction?.Invoke(captainKey);
+        }
+
+        public void UpdateActiveState(CaptainExoKey currentCaptain)
+        {
+            activeCaptainImage.gameObject.SetActive(captainKey == currentCaptain);
         }
     }
 }
-

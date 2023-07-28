@@ -82,7 +82,7 @@ namespace BattleCruisers.Utils
         Unit_AttackRIB,
 
         // CaptainExos
-        CaptainExo_Charlie,
+        CaptainExo_000,
         CaptainExo_001,
         CaptainExo_002,
         CaptainExo_003,

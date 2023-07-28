@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
@@ -11,7 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         int CaptainExoCost { get; }
         string StringKeyBase { get; }
         int CaptainIndex { get; }
-
         bool IsOwned { get; set; }
     }
 }

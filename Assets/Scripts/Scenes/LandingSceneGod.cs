@@ -46,10 +46,10 @@ namespace BattleCruisers.Scenes
             try
             {
                 //---> should be enabled in Production
-/*                var options = new InitializationOptions();
+                var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
                 await UnityServices.InitializeAsync(options);
-                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();*/
+                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
             }
             catch (ConsentCheckException e)
             {

@@ -196,9 +196,13 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
-        //[SerializeField]
-        //private List<CaptainList> _unlockedCaptains;
-
+        [SerializeField]
+        private CaptainExoKey _currentCaptain;
+        public CaptainExoKey CurrentCaptain
+        {
+            get => _currentCaptain;
+            set => _currentCaptain = value;
+        }
         [SerializeField]
         private long _lifetimeDestructionScore;
         public long LifetimeDestructionScore
@@ -238,9 +242,11 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private int _selectedPvPLevel;
 
-        //public CaptainList _currentCaptain;
         [SerializeField]
         private SkirmishModel _skirmish;
+
+        [SerializeField]
+        private CoinBattleModel _coinBattle;
 
         [SerializeField]
         private HotkeysModel _hotkeys;
@@ -314,11 +320,24 @@ namespace BattleCruisers.Data.Models
             set { _skirmish = value; }
         }
 
+        public CoinBattleModel CoinBattle
+        {
+            get { return _coinBattle; }
+            set { _coinBattle = value; }
+        }
+
+        // Captain Logic
+
+        [SerializeField]
+        private List<string> _ownedExosKeys = new List<string>();
+        public IReadOnlyList<string> OwnedExosKeys => _ownedExosKeys;
+
+
+
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
-        public ReadOnlyCollection<CaptainExoList> UnlockedCaptainExos { get; }
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
@@ -347,6 +366,11 @@ namespace BattleCruisers.Data.Models
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
+
+
+            _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
+
+
         }
 
         public GameModel(
@@ -369,6 +393,8 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls.AddRange(unlockedHulls);
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
+
+
         }
 
         public Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult)
@@ -544,5 +570,20 @@ namespace BattleCruisers.Data.Models
         {
             return UnlockedBuildings.Contains(buildingKey);
         }
+
+        public bool OwnsExo(string exoKey)
+        {
+            return _ownedExosKeys.Contains(exoKey);
+        }
+
+        public void PurchaseExo(string exoKey)
+        {
+            if (!_ownedExosKeys.Contains(exoKey))
+            {
+                _ownedExosKeys.Add(exoKey);
+            }
+        }
+
+
     }
 }

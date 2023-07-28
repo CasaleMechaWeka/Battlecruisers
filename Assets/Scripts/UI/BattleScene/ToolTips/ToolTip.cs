@@ -15,6 +15,8 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private ToolTipActivator toolTipActivator;
     private bool started = false;
     private int _virticalAdjustment = 0;
+    private Color activeColor = new Color(0, 0, 0, 1);
+    private Color notActiveColor = new Color(0, 0, 0, 0);
 
     public void Start()
     {
@@ -76,12 +78,14 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         toolTipText.enabled = true;
         background.enabled = true;
+        background.color = activeColor;
     }
     
     private void hide()
     {
         toolTipText.enabled = false;
         background.enabled = false;
+        background.color = notActiveColor;
     }
 
     public void OnPointerExit(PointerEventData eventData)

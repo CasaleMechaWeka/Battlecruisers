@@ -7,6 +7,7 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
@@ -23,6 +24,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         Cruiser GetCruiser(IPrefabKey key);
         ExplosionController GetExplosion(IPrefabKey key);
         ShipDeathInitialiser GetShipDeath(IPrefabKey key);
+        CaptainExoData GetCaptainExo(IPrefabKey key);
 
         // Multiple untyped prefab caches
         TProjectile GetProjectile<TProjectile>(IPrefabKey prefabKey) where TProjectile : Projectile;

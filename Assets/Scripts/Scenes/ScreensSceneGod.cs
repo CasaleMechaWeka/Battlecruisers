@@ -31,6 +31,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Scenes
 {
@@ -83,6 +85,9 @@ namespace BattleCruisers.Scenes
         public bool testLoadoutScreen = false;
         public DestructionRanker ranker;
 
+        [SerializeField]
+        private CaptainSelectorPanel captainSelectorPanel;
+
         async void Start()
         {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
@@ -101,6 +106,10 @@ namespace BattleCruisers.Scenes
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
+
+            var prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
+            captainSelectorPanel.Initialize(_gameModel, prefabFetcher);
+
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             _soundPlayer
@@ -413,6 +422,27 @@ namespace BattleCruisers.Scenes
         {
 
         }
+
+        public CaptainExoData GetCaptainExoData(CaptainExoKey key)
+        {
+            var prefabPath = key.PrefabPath;
+            var prefab = Resources.Load<GameObject>(prefabPath);
+            if (prefab == null)
+            {
+                Debug.LogError($"Cannot find prefab at path: {prefabPath}");
+                return null;
+            }
+
+            var data = prefab.GetComponent<CaptainExoData>();
+            if (data == null)
+            {
+                Debug.LogError($"No CaptainExoData component attached to prefab at path: {prefabPath}");
+            }
+
+            return data;
+        }
+
+
 
         private void CleanUp()
         {

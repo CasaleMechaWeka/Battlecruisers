@@ -6,6 +6,7 @@ using System;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
+    [Serializable]
     public class CaptainExoKey : PrefabKey
     {
         private const string prefabPathPreFix = "Prefabs/ScreensScene/ProfileScreen/Captains";
