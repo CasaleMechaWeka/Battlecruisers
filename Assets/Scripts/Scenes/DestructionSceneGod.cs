@@ -203,7 +203,7 @@ namespace BattleCruisers.Scenes
             // Set starting rank values:
             rank = ranker.CalculateRank(prevAllTimeVal);
 
-            currentXP = applicationModel.DataProvider.GameModel.XPToNextLevel;
+            currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
@@ -361,10 +361,6 @@ namespace BattleCruisers.Scenes
                                 yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
                                 xpRunningTotal += xpToAdd;
                                 currentXP = xpRunningTotal;
-                                if (realScene == true)
-                                {
-                                    applicationModel.DataProvider.GameModel.XPToNextLevel = xpRunningTotal;
-                                }
                                 xpToAdd = 0;
                             }
                         }
@@ -378,10 +374,6 @@ namespace BattleCruisers.Scenes
                 {
                     yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
                     currentXP += xpToAdd;
-                    if (realScene == true)
-                    {
-                        applicationModel.DataProvider.GameModel.XPToNextLevel = currentXP;
-                    }
                 }
             }
 
@@ -523,7 +515,6 @@ namespace BattleCruisers.Scenes
 
             // we need XPToNextLevel to populate any XP progress bars:
             long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-            applicationModel.DataProvider.GameModel.XPToNextLevel = (int)ranker.CalculateXpToNextLevel(newLifetimeScore);
 
             // Give the player their coins:
             applicationModel.DataProvider.GameModel.Coins += coinsToAward;
