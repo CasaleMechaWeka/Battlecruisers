@@ -48,12 +48,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             Helper.AssertIsNotNull(captainsButton);
 
             _soundPlayer = soundPlayer;
-
+            /*
             captainsButton.Initialise(_soundPlayer, ChangeCaptainSelection);
             CaptainExoData captainExoData = prefabFactory.GetCaptainExo(dataProvider.GameModel.CurrentCaptain);
             Image tempImage = currentCaptainImage.GetComponent<Image>();
-            tempImage.sprite = captainExoData.CaptainExoImage;
-            Debug.Log(captainExoData.CaptainExoImage.name);
+            tempImage.sprite = captainExoData.CaptainExoImage; 
+            Debug.Log(captainExoData.CaptainExoImage.name); */
 
             // XP progress bar setup
             if (xpBar != null)
