@@ -14,7 +14,7 @@ public class UnityAuthentication : MonoBehaviour
 
             SetupEvents();
 
-            InitializePlayGamesLogin();
+            //InitializePlayGamesLogin();
             //await SignInWithGoogleAsync(((PlayGamesLocalUser)Social.localUser).GetIdToken());
             await SignInAnonymouslyAsync();
 
