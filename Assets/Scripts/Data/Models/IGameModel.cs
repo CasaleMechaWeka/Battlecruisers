@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using Newtonsoft.Json;
 
 namespace BattleCruisers.Data.Models
 {
@@ -15,7 +16,6 @@ namespace BattleCruisers.Data.Models
         IReadOnlyList<string> OwnedExosKeys { get; }
 
         int NumOfLevelsCompleted { get; }
-        int XPToNextLevel { get; set; }
         long LifetimeDestructionScore { get; set; }
         long BestDestructionScore { get; set; }
         bool HasAttemptedTutorial { get; set; }

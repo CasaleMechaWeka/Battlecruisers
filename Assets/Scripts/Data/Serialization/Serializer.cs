@@ -1,7 +1,12 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
+using Newtonsoft.Json;
+using Unity.Services.CloudSave;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BattleCruisers.Data.Serialization
 {
@@ -46,5 +51,47 @@ namespace BattleCruisers.Data.Serialization
 				File.Delete(_modelFilePathProvider.GameModelFilePath);
             }
         }
-    }
+
+		public object DeserializeGameModel(string gameModelJSON)
+        {
+			return JsonConvert.DeserializeObject<GameModel>(gameModelJSON);
+        }
+
+		public string SerializeGameModel(object gameModel)
+		{
+			return JsonConvert.SerializeObject(gameModel, new JsonSerializerSettings
+			{
+				ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+			});
+		}
+
+		public async Task CloudSave(GameModel game)
+		{
+			try
+			{
+				var data = new Dictionary<string, object> { { "GameModel", SerializeGameModel(game) } };
+				await CloudSaveService.Instance.Data.ForceSaveAsync(data);
+			}
+			catch (UnityException e)
+			{
+				Debug.LogException(e);
+			}
+		}
+
+		public async Task<GameModel> CloudLoad()
+		{
+			try
+			{
+				Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
+				GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
+				Debug.Log(savedData["GameModel"]);
+				return game;
+			}
+			catch (UnityException e)
+			{
+				Debug.LogException(e);
+				return null;
+			}
+		}
+	}
 }
