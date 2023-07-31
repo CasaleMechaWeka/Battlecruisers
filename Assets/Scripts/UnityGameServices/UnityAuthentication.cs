@@ -2,8 +2,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
 
 public class UnityAuthentication : MonoBehaviour
 {
