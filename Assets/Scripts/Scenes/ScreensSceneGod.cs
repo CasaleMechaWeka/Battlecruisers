@@ -88,6 +88,8 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private CaptainSelectorPanel captainSelectorPanel;
 
+        public GameObject characterOfShop, characterOfBlackmarket;
+
         async void Start()
         {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
@@ -213,7 +215,8 @@ namespace BattleCruisers.Scenes
                 _isPlaying = true;
             }
 
-
+            characterOfShop.SetActive(false);
+            characterOfBlackmarket.SetActive(false);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
@@ -242,16 +245,22 @@ namespace BattleCruisers.Scenes
 
         public void GotoHubScreen()
         {
+            characterOfBlackmarket.SetActive(false);
+            characterOfShop.SetActive(false);
             GoToScreen(hubScreen);
         }
 
         public void GotoShopScreen()
         {
+            characterOfBlackmarket.SetActive(false);
+            characterOfShop.SetActive(true);
             GoToScreen(shopPanelScreen);
         }
 
         public void GotoBlackMarketScreen()
         {
+            characterOfBlackmarket.SetActive(true);
+            characterOfShop.SetActive(false);
             GoToScreen(blackMarketScreen);
         }
 
