@@ -18,6 +18,7 @@ using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -41,11 +42,12 @@ namespace BattleCruisers.Scenes
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
+        public GameObject logos;
+
         async void Start()
         {
             try
             {
-                //---> should be enabled in Production
                 var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
                 await UnityServices.InitializeAsync(options);
@@ -57,62 +59,80 @@ namespace BattleCruisers.Scenes
                 Debug.Log(e.Message);
             }
 
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            DontDestroyOnLoad(gameObject);
+            SceneNavigator = this;
 
-
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
-
-#if FREE_EDITION || UNITY_EDITOR
-            //if player NOT already paid then use Free title
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
-                subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
-#else
-            //if premium version set here 
-            applicationModel.DataProvider.GameModel.PremiumEdition = true;
-            applicationModel.DataProvider.SaveGame();
-#endif
-
-            SubTitle.text = subTitle;
-
-            Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
-
-            if (!_isInitialised)
+            //below is code to localise the logo
+            string locName = LocalizationSettings.SelectedLocale.name;
+            Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
+            foreach (Transform t in ts)
             {
-                IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-                MusicPlayer = CreateMusicPlayer(dataProvider);
-
-                if (!dataProvider.GameModel.Settings.InitialisedGraphics)
+                if (t.gameObject.name == locName)
                 {
-                    dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
-                }
-
-                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                // Persist this game object across scenes
-                DontDestroyOnLoad(gameObject);
-                _isInitialised = true;
-
-                SceneNavigator = this;
-
-                HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
-                _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-
-                //Debug.Log(Screen.currentResolution);
-                // Game starts with the screens scene
-                if (testCreditsScene)
-                {
-                    GoToScene(SceneNames.CREDITS_SCENE, true);
-                }
-                else if (testCutScene)
-                {
-                    GoToScene(SceneNames.CUTSCENE_SCENE, true);
-                }
-                else
-                {
-                    GoToScene(SceneNames.SCREENS_SCENE, true);
+                    t.gameObject.SetActive(true);
+                    break;
                 }
             }
+
+
+            // the following code block is obsolete because we need to add new economy. Sava :)
+            /*
+                        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
+
+                        ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+                        string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
+
+            #if FREE_EDITION || UNITY_EDITOR
+                        //if player NOT already paid then use Free title
+                        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+                            subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+            #else
+                        //if premium version set here 
+                        applicationModel.DataProvider.GameModel.PremiumEdition = true;
+                        applicationModel.DataProvider.SaveGame();
+            #endif
+
+                        SubTitle.text = subTitle;
+
+                        Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
+
+                        if (!_isInitialised)
+                        {
+                            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+                            MusicPlayer = CreateMusicPlayer(dataProvider);
+
+                            if (!dataProvider.GameModel.Settings.InitialisedGraphics)
+                            {
+                                dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
+                            }
+
+                            Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                            //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                            // Persist this game object across scenes
+                            DontDestroyOnLoad(gameObject);
+                            _isInitialised = true;
+
+                            SceneNavigator = this;
+
+                            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
+                            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+
+                            //Debug.Log(Screen.currentResolution);
+                            // Game starts with the screens scene
+                            if (testCreditsScene)
+                            {
+                                GoToScene(SceneNames.CREDITS_SCENE, true);
+                            }
+                            else if (testCutScene)
+                            {
+                                GoToScene(SceneNames.CUTSCENE_SCENE, true);
+                            }
+                            else
+                            {
+                                GoToScene(SceneNames.SCREENS_SCENE, true);
+                            }
+                        }*/
         }
 
 
@@ -192,9 +212,6 @@ namespace BattleCruisers.Scenes
             {
                 LoadingScreenController.Instance.Destroy();
             }
-
-
-
         }
 
         private IEnumerator LoadScene(string sceneName, LoadSceneMode loadSceneMode)
@@ -217,10 +234,13 @@ namespace BattleCruisers.Scenes
             _lastSceneLoaded = sceneName;
         }
 
-        void update()
+
+        // commented by Sava, not sure why this code block here
+
+/*        void update()
         {
             transform.localPosition = Camera.main.gameObject.transform.localPosition;
-        }
-
+            Debug.Log("you are calling me here!!!");
+        }*/
     }
 }
