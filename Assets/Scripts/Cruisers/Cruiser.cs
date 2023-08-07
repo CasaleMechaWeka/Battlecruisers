@@ -326,6 +326,11 @@ namespace BattleCruisers.Cruisers
             _healthTracker.State = HealthTrackerState.Immutable;
         }
 
+        public void MakeDamagable()
+        {
+            _healthTracker.State = HealthTrackerState.Mutable;
+        }
+
         public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)
         {
 
