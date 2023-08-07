@@ -1,5 +1,4 @@
-﻿
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
@@ -7,11 +6,14 @@ using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -21,6 +23,13 @@ using UnityEngine.Assertions;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using BattleCruisers.Network.Multiplay.Utils;
+using BattleCruisers.Utils.Localisation;
+using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
+
+#if UNITY_EDITOR
+using System.Security.Cryptography;
+#endif
 
 namespace BattleCruisers.Scenes
 {
@@ -44,13 +53,77 @@ namespace BattleCruisers.Scenes
 
         public GameObject logos;
 
+        public GameObject googleBtn, guestBtn;
+        public GameObject spinGoogle, spinGuest;
+        public GameObject labelGoogle, labelGuest;
+        public const string AuthProfileCommandLineArg = "-AuthProfile";
+        public ILocTable commonStrings;
+
+        public static LandingSceneGod Instance;
+
         async void Start()
         {
+            Helper.AssertIsNotNull(logos, googleBtn, guestBtn);
+            Helper.AssertIsNotNull(spinGoogle, spinGuest);
+            Helper.AssertIsNotNull(labelGoogle, labelGuest);
+
+            if (Instance == null)
+                Instance = this;
+
+            spinGuest.SetActive(false);
+            spinGoogle.SetActive(false);
+
+            labelGoogle.SetActive(true);
+            labelGuest.SetActive(true);
+
+            googleBtn.SetActive(false);
+            guestBtn.SetActive(false);
+
             try
             {
                 var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
+
+                var profile = GetProfile();
+
+                if (profile.Length > 0)
+                {
+                    try
+                    {
+                        /*{LocalProfileTool.LocalProfileSuffix}*/
+                        options.SetProfile($"{profile}");
+
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e.ToString());
+                    }
+                }
+
                 await UnityServices.InitializeAsync(options);
+
+#if UNITY_EDITOR
+                if (ParrelSync.ClonesManager.IsClone())
+                {
+                    // When using a ParrelSync clone, switch to a different authentication profile to force the clone
+                    // to sign in as a different anonymous user account.
+                    string customArgument = ParrelSync.ClonesManager.GetArgument();
+                    AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
+                }
+#endif
+
+                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+#if FREE_EDITION
+
+#else
+                //if premium version set here 
+                applicationModel.DataProvider.GameModel.PremiumEdition = true;
+                applicationModel.DataProvider.SaveGame();
+#endif
+
+                // initiailise google login 
+                InitializePlayGamesLogin();
+
                 List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
             }
             catch (ConsentCheckException e)
@@ -59,8 +132,17 @@ namespace BattleCruisers.Scenes
                 Debug.Log(e.Message);
             }
 
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            MusicPlayer = CreateMusicPlayer(dataProvider);
+
+
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
+            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+
+            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
+            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+
 
             //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
@@ -74,68 +156,92 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-
-            // the following code block is obsolete because we need to add new economy. Sava :)
-            /*
-                        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
-
-                        ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-                        string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
-
-            #if FREE_EDITION || UNITY_EDITOR
-                        //if player NOT already paid then use Free title
-                        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
-                            subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
-            #else
-                        //if premium version set here 
-                        applicationModel.DataProvider.GameModel.PremiumEdition = true;
-                        applicationModel.DataProvider.SaveGame();
-            #endif
-
-                        SubTitle.text = subTitle;
-
-                        Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
-
-                        if (!_isInitialised)
-                        {
-                            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-                            MusicPlayer = CreateMusicPlayer(dataProvider);
-
-                            if (!dataProvider.GameModel.Settings.InitialisedGraphics)
-                            {
-                                dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
-                            }
-
-                            Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                            //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                            // Persist this game object across scenes
-                            DontDestroyOnLoad(gameObject);
-                            _isInitialised = true;
-
-                            SceneNavigator = this;
-
-                            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
-                            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-
-                            //Debug.Log(Screen.currentResolution);
-                            // Game starts with the screens scene
-                            if (testCreditsScene)
-                            {
-                                GoToScene(SceneNames.CREDITS_SCENE, true);
-                            }
-                            else if (testCutScene)
-                            {
-                                GoToScene(SceneNames.CUTSCENE_SCENE, true);
-                            }
-                            else
-                            {
-                                GoToScene(SceneNames.SCREENS_SCENE, true);
-                            }
-                        }*/
+            // should be enabled after completion initialization
+            googleBtn.SetActive(true);
+            guestBtn.SetActive(true);
         }
 
+        void SetInteractable(bool interactable)
+        {
+            googleBtn.GetComponent<Button>().interactable = interactable;
+            guestBtn.GetComponent<Button>().interactable = interactable;
+        }
 
+        void SetSpin(GameObject obj, bool spinable)
+        {
+            obj.SetActive(spinable);
+        }
+        private string GetProfile()
+        {
+            var arguments = Environment.GetCommandLineArgs();
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                if (arguments[i] == AuthProfileCommandLineArg)
+                {
+                    var profileId = arguments[i + 1];
+                    return profileId;
+                }
+            }
+
+#if UNITY_EDITOR
+
+            // When running in the Editor make a unique ID from the Application.dataPath.
+            // This will work for cloning projects manually, or with Virtual Projects.
+            // Since only a single instance of the Editor can be open for a specific
+            // dataPath, uniqueness is ensured.
+            var hashedBytes = new MD5CryptoServiceProvider()
+                .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
+            Array.Resize(ref hashedBytes, 16);
+            return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
+#else
+            return "";
+#endif
+        }
+
+        public void GoogleLogin()
+        {
+            Debug.Log("===> trying to login with Google");
+            LoginGoogle();
+        }
+
+        public async void AnonymousLogin()
+        {
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                SetInteractable(false);
+                SetSpin(spinGuest, true);
+                labelGuest.SetActive(false);
+                AuthenticationService.Instance.SignedIn += SignedIn;
+                AuthenticationService.Instance.SignedOut += SignedOut;
+                AuthenticationService.Instance.Expired += Expired;
+                AuthenticationService.Instance.SignInFailed += SignFailed;
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            }
+        }
+
+        private void SignFailed(RequestFailedException exception)
+        {
+            Debug.Log("===> " + exception.Message);
+            SetInteractable(true);
+            SetSpin(spinGuest, false);
+            SetSpin(spinGoogle, false);
+            labelGoogle.SetActive(true);
+            labelGuest.SetActive(true);
+        }
+
+        void SignedIn()
+        {
+            GoToScene(SceneNames.SCREENS_SCENE, true);
+        }
+
+        void SignedOut()
+        {
+            Debug.Log("===> You're signed Out to UGS!!!");
+        }
+        void Expired()
+        {
+            Debug.Log("===> You're Expired from UGS!!!");
+        }
 
         private IMusicPlayer CreateMusicPlayer(IDataProvider dataProvider)
         {
@@ -169,7 +275,7 @@ namespace BattleCruisers.Scenes
 
             LoadingScreenHint = hint;
 
-            if (stopMusic)
+            if (MusicPlayer != null && stopMusic)
                 MusicPlayer.Stop();
 
             StartCoroutine(LoadSceneWithLoadingScreen(sceneName));
@@ -237,10 +343,69 @@ namespace BattleCruisers.Scenes
 
         // commented by Sava, not sure why this code block here
 
-/*        void update()
+        /*        void update()
+                {
+                    transform.localPosition = Camera.main.gameObject.transform.localPosition;
+                    Debug.Log("you are calling me here!!!");
+                }*/
+
+
+        // Google Auth
+        void InitializePlayGamesLogin()
         {
-            transform.localPosition = Camera.main.gameObject.transform.localPosition;
-            Debug.Log("you are calling me here!!!");
-        }*/
+            var config = new PlayGamesClientConfiguration.Builder()
+                .RequestIdToken()
+                .Build();
+            PlayGamesPlatform.InitializeInstance(config);
+            PlayGamesPlatform.DebugLogEnabled = true;
+            PlayGamesPlatform.Activate();
+        }
+
+        void LoginGoogle()
+        {
+            SetInteractable(false);
+            SetSpin(spinGoogle, true);
+            labelGoogle.SetActive(false);
+            Social.localUser.Authenticate(OnGoogleLogin);
+        }
+
+        async void OnGoogleLogin(bool success)
+        {
+            if (success)
+            {
+                Debug.Log("Login with Google Done, IdToken: " + ((PlayGamesLocalUser)Social.localUser).GetIdToken());
+                await SignInWithGoogleAsync(((PlayGamesLocalUser)Social.localUser).GetIdToken());
+            }
+            else
+            {
+                Debug.Log("Unsuccessful login");
+            }
+        }
+
+        async Task SignInWithGoogleAsync(string idToken)
+        {
+            try
+            {
+                await AuthenticationService.Instance.SignInWithGoogleAsync(idToken);
+                Debug.Log("SignIn is successful.");
+            }
+            catch (Unity.Services.Authentication.AuthenticationException ex)
+            {
+                Debug.LogException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
+        void OnDestroy()
+        {
+            AuthenticationService.Instance.SignOut();
+            AuthenticationService.Instance.SignedIn -= SignedIn;
+            AuthenticationService.Instance.SignedOut -= SignedOut;
+            AuthenticationService.Instance.SignInFailed -= SignFailed;
+            AuthenticationService.Instance.Expired -= Expired;
+        }
     }
 }

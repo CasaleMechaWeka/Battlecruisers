@@ -117,9 +117,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenProfile()
         {
             GoToScreen(profilePanel);
-
             UnselectAll();
-
         }
 
         public void Continue()

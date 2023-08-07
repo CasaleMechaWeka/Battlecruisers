@@ -109,22 +109,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         }
 
 
-
-
-        // private void HostIPRequest(string ip, string port)
-        // {
-
-        //     int.TryParse(port, out var portNum);
-        //     if (portNum <= 0)
-        //     {
-        //         portNum = k_DefaultPort;
-        //     }
-        //     ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-        //     m_ConnectionManager.StartHostIp(m_localTestName, ip, portNum);
-
-        // }
-
-
         private void JoinWithIP(string ip, string port)
         {
             int.TryParse(port, out var portNum);
@@ -162,7 +146,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 return;
             }
-
 
             List<QueryFilter> mFilters = new List<QueryFilter>()
             {
@@ -259,16 +242,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         protected override void Awake()
         {
             base.Awake();
-
-
-            //---> should be enabled in Production
-            /*            if (string.IsNullOrEmpty(Application.cloudProjectId))
-                        {
-                            OnSignInFailed();
-                            return;
-                        }
-
-                        TrySignIn();*/
+         //   TrySignIn();
         }
 
 
@@ -351,47 +325,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
 
-
-            Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "Pre prefab cache load");
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "After prefab cache load");
-
-            _applicationModel = ApplicationModelProvider.ApplicationModel;
-            _dataProvider = _applicationModel.DataProvider;
-            _gameModel = _dataProvider.GameModel;
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
-            _musicPlayer = LandingSceneGod.MusicPlayer;
-            _soundPlayer
-            = new SingleSoundPlayer(
-                new SoundFetcher(),
-                new EffectVolumeAudioSource(
-                    new AudioSourceBC(_uiAudioSource),
-                    _dataProvider.SettingsManager, 1));
-
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
             trashDataList.Initialise(storyStrings);
-            ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(_gameModel.SelectedLevel);
-            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData, commonStrings, storyStrings);
-
-            // TEMP  For when not coming from LandingScene :)
-            if (_musicPlayer == null)
-            {
-                _musicPlayer = Substitute.For<IMusicPlayer>();
-                _sceneNavigator = Substitute.For<ISceneNavigator>();
-            }
-
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-
-
-            // Temp only because I am starting the scene without a previous choose level scene
-            if (_sceneNavigator == null)
-            {
-                _applicationModel.SelectedLevel = defaultLevel;
-                _sceneNavigator = Substitute.For<ISceneNavigator>();
-            }
+            ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
+            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData, commonStrings, storyStrings); 
 
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();
@@ -399,28 +336,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
             m_LobbyServiceFacade.OnMatchMakingStarted += onMatchmakingStarted;
 
-            //---> should be enabled in Production
-            // m_AuthServiceFacade.AddActionToSignedInEvent(OnSignedIn);
-
-            //---> to play without internet connection for local test, should be removed in Production
             StartCoroutine(iStartPvP());
         }
-
-
-        private void OnSignedIn()
-        {
-            var IsAuthorized = m_AuthServiceFacade.EnsurePlayerIsAuthorized();
-            if (IsAuthorized.Result)
-                StartCoroutine(iStartPvP());
-        }
-
-
-        private void OnSignedFailed()
-        {
-
-        }
-
-
     }
 }
 

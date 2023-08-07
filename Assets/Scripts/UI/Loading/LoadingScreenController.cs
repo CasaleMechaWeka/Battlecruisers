@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.Loading
             Helper.AssertIsNotNull(root, loadingText);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
             string subTitle = String.Empty;
 
             //if player NOT already paid then use Free title
@@ -40,14 +40,6 @@ namespace BattleCruisers.UI.Loading
             {
                 subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
             }
-#if FREE_EDITION
-
-
-#else
-            //if premium version set here 
-            applicationModel.DataProvider.GameModel.PremiumEdition = true;
-            applicationModel.DataProvider.SaveGame();
-#endif
 
             SubTitle.text = subTitle;
 
