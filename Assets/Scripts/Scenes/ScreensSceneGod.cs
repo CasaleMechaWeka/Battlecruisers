@@ -90,11 +90,13 @@ namespace BattleCruisers.Scenes
         private CaptainSelectorPanel captainSelectorPanel;
 
         public GameObject characterOfShop, characterOfBlackmarket;
+        public Transform ContainerCaptain;
 
         async void Start()
         {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -206,9 +208,7 @@ namespace BattleCruisers.Scenes
                 GoToLoadoutScreen();
             }
 
-            ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
-
-            _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+            ranker.DisplayRank(_gameModel.LifetimeDestructionScore);    
 
             if (_gameModel.PremiumEdition)
             {
@@ -217,8 +217,13 @@ namespace BattleCruisers.Scenes
             }
 
             characterOfShop.SetActive(false);
-            characterOfBlackmarket.SetActive(false);
+            characterOfBlackmarket.SetActive(false);      
 
+            // load charlie for Screenscene UI animation effect
+            CaptainExoData charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.CurrentCaptain), ContainerCaptain);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+
+            _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 

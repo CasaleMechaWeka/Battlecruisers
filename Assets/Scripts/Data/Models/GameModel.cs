@@ -171,8 +171,6 @@ namespace BattleCruisers.Data.Models
 
             private int _stageNumber;
             public int StageNumber;
-
-
         }
 
         [SerializeField]
@@ -366,11 +364,7 @@ namespace BattleCruisers.Data.Models
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
-
-
             _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
-
-
         }
 
         public GameModel(
@@ -393,8 +387,6 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls.AddRange(unlockedHulls);
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
-
-
         }
 
         public Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult)
