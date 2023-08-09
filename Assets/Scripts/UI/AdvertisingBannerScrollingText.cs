@@ -124,7 +124,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
 #if UNITY_STANDALONE || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
         gameObject.SetActive(false);
-#elif UNITY_ANDROID && FREE_EDITION
+
+/*#elif UNITY_ANDROID && FREE_EDITION*/
+#elif UNITY_ANDROID
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
@@ -133,14 +135,16 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-#elif UNITY_EDITOR && FREE_EDITION
-         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+/*#elif UNITY_EDITOR && FREE_EDITION*/
+#elif UNITY_EDITOR
+        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
         }
           else
         {
             gameObject.SetActive(false);
+            Debug.Log("===> PremiumEdition");
         }
 #endif
     }

@@ -51,7 +51,8 @@ public class FullScreenAdverts : MonoBehaviour
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
         settingsManager = applicationModel.DataProvider.SettingsManager;
 
-#if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
+// #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
+#if (UNITY_ANDROID || UNITY_IOS)
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
@@ -62,8 +63,18 @@ public class FullScreenAdverts : MonoBehaviour
             // For premium users, show ads only if ShowAds setting is enabled
             gameObject.SetActive(settingsManager.ShowAds);
         }
-#elif UNITY_EDITOR && FREE_EDITION
-    gameObject.SetActive(true);
+// #elif UNITY_EDITOR && FREE_EDITION
+#elif UNITY_EDITOR
+        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            Assert.IsNotNull(settingsManager);
+            // For premium users, show ads only if ShowAds setting is enabled
+            gameObject.SetActive(settingsManager.ShowAds);
+        }
 #else
         Assert.IsNotNull(settingsManager);
         gameObject.SetActive(settingsManager.ShowAds);
