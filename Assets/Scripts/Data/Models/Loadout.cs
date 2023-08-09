@@ -40,6 +40,22 @@ namespace BattleCruisers.Data.Models
             }
         }
 
+        // Captain Logic
+
+        [SerializeField]
+        private CaptainExoKey _currentCaptain;
+        public CaptainExoKey CurrentCaptain
+        {
+            get => _currentCaptain;
+            set => _currentCaptain = value;
+        }
+
+        [SerializeField]
+        private List<string> _ownedExosKeys = new List<string>();
+        public IReadOnlyList<string> OwnedExosKeys => _ownedExosKeys;
+
+
+
         public Loadout(
             HullKey hull,
             List<BuildingKey> buildings,
@@ -52,6 +68,7 @@ namespace BattleCruisers.Data.Models
             _units = units;
             _builds = buildLimt;
             _unit = unitLimit;
+            _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
         }
 
         public bool Is_buildsNull()
@@ -227,6 +244,19 @@ namespace BattleCruisers.Data.Models
             if (unitKeys.Contains(key))
                 return true;
             return false;
+        }
+
+        public bool OwnsExo(string exoKey)
+        {
+            return _ownedExosKeys.Contains(exoKey);
+        }
+
+        public void PurchaseExo(string exoKey)
+        {
+            if (!_ownedExosKeys.Contains(exoKey))
+            {
+                _ownedExosKeys.Add(exoKey);
+            }
         }
 
         public override bool Equals(object obj)

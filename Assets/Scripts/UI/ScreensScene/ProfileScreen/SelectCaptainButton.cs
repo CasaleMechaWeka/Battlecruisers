@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             //_comparisonStateTracker.State.ValueChanged += ComparisonStateChanged;
 
             _dataProvider = dataProvider;
-            _selectedCaptain = new SettableBroadcastingProperty<CaptainExoKey>(initialValue: dataProvider.GameModel.CurrentCaptain);
+            _selectedCaptain = new SettableBroadcastingProperty<CaptainExoKey>(initialValue: dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
 
             SelectedCaptain = new BroadcastingProperty<CaptainExoKey>(_selectedCaptain);
         }

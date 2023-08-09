@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 {
                     var buttonGameObject = Instantiate(captainButtonPrefab, buttonContainer);
                     var button = buttonGameObject.GetComponent<CaptainExoButton>();
-                    button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.CurrentCaptain, SelectCaptain);
+                    button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.PlayerLoadout.CurrentCaptain, SelectCaptain);
                 }
             }
         }
@@ -66,13 +66,13 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             foreach (Transform child in buttonContainer)
             {
                 var button = child.GetComponent<CaptainExoButton>();
-                button.UpdateActiveState(_gameModel.CurrentCaptain);
+                button.UpdateActiveState(_gameModel.PlayerLoadout.CurrentCaptain);
             }
         }
 
         public void SelectCaptain(CaptainExoKey captain)
         {
-            _gameModel.CurrentCaptain = captain;
+            _gameModel.PlayerLoadout.CurrentCaptain = captain;
             UpdateActiveCaptain();
             gameObject.SetActive(false); // Close the panel after selection
         }

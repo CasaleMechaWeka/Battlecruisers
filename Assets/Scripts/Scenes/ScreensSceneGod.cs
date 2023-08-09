@@ -220,7 +220,7 @@ namespace BattleCruisers.Scenes
             characterOfBlackmarket.SetActive(false);      
 
             // load charlie for Screenscene UI animation effect
-            CaptainExoData charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.CurrentCaptain), ContainerCaptain);
+            CaptainExoData charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);

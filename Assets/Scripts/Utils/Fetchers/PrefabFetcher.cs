@@ -15,7 +15,6 @@ namespace BattleCruisers.Utils.Fetchers
         public async Task<IPrefabContainer<TPrefab>> GetPrefabAsync<TPrefab>(IPrefabKey prefabKey) where TPrefab : class
         {
             string addressableKey = PREFAB_ROOT_DIR + prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
-            Debug.Log("====> addressKey" + addressableKey);
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
 
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, $"Pre await Addressables.LoadAssetAsync: {prefabKey.PrefabPath}");

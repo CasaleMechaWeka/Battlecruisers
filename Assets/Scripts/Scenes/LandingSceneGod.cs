@@ -24,6 +24,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.UI;
 
 
 #if UNITY_EDITOR
@@ -35,8 +36,6 @@ namespace BattleCruisers.Scenes
 
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
-        public Text SubTitle;
-        private bool _isInitialised = false;
         private string _lastSceneLoaded;
         private IHintProvider _hintProvider;
 
@@ -50,24 +49,39 @@ namespace BattleCruisers.Scenes
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
-        public GameObject logos;
+        public GameObject landingCanvas;
 
+        public GameObject loginPanel, retryPanel;
+
+        public GameObject logos;
         public GameObject googleBtn, guestBtn;
         public GameObject spinGoogle, spinGuest;
         public GameObject labelGoogle, labelGuest;
+
+        public GameObject quitBtn, retryBtn;
+        public GameObject spinRetry;
+        public GameObject labelRetry;
+
         public const string AuthProfileCommandLineArg = "-AuthProfile";
         public ILocTable commonStrings;
 
         public static LandingSceneGod Instance;
+        public LoginType loginType = LoginType.None;
+
+        public ErrorMessageHandler messageHandler;
 
         async void Start()
         {
-            Helper.AssertIsNotNull(logos, googleBtn, guestBtn);
-            Helper.AssertIsNotNull(spinGoogle, spinGuest);
-            Helper.AssertIsNotNull(labelGoogle, labelGuest);
+            Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
+            Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
+            Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
+            Helper.AssertIsNotNull(messageHandler);
 
             if (Instance == null)
                 Instance = this;
+
+            landingCanvas.SetActive(true);
+            loginPanel.SetActive(true);
 
             spinGuest.SetActive(false);
             spinGoogle.SetActive(false);
@@ -77,6 +91,10 @@ namespace BattleCruisers.Scenes
 
             googleBtn.SetActive(false);
             guestBtn.SetActive(false);
+
+            retryPanel.SetActive(false);
+            labelRetry.SetActive(true);
+            spinRetry.SetActive(false);
 
             try
             {
@@ -91,7 +109,6 @@ namespace BattleCruisers.Scenes
                     {
                         /*{LocalProfileTool.LocalProfileSuffix}*/
                         options.SetProfile($"{profile}");
-
                     }
                     catch (Exception e)
                     {
@@ -111,29 +128,19 @@ namespace BattleCruisers.Scenes
                 }
 #endif
 
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-#if FREE_EDITION
-
-#else
-                //if premium version set here 
-                applicationModel.DataProvider.GameModel.PremiumEdition = true;
-                applicationModel.DataProvider.SaveGame();
-#endif
-
                 // initiailise google login 
                 InitializePlayGamesLogin();
-
                 List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
             }
             catch (ConsentCheckException e)
             {
                 //do nothing
                 Debug.Log(e.Message);
+                messageHandler.ShowMessage("Please check Internet connection!");
             }
 
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             MusicPlayer = CreateMusicPlayer(dataProvider);
-
 
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
@@ -158,6 +165,12 @@ namespace BattleCruisers.Scenes
             // should be enabled after completion initialization
             googleBtn.SetActive(true);
             guestBtn.SetActive(true);
+
+            // add event handlers to authentication
+            AuthenticationService.Instance.SignedIn += SignedIn;
+            AuthenticationService.Instance.SignedOut += SignedOut;
+            AuthenticationService.Instance.Expired += Expired;
+            AuthenticationService.Instance.SignInFailed += SignFailed;
         }
 
         void SetInteractable(bool interactable)
@@ -200,6 +213,7 @@ namespace BattleCruisers.Scenes
         public void GoogleLogin()
         {
             Debug.Log("===> trying to login with Google");
+            loginType = LoginType.Google;
             LoginGoogle();
         }
 
@@ -210,11 +224,16 @@ namespace BattleCruisers.Scenes
                 SetInteractable(false);
                 SetSpin(spinGuest, true);
                 labelGuest.SetActive(false);
-                AuthenticationService.Instance.SignedIn += SignedIn;
-                AuthenticationService.Instance.SignedOut += SignedOut;
-                AuthenticationService.Instance.Expired += Expired;
-                AuthenticationService.Instance.SignInFailed += SignFailed;
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                loginType = LoginType.Anonymous;
+                try
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                    messageHandler.ShowMessage("Please check Internet connection!");
+                }                
             }
         }
 
@@ -226,10 +245,13 @@ namespace BattleCruisers.Scenes
             SetSpin(spinGoogle, false);
             labelGoogle.SetActive(true);
             labelGuest.SetActive(true);
+            loginType = LoginType.None;
         }
 
         void SignedIn()
         {
+            landingCanvas.SetActive(false);
+            loginPanel.SetActive(false);
             GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
@@ -381,6 +403,19 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        public void OnRetry()
+        {
+            if (loginType == LoginType.Anonymous)
+                AnonymousLogin();
+            if(loginType == LoginType.Google)
+                GoogleLogin();
+        }
+
+        public void OnQuit()
+        {
+            Application.Quit();
+        }
+
         async Task SignInWithGoogleAsync(string idToken)
         {
             try
@@ -406,5 +441,9 @@ namespace BattleCruisers.Scenes
             AuthenticationService.Instance.SignInFailed -= SignFailed;
             AuthenticationService.Instance.Expired -= Expired;
         }
+
+        public enum LoginType { Google, Apple, Anonymous, None }
     }
+
+
 }
