@@ -16,7 +16,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Services.Analytics;
 using Unity.Services.Authentication;
-using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,6 +24,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI;
+using UnityEngine.Networking;
+using Unity.Services.Core;
+using System.Net;
 
 
 #if UNITY_EDITOR
@@ -54,7 +56,7 @@ namespace BattleCruisers.Scenes
         public GameObject loginPanel, retryPanel;
 
         public GameObject logos;
-        public GameObject googleBtn, guestBtn;
+        public CanvasGroupButton googleBtn, guestBtn;
         public GameObject spinGoogle, spinGuest;
         public GameObject labelGoogle, labelGuest;
 
@@ -70,15 +72,35 @@ namespace BattleCruisers.Scenes
 
         public ErrorMessageHandler messageHandler;
 
+
+
         async void Start()
         {
             Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
             Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
             Helper.AssertIsNotNull(messageHandler);
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
             if (Instance == null)
                 Instance = this;
+
+            ISoundFetcher soundFetcher = new SoundFetcher();
+            AudioSource platformAudioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(platformAudioSource);
+            IAudioSource audioSource
+                = new MusicVolumeAudioSource(
+                    new AudioSourceBC(platformAudioSource),
+                    applicationModel.DataProvider.SettingsManager);
+
+            ISingleSoundPlayer soundPlayer = new SingleSoundPlayer(
+                new SoundFetcher(),
+                audioSource
+                );
+
+            googleBtn.Initialise(soundPlayer, GoogleLogin);
+            guestBtn.Initialise(soundPlayer, AnonymousLogin);
+
 
             landingCanvas.SetActive(true);
             loginPanel.SetActive(true);
@@ -89,12 +111,14 @@ namespace BattleCruisers.Scenes
             labelGoogle.SetActive(true);
             labelGuest.SetActive(true);
 
-            googleBtn.SetActive(false);
-            guestBtn.SetActive(false);
+            googleBtn.gameObject.SetActive(false);
+            guestBtn.gameObject.SetActive(false);
 
             retryPanel.SetActive(false);
             labelRetry.SetActive(true);
             spinRetry.SetActive(false);
+
+            googleBtn.Initialise();
 
             try
             {
@@ -130,16 +154,22 @@ namespace BattleCruisers.Scenes
 
                 // initiailise google login 
                 InitializePlayGamesLogin();
-                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
+
+                if (HasConnection())
+                {
+                    Debug.Log("===> called me!!!");
+                    List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
+                }
+
             }
             catch (ConsentCheckException e)
             {
-                //do nothing
+                // do nothing
                 Debug.Log(e.Message);
-                messageHandler.ShowMessage("Please check Internet connection!");
+                // messageHandler.ShowMessage("Please check Internet connection!");
             }
 
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            IDataProvider dataProvider = applicationModel.DataProvider;
             MusicPlayer = CreateMusicPlayer(dataProvider);
 
             DontDestroyOnLoad(gameObject);
@@ -162,21 +192,22 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            // should be enabled after completion initialization
-            googleBtn.SetActive(true);
-            guestBtn.SetActive(true);
 
             // add event handlers to authentication
             AuthenticationService.Instance.SignedIn += SignedIn;
             AuthenticationService.Instance.SignedOut += SignedOut;
             AuthenticationService.Instance.Expired += Expired;
             AuthenticationService.Instance.SignInFailed += SignFailed;
+
+            // should be enabled after completion initialization
+            googleBtn.gameObject.SetActive(true);
+            guestBtn.gameObject.SetActive(true);
         }
 
         void SetInteractable(bool interactable)
         {
-            googleBtn.GetComponent<Button>().interactable = interactable;
-            guestBtn.GetComponent<Button>().interactable = interactable;
+            googleBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
+            guestBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
         }
 
         void SetSpin(GameObject obj, bool spinable)
@@ -219,27 +250,36 @@ namespace BattleCruisers.Scenes
 
         public async void AnonymousLogin()
         {
-            if (!AuthenticationService.Instance.IsSignedIn)
+            if (HasConnection())
             {
-                SetInteractable(false);
-                SetSpin(spinGuest, true);
-                labelGuest.SetActive(false);
-                loginType = LoginType.Anonymous;
-                try
+                if (!AuthenticationService.Instance.IsSignedIn)
                 {
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    SetInteractable(false);
+                    SetSpin(spinGuest, true);
+                    labelGuest.SetActive(false);
+                    loginType = LoginType.Anonymous;
+                    try
+                    {
+                        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log(ex.Message);
+                        //    messageHandler.ShowMessage("Please check Internet connection!");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Debug.Log(ex.Message);
-                    messageHandler.ShowMessage("Please check Internet connection!");
-                }                
+            }
+            else
+            {
+                // play without Internet
+                landingCanvas.SetActive(false);
+                loginPanel.SetActive(false);
+                GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
 
         private void SignFailed(RequestFailedException exception)
         {
-            Debug.Log("===> " + exception.Message);
             SetInteractable(true);
             SetSpin(spinGuest, false);
             SetSpin(spinGoogle, false);
@@ -400,6 +440,9 @@ namespace BattleCruisers.Scenes
             else
             {
                 Debug.Log("Unsuccessful login");
+                SetInteractable(true);
+                SetSpin(spinGoogle, false);
+                labelGoogle.SetActive(true);
             }
         }
 
@@ -407,7 +450,7 @@ namespace BattleCruisers.Scenes
         {
             if (loginType == LoginType.Anonymous)
                 AnonymousLogin();
-            if(loginType == LoginType.Google)
+            if (loginType == LoginType.Google)
                 GoogleLogin();
         }
 
@@ -440,6 +483,22 @@ namespace BattleCruisers.Scenes
             AuthenticationService.Instance.SignedOut -= SignedOut;
             AuthenticationService.Instance.SignInFailed -= SignFailed;
             AuthenticationService.Instance.Expired -= Expired;
+        }
+
+        public static bool HasConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (var stream = new WebClient().OpenRead("https://unity.com"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public enum LoginType { Google, Apple, Anonymous, None }
