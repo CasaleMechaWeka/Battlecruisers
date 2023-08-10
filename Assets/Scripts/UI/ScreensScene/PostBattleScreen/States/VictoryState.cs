@@ -67,12 +67,29 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 }
                 else
                 {
-                    _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
-                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer);
+                    if (appModel.Mode == GameMode.CoinBattle)
+                    {
+                        postBattleScreen.victoryNoLootMessage.gameObject.SetActive(true);
+                        postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
+                        musicPlayer.PlayVictoryMusic();
+                    }
+                    else
+                    {
+                        postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+                        postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer);
+                    }
+
                 }
             }
-
-            SaveVictory(battleResult);
+            if (appModel.Mode == GameMode.CoinBattle)
+            {
+                //Reset gamemode to Campaign
+                appModel.Mode = GameMode.Campaign;
+            }
+            else
+            {
+                SaveVictory(battleResult);
+            }    
         }
 
         private void SaveVictory(BattleResult battleResult)

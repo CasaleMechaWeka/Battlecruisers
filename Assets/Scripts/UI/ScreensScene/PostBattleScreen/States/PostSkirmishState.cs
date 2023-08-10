@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         {
             Assert.IsNotNull(soundPlayer);
             Assert.IsNotNull(appModel.DataProvider.GameModel.Skirmish);
-            Assert.AreEqual(GameMode.Skirmish, appModel.Mode);
+            //Assert.AreEqual(GameMode.Skirmish, appModel.Mode);
 
             _userWonSkirmish = appModel.UserWonSkirmish;
 

@@ -102,6 +102,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             IPostBattleState postBattleState = null;
+            Debug.Log(desiredBehaviour);
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || _applicationModel.IsTutorial)
             {
@@ -183,7 +184,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 ITrashTalkData levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
                 levelName.Initialise(BattleResult.LevelNum, levelTrashTalkData);
                 unlockedItemSection.Initialise();
-
+                Debug.Log(desiredBehaviour);
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
                     || !BattleResult.WasVictory)
                 {

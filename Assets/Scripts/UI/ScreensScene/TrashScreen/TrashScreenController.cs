@@ -102,9 +102,9 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public override void Cancel()
         {
-            if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle)
+            if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle || _appModel.Mode == GameMode.CoinBattle)
             {
-                _screensSceneGod.GoToHomeScreen();
+                _screensSceneGod.GotoHubScreen();
             }
             else
             {
