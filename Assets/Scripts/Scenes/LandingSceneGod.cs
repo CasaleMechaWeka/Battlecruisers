@@ -7,8 +7,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +25,8 @@ using BattleCruisers.UI;
 using UnityEngine.Networking;
 using Unity.Services.Core;
 using System.Net;
+using BattleCruisers.Utils.Network;
+using BattleCruisers.Utils.Properties;
 
 
 #if UNITY_EDITOR
@@ -72,7 +72,25 @@ namespace BattleCruisers.Scenes
 
         public ErrorMessageHandler messageHandler;
 
+        private INetworkState _currentInternetConnectivity;
+        private INetworkState CurrentInternetConnectivity
+        {
+            get => _currentInternetConnectivity;
+            set
+            {
+                Assert.IsNotNull(value);
+                _currentInternetConnectivity = value;
+                _internetConnectivity.Value = _currentInternetConnectivity.IsConnected;
+            }
+        }
 
+
+
+        private SettableBroadcastingProperty<bool> _internetConnectivity;
+        public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
+
+        private INetworkState ConnectedState = new InternetConnectivity(true);
+        private INetworkState DisconnectedState = new InternetConnectivity(false);
 
         async void Start()
         {
@@ -81,6 +99,14 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
             Helper.AssertIsNotNull(messageHandler);
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
+
+            bool startingState = await HasConnection();
+            _currentInternetConnectivity = new InternetConnectivity(startingState);    // starting state;
+            _internetConnectivity = new SettableBroadcastingProperty<bool>(_currentInternetConnectivity.IsConnected);
+            InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
+            //cheat code
+            InternetConnectivity.ValueChanged += TestEventHandler;
 
             if (Instance == null)
                 Instance = this;
@@ -152,10 +178,8 @@ namespace BattleCruisers.Scenes
                 }
 #endif
 
-                // initiailise google login 
-                InitializePlayGamesLogin();
 
-                if (HasConnection())
+                if (InternetConnectivity.Value)
                 {
                     List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
                 }
@@ -243,13 +267,11 @@ namespace BattleCruisers.Scenes
         public void GoogleLogin()
         {
             Debug.Log("===> trying to login with Google");
-            loginType = LoginType.Google;
-            LoginGoogle();
         }
 
         public async void AnonymousLogin()
         {
-            if (HasConnection())
+            if (InternetConnectivity.Value)
             {
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
@@ -401,49 +423,40 @@ namespace BattleCruisers.Scenes
         }
 
 
-        // commented by Sava, not sure why this code block here
 
-        /*        void update()
-                {
-                    transform.localPosition = Camera.main.gameObject.transform.localPosition;
-                    Debug.Log("you are calling me here!!!");
-                }*/
-
-
-        // Google Auth
-        void InitializePlayGamesLogin()
+        void Update()
         {
-            var config = new PlayGamesClientConfiguration.Builder()
-                .RequestIdToken()
-                .Build();
-            PlayGamesPlatform.InitializeInstance(config);
-            PlayGamesPlatform.DebugLogEnabled = true;
-            PlayGamesPlatform.Activate();
-        }
-
-        void LoginGoogle()
-        {
-            SetInteractable(false);
-            SetSpin(spinGoogle, true);
-            labelGoogle.SetActive(false);
-            Social.localUser.Authenticate(OnGoogleLogin);
-        }
-
-        async void OnGoogleLogin(bool success)
-        {
-            if (success)
+            if (!isUpdatingInternetConnectivity)
             {
-                Debug.Log("Login with Google Done, IdToken: " + ((PlayGamesLocalUser)Social.localUser).GetIdToken());
-                await SignInWithGoogleAsync(((PlayGamesLocalUser)Social.localUser).GetIdToken());
+                isUpdatingInternetConnectivity = true;
+                iUpdateInternetConnectivity();
             }
+        }
+        bool isUpdatingInternetConnectivity = false;
+        async void iUpdateInternetConnectivity()
+        {
+            await Task.Delay(5000);
+            bool currentState = await HasConnection();
+            Debug.Log("======> current connection state : " + currentState);
+            if (currentState)
+                _currentInternetConnectivity = ConnectedState;
             else
-            {
-                Debug.Log("Unsuccessful login");
-                SetInteractable(true);
-                SetSpin(spinGoogle, false);
-                labelGoogle.SetActive(true);
-            }
+                _currentInternetConnectivity = DisconnectedState;
+
+            isUpdatingInternetConnectivity = false;       
         }
+
+        void TestEventHandler(object sender, EventArgs args)
+        {
+            Debug.Log("======>" + InternetConnectivity.Value);
+        }
+
+
+
+
+
+
+
 
         public void OnRetry()
         {
@@ -482,20 +495,23 @@ namespace BattleCruisers.Scenes
             AuthenticationService.Instance.SignedOut -= SignedOut;
             AuthenticationService.Instance.SignInFailed -= SignFailed;
             AuthenticationService.Instance.Expired -= Expired;
+
+            InternetConnectivity.ValueChanged -= TestEventHandler;
         }
 
-        public static bool HasConnection()
+        public static async Task<bool> HasConnection()
         {
             try
             {
-                using (var client = new WebClient())
-                using (var stream = new WebClient().OpenRead("https://unity.com"))
+                using (var client = new WebClient { Proxy = null })
+                using (await client.OpenReadTaskAsync("http://www.google.com"))
                 {
                     return true;
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Debug.Log("===> " + ex.Message);
                 return false;
             }
         }
