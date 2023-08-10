@@ -13,6 +13,10 @@ namespace BattleCruisers.Targets.TargetDetectors
 		public event EventHandler<TargetEventArgs> TargetEntered;
 		public event EventHandler<TargetEventArgs> TargetExited;
 
+        //private float lastTargetEnteredTime;
+        //private float targetEnteredThrottleTime = 0.3f; // Adjust this value as needed
+        //private float lastTargetExitedTime;
+        //private float targetExitedThrottleTime = 0.3f; // Adjust this value as needed
         protected virtual void Start()
         {
             Logging.Verbose(Tags.TARGET_DETECTOR, $"id: {gameObject.GetInstanceID()}");
@@ -52,11 +56,25 @@ namespace BattleCruisers.Targets.TargetDetectors
 
         public void InvokeTargetEnteredEvent(ITarget target)
         {
+            //float currentTime = Time.time;
+
+            //if (currentTime - lastTargetEnteredTime >= targetEnteredThrottleTime)
+            //{
+            //    TargetEntered?.Invoke(this, new TargetEventArgs(target));
+            //    lastTargetEnteredTime = currentTime;
+            //}
             TargetEntered?.Invoke(this, new TargetEventArgs(target));
         }
 
         public void InvokeTargetExitedEvent(ITarget target)
         {
+            //float currentTime = Time.time;
+
+            //if (currentTime - lastTargetExitedTime >= targetExitedThrottleTime)
+            //{
+            //    TargetExited?.Invoke(this, new TargetEventArgs(target));
+            //    lastTargetExitedTime = currentTime;
+            //}
             TargetExited?.Invoke(this, new TargetEventArgs(target));
         }
     }

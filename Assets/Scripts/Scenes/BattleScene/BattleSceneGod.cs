@@ -487,5 +487,17 @@ namespace BattleCruisers.Scenes.BattleScene
                 Debug.Log("Damage in credits: " + kvp.Value.GetTotalDamageInCredits());
             }
         }
+
+        public void ToggleEnemyGodMode(bool isGodMode)
+        {
+            if(isGodMode) 
+            {
+                aiCruiser.MakeInvincible();
+            }
+            else
+            {
+                aiCruiser.MakeDamagable();
+            }
+        }
     }
 }
