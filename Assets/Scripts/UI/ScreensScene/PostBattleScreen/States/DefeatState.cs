@@ -21,7 +21,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.title.text = _screensSceneStrings.GetString(LOSS_TITLE_KEY);
             postBattleScreen.defeatMessage.SetActive(true);
             musicPlayer.PlayDefeatMusic();
-            postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+            if(appModel.Mode == GameMode.CoinBattle)
+            {
+                postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
+            }
+            else
+            {
+                postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+            }
+            
+            //Reset gamemode to Campaign
+            appModel.Mode = GameMode.Campaign;
         }
 
         public override bool ShowVictoryBackground => false;

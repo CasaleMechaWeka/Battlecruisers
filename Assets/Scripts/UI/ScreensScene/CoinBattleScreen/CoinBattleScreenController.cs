@@ -23,25 +23,25 @@ namespace BattleCruisers.UI.ScreensScene.CoinBattleScreen
         private IRandomGenerator _random;
         private ICoinBattleModel CoinBattle => _applicationModel.DataProvider.GameModel.CoinBattle;
 
-        public CanvasGroupButton battleButton, homeButton;
+        //public CanvasGroupButton battleButton; //homeButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             IApplicationModel applicationModel,
             ISingleSoundPlayer soundPlayer,
-            ILocTable commonStrings,
-            ILocTable screensSceneStrings,
+            //ILocTable commonStrings,
+            //ILocTable screensSceneStrings,
             IPrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(battleButton);
-            Helper.AssertIsNotNull(applicationModel, soundPlayer, commonStrings, screensSceneStrings, prefabFactory);
+            //Helper.AssertIsNotNull(battleButton);
+            Helper.AssertIsNotNull(applicationModel, soundPlayer, prefabFactory);
 
             _applicationModel = applicationModel;
 
-            battleButton.Initialise(soundPlayer, BattleButtonClicked, this);
-            homeButton.Initialise(soundPlayer, Home, this);
+            //battleButton.Initialise(soundPlayer, BattleButtonClicked, this);
+            //homeButton.Initialise(soundPlayer, Home, this);
         }
 
         public void BattleButtonClicked()
