@@ -157,7 +157,6 @@ namespace BattleCruisers.Scenes
 
                 if (HasConnection())
                 {
-                    Debug.Log("===> called me!!!");
                     List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
                 }
 
