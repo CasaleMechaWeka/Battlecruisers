@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Utils.Factories;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,6 +14,9 @@ namespace BattleCruisers.Utils.Debugging
         private ICruiser _playerCruiser, _aiCruiser;
         private float _lastGameSpeed;
 
+        [SerializeField] private BattleSceneGod _battleSceneGod;
+
+        public static bool isEnemyGodMode {  get; private set; }
         public int droneBoostNumber;
         public Canvas hudCanvas;
 
@@ -105,6 +109,12 @@ namespace BattleCruisers.Utils.Debugging
         public void ToggleCursor()
         {
             Cursor.visible = !Cursor.visible;
+        }
+
+        public void ToggleEnemyGodMode()
+        {
+            isEnemyGodMode = !isEnemyGodMode;
+            _battleSceneGod.ToggleEnemyGodMode(isEnemyGodMode);
         }
     }
 }

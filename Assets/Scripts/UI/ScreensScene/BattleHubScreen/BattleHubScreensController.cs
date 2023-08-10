@@ -15,6 +15,7 @@ using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Ping = UnityEngine.Ping;
+using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -25,6 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ScreenController _currentScreen;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
+        private IApplicationModel _applicationModel;
 
 
         public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton;
@@ -36,6 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
         public ArenaSelectPanelScreenController arenaSelectPanel;
+        public CoinBattleScreenController coinBattleController;
 
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
 
@@ -44,6 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
             IDataProvider dataProvider,
+            IApplicationModel applicationModel,
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
@@ -55,6 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _nextLevelHelper = nextLevelHelper;
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
+            _applicationModel = applicationModel;
 
             homeButton.Initialise(_soundPlayer, GoHome);
             battleHubButton.Initialise(_soundPlayer, OpenBattleHub);
@@ -72,6 +77,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+
+            coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
+
         }
 
 
@@ -149,15 +157,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             // should be enabled in Production
 
-            /*            if (Application.internetReachability == NetworkReachability.NotReachable)
+                        if (Application.internetReachability == NetworkReachability.NotReachable)
                         {
-                            _screensSceneGod.LoadBattle1v1Mode();
+                            coinBattleController.BattleButtonClicked();
                         }
                         else
-                        {*/
-            GoToScreen(arenaSelectPanel);
-            // _screensSceneGod.LoadMultiplayScene();
-            //  }
+                        {
+                            GoToScreen(arenaSelectPanel);
+                        // _screensSceneGod.LoadMultiplayScene();
+                        }
 
         }
 

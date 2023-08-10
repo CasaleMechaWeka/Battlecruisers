@@ -4,11 +4,13 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Data
 {
     public interface IDataProvider
     {
+        // Local Saving:
         IList<ILevel> Levels { get; }
         IGameModel GameModel { get; }
         ILockedInformation LockedInfo { get; }
@@ -24,5 +26,9 @@ namespace BattleCruisers.Data
         /// Designed for user playtests, so users can start with a clean slate.
         /// </summary>
         void Reset();
+
+        // Cloud Saving:
+        Task CloudSave();
+        Task CloudLoad();
     }
 }

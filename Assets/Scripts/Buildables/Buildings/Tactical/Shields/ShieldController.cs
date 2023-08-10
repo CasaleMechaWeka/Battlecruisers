@@ -113,14 +113,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		}
 
 		protected override void OnTakeDamage()
-        {
-            
+        {            
             _takeDamageSoundDebouncer.Debounce(PlayDamagedSound);
         }
 
 		private void UpdateBuildingImmunity(bool boo)
 		{
-			Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5);
+			Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5.0f);
 
 			foreach(Collider2D c2d in colliders)
 			{

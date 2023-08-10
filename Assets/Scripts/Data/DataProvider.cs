@@ -7,12 +7,14 @@ using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine.Assertions;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Data
 {
     public class DataProvider : IDataProvider
     {
-        private readonly ISerializer _serializer;
+        private readonly ISerializer _serializer;       // functions for local read/write on disk and JSON serialization/deserialization
+        private readonly ISaveClient _cloudSaveService; // cloud save serialized JSON
 
         public IStaticData StaticData { get; }
         public IList<ILevel> Levels => StaticData.Levels;
@@ -71,6 +73,16 @@ namespace BattleCruisers.Data
         public void Reset()
         {
             _serializer.DeleteSavedGame();
+        }
+
+        public async Task CloudSave()
+        {
+            await _serializer.CloudSave(_gameModel);
+        }
+
+        public async Task CloudLoad()
+        {
+            await _serializer.CloudLoad();
         }
     }
 }

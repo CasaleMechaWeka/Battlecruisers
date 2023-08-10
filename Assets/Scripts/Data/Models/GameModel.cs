@@ -203,14 +203,6 @@ namespace BattleCruisers.Data.Models
             set => _lifetimeDestructionScore = value;
         }
 
-        [SerializeField]
-        private int _xpToNextLevel;
-        public int XPToNextLevel
-        {
-            get => _xpToNextLevel;
-            set => _xpToNextLevel = value;
-        }
-
         private bool _PremiumEdition;
         public bool PremiumEdition
         {
