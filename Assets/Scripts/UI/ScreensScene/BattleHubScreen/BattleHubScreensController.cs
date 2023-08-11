@@ -152,21 +152,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _screensSceneGod.GoToSkirmishScreen();
         }
 
-        public void GotoBattleMode()
+        public async void GotoBattleMode()
         {
-
-            // should be enabled in Production
-
-                        if (Application.internetReachability == NetworkReachability.NotReachable)
-                        {
-                     //       coinBattleController.BattleButtonClicked();
-                        }
-                        else
-                        {
-                            GoToScreen(arenaSelectPanel);
-                        // _screensSceneGod.LoadMultiplayScene();
-                        }
-
+            bool InternetReachable = await LandingSceneGod.CheckForInternetConnection();
+            if (InternetReachable)
+            {
+           //     coinBattleController.BattleButtonClicked();
+            }
+            else
+            {
+                GoToScreen(arenaSelectPanel);
+            }
         }
 
 

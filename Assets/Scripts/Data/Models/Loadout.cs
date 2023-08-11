@@ -7,6 +7,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -50,6 +51,27 @@ namespace BattleCruisers.Data.Models
             set => _currentCaptain = value;
         }
 
+        private IList<CaptainExoKey> _captainExos;
+        public IList<CaptainExoKey> CaptainExos
+        {
+            get => _captainExos;
+            set => _captainExos = value;
+        }
+
+        private List<int> _heckles;
+        public List<int> Heckles
+        {
+            get => _heckles;
+            set => _heckles = value;
+        }
+
+        private List<int> _currentHeckles = new List<int>{ 0, 1, 2 };
+        public List<int> CurrentHeckles
+        {
+            get => _currentHeckles;
+            set => _currentHeckles = value;
+        }
+
         [SerializeField]
         private List<string> _ownedExosKeys = new List<string>();
         public IReadOnlyList<string> OwnedExosKeys => _ownedExosKeys;
@@ -69,6 +91,8 @@ namespace BattleCruisers.Data.Models
             _builds = buildLimt;
             _unit = unitLimit;
             _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
+            _captainExos = new List<CaptainExoKey>();
+            _captainExos.Add(_currentCaptain);            
         }
 
         public bool Is_buildsNull()
@@ -204,14 +228,28 @@ namespace BattleCruisers.Data.Models
             Assert.IsTrue(removedSuccessfully);
             _unit[category] = unitList;
         }
-
+        public void AddCaptain(CaptainExoKey key)
+        {
+            _captainExos.Add(key);
+        }
+        public void RemoveCaptain(CaptainExoKey key)
+        {
+            _captainExos.Remove(key);
+        }
+        public void AddHeckle(int index)
+        {
+            _heckles.Add(index);
+        }
+        public void RemoveHeckle(int index)
+        {
+            _heckles.Remove(index);
+        }
         public List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory)
         {
             List<BuildingKey> builds = _builds[buildingCategory].ToList();
             Assert.IsNotNull(builds);
             return builds;
         }
-
         public List<UnitKey> GetUnitKeys(UnitCategory unitCategory)
         {
             List<UnitKey> unitList = _unit[unitCategory];
