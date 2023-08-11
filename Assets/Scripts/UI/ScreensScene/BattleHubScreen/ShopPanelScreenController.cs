@@ -23,6 +23,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public CaptainsContainer captainsContainer;
         private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
+        public Transform captainCamContainer;
+
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -62,14 +64,43 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public async void InitiaiseShop()
         {
+            CaptainItemController[] items = itemContainer.gameObject.GetComponentsInChildren<CaptainItemController>();
+            foreach (CaptainItemController item in items)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+            captainsContainer.btnBuy.SetActive(false);
+            captainsContainer.ownFeedback.SetActive(false);
             await Task.Delay(100);
+            byte ii = 0;
+            captainsContainer.visualOfCaptains.Clear();
             foreach (int index in _dataProvider.GameModel.CaptainExoList)
             {
                 GameObject captainItem = Instantiate(itemPrefab, itemContainer) as GameObject;
-                CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[index]));
-                captainItem.GetComponent<CaptainItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, _dataProvider.GameModel.Captains[index], captainsContainer);
-            }
+                CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[index]), captainCamContainer);
+                captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
+                captainExo.gameObject.SetActive(false);
+                captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
+                captainItem.GetComponent<CaptainItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, _dataProvider.GameModel.Captains[index], captainsContainer, ii);
+                if (ii == 0)  // the first item should be clicked :)
+                {
+                    captainItem.GetComponent<CaptainItemController>()._clickedFeedback.SetActive(true);
+                    captainsContainer.currentItem = captainItem.GetComponent<CaptainItemController>();
+                    captainExo.gameObject.SetActive(true);
+                    if (_dataProvider.GameModel.Captains[index].IsOwned)
 
+                    {
+                        captainsContainer.btnBuy.SetActive(false);
+                        captainsContainer.ownFeedback.SetActive(true);
+                    }
+                    else
+                    {
+                        captainsContainer.btnBuy.SetActive(true);
+                        captainsContainer.ownFeedback.SetActive(false);
+                    }
+                }
+                ii++;
+            }
         }
     }
 }

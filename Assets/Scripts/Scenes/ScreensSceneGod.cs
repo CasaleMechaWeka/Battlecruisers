@@ -90,6 +90,9 @@ namespace BattleCruisers.Scenes
         private CaptainSelectorPanel captainSelectorPanel;
 
         public GameObject characterOfShop, characterOfBlackmarket;
+        public GameObject characterOfCharlie;
+        public GameObject cameraOfCharacter;
+        public GameObject cameraOfCaptains;
         public Transform ContainerCaptain;
 
         async void Start()
@@ -160,6 +163,15 @@ namespace BattleCruisers.Scenes
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
 
+            characterOfShop.SetActive(false);
+            characterOfBlackmarket.SetActive(false);
+
+            // load charlie for Screenscene UI animation effect
+            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            characterOfCharlie = charlie.gameObject;
+            cameraOfCharacter.SetActive(true);
+            cameraOfCaptains.SetActive(false);
             if (_applicationModel.ShowPostBattleScreen)
             {
                 _applicationModel.ShowPostBattleScreen = false;
@@ -220,12 +232,7 @@ namespace BattleCruisers.Scenes
                 _isPlaying = true;
             }
 
-            characterOfShop.SetActive(false);
-            characterOfBlackmarket.SetActive(false);
 
-            // load charlie for Screenscene UI animation effect
-            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
-            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
@@ -243,6 +250,11 @@ namespace BattleCruisers.Scenes
 
         public void GoToHomeScreen()
         {
+            characterOfBlackmarket.SetActive(false);
+            characterOfShop.SetActive(false);            
+            characterOfCharlie.SetActive(true);
+            cameraOfCharacter.SetActive(true);
+            cameraOfCaptains.SetActive(false);
             GoToScreen(homeScreen);
             AdvertisingBanner.startAdvert();
         }
@@ -257,6 +269,9 @@ namespace BattleCruisers.Scenes
         {
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
+            characterOfCharlie.SetActive(false);
+            cameraOfCharacter.SetActive(false);
+            cameraOfCaptains.SetActive(false);
             GoToScreen(hubScreen);
         }
 
@@ -264,6 +279,9 @@ namespace BattleCruisers.Scenes
         {
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(true);
+            characterOfCharlie.SetActive(false);
+            cameraOfCharacter.SetActive(true);
+            cameraOfCaptains.SetActive(true);
             GoToScreen(shopPanelScreen);
             shopPanelScreen.InitiaiseShop();
         }
@@ -272,6 +290,9 @@ namespace BattleCruisers.Scenes
         {
             characterOfBlackmarket.SetActive(true);
             characterOfShop.SetActive(false);
+            characterOfCharlie.SetActive(false);
+            cameraOfCharacter.SetActive(true);
+            cameraOfCaptains.SetActive(true);
             GoToScreen(blackMarketScreen);
         }
 
@@ -312,6 +333,11 @@ namespace BattleCruisers.Scenes
 
         public void GoToLoadoutScreen()
         {
+            characterOfBlackmarket.SetActive(true);
+            characterOfShop.SetActive(false);
+            characterOfCharlie.SetActive(false);
+            cameraOfCharacter.SetActive(false);
+            cameraOfCaptains.SetActive(false);
             GoToScreen(loadoutScreen);
         }
 
