@@ -10,6 +10,9 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Projectiles;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -54,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;
-
+            SetMissileVisibleClientRpc(true);
             activationArgs.Target.Destroyed += Target_Destroyed;
         }
 
@@ -78,8 +81,111 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override void DestroyProjectile()
         {
             missile.enabled = false;
+            SetMissileVisibleClientRpc(false);
             Target.Destroyed -= Target_Destroyed;
             base.DestroyProjectile();
+        }
+
+
+        // Sava added these fields and methods
+
+        protected override float timeToActiveTrail => 0.1f;
+        protected override bool needToTeleport => true;
+        private PvPSoundType _type;
+        private string _name;
+        private Vector3 _pos;
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+        }
+        public override void OnNetworkDespawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
+        }
+
+        // Set Position
+        protected override void OnSetPosition_Visible(Vector3 position, bool visible)
+        {
+            OnSetPosition_VisibleClientRpc(position, visible);
+        }
+
+        // PlayExplosionSound
+        protected override void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
+        {
+            OnPlayExplosionSoundClientRpc(type, name, position);
+        }
+
+        private async void PlayExplosionSound()
+        {
+            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(_type, _name), _pos);
+        }
+
+        // should be called by client
+
+        private void Awake()
+        {
+            InitialiseTril();
+        }
+
+        protected override void HideEffectsOfClient()
+        {
+            if (IsClient)
+                base.HideEffectsOfClient();
+            else
+                HideEffectsOfClientRpc();
+        }
+
+        protected override void ShowAllEffectsOfClient()
+        {
+            if (IsClient)
+                base.ShowAllEffectsOfClient();
+            else
+                ShowAllEffectsOfClientRpc();
+        }
+
+        //----------------------------- Rpcs -----------------------------
+
+        [ClientRpc]
+        private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
+        {
+            if (!visible)
+                gameObject.SetActive(false);
+            else
+                Invoke("iSetActive", timeToActiveTrail);
+        }
+        private void iSetActive()
+        {
+            gameObject.SetActive(true);
+        }
+        [ClientRpc]
+        private void OnPlayExplosionSoundClientRpc(PvPSoundType type, string name, Vector3 position)
+        {
+            _type = type;
+            _name = name;
+            _pos = position;
+            Invoke("PlayExplosionSound", 0.05f);
+        }
+
+        // missile
+        [ClientRpc]
+        private void SetMissileVisibleClientRpc(bool visible)
+        {
+            missile.enabled = visible;
+        }
+
+        [ClientRpc]
+        protected void HideEffectsOfClientRpc()
+        {
+            HideEffectsOfClient();
+        }
+
+        [ClientRpc]
+        protected void ShowAllEffectsOfClientRpc()
+        {
+            ShowAllEffectsOfClient();
         }
     }
 }

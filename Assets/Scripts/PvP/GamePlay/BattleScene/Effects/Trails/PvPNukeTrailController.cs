@@ -43,8 +43,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             {
                 effect.Stop();
             }
-
             constantGlow.enabled = false;
+        }
+
+        public void SetVisibleTrail(bool isVisible)
+        {
+            smoke.enabled = isVisible;
         }
     }
 }

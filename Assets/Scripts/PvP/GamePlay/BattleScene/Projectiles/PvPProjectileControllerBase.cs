@@ -17,6 +17,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEditor;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using Unity.Netcode.Components;
+using System.Collections;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -35,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected bool _isActiveAndAlive;
         protected IPvPFactoryProvider _factoryProvider;
+        protected virtual bool needToTeleport { get => false; }
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -89,9 +92,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsNotNull(explosionPoolChooser);
             _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
 
+
             _isActiveAndAlive = false;
-            gameObject.SetActive(false);
             OnSetPosition_Visible(Position, false);
+            gameObject.SetActive(false);
+
         }
 
         // should be called by client
@@ -110,8 +115,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
+            if (needToTeleport)
+                GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
             OnSetPosition_Visible(Position, true);
-
             _targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
             _impactSound = activationArgs.ImpactSound;
@@ -119,15 +125,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _rigidBody.velocity = activationArgs.InitialVelocityInMPerS;
             _rigidBody.gravityScale = activationArgs.ProjectileStats.GravityScale;
             _targetToDamage = null;
-            OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale);
 
             AdjustGameObjectDirection();
 
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
+            OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale, _isActiveAndAlive);
         }
-
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
         {
         }
@@ -176,9 +181,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Logging.LogMethod(Tags.SHELLS);
 
             IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
-
             if (target != null
                 && !target.IsDestroyed
+                && _targetFilter != null
                 && _targetFilter.IsMatch(target)
                 && _targetToDamage == null)
             {
@@ -222,10 +227,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 return;
             }
-
             MovementController = null;
-            gameObject.SetActive(false);
             OnSetPosition_Visible(Position, false);
+            gameObject.SetActive(false);
             InvokeDestroyed();
             InvokeDeactivated();
         }
@@ -245,7 +249,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         }
 
-        protected virtual void OnActiveClient(Vector3 velocity, float gravityScale)
+        protected virtual void OnActiveClient(Vector3 velocity, float gravityScale, bool isAlive)
         {
         }
 

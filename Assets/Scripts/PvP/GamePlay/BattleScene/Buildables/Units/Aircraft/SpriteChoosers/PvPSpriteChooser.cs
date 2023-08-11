@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _assigner = assignerFactory.CreateAssigner(sprites.Count);
         }
 
-        public IPvPSpriteWrapper ChooseSprite(Vector2 velocity)
+        public (IPvPSpriteWrapper, int) ChooseSprite(Vector2 velocity)
         {
             float magnitude = velocity.magnitude;
 
@@ -40,7 +40,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             int spriteIndex = _assigner.Assign(proportion);
 
             Assert.IsTrue(spriteIndex < _sprites.Count && spriteIndex >= 0);
-            return _sprites[spriteIndex];
+            return (_sprites[spriteIndex], spriteIndex);
+        }
+
+        public IPvPSpriteWrapper ChooseSprite(int index)
+        {
+            Assert.IsTrue(index < _sprites.Count && index >= 0);
+            return _sprites[index];
         }
     }
 }

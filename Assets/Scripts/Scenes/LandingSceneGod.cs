@@ -1,5 +1,4 @@
-﻿
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
@@ -7,27 +6,36 @@ using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 using Unity.Services.Analytics;
 using Unity.Services.Authentication;
-using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using BattleCruisers.Utils.Localisation;
+using BattleCruisers.UI;
+using Unity.Services.Core;
+using System.Net;
+using BattleCruisers.Utils.Network;
+using BattleCruisers.Utils.Properties;
+using System.IO;
+
+#if UNITY_EDITOR
+using System.Security.Cryptography;
+#endif
 
 namespace BattleCruisers.Scenes
 {
 
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
-        public Text SubTitle;
-        private bool _isInitialised = false;
         private string _lastSceneLoaded;
         private IHintProvider _hintProvider;
 
@@ -41,81 +49,281 @@ namespace BattleCruisers.Scenes
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
-        async void Start()
+        public GameObject landingCanvas;
+
+        public GameObject loginPanel, retryPanel;
+
+        public GameObject logos;
+        public CanvasGroupButton googleBtn, guestBtn;
+        public GameObject spinGoogle, spinGuest;
+        public GameObject labelGoogle, labelGuest;
+
+        public GameObject quitBtn, retryBtn;
+        public GameObject spinRetry;
+        public GameObject labelRetry;
+
+        public const string AuthProfileCommandLineArg = "-AuthProfile";
+        public ILocTable commonStrings;
+
+        public static LandingSceneGod Instance;
+        public LoginType loginType = LoginType.None;
+
+        public ErrorMessageHandler messageHandler;
+
+        private INetworkState _currentInternetConnectivity;
+        private INetworkState CurrentInternetConnectivity
         {
-            try
+            get => _currentInternetConnectivity;
+            set
             {
-                //---> should be enabled in Production
-                var options = new InitializationOptions();
-                options.SetEnvironmentName("production");
-                await UnityServices.InitializeAsync(options);
-                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
-            }
-            catch (ConsentCheckException e)
-            {
-                //do nothing
-                Debug.Log(e.Message);
-            }
-
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
-
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
-
-#if FREE_EDITION || UNITY_EDITOR
-            //if player NOT already paid then use Free title
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
-                subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
-#else
-            //if premium version set here 
-            applicationModel.DataProvider.GameModel.PremiumEdition = true;
-            applicationModel.DataProvider.SaveGame();
-#endif
-
-            SubTitle.text = subTitle;
-
-            Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
-
-            if (!_isInitialised)
-            {
-                IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-                MusicPlayer = CreateMusicPlayer(dataProvider);
-
-                if (!dataProvider.GameModel.Settings.InitialisedGraphics)
-                {
-                    dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
-                }
-
-                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                // Persist this game object across scenes
-                DontDestroyOnLoad(gameObject);
-                _isInitialised = true;
-
-                SceneNavigator = this;
-
-                HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
-                _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-
-                //Debug.Log(Screen.currentResolution);
-                // Game starts with the screens scene
-                if (testCreditsScene)
-                {
-                    GoToScene(SceneNames.CREDITS_SCENE, true);
-                }
-                else if (testCutScene)
-                {
-                    GoToScene(SceneNames.CUTSCENE_SCENE, true);
-                }
-                else
-                {
-                    GoToScene(SceneNames.SCREENS_SCENE, true);
-                }
+                Assert.IsNotNull(value);
+                _currentInternetConnectivity = value;
+                _internetConnectivity.Value = _currentInternetConnectivity.IsConnected;
             }
         }
 
 
+
+        private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
+        public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
+
+        private INetworkState ConnectedState = new InternetConnectivity(true);
+        private INetworkState DisconnectedState = new InternetConnectivity(false);
+
+        async void Start()
+        {
+            Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
+            Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
+            Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
+            Helper.AssertIsNotNull(messageHandler);
+
+            landingCanvas.SetActive(true);
+            loginPanel.SetActive(true);
+
+            spinGuest.SetActive(false);
+            spinGoogle.SetActive(false);
+
+            labelGoogle.SetActive(true);
+            labelGuest.SetActive(true);
+
+            googleBtn.gameObject.SetActive(false);
+            guestBtn.gameObject.SetActive(false);
+
+            retryPanel.SetActive(false);
+            labelRetry.SetActive(true);
+            spinRetry.SetActive(false);
+
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
+            bool startingState = await CheckForInternetConnection();
+
+            if (startingState)
+                CurrentInternetConnectivity = ConnectedState;
+            else
+                CurrentInternetConnectivity = DisconnectedState;
+
+            InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
+            //cheat code
+            InternetConnectivity.ValueChanged += TestEventHandler;
+
+            if (Instance == null)
+                Instance = this;
+
+            ISoundFetcher soundFetcher = new SoundFetcher();
+            AudioSource platformAudioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(platformAudioSource);
+            IAudioSource audioSource
+                = new MusicVolumeAudioSource(
+                    new AudioSourceBC(platformAudioSource),
+                    applicationModel.DataProvider.SettingsManager);
+
+            ISingleSoundPlayer soundPlayer = new SingleSoundPlayer(
+                new SoundFetcher(),
+                audioSource
+                );
+
+            googleBtn.Initialise(soundPlayer, GoogleLogin);
+            guestBtn.Initialise(soundPlayer, AnonymousLogin);
+
+            try
+            {
+                var options = new InitializationOptions();
+                options.SetEnvironmentName("production");
+
+                var profile = GetProfile();
+
+                if (profile.Length > 0)
+                {
+                    try
+                    {
+                        /*{LocalProfileTool.LocalProfileSuffix}*/
+                        options.SetProfile($"{profile}");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e.ToString());
+                    }
+                }
+
+                await UnityServices.InitializeAsync(options);
+
+#if UNITY_EDITOR
+                if (ParrelSync.ClonesManager.IsClone())
+                {
+                    // When using a ParrelSync clone, switch to a different authentication profile to force the clone
+                    // to sign in as a different anonymous user account.
+                    string customArgument = ParrelSync.ClonesManager.GetArgument();
+                    AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
+                }
+#endif
+
+
+                if (InternetConnectivity.Value)
+                {
+                    List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
+                }
+
+            }
+            catch (ConsentCheckException e)
+            {
+                // do nothing
+                Debug.Log(e.Message);
+                // messageHandler.ShowMessage("Please check Internet connection!");
+            }
+
+            IDataProvider dataProvider = applicationModel.DataProvider;
+            MusicPlayer = CreateMusicPlayer(dataProvider);
+
+            DontDestroyOnLoad(gameObject);
+            SceneNavigator = this;
+            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+
+            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
+            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+
+
+            //below is code to localise the logo
+            string locName = LocalizationSettings.SelectedLocale.name;
+            Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
+            foreach (Transform t in ts)
+            {
+                if (t.gameObject.name == locName)
+                {
+                    t.gameObject.SetActive(true);
+                    break;
+                }
+            }
+
+
+            // add event handlers to authentication
+            AuthenticationService.Instance.SignedIn += SignedIn;
+            AuthenticationService.Instance.SignedOut += SignedOut;
+            AuthenticationService.Instance.Expired += Expired;
+            AuthenticationService.Instance.SignInFailed += SignFailed;
+
+            // should be enabled after completion initialization
+            googleBtn.gameObject.SetActive(true);
+            guestBtn.gameObject.SetActive(true);
+        }
+
+        void SetInteractable(bool interactable)
+        {
+            googleBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
+            guestBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
+        }
+
+        private string GetProfile()
+        {
+            var arguments = Environment.GetCommandLineArgs();
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                if (arguments[i] == AuthProfileCommandLineArg)
+                {
+                    var profileId = arguments[i + 1];
+                    return profileId;
+                }
+            }
+
+#if UNITY_EDITOR
+
+            // When running in the Editor make a unique ID from the Application.dataPath.
+            // This will work for cloning projects manually, or with Virtual Projects.
+            // Since only a single instance of the Editor can be open for a specific
+            // dataPath, uniqueness is ensured.
+            var hashedBytes = new MD5CryptoServiceProvider()
+                .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
+            Array.Resize(ref hashedBytes, 16);
+            return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
+#else
+            return "";
+#endif
+        }
+
+        public void GoogleLogin()
+        {
+            Debug.Log("===> trying to login with Google");
+        }
+
+        public async void AnonymousLogin()
+        {
+            if (InternetConnectivity.Value)
+            {
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    SetInteractable(false);
+                    spinGuest.SetActive(true);
+                    labelGuest.SetActive(false);
+                    loginType = LoginType.Anonymous;
+                    try
+                    {
+                        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log(ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                // play without Internet
+                loginType = LoginType.NoInternet;
+                loginPanel.SetActive(false);
+                spinGuest.SetActive(false);
+                labelGuest.SetActive(true);    
+                GoToScene(SceneNames.SCREENS_SCENE, true);
+            }
+        }
+
+        private void SignFailed(RequestFailedException exception)
+        {
+            SetInteractable(true);
+            spinGuest.SetActive(false);
+            spinGoogle.SetActive(false);
+            labelGoogle.SetActive(true);
+            labelGuest.SetActive(true);
+            loginType = LoginType.None;
+        }
+
+        void SignedIn()
+        {
+            SetInteractable(true);
+            loginPanel.SetActive(false);
+            spinGuest.SetActive(false);
+            spinGoogle.SetActive(false);
+            labelGoogle.SetActive(true);
+            labelGuest.SetActive(true);
+            GoToScene(SceneNames.SCREENS_SCENE, true);
+        }
+
+        void SignedOut()
+        {
+            Debug.Log("===> You're signed Out to UGS!!!");
+        }
+        void Expired()
+        {
+            Debug.Log("===> You're Expired from UGS!!!");
+        }
 
         private IMusicPlayer CreateMusicPlayer(IDataProvider dataProvider)
         {
@@ -149,7 +357,7 @@ namespace BattleCruisers.Scenes
 
             LoadingScreenHint = hint;
 
-            if (stopMusic)
+            if (MusicPlayer != null && stopMusic)
                 MusicPlayer.Stop();
 
             StartCoroutine(LoadSceneWithLoadingScreen(sceneName));
@@ -192,9 +400,6 @@ namespace BattleCruisers.Scenes
             {
                 LoadingScreenController.Instance.Destroy();
             }
-
-
-
         }
 
         private IEnumerator LoadScene(string sceneName, LoadSceneMode loadSceneMode)
@@ -217,10 +422,105 @@ namespace BattleCruisers.Scenes
             _lastSceneLoaded = sceneName;
         }
 
-        void update()
+
+
+/*        void Update()
         {
-            transform.localPosition = Camera.main.gameObject.transform.localPosition;
+            if (!isUpdatingInternetConnectivity)
+            {
+                isUpdatingInternetConnectivity = true;
+                iUpdateInternetConnectivity();
+            }
+        }*/
+        bool isUpdatingInternetConnectivity = false;
+        async void iUpdateInternetConnectivity()
+        {
+            await Task.Delay(5000);
+
+            if (this == null)
+                return;
+            bool currentState = await CheckForInternetConnection();
+            if (this == null)
+                return;
+
+            if (currentState)
+                CurrentInternetConnectivity = ConnectedState;
+            else
+                CurrentInternetConnectivity = DisconnectedState;
+
+            isUpdatingInternetConnectivity = false;
+
         }
 
+        void TestEventHandler(object sender, EventArgs args)
+        {
+            Debug.Log("======> InternetConnectivity EventHandler is working : " + InternetConnectivity.Value);
+        }
+
+
+
+
+
+
+
+
+        public void OnRetry()
+        {
+            if (loginType == LoginType.Anonymous)
+                AnonymousLogin();
+            if (loginType == LoginType.Google)
+                GoogleLogin();
+        }
+
+        public void OnQuit()
+        {
+            Application.Quit();
+        }
+
+        async Task SignInWithGoogleAsync(string idToken)
+        {
+            try
+            {
+                await AuthenticationService.Instance.SignInWithGoogleAsync(idToken);
+                Debug.Log("SignIn is successful.");
+            }
+            catch (Unity.Services.Authentication.AuthenticationException ex)
+            {
+                Debug.LogException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
+        void OnDestroy()
+        {
+            AuthenticationService.Instance.SignOut();
+            AuthenticationService.Instance.SignedIn -= SignedIn;
+            AuthenticationService.Instance.SignedOut -= SignedOut;
+            AuthenticationService.Instance.SignInFailed -= SignFailed;
+            AuthenticationService.Instance.Expired -= Expired;
+
+            InternetConnectivity.ValueChanged -= TestEventHandler;
+        }
+
+        public static async Task<bool> CheckForInternetConnection(int timeoutMs = 10000, string url = "https://www.google.com")
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.KeepAlive = false;
+                request.Timeout = timeoutMs;
+                using (await request.GetResponseAsync())
+                    return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
 }

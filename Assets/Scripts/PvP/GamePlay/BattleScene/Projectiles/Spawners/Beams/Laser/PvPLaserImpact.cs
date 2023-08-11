@@ -34,7 +34,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             transform.position = position;
             _effects.Play();
-
             _debouncer.Debounce(Hide);
         }
 

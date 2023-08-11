@@ -10,6 +10,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
+using BattleCruisers.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
@@ -24,6 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private IPvPSettableBroadcastingProperty<bool> _isLaserFiring;
         public IPvPBroadcastingProperty<bool> IsLaserFiring { get; private set; }
+
+        public PvPArchonBattleshipController archonBattleShip;
 
         protected override void Awake()
         {
@@ -56,8 +61,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _damagePerS = damagePerS;
             _deltaTimeProvider = deltaTimeProvider;
-            _laserSoundPlayer = new PvPLaserSoundPlayer(_laserRenderer, _audioSource);
+            //    _laserSoundPlayer = new PvPLaserSoundPlayer(_laserRenderer, _audioSource);
             _laserImpact.Initialise(timeScaleDeferrer);
+        }
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if (IsClient)
+            {
+                _laserSoundPlayer = new PvPLaserSoundPlayer(_laserRenderer, _audioSource);
+                _laserImpact.Initialise(PvPBattleSceneGodClient.Instance.factoryProvider.DeferrerProvider.Deferrer);
+            }
+        }
+        protected override void PlaySparks_PvP()
+        {
+            PlaySparksClientRpc();
+        }
+        protected override void StopSparks_PvP()
+        {
+            StopSparksClientRpc();
         }
 
         protected override void HandleCollision(IPvPBeamCollision collision)
@@ -70,8 +92,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             collision.Target.TakeDamage(damage, _parent);
 
             _isLaserFiring.Value = true;
+
+            HandleCollision_PvP(transform.position, collision.CollisionPoint);
         }
 
+
+        private void HandleCollision_PvP(Vector3 transPos, Vector3 collisionPos)
+        {
+            HandleCollisionClientRpc(transPos, collisionPos);
+        }
         public void StopLaser()
         {
             // Logging.LogMethod(Tags.BEAM);
@@ -79,12 +108,44 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _laserRenderer.HideLaser();
             _laserMuzzleEffect.Stop();
             _isLaserFiring.Value = false;
+            StopLaser_PvP();
         }
 
+        private void StopLaser_PvP()
+        {
+            StopLaserClientRpc();
+        }
         public override void DisposeManagedState()
         {
             base.DisposeManagedState();
             _laserSoundPlayer?.DisposeManagedState();
+        }
+
+        [ClientRpc]
+        private void PlaySparksClientRpc()
+        {
+            constantSparks.Play();
+        }
+
+        [ClientRpc]
+        private void StopSparksClientRpc()
+        {
+            constantSparks.Stop();
+        }
+
+        [ClientRpc]
+        private void HandleCollisionClientRpc(Vector3 transPos, Vector3 collisionPos)
+        {
+            _laserRenderer.ShowLaser(transPos, collisionPos);
+            _laserImpact.Show(collisionPos);
+            _laserMuzzleEffect.Play();
+        }
+        [ClientRpc]
+        private void StopLaserClientRpc()
+        {
+            _laserRenderer.HideLaser();
+            _laserMuzzleEffect.Stop();
+            _isLaserFiring.Value = false;
         }
     }
 }

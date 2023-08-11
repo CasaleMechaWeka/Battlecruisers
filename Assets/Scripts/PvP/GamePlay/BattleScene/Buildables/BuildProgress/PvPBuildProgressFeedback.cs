@@ -115,11 +115,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             PvPHelper.AssertIsNotNull(buildable, buildableFactory);
             Assert.AreNotEqual(PvPBuildableState.Completed, buildable.BuildableState);
-
+            //     if (buildable.BuildableState != PvPBuildableState.Completed)
+            //      {
             CurrentBuildable = buildable;
             CurrentFactory = buildableFactory;
-
             _buildProgressImage.IsVisible = true;
+            //      }
         }
 
         public void HideBuildProgress()

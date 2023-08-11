@@ -1,12 +1,9 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -14,10 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         IDataProvider _dataProvider;
 
-        public CanvasGroupButton backButton,buyButton,blackMarketButton;
-        public GameObject PlayerCoinAmount;
-        public ShopItemPanel itemPanel;
-        public ShopItemDisplayer itemDisplayer;
+        public CanvasGroupButton backButton, buyButton, blackMarketButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -27,42 +21,27 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
-
+            Helper.AssertIsNotNull(backButton, buyButton, blackMarketButton);
             _dataProvider = dataProvider;
             //Initialise each button with its function
-            backButton.Initialise(soundPlayer, Home, this);
-            buyButton.Initialise(soundPlayer, PurchaseExo, this);
-            blackMarketButton.Initialise(soundPlayer, BlackMarket, this);
-            itemPanel.Initialise(soundPlayer, prefabFactory, dataProvider.GameModel, itemDisplayer);
-            itemDisplayer.gameObject.SetActive(false);
-
-/*            Text coins = PlayerCoinAmount.GetComponent<Text>();
-            coins.text = (dataProvider.GameModel.Coins).ToString();*/
+            backButton.Initialise(soundPlayer, GoHome, this);
+            buyButton.Initialise(soundPlayer, PurchaseCaptainExo, this);
+            blackMarketButton.Initialise(soundPlayer, GotoBlackMarket, this);
         }
 
-        public void Update()
-        {
-            //temp testing purpose
-            Text coins = PlayerCoinAmount.GetComponent<Text>();
-            if (_dataProvider != null)
-            {
-                coins.text = (_dataProvider.GameModel.Coins).ToString();
-            }
-
-        }
 
 
         //All the button fucntions for shop screen
-        public void Home()
+        public void GoHome()
         {
             _screensSceneGod.GotoHubScreen();
         }
-        public void PurchaseExo()
+        public void PurchaseCaptainExo()
         {
-        //    _dataProvider.GameModel.PurchaseExo(/* exoKey goes here */);
+
         }
 
-        public void BlackMarket()
+        public void GotoBlackMarket()
         {
             _screensSceneGod.GotoBlackMarketScreen();
         }

@@ -22,6 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override PvPUnitCategory UnitCategory => PvPUnitCategory.Aircraft;
         public override LayerMask UnitLayerMask => aircraftLayerMask;
 
+
+        // sava added
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
         // Visibility 
@@ -159,7 +161,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
                 OnResumeBuildingUnitServerRpc();
-            if(IsServer)
+            if (IsServer)
                 base.OnResumeBuildingUnit();
         }
 
@@ -170,9 +172,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnNewUnitChosenServerRpc();
             }
-            if(IsServer)
+            if (IsServer)
                 base.OnNewUnitChosen();
-        
+
         }
 
         protected override void OnIsUnitPausedValueChanged(bool isPaused)
@@ -240,6 +242,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
+        }
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
             return _factoryProvider.SpawnDeciderFactory.CreateAircraftSpawnPositionFinder(this);

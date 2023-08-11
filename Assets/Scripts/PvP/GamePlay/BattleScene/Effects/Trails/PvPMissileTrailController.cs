@@ -25,5 +25,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             glow.enabled = false;
             missileFlare.enabled = false;
         }
+
+        public void SetVisibleTrail(bool isVisible)
+        {
+            trail.enabled = isVisible;
+        }
     }
 }

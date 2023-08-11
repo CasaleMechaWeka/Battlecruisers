@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public Action clickedRepairButton { get; set; }
 
-        private const float NotZero = 100.0f;
+        private const float NotZero = 99999f;
 
         // network variables
         public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = NotZero };
@@ -58,9 +58,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             }
         }
-
-
-
         public virtual Vector2 DroneAreaPosition => Position;
         public Vector2 Position
         {
@@ -73,19 +70,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-
-
-
-
-
         public Vector2 HealthBarOffset
         {
             get; set;
         }
-
-
-
-
         // IMaskHighlightable
         protected virtual Vector2 MaskHighlightableSize => Size;
 
@@ -326,20 +314,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                foreach (NetworkObject obj in objs)
+                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                // foreach (NetworkObject obj in objs)
+                // {
+                //     if (obj.NetworkObjectId == objectId)
+                //     {
+                NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
+                IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                if (damageSource == null)
                 {
-                    if (obj.NetworkObjectId == objectId)
-                    {
-                        IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
-                        if (damageSource == null)
-                        {
-                            damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPUnit>();
-                        }
-                        if (damageSource != null)
-                            Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
-                    }
+                    damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPUnit>();
                 }
+                if (damageSource != null)
+                    Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                //     }
+                // }
             }
 
         }

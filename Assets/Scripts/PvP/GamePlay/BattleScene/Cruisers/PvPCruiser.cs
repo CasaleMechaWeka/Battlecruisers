@@ -604,15 +604,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             if (IsClient && IsOwner)
             {
-                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                foreach (NetworkObject obj in objs)
-                {
-                    if (obj.NetworkObjectId == objectId)
-                    {
-                        IPvPBuilding building = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>().Buildable.Parse<IPvPBuilding>();
-                        BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
-                    }
-                }
+                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                // foreach (NetworkObject obj in objs)
+                // {
+                //     if (obj.NetworkObjectId == objectId)
+                //     {
+                NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
+                IPvPBuilding building = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>().Buildable.Parse<IPvPBuilding>();
+                BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
+                //     }
+                // }
             }
         }
 

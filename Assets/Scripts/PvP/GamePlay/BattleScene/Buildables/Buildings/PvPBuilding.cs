@@ -74,15 +74,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void StartConstruction()
         {
             base.StartConstruction();
+        }
 
+        protected override void OnBuildableCompleted()
+        {
 
-            //     PlayPlacementSound();
-
-            /*            if (ParentCruiser.IsPlayerCruiser)
-                        {
-                            //   _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
-
-                        }*/
+            base.OnBuildableCompleted();
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+            // _coreEngineAudioSource.Play(isSpatial: true, loop: true);
+        }
+        protected override void OnBuildableCompleted_PvPClient()
+        {
+            base.OnBuildableCompleted_PvPClient();
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
         }
 
         protected virtual void PlayPlacementSound()

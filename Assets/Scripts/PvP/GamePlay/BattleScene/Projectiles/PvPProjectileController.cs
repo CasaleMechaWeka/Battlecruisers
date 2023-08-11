@@ -27,12 +27,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private void Awake()
         {
-            Initialise();            
+            Initialise();
         }
 
-        protected override void OnActiveClient(Vector3 velocity, float gravityScale)
+        public override void OnNetworkSpawn()
         {
-            OnActiveClientRpc(velocity, gravityScale);
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+        }
+        public override void OnNetworkDespawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
+        }
+        protected override void OnActiveClient(Vector3 velocity, float gravityScale, bool isAlive)
+        {
+            OnActiveClientRpc(velocity, gravityScale, isAlive);
         }
 
         [ClientRpc]
@@ -43,11 +53,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         }
 
         [ClientRpc]
-        private void OnActiveClientRpc(Vector3 velocity, float gravityScale)
+        private void OnActiveClientRpc(Vector3 velocity, float gravityScale, bool isAlive)
         {
             _rigidBody.velocity = velocity;
             _rigidBody.gravityScale = gravityScale;
-            _isActiveAndAlive = true;
+            _isActiveAndAlive = isAlive;
         }
 
         [ClientRpc]

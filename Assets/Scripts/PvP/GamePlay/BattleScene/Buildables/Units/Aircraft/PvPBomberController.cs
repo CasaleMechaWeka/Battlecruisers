@@ -117,25 +117,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Activate_PvPClient()
         {
             base.Activate_PvPClient();
-            /*            _haveDroppedBombOnRun = false;
-                        _isAtCruisingHeight = false;*/
         }
         protected async override void OnBuildableCompleted()
         {
+            if (IsServer)
+            {
+                base.OnBuildableCompleted();
+                Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
+                _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
+                _targetProcessor.AddTargetConsumer(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
 
-            base.OnBuildableCompleted();
+                OnBuildableCompletedClientRpc();
+            }
+            if (IsClient)
+            {
+                OnBuildableCompleted_PvPClient();
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
 
-            Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
+            }
 
-            _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
-            _targetProcessor.AddTargetConsumer(this);
-
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
-
-            /*            if (GetComponent<NetworkTransform>() != null)
-                            GetComponent<NetworkTransform>().enabled = true;
-                        if (GetComponent<NetworkRigidbody2D>() != null)
-                            GetComponent<NetworkRigidbody2D>().enabled = true;*/
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
@@ -148,6 +149,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             _isAtCruisingHeight = true;
             SwitchToBomberMovement();
+        }
+
+        // BuildableStatus
+        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
+        {
+            OnBuildableStateValueChangedClientRpc(state);
         }
 
         private void SwitchToBomberMovement()
@@ -420,6 +427,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnDestroyedEventClientRpc()
         {
             OnDestroyedEvent();
+        }
+
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            OnBuildableCompleted();
+        }
+
+        [ClientRpc]
+        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
+        {
+            BuildableState = state;
         }
     }
 }

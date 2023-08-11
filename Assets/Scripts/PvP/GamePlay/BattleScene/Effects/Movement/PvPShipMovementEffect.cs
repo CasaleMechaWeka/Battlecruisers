@@ -48,5 +48,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             StopEffects();
             _gameObject.IsVisible = false;
         }
+
+        public void Hide()
+        {
+            _gameObject.IsVisible = false;
+        }
     }
 }

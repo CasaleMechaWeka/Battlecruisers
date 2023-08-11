@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
@@ -19,8 +20,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _synchronizedSystems = synchronizedSystems;
         }
 
-        public void Play()
+        public async Task Play()
         {
+            await Task.Yield();
             foreach (IPvPSynchronizedParticleSystems system in _synchronizedSystems)
             {
                 system.ResetSeed();
@@ -32,8 +34,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
         }
 
-        public void Stop()
+        public async Task Stop()
         {
+            await Task.Yield();
             foreach (IPvPBroadcastingParticleSystem particleSystem in _particleSystems)
             {
                 particleSystem.Stop();

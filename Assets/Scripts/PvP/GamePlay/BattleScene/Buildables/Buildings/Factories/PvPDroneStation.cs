@@ -173,13 +173,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-/*        private void Start()
+        public override void OnNetworkSpawn()
         {
-            if (IsClient && IsOwner)
-                Faction = PvPFaction.Blues;
-            if (IsClient && !IsOwner)
-                Faction = PvPFaction.Reds;
-        }*/
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
+        }
+
+        /*        private void Start()
+                {
+                    if (IsClient && IsOwner)
+                        Faction = PvPFaction.Blues;
+                    if (IsClient && !IsOwner)
+                        Faction = PvPFaction.Reds;
+                }*/
 
         [ClientRpc]
         private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)

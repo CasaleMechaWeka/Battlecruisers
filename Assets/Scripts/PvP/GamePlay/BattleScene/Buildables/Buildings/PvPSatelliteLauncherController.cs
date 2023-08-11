@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -27,6 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _satellite = await _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, /*_uiManager, */_factoryProvider);
             _satellite.Position = transform.position + SpawnPositionAdjustment;
+            // pvp
+            _satellite.GameObject.GetComponent<NetworkTransform>().Teleport(transform.position + SpawnPositionAdjustment, transform.rotation, transform.localScale);
 
             _satellite.Activate(
                 new PvPBuildableActivationArgs(

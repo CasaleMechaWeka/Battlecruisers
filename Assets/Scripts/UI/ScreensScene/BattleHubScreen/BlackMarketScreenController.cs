@@ -1,20 +1,16 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 
 namespace BattleCruisers.UI.ScreensScene
 {
     public class BlackMarketScreenController : ScreenController
     {
-        public CanvasGroupButton backButton;
+        public CanvasGroupButton backButton, buyButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -24,13 +20,19 @@ namespace BattleCruisers.UI.ScreensScene
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
-
-            backButton.Initialise(soundPlayer,Home, this);
+            Helper.AssertIsNotNull(backButton, buyButton);
+            backButton.Initialise(soundPlayer,GoHome, this);
+            buyButton.Initialise(soundPlayer, Buy, this);
         }
 
-        public void Home()
+        public void GoHome()
         {
-            _screensSceneGod.GotoHubScreen();
+            _screensSceneGod.GotoShopScreen();
+        }
+
+        public void Buy()
+        {
+            
         }
     }
 

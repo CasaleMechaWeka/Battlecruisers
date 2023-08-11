@@ -46,10 +46,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private void _factory_NewChosen(object sender, PvPUnitStartedEventArgs e)
-        {
-            ShowBuildProgressIfNecessary(e.StartedUnit);
-        }
         private void _factory_UnitStarted(object sender, PvPUnitStartedEventArgs e)
         {
             ShowBuildProgressIfNecessary(e.StartedUnit);

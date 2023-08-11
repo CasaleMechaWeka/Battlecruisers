@@ -106,8 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public async Task InitialiseAsync(IPvPBarrelControllerArgs args)
         {
 
-            Assert.IsNotNull(args);
-
+            Assert.IsNotNull(args);            
             _parent = args.Parent;
             _targetFilter = args.TargetFilter;
             _turretStatsWrapper.pvpTurretStats
@@ -125,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.RotationMovementController,
                     args.AngleLimiter,
                     args.AttackablePositionFinder);
-
+            
             _firingHelper
                 = new PvPBarrelFiringHelper(
                     this,
@@ -138,7 +137,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _updater = args.Updater;
             
             _updater.Updated += _updater_Updated;
-    
         }
 
 
@@ -174,7 +172,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _fireIntervalManager.ProcessTimeInterval(_updater.DeltaTime);
             PvPBarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
             bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
-
             if (!wasFireSuccessful)
             {
                 CeaseFire();

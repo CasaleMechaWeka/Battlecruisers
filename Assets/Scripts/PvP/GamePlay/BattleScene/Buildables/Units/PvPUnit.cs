@@ -68,6 +68,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // _engineAudioSource = new PvPEffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
         }
 
+        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        {
+            base.Initialise(factoryProvider, uiManager);
+            _engineAudioSource = new PvPEffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
+        }
+
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
@@ -96,11 +102,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
+            
             base.OnBuildableCompleted();
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+           // _coreEngineAudioSource.Play(isSpatial: true, loop: true);
+        }
+        protected override void OnBuildableCompleted_PvPClient()
+        {
             _coreEngineAudioSource.Play(isSpatial: true, loop: true);
+            base.OnBuildableCompleted_PvPClient();
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
         }
 
-        void FixedUpdate()
+        
+       protected virtual void FixedUpdate()
         {
             if (IsClient)
                 return;
@@ -149,7 +164,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-            _coreEngineAudioSource.Stop();
+        //    _coreEngineAudioSource.Stop();
+        }
+
+        protected override void OnDestroyedEvent()
+        {
+            base.OnDestroyedEvent();
+            if(IsClient)
+                _coreEngineAudioSource.Stop();
         }
 
         protected override void InternalDestroy()

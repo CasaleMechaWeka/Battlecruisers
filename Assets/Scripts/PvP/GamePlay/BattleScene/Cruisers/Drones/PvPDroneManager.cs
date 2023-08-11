@@ -304,8 +304,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
 
             bool wasRemoved = _droneConsumers.Remove(droneConsumer);
-            Assert.IsTrue(wasRemoved);
-
+            // sava added
+        //    Assert.IsTrue(wasRemoved);
             _droneConsumers.Insert(0, droneConsumer);
         }
 

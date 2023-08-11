@@ -53,6 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 return _baseBuilding.Value == null;
             }
         }
+        public NetworkVariable<int> pvp_BoostProviders_Num = new NetworkVariable<int>();
         public ObservableCollection<IPvPBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; private set; }
         public IPvPTransform Transform { get; private set; }
@@ -179,14 +180,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             }
         }
-
+        public NetworkVariable<ulong> pvp_Building_NetworkObjectID = new NetworkVariable<ulong>();
         private IPvPBuilding SlotBuilding
         {
             set
             {
                 if (_baseBuilding.Value != null)
                 {
-                    Assert.IsNull(value);
+                    //    Assert.IsNull(value);
                     _baseBuilding.Value.Destroyed -= OnBuildingDestroyed;
                 }
 
@@ -194,6 +195,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
                 if (_baseBuilding.Value != null)
                 {
+                    // pvp
+                    ulong objectId = ulong.MaxValue;
+                    if (_baseBuilding.Value.GameObject.GetComponent<PvPBuilding>() != null)
+                    {
+                        objectId = (ulong)(_baseBuilding.Value.GameObject.GetComponent<PvPBuilding>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    }
+
+                    if (_baseBuilding.Value.GameObject.GetComponent<PvPUnit>() != null)
+                    {
+                        objectId = (ulong)(_baseBuilding.Value.GameObject.GetComponent<PvPUnit>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    }
+
+                    pvp_Building_NetworkObjectID.Value = objectId;
+
+
                     _buildingPlacer.PlaceBuilding(_baseBuilding.Value, this);
                     _baseBuilding.Value.Destroyed += OnBuildingDestroyed;
                 }
@@ -224,6 +240,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _size = slotRenderer.bounds.size;
 
             BoostProviders = new ObservableCollection<IPvPBoostProvider>();
+            // pvp
+            BoostProviders.CollectionChanged += (sender, e) =>
+            {
+                pvp_BoostProviders_Num.Value = BoostProviders.Count;
+            };
 
             Transform = new PvPTransformBC(transform);
 
@@ -232,7 +253,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             PvPSlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<PvPSlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);
-            _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this);
+            _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this, IsClient);
 
 
             _buildingPlacementFeedback = _renderer.gameObject.transform.Find("BuildingPlacedFeedback");

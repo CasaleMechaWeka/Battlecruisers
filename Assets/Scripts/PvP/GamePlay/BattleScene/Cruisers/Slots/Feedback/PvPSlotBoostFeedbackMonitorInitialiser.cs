@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPSlotBoostFeedbackMonitorInitialiser : MonoBehaviour
     {
-        public PvPSlotBoostFeedbackMonitor CreateFeedbackMonitor(IPvPSlot slot)
+        public PvPSlotBoostFeedbackMonitor CreateFeedbackMonitor(PvPSlot slot, bool isClient)
         {
             Assert.IsNotNull(slot);
 
@@ -20,7 +20,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     new PvPBoostStateFinder(),
                     new PvPBoostFeedback(
                         new PvPGameObjectBC(singleBoostEffect.gameObject),
-                        new PvPGameObjectBC(doubleBoostEffect.gameObject)));
+                        new PvPGameObjectBC(doubleBoostEffect.gameObject)),
+                    isClient);
         }
     }
 }

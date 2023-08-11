@@ -19,8 +19,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ISingleSoundPlayer _soundPlayer;
 
         public CanvasGroupButton captainsButton;
+        public CanvasGroupButton nameButton;
 
-        public CaptainSelectorPanel captainsPanel;
+        public CaptainSelectorPanel captainsPanel;        
 
         // xp and rank vars
         [SerializeField]
@@ -35,6 +36,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private Text levelXPString;
         public Text million, billion, trillion, quadrillion;
         public GameObject currentCaptainImage;
+        public Image badgeIcon, medalIcon;
+        public Text rankTitle;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -45,27 +48,22 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(captainsButton);
-
+            Helper.AssertIsNotNull(captainsButton, nameButton);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             _soundPlayer = soundPlayer;
-            /*
-            captainsButton.Initialise(_soundPlayer, ChangeCaptainSelection);
-            CaptainExoData captainExoData = prefabFactory.GetCaptainExo(dataProvider.GameModel.CurrentCaptain);
-            Image tempImage = currentCaptainImage.GetComponent<Image>();
-            tempImage.sprite = captainExoData.CaptainExoImage; 
-            Debug.Log(captainExoData.CaptainExoImage.name); */
 
-            // XP progress bar setup
-            if (xpBar != null)
-            {
-                rank = ranker.CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-                //currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
-                currentXP = (int)ranker.CalculateXpToNextLevel(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-                levelXP = (int)(ranker.CalculateLevelXP(rank));
-                xpBar.setValues(currentXP, levelXP);
-                currentXPString.text = FormatNumber(currentXP).ToString();
-                levelXPString.text = FormatNumber(levelXP).ToString();
-            }
+            captainsButton.Initialise(_soundPlayer, OnClickCaptainBtn);
+            nameButton.Initialise(_soundPlayer, OnClickNameBtn);
+        }
+
+        void OnClickNameBtn()
+        {
+            
+        }
+
+        void OnClickCaptainBtn() 
+        { 
+
         }
 
         private void ChangeCaptainSelection()

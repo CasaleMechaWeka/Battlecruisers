@@ -34,11 +34,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public BattlePanelScreenController battlePanel;
         public InfiniteLoadoutScreenController loadoutPanel;
-        //public ShopPanelScreenController shopPanel;
+    //    public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
         public ArenaSelectPanelScreenController arenaSelectPanel;
-        public CoinBattleScreenController coinBattleController;
+        // public CoinBattleScreenController coinBattleController;
 
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
 
@@ -76,11 +76,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-
-
             arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
-            coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
+         //   coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
 
         }
 
@@ -103,40 +101,31 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             GoToScreen(battlePanel);
             UnselectAll();
-
         }
 
         private void OpenLoadout()
         {
             _screensSceneGod.GoToLoadoutScreen();
-
             UnselectAll();
-
         }
         private void OpenShop()
         {
-            //GoToScreen(shopPanel);
+        //    GoToScreen(shopPanel);
             _screensSceneGod.GotoShopScreen();
-
             UnselectAll();
-
         }
 
         private void OpenLeaderboard()
         {
             GoToScreen(leaderboardPanel);
-
             UnselectAll();
-
         }
 
 
         private void OpenProfile()
         {
             GoToScreen(profilePanel);
-
             UnselectAll();
-
         }
 
         public void Continue()
@@ -170,7 +159,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                         if (Application.internetReachability == NetworkReachability.NotReachable)
                         {
-                            coinBattleController.BattleButtonClicked();
+                     //       coinBattleController.BattleButtonClicked();
                         }
                         else
                         {

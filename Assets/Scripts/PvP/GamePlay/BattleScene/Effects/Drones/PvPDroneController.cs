@@ -1,8 +1,10 @@
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,28 +18,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public event EventHandler Activated;
         public event EventHandler Deactivated;
-        public GameObject _drone;
 
-        public bool IsEnabled
-        {
-            get
-            {
-                return _drone.activeSelf;
-            }
-            set
-            {     
-                _drone.SetActive(value);
-
-            }
-        }
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
             base.StaticInitialise(commonStrings);
 
             Assert.IsNotNull(_animation);
-            Assert.IsNotNull(_drone);
-            IsEnabled = false;
+            //    gameObject.SetActive(false);
         }
 
 
@@ -45,9 +33,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void Activate(PvPDroneActivationArgs activationArgs)
         {
-            IsEnabled = true;
-            // clientRpc
-            OnChangedEnabledValueClientRpc(IsEnabled);
+            gameObject.SetActive(true);
+            SynchedServerData.Instance.ActivateNetworkObject(GetComponent<NetworkObject>().NetworkObjectId);
             gameObject.transform.position = activationArgs.Position;
             // clientRpc
             OnChangedPositionClientRpc(activationArgs.Position);
@@ -67,16 +54,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void Deactivate()
         {
-            IsEnabled = false;
-            // clientRpc
-            OnChangedEnabledValueClientRpc(IsEnabled);
+            gameObject.SetActive(false);
+            SynchedServerData.Instance.DeactivateNetworkObject(GetComponent<NetworkObject>().NetworkObjectId);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
-        [ClientRpc]
-        private void OnChangedEnabledValueClientRpc(bool isEnabled)
+        public override void OnNetworkSpawn()
         {
-            IsEnabled = isEnabled;
+            if (IsClient)
+            {
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+            }
+
+        }
+
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
         }
 
         [ClientRpc]

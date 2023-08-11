@@ -34,6 +34,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Models.PrefabKeys;
 
+
 namespace BattleCruisers.Scenes
 {
     public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
@@ -88,10 +89,14 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private CaptainSelectorPanel captainSelectorPanel;
 
+        public GameObject characterOfShop, characterOfBlackmarket;
+        public Transform ContainerCaptain;
+
         async void Start()
         {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -203,9 +208,7 @@ namespace BattleCruisers.Scenes
                 GoToLoadoutScreen();
             }
 
-            ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
-
-            _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+            ranker.DisplayRank(_gameModel.LifetimeDestructionScore);    
 
             if (_gameModel.PremiumEdition)
             {
@@ -213,8 +216,14 @@ namespace BattleCruisers.Scenes
                 _isPlaying = true;
             }
 
+            characterOfShop.SetActive(false);
+            characterOfBlackmarket.SetActive(false);      
 
+            // load charlie for Screenscene UI animation effect
+            CaptainExoData charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
 
+            _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
@@ -242,16 +251,22 @@ namespace BattleCruisers.Scenes
 
         public void GotoHubScreen()
         {
+            characterOfBlackmarket.SetActive(false);
+            characterOfShop.SetActive(false);
             GoToScreen(hubScreen);
         }
 
         public void GotoShopScreen()
         {
+            characterOfBlackmarket.SetActive(false);
+            characterOfShop.SetActive(true);
             GoToScreen(shopPanelScreen);
         }
 
         public void GotoBlackMarketScreen()
         {
+            characterOfBlackmarket.SetActive(true);
+            characterOfShop.SetActive(false);
             GoToScreen(blackMarketScreen);
         }
 

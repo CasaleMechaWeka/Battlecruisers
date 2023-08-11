@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 this,
                 _factoryProvider,
                 FiringSound,
-                _barrelAnimation);
+                _barrelAnimation);     
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()

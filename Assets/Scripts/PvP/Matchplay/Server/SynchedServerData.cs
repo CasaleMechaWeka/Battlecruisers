@@ -87,6 +87,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         }
 
 
+        public void ActivateNetworkObject(ulong networkObjectId)
+        {
+            ActivateNetworkObjectClientRpc(networkObjectId);
+        }
+
+        public void DeactivateNetworkObject(ulong networkObjectId)
+        {
+            DeactivateNetworkObjectClientRpc(networkObjectId);
+        }
         /// <summary>
         /// This call attempts to spawn a prefab by it's addressable guid - it ensures that all the clients have loaded the prefab before spawning it,
         /// and if the clients fail to acknowledge that they've loaded a prefab - the spawn will fail.
@@ -191,5 +200,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 rpcParams.Receive.SenderClientId);
         }
 
+        [ClientRpc]
+        private void ActivateNetworkObjectClientRpc(ulong networkObjectId)
+        {
+            NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(networkObjectId);
+            obj.gameObject.SetActive(true);
+            
+        }
+
+        [ClientRpc]
+        private void DeactivateNetworkObjectClientRpc(ulong networkObjectId)
+        {
+            NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(networkObjectId);
+            obj.gameObject.SetActive(false);
+            
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPSmoke : MonoBehaviour, IPvPSmoke
     {
         private IPvPSmokeChanger _smokeChanger;
-        private ParticleSystem _particleSystem;
+        public ParticleSystem _particleSystem;
 
         private PvPSmokeStrength _smokeStrength;
         public PvPSmokeStrength SmokeStrength
@@ -52,6 +52,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _particleSystem.Pause();
 
             transform.rotation = Quaternion.Euler(-90, 0, 0);
+        }
+
+        private void Awake()
+        {
+            _particleSystem = GetComponent<ParticleSystem>();
+            Assert.IsNotNull(_particleSystem);
+            _particleSystem.Pause();
         }
 
         private void ApplySmokeStats(PvPSmokeStatistics smokeStats)

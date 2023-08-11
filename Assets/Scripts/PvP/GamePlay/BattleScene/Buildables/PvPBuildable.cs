@@ -31,6 +31,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Effects.Smoke;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -42,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private PvPSmokeInitialiser _smokeInitialiser;
+        protected PvPSmokeInitialiser _smokeInitialiser;
 #pragma warning restore CS0414  // Variable is assigned but never used
         // All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
         // both the target and the health bar.
@@ -206,7 +207,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
-            EnableRenderers(isEnabled);
+            if (IsClient)
+                EnableRenderers(isEnabled);
         }
 
         protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
@@ -216,6 +218,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
+            if (IsClient)
+                // in some case, smoke strong is not removed from scene in client side, so force stop it when boat start to build.
+                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
         }
 
         private void OnHealthbarOffsetChanged()
@@ -255,9 +260,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsNotNull(deathSound);
             _deathSound = new PvPAudioClipWrapper(deathSound);
-
-
-
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }
 
@@ -357,9 +359,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
             }
-
-
-
         }
 
         public virtual void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
@@ -569,7 +568,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         OnBuildableCompleted();
                     }
                 }
-
                 OnUpdate();
             }
 
@@ -603,7 +601,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             EnableRenderers(true);
             BuildableState = PvPBuildableState.Completed;
 
-            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+            //  _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
 
             if (ConstructionCompletedSoundKey != null)
             {
@@ -619,7 +617,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void OnBuildableCompleted_PvPClient()
         {
             BuildableState = PvPBuildableState.Completed;
-            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+            //    _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
@@ -631,7 +629,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (ConstructionCompletedSoundKey != null)
             {
-                if (IsOwner)
+                if (IsClient && IsOwner)
                     _factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
             }
         }
@@ -757,7 +755,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void CallRpc_PlayDeathSound()
         {
             if (IsClient)
+            {
                 _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+                // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
+                //   _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
+            }
+
         }
 
         protected virtual void CallRpc_SyncFaction(PvPFaction faction)

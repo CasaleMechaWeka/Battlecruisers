@@ -18,7 +18,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 
-
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     [RequireComponent(typeof(NetcodeHooks))]
@@ -69,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private void Awake()
         {
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
+            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;            
         }
         void OnNetworkSpawn()
         {
@@ -151,16 +150,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 windInitialiser,
                 cloudInitialiser,
                 hotkeyInitialiser);
-            // Assert.IsNotNull(settingsManager);
-
-            // PrioritisedSoundPlayerAudioSource
-            //     = new PvPEffectVolumeAudioSource(
-            //         new PvPAudioSourceBC(prioritisedSoundPlayerAudioSource),
-            //         settingsManager, 0);
-            // UISoundsAudioSource
-            //     = new PvPEffectVolumeAudioSource(
-            //         new PvPAudioSourceBC(uiSoundsAudioSource),
-            //         settingsManager, 1);
 
             SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);
@@ -169,8 +158,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(lifetimeEvents);
             LifetimeEvents = lifetimeEvents;
             targetIndicator.Initialise();
-
-
 
             Deferrer = GetComponent<PvPTimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
@@ -181,14 +168,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);
             _updaterProvider.Initialise();
-
-
         }
 
         void Start()
         {
 
         }
-
     }
 }

@@ -86,7 +86,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
             {
-                IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
+                //   IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
+                IList<BuildingKey> buildingKeys = loadout.GetBuildingKeys(category);
                 IList<PvPBuildingKey> pvp_buildingKeys = new List<PvPBuildingKey>();
                 foreach (BuildingKey bKey in buildingKeys)
                 {
@@ -99,7 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 {
                     IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
                     SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
-                    categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);         
+                    categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
                 }
             }
 
@@ -164,7 +165,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
             {
-                IList<UnitKey> unitKeys = _playerLoadout.GetUnits(unitCategory);
+                //   IList<UnitKey> unitKeys = _playerLoadout.GetUnits(unitCategory);
+                IList<UnitKey> unitKeys = _playerLoadout.GetUnitKeys(unitCategory);
                 IList<PvPUnitKey> pvp_unitKeys = new List<PvPUnitKey>();
                 foreach (UnitKey uKey in unitKeys)
                 {

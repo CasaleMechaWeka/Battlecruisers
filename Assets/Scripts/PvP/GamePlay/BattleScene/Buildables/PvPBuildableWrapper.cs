@@ -66,6 +66,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 {
                     Buildable.ParentCruiser = PvPBattleSceneGodClient.Instance.playerCruiser;
                 }
+            //    PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+            }
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+            if (IsClient)
+            {
+            //    PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
+                PvP_IsVisible.OnValueChanged -= OnVisibleChanged;
+            }
+
+        }
+
+        protected void FixedUpdate()
+        {
+            if (IsClient)
+            {
+                if (gameObject.activeSelf != PvP_IsVisible.Value)
+                {
+                    gameObject.SetActive(PvP_IsVisible.Value);  // not sure, but pvp_isvisible is not synched sometimes.
+                }
             }
         }
     }

@@ -52,13 +52,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
+            if (IsServer)
+            {
+                base.OnBuildableCompleted();
 
-            _shieldController.gameObject.SetActive(true);
-            OnEnableShieldClientRpc(true);
+                _shieldController.gameObject.SetActive(true);
+                OnEnableShieldClientRpc(true);
+                OnBuildableCompletedClientRpc();
+            }
+            if (IsClient)
+                OnBuildableCompleted_PvPClient();
+
         }
 
-
+        // Sava added code
 
         // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
@@ -176,6 +183,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 BuildProgress = PvP_BuildProgress.Value;
             }
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
         }
 
         [ClientRpc]
