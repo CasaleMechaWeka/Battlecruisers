@@ -127,6 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5);
 
+            //// Added by Anuj
             foreach (Collider2D c2d in colliders)
             {
                 if (c2d.gameObject.layer == 15)
@@ -142,6 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     }
                 }
             }
+            ////
         }
 
         private void PlayDamagedSound()
