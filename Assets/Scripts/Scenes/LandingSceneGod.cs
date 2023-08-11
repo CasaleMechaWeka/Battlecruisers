@@ -19,15 +19,13 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI;
-using UnityEngine.Networking;
 using Unity.Services.Core;
 using System.Net;
 using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
-
+using System.IO;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
@@ -86,7 +84,7 @@ namespace BattleCruisers.Scenes
 
 
 
-        private SettableBroadcastingProperty<bool> _internetConnectivity;
+        private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
         public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
 
         private INetworkState ConnectedState = new InternetConnectivity(true);
@@ -98,12 +96,32 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
             Helper.AssertIsNotNull(messageHandler);
+
+            landingCanvas.SetActive(true);
+            loginPanel.SetActive(true);
+
+            spinGuest.SetActive(false);
+            spinGoogle.SetActive(false);
+
+            labelGoogle.SetActive(true);
+            labelGuest.SetActive(true);
+
+            googleBtn.gameObject.SetActive(false);
+            guestBtn.gameObject.SetActive(false);
+
+            retryPanel.SetActive(false);
+            labelRetry.SetActive(true);
+            spinRetry.SetActive(false);
+
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
+            bool startingState = await CheckForInternetConnection();
 
-            bool startingState = await HasConnection();
-            _currentInternetConnectivity = new InternetConnectivity(startingState);    // starting state;
-            _internetConnectivity = new SettableBroadcastingProperty<bool>(_currentInternetConnectivity.IsConnected);
+            if (startingState)
+                CurrentInternetConnectivity = ConnectedState;
+            else
+                CurrentInternetConnectivity = DisconnectedState;
+
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
             //cheat code
             InternetConnectivity.ValueChanged += TestEventHandler;
@@ -126,25 +144,6 @@ namespace BattleCruisers.Scenes
 
             googleBtn.Initialise(soundPlayer, GoogleLogin);
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
-
-
-            landingCanvas.SetActive(true);
-            loginPanel.SetActive(true);
-
-            spinGuest.SetActive(false);
-            spinGoogle.SetActive(false);
-
-            labelGoogle.SetActive(true);
-            labelGuest.SetActive(true);
-
-            googleBtn.gameObject.SetActive(false);
-            guestBtn.gameObject.SetActive(false);
-
-            retryPanel.SetActive(false);
-            labelRetry.SetActive(true);
-            spinRetry.SetActive(false);
-
-            googleBtn.Initialise();
 
             try
             {
@@ -233,10 +232,6 @@ namespace BattleCruisers.Scenes
             guestBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
         }
 
-        void SetSpin(GameObject obj, bool spinable)
-        {
-            obj.SetActive(spinable);
-        }
         private string GetProfile()
         {
             var arguments = Environment.GetCommandLineArgs();
@@ -276,7 +271,7 @@ namespace BattleCruisers.Scenes
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
                     SetInteractable(false);
-                    SetSpin(spinGuest, true);
+                    spinGuest.SetActive(true);
                     labelGuest.SetActive(false);
                     loginType = LoginType.Anonymous;
                     try
@@ -286,15 +281,16 @@ namespace BattleCruisers.Scenes
                     catch (Exception ex)
                     {
                         Debug.Log(ex.Message);
-                        //    messageHandler.ShowMessage("Please check Internet connection!");
                     }
                 }
             }
             else
             {
                 // play without Internet
-                landingCanvas.SetActive(false);
+                loginType = LoginType.NoInternet;
                 loginPanel.SetActive(false);
+                spinGuest.SetActive(false);
+                labelGuest.SetActive(true);    
                 GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
@@ -302,8 +298,8 @@ namespace BattleCruisers.Scenes
         private void SignFailed(RequestFailedException exception)
         {
             SetInteractable(true);
-            SetSpin(spinGuest, false);
-            SetSpin(spinGoogle, false);
+            spinGuest.SetActive(false);
+            spinGoogle.SetActive(false);
             labelGoogle.SetActive(true);
             labelGuest.SetActive(true);
             loginType = LoginType.None;
@@ -311,8 +307,12 @@ namespace BattleCruisers.Scenes
 
         void SignedIn()
         {
-            landingCanvas.SetActive(false);
+            SetInteractable(true);
             loginPanel.SetActive(false);
+            spinGuest.SetActive(false);
+            spinGoogle.SetActive(false);
+            labelGoogle.SetActive(true);
+            labelGuest.SetActive(true);
             GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
@@ -424,31 +424,37 @@ namespace BattleCruisers.Scenes
 
 
 
-        void Update()
+/*        void Update()
         {
             if (!isUpdatingInternetConnectivity)
             {
                 isUpdatingInternetConnectivity = true;
                 iUpdateInternetConnectivity();
             }
-        }
+        }*/
         bool isUpdatingInternetConnectivity = false;
         async void iUpdateInternetConnectivity()
         {
             await Task.Delay(5000);
-            bool currentState = await HasConnection();
-            Debug.Log("======> current connection state : " + currentState);
-            if (currentState)
-                _currentInternetConnectivity = ConnectedState;
-            else
-                _currentInternetConnectivity = DisconnectedState;
 
-            isUpdatingInternetConnectivity = false;       
+            if (this == null)
+                return;
+            bool currentState = await CheckForInternetConnection();
+            if (this == null)
+                return;
+
+            if (currentState)
+                CurrentInternetConnectivity = ConnectedState;
+            else
+                CurrentInternetConnectivity = DisconnectedState;
+
+            isUpdatingInternetConnectivity = false;
+
         }
 
         void TestEventHandler(object sender, EventArgs args)
         {
-            Debug.Log("======>" + InternetConnectivity.Value);
+            Debug.Log("======> InternetConnectivity EventHandler is working : " + InternetConnectivity.Value);
         }
 
 
@@ -499,25 +505,22 @@ namespace BattleCruisers.Scenes
             InternetConnectivity.ValueChanged -= TestEventHandler;
         }
 
-        public static async Task<bool> HasConnection()
+        public static async Task<bool> CheckForInternetConnection(int timeoutMs = 10000, string url = "https://www.google.com")
         {
             try
             {
-                using (var client = new WebClient { Proxy = null })
-                using (await client.OpenReadTaskAsync("http://www.google.com"))
-                {
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.KeepAlive = false;
+                request.Timeout = timeoutMs;
+                using (await request.GetResponseAsync())
                     return true;
-                }
             }
-            catch(Exception ex)
+            catch (Exception)
             {
-                Debug.Log("===> " + ex.Message);
                 return false;
             }
         }
 
-        public enum LoginType { Google, Apple, Anonymous, None }
+        public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
-
-
 }
