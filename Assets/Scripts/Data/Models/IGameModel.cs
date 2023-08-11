@@ -4,13 +4,18 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using Newtonsoft.Json;
 
 namespace BattleCruisers.Data.Models
 {
     public interface IGameModel
     {
-        public int Coins { get; set; }
+        int Coins { get; set; }
+        List<int> CaptainExoList { get; set; }
+        List<int> HeckleList { get; set; }
+        List<CaptainData> Captains { get; set; }
+        List<HeckleData> Heckles { get; set; }
         int NumOfLevelsCompleted { get; }
         long LifetimeDestructionScore { get; set; }
         long BestDestructionScore { get; set; }

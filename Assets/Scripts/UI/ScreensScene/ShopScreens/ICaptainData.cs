@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
-    public interface IHeckleData
+    public interface ICaptainData
     {
-        int HeckleCost { get; }
-        string StringKeyBase { get; }  
+        int CaptainCost { get; }
+        string NameStringKeyBase { get; }
+        string DescriptionKeyBase { get; }
         bool IsOwned { get; }
         int Index { get; }
     }
 }
-

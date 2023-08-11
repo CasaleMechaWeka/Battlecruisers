@@ -139,7 +139,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Common setup
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
+            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, dataProvider);
             IPrefabFetcher prefabFetcher = new PrefabFetcher();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);

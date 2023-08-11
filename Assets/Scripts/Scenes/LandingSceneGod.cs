@@ -456,14 +456,6 @@ namespace BattleCruisers.Scenes
         {
             Debug.Log("======> InternetConnectivity EventHandler is working : " + InternetConnectivity.Value);
         }
-
-
-
-
-
-
-
-
         public void OnRetry()
         {
             if (loginType == LoginType.Anonymous)

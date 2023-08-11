@@ -8,6 +8,7 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Pools;
 using System.Runtime.InteropServices;
 
@@ -20,7 +21,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly IMultiCache<Cruiser> _cruisers;
         private readonly IMultiCache<ExplosionController> _explosions;
         private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
-        private readonly IMultiCache<CaptainExoData> _captains;
+        private readonly IMultiCache<CaptainExo> _captains;
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
         public DroneController Drone { get; }
@@ -32,7 +33,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IMultiCache<Cruiser> cruisers, 
             IMultiCache<ExplosionController> explosions, 
             IMultiCache<ShipDeathInitialiser> shipDeaths,
-            IMultiCache<CaptainExoData> captains,
+            IMultiCache<CaptainExo> captains,
             IUntypedMultiCache<Projectile> projectiles, 
             DroneController drone,
             AudioSourceInitialiser audioSource)
@@ -80,7 +81,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             return _projectiles.GetPrefab<TProjectile>(prefabKey);
         }
 
-        public CaptainExoData GetCaptainExo(IPrefabKey key)
+        public CaptainExo GetCaptainExo(IPrefabKey key)
         {
             return _captains.GetPrefab(key);
         }
