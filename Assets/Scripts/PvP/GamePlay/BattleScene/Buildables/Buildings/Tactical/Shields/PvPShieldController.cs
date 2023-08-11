@@ -10,6 +10,7 @@ using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -130,8 +131,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 if (c2d.gameObject.layer == 15)
                 {
-                    IPvPTarget target = c2d.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
-                    target.SetBuildingImmunity(boo);
+                    // Check if the center of the collider is within the circle
+                    Vector2 circleCenter = transform.position;
+                    Vector2 colliderCenter = c2d.bounds.center;
+                    //float colliderRadius = c2d.bounds.extents.magnitude;
+                    if ((colliderCenter - circleCenter).sqrMagnitude <= 25.0f) // 5.0f * 5.0f
+                    {
+                        ITarget target = c2d.gameObject.GetComponent<ITargetProxy>()?.Target;
+                        target.SetBuildingImmunity(boo);
+                    }
                 }
             }
         }
