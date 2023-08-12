@@ -191,6 +191,12 @@ namespace BattleCruisers.Data.Models
             set => _captains = value;
         }
 
+        public List<IAPData> _iaps;
+        public List<IAPData> IAPs
+        {
+            get => _iaps;
+            set => _iaps = value;
+        }
         // Captain Logic
 
         [SerializeField]
@@ -402,6 +408,13 @@ namespace BattleCruisers.Data.Models
                     new CaptainData(nameBase:"CaptainExo010",descriptionBase: "CaptainDescription010",id: 10),new CaptainData(nameBase:"CaptainExo011",descriptionBase : "CaptainDescription011", id: 11),new CaptainData(nameBase:"CaptainExo012",descriptionBase : "CaptainDescription012", id: 12),new CaptainData(nameBase : "CaptainExo013",descriptionBase: "CaptainDescription013",id: 13),new CaptainData(nameBase : "CaptainExo014",descriptionBase: "CaptainDescription014",id: 14),
                     new CaptainData(nameBase:"CaptainExo015",descriptionBase: "CaptainDescription015",id: 15),new CaptainData(nameBase:"CaptainExo016",descriptionBase: "CaptainDescription016",id: 16),new CaptainData(nameBase:"CaptainExo017",descriptionBase: "CaptainDescription017",id: 17),new CaptainData(nameBase : "CaptainExo018",descriptionBase: "CaptainDescription018",id: 18),new CaptainData(nameBase : "CaptainExo019",descriptionBase: "CaptainDescription019",id: 19),
                 };
+
+            _iaps = new List<IAPData> { 
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins100Pack", iapDescriptionKeybase: "Coins100Pack", iapIconName: "Coins100Pack", 0.99f, 100),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins500Pack", iapDescriptionKeybase: "Coins500Pack", iapIconName: "Coins500Pack", 1.99f, 500),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Pack", iapDescriptionKeybase: "Coins1000Pack", iapIconName: "Coins1000Pack", 2.99f, 1000),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Pack", iapDescriptionKeybase: "Coins5000Pack", iapIconName: "Coins5000Pack", 3.99f, 5000),
+            };
         }
 
         public GameModel(

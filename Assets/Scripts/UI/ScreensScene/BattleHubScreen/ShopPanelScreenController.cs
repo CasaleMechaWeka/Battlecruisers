@@ -16,8 +16,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ShopPanelScreenController : ScreenController
     {
-        IDataProvider _dataProvider;
-
         public CanvasGroupButton backButton, buyCaptainButton, buyHeckleButton, blackMarketButton;
         public CanvasGroupButton captainsButton, hecklesButton;
         public Transform captainItemContainer, heckleItemContainer;
@@ -26,6 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public HecklesContainer hecklesContainer;
         private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
+        private IDataProvider _dataProvider;
         public Transform captainCamContainer;
 
 

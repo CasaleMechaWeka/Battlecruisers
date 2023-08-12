@@ -300,6 +300,7 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(true);
             GoToScreen(blackMarketScreen);
+            blackMarketScreen.InitialiseIAPs();
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
