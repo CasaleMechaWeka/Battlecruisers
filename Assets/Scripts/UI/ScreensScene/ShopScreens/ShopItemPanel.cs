@@ -23,20 +23,20 @@ public class ShopItemPanel : Panel
         IGameModel gameModel,
         ShopItemDisplayer itemDisplayer)
     {
-        ShopCaptainButton[] itemButton = GetComponentsInChildren<ShopCaptainButton>(includeInactive: true);
+        CaptainItemController[] itemButton = GetComponentsInChildren<CaptainItemController>(includeInactive: true);
         List<int> captainList = RandomIndex();
-        foreach (ShopCaptainButton captain in itemButton)
+        foreach (CaptainItemController captain in itemButton)
         {
             foreach (CaptainExoKey key in StaticPrefabKeys.CaptainExos.AllKeys)
             {
-                CaptainExoData temp = prefabFactory.GetCaptainExo(key);
-                if (captainList.Contains(temp.captainIndex))
+                CaptainExo temp = prefabFactory.GetCaptainExo(key);
+/*                if (captainList.Contains(temp.captainIndex))
                 {
                     Debug.Log(temp);
                     captainList.Remove(temp.captainIndex);
                     captain.Initialise(soundPlayer, prefabFactory, temp, itemDisplayer);
                     break;
-                }
+                }*/
             }
         }
         

@@ -22,13 +22,13 @@ namespace BattleCruisers.UI.ScreensScene
             
         }
 
-        public void DisplayItem(CaptainExoData captainExo)
+        public void DisplayItem(CaptainExo captainExo)
         {
             if(this.gameObject.activeSelf == false)
             {
                 this.gameObject.SetActive(true);
             }
-            Image image = _image.GetComponent<Image>();
+/*            Image image = _image.GetComponent<Image>();
             Text name = _name.GetComponent<Text>();
             Text description = _description.GetComponent<Text>();
             Text costText = _price.GetComponent<Text>();
@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene
                 {
                     feedback.gameObject.SetActive(true);
                 }
-            }
+            }*/
             
         }
     }

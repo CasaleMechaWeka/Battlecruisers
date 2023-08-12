@@ -133,7 +133,7 @@ namespace BattleCruisers.Utils.Fetchers
             return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
         }
 
-        public CaptainExoData GetCaptainExo(IPrefabKey key)
+        public CaptainExo GetCaptainExo(IPrefabKey key)
         {
             return _prefabCache.GetCaptainExo(key);
         }

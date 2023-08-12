@@ -93,7 +93,7 @@ namespace BattleCruisers.Scenes
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
+            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, ApplicationModelProvider.ApplicationModel.DataProvider);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
@@ -134,7 +134,7 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider,_applicationModel, nextLevelHelper);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
@@ -192,7 +192,7 @@ namespace BattleCruisers.Scenes
             {
                 GoToLoadoutScreen();
             }
-            else if(testShopScreen)
+            else if (testShopScreen)
             {
                 GotoShopScreen();
             }
@@ -411,7 +411,7 @@ namespace BattleCruisers.Scenes
         public void LoadPvPBattleScene()
         {
             AdvertisingBanner.stopAdvert();
-         //   _sceneNavigator.GoToScene(SceneNames.MULTIPLAY_SCREENS_SCENE, true);
+            //   _sceneNavigator.GoToScene(SceneNames.MULTIPLAY_SCREENS_SCENE, true);
             CleanUp();
         }
 

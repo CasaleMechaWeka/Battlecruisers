@@ -39,20 +39,18 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             foreach (CaptainExoKey captain in StaticPrefabKeys.CaptainExos.AllKeys)
             {
                 var captainExoData = await GetCaptainExoData(captain);
-                if (captainExoData.IsOwned)
+/*                if (captainExoData.IsOwned)
                 {
                     var buttonGameObject = Instantiate(captainButtonPrefab, buttonContainer);
                     var button = buttonGameObject.GetComponent<CaptainExoButton>();
                     button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.PlayerLoadout.CurrentCaptain, SelectCaptain);
-                }
+                }*/
             }
         }
 
-
-
-        private async Task<ICaptainExoData> GetCaptainExoData(CaptainExoKey captainExoKey)
+        private async Task<ICaptainExo> GetCaptainExoData(CaptainExoKey captainExoKey)
         {
-            IPrefabContainer<ICaptainExoData> captainExoPrefabContainer = await _prefabFetcher.GetPrefabAsync<ICaptainExoData>(captainExoKey);
+            IPrefabContainer<ICaptainExo> captainExoPrefabContainer = await _prefabFetcher.GetPrefabAsync<ICaptainExo>(captainExoKey);
             return captainExoPrefabContainer.Prefab;
         }
 

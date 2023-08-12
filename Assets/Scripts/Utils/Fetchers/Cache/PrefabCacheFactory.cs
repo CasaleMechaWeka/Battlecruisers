@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Deaths;
@@ -9,6 +10,7 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
@@ -29,11 +31,14 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     public class PrefabCacheFactory : IPrefabCacheFactory
     {
         private readonly ILocTable _commonStrings;
+        private readonly IDataProvider _dataProvider;
 
-        public PrefabCacheFactory(ILocTable commonStrings)
+        public PrefabCacheFactory(ILocTable commonStrings, IDataProvider dataProvider)
         {
             Assert.IsNotNull(commonStrings);
+            Assert.IsNotNull(dataProvider);
             _commonStrings = commonStrings;
+            _dataProvider = dataProvider;
         }
 
         public async Task<IPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
@@ -53,15 +58,15 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
             IDictionary<IPrefabKey, ExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, ExplosionController>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Explosions.AllKeys, keyToExplosion));
-            
+
             IDictionary<IPrefabKey, ShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, ShipDeathInitialiser>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.ShipDeaths.AllKeys, keyToDeath));
 
             IDictionary<IPrefabKey, Projectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Projectile>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
 
-            IDictionary<IPrefabKey, CaptainExoData> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExoData>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.CaptainExos.AllKeys, keyToCaptains));
+            IDictionary<IPrefabKey, CaptainExo> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, /*StaticPrefabKeys.CaptainExos.AllKeys*/ getSelectedCaptaionExo(), keyToCaptains));
 
             Container<DroneController> droneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));
@@ -80,10 +85,26 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<Cruiser>(keyToCruiser),
                     new MultiCache<ExplosionController>(keyToExplosion),
                     new MultiCache<ShipDeathInitialiser>(keyToDeath),
-                    new MultiCache<CaptainExoData>(keyToCaptains),
+                    new MultiCache<CaptainExo>(keyToCaptains),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
                     droneContainer.Value,
                     audioSourceContainer.Value);
+        }
+
+        private IList<IPrefabKey> getSelectedCaptaionExo() // we don't need to load all CaptainExo to reduce Memory
+        {
+            IList<IPrefabKey> captainExos = new List<IPrefabKey>();
+            foreach (int index in _dataProvider.GameModel.CaptainExoList)
+            {
+                captainExos.Add(StaticPrefabKeys.CaptainExos.AllKeys[index]);
+            }
+
+            foreach (PrefabKey prefabKey in _dataProvider.GameModel.PlayerLoadout.CaptainExos)
+            {
+                captainExos.Add(prefabKey);
+            }
+
+            return captainExos;
         }
 
         private async Task GetPrefabs<TPrefab>(
@@ -96,9 +117,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             await Task.WhenAll(prefabTasks);
         }
 
-        private async Task GetPrefab<TPrefab>( 
+        private async Task GetPrefab<TPrefab>(
             IPrefabFetcher prefabFetcher,
-            IDictionary<IPrefabKey, TPrefab> keyToPrefab, 
+            IDictionary<IPrefabKey, TPrefab> keyToPrefab,
             IPrefabKey prefabKey)
                 where TPrefab : class, IPrefab
         {
@@ -107,7 +128,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
             prefabContainer.Prefab.StaticInitialise(_commonStrings);
-            if(!keyToPrefab.ContainsKey(prefabKey))
+            if (!keyToPrefab.ContainsKey(prefabKey))
                 keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
 

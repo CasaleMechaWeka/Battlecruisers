@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -160,6 +161,46 @@ namespace BattleCruisers.Data.Models
             get => _totalVoyages;
             set => _totalVoyages = value;
         }
+
+
+        private List<int> _captainExoList;
+        public List<int> CaptainExoList
+        {
+            get => _captainExoList;
+            set => _captainExoList = value;
+        }
+
+        private List<int> _heckleList;
+        public List<int> HeckleList
+        {
+            get => _heckleList;
+            set => _heckleList = value;
+        }
+
+        public List<HeckleData> _heckles;
+        public List<HeckleData> Heckles
+        {
+            get => _heckles;
+            set => _heckles = value;
+        }
+
+        public List<CaptainData> _captains;
+        public List<CaptainData> Captains
+        {
+            get => _captains;
+            set => _captains = value;
+        }
+
+        // Captain Logic
+
+        [SerializeField]
+        private CaptainExoKey _currentCaptain;
+        public CaptainExoKey CurrentCaptain
+        {
+            get => _currentCaptain;
+            set => _currentCaptain = value;
+        }
+
 
         // Pre-Rogue stuff
 
@@ -345,6 +386,22 @@ namespace BattleCruisers.Data.Models
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
 
+            _captainExoList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+
+            _heckles = new List<HeckleData> {
+                   new HeckleData("Heckle000", owned: true,id: 0), new HeckleData("Heckle001",owned: true,id: 1), new HeckleData("Heckle002",owned: true,id: 2), new HeckleData("Heckle003",id: 3), new HeckleData("Heckle004",id: 4),
+                   new HeckleData("Heckle005",id: 5), new HeckleData("Heckle006",id: 6), new HeckleData("Heckle007",id: 7), new HeckleData("Heckle008",id: 8), new HeckleData("Heckle009",id: 9),
+                   new HeckleData("Heckle010",id:10), new HeckleData("Heckle011",id: 11), new HeckleData("Heckle012",id: 12), new HeckleData("Heckle013",id: 13), new HeckleData("Heckle014",id: 14),
+                   new HeckleData("Heckle015",id: 15), new HeckleData("Heckle016",id: 16), new HeckleData("Heckle017",id: 17), new HeckleData("Heckle018",id: 18), new HeckleData("Heckle019",id: 19),
+                };
+
+            _captains = new List<CaptainData> {
+                    new CaptainData(nameBase: "CaptainExo000", descriptionBase: "CaptainDescription000", owned: true, id: 0),new CaptainData(nameBase:"CaptainExo001",descriptionBase : "CaptainDescription001", id: 1),new CaptainData(nameBase : "CaptainExo002",descriptionBase : "CaptainDescription002", id: 2),new CaptainData(nameBase : "CaptainExo003",descriptionBase : "CaptainDescription003", id: 3),new CaptainData(nameBase : "CaptainExo004",descriptionBase: "CaptainDescription004",id: 4),
+                    new CaptainData(nameBase:"CaptainExo005",descriptionBase: "CaptainDescription005",id: 5),new CaptainData(nameBase:"CaptainExo006",descriptionBase: "CaptainDescription006",id: 6),new CaptainData(nameBase:"CaptainExo007",descriptionBase: "CaptainDescription007",id: 7),new CaptainData(nameBase : "CaptainExo008",descriptionBase: "CaptainDescription008",id: 8),new CaptainData("CaptainExo009",descriptionBase: "CaptainDescription009",id: 9),
+                    new CaptainData(nameBase:"CaptainExo010",descriptionBase: "CaptainDescription010",id: 10),new CaptainData(nameBase:"CaptainExo011",descriptionBase : "CaptainDescription011", id: 11),new CaptainData(nameBase:"CaptainExo012",descriptionBase : "CaptainDescription012", id: 12),new CaptainData(nameBase : "CaptainExo013",descriptionBase: "CaptainDescription013",id: 13),new CaptainData(nameBase : "CaptainExo014",descriptionBase: "CaptainDescription014",id: 14),
+                    new CaptainData(nameBase:"CaptainExo015",descriptionBase: "CaptainDescription015",id: 15),new CaptainData(nameBase:"CaptainExo016",descriptionBase: "CaptainDescription016",id: 16),new CaptainData(nameBase:"CaptainExo017",descriptionBase: "CaptainDescription017",id: 17),new CaptainData(nameBase : "CaptainExo018",descriptionBase: "CaptainDescription018",id: 18),new CaptainData(nameBase : "CaptainExo019",descriptionBase: "CaptainDescription019",id: 19),
+                };
         }
 
         public GameModel(

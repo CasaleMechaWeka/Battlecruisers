@@ -33,12 +33,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ResolutionDropdown resolutionDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
-            IBroadcastingProperty<float> musicVolume,
-            IBroadcastingProperty<float> effectVolume,
             IBroadcastingProperty<float> masterVolume,
+            IBroadcastingProperty<float> effectVolume,
+            IBroadcastingProperty<float> ambientVolume,
             IBroadcastingProperty<float> alertVolume,
             IBroadcastingProperty<float> interfaceVolume,
-            IBroadcastingProperty<float> ambientVolume,
+            IBroadcastingProperty<float> musicVolume,
             IBroadcastingProperty<bool> showInGameHints,
             IBroadcastingProperty<bool> showToolTips,
             IBroadcastingProperty<bool> altDroneSounds,
@@ -58,16 +58,16 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _resolutionDropdown = resolutionDropdown;
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
-            _musicVolume = musicVolume;
-            _effectVolume = effectVolume;
             _masterVolume = masterVolume;
+            _effectVolume = effectVolume;
+            _ambientVolume = ambientVolume;
+            _alertVolume = alertVolume;
+            _interfaceVolume = interfaceVolume;
+            _musicVolume = musicVolume;
             _showInGameHints = showInGameHints;
             _fullScreen = fullScreen;
             _VSync = VSync;
             _hotkeysPanel = hotkeysPanel;
-            _alertVolume = alertVolume;
-            _interfaceVolume = interfaceVolume;
-            _ambientVolume = ambientVolume;
             _showToolTips = showToolTips;
             _altDroneSounds = altDroneSounds;
             _showAds = showAds;
@@ -80,12 +80,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _resolutionDropdown.ResolutionChanged += (sender, e) => UpdateEnabledStatus();
             _zoomSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _musicVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _effectVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _masterVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _effectVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _ambientVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _alertVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _interfaceVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _ambientVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _musicVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showInGameHints.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showToolTips.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _fullScreen.ValueChanged += (sender, e) => UpdateEnabledStatus();
@@ -113,11 +113,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
             _settingsManager.MasterVolume = _masterVolume.Value;
-            _settingsManager.MusicVolume = _musicVolume.Value;
             _settingsManager.EffectVolume = _effectVolume.Value;
+            _settingsManager.AmbientVolume = _ambientVolume.Value;
             _settingsManager.AlertVolume = _alertVolume.Value;
             _settingsManager.InterfaceVolume = _interfaceVolume.Value;
-            _settingsManager.AmbientVolume = _ambientVolume.Value;
+            _settingsManager.MusicVolume = _musicVolume.Value;
             _settingsManager.ShowInGameHints = _showInGameHints.Value;
             _settingsManager.ShowToolTips = _showToolTips.Value;
             _settingsManager.AltDroneSounds = _altDroneSounds.Value;
@@ -145,12 +145,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _resolutionDropdown.Resolution != _settingsManager.Resolution
                 || _zoomSpeedLevel.Value != _settingsManager.ZoomSpeedLevel
                 || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
-                || _musicVolume.Value != _settingsManager.MusicVolume
-                || _effectVolume.Value != _settingsManager.EffectVolume
                 || _masterVolume.Value != _settingsManager.MasterVolume
+                || _effectVolume.Value != _settingsManager.EffectVolume
+                || _ambientVolume.Value != _settingsManager.AmbientVolume
                 || _alertVolume.Value != _settingsManager.AlertVolume
                 || _interfaceVolume.Value != _settingsManager.InterfaceVolume
-                || _ambientVolume.Value != _settingsManager.AmbientVolume
+                || _musicVolume.Value != _settingsManager.MusicVolume
                 || _showInGameHints.Value != _settingsManager.ShowInGameHints
                 || _showToolTips.Value != _settingsManager.ShowToolTips
                 || _altDroneSounds.Value != _settingsManager.AltDroneSounds
