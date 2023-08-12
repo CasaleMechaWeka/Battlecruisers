@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
         public ArenaSelectPanelScreenController arenaSelectPanel;
-        // public CoinBattleScreenController coinBattleController;
+        public CoinBattleScreenController coinBattleController;
 
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
 
@@ -78,7 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
-         //   coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
+            coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
 
         }
 
@@ -159,7 +159,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                         if (Application.internetReachability == NetworkReachability.NotReachable)
                         {
-                     //       coinBattleController.BattleButtonClicked();
+                            coinBattleController.BattleButtonClicked();
                         }
                         else
                         {

@@ -55,7 +55,14 @@ namespace BattleCruisers.Utils.BattleScene
             
             _applicationModel.DataProvider.SaveGame();
 
-            _applicationModel.ShowPostBattleScreen = true;
+            if (_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                _applicationModel.ShowPostBattleScreen = false;
+            }
+            else
+            {
+                _applicationModel.ShowPostBattleScreen = true;
+            }
             TimeBC.Instance.TimeScale = 1;
 
             if (retryLevel)
@@ -95,8 +102,15 @@ namespace BattleCruisers.Utils.BattleScene
 
             
             //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-
-            _applicationModel.ShowPostBattleScreen = true;
+            if(_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                _applicationModel.ShowPostBattleScreen = false;
+            }
+            else
+            {
+                _applicationModel.ShowPostBattleScreen = true;
+            }
+            
             TimeBC.Instance.TimeScale = 1;
 
             if (retryLevel)

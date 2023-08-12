@@ -167,6 +167,7 @@ namespace BattleCruisers.Scenes
             }
             else if (levelToShowCutscene == 0)
             {
+                _applicationModel.Mode = GameMode.Campaign;
                 GoToHomeScreen();
             }
             else
