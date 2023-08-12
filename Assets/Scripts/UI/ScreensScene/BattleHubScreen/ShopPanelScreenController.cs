@@ -7,6 +7,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using UnityEngine;
@@ -17,10 +18,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         IDataProvider _dataProvider;
 
-        public CanvasGroupButton backButton, buyButton, blackMarketButton;
-        public Transform itemContainer;
-        public GameObject itemPrefab;
+        public CanvasGroupButton backButton, buyCaptainButton, buyHeckleButton, blackMarketButton;
+        public CanvasGroupButton captainsButton, hecklesButton;
+        public Transform captainItemContainer, heckleItemContainer;
+        public GameObject captainItemPrefab, heckleItemPrefab;
         public CaptainsContainer captainsContainer;
+        public HecklesContainer hecklesContainer;
         private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         public Transform captainCamContainer;
@@ -34,15 +37,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
-            Helper.AssertIsNotNull(backButton, buyButton, blackMarketButton, captainsContainer);
+            Helper.AssertIsNotNull(backButton, buyCaptainButton, buyHeckleButton, blackMarketButton, captainsContainer);
+            Helper.AssertIsNotNull(captainsButton, hecklesButton);
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
             //Initialise each button with its function
             backButton.Initialise(_soundPlayer, GoHome, this);
-            buyButton.Initialise(_soundPlayer, PurchaseCaptainExo, this);
+            buyCaptainButton.Initialise(_soundPlayer, PurchaseCaptainExo, this);
+            buyHeckleButton.Initialise(_soundPlayer, PurchaseHeckle, this);
+            captainsButton.Initialise(_soundPlayer, CaptainsButton_OnClick);
+            hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
             blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
             captainsContainer.Initialize();
+            hecklesContainer.Initialize();
         }
 
 
@@ -57,14 +65,85 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         }
 
+        public void PurchaseHeckle()
+        {
+
+        }
+
         public void GotoBlackMarket()
         {
             _screensSceneGod.GotoBlackMarketScreen();
         }
 
-        public async void InitiaiseShop()
+        public void CaptainsButton_OnClick()
         {
-            CaptainItemController[] items = itemContainer.gameObject.GetComponentsInChildren<CaptainItemController>();
+            InitiaiseCaptains();
+        }
+
+        public void HeckesButton_OnClick()
+        {
+            InitialiseHeckles();
+        }
+
+        public async void InitialiseHeckles()
+        {
+
+
+            // remove all old children to refresh
+            HeckleItemController[] items = heckleItemContainer.gameObject.GetComponentsInChildren<HeckleItemController>();
+            foreach (HeckleItemController item in items)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+
+            foreach (GameObject obj in captainsContainer.visualOfCaptains)
+            {
+                if (obj != null)
+                    DestroyImmediate(obj);
+            }
+            captainsContainer.visualOfCaptains.Clear();
+
+            captainsContainer.gameObject.SetActive(false);
+            hecklesContainer.gameObject.SetActive(true);
+            hecklesContainer.btnBuy.SetActive(false);
+            hecklesContainer.ownFeedback.SetActive(false);
+
+            CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain), captainCamContainer);
+            captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
+            captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
+
+            await Task.Delay(100);
+            byte ii = 0;
+            foreach (int index in _dataProvider.GameModel.HeckleList)
+            {
+                GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
+                heckleItem.GetComponent<HeckleItemController>().StaticInitialise(_soundPlayer, _dataProvider.GameModel.Heckles[index], hecklesContainer, ii);
+                if (ii == 0)
+                {
+                    heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);
+                    hecklesContainer.currentItem = heckleItem.GetComponent<HeckleItemController>();
+
+                    if (_dataProvider.GameModel.Heckles[index].IsOwned)
+                    {
+                        hecklesContainer.btnBuy.SetActive(false);
+                        hecklesContainer.ownFeedback.SetActive(true);
+                    }
+                    else
+                    {
+                        hecklesContainer.btnBuy.SetActive(true);
+                        hecklesContainer.ownFeedback.SetActive(false);
+                    }
+                }
+                ii++;
+            }
+
+        }
+        public async void InitiaiseCaptains()
+        {
+
+
+            // remove all old children to refersh
+            CaptainItemController[] items = captainItemContainer.gameObject.GetComponentsInChildren<CaptainItemController>();
             foreach (CaptainItemController item in items)
             {
                 DestroyImmediate(item.gameObject);
@@ -73,10 +152,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.ownFeedback.SetActive(false);
             await Task.Delay(100);
             byte ii = 0;
+       
+            foreach (GameObject obj in captainsContainer.visualOfCaptains)
+            {
+                if (obj != null)
+                    DestroyImmediate(obj);
+            }
             captainsContainer.visualOfCaptains.Clear();
+
+            captainsContainer.gameObject.SetActive(true);
+            hecklesContainer.gameObject.SetActive(false);
+
             foreach (int index in _dataProvider.GameModel.CaptainExoList)
             {
-                GameObject captainItem = Instantiate(itemPrefab, itemContainer) as GameObject;
+                GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
                 CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[index]), captainCamContainer);
                 captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                 captainExo.gameObject.SetActive(false);
@@ -88,7 +177,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     captainsContainer.currentItem = captainItem.GetComponent<CaptainItemController>();
                     captainExo.gameObject.SetActive(true);
                     if (_dataProvider.GameModel.Captains[index].IsOwned)
-
                     {
                         captainsContainer.btnBuy.SetActive(false);
                         captainsContainer.ownFeedback.SetActive(true);

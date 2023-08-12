@@ -31,6 +31,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentItem._clickedFeedback.SetActive(false);
             visualOfCaptains[currentItem._index].SetActive(false);
             currentItem = (CaptainItemController)sender;
+            ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
             if(e.captainData.IsOwned)
             {
                 btnBuy.SetActive(false);
