@@ -410,10 +410,10 @@ namespace BattleCruisers.Data.Models
                 };
 
             _iaps = new List<IAPData> { 
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins100Pack", iapDescriptionKeybase: "Coins100Pack", iapIconName: "Coins100Pack", 0.99f, 100),
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins500Pack", iapDescriptionKeybase: "Coins500Pack", iapIconName: "Coins500Pack", 1.99f, 500),
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Pack", iapDescriptionKeybase: "Coins1000Pack", iapIconName: "Coins1000Pack", 2.99f, 1000),
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Pack", iapDescriptionKeybase: "Coins5000Pack", iapIconName: "Coins5000Pack", 3.99f, 5000),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins100Pack", iapDescriptionKeybase: "Coins100PackDescription", iapIconName: "Coins100Pack", 0.99f, 100),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins500Pack", iapDescriptionKeybase: "Coins500PackDescription", iapIconName: "Coins500Pack", 1.99f, 500),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Pack", iapDescriptionKeybase: "Coins1000PackDescription", iapIconName: "Coins1000Pack", 2.99f, 1000),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Pack", iapDescriptionKeybase: "Coins5000PackDescription", iapIconName: "Coins5000Pack", 3.99f, 5000),
             };
         }
 
