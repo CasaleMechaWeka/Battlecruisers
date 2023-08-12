@@ -68,14 +68,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
             scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
-            IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
-            musicVolumeSlider.Initialise(_settingsManager.MusicVolume, musicVolumeRange);
+            IRange<float> masterVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            masterVolumeSlider.Initialise(_settingsManager.MasterVolume, masterVolumeRange);
 
             IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             effectVolumeSlider.Initialise(_settingsManager.EffectVolume, effectVolumeRange);
 
-            IRange<float> masterVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
-            masterVolumeSlider.Initialise(_settingsManager.MasterVolume, masterVolumeRange);
+            IRange<float> ambientVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            ambientVolumeSlider.Initialise(_settingsManager.AmbientVolume, ambientVolumeRange);
 
             IRange<float> alertVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             alertVolumeSlider.Initialise(_settingsManager.AlertVolume, alertVolumeRange);
@@ -83,8 +83,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IRange<float> interfaceVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             interfaceVolumeSlider.Initialise(_settingsManager.InterfaceVolume, interfaceVolumeRange);
 
-            IRange<float> ambientVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
-            ambientVolumeSlider.Initialise(_settingsManager.AmbientVolume, ambientVolumeRange);
+            IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            musicVolumeSlider.Initialise(_settingsManager.MusicVolume, musicVolumeRange);
 
             showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
             showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);
@@ -106,12 +106,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     resolutionDropdown,               
                     zoomSlider.SliderValue,           
                     scrollSlider.SliderValue,         
-                    musicVolumeSlider.SliderValue,    
-                    effectVolumeSlider.SliderValue,   
                     masterVolumeSlider.SliderValue,   
+                    effectVolumeSlider.SliderValue,   
+                    ambientVolumeSlider.SliderValue,  
                     alertVolumeSlider.SliderValue,    
                     interfaceVolumeSlider.SliderValue,
-                    ambientVolumeSlider.SliderValue,  
+                    musicVolumeSlider.SliderValue,    
                     showInGameHintsToggle.IsChecked,  
                     showToolTipsToggle.IsChecked,     
                     altDroneSoundsToggle.IsChecked,   
@@ -282,11 +282,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
             masterVolumeSlider.ResetToDefaults(_settingsManager.MasterVolume);
-            musicVolumeSlider.ResetToDefaults(_settingsManager.MusicVolume);
             effectVolumeSlider.ResetToDefaults(_settingsManager.EffectVolume);
+            ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
             alertVolumeSlider.ResetToDefaults(_settingsManager.AlertVolume);
             interfaceVolumeSlider.ResetToDefaults(_settingsManager.InterfaceVolume);
-            ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
+            musicVolumeSlider.ResetToDefaults(_settingsManager.MusicVolume);
             showInGameHintsToggle.ResetToDefaults(_settingsManager.ShowInGameHints);
             showToolTipsToggle.ResetToDefaults(_settingsManager.ShowToolTips);
             VSyncToggle.ResetToDefaults(_settingsManager.VSync);

@@ -243,11 +243,11 @@ namespace BattleCruisers.Data.Models
             AIDifficulty = Difficulty.Hard;
             ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
             ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
-            MusicVolume = DEFAULT_VOLUME;
             EffectVolume = DEFAULT_VOLUME;
             AmbientVolume = DEFAULT_VOLUME;
             AlertVolume = DEFAULT_VOLUME;
             InterfaceVolume = DEFAULT_VOLUME;
+            MusicVolume = DEFAULT_VOLUME;
 
             MasterVolume = 0.5f;
             ShowInGameHints = true;
@@ -286,8 +286,8 @@ namespace BattleCruisers.Data.Models
             // For backwards compatability, when this class did not have these fields
             if (_version == ModelVersion.PreMusicVolume)
             {
-                _musicVolume = DEFAULT_VOLUME;
-                _effectVolume = DEFAULT_VOLUME;
+                //_musicVolume = DEFAULT_VOLUME;
+                //_effectVolume = DEFAULT_VOLUME;
 
                 _version = ModelVersion.WithMusicVolume;
             }
@@ -310,20 +310,22 @@ namespace BattleCruisers.Data.Models
                 other != null
                 && AIDifficulty == other.AIDifficulty
                 && ScrollSpeedLevel == other.ScrollSpeedLevel
-                && ShowInGameHints == other.ShowInGameHints
                 && ZoomSpeedLevel == other.ZoomSpeedLevel
-                && MusicVolume == other.MusicVolume
-                && EffectVolume == other.EffectVolume
+                && ShowInGameHints == other.ShowInGameHints
                 && MasterVolume == other.MasterVolume
+                && EffectVolume == other.EffectVolume
                 && AmbientVolume == other.AmbientVolume
-                && InterfaceVolume == other.InterfaceVolume
                 && AlertVolume == other.AlertVolume
+                && InterfaceVolume == other.InterfaceVolume
+                && MusicVolume == other.MusicVolume
                 && ShowToolTips == other.ShowToolTips;
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(AIDifficulty, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel, MusicVolume, EffectVolume);
+            return this.GetHashCode
+                (AIDifficulty, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel,
+                MasterVolume, EffectVolume, AmbientVolume, AlertVolume, InterfaceVolume, MusicVolume, ShowToolTips);
         }
     }
 }
