@@ -25,14 +25,14 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
             ISettingsManager settingsManager, 
-            IBroadcastingProperty<float> musicVolume,
-            IBroadcastingProperty<float> effectVolume,
-            IBroadcastingProperty<int> zoomSpeedLevel,
-            IBroadcastingProperty<int> scrollSpeedLevel,
             IBroadcastingProperty<float> masterVolume,
+            IBroadcastingProperty<float> effectVolume,
+            IBroadcastingProperty<float> ambientVolume,
             IBroadcastingProperty<float> alertVolume,
             IBroadcastingProperty<float> interfaceVolume,
-            IBroadcastingProperty<float> ambientVolume,
+            IBroadcastingProperty<float> musicVolume,
+            IBroadcastingProperty<int> zoomSpeedLevel,
+            IBroadcastingProperty<int> scrollSpeedLevel,
             IBroadcastingProperty<bool> showToolTips)
         {
             base.Initialise(soundPlayer, parent: mainMenuManager);
@@ -41,27 +41,27 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
             _mainMenuManager = mainMenuManager;
             _settingsManager = settingsManager;
-            _musicVolume = musicVolume;
-            _effectVolume = effectVolume;
             _masterVolume = masterVolume;
-            _zoomSpeedLevel = zoomSpeedLevel;
-            _scrollSpeedLevel = scrollSpeedLevel;
+            _effectVolume = effectVolume;
+            _ambientVolume = ambientVolume;
             _alertVolume = alertVolume;
             _interfaceVolume = interfaceVolume;
-            _ambientVolume = ambientVolume;
+            _musicVolume = musicVolume;
+            _zoomSpeedLevel = zoomSpeedLevel;
+            _scrollSpeedLevel = scrollSpeedLevel;
             _showToolTips = showToolTips;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
-            _musicVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _effectVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _zoomSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _masterVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _effectVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _ambientVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _alertVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _interfaceVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _ambientVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _musicVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _zoomSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showToolTips.ValueChanged += (sender, e) => UpdateEnabledStatus();
 
             UpdateEnabledStatus();
@@ -74,12 +74,12 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
             Assert.IsTrue(ShouldBeEnabled());
             
-            _settingsManager.MusicVolume = _musicVolume.Value;
-            _settingsManager.EffectVolume = _effectVolume.Value;
-            _settingsManager.AlertVolume = _alertVolume.Value;
             _settingsManager.MasterVolume = _masterVolume.Value;
-            _settingsManager.InterfaceVolume = _interfaceVolume.Value;
+            _settingsManager.EffectVolume = _effectVolume.Value;
             _settingsManager.AmbientVolume = _ambientVolume.Value;
+            _settingsManager.AlertVolume = _alertVolume.Value;
+            _settingsManager.InterfaceVolume = _interfaceVolume.Value;
+            _settingsManager.MusicVolume = _musicVolume.Value;
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
             _settingsManager.ShowToolTips = _showToolTips.Value;
@@ -99,14 +99,14 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         private bool ShouldBeEnabled()
         {
             return
-                _musicVolume.Value != _settingsManager.MusicVolume
+                _masterVolume.Value != _settingsManager.MasterVolume
                 || _effectVolume.Value != _settingsManager.EffectVolume
-                || _zoomSpeedLevel.Value != _settingsManager.ZoomSpeedLevel
-                || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
-                || _masterVolume.Value != _settingsManager.MasterVolume
+                || _ambientVolume.Value != _settingsManager.AmbientVolume
                 || _alertVolume.Value != _settingsManager.AlertVolume
                 || _interfaceVolume.Value != _settingsManager.InterfaceVolume
-                || _ambientVolume.Value != _settingsManager.AmbientVolume
+                || _musicVolume.Value != _settingsManager.MusicVolume
+                || _zoomSpeedLevel.Value != _settingsManager.ZoomSpeedLevel
+                || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
                 || _showToolTips.Value != _settingsManager.ShowToolTips;
         }
     }

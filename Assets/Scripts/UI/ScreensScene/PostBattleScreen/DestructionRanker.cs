@@ -21,7 +21,17 @@ namespace BattleCruisers.PostBattleScreen
         public GameObject[] destructionRanks;
         public void DisplayRank(long score)
         {
-            destructionRanks[CalculateRank(score)].SetActive(true);
+            for (int i = 0; i < destructionRanks.Length; i++)
+            {
+                if (i == CalculateRank(score))
+                {
+                    destructionRanks[i].SetActive(true);
+                }
+                else
+                {
+                    destructionRanks[i].SetActive(false);
+                }
+            }
         }
 
         public int CalculateRank(long score)

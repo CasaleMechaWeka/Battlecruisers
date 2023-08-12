@@ -109,7 +109,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (cur_idx > IndexCurrentArena)
             {
                 // nav left
-                arenas[IndexCurrentArena].anchoredPosition = new Vector2(5000f, 0f);
+                arenas[IndexCurrentArena].anchoredPosition = new Vector2(-5000f, 0f);
                 arenas[IndexCurrentArena].SetAsLastSibling();
                 arenas[IndexCurrentArena].gameObject.SetActive(true);
                 arenas[IndexCurrentArena].DOAnchorPosX(0f, 0.3f)
@@ -121,7 +121,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             else if (cur_idx < IndexCurrentArena)
             {
                 // nav right
-                arenas[IndexCurrentArena].anchoredPosition = new Vector2(-5000f, 0f);
+                arenas[IndexCurrentArena].anchoredPosition = new Vector2(5000f, 0f);
                 arenas[IndexCurrentArena].SetAsLastSibling();
                 arenas[IndexCurrentArena].gameObject.SetActive(true);
                 arenas[IndexCurrentArena].DOAnchorPosX(0f, 0.3f)

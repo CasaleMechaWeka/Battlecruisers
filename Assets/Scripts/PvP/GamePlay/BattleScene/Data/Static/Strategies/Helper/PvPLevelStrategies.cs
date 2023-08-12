@@ -412,7 +412,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
                 new IPvPOffensiveRequest[] //Broadsword
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
+                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
+                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.High),
+                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
                 }
             };
         }

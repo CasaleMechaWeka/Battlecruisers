@@ -471,7 +471,7 @@ namespace BattleCruisers.Scenes
         private long CalculateScore(float time, long damage, long constant)
         {
             // feels weird to make this a method but I don't like doing it directly in the animation methods:
-            long score = (damage * 1000) / (long)Mathf.Pow(time, 2.0f) / constant;
+            long score = (damage * 1000) / ((long)Mathf.Pow(time, 2.0f) / constant);
             return score;
         }
 
