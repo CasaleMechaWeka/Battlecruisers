@@ -371,7 +371,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void GoToHomeScreen()
         {
-            _screensSceneGod.GoToHomeScreen();
+            //_screensSceneGod.GoToHomeScreen();
+            _screensSceneGod.GotoHubScreen();
         }
 
         public void RetryTutorial()

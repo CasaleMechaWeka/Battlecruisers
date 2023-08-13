@@ -184,9 +184,14 @@ namespace BattleCruisers.Scenes
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
-            else if (levelToShowCutscene == 0)
+            else if(_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.Mode = GameMode.Campaign;
+                fullScreenads.OpenAdvert();
+                GotoHubScreen();
+            }
+            else if (levelToShowCutscene == 0)
+            {
                 GoToHomeScreen();
             }
             else
