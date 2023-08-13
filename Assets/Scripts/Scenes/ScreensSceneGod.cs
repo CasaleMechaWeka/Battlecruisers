@@ -364,7 +364,7 @@ namespace BattleCruisers.Scenes
 
             _applicationModel.SelectedLevel = levelNum;
 
-            if (_applicationModel.Mode == GameMode.Campaign || _applicationModel.Mode == GameMode.CoinBattle)
+            if (_applicationModel.Mode == GameMode.Campaign)
             {
                 if (LevelStages.STAGE_STARTS.Contains(levelNum - 1) && levelToShowCutscene != levelNum)
                 {
@@ -381,6 +381,11 @@ namespace BattleCruisers.Scenes
 
                 }
 
+            }
+            else if(_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                levelToShowCutscene = 0;
+                GoToScreen(trashScreen, playDefaultMusic: false);
             }
             else
             {
