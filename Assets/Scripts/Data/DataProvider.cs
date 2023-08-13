@@ -39,7 +39,7 @@ namespace BattleCruisers.Data
                 {
                     _gameModel.PlayerLoadout.Create_buildsAnd_units();
                     SaveGame();
-                }                
+                }
             }
             else
             {
@@ -85,24 +85,24 @@ namespace BattleCruisers.Data
             await _serializer.CloudLoad();
         }
 
-        public async Task SyncCoinsFromCloud()
+        public async Task<bool> SyncCoinsFromCloud()
         {
-            await _serializer.SyncCoinsFromCloud(this);
+            return await _serializer.SyncCoinsFromCloud(this);
         }
 
-        public async Task SyncCoinsToCloud()
+        public async Task<bool> SyncCoinsToCloud()
         {
-            await _serializer.SyncCoinsToCloud(this);
+            return await _serializer.SyncCoinsToCloud(this);
         }
 
-        public async Task SyncCreditsFromCloud()
+        public async Task<bool> SyncCreditsFromCloud()
         {
-            await _serializer.SyncCreditsFromCloud(this);
+            return await _serializer.SyncCreditsFromCloud(this);
         }
 
-        public async Task SyncCreditsToCloud()
+        public async Task<bool> SyncCreditsToCloud()
         {
-            await _serializer.SyncCreditsToCloud(this);
+            return await _serializer.SyncCreditsToCloud(this);
         }
     }
 }

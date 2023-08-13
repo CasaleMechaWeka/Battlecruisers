@@ -85,15 +85,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
             coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
-
-            CaptainExo captain =_prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-            playerInfoPanelController.Initialize(
-                    captain.CaptainExoImage,
-                    captain.GetComponent<CaptainExo>().CaptainExoImage,
-                    _dataProvider.GameModel.Coins,
-                    _dataProvider.GameModel.Credits,
-                    _dataProvider.GameModel.PlayerName
-                );
+            playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
         }
 
 

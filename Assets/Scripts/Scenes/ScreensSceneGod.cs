@@ -128,17 +128,7 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                    string playerName = await AuthenticationService.Instance.GetPlayerNameAsync();
-                    if (playerName != null && playerName != _dataProvider.GameModel.PlayerName)
-                    {
-                        //    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName);
-                        _dataProvider.GameModel.PlayerName = playerName;
-                        _dataProvider.SaveGame();
-                    }
-                    else
-                    {
-                        await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName);
-                    }
+                    await _dataProvider.CloudLoad();
                     await _dataProvider.SyncCoinsFromCloud();
                     await _dataProvider.SyncCreditsFromCloud();
                 }
@@ -146,7 +136,6 @@ namespace BattleCruisers.Scenes
                 {
                     Debug.Log(ex.Message);
                 }
-
             }
             else
             {

@@ -87,9 +87,13 @@ namespace BattleCruisers.Data.Serialization
             try
             {
                 Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
-                GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
-                Debug.Log(savedData["GameModel"]);
-                return game;
+                if (savedData != null && savedData["GameModel"] != string.Empty)
+                {
+                    GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
+                    Debug.Log(savedData["GameModel"]);
+                    return game;
+                }
+                return null;
             }
             catch (UnityException e)
             {
@@ -98,51 +102,56 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task SyncCoinsToCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCoinsToCloud(IDataProvider dataProvider)
         {
             try
             {
                 await EconomyManager.SetEconomyBalance("COIN", dataProvider.GameModel.Coins);
+                return true;
             }
             catch (EconomyRateLimitedException e)
             {
                 Debug.LogException(e);
+                return false;
             }
             catch (Exception e)
             {
                 Debug.Log("Problem getting Economy currency balances:");
                 Debug.LogException(e);
+                return false;
             }
         }
 
-        public async Task SyncCoinsFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCoinsFromCloud(IDataProvider dataProvider)
         {
             GetBalancesResult balanceResult = null;
             try
             {
                 balanceResult = await EconomyManager.GetEconomyBalances();
-                if (this == null) return;
-                if (balanceResult is null) return;
+                if (this == null) return false;
+                if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
                     if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
                         dataProvider.GameModel.Coins = balance.Balance;
                         dataProvider.SaveGame();
+                        return true;
                     }
                 }
             }
             catch (EconomyRateLimitedException e)
             {
                 balanceResult = await BattleCruisers.Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyBalances, e.RetryAfter);
-                if (this == null) return;
-                if (balanceResult is null) return;
+                if (this == null) return false;
+                if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
                     if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
                         dataProvider.GameModel.Coins = balance.Balance;
                         dataProvider.SaveGame();
+                        return true;
                     }
                 }
             }
@@ -150,53 +159,60 @@ namespace BattleCruisers.Data.Serialization
             {
                 Debug.Log("Problem getting Economy currency balances:");
                 Debug.LogException(e);
+                return false;
             }
+            return false;
         }
 
-        public async Task SyncCreditsToCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCreditsToCloud(IDataProvider dataProvider)
         {
             try
             {
                 await EconomyManager.SetEconomyBalance("CREDIT", dataProvider.GameModel.Credits);
+                return true;
             }
             catch (EconomyRateLimitedException e)
             {
                 Debug.LogException(e);
+                return false;
             }
             catch (Exception e)
             {
                 Debug.Log("Problem getting Economy currency balances:");
                 Debug.LogException(e);
+                return false;
             }
         }
-        public async Task SyncCreditsFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCreditsFromCloud(IDataProvider dataProvider)
         {
             GetBalancesResult balanceResult = null;
             try
             {
                 balanceResult = await EconomyManager.GetEconomyBalances();
-                if (this == null) return;
-                if (balanceResult is null) return;
+                if (this == null) return false;
+                if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
                     if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
                     {
                         dataProvider.GameModel.Credits = balance.Balance;
                         dataProvider.SaveGame();
+                        return true;
                     }
                 }
             }
             catch (EconomyRateLimitedException e)
             {
                 balanceResult = await BattleCruisers.Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyBalances, e.RetryAfter);
-                if (this == null) return;
-                if (balanceResult is null) return;
+                if (this == null) return false;
+                if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
                     if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
                     {
                         dataProvider.GameModel.Credits = balance.Balance;
                         dataProvider.SaveGame();
+                        return true;
                     }
                 }
             }
@@ -204,7 +220,9 @@ namespace BattleCruisers.Data.Serialization
             {
                 Debug.Log("Problem getting Economy currency balances:");
                 Debug.LogException(e);
+                return false;
             }
+            return false;
         }
     }
 }

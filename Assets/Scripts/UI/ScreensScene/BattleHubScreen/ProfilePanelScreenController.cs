@@ -18,11 +18,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         private ISingleSoundPlayer _soundPlayer;
 
-        public CanvasGroupButton captainsButton;
-        public CanvasGroupButton nameButton;
-
-        public CaptainSelectorPanel captainsPanel;        
-
+        public CanvasGroupButton captainEditButton;
+        public CanvasGroupButton playerNameEditButton;
+        public CaptainSelectorPanel captainsPanel;
+        public InputNamePopupPanelController captainNamePopupPanel;
         // xp and rank vars
         [SerializeField]
         private XPBar xpBar;
@@ -48,27 +47,29 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(captainsButton, nameButton);
+            Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel);
             Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             _soundPlayer = soundPlayer;
 
-            captainsButton.Initialise(_soundPlayer, OnClickCaptainBtn);
-            nameButton.Initialise(_soundPlayer, OnClickNameBtn);
+            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
+            playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
+        //    captainNamePopupPanel.gameObject.SetActive(false);
         }
 
-        void OnClickNameBtn()
+        void OnClickNameEditBtn()
         {
-            
+            captainNamePopupPanel.gameObject.SetActive(true);
         }
 
-        void OnClickCaptainBtn() 
-        { 
+        void OnClickCaptainEditBtn()
+        {
 
         }
 
         private void ChangeCaptainSelection()
         {
-            if(!captainsPanel.isActiveAndEnabled)
+            if (!captainsPanel.isActiveAndEnabled)
             {
                 captainsPanel.gameObject.SetActive(true);
             }
