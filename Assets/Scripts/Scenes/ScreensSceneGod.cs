@@ -184,6 +184,12 @@ namespace BattleCruisers.Scenes
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
+            else if(_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                _applicationModel.Mode = GameMode.Campaign;
+                fullScreenads.OpenAdvert();
+                GotoHubScreen();
+            }
             else if (levelToShowCutscene == 0)
             {
                 GoToHomeScreen();
@@ -364,7 +370,7 @@ namespace BattleCruisers.Scenes
 
             _applicationModel.SelectedLevel = levelNum;
 
-            if (_applicationModel.Mode == GameMode.Campaign || _applicationModel.Mode == GameMode.CoinBattle)
+            if (_applicationModel.Mode == GameMode.Campaign)
             {
                 if (LevelStages.STAGE_STARTS.Contains(levelNum - 1) && levelToShowCutscene != levelNum)
                 {
@@ -381,6 +387,11 @@ namespace BattleCruisers.Scenes
 
                 }
 
+            }
+            else if(_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                levelToShowCutscene = 0;
+                GoToScreen(trashScreen, playDefaultMusic: false);
             }
             else
             {
