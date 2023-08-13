@@ -16,6 +16,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Ping = UnityEngine.Ping;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -24,6 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private BattleResult _lastBattleResult;
         private INextLevelHelper _nextLevelHelper;
         private ScreenController _currentScreen;
+        private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IApplicationModel _applicationModel;
@@ -34,11 +36,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public BattlePanelScreenController battlePanel;
         public InfiniteLoadoutScreenController loadoutPanel;
-    //    public ShopPanelScreenController shopPanel;
+        //    public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
         public ArenaSelectPanelScreenController arenaSelectPanel;
         public CoinBattleScreenController coinBattleController;
+
+        public PlayerInfoPanelController playerInfoPanelController;
+
 
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
 
@@ -60,6 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
             _applicationModel = applicationModel;
+            _prefabFactory = prefabFactory;
 
             homeButton.Initialise(_soundPlayer, GoHome);
             battleHubButton.Initialise(_soundPlayer, OpenBattleHub);
@@ -80,6 +86,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
 
+            CaptainExo captain =_prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            playerInfoPanelController.Initialize(
+                    captain.CaptainExoImage,
+                    captain.GetComponent<CaptainExo>().CaptainExoImage,
+                    _dataProvider.GameModel.Coins,
+                    _dataProvider.GameModel.Credits,
+                    _dataProvider.GameModel.PlayerName
+                );
         }
 
 
@@ -87,6 +101,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void GoHome()
         {
+            playerInfoPanelController.gameObject.SetActive(false);
             _screensSceneGod.GoToHomeScreen();
         }
         private void UnselectAll()
@@ -99,24 +114,28 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         private void OpenBattleHub()
         {
+            playerInfoPanelController.gameObject.SetActive(true);
             GoToScreen(battlePanel);
             UnselectAll();
         }
 
         private void OpenLoadout()
         {
+            playerInfoPanelController.gameObject.SetActive(false);
             _screensSceneGod.GoToLoadoutScreen();
             UnselectAll();
         }
         private void OpenShop()
         {
-        //    GoToScreen(shopPanel);
+            //    GoToScreen(shopPanel);
+            playerInfoPanelController.gameObject.SetActive(true);
             _screensSceneGod.GotoShopScreen();
             UnselectAll();
         }
 
         private void OpenLeaderboard()
         {
+            playerInfoPanelController.gameObject.SetActive(true);
             GoToScreen(leaderboardPanel);
             UnselectAll();
         }
@@ -124,6 +143,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void OpenProfile()
         {
+            playerInfoPanelController.gameObject.SetActive(true);
             GoToScreen(profilePanel);
             UnselectAll();
         }
@@ -131,13 +151,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Continue()
         {
             Assert.IsNotNull(_lastBattleResult);
-
+            playerInfoPanelController.gameObject.SetActive(false);
             int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
             _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
         }
 
         public void GoToLevelsScreen()
         {
+            playerInfoPanelController.gameObject.SetActive(false);
             _screensSceneGod.GoToLevelsScreen();
         }
 
@@ -149,24 +170,22 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GoToSkirmishScreen()
         {
+            playerInfoPanelController.gameObject.SetActive(false);
             _screensSceneGod.GoToSkirmishScreen();
         }
 
-        public void GotoBattleMode()
+        public async void GotoBattleMode()
         {
-
-            // should be enabled in Production
-
-                        if (Application.internetReachability == NetworkReachability.NotReachable)
-                        {
-                            coinBattleController.BattleButtonClicked();
-                        }
-                        else
-                        {
-                            GoToScreen(arenaSelectPanel);
-                        // _screensSceneGod.LoadMultiplayScene();
-                        }
-
+            playerInfoPanelController.gameObject.SetActive(false);
+            if (await LandingSceneGod.CheckForInternetConnection())
+            {
+                coinBattleController.BattleButtonClicked();
+            }
+            else
+            {
+                GoToScreen(arenaSelectPanel);
+                // _screensSceneGod.LoadMultiplayScene();
+            }
         }
 
 

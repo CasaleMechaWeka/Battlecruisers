@@ -97,6 +97,7 @@ namespace BattleCruisers.Scenes
 
         public static ScreensSceneGod Instance;
 
+
         async void Start()
         {
 
@@ -184,6 +185,13 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
+            // load charlie for Screenscene UI animation effect
+            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            characterOfCharlie = charlie.gameObject;
+            cameraOfCharacter.SetActive(true);
+            cameraOfCaptains.SetActive(false);
+
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
@@ -199,12 +207,7 @@ namespace BattleCruisers.Scenes
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
 
-            // load charlie for Screenscene UI animation effect
-            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
-            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
-            characterOfCharlie = charlie.gameObject;
-            cameraOfCharacter.SetActive(true);
-            cameraOfCaptains.SetActive(false);
+
 
             if (_applicationModel.ShowPostBattleScreen)
             {
