@@ -26,6 +26,8 @@ using System.Net;
 using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
 using System.IO;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
@@ -82,7 +84,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-
+        public static IGoogleAuthentication _GoogleAuthentication { get; set; }
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
         public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
@@ -259,9 +261,29 @@ namespace BattleCruisers.Scenes
 #endif
         }
 
-        public void GoogleLogin()
+        public async void GoogleLogin()
         {
             Debug.Log("===> trying to login with Google");
+
+            _GoogleAuthentication = new GoogleAuthentication();
+            _GoogleAuthentication.InitializePlayGamesLogin();
+
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                SetInteractable(false);
+                spinGoogle.SetActive(true);
+                labelGoogle.SetActive(false);
+                loginType = LoginType.Google;
+
+                try
+                {
+                    await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); //the mouseover details for these enums are actually pretty good!
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                }
+            }
         }
 
         public async void AnonymousLogin()
@@ -467,23 +489,6 @@ namespace BattleCruisers.Scenes
         public void OnQuit()
         {
             Application.Quit();
-        }
-
-        async Task SignInWithGoogleAsync(string idToken)
-        {
-            try
-            {
-                await AuthenticationService.Instance.SignInWithGoogleAsync(idToken);
-                Debug.Log("SignIn is successful.");
-            }
-            catch (Unity.Services.Authentication.AuthenticationException ex)
-            {
-                Debug.LogException(ex);
-            }
-            catch (RequestFailedException ex)
-            {
-                Debug.LogException(ex);
-            }
         }
 
         void OnDestroy()
