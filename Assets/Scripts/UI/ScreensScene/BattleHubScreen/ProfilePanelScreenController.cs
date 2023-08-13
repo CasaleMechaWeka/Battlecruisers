@@ -16,12 +16,22 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ProfilePanelScreenController : ScreenController
     {
+
+        public static ProfilePanelScreenController Instance { get; private set; }
         private ISingleSoundPlayer _soundPlayer;
+        private IDataProvider _dataProvider;
+        private IPrefabFactory _prefabFactory;
 
         public CanvasGroupButton captainEditButton;
         public CanvasGroupButton playerNameEditButton;
+        public CanvasGroupButton selectButton;
         public CaptainSelectorPanel captainsPanel;
         public InputNamePopupPanelController captainNamePopupPanel;
+
+        public GameObject spinnerOfSelect;
+        public GameObject lableOfSelect;
+
+        public Text playerName;
         // xp and rank vars
         [SerializeField]
         private XPBar xpBar;
@@ -50,13 +60,26 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel);
             Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             _soundPlayer = soundPlayer;
+            _dataProvider = dataProvider;
+            _prefabFactory = prefabFactory;
 
             captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
             playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
-        //    captainNamePopupPanel.gameObject.SetActive(false);
+            selectButton.Initialise(_soundPlayer, OnClickSelectButton);
+            captainsPanel.gameObject.SetActive(false);
+            captainNamePopupPanel.gameObject.SetActive(false);
+
+            spinnerOfSelect.SetActive(false);
+            lableOfSelect.SetActive(true);
+
+            playerName.text = _dataProvider.GameModel.PlayerName;
         }
 
+        private void Awake()
+        {
+            Instance = this;
+        }
         void OnClickNameEditBtn()
         {
             captainNamePopupPanel.gameObject.SetActive(true);
@@ -64,8 +87,35 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         void OnClickCaptainEditBtn()
         {
-
+            captainsPanel.gameObject.SetActive(true);
+            captainsPanel.DisplayOwnedCaptains();
         }
+
+        async void OnClickSelectButton()
+        {
+            spinnerOfSelect.SetActive(true);
+            lableOfSelect.SetActive(false);
+            if (await captainsPanel.SaveCurrentItem())
+            {
+                PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+            }
+            captainsPanel.gameObject.SetActive(false);
+            spinnerOfSelect.SetActive(false);
+            lableOfSelect.SetActive(true);
+        }
+        public override void OnDismissing()
+        {
+            base.OnDismissing();
+            captainsPanel.RemoveAllCaptainsFromRenderCamera();
+            captainsPanel.gameObject.SetActive(false);
+        }
+
+        public override void OnPresenting(object activationParameter)
+        {
+            base.OnPresenting(activationParameter);
+            captainsPanel.ShowCurrentCaptain();
+        }
+
 
         private void ChangeCaptainSelection()
         {

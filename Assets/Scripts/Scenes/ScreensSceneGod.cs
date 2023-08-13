@@ -97,6 +97,7 @@ namespace BattleCruisers.Scenes
 
         public static ScreensSceneGod Instance;
 
+        private CaptainExo charlie;
 
         async void Start()
         {
@@ -143,7 +144,7 @@ namespace BattleCruisers.Scenes
             }
 
             var prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
-            captainSelectorPanel.Initialize(_gameModel, prefabFetcher);
+
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
@@ -175,13 +176,14 @@ namespace BattleCruisers.Scenes
             }
 
             // load charlie for Screenscene UI animation effect
-            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
-            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
-            characterOfCharlie = charlie.gameObject;
-            cameraOfCharacter.SetActive(true);
-            cameraOfCaptains.SetActive(false);
+            /*            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+                        charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+                        characterOfCharlie = charlie.gameObject;
+                        cameraOfCharacter.SetActive(true);
+                        cameraOfCaptains.SetActive(false);*/
+            ShowCharlieOnMainMenu();
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
+                        SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
@@ -192,7 +194,7 @@ namespace BattleCruisers.Scenes
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
-
+            captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
 
@@ -273,7 +275,20 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
-
+        void ShowCharlieOnMainMenu()
+        {
+            if (charlie is not null)
+            {
+                DestroyImmediate(charlie.gameObject);
+                charlie = null;
+            }
+                
+            charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            characterOfCharlie = charlie.gameObject;
+            cameraOfCharacter.SetActive(true);
+            cameraOfCaptains.SetActive(false);
+        }
 
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
@@ -285,6 +300,7 @@ namespace BattleCruisers.Scenes
 
         public void GoToHomeScreen()
         {
+            ShowCharlieOnMainMenu();
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
             characterOfCharlie.SetActive(true);

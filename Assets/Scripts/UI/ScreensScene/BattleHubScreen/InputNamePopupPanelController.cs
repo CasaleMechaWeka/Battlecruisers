@@ -55,20 +55,32 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             btnLabel.SetActive(false);
             spinner.SetActive(true);
             applyBtn.enabled = false;
-            if(await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+            string oldPlayerName = string.Empty;
+            if(inputField.text != _dataProvider.GameModel.PlayerName)
             {
-                try
+                if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
-                    _dataProvider.GameModel.PlayerName = inputField.text;
-                    _dataProvider.SaveGame();
-                    await _dataProvider.CloudSave();
+                    try
+                    {
+                        oldPlayerName = _dataProvider.GameModel.PlayerName;
+                        _dataProvider.GameModel.PlayerName = inputField.text;
+                        _dataProvider.SaveGame();
+                        await _dataProvider.CloudSave();
+                        PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
+                        ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
+                    }
+                    catch (Exception ex)
+                    {
+                        _dataProvider.GameModel.PlayerName = oldPlayerName;
+                        _dataProvider.SaveGame();
+                        PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
+                        ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
+                        Debug.LogException(ex);
+                    }
                 }
-                catch(Exception ex)
-                {
-                    Debug.LogException(ex);
-                }          
+        
             }
-            PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
+
             gameObject.SetActive(false);
             btnLabel.SetActive(true);
             spinner.SetActive(false);

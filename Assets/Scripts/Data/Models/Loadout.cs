@@ -51,8 +51,8 @@ namespace BattleCruisers.Data.Models
             set => _currentCaptain = value;
         }
 
-        private IList<CaptainExoKey> _captainExos;
-        public IList<CaptainExoKey> CaptainExos
+/*        private IList<int> _captainExos;
+        public IList<int> CaptainExos
         {
             get => _captainExos;
             set => _captainExos = value;
@@ -63,7 +63,7 @@ namespace BattleCruisers.Data.Models
         {
             get => _heckles;
             set => _heckles = value;
-        }
+        }*/
 
         private List<int> _currentHeckles = new List<int>{ 0, 1, 2 };
         public List<int> CurrentHeckles
@@ -90,9 +90,7 @@ namespace BattleCruisers.Data.Models
             _units = units;
             _builds = buildLimt;
             _unit = unitLimit;
-            _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
-            _captainExos = new List<CaptainExoKey>();
-            _captainExos.Add(_currentCaptain);            
+            _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain        
         }
 
         public bool Is_buildsNull()
@@ -228,11 +226,11 @@ namespace BattleCruisers.Data.Models
             Assert.IsTrue(removedSuccessfully);
             _unit[category] = unitList;
         }
-        public void AddCaptain(CaptainExoKey key)
+/*        public void AddCaptain(int key)
         {
             _captainExos.Add(key);
         }
-        public void RemoveCaptain(CaptainExoKey key)
+        public void RemoveCaptain(int key)
         {
             _captainExos.Remove(key);
         }
@@ -243,7 +241,7 @@ namespace BattleCruisers.Data.Models
         public void RemoveHeckle(int index)
         {
             _heckles.Remove(index);
-        }
+        }*/
         public List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory)
         {
             List<BuildingKey> builds = _builds[buildingCategory].ToList();

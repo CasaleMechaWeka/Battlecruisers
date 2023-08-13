@@ -107,6 +107,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenBattleHub()
         {
             playerInfoPanelController.gameObject.SetActive(true);
+            ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
+            ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             GoToScreen(battlePanel);
             UnselectAll();
         }
@@ -121,6 +123,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             //    GoToScreen(shopPanel);
             playerInfoPanelController.gameObject.SetActive(true);
+            ProfilePanelScreenController.Instance?.captainsPanel?.RemoveAllCaptainsFromRenderCamera();
+            ProfilePanelScreenController.Instance?.captainsPanel?.gameObject.SetActive(false);
             _screensSceneGod.GotoShopScreen();
             UnselectAll();
         }
@@ -128,6 +132,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenLeaderboard()
         {
             playerInfoPanelController.gameObject.SetActive(true);
+            ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
+            ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             GoToScreen(leaderboardPanel);
             UnselectAll();
         }
@@ -136,6 +142,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenProfile()
         {
             playerInfoPanelController.gameObject.SetActive(true);
+            ScreensSceneGod.Instance.cameraOfCaptains.SetActive(true);
+            ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             GoToScreen(profilePanel);
             UnselectAll();
         }

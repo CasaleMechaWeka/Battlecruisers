@@ -169,6 +169,27 @@ namespace BattleCruisers.Data.Static
             public static CaptainExoKey CaptainExo017 { get; } = new CaptainExoKey("CaptainExo017");
             public static CaptainExoKey CaptainExo018 { get; } = new CaptainExoKey("CaptainExo018");
             public static CaptainExoKey CaptainExo019 { get; } = new CaptainExoKey("CaptainExo019");
+            public static CaptainExoKey CaptainExo020 { get; } = new CaptainExoKey("CaptainExo020");
+            public static CaptainExoKey CaptainExo021 { get; } = new CaptainExoKey("CaptainExo021");
+            public static CaptainExoKey CaptainExo022 { get; } = new CaptainExoKey("CaptainExo022");
+            public static CaptainExoKey CaptainExo023 { get; } = new CaptainExoKey("CaptainExo023");
+            public static CaptainExoKey CaptainExo024 { get; } = new CaptainExoKey("CaptainExo024");
+            public static CaptainExoKey CaptainExo025 { get; } = new CaptainExoKey("CaptainExo025");
+            public static CaptainExoKey CaptainExo026 { get; } = new CaptainExoKey("CaptainExo026");
+            public static CaptainExoKey CaptainExo027 { get; } = new CaptainExoKey("CaptainExo027");
+            public static CaptainExoKey CaptainExo028 { get; } = new CaptainExoKey("CaptainExo028");
+            public static CaptainExoKey CaptainExo029 { get; } = new CaptainExoKey("CaptainExo029");
+            public static CaptainExoKey CaptainExo030 { get; } = new CaptainExoKey("CaptainExo030");
+            public static CaptainExoKey CaptainExo031 { get; } = new CaptainExoKey("CaptainExo031");
+            public static CaptainExoKey CaptainExo032 { get; } = new CaptainExoKey("CaptainExo032");
+            public static CaptainExoKey CaptainExo033 { get; } = new CaptainExoKey("CaptainExo033");
+            public static CaptainExoKey CaptainExo034 { get; } = new CaptainExoKey("CaptainExo034");
+            public static CaptainExoKey CaptainExo035 { get; } = new CaptainExoKey("CaptainExo035");
+            public static CaptainExoKey CaptainExo036 { get; } = new CaptainExoKey("CaptainExo036");
+            public static CaptainExoKey CaptainExo037 { get; } = new CaptainExoKey("CaptainExo037");
+            public static CaptainExoKey CaptainExo038 { get; } = new CaptainExoKey("CaptainExo038");
+            public static CaptainExoKey CaptainExo039 { get; } = new CaptainExoKey("CaptainExo039");
+            public static CaptainExoKey CaptainExo040 { get; } = new CaptainExoKey("CaptainExo040");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -179,7 +200,10 @@ namespace BattleCruisers.Data.Static
                         CaptainExo000, CaptainExo001, CaptainExo002, CaptainExo003, CaptainExo004, CaptainExo005,
                         CaptainExo006, CaptainExo007, CaptainExo008, CaptainExo009, CaptainExo010, CaptainExo011,
                         CaptainExo012, CaptainExo013, CaptainExo014, CaptainExo015, CaptainExo016, CaptainExo017,
-                        CaptainExo018, CaptainExo019
+                        CaptainExo018, CaptainExo019, CaptainExo020, CaptainExo021, CaptainExo022, CaptainExo023,
+                        CaptainExo024, CaptainExo025, CaptainExo026, CaptainExo027, CaptainExo028, CaptainExo029,
+                        CaptainExo030, CaptainExo031, CaptainExo032, CaptainExo033, CaptainExo034, CaptainExo035,
+                        CaptainExo036, CaptainExo037, CaptainExo038, CaptainExo039, CaptainExo040
                     };
                 }
             }
