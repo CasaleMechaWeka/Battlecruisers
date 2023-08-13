@@ -38,9 +38,6 @@ namespace BattleCruisers.Data.Models
         // Maximum hit points
         int MaxHP { get; set; }
 
-        // Credits
-        int Credits { get; set; }
-
         // List of perks
  //       List<Perk> Perks { get; set; } 
 

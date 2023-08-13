@@ -84,5 +84,25 @@ namespace BattleCruisers.Data
         {
             await _serializer.CloudLoad();
         }
+
+        public async Task SyncCoinsFromCloud()
+        {
+            await _serializer.SyncCoinsFromCloud(this);
+        }
+
+        public async Task SyncCoinsToCloud()
+        {
+            await _serializer.SyncCoinsToCloud(this);
+        }
+
+        public async Task SyncCreditsFromCloud()
+        {
+            await _serializer.SyncCreditsFromCloud(this);
+        }
+
+        public async Task SyncCreditsToCloud()
+        {
+            await _serializer.SyncCreditsToCloud(this);
+        }
     }
 }

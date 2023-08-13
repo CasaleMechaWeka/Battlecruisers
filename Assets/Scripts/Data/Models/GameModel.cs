@@ -140,15 +140,15 @@ namespace BattleCruisers.Data.Models
         }
 
 
-        private int _credits;
-        public int Credits
+        private long _credits;
+        public long Credits
         {
             get => _credits;
             set => _credits = value;
         }
 
-        private int _coins;
-        public int Coins
+        private long _coins;
+        public long Coins
         {
             get => _coins;
             set => _coins = value;
@@ -207,6 +207,12 @@ namespace BattleCruisers.Data.Models
             set => _currentCaptain = value;
         }
 
+        private string _playerName;
+        public String PlayerName
+        {
+            get => _playerName;
+            set => _playerName = value;
+        }
 
         // Pre-Rogue stuff
 
@@ -415,6 +421,10 @@ namespace BattleCruisers.Data.Models
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Pack", iapDescriptionKeybase: "Coins1000PackDescription", iapIconName: "Coins1000Pack", 2.99f, 1000),
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Pack", iapDescriptionKeybase: "Coins5000PackDescription", iapIconName: "Coins5000Pack", 3.99f, 5000),
             };
+
+            _playerName = "Charlie";
+            _coins = 50;
+            _credits = 0;
         }
 
         public GameModel(

@@ -33,7 +33,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Models.PrefabKeys;
-
+using Unity.Services.Authentication;
 
 namespace BattleCruisers.Scenes
 {
@@ -120,7 +120,37 @@ namespace BattleCruisers.Scenes
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
+            // Interacting with Cloud
 
+            bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+            if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
+            {
+                try
+                {
+                    string playerName = await AuthenticationService.Instance.GetPlayerNameAsync();
+                    if (playerName != null && playerName != _dataProvider.GameModel.PlayerName)
+                    {
+                        //    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName);
+                        _dataProvider.GameModel.PlayerName = playerName;
+                        _dataProvider.SaveGame();
+                    }
+                    else
+                    {
+                        await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName);
+                    }
+                    await _dataProvider.SyncCoinsFromCloud();
+                    await _dataProvider.SyncCreditsFromCloud();
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                }
+
+            }
+            else
+            {
+                // if not Internet Connection or Sign in, we will use local data.
+            }
 
             var prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
             captainSelectorPanel.Initialize(_gameModel, prefabFetcher);
@@ -175,6 +205,7 @@ namespace BattleCruisers.Scenes
             characterOfCharlie = charlie.gameObject;
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
+
             if (_applicationModel.ShowPostBattleScreen)
             {
                 _applicationModel.ShowPostBattleScreen = false;
@@ -184,7 +215,7 @@ namespace BattleCruisers.Scenes
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
-            else if(_applicationModel.Mode == GameMode.CoinBattle)
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.Mode = GameMode.Campaign;
                 fullScreenads.OpenAdvert();
@@ -388,7 +419,7 @@ namespace BattleCruisers.Scenes
                 }
 
             }
-            else if(_applicationModel.Mode == GameMode.CoinBattle)
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 levelToShowCutscene = 0;
                 GoToScreen(trashScreen, playDefaultMusic: false);

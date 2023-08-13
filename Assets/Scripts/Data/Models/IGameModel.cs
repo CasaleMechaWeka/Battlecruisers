@@ -11,7 +11,9 @@ namespace BattleCruisers.Data.Models
 {
     public interface IGameModel
     {
-        int Coins { get; set; }
+        long Coins { get; set; }
+        long Credits { get; set; }
+        string PlayerName { get; set; }
         List<int> CaptainExoList { get; set; }
         List<int> HeckleList { get; set; }
         List<CaptainData> Captains { get; set; }
