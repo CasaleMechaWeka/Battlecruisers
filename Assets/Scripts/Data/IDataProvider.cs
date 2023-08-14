@@ -30,5 +30,11 @@ namespace BattleCruisers.Data
         // Cloud Saving:
         Task CloudSave();
         Task CloudLoad();
+
+        Task<bool> SyncCoinsFromCloud();
+        Task<bool> SyncCoinsToCloud();
+
+        Task<bool> SyncCreditsFromCloud();
+        Task<bool> SyncCreditsToCloud();
     }
 }

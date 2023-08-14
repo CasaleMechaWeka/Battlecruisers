@@ -37,13 +37,15 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] AirOffensive = new IOffensiveRequest[]
+            public static IOffensiveRequest[] NavalAirOffensive = new IOffensiveRequest[]
                 {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] NavalOffensive = new IOffensiveRequest[]
+            public static IOffensiveRequest[] AirNavalOffensive = new IOffensiveRequest[]
                 {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
@@ -53,15 +55,15 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 AirNavalOffensiveUltra,
                 NavalOffensiveAir,
                 AirOffensiveNaval,
-                NavalOffensive,
-                AirOffensive
+                AirNavalOffensive,
+                NavalAirOffensive
             };
             public static IList<IOffensiveRequest[]> NoUltras = new List<IOffensiveRequest[]>()
-            {
+            {   
                 NavalOffensiveAir,
                 AirOffensiveNaval,
-                NavalOffensive,
-                AirOffensive
+                AirNavalOffensive,
+                NavalAirOffensive
             };
         }
 
@@ -69,27 +71,29 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
         /// Due to drone number limitations:
         /// + Cannot have Ultra as first request
         /// </summary>
-        public class Balanced
+        public static class Balanced
         {
-            public static IOffensiveRequest[] Offensive = new IOffensiveRequest[]
+            public static IOffensiveRequest[] NavalOffensive = new IOffensiveRequest[]
                 {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] OffensiveUltra = new IOffensiveRequest[]
+            public static IOffensiveRequest[] OffensiveUltraAir = new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                 };
             public static IOffensiveRequest[] OffensiveAirNaval = new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
             public static IOffensiveRequest[] OffensiveNavalAir = new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 };
             public static IOffensiveRequest[] OffensiveNaval = new IOffensiveRequest[]
@@ -97,10 +101,11 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] OffensiveAir = new IOffensiveRequest[]
+            public static IOffensiveRequest[] OffensiveAirUltra = new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 };
             public static IOffensiveRequest[] OffensiveNavalOffensive = new IOffensiveRequest[]
                 {
@@ -114,87 +119,87 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IList<IOffensiveRequest[]> All, NoUltras;
 
-            static Balanced()
+            public static List<IOffensiveRequest[]> All = new List<IOffensiveRequest[]>()
             {
-                List<IOffensiveRequest[]> all = new List<IOffensiveRequest[]>()
-                {
-                    Offensive,
-                    OffensiveUltra,
-                    OffensiveAirNaval,
-                    OffensiveNavalAir,
-                    OffensiveNaval,
-                    OffensiveAir,
-                    OffensiveNavalOffensive,
-                    OffensiveAirOffensive,
-                };
-                all.AddRange(Rush.All);
-                All = all;
+                NavalOffensive,
+                OffensiveUltraAir,
+                OffensiveAirNaval,
+                OffensiveNavalAir,
+                OffensiveNaval,
+                OffensiveAirUltra,
+                OffensiveNavalOffensive,
+                OffensiveAirOffensive,
+            };
 
-                List<IOffensiveRequest[]> noUltras = new List<IOffensiveRequest[]>()
-                {
-                    Offensive,
-                    OffensiveAirNaval,
-                    OffensiveNavalAir,
-                    OffensiveNaval,
-                    OffensiveAir,
-                    OffensiveNavalOffensive,
-                    OffensiveAirOffensive,
-                };
-                noUltras.AddRange(Rush.NoUltras);
-                NoUltras = noUltras;
-            }
+            public static List<IOffensiveRequest[]> NoUltras = new List<IOffensiveRequest[]>()
+            {
+                NavalOffensive,
+                OffensiveAirNaval,
+                OffensiveNavalAir,
+                OffensiveNaval,
+                OffensiveNavalOffensive,
+                OffensiveAirOffensive,
+            };
         }
 
         /// <summary>
         /// Have at least 10 drones at the first offensive request, so can afford 
         /// all offensive request types.
         /// </summary>
-        public class Boom
+        public static class Boom
         {
-            public static IOffensiveRequest[] Ultras = new IOffensiveRequest[]
+            public static IOffensiveRequest[] UltrasOffOff = new IOffensiveRequest[]
                 {
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+
                 };
-            public static IOffensiveRequest[] UltraOffensive = new IOffensiveRequest[]
+            public static IOffensiveRequest[] UltraNavalOffensive = new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] UltraOffensiveUltra = new IOffensiveRequest[]
+            public static IOffensiveRequest[] UltraOffensiveUltraNaval = new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-                };
-            public static IOffensiveRequest[] UltraAir = new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
-                };
-            public static IOffensiveRequest[] UltraNaval = new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IList<IOffensiveRequest[]> All, NoUltras;
-
-            static Boom()
-            {
-                List<IOffensiveRequest[]> all = new List<IOffensiveRequest[]>()
+            public static IOffensiveRequest[] UltraAirNaval = new IOffensiveRequest[]
                 {
-                    UltraAir,
-                    UltraOffensive,
-                    UltraOffensiveUltra,
-                    UltraAir,
-                    UltraNaval
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-                all.AddRange(Balanced.All);
-                All = all;
-
-                NoUltras = Balanced.NoUltras;
-            }
+            public static IOffensiveRequest[] UltraNavalUltra = new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                };
+            public static IOffensiveRequest[] NavalOffensiveAir = new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
+                };
+            public static List<IOffensiveRequest[]> All = new List<IOffensiveRequest[]>()
+            {
+                 UltrasOffOff,
+                 UltraNavalOffensive,
+                 UltraOffensiveUltraNaval,
+                 UltraAirNaval,
+                 UltraNavalUltra,
+                 NavalOffensiveAir
+             };
+            public static List<IOffensiveRequest[]> NoUltras = new List<IOffensiveRequest[]>()
+            {
+                 NavalOffensiveAir
+            };
         }
     }
 }

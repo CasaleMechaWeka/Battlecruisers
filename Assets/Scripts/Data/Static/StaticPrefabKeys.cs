@@ -191,7 +191,6 @@ namespace BattleCruisers.Data.Static
             public static CaptainExoKey CaptainExo039 { get; } = new CaptainExoKey("CaptainExo039");
             public static CaptainExoKey CaptainExo040 { get; } = new CaptainExoKey("CaptainExo040");
 
-
             public static IList<IPrefabKey> AllKeys
             {
                 get

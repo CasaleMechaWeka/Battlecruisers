@@ -99,9 +99,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                 captainExos.Add(StaticPrefabKeys.CaptainExos.AllKeys[index]);
             }
 
-            foreach (PrefabKey prefabKey in _dataProvider.GameModel.PlayerLoadout.CaptainExos)
+            for(int i = 0; i < StaticPrefabKeys.CaptainExos.AllKeys.Count; i++)
             {
-                captainExos.Add(prefabKey);
+                if (_dataProvider.GameModel.Captains[i].isOwned && !captainExos.Contains(StaticPrefabKeys.CaptainExos.AllKeys[i]))
+                    captainExos.Add(StaticPrefabKeys.CaptainExos.AllKeys[i]);
             }
 
             return captainExos;

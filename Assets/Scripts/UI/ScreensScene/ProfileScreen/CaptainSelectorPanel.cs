@@ -1,79 +1,140 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Data;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound.Players;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System;
+using System.Reflection;
+using static BattleCruisers.Data.Static.StaticPrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
     public class CaptainSelectorPanel : MonoBehaviour
     {
         [SerializeField]
-        private Transform buttonContainer;
+        private Transform itemContainer;
 
         [SerializeField]
-        private GameObject captainButtonPrefab; // assign this from the editor
+        private GameObject captainItemPrefab; // assign this from the editor
 
-        private IGameModel _gameModel;
-        private IPrefabFetcher _prefabFetcher;
+        private IDataProvider _dataProvider;
+        private IPrefabFactory _prefabFactory;
+        private ISingleSoundPlayer _soundPlayer;
+        private IScreensSceneGod _screensSceneGod;
 
-        public void Initialize(IGameModel gameModel, IPrefabFetcher prefabFetcher)
+        public Transform captainCamContainer;
+        public List<GameObject> visualOfCaptains = new List<GameObject>();
+        public EventHandler<CaptainDataEventArgs> captainDataChanged;
+
+        public CaptainSelectionItemController currentItem;
+
+        private ICaptainData currentCaptainData;
+
+        public void Initialize(
+            IScreensSceneGod screensSceneGod,
+            ISingleSoundPlayer soundPlayer,
+            IPrefabFactory prefabFactory,
+            IDataProvider dataProvider)
         {
-            _gameModel = gameModel;
-            _prefabFetcher = prefabFetcher;
-            PopulateButtons();
+            _dataProvider = dataProvider;
+            _prefabFactory = prefabFactory;
+            _soundPlayer = soundPlayer;
+            _screensSceneGod = screensSceneGod;
+            captainDataChanged += CaptainDataChanged;
         }
 
-        private async void PopulateButtons()
+        public void RemoveAllCaptainsFromRenderCamera()
         {
-            foreach (Transform child in buttonContainer)
+            foreach (GameObject obj in visualOfCaptains)
             {
-                Destroy(child.gameObject);
+                if (obj != null)
+                    DestroyImmediate(obj);
+            }
+            visualOfCaptains.Clear();
+        }
+        public async void DisplayOwnedCaptains()
+        {
+            CaptainSelectionItemController[] items = itemContainer.gameObject.GetComponentsInChildren<CaptainSelectionItemController>();
+            foreach (CaptainSelectionItemController item in items)
+            {
+                DestroyImmediate(item.gameObject);
             }
 
-            foreach (CaptainExoKey captain in StaticPrefabKeys.CaptainExos.AllKeys)
+            RemoveAllCaptainsFromRenderCamera();
+
+            await Task.Delay(100);
+
+            byte ii = 0;
+            for (int i = 0; i < StaticPrefabKeys.CaptainExos.AllKeys.Count; i++)
             {
-                var captainExoData = await GetCaptainExoData(captain);
-/*                if (captainExoData.IsOwned)
+                if (_dataProvider.GameModel.Captains[i].isOwned)
                 {
-                    var buttonGameObject = Instantiate(captainButtonPrefab, buttonContainer);
-                    var button = buttonGameObject.GetComponent<CaptainExoButton>();
-                    button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.PlayerLoadout.CurrentCaptain, SelectCaptain);
-                }*/
+                    GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
+
+                    CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[i]), captainCamContainer);
+                    captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
+                    captainExo.gameObject.SetActive(false);
+                    visualOfCaptains.Add(captainExo.gameObject);
+                    captainItem.GetComponent<CaptainSelectionItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, _dataProvider.GameModel.Captains[i], this, ii);
+
+                    if (_dataProvider.GameModel.Captains[i].NameStringKeyBase == _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName)  // the first item should be clicked :)
+                    {
+                        captainItem.GetComponent<CaptainSelectionItemController>()._clickedFeedback.SetActive(true);
+                        currentItem = captainItem.GetComponent<CaptainSelectionItemController>();
+                        captainExo.gameObject.SetActive(true);
+                    }
+                    ii++;
+                }
             }
         }
 
-        private async Task<ICaptainExo> GetCaptainExoData(CaptainExoKey captainExoKey)
+        public void ShowCurrentCaptain()
         {
-            IPrefabContainer<ICaptainExo> captainExoPrefabContainer = await _prefabFetcher.GetPrefabAsync<ICaptainExo>(captainExoKey);
-            return captainExoPrefabContainer.Prefab;
+            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain), captainCamContainer);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            visualOfCaptains.Add(charlie.gameObject);
         }
 
-        private void OnEnable()
+        private void CaptainDataChanged(object sender, CaptainDataEventArgs e)
         {
-            UpdateActiveCaptain();
+            currentItem._clickedFeedback.SetActive(false);
+            visualOfCaptains[currentItem._index].SetActive(false);
+            currentItem = (CaptainSelectionItemController)sender;
+            currentCaptainData = e.captainData;
         }
 
-        private void UpdateActiveCaptain()
+        public async Task<bool> SaveCurrentItem()
         {
-            foreach (Transform child in buttonContainer)
+            CaptainExoKey oldExoKey = null;
+            if (currentCaptainData != null)
             {
-                var button = child.GetComponent<CaptainExoButton>();
-                button.UpdateActiveState(_gameModel.PlayerLoadout.CurrentCaptain);
-            }
-        }
+                try
+                {
+                    oldExoKey = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
+                    _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = new Data.Models.PrefabKeys.CaptainExoKey(currentCaptainData.NameStringKeyBase);
+                    _dataProvider.SaveGame();
+                    await _dataProvider.CloudSave();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = oldExoKey;
+                    _dataProvider.SaveGame();
+                    Debug.LogException(ex);
+                    return false;
+                }
 
-        public void SelectCaptain(CaptainExoKey captain)
+            }
+            return false;
+        }
+        private void OnDestroy()
         {
-            _gameModel.PlayerLoadout.CurrentCaptain = captain;
-            UpdateActiveCaptain();
-            gameObject.SetActive(false); // Close the panel after selection
+            captainDataChanged -= CaptainDataChanged;
         }
     }
-
 }

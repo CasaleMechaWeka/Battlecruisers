@@ -16,13 +16,22 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ProfilePanelScreenController : ScreenController
     {
+
+        public static ProfilePanelScreenController Instance { get; private set; }
         private ISingleSoundPlayer _soundPlayer;
+        private IDataProvider _dataProvider;
+        private IPrefabFactory _prefabFactory;
 
-        public CanvasGroupButton captainsButton;
-        public CanvasGroupButton nameButton;
+        public CanvasGroupButton captainEditButton;
+        public CanvasGroupButton playerNameEditButton;
+        public CanvasGroupButton selectButton;
+        public CaptainSelectorPanel captainsPanel;
+        public InputNamePopupPanelController captainNamePopupPanel;
 
-        public CaptainSelectorPanel captainsPanel;        
+        public GameObject spinnerOfSelect;
+        public GameObject lableOfSelect;
 
+        public Text playerName;
         // xp and rank vars
         [SerializeField]
         private XPBar xpBar;
@@ -48,27 +57,69 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(captainsButton, nameButton);
+            Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel);
             Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             _soundPlayer = soundPlayer;
+            _dataProvider = dataProvider;
+            _prefabFactory = prefabFactory;
 
-            captainsButton.Initialise(_soundPlayer, OnClickCaptainBtn);
-            nameButton.Initialise(_soundPlayer, OnClickNameBtn);
+            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
+            playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
+            selectButton.Initialise(_soundPlayer, OnClickSelectButton);
+            captainsPanel.gameObject.SetActive(false);
+            captainNamePopupPanel.gameObject.SetActive(false);
+
+            spinnerOfSelect.SetActive(false);
+            lableOfSelect.SetActive(true);
+
+            playerName.text = _dataProvider.GameModel.PlayerName;
         }
 
-        void OnClickNameBtn()
+        private void Awake()
         {
-            
+            Instance = this;
+        }
+        void OnClickNameEditBtn()
+        {
+            captainNamePopupPanel.gameObject.SetActive(true);
         }
 
-        void OnClickCaptainBtn() 
-        { 
-
+        void OnClickCaptainEditBtn()
+        {
+            captainsPanel.gameObject.SetActive(true);
+            captainsPanel.DisplayOwnedCaptains();
         }
+
+        async void OnClickSelectButton()
+        {
+            spinnerOfSelect.SetActive(true);
+            lableOfSelect.SetActive(false);
+            if (await captainsPanel.SaveCurrentItem())
+            {
+                PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+            }
+            captainsPanel.gameObject.SetActive(false);
+            spinnerOfSelect.SetActive(false);
+            lableOfSelect.SetActive(true);
+        }
+        public override void OnDismissing()
+        {
+            base.OnDismissing();
+            captainsPanel.RemoveAllCaptainsFromRenderCamera();
+            captainsPanel.gameObject.SetActive(false);
+        }
+
+        public override void OnPresenting(object activationParameter)
+        {
+            base.OnPresenting(activationParameter);
+            captainsPanel.ShowCurrentCaptain();
+        }
+
 
         private void ChangeCaptainSelection()
         {
-            if(!captainsPanel.isActiveAndEnabled)
+            if (!captainsPanel.isActiveAndEnabled)
             {
                 captainsPanel.gameObject.SetActive(true);
             }

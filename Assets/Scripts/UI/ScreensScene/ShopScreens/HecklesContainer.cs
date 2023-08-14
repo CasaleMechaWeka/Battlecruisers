@@ -1,11 +1,10 @@
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Localisation;
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Build.Utilities;
+using Unity.Services.Economy;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,10 +20,18 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject btnBuy, ownFeedback;
         public HeckleItemController currentItem;
         public Text hecklePrice;
-        public void Initialize()
+        private ISingleSoundPlayer _soundPlayer;
+        public void Initialize(ISingleSoundPlayer soundPlayer)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
             heckleDataChanged += HeckleDataChanged;
+            _soundPlayer = soundPlayer;
+            btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
+        }
+
+        private void Purchase()
+        {
+            
         }
 
         private void HeckleDataChanged(object sender, HeckleDataEventArgs e)
