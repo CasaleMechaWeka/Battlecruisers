@@ -225,13 +225,13 @@ namespace BattleCruisers.Scenes
         // Turns them into local vars for frequently-used values,
         // Populates text fields on the screen with those values.
         // This should not be displayed to real users.
-        // DOES NOT Calculate and awards any rewards.
+        // DOES NOT awards any rewards.
         private void PopulateScreenFake()
         {
             long randomVal = UnityEngine.Random.Range(10, 100000);
 
             allTimeVal = randomVal;
-            levelTimeInSeconds = UnityEngine.Random.Range(60, 600);
+            levelTimeInSeconds = UnityEngine.Random.Range(300, 600);
             aircraftVal = randomVal / UnityEngine.Random.Range(4, 6);
             shipsVal = randomVal / UnityEngine.Random.Range(4, 6);
             cruiserVal = randomVal / UnityEngine.Random.Range(4, 6);
@@ -477,6 +477,16 @@ namespace BattleCruisers.Scenes
 
         private int CalculateCoins(long score)
         {
+            // 5 coins
+            if (score >= 5000)
+            {
+                return 5;
+            }
+            // 4 coins
+            if (score >= 4000)
+            {
+                return 4;
+            }
             // 3 coins
             if (score >= 3000)
             {
