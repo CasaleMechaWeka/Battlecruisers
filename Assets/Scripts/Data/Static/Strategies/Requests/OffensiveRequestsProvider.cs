@@ -184,7 +184,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
             {
                 List<IOffensiveRequest[]> all = new List<IOffensiveRequest[]>()
                 {
-                    UltraAir,
+                    Ultras,
                     UltraOffensive,
                     UltraOffensiveUltra,
                     UltraAir,

@@ -50,13 +50,15 @@ namespace BattleCruisers.Data.Static
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        //new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new OffensivePrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper(),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
-						new OffensivePrefabKeyWrapper()
+                        //new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new OffensivePrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
                     };
 				}
 			}

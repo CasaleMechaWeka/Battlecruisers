@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 
@@ -68,7 +69,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                         return new BasicBoomAggressiveStrategy();
                     }
                     else
-                    {
+                    { 
                         return new BasicBoomDefensiveStrategy();
                     }
 
