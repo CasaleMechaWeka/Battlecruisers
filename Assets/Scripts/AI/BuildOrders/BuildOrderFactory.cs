@@ -57,8 +57,14 @@ namespace BattleCruisers.AI.BuildOrders
         private IDynamicBuildOrder GetBuildOrder(IStrategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
 		{
 			// Create offensive build order
-            int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
-            IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
+            //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
+
+            int numOfOffensiveSlots = FindNumOfOffensiveSlots(levelInfo);
+
+            // What do we need?
+            // ISlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
+
+            IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
 
             // Create defensive build orders (only for basic AI)
             IDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
@@ -75,13 +81,34 @@ namespace BattleCruisers.AI.BuildOrders
 
             return new StrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);
 		}
+        
+        // TODO: Find a better class to move this to. Make the method public to add unit test!
+        private int FindNumOfOffensiveSlots(ILevelInfo levelInfo)
+        {
+            // Reserve 2 mast slots for a stealth gen and teslacoil.
+            int numOfMastSlotsToReserve = 2;
 
-		/// <summary>
-		/// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
-		/// IEnumerable from a LINQ Select query, but every time I looped through this
-		/// IEnumerable I would get a fresh copy of the object, so any changes I made to
-		/// those objects were lost!!!
-		/// </summary>
+            ISlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
+            int numOfOffensiveSlots = slotAccessor.GetSlotCount(SlotType.Platform);
+
+            if(levelInfo.HasMastOffensive())
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Mast) - numOfMastSlotsToReserve;
+            }
+
+            if(levelInfo.HasBowOffensive()) 
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Bow);
+            }
+
+            return numOfOffensiveSlots;
+        }
+        /// <summary>
+        /// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
+        /// IEnumerable from a LINQ Select query, but every time I looped through this
+        /// IEnumerable I would get a fresh copy of the object, so any changes I made to
+        /// those objects were lost!!!
+        /// </summary>
         private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots, ILevelInfo levelInfo)
 		{
 			AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
