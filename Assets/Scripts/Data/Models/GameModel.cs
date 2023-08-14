@@ -140,15 +140,15 @@ namespace BattleCruisers.Data.Models
         }
 
 
-        private int _credits;
-        public int Credits
+        private long _credits;
+        public long Credits
         {
             get => _credits;
             set => _credits = value;
         }
 
-        private int _coins;
-        public int Coins
+        private long _coins;
+        public long Coins
         {
             get => _coins;
             set => _coins = value;
@@ -191,6 +191,12 @@ namespace BattleCruisers.Data.Models
             set => _captains = value;
         }
 
+        public List<IAPData> _iaps;
+        public List<IAPData> IAPs
+        {
+            get => _iaps;
+            set => _iaps = value;
+        }
         // Captain Logic
 
         [SerializeField]
@@ -201,6 +207,12 @@ namespace BattleCruisers.Data.Models
             set => _currentCaptain = value;
         }
 
+        private string _playerName;
+        public String PlayerName
+        {
+            get => _playerName;
+            set => _playerName = value;
+        }
 
         // Pre-Rogue stuff
 
@@ -390,18 +402,37 @@ namespace BattleCruisers.Data.Models
             _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
 
             _heckles = new List<HeckleData> {
-                   new HeckleData("Heckle000", owned: true,id: 0), new HeckleData("Heckle001",owned: true,id: 1), new HeckleData("Heckle002",owned: true,id: 2), new HeckleData("Heckle003",id: 3), new HeckleData("Heckle004",id: 4),
-                   new HeckleData("Heckle005",id: 5), new HeckleData("Heckle006",id: 6), new HeckleData("Heckle007",id: 7), new HeckleData("Heckle008",id: 8), new HeckleData("Heckle009",id: 9),
-                   new HeckleData("Heckle010",id:10), new HeckleData("Heckle011",id: 11), new HeckleData("Heckle012",id: 12), new HeckleData("Heckle013",id: 13), new HeckleData("Heckle014",id: 14),
-                   new HeckleData("Heckle015",id: 15), new HeckleData("Heckle016",id: 16), new HeckleData("Heckle017",id: 17), new HeckleData("Heckle018",id: 18), new HeckleData("Heckle019",id: 19),
+                   new HeckleData("Heckle000", owned: true,id: 0), new HeckleData("Heckle001",owned: true,id: 1), new HeckleData("Heckle002",owned: true,id: 2), new HeckleData("Heckle003",owned: true,id: 3), new HeckleData("Heckle004",id: 4),
+                   new HeckleData("Heckle005",id: 5), new HeckleData("Heckle006",owned: true,id: 6), new HeckleData("Heckle007",id: 7), new HeckleData("Heckle008",id: 8), new HeckleData("Heckle009",id: 9),
+                   new HeckleData("Heckle010",id:10), new HeckleData("Heckle011",id: 11), new HeckleData("Heckle012",owned: true,id: 12), new HeckleData("Heckle013",id: 13), new HeckleData("Heckle014",id: 14),
+                   new HeckleData("Heckle015",id: 15), new HeckleData("Heckle016",owned: true,id: 16), new HeckleData("Heckle017",id: 17), new HeckleData("Heckle018",owned: true,id: 18), new HeckleData("Heckle019",id: 19),
+                   new HeckleData("Heckle020",id: 20), new HeckleData("Heckle021",owned: true,id: 21), new HeckleData("Heckle022",id: 22), new HeckleData("Heckle023",owned: true,id: 23), new HeckleData("Heckle024",id: 24),
+                   new HeckleData("Heckle025",id: 25), new HeckleData("Heckle026",owned: true,id: 26), new HeckleData("Heckle027",id: 27), new HeckleData("Heckle028",owned: true,id: 28), new HeckleData("Heckle029",id: 29),
+                   new HeckleData("Heckle030",id: 30), new HeckleData("Heckle031",owned: true,id: 31), new HeckleData("Heckle032",id: 32), new HeckleData("Heckle033",owned: true,id: 33), new HeckleData("Heckle034",id: 34),
+                   new HeckleData("Heckle035",id: 35), new HeckleData("Heckle036",owned: true,id: 36), new HeckleData("Heckle037",id: 37), new HeckleData("Heckle038",owned: true,id: 38), new HeckleData("Heckle039",id: 39),
                 };
 
             _captains = new List<CaptainData> {
                     new CaptainData(nameBase: "CaptainExo000", descriptionBase: "CaptainDescription000", owned: true, id: 0),new CaptainData(nameBase:"CaptainExo001",descriptionBase : "CaptainDescription001", id: 1),new CaptainData(nameBase : "CaptainExo002",descriptionBase : "CaptainDescription002", id: 2),new CaptainData(nameBase : "CaptainExo003",descriptionBase : "CaptainDescription003", id: 3),new CaptainData(nameBase : "CaptainExo004",descriptionBase: "CaptainDescription004",id: 4),
-                    new CaptainData(nameBase:"CaptainExo005",descriptionBase: "CaptainDescription005",id: 5),new CaptainData(nameBase:"CaptainExo006",descriptionBase: "CaptainDescription006",id: 6),new CaptainData(nameBase:"CaptainExo007",descriptionBase: "CaptainDescription007",id: 7),new CaptainData(nameBase : "CaptainExo008",descriptionBase: "CaptainDescription008",id: 8),new CaptainData("CaptainExo009",descriptionBase: "CaptainDescription009",id: 9),
-                    new CaptainData(nameBase:"CaptainExo010",descriptionBase: "CaptainDescription010",id: 10),new CaptainData(nameBase:"CaptainExo011",descriptionBase : "CaptainDescription011", id: 11),new CaptainData(nameBase:"CaptainExo012",descriptionBase : "CaptainDescription012", id: 12),new CaptainData(nameBase : "CaptainExo013",descriptionBase: "CaptainDescription013",id: 13),new CaptainData(nameBase : "CaptainExo014",descriptionBase: "CaptainDescription014",id: 14),
-                    new CaptainData(nameBase:"CaptainExo015",descriptionBase: "CaptainDescription015",id: 15),new CaptainData(nameBase:"CaptainExo016",descriptionBase: "CaptainDescription016",id: 16),new CaptainData(nameBase:"CaptainExo017",descriptionBase: "CaptainDescription017",id: 17),new CaptainData(nameBase : "CaptainExo018",descriptionBase: "CaptainDescription018",id: 18),new CaptainData(nameBase : "CaptainExo019",descriptionBase: "CaptainDescription019",id: 19),
+                    new CaptainData(nameBase:"CaptainExo005",descriptionBase: "CaptainDescription005",owned: true,id: 5),new CaptainData(nameBase:"CaptainExo006",descriptionBase: "CaptainDescription006",owned: true,id: 6),new CaptainData(nameBase:"CaptainExo007",descriptionBase: "CaptainDescription007",id: 7),new CaptainData(nameBase : "CaptainExo008",descriptionBase: "CaptainDescription008",id: 8),new CaptainData("CaptainExo009",descriptionBase: "CaptainDescription009",id: 9),
+                    new CaptainData(nameBase:"CaptainExo010",descriptionBase: "CaptainDescription010",owned: true,id: 10),new CaptainData(nameBase:"CaptainExo011",descriptionBase : "CaptainDescription011", id: 11),new CaptainData(nameBase:"CaptainExo012",descriptionBase : "CaptainDescription012", id: 12),new CaptainData(nameBase : "CaptainExo013",descriptionBase: "CaptainDescription013",id: 13),new CaptainData(nameBase : "CaptainExo014",descriptionBase: "CaptainDescription014",id: 14),
+                    new CaptainData(nameBase:"CaptainExo015",descriptionBase: "CaptainDescription015",owned: true,id: 15),new CaptainData(nameBase:"CaptainExo016",descriptionBase: "CaptainDescription016",owned: true,id: 16),new CaptainData(nameBase:"CaptainExo017",descriptionBase: "CaptainDescription017",owned : true, id: 17),new CaptainData(nameBase : "CaptainExo018",descriptionBase: "CaptainDescription018",owned: true,id: 18),new CaptainData(nameBase : "CaptainExo019",descriptionBase: "CaptainDescription019",id: 19),
+                    new CaptainData(nameBase:"CaptainExo020",descriptionBase: "CaptainDescription020",owned: true,id: 20),new CaptainData(nameBase:"CaptainExo021",descriptionBase: "CaptainDescription021",owned: true,id: 21),new CaptainData(nameBase:"CaptainExo022",descriptionBase: "CaptainDescription022",owned : true, id: 22),new CaptainData(nameBase : "CaptainExo023",descriptionBase: "CaptainDescription023",owned: true,id: 23),new CaptainData(nameBase : "CaptainExo024",descriptionBase: "CaptainDescription024",id: 24),
+                    new CaptainData(nameBase:"CaptainExo025",descriptionBase: "CaptainDescription025",owned: true,id: 25),new CaptainData(nameBase:"CaptainExo026",descriptionBase: "CaptainDescription026",owned: true,id: 26),new CaptainData(nameBase:"CaptainExo027",descriptionBase: "CaptainDescription027",owned : true, id: 27),new CaptainData(nameBase : "CaptainExo028",descriptionBase: "CaptainDescription028",owned: true,id: 28),new CaptainData(nameBase : "CaptainExo029",descriptionBase: "CaptainDescription029",id: 29),
+                    new CaptainData(nameBase:"CaptainExo030",descriptionBase: "CaptainDescription030",id: 30),new CaptainData(nameBase:"CaptainExo031",descriptionBase: "CaptainDescription031",owned: true,id: 31),new CaptainData(nameBase:"CaptainExo032",descriptionBase: "CaptainDescription032",owned : true, id: 32),new CaptainData(nameBase : "CaptainExo033",descriptionBase: "CaptainDescription033",owned: true,id: 33),new CaptainData(nameBase : "CaptainExo034",descriptionBase: "CaptainDescription034",id: 34),
+                    new CaptainData(nameBase:"CaptainExo035",descriptionBase: "CaptainDescription035",id: 35),new CaptainData(nameBase:"CaptainExo036",descriptionBase: "CaptainDescription036",owned: true,id: 36),new CaptainData(nameBase:"CaptainExo037",descriptionBase: "CaptainDescription037",owned : true, id: 37),new CaptainData(nameBase : "CaptainExo038",descriptionBase: "CaptainDescription038",owned: true,id: 38),new CaptainData(nameBase : "CaptainExo039",descriptionBase: "CaptainDescription039",id: 39),new CaptainData(nameBase : "CaptainExo040",descriptionBase: "CaptainDescription040",id: 40)
                 };
+
+            _iaps = new List<IAPData> {
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins100Pack", iapDescriptionKeybase: "Coins100PackDescription", iapIconName: "Coins100Pack", 0.99f, 100),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins500Pack", iapDescriptionKeybase: "Coins500PackDescription", iapIconName: "Coins500Pack", 1.99f, 500),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Pack", iapDescriptionKeybase: "Coins1000PackDescription", iapIconName: "Coins1000Pack", 2.99f, 1000),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Pack", iapDescriptionKeybase: "Coins5000PackDescription", iapIconName: "Coins5000Pack", 3.99f, 5000),
+            };
+
+            _playerName = "Charlie";
+            _coins = 50;
+            _credits = 0;
         }
 
         public GameModel(

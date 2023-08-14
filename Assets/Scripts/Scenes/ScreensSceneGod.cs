@@ -33,7 +33,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Models.PrefabKeys;
-
+using Unity.Services.Authentication;
 
 namespace BattleCruisers.Scenes
 {
@@ -97,6 +97,8 @@ namespace BattleCruisers.Scenes
 
         public static ScreensSceneGod Instance;
 
+        private CaptainExo charlie;
+
         async void Start()
         {
 
@@ -120,10 +122,29 @@ namespace BattleCruisers.Scenes
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
+            // Interacting with Cloud
 
+            bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+            if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
+            {
+                try
+                {
+                    await _dataProvider.CloudLoad();
+                    await _dataProvider.SyncCoinsFromCloud();
+                    await _dataProvider.SyncCreditsFromCloud();
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                }
+            }
+            else
+            {
+                // if not Internet Connection or Sign in, we will use local data.
+            }
 
             var prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
-            captainSelectorPanel.Initialize(_gameModel, prefabFetcher);
+
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
@@ -154,7 +175,15 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
+            // load charlie for Screenscene UI animation effect
+            /*            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+                        charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+                        characterOfCharlie = charlie.gameObject;
+                        cameraOfCharacter.SetActive(true);
+                        cameraOfCaptains.SetActive(false);*/
+            ShowCharlieOnMainMenu();
+
+                        SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
@@ -165,16 +194,12 @@ namespace BattleCruisers.Scenes
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
-
+            captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
 
-            // load charlie for Screenscene UI animation effect
-            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
-            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
-            characterOfCharlie = charlie.gameObject;
-            cameraOfCharacter.SetActive(true);
-            cameraOfCaptains.SetActive(false);
+
+
             if (_applicationModel.ShowPostBattleScreen)
             {
                 _applicationModel.ShowPostBattleScreen = false;
@@ -184,7 +209,7 @@ namespace BattleCruisers.Scenes
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
-            else if(_applicationModel.Mode == GameMode.CoinBattle)
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.Mode = GameMode.Campaign;
                 fullScreenads.OpenAdvert();
@@ -250,7 +275,20 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
-
+        void ShowCharlieOnMainMenu()
+        {
+            if (charlie is not null)
+            {
+                DestroyImmediate(charlie.gameObject);
+                charlie = null;
+            }
+                
+            charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            characterOfCharlie = charlie.gameObject;
+            cameraOfCharacter.SetActive(true);
+            cameraOfCaptains.SetActive(false);
+        }
 
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
@@ -262,6 +300,7 @@ namespace BattleCruisers.Scenes
 
         public void GoToHomeScreen()
         {
+            ShowCharlieOnMainMenu();
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
             characterOfCharlie.SetActive(true);
@@ -306,6 +345,7 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(true);
             GoToScreen(blackMarketScreen);
+            blackMarketScreen.InitialiseIAPs();
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
@@ -387,7 +427,7 @@ namespace BattleCruisers.Scenes
                 }
 
             }
-            else if(_applicationModel.Mode == GameMode.CoinBattle)
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 levelToShowCutscene = 0;
                 GoToScreen(trashScreen, playDefaultMusic: false);

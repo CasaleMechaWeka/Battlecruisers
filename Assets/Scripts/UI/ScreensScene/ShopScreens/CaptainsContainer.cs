@@ -1,5 +1,6 @@
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections;
@@ -20,10 +21,19 @@ namespace BattleCruisers.UI.ScreensScene
         public CaptainItemController currentItem;
         public List<GameObject> visualOfCaptains = new List<GameObject>();
         public GameObject btnBuy, ownFeedback;
-        public void Initialize()
+
+        private ISingleSoundPlayer _soundPlayer;
+        public void Initialize(ISingleSoundPlayer soundPlayer)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
             captainDataChanged += CaptainDataChanged;
+            _soundPlayer = soundPlayer;
+            btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
+        }
+
+        private void Purchase()
+        {
+            
         }
 
         private void CaptainDataChanged(object sender, CaptainDataEventArgs e)
