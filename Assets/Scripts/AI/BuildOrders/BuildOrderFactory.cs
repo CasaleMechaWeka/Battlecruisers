@@ -10,7 +10,10 @@ using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using UnityEditor.PackageManager.Requests;
+using UnityEngine;
 
 namespace BattleCruisers.AI.BuildOrders
 {
@@ -22,6 +25,7 @@ namespace BattleCruisers.AI.BuildOrders
         private readonly IStrategyFactory _strategyFactory;
 
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
+        private const int NUM_OF_AIR_FACTORY_SLOTS = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
@@ -57,21 +61,16 @@ namespace BattleCruisers.AI.BuildOrders
         private IDynamicBuildOrder GetBuildOrder(IStrategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
 		{
 			// Create offensive build order
-            int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
+            //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
 
-            // What do we need to figure this out? ISlotAccessor for slots that can host an offensive building
-            // What offensive buildings are unlocked
-            // If has 2 mast slots, reserve one for tesla or stealthgen
-            // From slot accessor we can add bow slow, platform slot, some of the mast slots to the offensive slot pool
+            int numOfOffensiveSlots = FindNumOfOffensiveSlots(levelInfo);
 
-            int FindNumOfOffensiveSlots();
-            // What has AI got available in its loadout?
-            bool HasMastOffensive();
-            bool HasBowOffensive();
+            // What do we need?
+            // ISlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
 
-            IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
-
+            IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
             // Create defensive build orders (only for basic AI)
+            UnityEngine.Debug.Log(strategy.Offensives.ToList().Count + " " + strategy.Offensives);
             IDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
             IDynamicBuildOrder antiNavalBuildOrder = hasDefensivePlaceholders ? CreateAntiNavalBuildOrder(levelInfo) : null;
 
@@ -86,21 +85,43 @@ namespace BattleCruisers.AI.BuildOrders
 
             return new StrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);
 		}
+        
+        // TODO: Find a better class to move this to. Make the method public to add unit test!
+        private int FindNumOfOffensiveSlots(ILevelInfo levelInfo)
+        {
+            // Reserve 2 mast slots for a stealth gen and teslacoil.
+            int numOfMastSlotsToReserve = 2;
 
-		/// <summary>
-		/// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
-		/// IEnumerable from a LINQ Select query, but every time I looped through this
-		/// IEnumerable I would get a fresh copy of the object, so any changes I made to
-		/// those objects were lost!!!
-		/// </summary>
+            ISlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
+            int numOfOffensiveSlots = slotAccessor.GetSlotCount(SlotType.Platform);
+
+            if(levelInfo.HasMastOffensive())
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Mast) - numOfMastSlotsToReserve;
+            }
+
+            if(levelInfo.HasBowOffensive()) 
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Bow);
+            }
+
+            return numOfOffensiveSlots;
+        }
+        /// <summary>
+        /// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
+        /// IEnumerable from a LINQ Select query, but every time I looped through this
+        /// IEnumerable I would get a fresh copy of the object, so any changes I made to
+        /// those objects were lost!!!
+        /// </summary>
         private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots, ILevelInfo levelInfo)
-		{
+		{            
 			AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
 			// Create individual build orders
 			IList<IDynamicBuildOrder> buildOrders = new List<IDynamicBuildOrder>();
 			foreach (IOffensiveRequest request in requests)
 			{
+                UnityEngine.Debug.Log(request);
                 buildOrders.Add(CreateBuildOrder(request, levelInfo));
 			}
 
@@ -117,9 +138,16 @@ namespace BattleCruisers.AI.BuildOrders
 				navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
 			}
 
+            // Should have a single naval request at most
+            IOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Air);
+            if (airRequest != null)
+            {
+                airRequest.NumOfSlotsToUse = NUM_OF_AIR_FACTORY_SLOTS;
+            }
+
             // All non-naval requests (offensives or non-banned ultras) require platform slots, 
             // so need to split the available platform slots between these requests.
-			IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval);
+            IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval && request.Type != OffensiveType.Air);
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
 		}
 
