@@ -8,6 +8,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils.Network
 {
+    // Google authentication currently works under these specific conditions:
+    // - Unity's Authentication package 2.4.0
+    // - Google Play Games plugin version 0.10.14
+    // - OAuth clients in GPC/Google Cloud set up as they are right now, on 14/08/2023
+    //
+    // Nothing sums it up better than this quote from a Unity Developer in a thread on the Unity forums:
+    // "Just to clarify, Authentication works fine, it's google's API we are trying to clarify as it's ever changing."
+
     public class GoogleAuthentication : IGoogleAuthentication
     {
         public string Token;
@@ -93,6 +101,7 @@ namespace BattleCruisers.Utils.Network
                 Debug.LogException(ex);
             }
         }
+
 
         // This one is Google Play as opposed to Google
         // But both AuthenticationServices run through the GooglePlayGames api/plugin/sdk!
