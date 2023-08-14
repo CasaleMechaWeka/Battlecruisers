@@ -265,11 +265,11 @@ namespace BattleCruisers.Scenes
         {
             Debug.Log("===> trying to login with Google");
 
-            _GoogleAuthentication = new GoogleAuthentication();
-            _GoogleAuthentication.InitializePlayGamesLogin();
-
             if (!AuthenticationService.Instance.IsSignedIn)
             {
+                _GoogleAuthentication = new GoogleAuthentication();
+                _GoogleAuthentication.InitializePlayGamesLogin();
+
                 SetInteractable(false);
                 spinGoogle.SetActive(true);
                 labelGoogle.SetActive(false);
@@ -277,7 +277,7 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); //the mouseover details for these enums are actually pretty good!
+                    await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The mouseover details for these enums are actually pretty good!
                 }
                 catch (Exception ex)
                 {

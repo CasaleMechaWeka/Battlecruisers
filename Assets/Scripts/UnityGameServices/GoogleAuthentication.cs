@@ -10,13 +10,16 @@ namespace BattleCruisers.Utils.Network
 {
     public class GoogleAuthentication : IGoogleAuthentication
     {
+        public string Token;
+        public string Error;
+
         public void InitializePlayGamesLogin()
         {
             var config = new PlayGamesClientConfiguration.Builder()
                 // Requests an ID token be generated.  
                 // This OAuth token can be used to
                 // identify the player to other services such as Firebase.
-                //.RequestIdToken() //<---- This causes authentication to fail with Error Code 10: Developer Error
+                .RequestIdToken()
                 .Build();
 
             PlayGamesPlatform.InitializeInstance(config);
@@ -24,11 +27,13 @@ namespace BattleCruisers.Utils.Network
             PlayGamesPlatform.Activate();
         }
 
+        //Fetch the Token / Auth code
         public async Task Authenticate(SignInInteractivity interactivity)
         {
             PlayGamesPlatform.Activate();
             await UnityServices.InitializeAsync();
 
+            string c;
             //The compiler doesn't like it if "interactivity" isn't passed into Authenticate().
             //This diverges from tutorials and documentation!
             PlayGamesPlatform.Instance.Authenticate(interactivity, (success) =>
@@ -36,10 +41,17 @@ namespace BattleCruisers.Utils.Network
                 if (SignInStatus.Success == success)
                 {
                     // This is the recommended replacement for "PlayGamesPlatform.Instance.RequestServerSideAccess()":
-                    SignInWithGoogleAsync(((PlayGamesLocalUser)Social.localUser).GetIdToken());
+                    c = ((PlayGamesLocalUser)PlayGamesPlatform.Instance.localUser).GetIdToken();
+                    Debug.Log("Authorization code: " + c);
+                    SignInWithGoogleAsync(c);
+                    Token = c;
                 }
-            }
-            );
+                else
+                {
+                    Error = "Failed to retrieve Google play games authorization code";
+                    Debug.Log("Login Unsuccessful");
+                }
+            });
         }
 
         public void LoginGoogle()
