@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -44,7 +45,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     levelNum,
                     _skirmish.AICruiser,
                     backgroundLevel.MusicKeys,
-                    backgroundLevel.SkyMaterialName);
+                    backgroundLevel.SkyMaterialName,
+                    StaticPrefabKeys.CaptainExos.CaptainExo021);
         }
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)

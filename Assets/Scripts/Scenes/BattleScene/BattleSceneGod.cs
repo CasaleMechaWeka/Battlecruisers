@@ -44,6 +44,7 @@ using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using Unity.Services.Analytics;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -92,6 +93,11 @@ namespace BattleCruisers.Scenes.BattleScene
         private static bool GameOver;
         public GameObject ultraPanel;
         private IApplicationModel applicationModel;
+
+        public GameObject PlayerCaptain;
+        public GameObject EnemyCaptain;
+        public Transform playerCaptainContainer;
+        public Transform AICaptainContainer;
 
         public GameObject[] ilegalTutorialSettings;
         private async void Start()
@@ -202,6 +208,18 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
+            //Setting up Captains
+            CaptainExo playerCaptain = Instantiate(prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain), playerCaptainContainer);
+            CaptainExo AICaptain = Instantiate(prefabFactory.GetCaptainExo(currentLevel.Captains),AICaptainContainer);
+            foreach(SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
+            {
+                spriteRenderer.material.color = Color.red;
+            }
+            playerCaptain.gameObject.transform.localScale = playerCaptainContainer.localScale;
+            AICaptain.gameObject.transform.localScale = AICaptainContainer.localScale;
+            PlayerCaptain = playerCaptain.gameObject;
+            EnemyCaptain = AICaptain.gameObject;
+
             LeftPanelComponents leftPanelComponents
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
@@ -346,12 +364,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
             //Code that uses current level to set the image of the enemy robot on the enemy nav button
             //Make sure to add more images to the EnemyCharacterImages prefab if more enemies are added
-            if(enemyCharacterImages != null)
+            /*if(enemyCharacterImages != null)
             {
                 Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
                 Assert.IsTrue(enemyImages.Length >= currentLevel.Num);
                 enemyImages[currentLevel.Num - 1].enabled = true;
-            }
+            }*/
 
             toolTipActivator.Initialise();
 
