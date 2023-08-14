@@ -16,8 +16,7 @@ namespace BattleCruisers.Utils.Network
                 // Requests an ID token be generated.  
                 // This OAuth token can be used to
                 // identify the player to other services such as Firebase.
-                .RequestIdToken()
-                .RequestServerAuthCode(true)
+                //.RequestIdToken() //<---- This causes authentication to fail with Error Code 10: Developer Error
                 .Build();
 
             PlayGamesPlatform.InitializeInstance(config);
