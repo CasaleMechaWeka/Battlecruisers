@@ -10,11 +10,13 @@ namespace BattleCruisers.Utils.Network
 {
     public interface IGoogleAuthentication
     {
+        #if PLATFORM_ANDROID
         void InitializePlayGamesLogin();
         Task Authenticate(SignInInteractivity interactivity);
         void LoginGoogle();
         Task SignInWithGoogleAsync(string idToken);
         Task SignInWithGooglePlayGamesAsync(string authCode);
         Task LinkWithGoogleAsync(string idToken);
+        #endif
     }
 }

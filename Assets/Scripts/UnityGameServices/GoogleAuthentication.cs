@@ -20,7 +20,7 @@ namespace BattleCruisers.Utils.Network
     {
         public string Token;
         public string Error;
-
+#if PLATFORM_ANDROID
         public void InitializePlayGamesLogin()
         {
             var config = new PlayGamesClientConfiguration.Builder()
@@ -151,5 +151,6 @@ namespace BattleCruisers.Utils.Network
                 Debug.LogException(ex);
             }
         }
+#endif
     }
 }

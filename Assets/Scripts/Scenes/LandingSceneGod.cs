@@ -147,6 +147,22 @@ namespace BattleCruisers.Scenes
             googleBtn.Initialise(soundPlayer, GoogleLogin);
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
 
+#if PLATFORM_ANDROID
+            _GoogleAuthentication = new GoogleAuthentication();
+            _GoogleAuthentication.InitializePlayGamesLogin();
+
+            // Attempt signin without user input:
+            try
+            {
+                _GoogleAuthentication = new GoogleAuthentication();
+                _GoogleAuthentication.InitializePlayGamesLogin();
+                await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
+#endif
             try
             {
                 var options = new InitializationOptions();
@@ -177,13 +193,6 @@ namespace BattleCruisers.Scenes
                     string customArgument = ParrelSync.ClonesManager.GetArgument();
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
-#endif
-
-#if PLATFORM_ANDROID
-                // Attempt signin without user input:
-                _GoogleAuthentication = new GoogleAuthentication();
-                _GoogleAuthentication.InitializePlayGamesLogin();
-                await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
 #endif
 
                 if (InternetConnectivity.Value)
@@ -273,21 +282,20 @@ namespace BattleCruisers.Scenes
 
             if (!AuthenticationService.Instance.IsSignedIn)
             {
-                _GoogleAuthentication = new GoogleAuthentication();
-                _GoogleAuthentication.InitializePlayGamesLogin();
-
                 SetInteractable(false);
                 spinGoogle.SetActive(true);
                 labelGoogle.SetActive(false);
                 loginType = LoginType.Google;
 
+#if PLATFORM_ANDROID
                 try
                 {
+                    
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
 
                     // turn the button back on if it fails I guess?
                     // should probably display some kind of error modal to users too.
-                    if(!AuthenticationService.Instance.IsSignedIn)
+                    if (!AuthenticationService.Instance.IsSignedIn)
                     {
                         SetInteractable(true);
                         spinGoogle.SetActive(false);
@@ -298,6 +306,7 @@ namespace BattleCruisers.Scenes
                 {
                     Debug.Log(ex.Message);
                 }
+#endif
             }
         }
 
