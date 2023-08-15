@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 namespace BattleCruisers.AI.BuildOrders
@@ -69,8 +68,9 @@ namespace BattleCruisers.AI.BuildOrders
             // ISlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
 
             IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
+            //UnityEngine.Debug.Log(strategy.Offensives.ToList().Count + " " + strategy.Offensives);
+
             // Create defensive build orders (only for basic AI)
-            UnityEngine.Debug.Log(strategy.Offensives.ToList().Count + " " + strategy.Offensives);
             IDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
             IDynamicBuildOrder antiNavalBuildOrder = hasDefensivePlaceholders ? CreateAntiNavalBuildOrder(levelInfo) : null;
 
