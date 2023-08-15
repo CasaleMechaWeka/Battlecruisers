@@ -78,7 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
             skirmishButton.Initialise(_soundPlayer, GoToSkirmishScreen);
             battleButton.Initialise(_soundPlayer, GotoBattleMode);
-
+ 
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);

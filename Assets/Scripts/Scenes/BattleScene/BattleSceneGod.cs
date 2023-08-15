@@ -44,6 +44,7 @@ using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using Unity.Services.Analytics;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -92,6 +93,13 @@ namespace BattleCruisers.Scenes.BattleScene
         private static bool GameOver;
         public GameObject ultraPanel;
         private IApplicationModel applicationModel;
+
+        public GameObject PlayerCaptain;
+        public GameObject EnemyCaptain;
+        public Transform playerCaptainContainer;
+        public Transform AICaptainContainer;
+        public GameObject PlayerName;
+        public GameObject EnemyName;
 
         public GameObject[] ilegalTutorialSettings;
         private async void Start()
@@ -202,6 +210,37 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
+
+            //Setting up Captains
+            CaptainExo playerCaptain = Instantiate(prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain), playerCaptainContainer);
+            CaptainExo AICaptain = Instantiate(prefabFactory.GetCaptainExo(currentLevel.Captains),AICaptainContainer);
+            foreach (SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
+            {
+                spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
+            }
+            foreach (SpriteRenderer spriteRenderer in AICaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
+            {
+                spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
+            }
+            playerCaptain.gameObject.transform.localScale = Vector3.one;
+            AICaptain.gameObject.transform.localScale = Vector3.one;
+            PlayerCaptain = playerCaptain.gameObject;
+            EnemyCaptain = AICaptain.gameObject;
+
+            //Setting up Captain Names
+            Text playerName = PlayerName.gameObject.GetComponent<Text>();
+            playerName.text = dataProvider.GameModel.PlayerName;
+            if(applicationModel.Mode == GameMode.PvP_1VS1)
+            {
+                //Enemy player name
+            }
+            else
+            {
+                Text AIName = EnemyName.gameObject.GetComponent<Text>();
+                AIName.text = AICaptain.Name;
+            }
+            
+
             LeftPanelComponents leftPanelComponents
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
@@ -346,12 +385,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
             //Code that uses current level to set the image of the enemy robot on the enemy nav button
             //Make sure to add more images to the EnemyCharacterImages prefab if more enemies are added
-            if(enemyCharacterImages != null)
+            /*if(enemyCharacterImages != null)
             {
                 Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
                 Assert.IsTrue(enemyImages.Length >= currentLevel.Num);
                 enemyImages[currentLevel.Num - 1].enabled = true;
-            }
+            }*/
 
             toolTipActivator.Initialise();
 

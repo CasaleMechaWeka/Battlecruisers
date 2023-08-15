@@ -301,62 +301,62 @@ namespace BattleCruisers.Data.Static
             return new List<ILevel>()
             {
                 // Set 1:  Raptor
-                new Level(1, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
-                new Level(2, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple),
-                new Level(3, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Dusk),
+                new Level(1, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.CaptainExo001),
+                new Level(2, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.CaptainExo002),
+                new Level(3, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.CaptainExo003),
                 
                 // Set 2:  Bullshark
-                new Level(4, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new Level(5, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
-                new Level(6, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
-                new Level(7, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
+                new Level(4, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.CaptainExo004),
+                new Level(5, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.CaptainExo005),
+                new Level(6, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo006),
+                new Level(7, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo007),
 
                 // Set 3:  Rockjaw
-                new Level(8, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new Level(9, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning),
-                new Level(10, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Purple),
+                new Level(8, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.CaptainExo008),
+                new Level(9, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.CaptainExo009),
+                new Level(10, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.CaptainExo010),
 
                 // Set 4:  Eagle
-                new Level(11, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
-                new Level(12, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
-                new Level(13, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
-                new Level(14, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
-                new Level(15, StaticPrefabKeys.Hulls.ManOfWarBoss, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
+                new Level(11, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo011),
+                new Level(12, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.CaptainExo012),
+                new Level(13, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.CaptainExo013),
+                new Level(14, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo014),
+                new Level(15, StaticPrefabKeys.Hulls.ManOfWarBoss, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo015),
 
                 // Set 5:  Hammerhead
-                new Level(16, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Experimental, SkyMaterials.Morning),
-                new Level(17, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
-                new Level(18, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk),
+                new Level(16, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Experimental, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.CaptainExo016),
+                new Level(17, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.CaptainExo017),
+                new Level(18, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.CaptainExo018),
 
                 // Set 6:  Longbow
-                new Level(19, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple),
-                new Level(20, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight),
-                new Level(21, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new Level(22, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
+                new Level(19, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.CaptainExo019),
+                new Level(20, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo020),
+                new Level(21, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.CaptainExo021),
+                new Level(22, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo022),
 
                 // Set 7:  Megolodon
-                new Level(23, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
-                new Level(24, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
-                new Level(25, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new Level(26, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
+                new Level(23, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.CaptainExo023),
+                new Level(24, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo024),
+                new Level(25, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.CaptainExo025),
+                new Level(26, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.CaptainExo026),
 				
 			     // Set 8:  Huntress Prime
-                new Level(27, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
-                new Level(28, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
-                new Level(29, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
-                new Level(30, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
-                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise), //HUNTRESS PRIME
+                new Level(27, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.CaptainExo027),
+                new Level(28, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.CaptainExo028),
+                new Level(29, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.CaptainExo029),
+                new Level(30, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo030),
+                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo031), //HUNTRESS PRIME
 
                  // Set 9:  Secret Levels
-                new Level(32, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
-                new Level(33, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
-                new Level(34, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
-                new Level(35, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
-                new Level(36, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
-                new Level(37, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
-                new Level(38, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new Level(39, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
-                new Level(40, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight) //TODO: Change to new boss broadsword
+                new Level(32, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.CaptainExo032),
+                new Level(33, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.CaptainExo033),
+                new Level(34, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.CaptainExo034),
+                new Level(35, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo035),
+                new Level(36, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo036),
+                new Level(37, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.CaptainExo037),
+                new Level(38, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.CaptainExo038),
+                new Level(39, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo039),
+                new Level(40, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo040) //TODO: Change to new boss broadsword
             };
         }
 

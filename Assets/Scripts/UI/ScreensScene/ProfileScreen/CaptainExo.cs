@@ -8,6 +8,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
     public class CaptainExo : Prefab, ICaptainExo
     {
         public Sprite captainExoImage;
-        public Sprite CaptainExoImage => captainExoImage;                              
+        public Sprite CaptainExoImage => captainExoImage;
+
+        public string captainName;
+        public string Name => captainName;
     }
 }
