@@ -26,6 +26,8 @@ using System.Net;
 using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
 using System.IO;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
@@ -82,7 +84,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-
+        public static IGoogleAuthentication _GoogleAuthentication { get; set; }
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
         public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
@@ -145,6 +147,22 @@ namespace BattleCruisers.Scenes
             googleBtn.Initialise(soundPlayer, GoogleLogin);
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
 
+#if PLATFORM_ANDROID
+            _GoogleAuthentication = new GoogleAuthentication();
+            _GoogleAuthentication.InitializePlayGamesLogin();
+
+            // Attempt signin without user input:
+            try
+            {
+                _GoogleAuthentication = new GoogleAuthentication();
+                _GoogleAuthentication.InitializePlayGamesLogin();
+                await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
+#endif
             try
             {
                 var options = new InitializationOptions();
@@ -176,7 +194,6 @@ namespace BattleCruisers.Scenes
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
 #endif
-
 
                 if (InternetConnectivity.Value)
                 {
@@ -259,9 +276,38 @@ namespace BattleCruisers.Scenes
 #endif
         }
 
-        public void GoogleLogin()
+        public async void GoogleLogin()
         {
             Debug.Log("===> trying to login with Google");
+
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                SetInteractable(false);
+                spinGoogle.SetActive(true);
+                labelGoogle.SetActive(false);
+                loginType = LoginType.Google;
+
+#if PLATFORM_ANDROID
+                try
+                {
+                    
+                    await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+
+                    // turn the button back on if it fails I guess?
+                    // should probably display some kind of error modal to users too.
+                    if (!AuthenticationService.Instance.IsSignedIn)
+                    {
+                        SetInteractable(true);
+                        spinGoogle.SetActive(false);
+                        labelGoogle.SetActive(true);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                }
+#endif
+            }
         }
 
         public async void AnonymousLogin()
@@ -467,23 +513,6 @@ namespace BattleCruisers.Scenes
         public void OnQuit()
         {
             Application.Quit();
-        }
-
-        async Task SignInWithGoogleAsync(string idToken)
-        {
-            try
-            {
-                await AuthenticationService.Instance.SignInWithGoogleAsync(idToken);
-                Debug.Log("SignIn is successful.");
-            }
-            catch (Unity.Services.Authentication.AuthenticationException ex)
-            {
-                Debug.LogException(ex);
-            }
-            catch (RequestFailedException ex)
-            {
-                Debug.LogException(ex);
-            }
         }
 
         void OnDestroy()

@@ -12,5 +12,9 @@ namespace BattleCruisers.AI
 
         bool CanConstructBuilding(BuildingKey buildingKey);
         IList<BuildingKey> GetAvailableBuildings(BuildingCategory category);
-	}
+
+
+        bool HasMastOffensive();
+        bool HasBowOffensive();
+    }
 }

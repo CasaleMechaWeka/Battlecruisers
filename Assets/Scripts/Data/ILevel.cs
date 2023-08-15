@@ -10,5 +10,6 @@ namespace BattleCruisers.Data
         IPrefabKey Hull { get; }
         SoundKeyPair MusicKeys { get; }
         string SkyMaterialName { get; }
+        IPrefabKey Captains { get; }
     }
 }

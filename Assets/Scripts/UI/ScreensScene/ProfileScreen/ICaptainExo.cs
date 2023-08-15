@@ -8,6 +8,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
     public interface ICaptainExo
     {
         Sprite CaptainExoImage { get; }
+
+        string Name { get; }
     }
 }
 

@@ -10,12 +10,14 @@ namespace BattleCruisers.Data
         public IPrefabKey Hull { get; }
         public SoundKeyPair MusicKeys { get; }
         public string SkyMaterialName { get; }
+        public IPrefabKey Captains { get; }
 
         public Level(
             int num, 
             IPrefabKey hull, 
             SoundKeyPair musicKeys,
-            string skyMaterialName)
+            string skyMaterialName,
+            IPrefabKey captain)
 		{
             Helper.AssertIsNotNull(hull, musicKeys);
 
@@ -23,6 +25,7 @@ namespace BattleCruisers.Data
             Hull = hull;
             MusicKeys = musicKeys;
             SkyMaterialName = skyMaterialName;
+            Captains = captain;
 		}
 	}
 }
