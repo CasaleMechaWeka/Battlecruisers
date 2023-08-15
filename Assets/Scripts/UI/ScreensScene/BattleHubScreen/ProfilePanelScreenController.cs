@@ -11,6 +11,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers.Sprites;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -38,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private int currentXP;
         private int levelXP;
         private int rank;
-        public DestructionRanker ranker;
         [SerializeField]
         private Text currentXPString;
         [SerializeField]
@@ -47,8 +49,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject currentCaptainImage;
         public Image badgeIcon, medalIcon;
         public Text rankTitle;
+        public Image rankImage;
 
-        public void Initialise(
+        private ILocTable commonStrings;
+
+        public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
@@ -63,6 +68,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
+            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+
             captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
             playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
@@ -74,6 +81,25 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             lableOfSelect.SetActive(true);
 
             playerName.text = _dataProvider.GameModel.PlayerName;
+            int rank = CalculateRank(_dataProvider.GameModel.LifetimeDestructionScore);
+            rankTitle.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
+            SpriteFetcher fetcher = new SpriteFetcher();
+            rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
+        }
+
+        private int CalculateRank(long score)
+        {
+
+            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
+            {
+                long x = 2500 + 2500 * i * i;
+                //Debug.Log(x);
+                if (score < x)
+                {
+                    return i;
+                }
+            }
+            return StaticPrefabKeys.Ranks.AllRanks.Count;
         }
 
         private void Awake()

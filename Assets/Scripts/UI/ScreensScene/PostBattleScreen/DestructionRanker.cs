@@ -19,11 +19,20 @@ namespace BattleCruisers.PostBattleScreen
 {
     public class DestructionRanker : MonoBehaviour
     {
+        [SerializeField]
+        GameObject[] destructionRanks;
         public void DisplayRank(long score)
         {
+            StartCoroutine(iDisplayRank(score));
+        }
+        IEnumerator iDisplayRank(long score)
+        {
+            foreach (GameObject o in destructionRanks)
+                o.SetActive(false);
+            yield return null;
             int rank = CalculateRank(score);
-            Assert.IsTrue(rank >= 0 && rank <=33);
-
+            Assert.IsTrue(rank >= 0 && rank <= 33);
+            destructionRanks[rank].SetActive(true);
         }
 
         public int CalculateRank(long score)
