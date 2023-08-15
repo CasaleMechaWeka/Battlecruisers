@@ -38,9 +38,6 @@ namespace BattleCruisers.Utils.Network
         //Fetch the Token / Auth code
         public async Task Authenticate(SignInInteractivity interactivity)
         {
-            PlayGamesPlatform.Activate();
-            await UnityServices.InitializeAsync();
-
             string c;
             //The compiler doesn't like it if "interactivity" isn't passed into Authenticate().
             //This diverges from tutorials and documentation!
@@ -49,7 +46,7 @@ namespace BattleCruisers.Utils.Network
                 if (SignInStatus.Success == success)
                 {
                     // This is the recommended replacement for "PlayGamesPlatform.Instance.RequestServerSideAccess()":
-                    c = ((PlayGamesLocalUser)PlayGamesPlatform.Instance.localUser).GetIdToken();
+                    c = ((PlayGamesLocalUser)Social.localUser).GetIdToken();
                     Debug.Log("Authorization code: " + c);
                     SignInWithGoogleAsync(c);
                     Token = c;
