@@ -211,12 +211,16 @@ namespace BattleCruisers.Scenes.BattleScene
             //Setting up Captains
             CaptainExo playerCaptain = Instantiate(prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain), playerCaptainContainer);
             CaptainExo AICaptain = Instantiate(prefabFactory.GetCaptainExo(currentLevel.Captains),AICaptainContainer);
-            foreach(SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
+            foreach (SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
             {
-                spriteRenderer.material.color = Color.red;
+                spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
             }
-            playerCaptain.gameObject.transform.localScale = playerCaptainContainer.localScale;
-            AICaptain.gameObject.transform.localScale = AICaptainContainer.localScale;
+            foreach (SpriteRenderer spriteRenderer in AICaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
+            {
+                spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
+            }
+            playerCaptain.gameObject.transform.localScale = Vector3.one;
+            AICaptain.gameObject.transform.localScale = Vector3.one;
             PlayerCaptain = playerCaptain.gameObject;
             EnemyCaptain = AICaptain.gameObject;
 
