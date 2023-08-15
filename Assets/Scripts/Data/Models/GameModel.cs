@@ -214,6 +214,12 @@ namespace BattleCruisers.Data.Models
             set => _playerName = value;
         }
 
+/*        private int _rankData;
+        public int RankData
+        {
+            get => _rankData;
+            set => _rankData = value;
+        }*/
         // Pre-Rogue stuff
 
         public class ModelVersion
@@ -433,6 +439,8 @@ namespace BattleCruisers.Data.Models
             _playerName = "Charlie";
             _coins = 50;
             _credits = 0;
+
+/*            _rankData = 0;*/
         }
 
         public GameModel(

@@ -205,9 +205,9 @@ namespace BattleCruisers.Scenes
 
             currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
-            rankNumber.text = FormatRankNumber(rank);
+            /*rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
-            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get*/
             coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
             coinsText.text = "+" + coinsToAward.ToString();
 
@@ -275,8 +275,8 @@ namespace BattleCruisers.Scenes
             currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
-            rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
-            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+            /*rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get*/
             coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
             coinsText.text = "+" + coinsToAward.ToString();
 
@@ -318,7 +318,7 @@ namespace BattleCruisers.Scenes
                 // If the bar would fill up, it needs some special handling.
                 if (xpToAdd + currentXP >= nextLevelXP)
                 {
-                    // Only deal with it if the player isn't max rank:
+/*                    // Only deal with it if the player isn't max rank:
                     if (ranker.CalculateRank(allTimeVal) < ranker.destructionRanks.Length - 1)
                     {
                         while (xpToAdd > 0)
@@ -368,7 +368,7 @@ namespace BattleCruisers.Scenes
                     else
                     {
                         // TODO: any extra handling for max rank.
-                    }
+                    }*/
                 }
                 else
                 {

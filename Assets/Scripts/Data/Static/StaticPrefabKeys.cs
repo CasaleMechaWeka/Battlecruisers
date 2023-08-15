@@ -146,6 +146,57 @@ namespace BattleCruisers.Data.Static
             }
         }
 
+        public static class Ranks
+        {
+            // Ranks
+            public static RankData rank00 { get; } = new RankData("Rank00BoatThief", "00", "Rank0");
+            public static RankData rank01 { get; } = new RankData("Rank00BoatThief", "01", "Rank1");
+            public static RankData rank02 { get; } = new RankData("Rank00BoatThief", "002", "Rank2");
+            public static RankData rank03 { get; } = new RankData("Rank00BoatThief", "03", "Rank3");
+            public static RankData rank04 { get; } = new RankData("Rank00BoatThief", "04", "Rank4");
+            public static RankData rank05 { get; } = new RankData("Rank00BoatThief", "05", "Rank5");
+            public static RankData rank06 { get; } = new RankData("Rank00BoatThief", "06", "Rank6");
+            public static RankData rank07 { get; } = new RankData("Rank00BoatThief", "07", "Rank7");
+            public static RankData rank08 { get; } = new RankData("Rank00BoatThief", "08", "Rank8");
+            public static RankData rank09 { get; } = new RankData("Rank00BoatThief", "09", "Rank9");
+            public static RankData rank10 { get; } = new RankData("Rank00BoatThief", "10", "Rank10");
+            public static RankData rank11 { get; } = new RankData("Rank00BoatThief", "11", "Rank11");
+            public static RankData rank12 { get; } = new RankData("Rank00BoatThief", "12", "Rank12");
+            public static RankData rank13 { get; } = new RankData("Rank00BoatThief", "13", "Rank13");
+            public static RankData rank14 { get; } = new RankData("Rank00BoatThief", "14", "Rank14");
+            public static RankData rank15 { get; } = new RankData("Rank00BoatThief", "15", "Rank15");
+            public static RankData rank16 { get; } = new RankData("Rank00BoatThief", "16", "Rank16");
+            public static RankData rank17 { get; } = new RankData("Rank00BoatThief", "17", "Rank17");
+            public static RankData rank18 { get; } = new RankData("Rank00BoatThief", "18", "Rank18");
+            public static RankData rank19 { get; } = new RankData("Rank00BoatThief", "19", "Rank19");
+            public static RankData rank20 { get; } = new RankData("Rank00BoatThief", "20", "Rank20");
+            public static RankData rank21 { get; } = new RankData("Rank00BoatThief", "21", "Rank21");
+            public static RankData rank22 { get; } = new RankData("Rank00BoatThief", "22", "Rank22");
+            public static RankData rank23 { get; } = new RankData("Rank00BoatThief", "23", "Rank23");
+            public static RankData rank24 { get; } = new RankData("Rank00BoatThief", "24", "Rank24");
+            public static RankData rank25 { get; } = new RankData("Rank00BoatThief", "25", "Rank25");
+            public static RankData rank26 { get; } = new RankData("Rank00BoatThief", "26", "Rank26");
+            public static RankData rank27 { get; } = new RankData("Rank00BoatThief", "27", "Rank27");
+            public static RankData rank28 { get; } = new RankData("Rank00BoatThief", "28", "Rank28");
+            public static RankData rank29 { get; } = new RankData("Rank00BoatThief", "29", "Rank29");
+            public static RankData rank30 { get; } = new RankData("Rank00BoatThief", "30", "Rank30");
+            public static RankData rank31 { get; } = new RankData("Rank00BoatThief", "31", "Rank31");
+            public static RankData rank32 { get; } = new RankData("Rank00BoatThief", "32", "Rank32");
+            public static RankData rank33 { get; } = new RankData("Rank00BoatThief", "33", "Rank33");
+            public static IList<IRankData> AllRanks
+            {
+                get
+                {
+                    return new List<IRankData>()
+                    {
+                        rank00, rank01, rank02, rank03, rank04, rank05, rank06, rank07, rank08, rank09,
+                        rank10, rank11, rank12, rank13, rank14, rank15, rank16, rank17, rank18, rank19,
+                        rank20, rank21, rank22, rank23, rank24, rank25, rank26, rank27, rank28, rank29,
+                        rank30, rank31, rank32, rank33
+                    };
+                }
+            }
+        }
         public static class CaptainExos
         {
             // Captains

@@ -135,7 +135,7 @@ namespace BattleCruisers.Scenes
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log(ex.Message);
+                    Debug.Log(ex.Message);                    
                 }
             }
             else
@@ -265,8 +265,6 @@ namespace BattleCruisers.Scenes
                 thankYouPlane.SetTrigger("Play");
                 _isPlaying = true;
             }
-
-
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 

@@ -65,17 +65,15 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 DestroyImmediate(item.gameObject);
             }
 
-            RemoveAllCaptainsFromRenderCamera();
-
-            await Task.Delay(100);
+            RemoveAllCaptainsFromRenderCamera();            
 
             byte ii = 0;
             for (int i = 0; i < StaticPrefabKeys.CaptainExos.AllKeys.Count; i++)
             {
                 if (_dataProvider.GameModel.Captains[i].isOwned)
                 {
+                    
                     GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
-
                     CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[i]), captainCamContainer);
                     captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                     captainExo.gameObject.SetActive(false);
@@ -89,6 +87,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                         captainExo.gameObject.SetActive(true);
                     }
                     ii++;
+
+                    await Task.Delay(10);
                 }
             }
         }
