@@ -179,6 +179,12 @@ namespace BattleCruisers.Scenes
                 }
 #endif
 
+#if PLATFORM_ANDROID
+                // Attempt signin without user input:
+                _GoogleAuthentication = new GoogleAuthentication();
+                _GoogleAuthentication.InitializePlayGamesLogin();
+                await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
+#endif
 
                 if (InternetConnectivity.Value)
                 {
@@ -277,7 +283,16 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The mouseover details for these enums are actually pretty good!
+                    await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+
+                    // turn the button back on if it fails I guess?
+                    // should probably display some kind of error modal to users too.
+                    if(!AuthenticationService.Instance.IsSignedIn)
+                    {
+                        SetInteractable(true);
+                        spinGoogle.SetActive(false);
+                        labelGoogle.SetActive(true);
+                    }
                 }
                 catch (Exception ex)
                 {
