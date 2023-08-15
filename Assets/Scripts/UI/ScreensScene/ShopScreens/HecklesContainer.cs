@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene
 {
     public class HecklesContainer : MonoBehaviour
     {
-        private ILocTable commonStrings;
+        private ILocTable hecklesStrings;
         public EventHandler<HeckleDataEventArgs> heckleDataChanged;
 
         public Text t_heckleMessage;
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene
         private ISingleSoundPlayer _soundPlayer;
         public void Initialize(ISingleSoundPlayer soundPlayer)
         {
-            commonStrings = LandingSceneGod.Instance.commonStrings;
+            hecklesStrings = LandingSceneGod.Instance.hecklesStrings;
             heckleDataChanged += HeckleDataChanged;
             _soundPlayer = soundPlayer;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         private void Purchase()
         {
-            
+
         }
 
         private void HeckleDataChanged(object sender, HeckleDataEventArgs e)
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene
                 ownFeedback.SetActive(false);
             }
 
-            t_heckleMessage.text = commonStrings.GetString(e.heckleData.StringKeyBase);
+            t_heckleMessage.text = hecklesStrings.GetString(e.heckleData.StringKeyBase);
             hecklePrice.text = e.heckleData.HeckleCost.ToString("#,##0");
             obj_heckleMessage.GetComponent<RectTransform>().localScale = Vector3.zero;
             obj_heckleMessage.GetComponent<RectTransform>().DOScale(Vector3.one, 0.2f);

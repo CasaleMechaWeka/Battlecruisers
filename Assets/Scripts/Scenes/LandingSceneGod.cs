@@ -66,6 +66,7 @@ namespace BattleCruisers.Scenes
 
         public const string AuthProfileCommandLineArg = "-AuthProfile";
         public ILocTable commonStrings;
+        public ILocTable hecklesStrings;
 
         public static LandingSceneGod Instance;
         public LoginType loginType = LoginType.None;
@@ -214,6 +215,7 @@ namespace BattleCruisers.Scenes
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            hecklesStrings = await LocTableFactory.Instance.LoadHecklesTableAsync();
 
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
@@ -336,7 +338,7 @@ namespace BattleCruisers.Scenes
                 loginType = LoginType.NoInternet;
                 loginPanel.SetActive(false);
                 spinGuest.SetActive(false);
-                labelGuest.SetActive(true);    
+                labelGuest.SetActive(true);
                 GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
@@ -470,14 +472,14 @@ namespace BattleCruisers.Scenes
 
 
 
-/*        void Update()
-        {
-            if (!isUpdatingInternetConnectivity)
-            {
-                isUpdatingInternetConnectivity = true;
-                iUpdateInternetConnectivity();
-            }
-        }*/
+        /*        void Update()
+                {
+                    if (!isUpdatingInternetConnectivity)
+                    {
+                        isUpdatingInternetConnectivity = true;
+                        iUpdateInternetConnectivity();
+                    }
+                }*/
         bool isUpdatingInternetConnectivity = false;
         async void iUpdateInternetConnectivity()
         {
