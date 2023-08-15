@@ -98,6 +98,8 @@ namespace BattleCruisers.Scenes.BattleScene
         public GameObject EnemyCaptain;
         public Transform playerCaptainContainer;
         public Transform AICaptainContainer;
+        public GameObject PlayerName;
+        public GameObject EnemyName;
 
         public GameObject[] ilegalTutorialSettings;
         private async void Start()
@@ -208,6 +210,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
+
             //Setting up Captains
             CaptainExo playerCaptain = Instantiate(prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain), playerCaptainContainer);
             CaptainExo AICaptain = Instantiate(prefabFactory.GetCaptainExo(currentLevel.Captains),AICaptainContainer);
@@ -223,6 +226,20 @@ namespace BattleCruisers.Scenes.BattleScene
             AICaptain.gameObject.transform.localScale = Vector3.one;
             PlayerCaptain = playerCaptain.gameObject;
             EnemyCaptain = AICaptain.gameObject;
+
+            //Setting up Captain Names
+            Text playerName = PlayerName.gameObject.GetComponent<Text>();
+            playerName.text = dataProvider.GameModel.PlayerName;
+            if(applicationModel.Mode == GameMode.PvP_1VS1)
+            {
+                //Enemy player name
+            }
+            else
+            {
+                Text AIName = EnemyName.gameObject.GetComponent<Text>();
+                AIName.text = AICaptain.Name;
+            }
+            
 
             LeftPanelComponents leftPanelComponents
                 = leftPanelInitialiser.Initialise(
