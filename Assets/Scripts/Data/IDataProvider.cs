@@ -5,6 +5,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Threading.Tasks;
+using Unity.Services.Economy.Model;
 
 namespace BattleCruisers.Data
 {
@@ -17,6 +18,9 @@ namespace BattleCruisers.Data
         IStaticData StaticData { get; }
         ISettingsManager SettingsManager { get; }
 
+        List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
+        public VirtualShopConfig virtualShopConfig { get; set; }
+
         ILevel GetLevel(int levelNum);
         IPvPLevel GetPvPLevel(Map map);
         void SaveGame();
@@ -26,7 +30,8 @@ namespace BattleCruisers.Data
         /// Designed for user playtests, so users can start with a clean slate.
         /// </summary>
         void Reset();
-
+        Task<int> GetCaptainCost(int index);
+        Task<int> GetHeckleCost(int index);
         // Cloud Saving:
         Task CloudSave();
         Task CloudLoad();
@@ -36,5 +41,8 @@ namespace BattleCruisers.Data
 
         Task<bool> SyncCreditsFromCloud();
         Task<bool> SyncCreditsToCloud();
+
+        Task RefreshEconomyConfiguration();
+        Task FetchConfigs();
     }
 }

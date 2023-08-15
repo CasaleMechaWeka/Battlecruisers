@@ -1,3 +1,4 @@
+using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -23,11 +24,13 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject btnBuy, ownFeedback;
 
         private ISingleSoundPlayer _soundPlayer;
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        private IDataProvider _dataProvider;
+        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
             captainDataChanged += CaptainDataChanged;
             _soundPlayer = soundPlayer;
+            _dataProvider = dataProvider;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
         }
 
@@ -36,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene
             
         }
 
-        private void CaptainDataChanged(object sender, CaptainDataEventArgs e)
+        private async void CaptainDataChanged(object sender, CaptainDataEventArgs e)
         {
             currentItem._clickedFeedback.SetActive(false);
             visualOfCaptains[currentItem._index].SetActive(false);
@@ -56,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene
         //    captainImage.sprite = e.captainImage;
             captainName.text = commonStrings.GetString(e.captainData.NameStringKeyBase);
             captainDescription.text = commonStrings.GetString(e.captainData.DescriptionKeyBase);
-            captainPrice.text = e.captainData.CaptainCost.ToString("#,##0");
+            captainPrice.text = (await _dataProvider.GetCaptainCost(e.captainData.Index)).ToString();
         }
 
         private void OnDestroy()
