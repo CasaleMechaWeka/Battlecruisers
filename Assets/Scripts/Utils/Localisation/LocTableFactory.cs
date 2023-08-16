@@ -37,9 +37,11 @@ namespace BattleCruisers.Utils.Localisation
             public const string TUTORIAL = "Tutorial";
             public const string FONTS = "Fonts";
             public const string ADVERTISING = "Advertising";
+            public const string HECKLES = "Heckles";
+
         }
 
-        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable, _fonts, _advertisingTable;
+        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable, _hecklesTable, _fonts, _advertisingTable;
 
         private LocTableFactory() { }
 
@@ -122,6 +124,18 @@ namespace BattleCruisers.Utils.Localisation
         }
 
 
+        public async Task<ILocTable> LoadHecklesTableAsync()
+        {
+            if (_hecklesTable == null)
+            {
+                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.HECKLES);
+                _hecklesTable = new LocTable(tableHandle);
+            }
+
+            return _hecklesTable;
+        }
+
+
         private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
             Locale localeToUse = await GetLocaleAsync();
@@ -130,7 +144,7 @@ namespace BattleCruisers.Utils.Localisation
 
             // Load table, so getting any strings will be synchronous
             await handle.Task;
-            
+
             Assert.IsTrue(handle.Status == AsyncOperationStatus.Succeeded);
             Assert.IsNotNull(handle.Result);
 
@@ -154,27 +168,28 @@ namespace BattleCruisers.Utils.Localisation
             Locale arabic = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Arabic");
 
             //Debug.Log("Should be names below");
-            foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
+            foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
             {
                 //Debug.Log(locale.name);
             }
 
             if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language != null)
             {
-                foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
+                foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
                 {
                     //Debug.Log(locale.name);
                     //replace below with the string saved in settings
                     if (locale.name == ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language)
                     {
-                        
+
                         localeToUse = locale;
                         LocalizationSettings.SelectedLocale = localeToUse;
                         //ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = locale.name;
                     }
                 }
             }
-            else{
+            else
+            {
                 ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = localeToUse.name;
                 LocalizationSettings.SelectedLocale = localeToUse;
                 //Debug.Log("Set the language to " + ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language);
@@ -183,17 +198,17 @@ namespace BattleCruisers.Utils.Localisation
             }
             //localeToUse = Locale.CreateLocale(LocaleIdentifier);
 
-/*
-#if PSEUDO_LOCALE
-            Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
-            Locale pseudoLocale = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Pseudo-Locale(pseudo)");
-            Assert.IsNotNull(pseudoLocale);
-            LocalizationSettings.SelectedLocale = pseudoLocale;
-            localeToUse = pseudoLocale;
-#endif
-*/
+            /*
+            #if PSEUDO_LOCALE
+                        Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
+                        Locale pseudoLocale = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Pseudo-Locale(pseudo)");
+                        Assert.IsNotNull(pseudoLocale);
+                        LocalizationSettings.SelectedLocale = pseudoLocale;
+                        localeToUse = pseudoLocale;
+            #endif
+            */
 
-            
+
 
             _locale = localeToUse;
             //Debug.Log(_locale);
@@ -260,6 +275,15 @@ namespace BattleCruisers.Utils.Localisation
             {
                 Addressables.Release(_tutorialTable.Handle);
                 _advertisingTable = null;
+            }
+        }
+
+        public void ReleaseHecklesTable()
+        {
+            if (_hecklesTable != null)
+            {
+                Addressables.Release(_hecklesTable.Handle);
+                _hecklesTable = null;
             }
         }
     }

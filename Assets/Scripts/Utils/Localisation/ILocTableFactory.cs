@@ -10,8 +10,9 @@ namespace BattleCruisers.Utils.Localisation
         Task<ILocTable> LoadStoryTableAsync();
         Task<ILocTable> LoadTutorialTableAsync();
         Task<ILocTable> LoadFontsTableAsync();
-
         Task<ILocTable> LoadAdvertisingTableAsync();
+        Task<ILocTable> LoadHecklesTableAsync();
+
 
         void ReleaseBattleSceneTable();
         void ReleaseCommonTable();
@@ -20,5 +21,6 @@ namespace BattleCruisers.Utils.Localisation
         void ReleaseTutorialTable();
         void ReleaseFontsTable();
         void ReleaseAdvertisingTable();
+        void ReleaseHecklesTable();
     }
 }
