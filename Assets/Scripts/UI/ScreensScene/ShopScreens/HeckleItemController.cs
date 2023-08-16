@@ -4,6 +4,7 @@ using BattleCruisers.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace BattleCruisers.UI.ScreensScene
@@ -17,6 +18,7 @@ namespace BattleCruisers.UI.ScreensScene
         private ISingleSoundPlayer _soundPlayer;
         private HecklesContainer _hecklesContainer;
         public int _index;
+        public Text heckleNameText;
 
 
         public void StaticInitialise(
@@ -26,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene
             int index
             )
         {
-            Helper.AssertIsNotNull(soundPlayer, /*prefabFactory, */heckleData,  clickingArea, _ownedItemMark, _clickedFeedback, hecklesContainer);
+            Helper.AssertIsNotNull(soundPlayer, /*prefabFactory, */heckleData, clickingArea, _ownedItemMark, _clickedFeedback, hecklesContainer);
 
             _heckleData = heckleData;
             _soundPlayer = soundPlayer;
@@ -36,14 +38,15 @@ namespace BattleCruisers.UI.ScreensScene
             _clickedFeedback.SetActive(false);
 
             _ownedItemMark.SetActive(_heckleData.IsOwned);
-            clickingArea.Initialise(_soundPlayer, OnClicked);            
+            clickingArea.Initialise(_soundPlayer, OnClicked);
+            heckleNameText.text = Mathf.Max(108 + index * 217).ToString().Substring(0, 3);
         }
         public void OnClicked()
         {
             _clickedFeedback.SetActive(true);
             _hecklesContainer.heckleDataChanged.Invoke(this, new HeckleDataEventArgs
             {
-                heckleData = _heckleData                
+                heckleData = _heckleData
             });
         }
     }
