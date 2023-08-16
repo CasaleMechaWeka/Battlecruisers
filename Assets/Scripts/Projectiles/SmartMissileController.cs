@@ -40,6 +40,7 @@ namespace BattleCruisers.Projectiles
         private ITargetFinder _targetFinder;
         private IRankedTargetTracker _targetTracker;
         private ITargetProcessor _targetProcessor;
+        private RocketTarget _rocketTarget;
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 0.5f;
 
@@ -83,6 +84,10 @@ namespace BattleCruisers.Projectiles
         public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
+
+            _rocketTarget = GetComponentInChildren<RocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
+
             Assert.IsNotNull(missile);
 
             _transform = new TransformBC(gameObject.transform);
@@ -109,6 +114,9 @@ namespace BattleCruisers.Projectiles
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
 
             SetupTargetProcessor(activationArgs);
+
+            _rocketTarget.GameObject.SetActive(true);
+            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
 
             missile.enabled = true;
 
@@ -156,6 +164,7 @@ namespace BattleCruisers.Projectiles
 		protected override void DestroyProjectile()
 		{
             missile.enabled = false;
+            _rocketTarget.GameObject.SetActive(false);
             _target.Destroyed -= _target_Destroyed;
             CleanUpTargetProcessor();
 			base.DestroyProjectile();

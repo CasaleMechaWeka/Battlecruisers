@@ -22,6 +22,8 @@ namespace BattleCruisers.Projectiles
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
 
+        private RocketTarget _rocketTarget;
+
         public SpriteRenderer missile;
 
         protected override float TrailLifetimeInS => 3;
@@ -30,6 +32,10 @@ namespace BattleCruisers.Projectiles
         public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
+
+            _rocketTarget = GetComponentInChildren<RocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
+
             Assert.IsNotNull(missile);
         }
 
@@ -55,6 +61,9 @@ namespace BattleCruisers.Projectiles
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;
 
+            _rocketTarget.GameObject.SetActive(true);
+            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+
             activationArgs.Target.Destroyed += Target_Destroyed;
 		}
 
@@ -78,6 +87,7 @@ namespace BattleCruisers.Projectiles
 		protected override void DestroyProjectile()
 		{
             missile.enabled = false;
+            _rocketTarget.GameObject.SetActive(false);
             Target.Destroyed -= Target_Destroyed;
 			base.DestroyProjectile();
 		}
