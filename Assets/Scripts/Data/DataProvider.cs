@@ -17,7 +17,7 @@ using System.Linq;
 using UnityEngine;
 using BattleCruisers.Scenes;
 using Unity.Services.Authentication;
-using UnityEditor.Purchasing;
+using BattleCruisers.Utils.UGS.Samples;
 
 namespace BattleCruisers.Data
 {
@@ -116,13 +116,13 @@ namespace BattleCruisers.Data
             return await _serializer.SyncCreditsToCloud(this);
         }
 
-        public async Task RefreshEconomyConfiguration()
+        private async Task RefreshEconomyConfiguration()
         {
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             m_VirtualPurchaseDefinitions = EconomyService.Instance.Configuration.GetVirtualPurchases();
         }
 
-        public async Task FetchConfigs()
+        private async Task FetchConfigs()
         {
             try
             {
@@ -141,52 +141,56 @@ namespace BattleCruisers.Data
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
         }
 
-        public async Task<int> GetCaptainCost(int index)
+        public async Task SyncCaptainsCost()
         {
-            Assert.IsTrue(index >= 1 && index < virtualShopConfig.categories[0].items.Count);
-            int cost = 0;
+
             if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
             {
-                string targetPurchaseID = virtualShopConfig.categories[0].items[index - 1].id; // because, CaptainExo000 is default
-                foreach (VirtualPurchaseDefinition purchaseDef in m_VirtualPurchaseDefinitions)
+                try
                 {
-                    if (targetPurchaseID == purchaseDef.Id)
+                    await FetchConfigs();
+                    await RefreshEconomyConfiguration();
+                    for (int i = 0; i < virtualShopConfig.categories[0].items.Count; i++)
                     {
-                        var costs = ParseEconomyItems(purchaseDef.Costs);
-                        foreach (ItemAndAmountSpec spec in costs)
+                        string targetPurchaseID = virtualShopConfig.categories[0].items[i].id;
+                        foreach (VirtualPurchaseDefinition purchaseDef in m_VirtualPurchaseDefinitions)
                         {
-                            if (spec.id == "COIN")
-                                cost = spec.amount;
+                            if (targetPurchaseID == purchaseDef.Id)
+                            {
+                                var costs = ParseEconomyItems(purchaseDef.Costs);
+                                foreach (ItemAndAmountSpec spec in costs)
+                                {
+                                    if (spec.id == "COIN")
+                                        _gameModel.Captains[i + 1].captainCost = spec.amount;
+                                }
+                            }
                         }
                     }
+                    SaveGame();
+                    await CloudSave();
+                } catch(Exception ex)
+                {
+                    Debug.Log(ex.Message);
                 }
+
             }
-            return cost;
         }
 
-
-        public async Task<int> GetHeckleCost(int index)
+        public async Task<bool> PurchaseCaptain(int index)
         {
-            Assert.IsTrue(index >= 3 && index < virtualShopConfig.categories[1].items.Count);
-            int cost = 0;
-            if(await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+            try
             {
-                string targetPurchaseID = virtualShopConfig.categories[1].items[index].id;
-                foreach (VirtualPurchaseDefinition purchaseDef in m_VirtualPurchaseDefinitions)
-                {
-                    if (targetPurchaseID == purchaseDef.Id)
-                    {
-                        var costs = ParseEconomyItems(purchaseDef.Costs);
-                        foreach (ItemAndAmountSpec spec in costs)
-                        {
-                            if (spec.id == "COIN")
-                                cost = spec.amount;
-                        }
-                    }
-                }
+                string purchaseId = virtualShopConfig.categories[0].items[index].id;
+                var result = await EconomyManager.MakeVirtualPurchaseAsync(purchaseId);
+                await EconomyManager.RefreshCurrencyBalances();
+                return true;
             }
-            return cost;
+            catch
+            {
+                return false;
+            }
         }
+
 
 
         List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)

@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene
             
         }
 
-        private async void HeckleDataChanged(object sender, HeckleDataEventArgs e)
+        private void HeckleDataChanged(object sender, HeckleDataEventArgs e)
         {
             currentItem._clickedFeedback.SetActive(false);
             currentItem = (HeckleItemController)sender;
@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene
             }
 
             t_heckleMessage.text = commonStrings.GetString(e.heckleData.StringKeyBase);
-            hecklePrice.text = (await _dataProvider.GetHeckleCost(e.heckleData.Index)).ToString();
+            hecklePrice.text = e.heckleData.HeckleCost.ToString();
             obj_heckleMessage.GetComponent<RectTransform>().localScale = Vector3.zero;
             obj_heckleMessage.GetComponent<RectTransform>().DOScale(Vector3.one, 0.2f);
         }

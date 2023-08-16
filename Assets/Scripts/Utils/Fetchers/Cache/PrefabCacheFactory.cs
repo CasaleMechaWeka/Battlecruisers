@@ -66,7 +66,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
 
             IDictionary<IPrefabKey, CaptainExo> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, /*StaticPrefabKeys.CaptainExos.AllKeys*/ getSelectedCaptaionExo(), keyToCaptains));
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.CaptainExos.AllKeys /*getSelectedCaptaionExo()*/, keyToCaptains));
 
             Container<DroneController> droneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));

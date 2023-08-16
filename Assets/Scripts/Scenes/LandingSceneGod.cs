@@ -360,6 +360,7 @@ namespace BattleCruisers.Scenes
             labelGoogle.SetActive(true);
             labelGuest.SetActive(true);
             GoToScene(SceneNames.SCREENS_SCENE, true);
+            Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
         }
 
         void SignedOut()

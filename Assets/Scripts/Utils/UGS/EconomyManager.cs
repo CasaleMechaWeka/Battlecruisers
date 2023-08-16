@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Unity.Services.Economy.Model;
 using Unity.Services.Economy;
 using UnityEngine;
+using System;
 
 namespace BattleCruisers.Utils.UGS.Samples
 {
@@ -18,6 +19,39 @@ namespace BattleCruisers.Utils.UGS.Samples
         public static async Task SetEconomyBalance(string currencyId, long balance)
         {
             await EconomyService.Instance.PlayerBalances.SetBalanceAsync(currencyId, balance);
+        }
+
+        public static async Task<MakeVirtualPurchaseResult> MakeVirtualPurchaseAsync(string virtualPurchaseId)
+        {
+            try
+            {                
+                return await EconomyService.Instance.Purchases.MakeVirtualPurchaseAsync(virtualPurchaseId);
+            }
+            catch(EconomyException e)
+            {
+                Debug.LogException(e);
+                return default;
+            }
+        }
+
+        public static async Task RefreshCurrencyBalances()
+        {
+            GetBalancesResult balanceResult = null;
+
+            try
+            {
+                balanceResult = await GetEconomyBalances();
+            }
+            catch (EconomyRateLimitedException e)
+            {
+
+                balanceResult = await Utils.RetryEconomyFunction(GetEconomyBalances, e.RetryAfter);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Problem getting Economy currency balances:");
+                Debug.LogException(e);
+            }
         }
     }
 }

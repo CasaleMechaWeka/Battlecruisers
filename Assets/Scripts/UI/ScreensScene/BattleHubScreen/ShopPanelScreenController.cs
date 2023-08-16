@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsButton.Initialise(_soundPlayer, CaptainsButton_OnClick);
             hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
             blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
-            captainsContainer.Initialize(_soundPlayer, _dataProvider);
+            captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider);
         }
 
@@ -117,14 +117,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);
                     hecklesContainer.currentItem = heckleItem.GetComponent<HeckleItemController>();
                     //    heckleItem.GetComponent<HeckleItemController>().OnClicked(); // to display price of Heckle.
-                    if (index > 2)
+                    if (index  < 3)
                     {
-                        hecklesContainer.hecklePrice.text = (await _dataProvider.GetHeckleCost(index)).ToString();
+                        hecklesContainer.hecklePrice.text = "0"; // heckle000,001, 002 are default items. 
                     }
-                    else
-                    {
-                        hecklesContainer.hecklePrice.text = "0";
-                    }
+
                     if (_dataProvider.GameModel.Heckles[index].IsOwned)
                     {
                         hecklesContainer.btnBuy.SetActive(false);
@@ -183,11 +180,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     //    captainItem.GetComponent<CaptainItemController>().OnClicked(); // to display Captain's price
                     if (index == 0)
                     {
-                        captainsContainer.captainPrice.text = "0";
-                    }
-                    else
-                    {
-                        captainsContainer.captainPrice.text = (await _dataProvider.GetCaptainCost(index)).ToString();
+                        captainsContainer.captainPrice.text = "0"; // CaptainExo000 is default item. :)
                     }
                     captainExo.gameObject.SetActive(true);
                     if (_dataProvider.GameModel.Captains[index].IsOwned)

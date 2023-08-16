@@ -30,8 +30,8 @@ namespace BattleCruisers.Data
         /// Designed for user playtests, so users can start with a clean slate.
         /// </summary>
         void Reset();
-        Task<int> GetCaptainCost(int index);
-        Task<int> GetHeckleCost(int index);
+/*        Task<int> GetCaptainCost(int index);
+        Task<int> GetHeckleCost(int index);*/
         // Cloud Saving:
         Task CloudSave();
         Task CloudLoad();
@@ -41,8 +41,10 @@ namespace BattleCruisers.Data
 
         Task<bool> SyncCreditsFromCloud();
         Task<bool> SyncCreditsToCloud();
+        Task SyncCaptainsCost();
 
-        Task RefreshEconomyConfiguration();
-        Task FetchConfigs();
+        Task<bool> PurchaseCaptain(int index);
+        /*        Task RefreshEconomyConfiguration();
+                Task FetchConfigs();*/
     }
 }

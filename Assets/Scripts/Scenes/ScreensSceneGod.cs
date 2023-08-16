@@ -63,6 +63,8 @@ namespace BattleCruisers.Scenes
         public FullScreenAdverts fullScreenads;
         public ShopPanelScreenController shopPanelScreen;
         public BlackMarketScreenController blackMarketScreen;
+        public MessageBox messageBox;
+        public GameObject processingPanel;
 
         public Animator thankYouPlane;
         [SerializeField]
@@ -129,15 +131,14 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                    await _dataProvider.FetchConfigs();
-                    await _dataProvider.RefreshEconomyConfiguration();
+                    await _dataProvider.SyncCaptainsCost();
                     await _dataProvider.CloudLoad();
                     await _dataProvider.SyncCoinsFromCloud();
-                    await _dataProvider.SyncCreditsFromCloud();                    
+                    await _dataProvider.SyncCreditsFromCloud();
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log(ex.Message);                    
+                    Debug.Log(ex.Message);
                 }
             }
             else
@@ -185,7 +186,7 @@ namespace BattleCruisers.Scenes
                         cameraOfCaptains.SetActive(false);*/
             ShowCharlieOnMainMenu();
 
-                        SpriteFetcher spriteFetcher = new SpriteFetcher();
+            SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
@@ -197,8 +198,11 @@ namespace BattleCruisers.Scenes
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
+            messageBox.Initialize(_dataProvider, _soundPlayer);
+            messageBox.HideMessage();
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
+            processingPanel.SetActive(false);
 
 
 
@@ -282,7 +286,7 @@ namespace BattleCruisers.Scenes
                 DestroyImmediate(charlie.gameObject);
                 charlie = null;
             }
-                
+
             charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             characterOfCharlie = charlie.gameObject;
