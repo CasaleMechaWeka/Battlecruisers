@@ -129,13 +129,15 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
+                    await _dataProvider.FetchConfigs();
+                    await _dataProvider.RefreshEconomyConfiguration();
                     await _dataProvider.CloudLoad();
                     await _dataProvider.SyncCoinsFromCloud();
-                    await _dataProvider.SyncCreditsFromCloud();
+                    await _dataProvider.SyncCreditsFromCloud();                    
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log(ex.Message);
+                    Debug.Log(ex.Message);                    
                 }
             }
             else
@@ -265,8 +267,6 @@ namespace BattleCruisers.Scenes
                 thankYouPlane.SetTrigger("Play");
                 _isPlaying = true;
             }
-
-
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 

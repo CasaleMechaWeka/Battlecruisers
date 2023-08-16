@@ -205,14 +205,14 @@ namespace BattleCruisers.Scenes
 
             currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
-            rankNumber.text = FormatRankNumber(rank);
+            /*rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
-            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get*/
             coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
             coinsText.text = "+" + coinsToAward.ToString();
 
             // Set XP bar current/max values:
-            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
+/*            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
             {
                 levelBar.maxValue = 1;
                 levelBar.value = 1;
@@ -221,7 +221,7 @@ namespace BattleCruisers.Scenes
             {
                 levelBar.maxValue = nextLevelXP;
                 levelBar.value = currentXP;
-            }
+            }*/
 
             // From here on out, the screen shouldn't be needing to GET any GameModel variables,
             // so we can give the player all their points and coins now.
@@ -283,13 +283,13 @@ namespace BattleCruisers.Scenes
             currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
-            rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
-            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+            /*rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get*/
             coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
             coinsText.text = "+" + coinsToAward.ToString();
 
             // Set XP bar current/max values:
-            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
+/*            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
             {
                 levelBar.maxValue = 1;
                 levelBar.value = 1;
@@ -298,7 +298,7 @@ namespace BattleCruisers.Scenes
             {
                 levelBar.maxValue = nextLevelXP;
                 levelBar.value = currentXP;
-            }
+            }*/
 
             screenTitle.text = "Debug Mode";
             realScene = false;
@@ -334,7 +334,7 @@ namespace BattleCruisers.Scenes
                 // If the bar would fill up, it needs some special handling.
                 if (xpToAdd + currentXP >= nextLevelXP)
                 {
-                    // Only deal with it if the player isn't max rank:
+/*                    // Only deal with it if the player isn't max rank:
                     if (ranker.CalculateRank(allTimeVal) < ranker.destructionRanks.Length - 1)
                     {
                         while (xpToAdd > 0)
@@ -386,7 +386,7 @@ namespace BattleCruisers.Scenes
                         levelBar.maxValue = 1;
                         levelBar.value = 1;
                         // TODO: any extra handling for max rank.
-                    }
+                    }*/
                 }
                 else
                 {

@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene
             clickingArea.Initialise(_soundPlayer, OnClicked);
         }
 
-        private void OnClicked()
+        public void OnClicked()
         {
             _clickedFeedback.SetActive(true);
             _captainsContainer.visualOfCaptains[_index].SetActive(true);

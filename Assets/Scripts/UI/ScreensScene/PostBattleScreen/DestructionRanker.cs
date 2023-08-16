@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
@@ -18,26 +19,26 @@ namespace BattleCruisers.PostBattleScreen
 {
     public class DestructionRanker : MonoBehaviour
     {
-        public GameObject[] destructionRanks;
+        [SerializeField]
+        GameObject[] destructionRanks;
         public void DisplayRank(long score)
         {
-            for (int i = 0; i < destructionRanks.Length; i++)
-            {
-                if (i == CalculateRank(score))
-                {
-                    destructionRanks[i].SetActive(true);
-                }
-                else
-                {
-                    destructionRanks[i].SetActive(false);
-                }
-            }
+            StartCoroutine(iDisplayRank(score));
+        }
+        IEnumerator iDisplayRank(long score)
+        {
+            foreach (GameObject o in destructionRanks)
+                o.SetActive(false);
+            yield return null;
+            int rank = CalculateRank(score);
+            Assert.IsTrue(rank >= 0 && rank <= 33);
+            destructionRanks[rank].SetActive(true);
         }
 
         public int CalculateRank(long score)
         {
             
-            for(int i = 0; i < destructionRanks.Length-1; i++)
+            for(int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
             {
                 long x = 2500 + 2500*i*i;
                 //Debug.Log(x);
@@ -46,7 +47,7 @@ namespace BattleCruisers.PostBattleScreen
                     return i;
                 }
             }
-            return destructionRanks.Length-1;
+            return StaticPrefabKeys.Ranks.AllRanks.Count;
         }
 
         // return what the x value will be in CalculateRank()
@@ -63,7 +64,7 @@ namespace BattleCruisers.PostBattleScreen
         {
             int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
 
-            if (currentRank >= destructionRanks.Length - 1)
+            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count)
             {
                 // If the current rank is already the highest, there is no remainder
                 return 0;

@@ -1,3 +1,4 @@
+using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -12,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene
 {
     public class HecklesContainer : MonoBehaviour
     {
-        private ILocTable hecklesStrings;
+        private ILocTable commonStrings;
         public EventHandler<HeckleDataEventArgs> heckleDataChanged;
 
         public Text t_heckleMessage;
@@ -21,20 +22,22 @@ namespace BattleCruisers.UI.ScreensScene
         public HeckleItemController currentItem;
         public Text hecklePrice;
         private ISingleSoundPlayer _soundPlayer;
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        private IDataProvider _dataProvider;
+        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider)
         {
-            hecklesStrings = LandingSceneGod.Instance.hecklesStrings;
+            commonStrings = LandingSceneGod.Instance.commonStrings;
             heckleDataChanged += HeckleDataChanged;
             _soundPlayer = soundPlayer;
+            _dataProvider = dataProvider;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
         }
 
         private void Purchase()
         {
-
+            
         }
 
-        private void HeckleDataChanged(object sender, HeckleDataEventArgs e)
+        private async void HeckleDataChanged(object sender, HeckleDataEventArgs e)
         {
             currentItem._clickedFeedback.SetActive(false);
             currentItem = (HeckleItemController)sender;
@@ -50,8 +53,8 @@ namespace BattleCruisers.UI.ScreensScene
                 ownFeedback.SetActive(false);
             }
 
-            t_heckleMessage.text = hecklesStrings.GetString(e.heckleData.StringKeyBase);
-            hecklePrice.text = e.heckleData.HeckleCost.ToString("#,##0");
+            t_heckleMessage.text = commonStrings.GetString(e.heckleData.StringKeyBase);
+            hecklePrice.text = (await _dataProvider.GetHeckleCost(e.heckleData.Index)).ToString();
             obj_heckleMessage.GetComponent<RectTransform>().localScale = Vector3.zero;
             obj_heckleMessage.GetComponent<RectTransform>().DOScale(Vector3.one, 0.2f);
         }

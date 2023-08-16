@@ -36,9 +36,9 @@ namespace BattleCruisers.UI.ScreensScene
             _clickedFeedback.SetActive(false);
 
             _ownedItemMark.SetActive(_heckleData.IsOwned);
-            clickingArea.Initialise(_soundPlayer, OnClicked);
+            clickingArea.Initialise(_soundPlayer, OnClicked);            
         }
-        private void OnClicked()
+        public void OnClicked()
         {
             _clickedFeedback.SetActive(true);
             _hecklesContainer.heckleDataChanged.Invoke(this, new HeckleDataEventArgs

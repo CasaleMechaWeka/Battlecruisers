@@ -8,6 +8,16 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
+using Unity.Services.Economy.Model;
+using Unity.Services.RemoteConfig;
+using Unity.Services.Economy;
+using System;
+using System.Text;
+using System.Linq;
+using UnityEngine;
+using BattleCruisers.Scenes;
+using Unity.Services.Authentication;
+using UnityEditor.Purchasing;
 
 namespace BattleCruisers.Data
 {
@@ -24,7 +34,8 @@ namespace BattleCruisers.Data
 
         private readonly GameModel _gameModel;
         public IGameModel GameModel => _gameModel;
-
+        public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
+        public VirtualShopConfig virtualShopConfig { get; set; }
         public DataProvider(IStaticData staticData, ISerializer serializer)
         {
             Helper.AssertIsNotNull(staticData, serializer);
@@ -104,5 +115,150 @@ namespace BattleCruisers.Data
         {
             return await _serializer.SyncCreditsToCloud(this);
         }
+
+        public async Task RefreshEconomyConfiguration()
+        {
+            await EconomyService.Instance.Configuration.SyncConfigurationAsync();
+            m_VirtualPurchaseDefinitions = EconomyService.Instance.Configuration.GetVirtualPurchases();
+        }
+
+        public async Task FetchConfigs()
+        {
+            try
+            {
+                await RemoteConfigService.Instance.FetchConfigsAsync(new UserAttributes(), new AppAttributes());
+                GetConfigValues();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
+
+        void GetConfigValues()
+        {
+            var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
+            virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
+        }
+
+        public async Task<int> GetCaptainCost(int index)
+        {
+            Assert.IsTrue(index >= 1 && index < virtualShopConfig.categories[0].items.Count);
+            int cost = 0;
+            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+            {
+                string targetPurchaseID = virtualShopConfig.categories[0].items[index - 1].id; // because, CaptainExo000 is default
+                foreach (VirtualPurchaseDefinition purchaseDef in m_VirtualPurchaseDefinitions)
+                {
+                    if (targetPurchaseID == purchaseDef.Id)
+                    {
+                        var costs = ParseEconomyItems(purchaseDef.Costs);
+                        foreach (ItemAndAmountSpec spec in costs)
+                        {
+                            if (spec.id == "COIN")
+                                cost = spec.amount;
+                        }
+                    }
+                }
+            }
+            return cost;
+        }
+
+
+        public async Task<int> GetHeckleCost(int index)
+        {
+            Assert.IsTrue(index >= 3 && index < virtualShopConfig.categories[1].items.Count);
+            int cost = 0;
+            if(await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+            {
+                string targetPurchaseID = virtualShopConfig.categories[1].items[index].id;
+                foreach (VirtualPurchaseDefinition purchaseDef in m_VirtualPurchaseDefinitions)
+                {
+                    if (targetPurchaseID == purchaseDef.Id)
+                    {
+                        var costs = ParseEconomyItems(purchaseDef.Costs);
+                        foreach (ItemAndAmountSpec spec in costs)
+                        {
+                            if (spec.id == "COIN")
+                                cost = spec.amount;
+                        }
+                    }
+                }
+            }
+            return cost;
+        }
+
+
+        List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)
+        {
+            var itemsAndAmountsSpec = new List<ItemAndAmountSpec>();
+
+            foreach (var itemQuantity in itemQuantities)
+            {
+                var id = itemQuantity.Item.GetReferencedConfigurationItem().Id;
+                itemsAndAmountsSpec.Add(new ItemAndAmountSpec(id, itemQuantity.Amount));
+            }
+
+            return itemsAndAmountsSpec;
+        }
     }
+
+    [Serializable]
+    public struct ItemConfig
+    {
+        public string id;
+        public override string ToString()
+        {
+            var returnString = new StringBuilder($"\"{id}\"");
+            return returnString.ToString();
+        }
+    }
+
+    [Serializable]
+    public struct CategoryConfig
+    {
+        public string id;
+        public bool enabledFlag;
+        public List<ItemConfig> items;
+        public override string ToString()
+        {
+            var returnString = new StringBuilder($"category:\"{id}\", enabled:{enabledFlag}");
+            if (items?.Count > 0)
+            {
+                returnString.Append($", items: {string.Join(", ", items.Select(itemConfig => itemConfig.ToString()).ToArray())}");
+            }
+
+            return returnString.ToString();
+        }
+    }
+
+    [Serializable]
+    public struct VirtualShopConfig
+    {
+        public List<CategoryConfig> categories;
+
+        public override string ToString()
+        {
+            return $"categories: {string.Join(", ", categories.Select(category => category.ToString()).ToArray())}";
+        }
+    }
+
+    public struct ItemAndAmountSpec
+    {
+        public string id;
+        public int amount;
+
+        public ItemAndAmountSpec(string id, int amount)
+        {
+            this.id = id;
+            this.amount = amount;
+        }
+        public override string ToString()
+        {
+            return $"{id}:{amount}";
+        }
+    }
+    struct UserAttributes { }
+
+    struct AppAttributes { }
 }
