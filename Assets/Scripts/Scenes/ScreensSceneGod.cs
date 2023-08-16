@@ -198,13 +198,12 @@ namespace BattleCruisers.Scenes
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
+            messageBox.gameObject.SetActive(true);
             messageBox.Initialize(_dataProvider, _soundPlayer);
             messageBox.HideMessage();
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             processingPanel.SetActive(false);
-
-
 
             if (_applicationModel.ShowPostBattleScreen)
             {

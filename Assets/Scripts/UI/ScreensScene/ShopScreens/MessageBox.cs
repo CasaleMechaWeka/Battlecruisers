@@ -22,6 +22,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _soundPlayer = soundPlayer;
             okBtn.Initialise(_soundPlayer, OnClick);
+            if (Instance == null)
+                Instance = this;
         }
 
         private void Awake()
