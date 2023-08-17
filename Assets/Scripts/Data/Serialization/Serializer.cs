@@ -71,40 +71,69 @@ namespace BattleCruisers.Data.Serialization
             });
         }
 
+        public object DeserializeProperty(string propertyJSON)
+        {
+            return JsonConvert.DeserializeObject<GameModel>(propertyJSON);
+        }
+
+        public string SerializeProperty(object property)
+        {
+            return JsonConvert.SerializeObject(property, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+        }
+
+        // Saves every local property of GameModel
         public async Task CloudSave(GameModel game)
         {
-            try
+            foreach (var property in typeof(GameModel).GetProperties())
             {
-                var data = new Dictionary<string, object> { { "GameModel", SerializeGameModel(game) } };
-                await CloudSaveService.Instance.Data.ForceSaveAsync(data);
-            }
-            catch (UnityException e)
-            {
-                Debug.LogException(e);
-            }
-        }
-
-        public async Task<GameModel> CloudLoad()
-        {
-            try
-            {
-                Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
-                if (savedData != null && savedData["GameModel"] != string.Empty)
+                try
                 {
-                    GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
-                //    Debug.Log(savedData["GameModel"]);
-                    return game;
+                    string propertyName = property.Name;
+                    object propertyValue = SerializeProperty(property.GetValue(game));
+
+                    var data = new Dictionary<string, object> { { propertyName, propertyValue } };
+                    await CloudSaveService.Instance.Data.ForceSaveAsync(data);
                 }
-                return null;
-            }
-            catch (UnityException e)
-            {
-                Debug.LogException(e);
-                return null;
+                catch (UnityException e)
+                {
+                    Debug.LogException(e);
+                }
             }
         }
 
-        
+        // Loads every cloud property of GameModel
+        public async Task<GameModel> CloudLoad(GameModel game)
+        {
+            // This method now requires a GameModel passed in.
+            // This is so that it overwrites existing properties and leaves the rest, instead of creating null ones.
+            List<string> keys = await CloudSaveService.Instance.Data.RetrieveAllKeysAsync();
+
+            for (int i = 0; i <= keys.Count; i++)
+            {
+                try
+                {
+                    Dictionary<string, string> savedProperty = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { keys[i] });
+                    if (savedProperty[keys[i]] != string.Empty)
+                    {
+                        game.GetType().GetProperty(keys[i]).SetValue(DeserializeProperty(savedProperty[keys[i]]),
+                            System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Problem while loading key: " + savedProperty[keys[i]] + ", the key is empty or null");
+                    }
+                }
+                catch (UnityException e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+            return game;
+        }
+      
         public async Task<bool> SyncCoinsToCloud(IDataProvider dataProvider)
         {
             try
