@@ -1,5 +1,6 @@
 using BattleCruisers.AI;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
@@ -66,8 +67,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         private IPvPDynamicBuildOrder GetBuildOrder(IPvPStrategy strategy, IPvPLevelInfo levelInfo, bool hasDefensivePlaceholders)
         {
             // Create offensive build order
-            int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Platform);
-            IPvPDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
+            //---> CODE BY ANUJ
+            int numOfOffensiveSlots = FindNumOfOffensiveSlots(levelInfo);
+            //<---
+            //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Platform);
+            //IPvPDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
+
+            IPvPDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
 
             // Create defensive build orders (only for basic AI)
             IPvPDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
@@ -84,6 +90,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 
             return new PvPStrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);
         }
+
+        //---> CODE BY ANUJ
+        // TODO: Find a better class to move this to. Make the method public to add unit test!
+        private int FindNumOfOffensiveSlots(IPvPLevelInfo levelInfo)
+        {
+            // Reserve 2 mast slots for a stealth gen and teslacoil.
+            int numOfMastSlotsToReserve = 2;
+
+            IPvPSlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
+            int numOfOffensiveSlots = slotAccessor.GetSlotCount(PvPSlotType.Platform);
+
+            if (levelInfo.HasMastOffensive())
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(PvPSlotType.Mast) - numOfMastSlotsToReserve;
+            }
+
+            if (levelInfo.HasBowOffensive())
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(PvPSlotType.Bow);
+            }
+
+            return numOfOffensiveSlots;
+        }
+        //<---
 
         /// <summary>
         /// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
