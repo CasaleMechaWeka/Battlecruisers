@@ -20,6 +20,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Projectiles;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -42,6 +43,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPTargetFinder _targetFinder;
         private IPvPRankedTargetTracker _targetTracker;
         private IPvPTargetProcessor _targetProcessor;
+        //---> CODE BY ANUJ
+        private PvPRocketTarget _rocketTarget;
+        //<---
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 0.5f;
 
@@ -85,6 +89,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
+
+            //---> CODE BY ANUJ
+            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
+            //<---
             Assert.IsNotNull(missile);
 
             _transform = new PvPTransformBC(gameObject.transform);
@@ -111,6 +120,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
 
             SetupTargetProcessor(activationArgs);
+
+            //---> CODE BY ANUJ
+            _rocketTarget.GameObject.SetActive(true);
+            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            //<---
 
             missile.enabled = true;
             SetMissileVisibleClientRpc(true);
@@ -158,6 +172,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override void DestroyProjectile()
         {
             missile.enabled = false;
+            //---> CODE BY ANUJ
+            _rocketTarget.GameObject.SetActive(false);
+            //<---
             _target.Destroyed -= _target_Destroyed;
             CleanUpTargetProcessor();
             base.DestroyProjectile();
