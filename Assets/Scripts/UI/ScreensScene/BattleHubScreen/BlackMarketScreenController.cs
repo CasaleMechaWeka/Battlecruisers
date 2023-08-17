@@ -97,8 +97,16 @@ namespace BattleCruisers.UI.ScreensScene
                 iapItem.GetComponent<IAPItemController>().StaticInitialise(_soundPlayer, iapData, this);
                 if (ii == 0)
                 {
+                    Debug.Log("===> you called me here!!!");
                     iapItem.GetComponent<IAPItemController>()._clickedFeedback.SetActive(true);
                     _currentItem = iapItem.GetComponent<IAPItemController>();
+
+                    SpriteFetcher spriteFetcher = new SpriteFetcher();
+                    ISpriteWrapper spWrapper = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + iapData.IAPIconName + ".png");
+                    iapIcon.sprite = spWrapper.Sprite;
+                    iapName.text = commonStrings.GetString(iapData.IAPNameKeyBase);
+                    iapDescription.text = commonStrings.GetString(iapData.IAPDescriptionKeyBase);
+                    iapPrice.text = "$" + iapData.IAPCost.ToString("#,##0.00");
                 }
                 ii++;
             }          
