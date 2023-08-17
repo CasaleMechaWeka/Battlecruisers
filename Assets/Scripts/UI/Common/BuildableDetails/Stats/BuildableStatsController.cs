@@ -6,7 +6,7 @@ using BattleCruisers.Utils.Categorisation;
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public abstract class BuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
-	{
+    {
         public NumberStatValue drones, buildTime;
         public StarsStatValue health, cruiserDamage, shipDamage, airDamage;
 
@@ -25,9 +25,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
         }
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)
-		{
-			drones.ShowResult(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
-			buildTime.ShowResult((item.BuildTimeInS*item.NumOfDronesRequired).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS*item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS*itemToCompareTo.NumOfDronesRequired)));
+        {
+            drones.ShowResult(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
+            buildTime.ShowResult((item.BuildTimeInS * item.NumOfDronesRequired * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS * item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
             health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item), GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
@@ -76,5 +76,5 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
             return damagePerS;
         }
-	}
+    }
 }

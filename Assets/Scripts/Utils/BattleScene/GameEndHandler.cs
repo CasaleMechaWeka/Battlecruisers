@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Projectiles;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Buttons.Toggles;
@@ -12,6 +13,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
@@ -87,6 +89,7 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser victoryCruiser = wasPlayerVictory ? _playerCruiser : _aiCruiser;
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
+            ClearProjectiles();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
@@ -114,6 +117,7 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser victoryCruiser = wasPlayerVictory ? _playerCruiser : _aiCruiser;
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
+            ClearProjectiles();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
@@ -165,6 +169,15 @@ namespace BattleCruisers.Utils.BattleScene
                     ship.DisableMovement();
                     ship.StopMoving();
                 }
+            }
+        }
+
+        private void ClearProjectiles()
+        {
+            SmartMissileController[] smartMissiles = MonoBehaviour.FindObjectsOfType<SmartMissileController>();
+            foreach (SmartMissileController missile in smartMissiles)
+            {
+                missile.enabled = false;
             }
         }
 

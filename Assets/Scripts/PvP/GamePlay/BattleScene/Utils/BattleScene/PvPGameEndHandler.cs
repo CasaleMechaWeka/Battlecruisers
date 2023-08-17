@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles;
@@ -16,6 +17,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Projectiles;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Buttons.Toggles;
@@ -25,6 +27,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
@@ -106,6 +109,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
             IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
+            //---> Code by ANUJ
+            ClearProjectiles();
+            //<---
             _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             _ai_LeftPlayer.DisposeManagedState();
             _ai_RightPlayer.DisposeManagedState();
@@ -134,6 +140,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
             IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
+            //---> Code by ANUJ
+            ClearProjectiles();
+            //<---
             //    _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             if (_ai_LeftPlayer != null)
                 _ai_LeftPlayer.DisposeManagedState();
@@ -205,6 +214,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             }
         }
 
+        //---> Code by ANUJ
+        private void ClearProjectiles()
+        {
+            PvPSmartMissileController[] smartMissiles = MonoBehaviour.FindObjectsOfType<PvPSmartMissileController>();
+            foreach (PvPSmartMissileController missile in smartMissiles)
+            {
+                missile.enabled = false;
+            }
+        }
+        //<---
         public void HandleGameEnd()
         {
             Assert.IsFalse(_handledGameEnd, "Should only be called once.");
