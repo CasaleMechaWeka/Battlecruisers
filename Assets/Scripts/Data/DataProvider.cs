@@ -32,7 +32,7 @@ namespace BattleCruisers.Data
         public ISettingsManager SettingsManager { get; }
         public ILockedInformation LockedInfo { get; }
 
-        private readonly GameModel _gameModel;
+        private GameModel _gameModel;
         public IGameModel GameModel => _gameModel;
         public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
@@ -93,22 +93,22 @@ namespace BattleCruisers.Data
 
         public async Task CloudLoad()
         {
-            await _serializer.CloudLoad();
+            GameModel gModelFromCloud = await _serializer.CloudLoad();
         }
 
-        public async Task<bool> SyncCoinsFromCloud()
+        public async Task<bool> SyncCurrencyFromCloud()
         {
-            return await _serializer.SyncCoinsFromCloud(this);
+            return await _serializer.SyncCurrencyFromCloud(this);
+        }
+
+        public async Task<bool> SyncInventoryFromCloud()
+        {
+            return await _serializer.SyncInventoryFromCloud(this);
         }
 
         public async Task<bool> SyncCoinsToCloud()
         {
             return await _serializer.SyncCoinsToCloud(this);
-        }
-
-        public async Task<bool> SyncCreditsFromCloud()
-        {
-            return await _serializer.SyncCreditsFromCloud(this);
         }
 
         public async Task<bool> SyncCreditsToCloud()
@@ -122,6 +122,32 @@ namespace BattleCruisers.Data
             m_VirtualPurchaseDefinitions = EconomyService.Instance.Configuration.GetVirtualPurchases();
         }
 
+        public async Task LoadBCData()
+        {
+            await RefreshEconomyConfiguration();
+            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
+            RemoteConfigService.Instance.FetchConfigs(new UserAttributes(), new AppAttributes());
+        }
+        async void ApplyRemoteSettings(ConfigResponse configResponse)
+        {
+            switch (configResponse.requestOrigin)
+            {
+                case ConfigOrigin.Default:
+                    Debug.Log("===> config.Default");
+                    break;
+                case ConfigOrigin.Cached:
+                    Debug.Log("===> config.Cached");
+                    break;
+                case ConfigOrigin.Remote:
+                    Debug.Log("===> config.Remote");
+                    GetConfigValues();
+                    await SyncCaptainsCost();
+                    await SyncHecklesCost();
+                    await SyncCurrencyFromCloud();
+                    await SyncInventoryFromCloud();
+                    break;
+            }
+        }
         private async Task FetchConfigs()
         {
             try
@@ -143,16 +169,54 @@ namespace BattleCruisers.Data
 
         public async Task SyncCaptainsCost()
         {
-
             if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
             {
                 try
                 {
-                    await FetchConfigs();
-                    await RefreshEconomyConfiguration();
-                    for (int i = 0; i < virtualShopConfig.categories[0].items.Count; i++)
+                    foreach (VirtualPurchaseDefinition purchaseDef in m_VirtualPurchaseDefinitions)
                     {
-                        string targetPurchaseID = virtualShopConfig.categories[0].items[i].id;
+                        var rewards = ParseEconomyItems(purchaseDef.Rewards);
+                        var costs = ParseEconomyItems(purchaseDef.Costs);
+                        foreach (ItemAndAmountSpec reward in rewards)
+                        {
+                            if (reward.id.Contains("CAPTAIN"))
+                            {
+                                int index = StaticPrefabKeys.CaptainItems[reward.id];
+                                foreach (ItemAndAmountSpec cost in costs)
+                                {
+                                    if (cost.id == "COIN")
+                                        _gameModel.Captains[index].captainCost = cost.amount;
+                                }
+                            }
+                            if (reward.id.Contains("HECKLE"))
+                            {
+                                int index = StaticPrefabKeys.HeckleItems[reward.id];
+                                foreach (ItemAndAmountSpec cost in costs)
+                                {
+                                    if (cost.id == "COIN")
+                                        _gameModel.Heckles[index].heckleCost = cost.amount;
+                                }
+                            }
+                        }
+                    }
+                    SaveGame();
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                }
+            }
+        }
+
+        public async Task SyncHecklesCost()
+        {
+            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+            {
+                try
+                {
+                    for (int i = 0; i < virtualShopConfig.categories[1].items.Count; i++)
+                    {
+                        string targetPurchaseID = virtualShopConfig.categories[1].items[i].id;
                         foreach (VirtualPurchaseDefinition purchaseDef in m_VirtualPurchaseDefinitions)
                         {
                             if (targetPurchaseID == purchaseDef.Id)
@@ -161,27 +225,29 @@ namespace BattleCruisers.Data
                                 foreach (ItemAndAmountSpec spec in costs)
                                 {
                                     if (spec.id == "COIN")
-                                        _gameModel.Captains[i + 1].captainCost = spec.amount;
+                                        _gameModel.Heckles[i + 3].heckleCost = spec.amount;
                                 }
                             }
                         }
                     }
                     SaveGame();
-                    await CloudSave();
-                } catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Debug.Log(ex.Message);
                 }
-
             }
         }
 
         public async Task<bool> PurchaseCaptain(int index)
         {
+            Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
             try
             {
-                string purchaseId = virtualShopConfig.categories[0].items[index].id;
+                string purchaseId = virtualShopConfig.categories[0].items[index - 1].id;   // category 0 is captains
                 var result = await EconomyManager.MakeVirtualPurchaseAsync(purchaseId);
+                if (result == null)
+                    return false;
                 await EconomyManager.RefreshCurrencyBalances();
                 return true;
             }
@@ -191,7 +257,23 @@ namespace BattleCruisers.Data
             }
         }
 
-
+        public async Task<bool> PurchaseHeckle(int index)
+        {
+            Assert.IsTrue(index > 2); // 0,1,2 are default items. can not buy them.
+            try
+            {
+                string purchaseId = virtualShopConfig.categories[1].items[index - 3].id;  // category 1 is heckles
+                var result = await EconomyManager.MakeVirtualPurchaseAsync(purchaseId);
+                if (result == null)
+                    return false;
+                await EconomyManager.RefreshCurrencyBalances();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)
         {

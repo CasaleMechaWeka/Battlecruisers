@@ -24,11 +24,13 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<BuildingKey> _buildings;
 
+        [SerializeField]
         private Dictionary<BuildingCategory, List<BuildingKey>> _builds;
 
         [SerializeField]
         private List<UnitKey> _units;
 
+        [SerializeField]
         private Dictionary<UnitCategory, List<UnitKey>> _unit;
 
         public HullKey Hull
@@ -43,7 +45,7 @@ namespace BattleCruisers.Data.Models
 
         // Captain Logic
 
-        [SerializeField]
+//        [SerializeField]
         private CaptainExoKey _currentCaptain;
         public CaptainExoKey CurrentCaptain
         {
@@ -90,7 +92,7 @@ namespace BattleCruisers.Data.Models
             _units = units;
             _builds = buildLimt;
             _unit = unitLimit;
-            _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain        
+            _currentCaptain =  new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain        
         }
 
         public bool Is_buildsNull()

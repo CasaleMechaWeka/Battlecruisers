@@ -95,7 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public void ShowCurrentCaptain()
         {
-            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain), captainCamContainer);
+            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo( _dataProvider.GameModel.PlayerLoadout.CurrentCaptain), captainCamContainer);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             visualOfCaptains.Add(charlie.gameObject);
         }
@@ -116,9 +116,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 try
                 {
                     oldExoKey = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
-                    _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = new Data.Models.PrefabKeys.CaptainExoKey(currentCaptainData.NameStringKeyBase);
+                    _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey(currentCaptainData.NameStringKeyBase);
                     _dataProvider.SaveGame();
-                    await _dataProvider.CloudSave();
+                //    await _dataProvider.CloudSave();
                     return true;
                 }
                 catch(Exception ex)

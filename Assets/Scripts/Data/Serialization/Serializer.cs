@@ -11,6 +11,8 @@ using System;
 using Unity.Services.Economy;
 using Unity.Services.Economy.Model;
 using BattleCruisers.Utils.UGS.Samples;
+using UnityEditor.Build;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Data.Serialization
 {
@@ -90,7 +92,7 @@ namespace BattleCruisers.Data.Serialization
                 if (savedData != null && savedData["GameModel"] != string.Empty)
                 {
                     GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
-                    Debug.Log(savedData["GameModel"]);
+                //    Debug.Log(savedData["GameModel"]);
                     return game;
                 }
                 return null;
@@ -102,6 +104,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
+        
         public async Task<bool> SyncCoinsToCloud(IDataProvider dataProvider)
         {
             try
@@ -122,7 +125,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncCoinsFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCurrencyFromCloud(IDataProvider dataProvider)
         {
             GetBalancesResult balanceResult = null;
             try
@@ -135,10 +138,14 @@ namespace BattleCruisers.Data.Serialization
                     if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
                         dataProvider.GameModel.Coins = balance.Balance;
-                        dataProvider.SaveGame();
-                        return true;
+                    }
+                    if(balance.Balance > 0 && balance.CurrencyId == "CREDIT")
+                    {
+                        dataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
+                dataProvider.SaveGame();
+                return true;
             }
             catch (EconomyRateLimitedException e)
             {
@@ -150,10 +157,14 @@ namespace BattleCruisers.Data.Serialization
                     if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
                         dataProvider.GameModel.Coins = balance.Balance;
-                        dataProvider.SaveGame();
-                        return true;
+                    }
+                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
+                    {
+                        dataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
+                dataProvider.SaveGame();
+                return true;
             }
             catch (Exception e)
             {
@@ -161,7 +172,61 @@ namespace BattleCruisers.Data.Serialization
                 Debug.LogException(e);
                 return false;
             }
-            return false;
+        }
+
+        public async Task<bool> SyncInventoryFromCloud(IDataProvider dataProivder)
+        {
+            GetInventoryResult inventoryResult = null;
+            try
+            {
+                inventoryResult = await EconomyManager.GetEconomyInventories();
+                if (this == null) return false;
+                if (inventoryResult is null) return false;
+                foreach (var inventory in inventoryResult.PlayersInventoryItems)
+                {
+                    if(inventory.GetItemDefinition().Name.Contains("Captain"))
+                    {
+                        int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
+                        dataProivder.GameModel.Captains[index].isOwned = true;
+                    }
+                    if(inventory.GetItemDefinition().Name.Contains("Heckle"))
+                    {
+                        int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
+                        dataProivder.GameModel.Heckles[index].isOwned = true;
+                    }
+                   
+                }
+                dataProivder.SaveGame();
+                return true;
+            }
+            catch (EconomyRateLimitedException e)
+            {
+                inventoryResult = await BattleCruisers.Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyInventories, e.RetryAfter);
+                if (this == null) return false;
+                if (inventoryResult is null) return false;
+                foreach (var inventory in inventoryResult.PlayersInventoryItems)
+                {
+                    if (inventory.GetItemDefinition().Name.Contains("Captain"))
+                    {
+                        int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
+                        dataProivder.GameModel.Captains[index].isOwned = true;
+                    }
+                    if (inventory.GetItemDefinition().Name.Contains("Heckle"))
+                    {
+                        int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
+                        dataProivder.GameModel.Heckles[index].isOwned = true;
+                    }
+
+                }
+                dataProivder.SaveGame();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Problem getting Economy currency balances:");
+                Debug.LogException(e);
+                return false;
+            }
         }
 
         public async Task<bool> SyncCreditsToCloud(IDataProvider dataProvider)
@@ -182,47 +247,6 @@ namespace BattleCruisers.Data.Serialization
                 Debug.LogException(e);
                 return false;
             }
-        }
-        public async Task<bool> SyncCreditsFromCloud(IDataProvider dataProvider)
-        {
-            GetBalancesResult balanceResult = null;
-            try
-            {
-                balanceResult = await EconomyManager.GetEconomyBalances();
-                if (this == null) return false;
-                if (balanceResult is null) return false;
-                foreach (var balance in balanceResult.Balances)
-                {
-                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
-                    {
-                        dataProvider.GameModel.Credits = balance.Balance;
-                        dataProvider.SaveGame();
-                        return true;
-                    }
-                }
-            }
-            catch (EconomyRateLimitedException e)
-            {
-                balanceResult = await BattleCruisers.Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyBalances, e.RetryAfter);
-                if (this == null) return false;
-                if (balanceResult is null) return false;
-                foreach (var balance in balanceResult.Balances)
-                {
-                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
-                    {
-                        dataProvider.GameModel.Credits = balance.Balance;
-                        dataProvider.SaveGame();
-                        return true;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.Log("Problem getting Economy currency balances:");
-                Debug.LogException(e);
-                return false;
-            }
-            return false;
         }
     }
 }

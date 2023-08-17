@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
             blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
-            hecklesContainer.Initialize(_soundPlayer, _dataProvider);
+            hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
         }
 
 
@@ -87,7 +87,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public async void InitialiseHeckles()
         {
 
-
+            captainsContainer.gameObject.SetActive(false);
+            hecklesContainer.gameObject.SetActive(true);
             // remove all old children to refresh
             HeckleItemController[] items = heckleItemContainer.gameObject.GetComponentsInChildren<HeckleItemController>();
             foreach (HeckleItemController item in items)
@@ -97,8 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-            captainsContainer.gameObject.SetActive(false);
-            hecklesContainer.gameObject.SetActive(true);
+
             hecklesContainer.btnBuy.SetActive(false);
             hecklesContainer.ownFeedback.SetActive(false);
 
@@ -146,7 +146,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public async void InitiaiseCaptains()
         {
 
-
+            captainsContainer.gameObject.SetActive(true);
+            hecklesContainer.gameObject.SetActive(false);
             // remove all old children to refersh
             CaptainItemController[] items = captainItemContainer.gameObject.GetComponentsInChildren<CaptainItemController>();
             foreach (CaptainItemController item in items)
@@ -160,8 +161,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-            captainsContainer.gameObject.SetActive(true);
-            hecklesContainer.gameObject.SetActive(false);
+
 
             byte ii = 0;
             foreach (int index in _dataProvider.GameModel.CaptainExoList)

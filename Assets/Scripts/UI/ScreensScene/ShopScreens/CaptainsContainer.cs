@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene
                         if (result)
                         {
                             
-                            await _dataProvider.SyncCoinsFromCloud();
+                            await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.ScreensScene
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
                             _dataProvider.SaveGame();
-                            await _dataProvider.CloudSave();
+                        //    await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             MessageBox.Instance.ShowMessage("You got " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
                         }
@@ -70,8 +70,7 @@ namespace BattleCruisers.UI.ScreensScene
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             MessageBox.Instance.ShowMessage("Try again later!");
-                        }
-                           
+                        }                           
                     }
                     catch
                     {

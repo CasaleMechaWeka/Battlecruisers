@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;

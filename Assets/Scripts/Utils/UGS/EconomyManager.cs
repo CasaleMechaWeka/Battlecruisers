@@ -12,8 +12,14 @@ namespace BattleCruisers.Utils.UGS.Samples
     {
         public static Task<GetBalancesResult> GetEconomyBalances()
         {
-            var options = new GetBalancesOptions { ItemsPerFetch = 100 };
+            var options = new GetBalancesOptions { ItemsPerFetch = 100 };            
             return EconomyService.Instance.PlayerBalances.GetBalancesAsync(options);
+        }
+
+        public static Task<GetInventoryResult> GetEconomyInventories()
+        {
+            var options = new GetInventoryOptions {  ItemsPerFetch = 100 };
+            return EconomyService.Instance.PlayerInventory.GetInventoryAsync(options);
         }
 
         public static async Task SetEconomyBalance(string currencyId, long balance)
@@ -24,13 +30,13 @@ namespace BattleCruisers.Utils.UGS.Samples
         public static async Task<MakeVirtualPurchaseResult> MakeVirtualPurchaseAsync(string virtualPurchaseId)
         {
             try
-            {                
+            { 
                 return await EconomyService.Instance.Purchases.MakeVirtualPurchaseAsync(virtualPurchaseId);
             }
             catch(EconomyException e)
             {
                 Debug.LogException(e);
-                return default;
+                return null;
             }
         }
 

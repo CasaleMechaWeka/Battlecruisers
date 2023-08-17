@@ -126,8 +126,8 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = DisconnectedState;
 
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
-            //cheat code
-            InternetConnectivity.ValueChanged += TestEventHandler;
+            // cheat code
+            // InternetConnectivity.ValueChanged += TestEventHandler;
 
             if (Instance == null)
                 Instance = this;
@@ -526,7 +526,7 @@ namespace BattleCruisers.Scenes
             AuthenticationService.Instance.SignInFailed -= SignFailed;
             AuthenticationService.Instance.Expired -= Expired;
 
-            InternetConnectivity.ValueChanged -= TestEventHandler;
+        //    InternetConnectivity.ValueChanged -= TestEventHandler;
         }
 
         public static async Task<bool> CheckForInternetConnection(int timeoutMs = 10000, string url = "https://www.google.com")

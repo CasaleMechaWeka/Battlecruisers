@@ -131,10 +131,8 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                    await _dataProvider.SyncCaptainsCost();
-                    await _dataProvider.CloudLoad();
-                    await _dataProvider.SyncCoinsFromCloud();
-                    await _dataProvider.SyncCreditsFromCloud();
+                //    await _dataProvider.CloudLoad();
+                    await _dataProvider.LoadBCData();
                 }
                 catch (Exception ex)
                 {
@@ -286,7 +284,7 @@ namespace BattleCruisers.Scenes
                 charlie = null;
             }
 
-            charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            charlie = Instantiate(_prefabFactory.GetCaptainExo( _gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             characterOfCharlie = charlie.gameObject;
             cameraOfCharacter.SetActive(true);

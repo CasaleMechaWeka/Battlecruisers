@@ -16,9 +16,9 @@ namespace BattleCruisers.Data.Serialization
         Task<GameModel> CloudLoad();
 
         Task<bool> SyncCoinsToCloud(IDataProvider dataProvider);
-        Task<bool> SyncCoinsFromCloud(IDataProvider dataProvider);
+        Task<bool> SyncCurrencyFromCloud(IDataProvider dataProvider);
+        Task<bool> SyncInventoryFromCloud(IDataProvider dataProvider);
 
         Task<bool> SyncCreditsToCloud(IDataProvider dataProvider);
-        Task<bool> SyncCreditsFromCloud(IDataProvider dataProvider);
     }
 }
