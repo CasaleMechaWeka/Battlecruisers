@@ -84,6 +84,7 @@ namespace BattleCruisers.Data
         public void Reset()
         {
             _serializer.DeleteSavedGame();
+            _serializer.DeleteCloudSave();
         }
 
         public async Task CloudSave()
@@ -93,7 +94,7 @@ namespace BattleCruisers.Data
 
         public async Task CloudLoad()
         {
-            GameModel gModelFromCloud = await _serializer.CloudLoad(_gameModel);
+            GameModel gModelFromCloud = await _serializer.CloudLoad();
         }
 
         public async Task<bool> SyncCurrencyFromCloud()
