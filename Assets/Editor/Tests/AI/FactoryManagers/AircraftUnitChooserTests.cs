@@ -9,22 +9,23 @@ using NUnit.Framework;
 namespace BattleCruisers.Tests.AI.FactoryManagers
 {
     public class AircraftUnitChooserTests
-	{
-		private IUnitChooser _unitChooser;
-		private IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane;
+    {
+        private IUnitChooser _unitChooser;
+        private IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship;
         private IDroneManager _droneManager;
         private IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
 
-		[SetUp]
-		public void SetuUp()
-		{
-			_defaultPlane = CreateUnit(numOfDrones: 2);
+        [SetUp]
+        public void SetuUp()
+        {
+            _defaultPlane = CreateUnit(numOfDrones: 2);
             _lategamePlane = CreateUnit(numOfDrones: 10);
-			_antiAirPlane = CreateUnit(numOfDrones: 6);
-			_antiNavalPlane = CreateUnit(numOfDrones: 6);
+            _antiAirPlane = CreateUnit(numOfDrones: 6);
+            _antiNavalPlane = CreateUnit(numOfDrones: 6);
+            _broadswordGunship = CreateUnit(numOfDrones: 18);
 
-			_droneManager = Substitute.For<IDroneManager>();
-			_droneManager.NumOfDrones = 12;
+            _droneManager = Substitute.For<IDroneManager>();
+            _droneManager.NumOfDrones = 12;
 
             _airThreatMonitor = Substitute.For<IThreatMonitor>();
             _navalThreatMonitor = Substitute.For<IThreatMonitor>();
@@ -34,25 +35,27 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
                 _lategamePlane,
                 _antiAirPlane,
                 _antiNavalPlane,
+                _broadswordGunship,
+
                 _droneManager,
                 _airThreatMonitor,
                 _navalThreatMonitor,
                 threatLevelThreshold: ThreatLevel.High);
-		}
+        }
 
-		private IBuildableWrapper<IUnit> CreateUnit(int numOfDrones)
-		{
-			IBuildableWrapper<IUnit> unit = Substitute.For<IBuildableWrapper<IUnit>>();
-			unit.Buildable.Returns(Substitute.For<IUnit>());
-			unit.Buildable.NumOfDronesRequired.Returns(numOfDrones);
-			return unit;
-		}
+        private IBuildableWrapper<IUnit> CreateUnit(int numOfDrones)
+        {
+            IBuildableWrapper<IUnit> unit = Substitute.For<IBuildableWrapper<IUnit>>();
+            unit.Buildable.Returns(Substitute.For<IUnit>());
+            unit.Buildable.NumOfDronesRequired.Returns(numOfDrones);
+            return unit;
+        }
 
         [Test]
-		public void Constructor_ChoosesUnit()
-		{
+        public void Constructor_ChoosesUnit()
+        {
             Assert.IsNotNull(_unitChooser.ChosenUnit);
-		}
+        }
 
         [Test]
         public void NoThreats_ChoosesDefaultPlane()
@@ -65,49 +68,49 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             Assert.AreSame(_defaultPlane, _unitChooser.ChosenUnit);
         }
 
-		[Test]
-		public void AirThreat_AboveThreshold_ChoosesAntiAirPlane()
-		{
+        [Test]
+        public void AirThreat_AboveThreshold_ChoosesAntiAirPlane()
+        {
             _airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
-			_navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
+            _navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
 
-			TriggerChoosing();
+            TriggerChoosing();
 
             Assert.AreSame(_antiAirPlane, _unitChooser.ChosenUnit);
-		}
+        }
 
-		[Test]
-		public void AirThreat_BelowThreshold_ChoosesDefaultPlane()
-		{
+        [Test]
+        public void AirThreat_BelowThreshold_ChoosesDefaultPlane()
+        {
             _airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.Low);
-			_navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
+            _navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
 
-			TriggerChoosing();
+            TriggerChoosing();
 
             Assert.AreSame(_defaultPlane, _unitChooser.ChosenUnit);
-		}
+        }
 
-		[Test]
-		public void NavalThreat_AboveThreshold_ChoosesAntiNavalPlane()
-		{
+        [Test]
+        public void NavalThreat_AboveThreshold_ChoosesAntiNavalPlane()
+        {
             _airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
             _navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
-			TriggerChoosing();
+            TriggerChoosing();
 
             Assert.AreSame(_antiNavalPlane, _unitChooser.ChosenUnit);
-		}
+        }
 
-		[Test]
-		public void NavalThreat_BelowThreshold_ChoosesDefaultPlane()
-		{
+        [Test]
+        public void NavalThreat_BelowThreshold_ChoosesDefaultPlane()
+        {
             _airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
             _navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.Low);
 
-			TriggerChoosing();
+            TriggerChoosing();
 
-			Assert.AreSame(_defaultPlane, _unitChooser.ChosenUnit);
-		}
+            Assert.AreSame(_defaultPlane, _unitChooser.ChosenUnit);
+        }
 
         [Test]
         public void AirAndNavalThreats_AboveThreshold_ChoosesNonDefault()
@@ -122,38 +125,38 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 
         [Test]
         public void CannotAffordDesiredPlane_ChoosesDefault()
-		{
+        {
             _droneManager.NumOfDrones = _defaultPlane.Buildable.NumOfDronesRequired;
-			_airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
-			_navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
+            _airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
+            _navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
-			TriggerChoosing();
+            TriggerChoosing();
 
             Assert.AreSame(_defaultPlane, _unitChooser.ChosenUnit);
-		}
+        }
 
-		[Test]
-		public void CannotAffordDesiredPlane_CannotAffordDefault_ChoosesNull()
-		{
-			_droneManager.NumOfDrones = _defaultPlane.Buildable.NumOfDronesRequired - 1;
-			_airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
-			_navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
+        [Test]
+        public void CannotAffordDesiredPlane_CannotAffordDefault_ChoosesNull()
+        {
+            _droneManager.NumOfDrones = _defaultPlane.Buildable.NumOfDronesRequired - 1;
+            _airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
+            _navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
-			TriggerChoosing();
+            TriggerChoosing();
 
             Assert.IsNull(_unitChooser.ChosenUnit);
-		}
+        }
 
-		[Test]
-		public void DroneNumChanged_TriggersChoosing()
-		{
-			_airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
-			_navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
+        [Test]
+        public void DroneNumChanged_TriggersChoosing()
+        {
+            _airThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.None);
+            _navalThreatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
             _droneManager.DroneNumChanged += Raise.EventWith(_droneManager, new DroneNumChangedEventArgs(newNumOfDrones: 72));
 
             Assert.AreSame(_antiNavalPlane, _unitChooser.ChosenUnit);
-		}
+        }
 
         [Test]
         public void NavalThreatChanged_TriggersChoosing()
@@ -181,5 +184,5 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         {
             _airThreatMonitor.ThreatLevelChanged += Raise.Event();
         }
-	}
+    }
 }
