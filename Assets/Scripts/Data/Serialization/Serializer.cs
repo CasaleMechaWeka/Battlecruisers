@@ -111,19 +111,18 @@ namespace BattleCruisers.Data.Serialization
             // This is so that it overwrites existing properties and leaves the rest, instead of creating null ones.
             List<string> keys = await CloudSaveService.Instance.Data.RetrieveAllKeysAsync();
 
-            for (int i = 0; i <= keys.Count; i++)
+            for (int i = 0; i <= keys.Count - 1; i++)
             {
                 try
                 {
                     Dictionary<string, string> savedProperty = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { keys[i] });
-                    if (savedProperty[keys[i]] != string.Empty)
+
+                    string value;
+                    if (savedProperty.TryGetValue(keys[i], out value))
                     {
-                        game.GetType().GetProperty(keys[i]).SetValue(DeserializeProperty(savedProperty[keys[i]]),
+                        Debug.Log(keys[i] + ": " + value);
+                        game.GetType().GetProperty(keys[i]).SetValue(DeserializeProperty(value),
                             System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Problem while loading key: " + savedProperty[keys[i]] + ", the key is empty or null");
                     }
                 }
                 catch (UnityException e)
