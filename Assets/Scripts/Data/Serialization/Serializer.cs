@@ -91,9 +91,13 @@ namespace BattleCruisers.Data.Serialization
             try
             {
                 Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
+                if(savedData != null && savedData["GameModel"] != String.Empty)
+                {
                 GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
                 Debug.Log(savedData["GameModel"]);
                 return game;
+                }
+                return null;
             }
             catch (UnityException e)
             {
