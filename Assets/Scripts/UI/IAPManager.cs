@@ -11,10 +11,14 @@ public class IAPManager : MonoBehaviour, IStoreListener
     public IStoreController storeController;
     private static IExtensionProvider _StoreExtensionProvider;
     public const string premium_version_product = "premium_version";
+    public const string small_coin_pack = "coins100_pack";
+    public const string large_coin_pack = "coins1000_pack";
+    public const string medium_coin_pack = "coins500_pack";
+    public const string extralarge_coin_pack = "coins5000_pack";
 
     //************************** Adjust these methods **************************************
     public void InitializePurchasing()
-    {
+    {        
         if (IsInitialized()) { return; }
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
@@ -44,9 +48,25 @@ public class IAPManager : MonoBehaviour, IStoreListener
             applicationModel.DataProvider.GameModel.PremiumEdition = true;
             applicationModel.DataProvider.SaveGame();
         }
+        if(args.purchasedProduct.definition.id == small_coin_pack)
+        {
+
+        }
+        if(args.purchasedProduct.definition.id == medium_coin_pack)
+        {
+
+        }
+        if(args.purchasedProduct.definition.id == large_coin_pack)
+        {
+
+        }
+        if(args.purchasedProduct.definition.id == extralarge_coin_pack)
+        {
+
+        }
         else
         {
-            Debug.Log("Purchase Failed");
+            Debug.Log("Purchase Failed");                
         }
         return PurchaseProcessingResult.Complete;
     }
@@ -122,6 +142,11 @@ public class IAPManager : MonoBehaviour, IStoreListener
         _StoreExtensionProvider = extensions;
     }
 
+
+    public void OnInitializeFailed(InitializationFailureReason error, string message)
+    {
+        Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
+    }
 
     public void OnInitializeFailed(InitializationFailureReason error)
     {
