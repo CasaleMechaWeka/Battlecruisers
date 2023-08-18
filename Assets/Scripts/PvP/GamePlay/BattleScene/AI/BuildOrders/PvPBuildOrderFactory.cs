@@ -6,6 +6,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Helper;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models;
@@ -16,6 +17,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Requests;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
+        //---> CODE BY ANUJ
+        private const int NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE = 1;
+        //<---
 
         public PvPBuildOrderFactory(IPvPSlotAssigner slotAssigner, IStaticData staticData, PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPStrategyFactory strategyFactory)
         {
@@ -145,9 +150,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
                 navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
             }
 
+            //---> CODE BY ANUJ
+            // Should have a single air request at most
+            IPvPOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == PvPOffensiveType.Air);
+            if (airRequest != null)
+            {
+                airRequest.NumOfSlotsToUse = NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE;
+            }
+            //<---
+
             // All non-naval requests (offensives or non-banned ultras) require platform slots, 
             // so need to split the available platform slots between these requests.
-            IEnumerable<IPvPOffensiveRequest> platformRequests = requests.Where(request => request.Type != PvPOffensiveType.Naval);
+
+            //---> CODE CHANGED BY ANUJ
+            IEnumerable<IPvPOffensiveRequest> platformRequests = requests.Where
+                (request => request.Type != PvPOffensiveType.Naval && request.Type != PvPOffensiveType.Air);
+            //<---
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
         }
 
