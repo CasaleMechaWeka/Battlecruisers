@@ -34,6 +34,29 @@ namespace BattleCruisers.UI.ScreensScene
         public Text iapPrice;
         public BlackMarketIAPConfirmModal confirmModal;
 
+        public EventHandler<IAPEventArgs> purchasedIAP;
+
+        public static BlackMarketScreenController Instance;
+
+        private async void PurchasedIAP(object sender, IAPEventArgs e)
+        {
+            switch (e.CoinsPack)
+            {
+                case IAPManager.small_coin_pack:
+                    Debug.Log("===>" + IAPManager.small_coin_pack);
+                    break;
+                case IAPManager.medium_coin_pack:
+                    Debug.Log("===>" + IAPManager.medium_coin_pack);
+                    break;
+                case IAPManager.large_coin_pack:
+                    Debug.Log("===>" + IAPManager.large_coin_pack);
+                    break;
+                case IAPManager.extralarge_coin_pack:
+                    Debug.Log("===>" + IAPManager.extralarge_coin_pack);
+                    break;
+            }
+        }
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -56,6 +79,12 @@ namespace BattleCruisers.UI.ScreensScene
             iapDataChanged += IAPDataChangedHandler;
             commonStrings = LandingSceneGod.Instance.commonStrings;
         }
+        private void Start()
+        {
+            purchasedIAP += PurchasedIAP;
+            if (Instance == null)
+                Instance = this;
+        }
 
         private async void IAPDataChangedHandler(object sender, IAPDataEventArgs args)
         {
@@ -69,10 +98,7 @@ namespace BattleCruisers.UI.ScreensScene
             iapIcon.sprite = spWrapper.Sprite;
             iapName.text = commonStrings.GetString(args.iapData.IAPNameKeyBase);
             iapDescription.text = commonStrings.GetString(args.iapData.IAPDescriptionKeyBase);
-
-
             DisplayPrice();
-
         }
 
         private void DisplayPrice()
@@ -129,7 +155,7 @@ namespace BattleCruisers.UI.ScreensScene
                 {
                     iapItem.GetComponent<IAPItemController>()._clickedFeedback.SetActive(true);
                     _currentItem = iapItem.GetComponent<IAPItemController>();
-                    currenIAPData = iapData;                   
+                    currenIAPData = iapData;
                     SpriteFetcher spriteFetcher = new SpriteFetcher();
                     ISpriteWrapper spWrapper = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + iapData.IAPIconName + ".png");
                     iapIcon.sprite = spWrapper.Sprite;
@@ -145,6 +171,7 @@ namespace BattleCruisers.UI.ScreensScene
         private void OnDestroy()
         {
             iapDataChanged -= IAPDataChangedHandler;
+            purchasedIAP -= PurchasedIAP;
         }
     }
 
@@ -152,5 +179,9 @@ namespace BattleCruisers.UI.ScreensScene
     public class IAPDataEventArgs : EventArgs
     {
         public IIAPData iapData { get; set; }
+    }
+    public class IAPEventArgs : EventArgs
+    {
+        public string CoinsPack;
     }
 }

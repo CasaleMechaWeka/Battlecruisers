@@ -12,6 +12,9 @@ using UnityEngine.UI;
 using UnityEngine.Purchasing;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Scenes;
+using Unity.Services.Authentication;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
 public class BlackMarketIAPConfirmModal : MonoBehaviour
 {
@@ -41,24 +44,37 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
         coinPack.sprite = null;
     }
 
-    private void Purchase()
+    private async void Purchase()
     {
-        Close();
-
-        switch (_currentIAPData.IAPNameKeyBase)
+        if(await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
         {
-            case "Coins100Name":
-                IAPManager.instance.storeController.InitiatePurchase(IAPManager.small_coin_pack);
-                break;
-            case "Coins500Name":
-                IAPManager.instance.storeController.InitiatePurchase(IAPManager.medium_coin_pack);
-                break;
-            case "Coins1000Name":
-                IAPManager.instance.storeController.InitiatePurchase(IAPManager.large_coin_pack);
-                break;
-            case "Coins5000Name":
-                IAPManager.instance.storeController.InitiatePurchase(IAPManager.extralarge_coin_pack);
-                break;
+            Close();
+            switch (_currentIAPData.IAPNameKeyBase)
+            {
+                case "Coins100Name":
+                    IAPManager.instance.storeController.InitiatePurchase(IAPManager.small_coin_pack);
+                    break;
+                case "Coins500Name":
+                    IAPManager.instance.storeController.InitiatePurchase(IAPManager.medium_coin_pack);
+                    break;
+                case "Coins1000Name":
+                    IAPManager.instance.storeController.InitiatePurchase(IAPManager.large_coin_pack);
+                    break;
+                case "Coins5000Name":
+                    IAPManager.instance.storeController.InitiatePurchase(IAPManager.extralarge_coin_pack);
+                    break;
+            }
+        }
+        else
+        {
+            if(await LandingSceneGod.CheckForInternetConnection())
+            {
+                MessageBox.Instance.ShowMessage("You have no Internet Connection!");
+            }
+            else if(AuthenticationService.Instance.IsSignedIn)
+            {
+                MessageBox.Instance.ShowMessage("You are not signed in.");
+            }
         }
     }
 

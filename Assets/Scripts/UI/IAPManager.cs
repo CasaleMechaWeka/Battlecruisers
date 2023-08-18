@@ -1,4 +1,8 @@
 using BattleCruisers.Data;
+using BattleCruisers.UI.ScreensScene;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
@@ -18,7 +22,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     //************************** Adjust these methods **************************************
     public void InitializePurchasing()
-    {        
+    {
         if (IsInitialized()) { return; }
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
@@ -52,27 +56,27 @@ public class IAPManager : MonoBehaviour, IStoreListener
             applicationModel.DataProvider.GameModel.PremiumEdition = true;
             applicationModel.DataProvider.SaveGame();
         }
-        
-        if(args.purchasedProduct.definition.id == small_coin_pack)
+        else if (args.purchasedProduct.definition.id == small_coin_pack)
         {
-
+            BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = small_coin_pack });
         }
-        if(args.purchasedProduct.definition.id == medium_coin_pack)
+        else if (args.purchasedProduct.definition.id == medium_coin_pack)
         {
-
+            BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = medium_coin_pack });
         }
-        if(args.purchasedProduct.definition.id == large_coin_pack)
+        else if (args.purchasedProduct.definition.id == large_coin_pack)
         {
-
+            BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = large_coin_pack });
         }
-        if(args.purchasedProduct.definition.id == extralarge_coin_pack)
+        else if (args.purchasedProduct.definition.id == extralarge_coin_pack)
         {
-
+            BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = extralarge_coin_pack });
         }
         else
         {
-            Debug.Log("Purchase Failed");                
+            Debug.Log(" ===> Purchase Failed ---> " + args.purchasedProduct.definition.id);
         }
+
         return PurchaseProcessingResult.Complete;
     }
 
@@ -88,11 +92,12 @@ public class IAPManager : MonoBehaviour, IStoreListener
         if (storeController == null) { InitializePurchasing(); }
     }
 
+
     private void TestSingleton()
     {
         if (instance != null) { Destroy(gameObject); return; }
         instance = this;
-        DontDestroyOnLoad(gameObject);       
+        DontDestroyOnLoad(gameObject);
     }
 
     void BuyProductID(string productId)
@@ -130,7 +135,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
             Debug.Log("RestorePurchases started ...");
 
             var apple = _StoreExtensionProvider.GetExtension<IAppleExtensions>();
-            apple.RestoreTransactions((result) => {
+            apple.RestoreTransactions((result) =>
+            {
                 Debug.Log("RestorePurchases continuing: " + result + ". If no further messages, no purchases available to restore.");
             });
         }

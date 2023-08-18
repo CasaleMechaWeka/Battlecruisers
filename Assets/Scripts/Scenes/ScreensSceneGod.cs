@@ -272,7 +272,7 @@ namespace BattleCruisers.Scenes
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
             if (Instance == null)
-                Instance = this;
+                Instance = this;        
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
