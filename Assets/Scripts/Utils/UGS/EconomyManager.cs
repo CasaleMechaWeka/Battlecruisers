@@ -30,7 +30,7 @@ namespace BattleCruisers.Utils.UGS.Samples
         public static async Task<MakeVirtualPurchaseResult> MakeVirtualPurchaseAsync(string virtualPurchaseId)
         {
             try
-            { 
+            {                 
                 return await EconomyService.Instance.Purchases.MakeVirtualPurchaseAsync(virtualPurchaseId);
             }
             catch(EconomyException e)
@@ -39,6 +39,15 @@ namespace BattleCruisers.Utils.UGS.Samples
                 return null;
             }
         }
+
+/*        public static async Task<RedeemGooglePlayPurchaseResult> MakeRealMoneyPurchaseAsync(string purchaseId)
+        {
+            try
+            {
+                RedeemGooglePlayStorePurchaseArgs args = new RedeemGooglePlayStorePurchaseArgs(purchaseId, "PURCHASE_DATA", "PURCHASE_DATA_SIGNATURE", 0, "USD");
+                return await EconomyService.Instance.Purchases.RedeemGooglePlayPurchaseAsync()
+            }
+        }*/
 
         public static async Task RefreshCurrencyBalances()
         {

@@ -23,6 +23,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
         builder.AddProduct(premium_version_product, ProductType.NonConsumable);
+        builder.AddProduct(small_coin_pack, ProductType.Consumable);
+        builder.AddProduct(medium_coin_pack, ProductType.Consumable);
+        builder.AddProduct(large_coin_pack, ProductType.Consumable);
+        builder.AddProduct(extralarge_coin_pack, ProductType.Consumable);
 
         UnityPurchasing.Initialize(this, builder);
     }
@@ -48,6 +52,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
             applicationModel.DataProvider.GameModel.PremiumEdition = true;
             applicationModel.DataProvider.SaveGame();
         }
+        
         if(args.purchasedProduct.definition.id == small_coin_pack)
         {
 

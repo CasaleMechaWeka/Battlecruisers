@@ -45,6 +45,8 @@ namespace BattleCruisers.Data
 
         Task<bool> PurchaseCaptain(int index);
         Task<bool> PurchaseHeckle(int index);
+/*        Task<bool> PurchaseIAP(string purchaseId);*/
+
         /*        Task RefreshEconomyConfiguration();
                 Task FetchConfigs();*/
     }

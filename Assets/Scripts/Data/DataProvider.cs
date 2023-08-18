@@ -32,7 +32,8 @@ namespace BattleCruisers.Data
         public ISettingsManager SettingsManager { get; }
         public ILockedInformation LockedInfo { get; }
 
-        private GameModel _gameModel;
+        private readonly GameModel _gameModel;
+
         public IGameModel GameModel => _gameModel;
         public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
@@ -240,6 +241,14 @@ namespace BattleCruisers.Data
             }
         }
 
+
+/*        public async Task<bool> PurchaseIAP(string purchaseId)
+        {
+            try 
+            { 
+                var result =  await EconomyManager.
+            }
+        }*/
         public async Task<bool> PurchaseCaptain(int index)
         {
             Assert.IsTrue(index > 0); // 0 is default item. can not buy them.

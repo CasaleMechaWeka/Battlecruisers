@@ -11,6 +11,7 @@ using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene
@@ -25,11 +26,13 @@ namespace BattleCruisers.UI.ScreensScene
         public EventHandler<IAPDataEventArgs> iapDataChanged;
         public GameObject itemPrefab;
         private IAPItemController _currentItem;
+        private IIAPData currenIAPData;
         private ILocTable commonStrings;
         public Image iapIcon;
         public Text iapName;
         public Text iapDescription;
         public Text iapPrice;
+        public BlackMarketIAPConfirmModal confirmModal;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -39,13 +42,14 @@ namespace BattleCruisers.UI.ScreensScene
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
-            Helper.AssertIsNotNull(backButton, buyButton, screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper, iapContainer);
+            Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper, iapContainer);
             Helper.AssertIsNotNull(iapIcon, iapName, iapDescription, iapPrice);
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
+            confirmModal.Initiaize(dataProvider, prefabFactory, soundPlayer);
             backButton.Initialise(soundPlayer, GoHome, this);
             buyButton.Initialise(soundPlayer, Buy, this);
 
@@ -57,6 +61,7 @@ namespace BattleCruisers.UI.ScreensScene
         {
             _currentItem._clickedFeedback.SetActive(false);
             _currentItem = (IAPItemController)sender;
+            currenIAPData = args.iapData;
             ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("select");
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
@@ -64,8 +69,33 @@ namespace BattleCruisers.UI.ScreensScene
             iapIcon.sprite = spWrapper.Sprite;
             iapName.text = commonStrings.GetString(args.iapData.IAPNameKeyBase);
             iapDescription.text = commonStrings.GetString(args.iapData.IAPDescriptionKeyBase);
-            iapPrice.text = "$" + args.iapData.IAPCost.ToString("#,##0.00");
 
+
+            DisplayPrice();
+
+        }
+
+        private void DisplayPrice()
+        {
+            Product product = null;
+
+            switch (currenIAPData.IAPNameKeyBase)
+            {
+                case "Coins100Name":
+                    product = IAPManager.instance.storeController.products.WithID(IAPManager.small_coin_pack);
+                    break;
+                case "Coins500Name":
+                    product = IAPManager.instance.storeController.products.WithID(IAPManager.medium_coin_pack);
+                    break;
+                case "Coins1000Name":
+                    product = IAPManager.instance.storeController.products.WithID(IAPManager.large_coin_pack);
+                    break;
+                case "Coins5000Name":
+                    product = IAPManager.instance.storeController.products.WithID(IAPManager.extralarge_coin_pack);
+                    break;
+            }
+
+            iapPrice.text = "$ " + product.metadata.localizedPriceString;
         }
         public void GoHome()
         {
@@ -74,7 +104,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void Buy()
         {
-
+            confirmModal.Show(currenIAPData);
         }
 
         public async void InitialiseIAPs()
@@ -97,19 +127,18 @@ namespace BattleCruisers.UI.ScreensScene
                 iapItem.GetComponent<IAPItemController>().StaticInitialise(_soundPlayer, iapData, this);
                 if (ii == 0)
                 {
-                    Debug.Log("===> you called me here!!!");
                     iapItem.GetComponent<IAPItemController>()._clickedFeedback.SetActive(true);
                     _currentItem = iapItem.GetComponent<IAPItemController>();
-
+                    currenIAPData = iapData;                   
                     SpriteFetcher spriteFetcher = new SpriteFetcher();
                     ISpriteWrapper spWrapper = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + iapData.IAPIconName + ".png");
                     iapIcon.sprite = spWrapper.Sprite;
                     iapName.text = commonStrings.GetString(iapData.IAPNameKeyBase);
                     iapDescription.text = commonStrings.GetString(iapData.IAPDescriptionKeyBase);
-                    iapPrice.text = "$" + iapData.IAPCost.ToString("#,##0.00");
+                    DisplayPrice();
                 }
                 ii++;
-            }          
+            }
             buyButton.gameObject.SetActive(true);
         }
 
