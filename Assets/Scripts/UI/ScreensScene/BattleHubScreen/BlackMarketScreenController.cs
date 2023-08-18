@@ -1,6 +1,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -43,18 +44,35 @@ namespace BattleCruisers.UI.ScreensScene
             switch (e.CoinsPack)
             {
                 case IAPManager.small_coin_pack:
-                    Debug.Log("===>" + IAPManager.small_coin_pack);
+                    _dataProvider.GameModel.Coins += 100;
+                    MessageBox.Instance.ShowMessage("You get 100 coins.");
                     break;
                 case IAPManager.medium_coin_pack:
-                    Debug.Log("===>" + IAPManager.medium_coin_pack);
+                    _dataProvider.GameModel.Coins += 500;
+                    MessageBox.Instance.ShowMessage("You get 500 coins");
                     break;
                 case IAPManager.large_coin_pack:
-                    Debug.Log("===>" + IAPManager.large_coin_pack);
+                    _dataProvider.GameModel.Coins += 1000;
+                    MessageBox.Instance.ShowMessage("You get 1000 coins");
                     break;
                 case IAPManager.extralarge_coin_pack:
-                    Debug.Log("===>" + IAPManager.extralarge_coin_pack);
+                    _dataProvider.GameModel.Coins += 5000;
+                    MessageBox.Instance.ShowMessage("You get 5000 coins");
                     break;
             }
+            _dataProvider.SaveGame();
+            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+            try
+            {
+                bool result = await _dataProvider.SyncCoinsToCloud();
+                if (!result)
+                    Debug.Log("Sync failed");
+            }
+            catch
+            {
+                Debug.Log("Sync failed");
+            }
+            
         }
 
         public void Initialise(
