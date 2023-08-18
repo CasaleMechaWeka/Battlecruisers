@@ -93,5 +93,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 CurrentlyShownPanel != null
                 && CurrentlyShownPanel.ItemType == element;
         }
+
+        public void ShowHecklePanel()
+        {
+            CurrentlyShownPanel = null;
+        }
     }
 }

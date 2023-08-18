@@ -126,6 +126,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private void ShowHeckles()
         {
             _itemDetailsManager.HideDetails();
+            itemPanels.CurrentlyShownPanel?.Hide();
+            itemPanels.ShowHecklePanel();
         }
 
         private void ShowPlayerHull()
