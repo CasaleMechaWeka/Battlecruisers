@@ -32,6 +32,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public CancelButtonController homeButton;
         public LimitDisplayer limitDisplayer;
 
+        // Heckles
+        public CanvasGroupButton heckleButton;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -42,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton);
+            Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton, heckleButton);
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
             _dataProvider = dataProvider;
@@ -113,10 +116,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
+            heckleButton.Initialise(soundPlayer, ShowHeckles);
 
             ShowPlayerHull();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
+        }
+
+        private void ShowHeckles()
+        {
+            _itemDetailsManager.HideDetails();
         }
 
         private void ShowPlayerHull()

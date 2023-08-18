@@ -30,20 +30,26 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, prefabFactory);
 
-            ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
-            IList<IItemButton> buttons = new List<IItemButton>();
+                ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
+                IList<IItemButton> buttons = new List<IItemButton>();
 
-            HasUnlockedItem = false;
+                HasUnlockedItem = false;
 
-            foreach (ItemContainer itemContainer in itemContainers)
-            {
-                IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
-                buttons.Add(button);
-                HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
-                itemContainer.gameObject.SetActive(button.IsUnlocked);
-            }
-            _button = buttons;
-            return buttons;
+                foreach (ItemContainer itemContainer in itemContainers)
+                {
+                    IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
+                    buttons.Add(button);
+                    HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
+                    itemContainer.gameObject.SetActive(button.IsUnlocked);
+                }
+
+                if (itemType == ItemType.Heckle)   // To always enable heckle button on top panel.
+                {
+                    HasUnlockedItem = true;
+                }
+                _button = buttons;
+                return buttons;
+       
         }
 
         public IItemButton GetFirstItemButton()

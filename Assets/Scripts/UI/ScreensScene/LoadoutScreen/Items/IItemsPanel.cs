@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
     public enum ItemFamily
     {
-        Hulls, Buildings, Units
+        Hulls, Buildings, Units, Heckles
     }
 
     public interface IItemsPanel : IPanel
