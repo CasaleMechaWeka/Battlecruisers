@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Unity.Services.CloudSave;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -72,6 +73,20 @@ namespace BattleCruisers.Data.Serialization
             });
         }
 
+        public object DeserializeProperty(string propertyJSON)
+        {
+            Debug.LogWarning(JsonConvert.DeserializeObject<GameModel>(propertyJSON).ToString());
+            return JsonConvert.DeserializeObject<GameModel>(propertyJSON);
+        }
+
+        public string SerializeProperty(object property)
+        {
+            return JsonConvert.SerializeObject(property, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+        }
+
         // Saves every local property of GameModel
         public async Task CloudSave(GameModel game)
         {
@@ -80,7 +95,7 @@ namespace BattleCruisers.Data.Serialization
                 try
                 {
                     string propertyName = property.Name;
-                    object propertyValue = property.GetValue(game); //SerializeProperty(property.GetValue(game));
+                    object propertyValue = SerializeProperty(property.GetValue(game));
 
                     var data = new Dictionary<string, object> { { propertyName, propertyValue } };
                     await CloudSaveService.Instance.Data.ForceSaveAsync(data);
@@ -105,12 +120,13 @@ namespace BattleCruisers.Data.Serialization
             {
                 try
                 {
-                    string name = keys[i];
-                    Dictionary<string, string> savedProperty = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { name });
-                    var value = savedProperty[name];
-
-                    PropertyInfo propertyInfo = game.GetType().GetProperty(name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-                    propertyInfo.SetValue(game, value);
+                    //string name = keys[i];
+                    //Dictionary<string, string> savedProperty = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { name });
+                    //var value = savedProperty[name];
+                    //dynamic jsonData = JsonConvert.DeserializeObject<dynamic>(value);
+                    //
+                    //FieldInfo info = typeof(GameModel).GetField(name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                    //info.SetValue(null, jsonData);
                 }
                 catch (UnityException e)
                 {
@@ -119,7 +135,7 @@ namespace BattleCruisers.Data.Serialization
             }
             return game;
         }
-      
+
         public async Task<bool> SyncCoinsToCloud(IDataProvider dataProvider)
         {
             try
