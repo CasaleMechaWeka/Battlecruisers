@@ -93,7 +93,7 @@ namespace BattleCruisers.Data
 
         public async Task CloudLoad()
         {
-            GameModel gModelFromCloud = await _serializer.CloudLoad();
+            GameModel gModelFromCloud = await _serializer.CloudLoad(_gameModel);
         }
 
         public async Task<bool> SyncCurrencyFromCloud()

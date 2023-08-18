@@ -25,6 +25,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
 
+        //---> CODE BY ANUJ
+        private PvPRocketTarget _rocketTarget;
+        //<---        
+
         public SpriteRenderer missile;
 
         protected override float TrailLifetimeInS => 3;
@@ -33,6 +37,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
+
+            //---> CODE BY ANUJ
+            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
+            //<---
+
             Assert.IsNotNull(missile);
         }
 
@@ -57,7 +67,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;
+
+            //---> CODE BY ANUJ
+            _rocketTarget.GameObject.SetActive(true);
+            //<---
             SetMissileVisibleClientRpc(true);
+            //---> CODE BY ANUJ
+            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            //<---
             activationArgs.Target.Destroyed += Target_Destroyed;
         }
 
@@ -81,6 +98,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override void DestroyProjectile()
         {
             missile.enabled = false;
+            //---> CODE BY ANUJ
+            _rocketTarget.GameObject.SetActive(false);
+            //<---
             SetMissileVisibleClientRpc(false);
             Target.Destroyed -= Target_Destroyed;
             base.DestroyProjectile();

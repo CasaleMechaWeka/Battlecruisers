@@ -12,5 +12,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
         bool CanConstructBuilding(PvPBuildingKey buildingKey);
         IList<PvPBuildingKey> GetAvailableBuildings(PvPBuildingCategory category);
+
+        //---> CODE BY ANUJ
+        bool HasMastOffensive();
+        bool HasBowOffensive();
+        //<---
     }
 }
