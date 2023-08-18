@@ -13,7 +13,7 @@ namespace BattleCruisers.Data.Serialization
         object DeserializeGameModel(string gameModelJSON);
         string SerializeGameModel(object gameModel);
         Task CloudSave(GameModel game);
-        Task<GameModel> CloudLoad();
+        Task<GameModel> CloudLoad(GameModel game);
 
         Task<bool> SyncCoinsToCloud(IDataProvider dataProvider);
         Task<bool> SyncCurrencyFromCloud(IDataProvider dataProvider);

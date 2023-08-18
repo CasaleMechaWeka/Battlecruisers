@@ -8,6 +8,7 @@ using Unity.Services.CloudSave;
 using System.Threading.Tasks;
 using UnityEngine;
 using System;
+using System.Reflection;
 using Unity.Services.Economy;
 using Unity.Services.Economy.Model;
 using BattleCruisers.Utils.UGS.Samples;
@@ -71,40 +72,54 @@ namespace BattleCruisers.Data.Serialization
             });
         }
 
+        // Saves every local property of GameModel
         public async Task CloudSave(GameModel game)
         {
-            try
+            foreach (var property in typeof(GameModel).GetProperties())
             {
-                var data = new Dictionary<string, object> { { "GameModel", SerializeGameModel(game) } };
-                await CloudSaveService.Instance.Data.ForceSaveAsync(data);
-            }
-            catch (UnityException e)
-            {
-                Debug.LogException(e);
-            }
-        }
-
-        public async Task<GameModel> CloudLoad()
-        {
-            try
-            {
-                Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
-                if (savedData != null && savedData["GameModel"] != string.Empty)
+                try
                 {
-                    GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
-                //    Debug.Log(savedData["GameModel"]);
-                    return game;
+                    string propertyName = property.Name;
+                    object propertyValue = property.GetValue(game); //SerializeProperty(property.GetValue(game));
+
+                    var data = new Dictionary<string, object> { { propertyName, propertyValue } };
+                    await CloudSaveService.Instance.Data.ForceSaveAsync(data);
                 }
-                return null;
-            }
-            catch (UnityException e)
-            {
-                Debug.LogException(e);
-                return null;
+                catch (UnityException e)
+                {
+                    Debug.LogException(e);
+                }
             }
         }
 
-        
+        // Loads every cloud property of GameModel
+        public async Task<GameModel> CloudLoad(GameModel _game)
+        {
+            // This method now requires a GameModel passed in.
+            // This is so that it overwrites existing properties and leaves the rest, instead of creating null ones.
+            GameModel game = _game;
+
+            List<string> keys = await CloudSaveService.Instance.Data.RetrieveAllKeysAsync();
+
+            for (int i = 0; i <= keys.Count - 1; i++)
+            {
+                try
+                {
+                    string name = keys[i];
+                    Dictionary<string, string> savedProperty = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { name });
+                    var value = savedProperty[name];
+
+                    PropertyInfo propertyInfo = game.GetType().GetProperty(name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                    propertyInfo.SetValue(game, value);
+                }
+                catch (UnityException e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+            return game;
+        }
+      
         public async Task<bool> SyncCoinsToCloud(IDataProvider dataProvider)
         {
             try

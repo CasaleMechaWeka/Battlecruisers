@@ -24,7 +24,7 @@ namespace BattleCruisers.AI.BuildOrders
         private readonly IStrategyFactory _strategyFactory;
 
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
-        private const int NUM_OF_AIR_FACTORY_SLOTS = 1;
+        private const int NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
@@ -138,16 +138,17 @@ namespace BattleCruisers.AI.BuildOrders
 				navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
 			}
 
-            // Should have a single naval request at most
+            // Should have a single air request at most
             IOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Air);
             if (airRequest != null)
             {
-                airRequest.NumOfSlotsToUse = NUM_OF_AIR_FACTORY_SLOTS;
+                airRequest.NumOfSlotsToUse = NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE;
             }
 
             // All non-naval requests (offensives or non-banned ultras) require platform slots, 
             // so need to split the available platform slots between these requests.
-            IEnumerable<IOffensiveRequest> platformRequests = requests.Where(request => request.Type != OffensiveType.Naval && request.Type != OffensiveType.Air);
+            IEnumerable<IOffensiveRequest> platformRequests = requests.Where
+                (request => request.Type != OffensiveType.Naval && request.Type != OffensiveType.Air);
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
 		}
 
