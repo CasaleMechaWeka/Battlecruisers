@@ -17,9 +17,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         const string LeaderboardID = "BC-PvP1v1Leaderboard";
 
-        public GameObject TopPlayer;
+        public LeaderboradPanel TopPlayer;
         [SerializeField]
-        private List<GameObject> Players;
+        private List<LeaderboradPanel> Players;
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -41,8 +41,38 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     e.ToString();
                 }
 
-                var scoreResponse = LeaderboardsService.Instance.GetScoresAsync(LeaderboardID);
-                Debug.Log(JsonConvert.SerializeObject(scoreResponse));
+                try
+                {
+                    var score = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardID);
+                    int i = 0;
+                    foreach(var entry in score.Results)
+                    {
+                        if(entry != null)
+                        {
+                            if(entry.Rank == 0)
+                            {
+                                TopPlayer.Initialise(soundPlayer, prefabFactory, entry.PlayerName, entry.Score, entry.Rank);
+                            }
+                            else
+                            {
+                                Players[i].Initialise(soundPlayer, prefabFactory, entry.PlayerName, entry.Score, entry.Rank);
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    for (int j = i; j < 16; j++)
+                    {
+                        Players[j].gameObject.SetActive(false);
+                    }
+                }
+                catch(Exception e)
+                {
+                    e.ToString();
+                }
 
             }
             
