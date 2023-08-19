@@ -34,17 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             return heckleButton;
         }
 
-/*        public ItemButton InitialiseHeckleItemButton(
-            ISingleSoundPlayer soundPlayer,
-            IHeckleData heckleData,
-            IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamilyTracker)
-        {
-            HeckleButtonV2 heckleButton = GetComponentInChildren<HeckleButtonV2>(includeInactive: true);
-            Assert.IsNotNull(heckleButton);
-            heckleButton.Initialise(soundPlayer, heckleData, itemDetailsManager, comparingFamilyTracker);
-            return heckleButton;
-        }*/
+
 
         // Heckle button is not working as like other category buttons
         protected override bool IsUnlocked(IGameModel gameModel)

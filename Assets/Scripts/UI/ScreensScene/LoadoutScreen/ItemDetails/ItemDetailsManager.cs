@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Utils;
@@ -14,6 +15,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         private readonly IItemDetailsDisplayer<IBuilding> _buildingDetails;
         private readonly IItemDetailsDisplayer<IUnit> _unitDetails;
         private readonly IItemDetailsDisplayer<ICruiser> _cruiserDetails;
+
+        private HeckleDetailsController _heckleDetails;
+        public HeckleDetailsController HeckleDetails
+        {
+            set {
+                _heckleDetails = value;
+            }
+            get
+            {
+                return _heckleDetails;
+            }
+        }
 
         public ItemFamily? SelectedItemFamily { get; private set; }
 
@@ -64,6 +77,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             ShowDetails(cruiser, _cruiserDetails, ItemFamily.Hulls);
         }
 
+        public void ShowDetails(string keyBase)
+        {
+            HideDetails();
+            SelectedItemFamily = ItemFamily.Heckles;
+            _heckleDetails.ShowHeckle(keyBase);
+            /*            itemDetails.SelectItem(item);
+                        _selectedItem.Value = item;*/
+            _numOfDetailsShown.Value = 1;
+        }
+
         private void ShowDetails<TItem, TItemDetails>(TItem item, TItemDetails itemDetails, ItemFamily itemFamily)
             where TItem : class, IComparableItem
             where TItemDetails : IItemDetailsDisplayer<TItem>
@@ -109,6 +132,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             _buildingDetails.HideDetails();
             _unitDetails.HideDetails();
             _cruiserDetails.HideDetails();
+            _heckleDetails.HideDetails();
             _selectedItem.Value = null;
             _comparingItem.Value = null;
             _numOfDetailsShown.Value = 0;

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Utils.Properties;
@@ -13,10 +14,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         IBroadcastingProperty<int> NumOfDetailsShown { get; }
         IBroadcastingProperty<IComparableItem> SelectedItem { get; }
         IBroadcastingProperty<IComparableItem> ComparingItem { get; }
+        HeckleDetailsController HeckleDetails { get; set; }
 
         void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);
         void ShowDetails(ICruiser cruiser);
+        void ShowDetails(string stringKeyBase);
 
         void CompareWithSelectedItem(IBuilding building);
         void CompareWithSelectedItem(IUnit unit);

@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
@@ -18,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
-        private IItemDetailsManager _itemDetailsManager;
+        private LoadoutScreen.ItemDetails.IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourControllerV2 _loadoutItemColourController;
 
@@ -31,6 +32,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public SelectUnitButton selectUnitButton;
         public CancelButtonController homeButton;
         public LimitDisplayer limitDisplayer;
+
+        public HeckleDetailsController _heckleDetails;
 
         // Heckles
         public CanvasGroupButton heckleButton;
@@ -68,7 +71,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
 
-            _itemDetailsManager = new ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
+            _itemDetailsManager = new LoadoutScreen.ItemDetails.ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
+            _itemDetailsManager.HeckleDetails = _heckleDetails;
 
             _comparingFamilyTracker = new ComparingItemFamilyTracker();
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
