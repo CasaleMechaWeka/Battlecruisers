@@ -52,6 +52,21 @@ namespace BattleCruisers.Data.Models
             _ownedIAPIDs = computeOwnedIAPs(game.IAPs);
         }
 
+        public void AssignSaveToGameModel(GameModel game)
+        {
+            game.Coins = _coins;
+            game.LifetimeDestructionScore = _lifetimeDestructionScore;
+            game.PlayerName = _playerName;
+            game.PlayerLoadout = _playerLoadout;
+            //TODO game.AddCompletedLevel();
+            //TODO game.AddUnlockedHull();
+            //TODO game.AddUnlockedBuilding();
+            //TODO game.AddUnlockedUnit();
+            game.CaptainExoList = _ownedCaptainIDs;
+            game.HeckleList = _ownedHeckleIDs;
+            //game.IAPs = _ownedIAPIDs;
+        }
+
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
         {
             var result = new Dictionary<int, int>();
