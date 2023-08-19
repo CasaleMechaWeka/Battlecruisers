@@ -7,12 +7,14 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using TMPro;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
     public abstract class ItemButton : ElementWithClickSound, IItemButton
     {
         private Image _itemImage;
+        public  Text _itemName;  // for heckle
         private ClickedFeedBack _clickedFeedBack;
 
         protected IItemDetailsManager _itemDetailsManager;
@@ -53,6 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemDetailsManager = itemDetailsManager;
             _comparingFamiltyTracker = comparingFamiltyTracker;
             _itemImage = transform.FindNamedComponent<Image>("ItemImage");
+            // _itemName = transform.FindNamedComponent<Text>("ItemName");
             _clickedFeedBack = GetComponentInChildren<ClickedFeedBack>(includeInactive: true);
             Assert.IsNotNull(_clickedFeedBack);
 
