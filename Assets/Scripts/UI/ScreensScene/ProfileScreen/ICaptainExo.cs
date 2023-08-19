@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
     {
         Sprite CaptainExoImage { get; }
 
-        string Name { get; }
+        string NameKeyBase { get; }
     }
 }
 

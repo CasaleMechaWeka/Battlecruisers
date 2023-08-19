@@ -11,6 +11,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public Sprite CaptainExoImage => captainExoImage;
 
         public string captainName;
-        public string Name => captainName;
+        public string NameKeyBase => captainName;
     }
 }

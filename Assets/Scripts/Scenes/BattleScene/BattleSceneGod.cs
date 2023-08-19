@@ -237,7 +237,7 @@ namespace BattleCruisers.Scenes.BattleScene
             else
             {
                 Text AIName = EnemyName.gameObject.GetComponent<Text>();
-                AIName.text = AICaptain.Name;
+                AIName.text = commonStrings.GetString(AICaptain.captainName);
             }
             
 
