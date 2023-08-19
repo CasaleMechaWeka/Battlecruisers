@@ -46,7 +46,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemToButton = new Dictionary<IComparableItem, IItemButton>();
             foreach (IItemButton button in itemButtons)
             {
-                _itemToButton.Add(button.Item, button);
+                if (button.Item is not null)
+                    _itemToButton.Add(button.Item, button);
             }
         }
 

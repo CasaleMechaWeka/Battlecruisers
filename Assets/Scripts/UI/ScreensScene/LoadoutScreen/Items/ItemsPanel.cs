@@ -8,6 +8,9 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
+using UnityEngine;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -20,7 +23,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public bool HasUnlockedItem { get; private set; }
 
-        public IList<IItemButton> Initialise(
+        public HeckleItemContainerV2 HeckleItemContainerV2Prefab;
+        public Transform heckleParent;
+
+        public async Task<IList<IItemButton>> Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
@@ -29,7 +35,27 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IPrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, prefabFactory);
-
+            await Task.Delay(10);
+            if(itemType == ItemType.Heckle)
+            {
+                HasUnlockedItem = true;
+                IList<IItemButton> buttons = new List<IItemButton>();
+                foreach (IHeckleData heckleData in gameModel.Heckles)
+                {
+                     if(heckleData.IsOwned)
+                    {                        
+                        HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
+                        heckleContainer.heckleData = heckleData;
+                        IItemButton button = heckleContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
+                        buttons.Add(button);
+                        heckleContainer.gameObject.SetActive(true);
+                    }
+                }               
+                _button = buttons;
+                return buttons;
+            }
+            else
+            {
                 ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
                 IList<IItemButton> buttons = new List<IItemButton>();
 
@@ -42,14 +68,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
                     itemContainer.gameObject.SetActive(button.IsUnlocked);
                 }
-
-                if (itemType == ItemType.Heckle)   // To always enable heckle button on top panel.
-                {
-                    HasUnlockedItem = true;
-                }
                 _button = buttons;
                 return buttons;
-       
+            }       
         }
 
         public IItemButton GetFirstItemButton()

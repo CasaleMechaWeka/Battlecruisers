@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     public class HeckleCategoryButton : CanvasGroupButton
     {
         private IItemPanelsController _itemPanels;
+        public ItemType itemType;
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IItemPanelsController itemPanels)
@@ -30,7 +31,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectedFeedback()
         {
-            IsSelected = _itemPanels.IsMatch(ItemType.Heckle);
+            IsSelected = _itemPanels.IsMatch(itemType);
+        }
+
+        protected override void OnClicked()
+        {
+            base.OnClicked();
+            _itemPanels.ShowItemsPanel(itemType);
         }
     }
 }

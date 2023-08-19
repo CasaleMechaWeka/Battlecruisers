@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
-            IGameModel gameModel);
+            IGameModel gameModel);        
 
         private void ItemButton_Clicked(object sender, EventArgs e)
         {

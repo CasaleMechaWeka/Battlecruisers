@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -41,7 +42,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public event EventHandler PotentialMatchChange;
 
-        public IList<IItemButton> Initialise(
+        public async Task<IList<IItemButton>> Initialise(
             IItemDetailsManager itemDetailsManager, 
             ItemType defaultItemTypeToShow,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -59,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             foreach (ItemsPanel panel in panels)
             {
-                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
+                IList<IItemButton> panelItemButtons = await panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                 allItemButtons.AddRange(panelItemButtons);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();
@@ -69,7 +70,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     CurrentlyShownPanel = panel;
                 }
             }
-
             return allItemButtons;
         }
 

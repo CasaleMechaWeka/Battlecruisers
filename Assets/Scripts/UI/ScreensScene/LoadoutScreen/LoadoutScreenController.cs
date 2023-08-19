@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public SelectCruiserButton selectCruiserButton;
         public CancelButtonController homeButton;
 
-        public void Initialise(
+        public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     _dataProvider);
 
             IList<IItemButton> itemButtons
-                = itemPanels.Initialise(
+                = await itemPanels.Initialise(
                     _itemDetailsManager,
                     ItemType.Hull,
                     _comparingFamilyTracker,

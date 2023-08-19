@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         // Heckles
         public CanvasGroupButton heckleButton;
 
-        public void Initialise(
+        public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
@@ -104,7 +104,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 _comparingFamilyTracker);
 
             IList<IItemButton> itemButtons
-                = itemPanels.Initialise(
+                = await itemPanels.Initialise(
                     _itemDetailsManager,
                     ItemType.Hull,
                     _comparingFamilyTracker,
