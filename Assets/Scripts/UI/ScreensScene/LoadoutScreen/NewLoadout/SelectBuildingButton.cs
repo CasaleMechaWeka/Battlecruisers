@@ -71,9 +71,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
             List<BuildingKey> buildingKeys = playerLoadout.GetBuildingKeys(displayBuilding.Category);
             Assert.IsNotNull(buildingKeys);
-            if(!buildingKeys.Contains(buildingKey))
+            if (!buildingKeys.Contains(buildingKey))
             {
-                if(playerLoadout.GetBuildingListSize(displayBuilding.Category) <= buildingLimit)
+                if (playerLoadout.GetBuildingListSize(displayBuilding.Category) <= buildingLimit)
                     playerLoadout.AddbuildItem(displayBuilding.Category, buildingKey);
                 _dataProvider.SaveGame();
                 limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
@@ -98,7 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 selectText.SetActive(false);
                 deselectText.SetActive(true);
             }
-            else 
+            else
             {
                 checkBox.SetActive(false);
                 Enabled = IsOverLimit();
@@ -106,24 +106,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 deselectText.SetActive(false);
             }
         }
-        
+
         private bool ShouldBeEnabled()
         {
             if (_comparingFamily.Value == ItemFamily.Buildings)
                 flag = true;
-            else if (_comparingFamily.Value == ItemFamily.Units || _comparingFamily.Value == ItemFamily.Hulls)
+            else if (_comparingFamily.Value == ItemFamily.Units || _comparingFamily.Value == ItemFamily.Hulls || _comparingFamily.Value == ItemFamily.Heckles)
                 flag = false;
             else if (_comparingFamily.Value == null)
             {
                 //do nothing
             }
-               
+
             return flag;
         }
 
         private void UpdateSelectBuildingButton(object sender, EventArgs e)
         {
-            if(ShouldBeEnabled())
+            if (ShouldBeEnabled())
             {
                 Enabled = IsOverLimit();
             }
@@ -136,13 +136,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             IBuilding displayBuilding = _buildingDetails.SelectedItem.Value;
             Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
-            
+
             //Assert.IsNotNull(displayBuilding);
             if (displayBuilding != null)
             {
                 BuildingKey buildingKey = _buildingNameToKey.GetKey(displayBuilding.Name);
                 limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
-
                 List<BuildingKey> buildingKeys = playerLoadout.GetBuildingKeys(displayBuilding.Category);
                 Assert.IsNotNull(buildingKeys);
                 if (buildingKeys.Contains(buildingKey))
@@ -151,20 +150,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 {
                     UpdateSelectText(false);
                 }
-                    
+
             }
         }
 
         private bool IsOverLimit()
         {
             Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
-            if(_buildingDetails.SelectedItem.Value != null)
+            if (_buildingDetails.SelectedItem.Value != null)
             {
                 if ((loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) == buildingLimit) && selectText.activeSelf)
                 {
                     return false;
                 }
-            }    
+            }
             return true;
         }
     }

@@ -40,8 +40,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
             _heckleData = heckleData;
             _itemsPanel.HeckleButtonChanged += OnCurrentHeckleButtonChanged;
-            //    _itemFamilyTracker = comparingItemFamily;
-            //    _itemFamilyTracker.ComparingFamily.ValueChanged += OnUnitListChange;
+            _itemFamilyTracker = comparingItemFamily;
+            _itemFamilyTracker.ComparingFamily.ValueChanged += OnHeckleListChange;
             _itemName.text = Mathf.Max(108, 217 * heckleData.Index).ToString().Substring(0, 3);
             UpdateSelectedFeedback();
         }

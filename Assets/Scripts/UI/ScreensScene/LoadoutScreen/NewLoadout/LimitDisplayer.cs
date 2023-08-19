@@ -18,6 +18,7 @@ using TMPro;
 using Unity.Services.Analytics;
 using BattleCruisers.Buildables.Buildings;
 using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
+using BattleCruisers.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -26,6 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IDataProvider _dataProvider;
         private IItemDetailsDisplayer<IBuilding> _displayer;
         private IItemDetailsDisplayer<IUnit> _unit;
+        private HeckleDetailsController _heckle;
         private IComparingItemFamilyTracker _familyTracker;
         private IBuildingNameToKey _buildingName;
         private IUnitNameToKey _unitName;
@@ -36,13 +38,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public void Initialise(IDataProvider dataProvider,
             IItemDetailsDisplayer<IBuilding> buildingDetails,
             IItemDetailsDisplayer<IUnit> unitDetails,
+            HeckleDetailsController heckleDetails,
             IComparingItemFamilyTracker comparingItemFamily)
-            //IBuildingNameToKey buildingNameToKey,
-            //IUnitNameToKey unitNameToKey)
+        //IBuildingNameToKey buildingNameToKey,
+        //IUnitNameToKey unitNameToKey)
         {
             _dataProvider = dataProvider;
             _displayer = buildingDetails;
             _unit = unitDetails;
+            _heckle = heckleDetails;
             _familyTracker = comparingItemFamily;
             //_buildingName = buildingNameToKey;
             //_unitName = unitNameToKey;
@@ -54,20 +58,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateLimitDisplayer(object sender, EventArgs e)
         {
-            if(_familyTracker.ComparingFamily.Value == ItemFamily.Buildings)
+            if (_familyTracker.ComparingFamily.Value == ItemFamily.Buildings)
             {
                 this.gameObject.SetActive(true);
 
             }
-            else if(_familyTracker.ComparingFamily.Value == ItemFamily.Units)
+            else if (_familyTracker.ComparingFamily.Value == ItemFamily.Units)
             {
                 this.gameObject.SetActive(true);
             }
-            else if(_familyTracker.ComparingFamily.Value == ItemFamily.Hulls)
+            else if (_familyTracker.ComparingFamily.Value == ItemFamily.Hulls)
             {
                 this.gameObject.SetActive(false);
             }
-            else if(_familyTracker.ComparingFamily.Value == null)
+            else if (_familyTracker.ComparingFamily.Value == ItemFamily.Heckles)
+            {
+                this.gameObject.SetActive(true);
+            }
+            else if (_familyTracker.ComparingFamily.Value == null)
             {
                 //do nothing
             }
