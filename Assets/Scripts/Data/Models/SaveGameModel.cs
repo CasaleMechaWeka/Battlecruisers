@@ -2,38 +2,40 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 
 namespace BattleCruisers.Data.Models
 {
+    [Serializable]
     public class SaveGameModel
     {
         // What do we need to save, critically? Just the assets and progress.
 
         // Number of coins I own.
-        private long _coins;
+        public long _coins;
 
         // Total historic destruction score.
-        private long _lifetimeDestructionScore;
+        public long _lifetimeDestructionScore;
 
         // My callsign.
-        private string _playerName;
+        public string _playerName;
 
         // My selected loadout.
-        private Loadout _playerLoadout; // selected captainexo is part of this.
+        public Loadout _playerLoadout; // selected captainexo is part of this.
 
         // What levels have been completed
         // What difficulty those levels have been completed at.
-        Dictionary<int, int> _levelsCompleted;                          // int levelNum, enum (as int) hardestDifficulty
+        public Dictionary<int, int> _levelsCompleted;                          // int levelNum, enum (as int) hardestDifficulty
 
         // Assets owned (heckle002, captainexo001, longbow, steamcopter)
-        private List<string> _unlockedHulls;                            // prefab filenames
-        private Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
-        private Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
-        private List<int> _ownedCaptainIDs;
-        private List<int> _ownedHeckleIDs;
-        private Dictionary<int, string> _ownedIAPIDs;                   // int iapType, string iapNameKeyBase
+        public List<string> _unlockedHulls;                            // prefab filenames
+        public Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
+        public Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
+        public List<int> _ownedCaptainIDs;
+        public List<int> _ownedHeckleIDs;
+        public Dictionary<int, string> _ownedIAPIDs;                   // int iapType, string iapNameKeyBase
 
         public SaveGameModel(GameModel game)
         {
@@ -55,6 +57,7 @@ namespace BattleCruisers.Data.Models
             var result = new Dictionary<int, int>();
             if (levels == null)
             {
+                Debug.LogWarning("computeCompletedLevels returned null in SaveGameModel");
                 return null;
             }
             else
@@ -72,6 +75,7 @@ namespace BattleCruisers.Data.Models
             var result = new List<string>();
             if (hulls == null)
             {
+                Debug.LogWarning("computeUnlockedHulls returned null in SaveGameModel");
                 return null;
             }
             else
@@ -89,6 +93,7 @@ namespace BattleCruisers.Data.Models
             var result = new Dictionary<string, string>();
             if (buildings == null)
             {
+                Debug.LogWarning("computeUnlockedBuildings returned null in SaveGameModel");
                 return null;
             }
             else
@@ -109,6 +114,7 @@ namespace BattleCruisers.Data.Models
             var result = new Dictionary<string, string>();
             if (units == null)
             {
+                Debug.LogWarning("computeUnlockedUnits returned null in SaveGameModel");
                 return null;
             }
             else
@@ -129,6 +135,7 @@ namespace BattleCruisers.Data.Models
             var result = new Dictionary<int, string>();
             if (iaps == null)
             {
+                Debug.LogWarning("computeOwnedIAPs returned null in SaveGameModel");
                 return null;
             }
             else
