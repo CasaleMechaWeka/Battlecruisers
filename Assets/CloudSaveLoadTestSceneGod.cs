@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes
         private IGameModel _gameModel;
 
         public Text idTextBox;
-        public CanvasGroupButton saveBtn;
+        public CanvasGroupButton saveBtn, loadBtn;
 
         void Start()
         {
@@ -50,12 +50,18 @@ namespace BattleCruisers.Scenes
             login();
 
             saveBtn.Initialise(soundPlayer, Save);
-            
+            loadBtn.Initialise(soundPlayer, Load);
+
         }
 
         public async void Save()
         {
             await _dataProvider.CloudSave();
+        }
+
+        public async void Load()
+        {
+            await _dataProvider.CloudLoad();
         }
 
         public async void login()

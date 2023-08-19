@@ -36,7 +36,6 @@ namespace BattleCruisers.Data.Models
         public Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
         public List<int> _ownedCaptainIDs;
         public List<int> _ownedHeckleIDs;
-        public Dictionary<int, string> _ownedIAPIDs;                   // int iapType, string iapNameKeyBase
 
         public SaveGameModel()
         { // this is the constructor for cloud load
@@ -54,7 +53,6 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
             _ownedCaptainIDs = game.CaptainExoList;
             _ownedHeckleIDs = game.HeckleList;
-            _ownedIAPIDs = computeOwnedIAPs(game.IAPs);
         }
 
         public void AssignSaveToGameModel(GameModel game)
@@ -96,9 +94,6 @@ namespace BattleCruisers.Data.Models
 
             game.CaptainExoList = _ownedCaptainIDs;
             game.HeckleList = _ownedHeckleIDs;
-
-            // TODO:
-            // game.IAPs = _ownedIAPIDs;
         }
 
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
@@ -174,24 +169,6 @@ namespace BattleCruisers.Data.Models
                     string prefabName = unit.PrefabName;
 
                     result.Add(prefabName, category);
-                }
-            }
-            return result;
-        }
-
-        private Dictionary<int, string> computeOwnedIAPs(List<IAPData> iaps)
-        {
-            var result = new Dictionary<int, string>();
-            if (iaps == null)
-            {
-                Debug.LogWarning("computeOwnedIAPs returned null in SaveGameModel");
-                return null;
-            }
-            else
-            {
-                foreach (var iap in iaps)
-                {
-                    result.Add(iap.IAPType, iap.IAPNameKeyBase);
                 }
             }
             return result;
