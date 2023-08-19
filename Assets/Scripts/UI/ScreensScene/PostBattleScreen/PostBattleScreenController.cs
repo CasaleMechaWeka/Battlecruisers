@@ -189,6 +189,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     || !BattleResult.WasVictory)
                 {
                     postBattleState = new DefeatState(this, _applicationModel, musicPlayer, screensSceneStrings);
+                    title.color = Color.white; // Set title text to white for defeat
                 }
                 else
                 {
@@ -202,6 +203,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             _lootManager,
                             levelTrashTalkData,
                             desiredBehaviour);
+
+                    title.color = Color.black; // Set title text to black for victory
                 }
 
                 await SetupAppraisalButtonsAsync(soundPlayer, trashTalkList);
