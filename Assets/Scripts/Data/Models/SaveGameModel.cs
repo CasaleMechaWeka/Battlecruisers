@@ -1,10 +1,11 @@
 using BattleCruisers.UI.ScreensScene.ShopScreen;
+using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.Data.Models
 {
@@ -37,6 +38,10 @@ namespace BattleCruisers.Data.Models
         public List<int> _ownedHeckleIDs;
         public Dictionary<int, string> _ownedIAPIDs;                   // int iapType, string iapNameKeyBase
 
+        public SaveGameModel()
+        { // this is the constructor for cloud load
+        }
+
         public SaveGameModel(GameModel game)
         {
             _coins = game.Coins;
@@ -58,13 +63,42 @@ namespace BattleCruisers.Data.Models
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
             game.PlayerName = _playerName;
             game.PlayerLoadout = _playerLoadout;
-            //TODO game.AddCompletedLevel();
-            //TODO game.AddUnlockedHull();
-            //TODO game.AddUnlockedBuilding();
-            //TODO game.AddUnlockedUnit();
+
+            foreach (var level in _levelsCompleted)
+            {
+                CompletedLevel cLevel = new CompletedLevel(level.Key, (Settings.Difficulty)level.Value);
+                game.AddCompletedLevel(cLevel);
+            }
+
+            foreach(var hull in _unlockedHulls)
+            {
+                HullKey hk = new HullKey(hull);
+                game.AddUnlockedHull(hk);
+            }
+
+            foreach(var building in _unlockedBuildings)
+            {
+                // Keys and Vals are reversed here, because dictionaries require their Keys to be unique
+                // these AddUnlocked constructors take an enum as their first arg, which definitionally is not unique.
+                Enum.TryParse(building.Value, out BuildingCategory bc);
+                BuildingKey bk = new BuildingKey(bc, building.Key);
+                game.AddUnlockedBuilding(bk);
+            }
+
+            foreach (var unit in _unlockedUnits)
+            {
+                // Keys and Vals are reversed here, because dictionaries require their Keys to be unique
+                // these AddUnlocked constructors take an enum as their first arg, which definitionally is not unique.
+                Enum.TryParse(unit.Value, out UnitCategory uc);
+                UnitKey uk = new UnitKey(uc, unit.Key);
+                game.AddUnlockedUnit(uk);
+            }
+
             game.CaptainExoList = _ownedCaptainIDs;
             game.HeckleList = _ownedHeckleIDs;
-            //game.IAPs = _ownedIAPIDs;
+
+            // TODO:
+            // game.IAPs = _ownedIAPIDs;
         }
 
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)

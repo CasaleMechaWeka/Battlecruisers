@@ -62,7 +62,7 @@ namespace BattleCruisers.Data.Serialization
 
         public object DeserializeGameModel(string gameModelJSON)
         {
-            return JsonConvert.DeserializeObject<GameModel>(gameModelJSON);
+            return JsonConvert.DeserializeObject<SaveGameModel>(gameModelJSON);
         }
 
         public string SerializeGameModel(object gameModel)
@@ -87,18 +87,23 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<GameModel> CloudLoad()
+        public async Task<SaveGameModel> CloudLoad(GameModel game)
         {
             try
             {
                 Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
-                if(savedData != null && savedData["GameModel"] != String.Empty)
+                if (savedData != null && savedData["GameModel"] != String.Empty)
                 {
-                GameModel game = (GameModel)DeserializeGameModel(savedData["GameModel"]);
-                Debug.Log(savedData["GameModel"]);
-                return game;
+                    SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(savedData["GameModel"]);
+                    Debug.Log(savedData["GameModel"]);
+
+                    //saveModel.AssignSaveToGameModel(game);
+                    return saveModel;
                 }
-                return null;
+                else
+                {
+                    return null;
+                }
             }
             catch (UnityException e)
             {
