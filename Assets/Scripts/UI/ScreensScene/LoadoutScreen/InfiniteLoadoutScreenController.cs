@@ -109,6 +109,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             limitDisplayer.Initialise(dataProvider,
                 buildingDetails,
                 unitDetails,
+                _heckleDetails,
                 _comparingFamilyTracker);
 
             IList<IItemButton> itemButtons

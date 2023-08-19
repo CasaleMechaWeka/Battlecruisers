@@ -22,6 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     public class SelectHeckleButton : CanvasGroupButton
     {
         public TextMeshProUGUI limit;
+        public TextMeshProUGUI allowedLimit;
         public GameObject selectText;
         public GameObject deselectText;
         public int heckleLimit;
@@ -33,6 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override bool ToggleVisibility => true;
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
+        private IComparingItemFamilyTracker _comparingItemFamilyTracker;
 
         public void Initialise(ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
@@ -43,12 +45,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             base.Initialise(soundPlayer);
             Helper.AssertIsNotNull(dataProvider, heckleDetails, _itemFamily);
             _comparingFamily = _itemFamily;
+            _comparingItemFamilyTracker = comparingItemFamily;
             _heckleDetails = heckleDetails;
             _comparingFamily.ValueChanged += UpdateSelectHeckleButton;
-            _heckleDetails.SelectedItem.ValueChanged += DisplayedUnitChanged;
+            _heckleDetails.SelectedItem.ValueChanged += DisplayedHeckleChanged;
             _dataProvider = dataProvider;
             UpdateSelectText(true);
             Enabled = ShouldBeEnabled();
+            allowedLimit.text = heckleLimit.ToString();
+            //    limit.text = _dataProvider.GameModel.PlayerLoadout.CurrentHeckles.Count.ToString();
         }
 
 
@@ -56,7 +61,31 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             base.OnClicked();
 
+            IHeckleData heckleData = _heckleDetails.SelectedItem.Value;
+            Assert.IsNotNull(heckleData);
+            int index = heckleData.Index;
 
+            Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+
+
+            if (!playerLoadout.CurrentHeckles.Contains(index))
+            {
+                if (playerLoadout.CurrentHeckles.Count < heckleLimit)
+                    playerLoadout.CurrentHeckles.Add(index);
+                _dataProvider.SaveGame();
+                limit.text = playerLoadout.CurrentHeckles.Count.ToString();
+                UpdateSelectText(true);
+            }
+            else
+            {
+                playerLoadout.CurrentHeckles.Remove(index);
+                _dataProvider.SaveGame();
+                limit.text = playerLoadout.CurrentHeckles.Count.ToString();
+                UpdateSelectText(false);
+            }
+
+            _comparingItemFamilyTracker.SetComparingFamily(ItemFamily.Heckles);
+            _comparingItemFamilyTracker.SetComparingFamily(null);
         }
 
         private void UpdateSelectText(bool value)
@@ -91,6 +120,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectHeckleButton(object sender, EventArgs e)
         {
+            limit.text = _dataProvider.GameModel.PlayerLoadout.CurrentHeckles.Count.ToString();
             if (ShouldBeEnabled())
             {
                 Enabled = IsOverLimit();
@@ -102,25 +132,36 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         }
 
 
-        private void DisplayedUnitChanged(object sender, EventArgs e)
+        private void DisplayedHeckleChanged(object sender, EventArgs e)
         {
             IHeckleData heckleData = _heckleDetails.SelectedItem.Value;
-            if(heckleData != null)
+            if (heckleData != null)
             {
                 Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
                 limit.text = playerLoadout.CurrentHeckles.Count.ToString();
 
                 if (playerLoadout.CurrentHeckles.Contains(heckleData.Index))
+                {
                     UpdateSelectText(true);
+                }
                 else
+                {
                     UpdateSelectText(false);
+                }
             }
         }
 
         private bool IsOverLimit()
         {
             Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
-
+            if (_heckleDetails.SelectedItem.Value != null)
+            {
+                if (((loadout.CurrentHeckles.Count == heckleLimit) && selectText.activeSelf) ||
+                    ((loadout.CurrentHeckles.Count == 1 && deselectText.activeSelf)))
+                {
+                    return false;
+                }
+            }
             return true;
         }
     }
