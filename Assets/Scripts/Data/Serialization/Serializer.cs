@@ -67,17 +67,18 @@ namespace BattleCruisers.Data.Serialization
 
         public string SerializeGameModel(object gameModel)
         {
-            return JsonConvert.SerializeObject(gameModel, new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
+            return JsonConvert.SerializeObject(gameModel); //, new JsonSerializerSettings
+            //{
+            //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            //});
         }
 
         public async Task CloudSave(GameModel game)
         {
+            SaveGameModel saveData = new SaveGameModel(game);
             try
             {
-                var data = new Dictionary<string, object> { { "GameModel", SerializeGameModel(game) } };
+                var data = new Dictionary<string, object> { { "GameModel", SerializeGameModel(saveData) } };
                 await CloudSaveService.Instance.Data.ForceSaveAsync(data);
             }
             catch (UnityException e)
