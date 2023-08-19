@@ -44,10 +44,10 @@ namespace BattleCruisers.Data.Models
             _levelsCompleted = computeCompletedLevels(game.CompletedLevels);
             _unlockedHulls = computeUnlockedHulls(game.UnlockedHulls);
             _unlockedBuildings = computeUnlockedBuildings(game.UnlockedBuildings);
-            //_unlockedUnits;
-            //_ownedCaptainIDs;
-            //_ownedHeckleIDs;
-            //_ownedIAPIDs;
+            _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
+            _ownedCaptainIDs = computeOwnedCaptains(game.Captains);
+            _ownedHeckleIDs = computeOwnedHeckles(game.Heckles);
+            _ownedIAPIDs = computeOwnedIAPs(game.IAPs);
         }
 
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
@@ -76,6 +76,52 @@ namespace BattleCruisers.Data.Models
             foreach (var building in buildings)
             {
                 result.Add(building.BuildingCategory.ToString(), building.PrefabName);
+            }
+            return result;
+        }
+
+        private Dictionary<string, string> computeUnlockedUnits(IReadOnlyCollection<PrefabKeys.UnitKey> units)
+        {
+            var result = new Dictionary<string, string>();
+            foreach (var unit in units)
+            {
+                result.Add(unit.UnitCategory.ToString(), unit.PrefabName);
+            }
+            return result;
+        }
+
+        private List<int> computeOwnedCaptains(List<CaptainData> captains)
+        {
+            var result = new List<int>();
+            foreach (var captain in captains)
+            {
+                if (captain.IsOwned)
+                {
+                    result.Add(captain.Index); // index is id
+                }
+            }
+            return result;
+        }
+
+        private List<int> computeOwnedHeckles(List<HeckleData> heckles)
+        {
+            var result = new List<int>();
+            foreach (var heckle in heckles)
+            {
+                if (heckle.IsOwned)
+                {
+                    result.Add(heckle.Index); // index is id
+                }
+            }
+            return result;
+        }
+
+        private Dictionary<int, string> computeOwnedIAPs(List<IAPData> iaps)
+        {
+            var result = new Dictionary<int, string>();
+            foreach (var iap in iaps)
+            {
+                result.Add(iap.IAPType, iap.IAPNameKeyBase);
             }
             return result;
         }
