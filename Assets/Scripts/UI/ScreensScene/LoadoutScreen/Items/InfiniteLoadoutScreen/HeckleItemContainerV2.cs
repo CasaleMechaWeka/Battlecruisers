@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             HeckleButtonV2 heckleButton = GetComponentInChildren<HeckleButtonV2>(includeInactive: true);
             Assert.IsNotNull(heckleButton);
-            heckleButton.Initialise(soundPlayer, heckleData, itemDetailsManager, comparingFamilyTracker);
+            heckleButton.Initialise(_itemsPanel, soundPlayer, heckleData, itemDetailsManager, comparingFamilyTracker, gameModel);
             return heckleButton;
         }
 

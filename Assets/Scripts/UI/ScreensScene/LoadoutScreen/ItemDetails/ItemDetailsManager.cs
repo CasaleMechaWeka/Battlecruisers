@@ -19,7 +19,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         private HeckleDetailsController _heckleDetails;
         public HeckleDetailsController HeckleDetails
         {
-            set {
+            set
+            {
                 _heckleDetails = value;
             }
             get
@@ -82,8 +83,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             HideDetails();
             SelectedItemFamily = ItemFamily.Heckles;
             _heckleDetails.ShowHeckle(keyBase);
-            /*            itemDetails.SelectItem(item);
-                        _selectedItem.Value = item;*/
+            //  itemDetails.SelectItem(item);
+            //  _selectedItem.Value = item;
             _numOfDetailsShown.Value = 1;
         }
 

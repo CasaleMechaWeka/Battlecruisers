@@ -26,9 +26,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         private IGameModel _gameModel;
         private NewItemMark _newItemMark;
+        protected ItemsPanel _itemsPanel;
 
 
         public IItemButton Initialise(
+            ItemsPanel itemsPanel,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
             IGameModel gameModel,
@@ -36,8 +38,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
-
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer, prefabFactory, itemsPanel);
+            _itemsPanel = itemsPanel;
             _gameModel = gameModel;
 
             //LockedItem lockedItem = GetComponentInChildren<LockedItem>(includeInactive: true);

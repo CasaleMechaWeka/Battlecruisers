@@ -11,6 +11,7 @@ using BattleCruisers.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
 using System.Threading.Tasks;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -26,6 +27,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public HeckleItemContainerV2 HeckleItemContainerV2Prefab;
         public Transform heckleParent;
 
+        // Heckle Logic
+
+        private HeckleButtonV2 _currentHeckleButton;
+        public HeckleButtonV2 CurrentHeckleButton
+        {
+            set
+            {
+                _currentHeckleButton = value;
+                HeckleButtonChanged?.Invoke(this, EventArgs.Empty);
+            }
+            get
+            {
+                return _currentHeckleButton;
+            }
+        }
+
+        public EventHandler HeckleButtonChanged;
+
         public async Task<IList<IItemButton>> Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -36,21 +55,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, prefabFactory);
             await Task.Delay(10);
-            if(itemType == ItemType.Heckle)
+            if (itemType == ItemType.Heckle)
             {
                 HasUnlockedItem = true;
                 IList<IItemButton> buttons = new List<IItemButton>();
                 foreach (IHeckleData heckleData in gameModel.Heckles)
                 {
-                     if(heckleData.IsOwned)
-                    {                        
+                    if (heckleData.IsOwned)
+                    {
                         HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
                         heckleContainer.heckleData = heckleData;
-                        IItemButton button = heckleContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
+                        IItemButton button = heckleContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                         buttons.Add(button);
                         heckleContainer.gameObject.SetActive(true);
                     }
-                }               
+                }
                 _button = buttons;
                 return buttons;
             }
@@ -63,14 +82,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
                 foreach (ItemContainer itemContainer in itemContainers)
                 {
-                    IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
+                    IItemButton button = itemContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                     buttons.Add(button);
                     HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
                     itemContainer.gameObject.SetActive(button.IsUnlocked);
                 }
                 _button = buttons;
                 return buttons;
-            }       
+            }
         }
 
         public IItemButton GetFirstItemButton()
