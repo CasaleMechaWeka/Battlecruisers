@@ -30,6 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public SelectCruiserButton selectCruiserButton;
         public SelectBuildingButton selectBuildingButton;
         public SelectUnitButton selectUnitButton;
+        public SelectHeckleButton selectHeckleButton;
         public CancelButtonController homeButton;
         public LimitDisplayer limitDisplayer;
 
@@ -70,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 = new ItemDetailsDisplayer<ICruiser>(
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
-
+            _heckleDetails.Initialize();
             _itemDetailsManager = new LoadoutScreen.ItemDetails.ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
             _itemDetailsManager.HeckleDetails = _heckleDetails;
 
@@ -100,6 +101,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 unitDetails,
                 new UnitNameToKey(_dataProvider.GameModel.UnlockedUnits, prefabFactory),
                 _comparingFamilyTracker.ComparingFamily,
+                _comparingFamilyTracker);
+
+            selectHeckleButton.Initialise(soundPlayer, dataProvider, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
                 _comparingFamilyTracker);
 
             limitDisplayer.Initialise(dataProvider,

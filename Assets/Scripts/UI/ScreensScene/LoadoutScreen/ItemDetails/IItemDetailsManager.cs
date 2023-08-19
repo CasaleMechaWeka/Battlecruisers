@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
@@ -19,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);
         void ShowDetails(ICruiser cruiser);
-        void ShowDetails(string stringKeyBase);
+        void ShowDetails(IHeckleData heckleData);
 
         void CompareWithSelectedItem(IBuilding building);
         void CompareWithSelectedItem(IUnit unit);

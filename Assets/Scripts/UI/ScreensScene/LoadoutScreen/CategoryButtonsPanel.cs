@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             HeckleCategoryButton heckleButton = transform.FindNamedComponent<HeckleCategoryButton>("HeckleButton");
             Assert.IsNotNull(heckleButton);
-            heckleButton.Initialise(soundPlayer, itemPanels);
+            heckleButton.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, itemFamilyTracker);
         }
 
         public void DisposeManagedState()

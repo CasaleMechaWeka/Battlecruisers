@@ -15,13 +15,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private IItemPanelsController _itemPanels;
         public ItemType itemType;
+        private ItemFamily ItemFamily => ItemFamily.Heckles;
+        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private IComparingItemFamilyTracker _itemFamilyTracker;
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IItemPanelsController itemPanels)
+            IItemPanelsController itemPanels,
+            IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
+            IComparingItemFamilyTracker itemFamilyTracker)
         {
             base.Initialise(soundPlayer);
             _itemPanels = itemPanels;
             _itemPanels.PotentialMatchChange += _itemPanels_PotentialMatchChange;
+            _itemFamilyTracker = itemFamilyTracker;
+
+            _itemFamilyToCompare = itemFamilyToCompare;
+     //       _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
         }
 
         private void _itemPanels_PotentialMatchChange(object sender, EventArgs e)
@@ -37,7 +46,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override void OnClicked()
         {
             base.OnClicked();
-            _itemPanels.ShowItemsPanel(itemType);
+            _itemPanels.ShowItemsPanel(itemType);            
+            _itemFamilyTracker.SetComparingFamily(ItemFamily);
+            _itemFamilyTracker.SetComparingFamily(null);
+        }
+
+        private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
+        {
+            Enabled = ShouldBeEnabled();
+        }
+
+        private bool ShouldBeEnabled()
+        {
+            /*            return _hasUnlockedItem
+                            && (_itemFamilyToCompare.Value == null
+                                || _itemFamilyToCompare.Value == ItemFamily);*/
+            return true;
         }
     }
 }

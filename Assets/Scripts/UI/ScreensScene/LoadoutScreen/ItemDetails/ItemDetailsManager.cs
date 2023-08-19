@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
@@ -78,11 +79,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             ShowDetails(cruiser, _cruiserDetails, ItemFamily.Hulls);
         }
 
-        public void ShowDetails(string keyBase)
+        public void ShowDetails(IHeckleData heckleData)
         {
             HideDetails();
             SelectedItemFamily = ItemFamily.Heckles;
-            _heckleDetails.ShowHeckle(keyBase);
+            _heckleDetails.ShowHeckle(heckleData);
             //  itemDetails.SelectItem(item);
             //  _selectedItem.Value = item;
             _numOfDetailsShown.Value = 1;

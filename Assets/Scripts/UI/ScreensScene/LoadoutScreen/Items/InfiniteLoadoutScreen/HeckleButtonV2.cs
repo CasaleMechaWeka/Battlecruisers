@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public override void ShowDetails()
         {
             //  _itemDetailsManager.ShowDetails(null);
-            _itemDetailsManager.ShowDetails(_heckleData.StringKeyBase);
+            _itemDetailsManager.ShowDetails(_heckleData);
             _itemsPanel.CurrentHeckleButton = this;
         }
 
@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _comparingFamiltyTracker.SetComparingFamily(itemFamily);
             if (_comparingFamiltyTracker.ComparingFamily.Value == itemFamily)
             {
-                _itemDetailsManager.ShowDetails(_heckleData.StringKeyBase);
+                _itemDetailsManager.ShowDetails(_heckleData);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
