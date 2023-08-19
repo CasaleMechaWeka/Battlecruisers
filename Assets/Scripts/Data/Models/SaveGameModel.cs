@@ -29,10 +29,10 @@ namespace BattleCruisers.Data.Models
 
         // Assets owned (heckle002, captainexo001, longbow, steamcopter)
         private List<string> _unlockedHulls;                            // prefab filenames
-        private Dictionary<string, string> _unlockedBuildings;          //category enum strings, prefab filenames
-        private Dictionary<string, string> _unlockedUnits;              //category enum strings, prefab filenames
-        private List<int> _ownedCaptainIDs;                             // id is "index" in class
-        private List<int> _ownedHeckleIDs;                              // id is "index" in class
+        private Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
+        private Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
+        private List<int> _ownedCaptainIDs;
+        private List<int> _ownedHeckleIDs;
         private Dictionary<int, string> _ownedIAPIDs;                   // int iapType, string iapNameKeyBase
 
         public SaveGameModel(GameModel game)
@@ -45,17 +45,24 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls = computeUnlockedHulls(game.UnlockedHulls);
             _unlockedBuildings = computeUnlockedBuildings(game.UnlockedBuildings);
             _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
-            _ownedCaptainIDs = computeOwnedCaptains(game.Captains);
-            _ownedHeckleIDs = computeOwnedHeckles(game.Heckles);
+            _ownedCaptainIDs = game.CaptainExoList;
+            _ownedHeckleIDs = game.HeckleList;
             _ownedIAPIDs = computeOwnedIAPs(game.IAPs);
         }
 
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
         {
             var result = new Dictionary<int, int>();
-            foreach (var level in levels)
+            if (levels == null)
             {
-                result.Add(level.LevelNum, ((int)level.HardestDifficulty));                
+                return null;
+            }
+            else
+            {
+                foreach (var level in levels)
+                {
+                    result.Add(level.LevelNum, ((int)level.HardestDifficulty));
+                }
             }
             return result;
         }
@@ -63,9 +70,16 @@ namespace BattleCruisers.Data.Models
         private List<string> computeUnlockedHulls(IReadOnlyCollection<PrefabKeys.HullKey> hulls)
         {
             var result = new List<string>();
-            foreach (var hull in hulls)
+            if (hulls == null)
             {
-                result.Add(hull.PrefabName);
+                return null;
+            }
+            else
+            {
+                foreach (var hull in hulls)
+                {
+                    result.Add(hull.PrefabName);
+                }
             }
             return result;
         }
@@ -73,9 +87,19 @@ namespace BattleCruisers.Data.Models
         private Dictionary<string, string> computeUnlockedBuildings(IReadOnlyCollection<PrefabKeys.BuildingKey> buildings)
         {
             var result = new Dictionary<string, string>();
-            foreach (var building in buildings)
+            if (buildings == null)
             {
-                result.Add(building.BuildingCategory.ToString(), building.PrefabName);
+                return null;
+            }
+            else
+            {
+                foreach (var building in buildings)
+                {
+                    string category = building.BuildingCategory.ToString();
+                    string prefabName = building.PrefabName;
+
+                    result.Add(prefabName, category);
+                }
             }
             return result;
         }
@@ -83,34 +107,18 @@ namespace BattleCruisers.Data.Models
         private Dictionary<string, string> computeUnlockedUnits(IReadOnlyCollection<PrefabKeys.UnitKey> units)
         {
             var result = new Dictionary<string, string>();
-            foreach (var unit in units)
+            if (units == null)
             {
-                result.Add(unit.UnitCategory.ToString(), unit.PrefabName);
+                return null;
             }
-            return result;
-        }
-
-        private List<int> computeOwnedCaptains(List<CaptainData> captains)
-        {
-            var result = new List<int>();
-            foreach (var captain in captains)
+            else
             {
-                if (captain.IsOwned)
+                foreach (var unit in units)
                 {
-                    result.Add(captain.Index); // index is id
-                }
-            }
-            return result;
-        }
+                    string category = unit.UnitCategory.ToString();
+                    string prefabName = unit.PrefabName;
 
-        private List<int> computeOwnedHeckles(List<HeckleData> heckles)
-        {
-            var result = new List<int>();
-            foreach (var heckle in heckles)
-            {
-                if (heckle.IsOwned)
-                {
-                    result.Add(heckle.Index); // index is id
+                    result.Add(prefabName, category);
                 }
             }
             return result;
@@ -119,9 +127,16 @@ namespace BattleCruisers.Data.Models
         private Dictionary<int, string> computeOwnedIAPs(List<IAPData> iaps)
         {
             var result = new Dictionary<int, string>();
-            foreach (var iap in iaps)
+            if (iaps == null)
             {
-                result.Add(iap.IAPType, iap.IAPNameKeyBase);
+                return null;
+            }
+            else
+            {
+                foreach (var iap in iaps)
+                {
+                    result.Add(iap.IAPType, iap.IAPNameKeyBase);
+                }
             }
             return result;
         }
