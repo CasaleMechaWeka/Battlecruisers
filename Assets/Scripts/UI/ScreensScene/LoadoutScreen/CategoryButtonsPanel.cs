@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -29,6 +30,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel, itemButtons, itemFamilyTracker);
             }
+
+            HeckleCategoryButton heckleButton = transform.FindNamedComponent<HeckleCategoryButton>("HeckleButton");
+            Assert.IsNotNull(heckleButton);
+            heckleButton.Initialise(soundPlayer, itemPanels);
         }
 
         public void DisposeManagedState()
