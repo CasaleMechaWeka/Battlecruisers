@@ -20,7 +20,7 @@ namespace BattleCruisers.PostBattleScreen
     public class DestructionRanker : MonoBehaviour
     {
         [SerializeField]
-        GameObject[] destructionRanks;
+        public GameObject[] destructionRanks;
         public void DisplayRank(long score)
         {
             StartCoroutine(iDisplayRank(score));
