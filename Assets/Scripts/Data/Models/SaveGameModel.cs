@@ -41,6 +41,7 @@ namespace BattleCruisers.Data.Models
         { // this is the constructor for cloud load
         }
 
+        // Takes in GameModel, simplifies values where necessary for easier JSON parsing
         public SaveGameModel(GameModel game)
         {
             _coins = game.Coins;
@@ -55,8 +56,11 @@ namespace BattleCruisers.Data.Models
             _ownedHeckleIDs = game.HeckleList;
         }
 
+        // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
+            TidyUp(); // Modify null and incompatible fields before assigning
+
             game.Coins = _coins;
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
             game.PlayerName = _playerName;
@@ -94,6 +98,17 @@ namespace BattleCruisers.Data.Models
 
             game.CaptainExoList = _ownedCaptainIDs;
             game.HeckleList = _ownedHeckleIDs;
+        }
+
+        // Method for fixing invalid fields in saves.
+        // Takes in GameModel so that it can be used to set defaults.
+        private void TidyUp()
+        {
+            // If the captain is somehow null (because the save uses an old Loadout), set the captain to Charlie
+            if(_playerLoadout.CurrentCaptain == null)
+            {
+                _playerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
+            }
         }
 
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
