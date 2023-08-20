@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene
             int index
             )
         {
-            Helper.AssertIsNotNull(soundPlayer, /*prefabFactory, */captainData, _captainImage, clickingArea, _ownedItemMark , _clickedFeedback, captainsContainer);
+            Helper.AssertIsNotNull(soundPlayer, /*prefabFactory, */captainData, _captainImage, clickingArea, _ownedItemMark, _clickedFeedback, captainsContainer);
             _captainData = captainData;
             _soundPlayer = soundPlayer;
             _captainsContainer = captainsContainer;
