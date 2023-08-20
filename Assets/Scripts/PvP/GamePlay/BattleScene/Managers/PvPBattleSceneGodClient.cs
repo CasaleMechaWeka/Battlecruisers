@@ -18,7 +18,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
@@ -29,38 +28,17 @@ using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
-using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
-using System;
-using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
-using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Cruisers.Helpers;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
-using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
-using BattleCruisers.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
-using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
-using BattleCruisers.Scenes.BattleScene;
-using static BattleCruisers.Data.Static.PrioritisedSoundKeys.Events;
-using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
@@ -157,7 +135,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
                 m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
             }
-
         }
 
 
@@ -201,7 +178,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
-
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -332,7 +308,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     playerCruiserDamageMonitor,
                     leftPanelComponents.PopLimitReachedFeedback);
 
-
             windManager
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
@@ -348,7 +323,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     components.UpdaterProvider.SwitchableUpdater,
                     navigationPermitters.HotkeyFilter,
                     cameraComponents.CameraFocuser,
-                    rightPanelComponents.SpeedComponents,
+                //    rightPanelComponents.SpeedComponents,
                     rightPanelComponents.MainMenuManager,
                     uiManager);
             playerCruiser.Destroyed += PlayerCruiser_Destroyed;

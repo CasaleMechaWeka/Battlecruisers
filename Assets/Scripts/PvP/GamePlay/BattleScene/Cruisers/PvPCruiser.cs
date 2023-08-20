@@ -539,7 +539,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ServerRpc(RequireOwnership = true)]
         public void PvP_UnhighlightSlotsServerRpc()
         {
-            SlotHighlighter.UnhighlightSlots();
+            SlotHighlighter?.UnhighlightSlots();
         }
 
 

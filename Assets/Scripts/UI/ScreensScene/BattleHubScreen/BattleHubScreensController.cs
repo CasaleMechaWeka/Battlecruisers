@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
@@ -9,14 +6,12 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
-using BattleCruisers.UI.ScreensScene.HomeScreen.Buttons;
-using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
-using Ping = UnityEngine.Ping;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using Unity.Services.Authentication;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -43,9 +38,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public CoinBattleScreenController coinBattleController;
 
         public PlayerInfoPanelController playerInfoPanelController;
-
-
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
+
+        public Text titleOfBattleButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -78,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
             skirmishButton.Initialise(_soundPlayer, GoToSkirmishScreen);
             battleButton.Initialise(_soundPlayer, GotoBattleMode);
- 
+
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
@@ -177,14 +172,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public async void GotoBattleMode()
         {
             playerInfoPanelController.gameObject.SetActive(false);
-            if (await LandingSceneGod.CheckForInternetConnection())
+            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
             {
-                coinBattleController.BattleButtonClicked();
+                GoToScreen(arenaSelectPanel);
             }
             else
             {
-                GoToScreen(arenaSelectPanel);
-                // _screensSceneGod.LoadMultiplayScene();
+                coinBattleController.BattleButtonClicked();
             }
         }
 

@@ -10,12 +10,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private readonly IHotkeyDetector _hotkeyDetector;
         private readonly IPvPSpeedComponents _speedComponents;
 
-        public PvPGameSpeedHotkeyListener(IHotkeyDetector hotkeyDetector, IPvPSpeedComponents speedComponents)
+        public PvPGameSpeedHotkeyListener(IHotkeyDetector hotkeyDetector/*, IPvPSpeedComponents speedComponents*/)
         {
-            PvPHelper.AssertIsNotNull(hotkeyDetector, speedComponents);
+            PvPHelper.AssertIsNotNull(hotkeyDetector/*, speedComponents*/);
 
             _hotkeyDetector = hotkeyDetector;
-            _speedComponents = speedComponents;
+        //    _speedComponents = speedComponents;
 
             _hotkeyDetector.PauseSpeed += _hotkeyDetector_PauseSpeed;
             _hotkeyDetector.SlowMotion += _hotkeyDetector_SlowMotion;
@@ -26,35 +26,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         private void _hotkeyDetector_PauseSpeed(object sender, EventArgs e)
         {
-            _speedComponents.PauseButton.TriggerClick();
+          //  _speedComponents.PauseButton.TriggerClick();
         }
 
         private void _hotkeyDetector_SlowMotion(object sender, EventArgs e)
         {
-            _speedComponents.SlowMotionButton.TriggerClick();
+         //   _speedComponents.SlowMotionButton.TriggerClick();
         }
 
         private void _hotkeyDetector_NormalSpeed(object sender, EventArgs e)
         {
-            _speedComponents.NormalSpeedButton.TriggerClick();
+         //   _speedComponents.NormalSpeedButton.TriggerClick();
         }
 
         private void _hotkeyDetector_FastForward(object sender, EventArgs e)
         {
-            _speedComponents.FastForwardButton.TriggerClick();
+         //    _speedComponents.FastForwardButton.TriggerClick();
         }
 
         private void _hotkeyDetector_ToggleSpeed(object sender, EventArgs e)
         {
-            if (_speedComponents.PauseButton.IsSelected)
+/*            if (_speedComponents.PauseButton.IsSelected)
             {
                 _speedComponents.NormalSpeedButton.TriggerClick();
             }
             else
             {
                 _speedComponents.PauseButton.TriggerClick();
-            }
-
+            }*/
         }
 
         public void DisposeManagedState()

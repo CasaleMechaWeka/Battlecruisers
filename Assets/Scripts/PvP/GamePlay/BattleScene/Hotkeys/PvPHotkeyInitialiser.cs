@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
     {
         // Keep references to avoid garbage collection
         private PvPNavigationHotkeyListener _navigationHotkeyListener;
-        private PvPGameSpeedHotkeyListener _gameSpeedHotkeyListener;
+     //   private PvPGameSpeedHotkeyListener _gameSpeedHotkeyListener;
         private PvPEscapeHandler _escapeHandler;
 
         public PvPBuildableButtonsHotkeyInitialiser buildableButtonsHotkeyInitialiser;
@@ -30,18 +30,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IPvPUpdater updater,
             IPvPBroadcastingFilter hotkeyFilter,
             IPvPCameraFocuser cameraFocuser,
-            IPvPSpeedComponents speedComponents,
+//            IPvPSpeedComponents speedComponents,
             IPvPMainMenuManager mainMenuManager,
             IPvPUIManager uiManager)
         {
             PvPHelper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
-            PvPHelper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents, mainMenuManager);
+            PvPHelper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, /*speedComponents,*/ mainMenuManager);
 
             // Hotkeys (only for PC)
             IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter, uiManager);
 
             _navigationHotkeyListener = new PvPNavigationHotkeyListener(hotkeyDetector, cameraFocuser);
-            _gameSpeedHotkeyListener = new PvPGameSpeedHotkeyListener(hotkeyDetector, speedComponents);
+        //    _gameSpeedHotkeyListener = new PvPGameSpeedHotkeyListener(hotkeyDetector/*, speedComponents*/);
             buildableButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
             buildingCategoryButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
 

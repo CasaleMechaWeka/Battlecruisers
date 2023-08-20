@@ -11,22 +11,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public IPvPInformatorPanel InformatorPanel { get; }
         public IPvPMainMenuManager MainMenuManager { get; }
         public IPvPModalMenu MainMenu { get; }
-        public PvPSpeedComponents SpeedComponents { get; }
+        // public PvPSpeedComponents SpeedComponents { get; }
         public PvPHelpButton HelpButton { get; }
 
         public PvPRightPanelComponents(
             IPvPInformatorPanel informatorPanel,
             IPvPMainMenuManager mainMenuManager,
             IPvPModalMenu mainMenu,
-            PvPSpeedComponents speedComponents,
+         //   PvPSpeedComponents speedComponents,
             PvPHelpButton helpButton)
         {
-            PvPHelper.AssertIsNotNull(informatorPanel, mainMenuManager, mainMenu, speedComponents, helpButton);
+            PvPHelper.AssertIsNotNull(informatorPanel, mainMenuManager, mainMenu, /*speedComponents,*/ helpButton);
 
             InformatorPanel = informatorPanel;
             MainMenuManager = mainMenuManager;
             MainMenu = mainMenu;
-            SpeedComponents = speedComponents;
+        //    SpeedComponents = speedComponents;
             HelpButton = helpButton;
         }
     }
