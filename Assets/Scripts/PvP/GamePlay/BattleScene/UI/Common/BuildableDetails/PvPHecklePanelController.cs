@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,13 +15,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public PvPCanvasGroupButton hecklesButton;
         public Sprite closed, opened;
         public PvPSlidingPanel hecklePanel;
+
+        public PvPHeckleButton heckleButtonPrefab;
+        public Transform hecklesParent;
+
         public IPvPSlidingPanel HecklePanel => hecklePanel;
 
         private IDataProvider _dataProvider;
         private IPvPSingleSoundPlayer _soundPlayer;
 
         private bool isOpened;
-        public void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer)
+        public async void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer, closed, opened, hecklesButton);
             _dataProvider = dataProvider;
@@ -30,11 +35,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             isOpened = false;
             hecklesButton.Initialise(_soundPlayer, OnHeckleButtonClicked);
             hecklePanel.Initialise();
+            await Task.Delay(10);
+            foreach (int i in _dataProvider.GameModel.PlayerLoadout.CurrentHeckles)
+            {
+                PvPHeckleButton heckleButton = Instantiate(heckleButtonPrefab, hecklesParent);
+                heckleButton.StaticInitialise(soundPlayer, dataProvider, _dataProvider.GameModel.Heckles[i]);
+            }
         }
 
         public void OnHeckleButtonClicked()
         {
-            if(isOpened)
+            if (isOpened)
             {
                 hecklesButton.gameObject.GetComponent<Image>().sprite = closed;
                 isOpened = false;
