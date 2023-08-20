@@ -14,6 +14,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -29,7 +30,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPModalMenuController modalMenu;
         public PvPMainMenuButtonController modalMainMenuButton;
         public PvPHelpButton helpButton;
-        public RectTransform rectTransformThis;            
+        public RectTransform rectTransformThis;
+        public PvPHecklePanelController heckleController;
 
         public PvPRightPanelComponents Initialise(
             IApplicationModel applicationModel,
@@ -58,6 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 );
 
             IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, perFrameUpdater, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            heckleController.Initialise(applicationModel.DataProvider, soundPlayer);
         //    PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
