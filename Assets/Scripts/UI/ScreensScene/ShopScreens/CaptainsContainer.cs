@@ -8,6 +8,7 @@ using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,9 +28,14 @@ namespace BattleCruisers.UI.ScreensScene
         public List<GameObject> visualOfCaptains = new List<GameObject>();
         public GameObject btnBuy, ownFeedback;
 
+        private string firstNameString;
+        private string firstDescrtiptionString;
+
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
+        public GameObject content;
+
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
@@ -38,6 +44,14 @@ namespace BattleCruisers.UI.ScreensScene
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
+            firstNameString = captainName.text;
+            firstDescrtiptionString = captainDescription.text;
+        }
+
+        private async void OnEnable()
+        {
+            captainName.text = firstNameString;
+            captainDescription.text = firstDescrtiptionString;
         }
 
         private async void Purchase()
@@ -46,13 +60,13 @@ namespace BattleCruisers.UI.ScreensScene
             if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
             {
                 if (_dataProvider.GameModel.Coins >= currentCaptainData.CaptainCost)
-                {                    
+                {
                     try
                     {
                         bool result = await _dataProvider.PurchaseCaptain(currentCaptainData.Index);
                         if (result)
                         {
-                            
+
                             await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
@@ -62,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
                             _dataProvider.SaveGame();
-                        //    await _dataProvider.CloudSave();
+                            //    await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             MessageBox.Instance.ShowMessage("You got " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
                         }
@@ -70,7 +84,7 @@ namespace BattleCruisers.UI.ScreensScene
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             MessageBox.Instance.ShowMessage("Try again later!");
-                        }                           
+                        }
                     }
                     catch
                     {

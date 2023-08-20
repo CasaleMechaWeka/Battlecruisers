@@ -117,7 +117,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);
                     hecklesContainer.currentItem = heckleItem.GetComponent<HeckleItemController>();
                     //    heckleItem.GetComponent<HeckleItemController>().OnClicked(); // to display price of Heckle.
-                    if (index  < 3)
+                    if (index < 3)
                     {
                         hecklesContainer.hecklePrice.text = "0"; // heckle000,001, 002 are default items. 
                     }
