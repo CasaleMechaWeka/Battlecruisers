@@ -33,7 +33,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IUnitNameToKey _unitName;
 
         public GameObject _limitText;
+        public GameObject allowedLimitText;
         private TextMeshPro _displayText;
+        public int BuildableLimit = 5, HeckleLimit = 3;
 
         public void Initialise(IDataProvider dataProvider,
             IItemDetailsDisplayer<IBuilding> buildingDetails,
@@ -50,7 +52,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _familyTracker = comparingItemFamily;
             //_buildingName = buildingNameToKey;
             //_unitName = unitNameToKey;
-            _displayText = _limitText.GetComponent<TextMeshPro>();
 
             _familyTracker.ComparingFamily.ValueChanged += UpdateLimitDisplayer;
             this.gameObject.SetActive(false);
@@ -58,14 +59,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateLimitDisplayer(object sender, EventArgs e)
         {
+            TextMeshProUGUI displayText = allowedLimitText.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI limitText = _limitText.GetComponent<TextMeshProUGUI>();
+            Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
             if (_familyTracker.ComparingFamily.Value == ItemFamily.Buildings)
             {
                 this.gameObject.SetActive(true);
-
+                displayText.text = BuildableLimit.ToString();
             }
             else if (_familyTracker.ComparingFamily.Value == ItemFamily.Units)
             {
                 this.gameObject.SetActive(true);
+                displayText.text = BuildableLimit.ToString();
             }
             else if (_familyTracker.ComparingFamily.Value == ItemFamily.Hulls)
             {
@@ -74,6 +79,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             else if (_familyTracker.ComparingFamily.Value == ItemFamily.Heckles)
             {
                 this.gameObject.SetActive(true);
+                displayText.text = HeckleLimit.ToString();
+                limitText.text = loadout.CurrentHeckles.Count.ToString();
             }
             else if (_familyTracker.ComparingFamily.Value == null)
             {
