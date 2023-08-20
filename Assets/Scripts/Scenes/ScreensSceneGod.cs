@@ -65,6 +65,8 @@ namespace BattleCruisers.Scenes
         public BlackMarketScreenController blackMarketScreen;
         public MessageBox messageBox;
         public GameObject processingPanel;
+        public GameObject environmentArt;
+        public GameObject homeScreenArt;
 
         public Animator thankYouPlane;
         [SerializeField]
@@ -307,6 +309,8 @@ namespace BattleCruisers.Scenes
             characterOfCharlie.SetActive(true);
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
+            homeScreenArt.SetActive(true);
+            environmentArt.SetActive(true);
             GoToScreen(homeScreen);
             AdvertisingBanner.startAdvert();
         }
@@ -324,6 +328,8 @@ namespace BattleCruisers.Scenes
             characterOfCharlie.SetActive(false);
             cameraOfCharacter.SetActive(false);
             cameraOfCaptains.SetActive(false);
+            homeScreenArt.SetActive(false);
+            environmentArt.SetActive(false);
             GoToScreen(hubScreen);
         }
 
