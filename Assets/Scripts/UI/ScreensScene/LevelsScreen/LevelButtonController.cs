@@ -24,13 +24,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public async Task InitialiseAsync(
             ISingleSoundPlayer soundPlayer,
-            LevelInfo level, 
-            IScreensSceneGod screensSceneGod, 
+            LevelInfo level,
+            IScreensSceneGod screensSceneGod,
             IDifficultySpritesProvider difficultySpritesProvider,
             int numOfLevelsUnlocked,
             ITrashTalkData trashTalkData,
             IDismissableEmitter parent)
-		{
+        {
             base.Initialise(soundPlayer, parent: parent);
 
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
@@ -41,11 +41,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             levelNumberText.text = level.Num.ToString();
             levelNameText.text = trashTalkData.EnemyName;
-            captainImage.sprite = trashTalkData.EnemyImage;
+            captainImage.sprite = trashTalkData.EnemySprite;
             await levelStatsController.InitialiseAsync(level.DifficultyCompleted, difficultySpritesProvider);
 
             Enabled = numOfLevelsUnlocked >= level.Num;
-		}
+        }
 
         protected override void OnClicked()
         {
@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             SetEnabledState(isEnabled: true);
 
             backgroundImage.sprite = defaultBackground;
-            
+
             captainImage.color = Color.black;
             levelNumberText.color = Color.white;
             levelNameText.color = Color.white;
@@ -76,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             captainImage.rectTransform.sizeDelta = new Vector2(enabledCaptainImageWidth, enabledCaptainImageWidth);
             SetEnabledState(isEnabled: true);
-            
+
             backgroundImage.sprite = clickedBackground;
 
             captainImage.color = battlecruisersRed;
