@@ -34,8 +34,6 @@ namespace BattleCruisers.Data.Models
         public List<string> _unlockedHulls;                            // prefab filenames
         public Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
         public Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
-        public List<int> _ownedCaptainIDs;
-        public List<int> _ownedHeckleIDs;
 
         public SaveGameModel()
         { // this is the constructor for cloud load
@@ -52,8 +50,6 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls = computeUnlockedHulls(game.UnlockedHulls);
             _unlockedBuildings = computeUnlockedBuildings(game.UnlockedBuildings);
             _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
-            _ownedCaptainIDs = game.CaptainExoList;
-            _ownedHeckleIDs = game.HeckleList;
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
@@ -65,7 +61,7 @@ namespace BattleCruisers.Data.Models
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
             game.PlayerName = _playerName;
             game.PlayerLoadout = _playerLoadout;
-
+          
             foreach (var level in _levelsCompleted)
             {
                 CompletedLevel cLevel = new CompletedLevel(level.Key, (Settings.Difficulty)level.Value);
@@ -81,7 +77,7 @@ namespace BattleCruisers.Data.Models
             foreach(var building in _unlockedBuildings)
             {
                 // Keys and Vals are reversed here, because dictionaries require their Keys to be unique
-                // these AddUnlocked constructors take an enum as their first arg, which definitionally is not unique.
+                // these AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
                 Enum.TryParse(building.Value, out BuildingCategory bc);
                 BuildingKey bk = new BuildingKey(bc, building.Key);
                 game.AddUnlockedBuilding(bk);
@@ -90,14 +86,11 @@ namespace BattleCruisers.Data.Models
             foreach (var unit in _unlockedUnits)
             {
                 // Keys and Vals are reversed here, because dictionaries require their Keys to be unique
-                // these AddUnlocked constructors take an enum as their first arg, which definitionally is not unique.
+                // these AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
                 Enum.TryParse(unit.Value, out UnitCategory uc);
                 UnitKey uk = new UnitKey(uc, unit.Key);
                 game.AddUnlockedUnit(uk);
             }
-
-            game.CaptainExoList = _ownedCaptainIDs;
-            game.HeckleList = _ownedHeckleIDs;
         }
 
         // Method for fixing invalid fields in saves.
