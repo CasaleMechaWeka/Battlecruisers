@@ -88,25 +88,33 @@ namespace BattleCruisers.Data.Serialization
 
         public async Task<SaveGameModel> CloudLoad(GameModel game)
         {
-            try
+            List<string> keys = await CloudSaveService.Instance.Data.RetrieveAllKeysAsync();
+            if (keys.Contains("GameModel"))
             {
-                Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
-                if (savedData != null && savedData["GameModel"] != String.Empty)
+                try
                 {
-                    SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(savedData["GameModel"]);
-                    Debug.Log(savedData["GameModel"]);
+                    Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
+                    if (savedData != null && savedData["GameModel"] != String.Empty)
+                    {
+                        SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(savedData["GameModel"]);
+                        Debug.Log(savedData["GameModel"]);
 
-                    //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
-                    return saveModel;
+                        //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
+                        return saveModel;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
-                else
+                catch (UnityException e)
                 {
+                    Debug.LogException(e);
                     return null;
                 }
             }
-            catch (UnityException e)
+            else
             {
-                Debug.LogException(e);
                 return null;
             }
         }
