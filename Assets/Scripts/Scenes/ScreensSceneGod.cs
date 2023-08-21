@@ -133,7 +133,7 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                //    await _dataProvider.CloudLoad();
+                    await _dataProvider.CloudLoad();
                     await _dataProvider.LoadBCData();
                 }
                 catch (Exception ex)
