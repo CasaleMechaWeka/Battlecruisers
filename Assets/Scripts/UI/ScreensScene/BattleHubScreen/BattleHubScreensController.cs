@@ -72,7 +72,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             continueButton.Initialise(_soundPlayer, Continue);
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
             skirmishButton.Initialise(_soundPlayer, GoToSkirmishScreen);
-            battleButton.Initialise(_soundPlayer, GotoBattleMode);
+            battleButton.Initialise(_soundPlayer, GotoPvPMode);
 
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
@@ -169,17 +169,19 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _screensSceneGod.GoToSkirmishScreen();
         }
 
-        public async void GotoBattleMode()
+        public void GotoPvPMode()
         {
+           
             playerInfoPanelController.gameObject.SetActive(false);
-            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
-            {
-                GoToScreen(arenaSelectPanel);
-            }
-            else
-            {
-                coinBattleController.BattleButtonClicked();
-            }
+            GoToScreen(arenaSelectPanel);
+            /*            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                        {
+                            GoToScreen(arenaSelectPanel);
+                        }
+                        else
+                        {
+                            coinBattleController.BattleButtonClicked();
+                        }*/
         }
 
 

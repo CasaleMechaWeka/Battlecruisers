@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _dataProvider = dataProvider;
             UpdateSelectText(true);
             Enabled = ShouldBeEnabled();
-            allowedLimit.text = heckleLimit.ToString();
+            //allowedLimit.text = heckleLimit.ToString();
             //    limit.text = _dataProvider.GameModel.PlayerLoadout.CurrentHeckles.Count.ToString();
         }
 
@@ -120,7 +120,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectHeckleButton(object sender, EventArgs e)
         {
-            limit.text = _dataProvider.GameModel.PlayerLoadout.CurrentHeckles.Count.ToString();
+            //limit.text = _dataProvider.GameModel.PlayerLoadout.CurrentHeckles.Count.ToString();
             if (ShouldBeEnabled())
             {
                 Enabled = IsOverLimit();

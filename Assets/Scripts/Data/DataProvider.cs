@@ -96,7 +96,15 @@ namespace BattleCruisers.Data
         public async Task CloudLoad()
         {
             SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
-            saveModel.AssignSaveToGameModel(_gameModel);
+            if (saveModel == null)
+            {
+                Debug.LogWarning("CloudSaveModel is null.");
+            }
+            else
+            {
+                saveModel.AssignSaveToGameModel(_gameModel);
+                Debug.Log("Cloud save retrieved and applied.");
+            }
         }
 
         public async Task<bool> SyncCurrencyFromCloud()
