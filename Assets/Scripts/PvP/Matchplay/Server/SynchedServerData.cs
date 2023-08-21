@@ -22,9 +22,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         public NetworkVariable<NetworkString> playerAPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<ulong> playerAClientNetworkId = new NetworkVariable<ulong>();
+        public NetworkVariable<NetworkString> playerAName = new NetworkVariable<NetworkString>();
+        public NetworkVariable<long> playerAScore = new NetworkVariable<long>();
+        public NetworkVariable<NetworkString> captainAPrefabName = new NetworkVariable<NetworkString>();
+
 
         public NetworkVariable<NetworkString> playerBPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<ulong> playerBClientNetworkId = new NetworkVariable<ulong>();
+        public NetworkVariable<NetworkString> playerBName = new NetworkVariable<NetworkString>();
+        public NetworkVariable<long> playerBScore = new NetworkVariable<long>();
+        public NetworkVariable<NetworkString> captainBPrefabName = new NetworkVariable<NetworkString>();
+
         public Action OnNetworkSpawned;
 
 

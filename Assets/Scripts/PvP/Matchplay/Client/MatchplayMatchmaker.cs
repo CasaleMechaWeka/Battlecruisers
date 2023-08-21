@@ -160,7 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             {
 
             };
-            var queueName = data.userGamePreferences.ToMultiplayQueue();
+            var queueName = "bc-1vs1-queue";   /*data.userGamePreferences.ToMultiplayQueue();*/
             return new CreateTicketOptions(queueName, attributes);
         }
 

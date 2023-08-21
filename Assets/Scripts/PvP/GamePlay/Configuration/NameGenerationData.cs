@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,10 +16,10 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.Configuration
 
         public string GenerateName()
         {
-            var firstWord = FirstWordList[Random.Range(0, FirstWordList.Length - 1)];
-            var secondWord = SecondWordList[Random.Range(0, SecondWordList.Length - 1)];
+            var firstWord = FirstWordList[UnityEngine.Random.Range(0, FirstWordList.Length - 1)];
+            var secondWord = SecondWordList[UnityEngine.Random.Range(0, SecondWordList.Length - 1)];
 
-            return firstWord + " " + secondWord;
+            return firstWord + " " + secondWord + DateTime.Now.ToString();
         }
     }
 }

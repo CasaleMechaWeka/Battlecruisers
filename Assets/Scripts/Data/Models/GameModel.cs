@@ -199,7 +199,12 @@ namespace BattleCruisers.Data.Models
         }
 
 
-
+        private int _gameMap;
+        public int GameMap
+        {
+            get => _gameMap;
+            set => _gameMap = value;
+        }
 
 
         private string _playerName;
@@ -480,6 +485,7 @@ namespace BattleCruisers.Data.Models
             _playerName = "Charlie";
             _coins = 50;
             _credits = 0;
+            _gameMap = 0;
         }
 
         public GameModel(

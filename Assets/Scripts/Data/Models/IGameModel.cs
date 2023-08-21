@@ -14,6 +14,7 @@ namespace BattleCruisers.Data.Models
         long Coins { get; set; }
         long Credits { get; set; }
         string PlayerName { get; set; }
+        int GameMap { get; set; }
         List<int> CaptainExoList { get; set; }
         List<int> HeckleList { get; set; }
         List<CaptainData> Captains { get; set; }

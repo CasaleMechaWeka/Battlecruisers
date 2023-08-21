@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         public async Task<SynchedServerData> ConfigureServer(GameInfo startingGameInfo)
         {
 
-            m_NetworkManager.SceneManager.LoadScene(startingGameInfo.ToSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            m_NetworkManager.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);   // only 1 PvPBattleScene
             var localNetworkedSceneLoaded = false;
             m_NetworkManager.SceneManager.OnLoadComplete += CreateAndSetSynchedServerData;
             void CreateAndSetSynchedServerData(ulong clientId, string sceneName, LoadSceneMode sceneMode)
@@ -117,11 +117,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             {
                 m_SynchedServerData.playerAPrefabName.Value = userData.hullPrefabName;
                 m_SynchedServerData.playerAClientNetworkId.Value = userData.networkId;
+                m_SynchedServerData.playerAName.Value = userData.userName;
+                m_SynchedServerData.playerAScore.Value = userData.score;
+                m_SynchedServerData.captainAPrefabName.Value = userData.captainPrefabName;
             }
             else if (m_clientData.Count == 1)
             {
                 m_SynchedServerData.playerBPrefabName.Value = userData.hullPrefabName;
                 m_SynchedServerData.playerBClientNetworkId.Value = userData.networkId;
+                m_SynchedServerData.playerBName.Value = userData.userName;
+                m_SynchedServerData.playerBScore.Value = userData.score;
+                m_SynchedServerData.captainBPrefabName.Value = userData.captainPrefabName;
             }
 
             Debug.Log($"Host ApprovalCheck: connecting client: ({request.ClientNetworkId}) - {userData}");

@@ -6,7 +6,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using BattleCruisers.Data;
 using Random = UnityEngine.Random;
-
+using Unity.Services.Authentication;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
@@ -43,13 +43,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             var tmepId = Guid.NewGuid().ToString();
             var tempLobbyId = Guid.NewGuid().ToString();
-            Data = new UserData("Random User" + Random.Range(1, 9999).ToString(), tmepId, 0, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo());
+            Data = new UserData(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, AuthenticationService.Instance.PlayerId, 0, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo(), ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
 
 
             //cheat code
             Data.userGamePreferences.gameQueue = GameQueue.Casual;
             Data.userGamePreferences.gameMode = GameMode.Starting;
-            Data.userGamePreferences.map = Map.PracticeWreckyards;
+            Data.userGamePreferences.map = (Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap;
         }
 
         public UserData Data { get; }
@@ -107,7 +107,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         }
     }
 
-
     [Serializable]
     public class UserData
     {
@@ -115,15 +114,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public string userAuthId;
         public ulong networkId;
         public string hullPrefabName;
+        public long score;
+        public string captainPrefabName;
         // public string lobbyId;
         public GameInfo userGamePreferences;
-        public UserData(string userName, string userAuthId, ulong networkId, string hullPrefabName, GameInfo userGamePreferences)
+        public UserData(string userName, string userAuthId, ulong networkId, string hullPrefabName, GameInfo userGamePreferences, long score, string captainPrefabName)
         {
             this.userName = userName;
             this.userAuthId = userAuthId;
             this.networkId = networkId;
             this.hullPrefabName = hullPrefabName;
             this.userGamePreferences = userGamePreferences;
+            this.score = score;
+            this.captainPrefabName = captainPrefabName;
             // this.lobbyId = lobbyId;
         }
 
@@ -184,22 +187,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             switch (map)
             {
-                // case Map.PracticeWreckyards:
-                //     return "PracticeWreckyards";
-                // case Map.OzPenitentiary:
-                //     return "OzPenitentiary";
-                // case Map.SanFranciscoFightClub:
-                //     return "SanFranciscoFightClub";
-                // case Map.UACBattleNight:
-                //     return "UACBattleNight";
-                // case Map.UACArena:
-                //     return "UACArena";
-                // case Map.RioBattlesport:
-                //     return "RioBattlesport";
-                // case Map.UACUltimate:
-                //     return "UACUltimate";
-                // case Map.MercenaryOne:
-                //     return "MercenaryOne";
+                case Map.PracticeWreckyards:
+                    return "PracticeWreckyards";
+                case Map.OzPenitentiary:
+                    return "OzPenitentiary";
+                case Map.SanFranciscoFightClub:
+                    return "SanFranciscoFightClub";
+                case Map.UACBattleNight:
+                    return "UACBattleNight";
+                case Map.UACArena:
+                    return "UACArena";
+                case Map.RioBattlesport:
+                    return "RioBattlesport";
+                case Map.UACUltimate:
+                    return "UACUltimate";
+                case Map.MercenaryOne:
+                    return "MercenaryOne";
                 default:
                     return "PvPBattleScene";
             }
