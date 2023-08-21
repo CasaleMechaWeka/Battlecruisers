@@ -24,7 +24,15 @@ namespace BattleCruisers.Data.Models
         public string _playerName;
 
         // My selected loadout.
-        public Loadout _playerLoadout; // selected captainexo is part of this.
+        // Selected Captain.
+        // Loadout data confuses the serializer! We must map it by hand.
+        public string _currentHullKey;
+        public Dictionary<string, string> _currentBuildings;
+        public Dictionary<string, string> _currentUnits;
+        public List<int> _currentHeckles;
+        public string _currentCaptain;
+        public Dictionary<string, Dictionary<string, string>> _buildLimits;
+        public Dictionary<string, Dictionary<string, string>> _unitLimits;
 
         // What levels have been completed
         // What difficulty those levels have been completed at.
@@ -42,66 +50,143 @@ namespace BattleCruisers.Data.Models
         // Takes in GameModel, simplifies values where necessary for easier JSON parsing
         public SaveGameModel(GameModel game)
         {
+            // GameModel fields:
             _coins = game.Coins;
             _lifetimeDestructionScore = game.LifetimeDestructionScore;
             _playerName = game.PlayerName;
-            _playerLoadout = game.PlayerLoadout;
             _levelsCompleted = computeCompletedLevels(game.CompletedLevels);
             _unlockedHulls = computeUnlockedHulls(game.UnlockedHulls);
             _unlockedBuildings = computeUnlockedBuildings(game.UnlockedBuildings);
             _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
+
+            // Loadout fields:
+            _currentHullKey = game.PlayerLoadout.Hull.PrefabName;
+            _currentBuildings = computeLoadoutBuildings(game.PlayerLoadout);
+            _currentUnits = computeLoadoutUnits(game.PlayerLoadout);
+            _currentHeckles = game.PlayerLoadout.CurrentHeckles;
+            _currentCaptain = game.PlayerLoadout.CurrentCaptain.PrefabName;
+            _buildLimits = computeBuildLimits(game.PlayerLoadout.GetBuildLimits());
+            _unitLimits = computeUnitLimits(game.PlayerLoadout.GetUnitLimits());
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
-            TidyUp(); // Modify null and incompatible fields before assigning
-
             game.Coins = _coins;
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
             game.PlayerName = _playerName;
-            game.PlayerLoadout = _playerLoadout;
-          
+
+            // levels completed
             foreach (var level in _levelsCompleted)
             {
                 CompletedLevel cLevel = new CompletedLevel(level.Key, (Settings.Difficulty)level.Value);
                 game.AddCompletedLevel(cLevel);
             }
 
+            // unlocked hulls
             foreach(var hull in _unlockedHulls)
             {
                 HullKey hk = new HullKey(hull);
                 game.AddUnlockedHull(hk);
             }
 
-            foreach(var building in _unlockedBuildings)
+            // Keys and Vals are reversed for unlocks and current units, because dictionaries require their Keys to be
+            // unique. The AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
+
+            // unlocked buildings
+            foreach (var building in _unlockedBuildings)
             {
-                // Keys and Vals are reversed here, because dictionaries require their Keys to be unique
-                // these AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
                 Enum.TryParse(building.Value, out BuildingCategory bc);
                 BuildingKey bk = new BuildingKey(bc, building.Key);
                 game.AddUnlockedBuilding(bk);
             }
 
+            // unlocked units
             foreach (var unit in _unlockedUnits)
             {
-                // Keys and Vals are reversed here, because dictionaries require their Keys to be unique
-                // these AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
                 Enum.TryParse(unit.Value, out UnitCategory uc);
                 UnitKey uk = new UnitKey(uc, unit.Key);
                 game.AddUnlockedUnit(uk);
             }
-        }
 
-        // Method for fixing invalid fields in saves.
-        // Takes in GameModel so that it can be used to set defaults.
-        private void TidyUp()
-        {
-            // If the captain is somehow null (because the save uses an old Loadout), set the captain to Charlie
-            if(_playerLoadout.CurrentCaptain == null)
+            // Loadout fields, we create a new loadout from scratch and feed it into the constructor:
+            // current hull
+            HullKey cHull = new HullKey(_currentHullKey);
+
+            // current buildings
+            List<BuildingKey> buildings = new List<BuildingKey>();
+            foreach (var building in _currentBuildings)
             {
-                _playerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
+                Enum.TryParse(building.Value, out BuildingCategory bc);
+                BuildingKey bk = new BuildingKey(bc, building.Key);
+                buildings.Add(bk);
             }
+
+            // current units
+            List<UnitKey> units = new List<UnitKey>();
+            foreach (var unit in _unlockedUnits)
+            {
+                Enum.TryParse(unit.Value, out UnitCategory uc);
+                UnitKey uk = new UnitKey(uc, unit.Key);
+                units.Add(uk);
+            }
+
+            // building limits
+            // the data structure here is pretty tough to process.
+            Dictionary<BuildingCategory, List<BuildingKey>> buildLimits = new Dictionary<BuildingCategory, List<BuildingKey>>();
+            foreach(string buildCat in _buildLimits.Keys)
+            {
+                Enum.TryParse(buildCat, out BuildingCategory bc);
+
+                Dictionary<string, string> buildingKeys;
+                _buildLimits.TryGetValue(buildCat, out buildingKeys);
+
+                List<BuildingKey> parsedBuildingKeys = new List<BuildingKey>();
+                foreach (var buildKey in buildingKeys)
+                {
+                    Enum.TryParse(buildKey.Value, out BuildingCategory keycat);
+                    BuildingKey newKey = new BuildingKey(keycat, buildKey.Key);
+                    parsedBuildingKeys.Add(newKey);
+                }
+                buildLimits.Add(bc, parsedBuildingKeys);
+            }
+
+            // unit limits
+            // the data structure here is pretty tough to process.
+            Dictionary<UnitCategory, List<UnitKey>> unitLimits = new Dictionary<UnitCategory, List<UnitKey>>();
+            foreach (string unitCat in _unitLimits.Keys)
+            {
+                Enum.TryParse(unitCat, out UnitCategory uc);
+
+                Dictionary<string, string> unitKeys;
+                _unitLimits.TryGetValue(unitCat, out unitKeys);
+
+                List<UnitKey> parsedUnitKeys = new List<UnitKey>();
+                foreach (var unitKey in unitKeys)
+                {
+                    Enum.TryParse(unitKey.Value, out UnitCategory keycat);
+                    UnitKey newKey = new UnitKey(keycat, unitKey.Key);
+                    parsedUnitKeys.Add(newKey);
+                }
+                unitLimits.Add(uc, parsedUnitKeys);
+            }
+
+            // loadout construction actually happens finally:
+            game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits);
+
+            // current heckles
+            game.PlayerLoadout.CurrentHeckles = _currentHeckles;
+
+            // current captain
+            if (_currentCaptain != null)
+            {
+                game.PlayerLoadout.CurrentCaptain = new CaptainExoKey(_currentCaptain);
+            }
+            else
+            {
+                game.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
+            }
+
         }
 
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
@@ -179,6 +264,124 @@ namespace BattleCruisers.Data.Models
                     result.Add(prefabName, category);
                 }
             }
+            return result;
+        }
+
+        private Dictionary<string, string> computeLoadoutBuildings(Loadout loadout)
+        {
+            var result = new Dictionary<string, string>();
+
+            foreach(BuildingKey building in loadout.GetBuildings(BuildingCategory.Factory))
+            {
+                string category = BuildingCategory.Factory.ToString();
+                string prefabName = building.PrefabName;
+
+                result.Add(prefabName, category);
+            }
+
+            foreach (BuildingKey building in loadout.GetBuildings(BuildingCategory.Defence))
+            {
+                string category = BuildingCategory.Defence.ToString();
+                string prefabName = building.PrefabName;
+
+                result.Add(prefabName, category);
+            }
+
+            foreach (BuildingKey building in loadout.GetBuildings(BuildingCategory.Offence))
+            {
+                string category = BuildingCategory.Offence.ToString();
+                string prefabName = building.PrefabName;
+
+                result.Add(prefabName, category);
+            }
+
+            foreach (BuildingKey building in loadout.GetBuildings(BuildingCategory.Tactical))
+            {
+                string category = BuildingCategory.Tactical.ToString();
+                string prefabName = building.PrefabName;
+
+                result.Add(prefabName, category);
+            }
+
+            foreach (BuildingKey building in loadout.GetBuildings(BuildingCategory.Ultra))
+            {
+                string category = BuildingCategory.Ultra.ToString();
+                string prefabName = building.PrefabName;
+
+                result.Add(prefabName, category);
+            }
+
+            return result;
+        }
+
+        private Dictionary<string, string> computeLoadoutUnits(Loadout loadout)
+        {
+            var result = new Dictionary<string, string>();
+
+            foreach (UnitKey unit in loadout.GetUnits(UnitCategory.Aircraft))
+            {
+                string category = UnitCategory.Aircraft.ToString();
+                string prefabName = unit.PrefabName;
+
+                result.Add(prefabName, category);
+            }
+
+            foreach (UnitKey unit in loadout.GetUnits(UnitCategory.Naval))
+            {
+                string category = UnitCategory.Naval.ToString();
+                string prefabName = unit.PrefabName;
+
+                result.Add(prefabName, category);
+            }
+
+            return result;
+        }
+
+        private Dictionary<string, Dictionary<string, string>> computeBuildLimits(Dictionary<BuildingCategory, List<BuildingKey>> buildLimits)
+        {
+            var result = new Dictionary<string, Dictionary<string, string>>();
+
+            foreach (BuildingCategory cat in buildLimits.Keys)
+            {
+                string category = cat.ToString();
+
+                List<BuildingKey> buildings;
+                buildLimits.TryGetValue(cat, out buildings);
+
+                Dictionary<string, string> parsedBuildings = new Dictionary<string, string>();
+                foreach(BuildingKey unparsedBuilding in buildings)
+                {
+                    string localCategory = unparsedBuilding.BuildingCategory.ToString();
+                    string prefabName = unparsedBuilding.PrefabName;
+                    parsedBuildings.Add(prefabName, localCategory);
+                }
+                result.Add(category, parsedBuildings);
+            }
+
+            return result;
+        }
+
+        private Dictionary<string, Dictionary<string, string>> computeUnitLimits(Dictionary<UnitCategory, List<UnitKey>> unitLimits)
+        {
+            var result = new Dictionary<string, Dictionary<string, string>>();
+
+            foreach (UnitCategory cat in unitLimits.Keys)
+            {
+                string category = cat.ToString();
+
+                List<UnitKey> units;
+                unitLimits.TryGetValue(cat, out units);
+
+                Dictionary<string, string> parsedUnits = new Dictionary<string, string>();
+                foreach (UnitKey unparsedUnit in units)
+                {
+                    string localCategory = unparsedUnit.UnitCategory.ToString();
+                    string prefabName = unparsedUnit.PrefabName;
+                    parsedUnits.Add(prefabName, localCategory);
+                }
+                result.Add(category, parsedUnits);
+            }
+
             return result;
         }
     }

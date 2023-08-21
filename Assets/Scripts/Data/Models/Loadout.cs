@@ -45,7 +45,7 @@ namespace BattleCruisers.Data.Models
 
         // Captain Logic
 
-//        [SerializeField]
+        //        [SerializeField]
         private CaptainExoKey _currentCaptain;
         public CaptainExoKey CurrentCaptain
         {
@@ -53,21 +53,21 @@ namespace BattleCruisers.Data.Models
             set => _currentCaptain = value;
         }
 
-/*        private IList<int> _captainExos;
-        public IList<int> CaptainExos
-        {
-            get => _captainExos;
-            set => _captainExos = value;
-        }
+        /*        private IList<int> _captainExos;
+                public IList<int> CaptainExos
+                {
+                    get => _captainExos;
+                    set => _captainExos = value;
+                }
 
-        private List<int> _heckles;
-        public List<int> Heckles
-        {
-            get => _heckles;
-            set => _heckles = value;
-        }*/
+                private List<int> _heckles;
+                public List<int> Heckles
+                {
+                    get => _heckles;
+                    set => _heckles = value;
+                }*/
 
-        private List<int> _currentHeckles = new List<int>{ 0, 1, 2 };
+        private List<int> _currentHeckles = new List<int> { 0, 1, 2 };
         public List<int> CurrentHeckles
         {
             get => _currentHeckles;
@@ -92,7 +92,7 @@ namespace BattleCruisers.Data.Models
             _units = units;
             _builds = buildLimt;
             _unit = unitLimit;
-            _currentCaptain =  new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain        
+            _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain        
         }
 
         public bool Is_buildsNull()
@@ -155,8 +155,8 @@ namespace BattleCruisers.Data.Models
             }
             Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
             {
-                {UnitCategory.Naval, ships },
-                {UnitCategory.Aircraft, aircraft }
+                { UnitCategory.Naval, ships },
+                { UnitCategory.Aircraft, aircraft }
             };
             _unit = unitlimit;
         }
@@ -228,22 +228,22 @@ namespace BattleCruisers.Data.Models
             Assert.IsTrue(removedSuccessfully);
             _unit[category] = unitList;
         }
-/*        public void AddCaptain(int key)
-        {
-            _captainExos.Add(key);
-        }
-        public void RemoveCaptain(int key)
-        {
-            _captainExos.Remove(key);
-        }
-        public void AddHeckle(int index)
-        {
-            _heckles.Add(index);
-        }
-        public void RemoveHeckle(int index)
-        {
-            _heckles.Remove(index);
-        }*/
+        /*        public void AddCaptain(int key)
+                {
+                    _captainExos.Add(key);
+                }
+                public void RemoveCaptain(int key)
+                {
+                    _captainExos.Remove(key);
+                }
+                public void AddHeckle(int index)
+                {
+                    _heckles.Add(index);
+                }
+                public void RemoveHeckle(int index)
+                {
+                    _heckles.Remove(index);
+                }*/
         public List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory)
         {
             List<BuildingKey> builds = _builds[buildingCategory].ToList();
@@ -295,6 +295,16 @@ namespace BattleCruisers.Data.Models
             {
                 _ownedExosKeys.Add(exoKey);
             }
+        }
+
+        public Dictionary<BuildingCategory, List<BuildingKey>> GetBuildLimits()
+        {
+            return _builds;
+        }
+
+        public Dictionary<UnitCategory, List<UnitKey>> GetUnitLimits()
+        {
+            return _unit;
         }
 
         public override bool Equals(object obj)
