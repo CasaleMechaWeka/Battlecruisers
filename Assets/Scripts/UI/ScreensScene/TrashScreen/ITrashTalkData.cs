@@ -4,7 +4,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public interface ITrashTalkData
     {
-        Sprite EnemyImage { get; }
+        Sprite EnemySprite { get; }
+        GameObject EnemyPrefab { get; }
         string EnemyName { get; }
         float EnemyScale { get; }
         Vector2 EnemyPosition { get; }

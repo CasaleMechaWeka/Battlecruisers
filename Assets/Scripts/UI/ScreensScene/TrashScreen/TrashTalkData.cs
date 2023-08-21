@@ -6,8 +6,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashTalkData : Prefab, ITrashTalkData
     {
-        public Sprite enemyImage;
-        public Sprite EnemyImage => enemyImage;
+        public Sprite enemySprite;
+        public Sprite EnemySprite => enemySprite;
+        public GameObject enemyPrefab;
+        public GameObject EnemyPrefab => enemyPrefab;
 
         public string enemyName = "Bill";
         public string EnemyName => enemyName;
@@ -37,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             EnemyText = storyStrings.GetString($"{stringKeyBase}/EnemyText");
             AppraisalDroneText = storyStrings.GetString($"{stringKeyBase}/DroneText");
             enemyName = storyStrings.GetString($"{stringKeyBase}/name");
-        
+
         }
     }
 }

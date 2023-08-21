@@ -10,6 +10,8 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Animations;
+using UnityEditor.Animations;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
@@ -25,15 +27,21 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
-        public Image sky, enemyCharacter;
+        public Image sky;
+        public GameObject enemyPrefab;
         public CanvasGroupButton startBattleButton, homeButton;
+        public Transform containerCaptains;
+        public GameObject characterCamera;
+        public Transform containerCharlie;
+        public Transform enemyCharacter;
 
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
+        private GameObject enemyModel;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer, 
+            ISingleSoundPlayer soundPlayer,
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
             ISpriteFetcher spriteFetcher,
@@ -41,10 +49,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IMusicPlayer musicPlayer,
             ILocTable commonStrings,
             ILocTable storyStrings)
-		{
-			base.Initialise(screensSceneGod);
+        {
+            base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton, trashDataList, homeButton);
+            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, trashDataList, homeButton);
             Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, trashDataList, musicPlayer, commonStrings);
 
             _appModel = appModel;
@@ -57,10 +65,12 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             startBattleButton.Initialise(soundPlayer, LoadBattle);
             homeButton.Initialise(soundPlayer, Cancel);
-		}
+        }
 
         public async override void OnPresenting(object activationParameter)
         {
+            characterCamera.SetActive(true);
+            containerCharlie.GetChild(0).gameObject.SetActive(true);
             base.OnPresenting(activationParameter);
 
             int levelIndex = _appModel.SelectedLevel - 1;
@@ -85,13 +95,18 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         private void SetupEnemyCharacter(ITrashTalkData trashTalkData)
         {
-            enemyCharacter.sprite = trashTalkData.EnemyImage;
-            enemyCharacter.transform.localPosition = trashTalkData.EnemyPosition;
-            enemyCharacter.transform.localScale = new Vector3(trashTalkData.EnemyScale, trashTalkData.EnemyScale, 1);
+            //enemyCharacter.sprite = trashTalkData.EnemySprite;
+            enemyPrefab = trashTalkData.EnemyPrefab;
+            containerCaptains.transform.parent.gameObject.SetActive(true);
+            enemyModel = Instantiate(enemyPrefab, containerCaptains.position, Quaternion.identity, containerCaptains);
+            enemyModel.transform.localScale = new Vector3(-.5f, .5f, 1f);
+            enemyCharacter.localPosition = trashTalkData.EnemyPosition;
         }
 
         private void StartBattle()
         {
+            if (enemyModel != null)
+                Destroy(enemyModel);
             _screensSceneGod.LoadBattleScene();
         }
 
@@ -102,6 +117,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public override void Cancel()
         {
+            if (enemyModel != null)
+                Destroy(enemyModel);
             if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle || _appModel.Mode == GameMode.CoinBattle)
             {
                 _screensSceneGod.GotoHubScreen();
