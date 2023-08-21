@@ -91,6 +91,7 @@ namespace BattleCruisers.Data
         public async Task CloudSave()
         {
             await _serializer.CloudSave(_gameModel);
+            Debug.Log("Cloud saved.");
         }
 
         public async Task CloudLoad()
