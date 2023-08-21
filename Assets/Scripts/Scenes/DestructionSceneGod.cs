@@ -534,7 +534,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        private void UpdateGameModelVals()
+        private async void UpdateGameModelVals()
         {
             // Update GameModel vars
             // lifetime damage (this value is all we need for rank image/titles elsewhere):
@@ -546,6 +546,9 @@ namespace BattleCruisers.Scenes
 
             // Give the player their coins:
             applicationModel.DataProvider.GameModel.Coins += coinsToAward;
+
+            // Save changes:
+            await applicationModel.DataProvider.CloudSave();
         }
 
         private void Done()
