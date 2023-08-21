@@ -12,6 +12,9 @@ namespace BattleCruisers.Data.Models
     [Serializable]
     public class SaveGameModel
     {
+        public int _saveVersion;
+
+
         // What do we need to save, critically? Just the assets and progress.
 
         // Number of coins I own.
@@ -50,6 +53,18 @@ namespace BattleCruisers.Data.Models
         // Takes in GameModel, simplifies values where necessary for easier JSON parsing
         public SaveGameModel(GameModel game)
         {
+
+            // ##################################################################################
+            // ##################################################################################
+            //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
+
+                                                _saveVersion = 1;
+
+            // Consider writing handling for loading old saves with mismatched or missing fields.
+            // ##################################################################################
+            // ##################################################################################
+
+
             // GameModel fields:
             _coins = game.Coins;
             _lifetimeDestructionScore = game.LifetimeDestructionScore;
