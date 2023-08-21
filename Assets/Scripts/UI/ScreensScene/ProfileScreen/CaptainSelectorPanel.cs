@@ -118,7 +118,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     oldExoKey = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
                     _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey(currentCaptainData.NameStringKeyBase);
                     _dataProvider.SaveGame();
-                //    await _dataProvider.CloudSave();
+                    await _dataProvider.CloudSave();
                     return true;
                 }
                 catch(Exception ex)

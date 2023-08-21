@@ -13,7 +13,6 @@ using System.Reflection;
 using Unity.Services.Economy;
 using Unity.Services.Economy.Model;
 using BattleCruisers.Utils.UGS.Samples;
-using UnityEditor.Build;
 using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Data.Serialization
@@ -97,7 +96,7 @@ namespace BattleCruisers.Data.Serialization
                     SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(savedData["GameModel"]);
                     Debug.Log(savedData["GameModel"]);
 
-                    //saveModel.AssignSaveToGameModel(game);
+                    //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
                     return saveModel;
                 }
                 else

@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
                             _dataProvider.SaveGame();
-                    //        await _dataProvider.CloudSave();
+                            await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             MessageBox.Instance.ShowMessage("You got \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                         }

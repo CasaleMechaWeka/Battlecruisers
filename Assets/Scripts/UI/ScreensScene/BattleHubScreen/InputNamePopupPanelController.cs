@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         oldPlayerName = _dataProvider.GameModel.PlayerName;
                         _dataProvider.GameModel.PlayerName = inputField.text;
                         _dataProvider.SaveGame();
-                    //    await _dataProvider.CloudSave();
+                        await _dataProvider.CloudSave();
                         PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
                         ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
                     }
