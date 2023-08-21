@@ -22,6 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject captainItemPrefab, heckleItemPrefab;
         public CaptainsContainer captainsContainer;
         public HecklesContainer hecklesContainer;
+        public GameObject hecklesMessage;
         private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
@@ -88,6 +89,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
 
             captainsContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(true);
             hecklesContainer.gameObject.SetActive(true);
             // remove all old children to refresh
             HeckleItemController[] items = heckleItemContainer.gameObject.GetComponentsInChildren<HeckleItemController>();
@@ -148,6 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             captainsContainer.gameObject.SetActive(true);
             hecklesContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(false);
             // remove all old children to refersh
             CaptainItemController[] items = captainItemContainer.gameObject.GetComponentsInChildren<CaptainItemController>();
             foreach (CaptainItemController item in items)
