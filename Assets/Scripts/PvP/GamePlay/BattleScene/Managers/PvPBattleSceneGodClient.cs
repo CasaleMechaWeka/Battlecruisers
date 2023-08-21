@@ -328,7 +328,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     uiManager);
             playerCruiser.Destroyed += PlayerCruiser_Destroyed;
             enemyCruiser.Destroyed += EnemyCruiser_Destroyed;
+
+
             // pvp
+            PvPHeckleMessageManager.Instance.Initialise(dataProvider, factoryProvider.Sound.UISoundPlayer);
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
         }

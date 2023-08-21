@@ -22,5 +22,9 @@ namespace Unity.Multiplayer.Samples.Utilities
             base.OnNetworkDespawn();
             OnNetworkDespawnHook?.Invoke();
         }
+        private void Start()
+        {
+            
+        }
     }
 }

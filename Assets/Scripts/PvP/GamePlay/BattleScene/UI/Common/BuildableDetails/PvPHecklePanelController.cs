@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             foreach (int i in _dataProvider.GameModel.PlayerLoadout.CurrentHeckles)
             {
                 PvPHeckleButton heckleButton = Instantiate(heckleButtonPrefab, hecklesParent);
-                heckleButton.StaticInitialise(soundPlayer, dataProvider, _dataProvider.GameModel.Heckles[i]);
+                heckleButton.StaticInitialise(soundPlayer, dataProvider, _dataProvider.GameModel.Heckles[i], this);
             }
         }
 
