@@ -231,7 +231,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
         }
+        public static void AddDeadBuildable(PvPTargetType type, int value)
+        {
+            if (!GameOver)
+            {
+                if (type == PvPTargetType.Satellite || type == PvPTargetType.Rocket)
+                {
+                    return;
+                }
+                deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
+                if (type == PvPTargetType.Cruiser)
+                {
+                    GameOver = true;
+                }
+            }
+        }
 
+        public static void AddPlayedTime(PvPTargetType type, float dt)
+        {
+            if (!GameOver)
+            {
+                deadBuildables?[type]?.AddPlayedTime(dt);
+            }
+        }
         public void RegisterAIOfLeftPlayer()
         {
             IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, 1 /* current level num*/);

@@ -443,6 +443,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
             }*/
+
+            if (IsPlayerCruiser && _enemyCruiser.IsAlive)
+                PvPBattleSceneGodServer.AddPlayedTime(PvPTargetType.PlayedTime, _time.DeltaTime);
         }
 
         public void MakeInvincible()
@@ -463,7 +466,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 //Debug.Log(maxHealth);
 
-                // BattleSceneGod.AddDeadBuildable(PvPTargetType, (int)(maxHealth));
+                PvPBattleSceneGodServer.AddDeadBuildable(TargetType, (int)(maxHealth));
 
 
                 //Debug.Log(maxHealth);
