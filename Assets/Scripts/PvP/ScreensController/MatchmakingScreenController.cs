@@ -38,17 +38,38 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Image leftPlayerRankImage;
         public Text leftPlayerRankName;
         public Text leftCruiserName;
+        public Image leftCruiserImage;
 
         public Text rightPlayerName;
         public Image rightPlayerRankeImage;
         public Text rightPlayerRankeName;
         public Text rightCruiserName;
+        public Image rightCruiserImage;
+        
 
         public Text vsTitile;
 
         private ILocTable commonStrings;
         private IDataProvider dataProvider;
         private SpriteFetcher spriteFetcher;
+
+
+        public Sprite BlackRig;
+        public Sprite Bullshark;
+        public Sprite Eagle;
+        public Sprite Hammerhead;
+        public Sprite HuntressBoss;
+        public Sprite Longbow;
+        public Sprite ManOfWarBoss;
+        public Sprite Megalodon;
+        public Sprite Raptor;
+        public Sprite Rickshaw;
+        public Sprite Rockjaw;
+        public Sprite TasDevil;
+        public Sprite Trident;
+        public Sprite Yeti;
+
+        private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>(); 
         public static MatchmakingScreenController Instance { get; private set; }
 
 
@@ -70,6 +91,21 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             spriteFetcher = new SpriteFetcher();
+            sprites.Add("BlackRig", BlackRig);
+            sprites.Add("Bullshark", Bullshark);
+            sprites.Add("Eagle", Eagle);
+            sprites.Add("Hammerhead", Hammerhead);
+            sprites.Add("HuntressBoss", HuntressBoss);
+            sprites.Add("Longbow", Longbow);
+            sprites.Add("ManOfWarBoss", ManOfWarBoss);
+            sprites.Add("Megalodon", Megalodon);
+            sprites.Add("Raptor", Raptor);
+            sprites.Add("Rickshaw", Rickshaw);
+            sprites.Add("Rockjaw", Rockjaw);
+            sprites.Add("TasDevil", TasDevil);
+            sprites.Add("Trident", Trident);
+            sprites.Add("Yeti", Yeti);
+
             DontDestroyOnLoad(gameObject);
 
             leftCruiserName.text = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
@@ -77,6 +113,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
             leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             leftPlayerRankImage.sprite = (await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
+            leftCruiserImage.sprite = sprites[dataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
         }
 
         public void SetTraskTalkData(ITrashTalkData trashTalkData, ILocTable commonString, ILocTable storyString)
@@ -98,6 +135,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperA = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
                 leftPlayerRankImage.sprite = spriteWrapperA.Sprite;
                 leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
+                leftCruiserImage.sprite = sprites[SynchedServerData.Instance.playerAPrefabName.Value];
 
                 rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
                 rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
@@ -105,6 +143,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
                 rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
                 rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
+                leftCruiserImage.sprite = sprites[SynchedServerData.Instance.playerBPrefabName.Value];
             }
             else
             {
@@ -114,6 +153,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
                 leftPlayerRankImage.sprite = spriteWrapperB.Sprite;
                 leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
+                leftCruiserImage.sprite = sprites[SynchedServerData.Instance.playerBPrefabName.Value];
 
                 rightPlayerName.text = SynchedServerData.Instance.playerAName.Value;
                 rightCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
@@ -121,6 +161,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperA = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
                 rightPlayerRankeImage.sprite = spriteWrapperA.Sprite;
                 rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
+                rightCruiserImage.sprite = sprites[SynchedServerData.Instance.playerAPrefabName.Value];
             }
 
             switch (SynchedServerData.Instance.map.Value)
