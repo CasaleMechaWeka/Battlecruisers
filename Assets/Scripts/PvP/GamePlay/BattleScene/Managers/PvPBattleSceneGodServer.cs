@@ -54,6 +54,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPBattleSceneHelper pvpBattleHelper;
 
         public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables;
+        public static Sprite enemyCruiserSprite;
+        public static string enemyCruiserName;
+
+        public static Sprite playerBCruiserSprite;
+        public static string playerBCruiserName;
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -154,6 +159,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);
+
+            enemyCruiserSprite = playerACruiser.Sprite;
+            enemyCruiserName = playerACruiser.Name;
+
+            playerBCruiserSprite = playerBCruiser.Sprite;
+            playerBCruiserName = playerBCruiser.Name;
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 

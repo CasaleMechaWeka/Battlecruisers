@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
-                    _sceneNavigator.GoToScene(PvPSceneNames.DESTRUCTION_SCENE, true);
+                    _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
-                    _sceneNavigator.GoToScene(PvPSceneNames.DESTRUCTION_SCENE, true);
+                    _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
             }
         }

@@ -109,6 +109,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
             IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
+            PvPBattleSceneGodServer.enemyCruiserSprite = losingCruiser.Sprite;
+            PvPBattleSceneGodServer.enemyCruiserName = losingCruiser.Name;
+
             //---> Code by ANUJ
             ClearProjectiles();
             //<---
@@ -116,17 +119,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _ai_LeftPlayer.DisposeManagedState();
             _ai_RightPlayer.DisposeManagedState();
             victoryCruiser.MakeInvincible();
-            //    _navigationPermitter.IsMatch = false;
-            //    _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
+
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-            //    _uiManager.HideCurrentlyShownMenu();
-            //    _uiManager.HideItemDetails();
-            //    _targetIndicator.Hide();
-            //   _windManager.Stop();
-            //    _buildingCategoryPermitter.AllowNoCategories();
-            // Want to play cruiser sinking animation in real time, regardless of time player has set
-            //    _speedButtonGroup.SelectDefaultButton();
             _battleSceneGodTunnel.HandleCruiserDestroyed();
             _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
@@ -140,6 +135,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
             IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
+            PvPBattleSceneGodServer.enemyCruiserSprite = losingCruiser.Sprite;
+            PvPBattleSceneGodServer.enemyCruiserName = losingCruiser.Name;
             //---> Code by ANUJ
             ClearProjectiles();
             //<---

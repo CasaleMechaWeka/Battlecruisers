@@ -48,6 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public const string CREDITS_SCENE = "LonelyCreditsScene";
         public const string CUTSCENE_SCENE = "HuntressCutscene";
         public const string DESTRUCTION_SCENE = "DestructionScene";
+        public const string PvP_DESTRUCTION_SCENE = "PvPDestructionScene";
         public const string STAGE_INTERSTITIAL_SCENE = "StageInterstitialScene";
         public const string PvP_BATTLE_SCENE = "PvPBattleScene";
         public const string PvP_BOOT_SCENE = "PvPBootScene";
