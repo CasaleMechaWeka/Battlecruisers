@@ -32,6 +32,14 @@ namespace BattleCruisers.Network.Multiplay.Utils
         public static bool IsPrefabLoadedOnAllClients(AddressableGUID assetGuid) =>
             s_LoadedDynamicPrefabResourceHandles.ContainsKey(assetGuid);
 
+
+/*        public static void Initialize()
+        {
+            HashOfDynamicPrefabGUIDs = k_EmptyDynamicPrefabHash;
+            s_LoadedDynamicPrefabResourceHandles = new Dictionary<AddressableGUID, PvPPrefab>(new AddressableGUIDEqualityComparer());
+            s_DynamicPrefabGUIDs = new List<AddressableGUID>();
+            s_PrefabHashToClientIds = new Dictionary<int, HashSet<ulong>>();
+        }*/
         public static bool TryGetLoadedGameObjectFromGuid(AddressableGUID assetGuid, out PvPPrefab loadedGameObject)
         {
             return s_LoadedDynamicPrefabResourceHandles.TryGetValue(assetGuid, out loadedGameObject);
@@ -48,6 +56,11 @@ namespace BattleCruisers.Network.Multiplay.Utils
         public static void Init(NetworkManager networkManager)
         {
             s_NetworkManager = networkManager;
+
+            HashOfDynamicPrefabGUIDs = k_EmptyDynamicPrefabHash;
+            s_LoadedDynamicPrefabResourceHandles = new Dictionary<AddressableGUID, PvPPrefab>(new AddressableGUIDEqualityComparer());
+            s_DynamicPrefabGUIDs = new List<AddressableGUID>();
+            s_PrefabHashToClientIds = new Dictionary<int, HashSet<ulong>>();
         }
 
 
@@ -149,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Utils
 
             foreach (var handle in s_LoadedDynamicPrefabResourceHandles.Values)
             {
-                s_NetworkManager.RemoveNetworkPrefab(handle.gameObject);      
+                s_NetworkManager.RemoveNetworkPrefab(handle.gameObject);
             }
 
             s_LoadedDynamicPrefabResourceHandles.Clear();
