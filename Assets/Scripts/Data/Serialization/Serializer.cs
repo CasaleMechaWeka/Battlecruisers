@@ -64,12 +64,13 @@ namespace BattleCruisers.Data.Serialization
             return JsonConvert.DeserializeObject<SaveGameModel>(gameModelJSON);
         }
 
-        public string SerializeGameModel(object gameModel)
+        public string SerializeGameModel(object saveGameModel)
         {
-            return JsonConvert.SerializeObject(gameModel); //, new JsonSerializerSettings
+            return JsonConvert.SerializeObject(saveGameModel); //, new JsonSerializerSettings
             //{
             //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             //});
+            // ^ uncomment this if serializing vectors
         }
 
         public async Task CloudSave(GameModel game)
