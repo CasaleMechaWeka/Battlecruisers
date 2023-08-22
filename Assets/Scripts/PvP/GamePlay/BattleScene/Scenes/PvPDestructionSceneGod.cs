@@ -101,6 +101,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         [SerializeField]
         private Text coinsText;
 
+
+        public Sprite BlackRig;
+        public Sprite Bullshark;
+        public Sprite Eagle;
+        public Sprite Hammerhead;
+        public Sprite HuntressBoss;
+        public Sprite Longbow;
+        public Sprite ManOfWarBoss;
+        public Sprite Megalodon;
+        public Sprite Raptor;
+        public Sprite Rickshaw;
+        public Sprite Rockjaw;
+        public Sprite TasDevil;
+        public Sprite Trident;
+        public Sprite Yeti;
+
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -118,11 +134,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                             applicationModel.DataProvider.SettingsManager, 1));
 
                 nextButton.Initialise(_soundPlayer, Done);
-                _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
+                _sceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
 
             }
 
-            // Populate screen:
+            PopulateScreen();
+/*            // Populate screen:
             if (PvPBattleSceneGodServer.deadBuildables != null)
             {
                 // real values:
@@ -132,7 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             {
                 // fake values if the screen is being launched for testing purposes:
                 PopulateScreenFake();
-            }
+            }*/
 
             // Start animating:
             StartCoroutine(AnimateScreen());
@@ -151,17 +168,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             // Get some values from GameModel and its friends:
             allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-            levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables[PvPTargetType.PlayedTime].GetPlayedTime();
+            levelTimeInSeconds = PvPBattleSceneGodTunnel._levelTimeInSeconds/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.PlayedTime].GetPlayedTime()*/;
 
-            aircraftVal = PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Aircraft].GetTotalDamageInCredits();
-            shipsVal = PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Ships].GetTotalDamageInCredits();
-            cruiserVal = PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Cruiser].GetTotalDamageInCredits();
-            buildingsVal = PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Buildings].GetTotalDamageInCredits();
-
-            Debug.Log("===> aircraftVal : " + aircraftVal.ToString());
-            Debug.Log("===> shipsVal : " + shipsVal.ToString());
-            Debug.Log("===> cruiserVal : " + cruiserVal.ToString());
-            Debug.Log("===> buildingsVal : " + buildingsVal.ToString());
+            aircraftVal = PvPBattleSceneGodTunnel._aircraftVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Aircraft].GetTotalDamageInCredits()*/;
+            shipsVal = PvPBattleSceneGodTunnel._shipsVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Ships].GetTotalDamageInCredits()*/;
+            cruiserVal = PvPBattleSceneGodTunnel._cruiserVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Cruiser].GetTotalDamageInCredits()*/;
+            buildingsVal = PvPBattleSceneGodTunnel._buildingsVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Buildings].GetTotalDamageInCredits()*/;
 
             // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
             destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
@@ -169,11 +181,57 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             for (int i = 0; i < destructionCards.Length; i++)
             {
                 destructionCards[i].destructionValue.text = FormatNumber(destructionValues[i]);
-                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodServer.deadBuildables[(PvPTargetType)i].GetTotalDestroyed();
+                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._totalDestroyed[i];
             }
 
-            destructionCards[2].image.sprite = PvPBattleSceneGodServer.enemyCruiserSprite;
-            destructionCards[2].description.text = PvPBattleSceneGodServer.enemyCruiserName;
+            /*destructionCards[2].image.sprite = PvPBattleSceneGodServer.enemyCruiserSprite;*/
+            switch (PvPBattleSceneGodTunnel._enemyCruiserName)
+            {
+                case "BlackRig":
+                    destructionCards[2].image.sprite = BlackRig;
+                    break;
+                case "Bullshark":
+                    destructionCards[2].image.sprite = Bullshark;
+                    break;
+                case "Eagle":
+                    destructionCards[2].image.sprite = Eagle;
+                    break;
+                case "Hammerhead":
+                    destructionCards[2].image.sprite = Hammerhead;
+                    break;
+                case "HuntressBoss":
+                    destructionCards[2].image.sprite = HuntressBoss;
+                    break;
+                case "Longbow":
+                    destructionCards[2].image.sprite = Longbow;
+                    break;
+                case "ManOfWarBoss":
+                    destructionCards[2].image.sprite = ManOfWarBoss;
+                    break;
+                case "Megalodon":
+                    destructionCards[2].image.sprite = Megalodon;
+                    break;
+                case "Raptor":
+                    destructionCards[2].image.sprite = Raptor;
+                    break;
+                case "Rickshaw":
+                    destructionCards[2].image.sprite = Rickshaw;
+                    break;
+                case "Rockjaw":
+                    destructionCards[2].image.sprite = Rockjaw;
+                    break;
+                case "TasDevil":
+                    destructionCards[2].image.sprite = TasDevil;
+                    break;
+                case "Trident":
+                    destructionCards[2].image.sprite = Trident;
+                    break;
+                case "Yeti":
+                    destructionCards[2].image.sprite = Yeti;
+                    break;
+
+            }
+            destructionCards[2].description.text = PvPBattleSceneGodTunnel._enemyCruiserName/*PvPBattleSceneGodServer.enemyCruiserName*/;
 
             //### Screen Setup ###
 
@@ -201,7 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             // Set starting rank values:
             rank = ranker.CalculateRank(prevAllTimeVal);
-            Debug.Log("===> rank : " + rank.ToString());
+
             currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
