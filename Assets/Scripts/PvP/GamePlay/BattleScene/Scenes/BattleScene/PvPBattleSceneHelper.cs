@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public virtual IPvPLevel GetPvPLevel()
         {
-            return _appModel.DataProvider.GetPvPLevel(Map.PracticeWreckyards);
+            return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
             // return _appModel.DataProvider.GetPvPLevel();
         }
 
