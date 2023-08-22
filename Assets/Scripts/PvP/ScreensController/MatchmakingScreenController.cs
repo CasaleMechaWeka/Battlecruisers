@@ -45,14 +45,17 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Text rightPlayerRankeName;
         public Text rightCruiserName;
         public Image rightCruiserImage;
-        
+
 
         public Text vsTitile;
+        public Text LookingForOpponentsText;
+        public Text FoundOpponentText;
 
         private ILocTable commonStrings;
         private IDataProvider dataProvider;
         private SpriteFetcher spriteFetcher;
 
+        private ILocTable screensSceneStrings;
 
         public Sprite BlackRig;
         public Sprite Bullshark;
@@ -69,7 +72,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite Trident;
         public Sprite Yeti;
 
-        private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>(); 
+        private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         public static MatchmakingScreenController Instance { get; private set; }
 
 
@@ -89,6 +92,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Instance = this;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
             dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             spriteFetcher = new SpriteFetcher();
             sprites.Add("BlackRig", BlackRig);
@@ -114,6 +118,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             leftPlayerRankImage.sprite = (await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
             leftCruiserImage.sprite = sprites[dataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
+
+            LookingForOpponentsText.text = commonStrings.GetString("LookingForOpponents");
+            FoundOpponentText.text = commonStrings.GetString("FoundOpponent");
         }
 
         public void SetTraskTalkData(ITrashTalkData trashTalkData, ILocTable commonString, ILocTable storyString)
@@ -125,8 +132,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public async void FoundCompetitor()
         {
-            
-           
+
+
             if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
             {
                 leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
@@ -142,7 +149,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
                 ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
                 rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
-                rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);               
+                rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
                 leftCruiserImage.sprite = sprites[SynchedServerData.Instance.playerBPrefabName.Value] != null ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
             }
             else
@@ -167,31 +174,31 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             switch (SynchedServerData.Instance.map.Value)
             {
                 case Map.PracticeWreckyards:
-                    vsTitile.text = "PracticeWreckyards";
+                    vsTitile.text = screensSceneStrings.GetString("Arena01Name");
                     break;
                 case Map.OzPenitentiary:
-                    vsTitile.text = "OzPenitentiary";
+                    vsTitile.text = screensSceneStrings.GetString("Arena02Name");
                     break;
                 case Map.UACUltimate:
-                    vsTitile.text = "UACUltimate";
+                    vsTitile.text = screensSceneStrings.GetString("Arena08Name");
                     break;
                 case Map.RioBattlesport:
-                    vsTitile.text = "RioBattlesport";
+                    vsTitile.text = screensSceneStrings.GetString("Arena07Name");
                     break;
                 case Map.NuclearDome:
-                    vsTitile.text = "NuclearDome";
+                    vsTitile.text = screensSceneStrings.GetString("Arena05Name");
                     break;
                 case Map.MercenaryOne:
-                    vsTitile.text = "MercenaryOne";
+                    vsTitile.text = screensSceneStrings.GetString("Arena09Name");
                     break;
                 case Map.SanFranciscoFightClub:
-                    vsTitile.text = "SanFranciscoFightClub";
+                    vsTitile.text = screensSceneStrings.GetString("Arena03Name");
                     break;
                 case Map.UACArena:
-                    vsTitile.text = "UACArena";
+                    vsTitile.text = screensSceneStrings.GetString("Arena06Name");
                     break;
                 case Map.UACBattleNight:
-                    vsTitile.text = "UACBattleNight";
+                    vsTitile.text = screensSceneStrings.GetString("Arena04Name");
                     break;
             }
 
