@@ -7,13 +7,16 @@ using System;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 
+// Remember, this class is going to be fed into a JSON (de)serializer!
+// Keep data types primitive.
+// JSON has never heard of Battlecruisers, so it gets confused by our internal structures.
+
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
     public class SaveGameModel
     {
         public int _saveVersion;
-
 
         // What do we need to save, critically? Just the assets and progress.
 
