@@ -24,6 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         Action onClientEntered;
         Action onClientExit;
         const int MaxConnectedPlayers = 2;
+        private bool isConnected = false;
         private void Awake()
         {
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -35,6 +36,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         }
 
+        private void Update()
+        {
+            if(isConnected && NetworkManager.Singleton.ConnectedClients.Count == 0)
+            {
+                if (Application.isEditor)
+                {
+                    UnityEditor.EditorApplication.isPlaying = false;
+                }
+                else
+                {
+                    Application.Quit();
+                }
+            }
+        }
         void OnClientEntered()
         {
             if (m_clients.Count == MaxConnectedPlayers)
@@ -122,6 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void OnSynchronizeComplete(ulong clientId)
         {
             m_clients.Add(clientId);
+            isConnected = true;
             onClientEntered?.Invoke();
         }
 

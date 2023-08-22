@@ -6,6 +6,11 @@ using System;
 using UnityEngine;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using System.Threading.Tasks;
+using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
+using BattleCruisers.Network.Multiplay.ConnectionManagement;
+using BattleCruisers.Network.Multiplay.Gameplay.UI;
+using BattleCruisers.Network.Multiplay.Infrastructure;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -31,8 +36,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _battleSceneGodTunnel = battleSceneGodTunnel;
         }
 
-        public void CompleteBattle(bool wasVictory, bool retryLevel)
+        public async void CompleteBattle(bool wasVictory, bool retryLevel)
         {
+            await Task.Delay(10);
             if (_isCompleted)
             {
                 return;
@@ -48,11 +54,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             _applicationModel.ShowPostBattleScreen = true;
             PvPTimeBC.Instance.TimeScale = 1;
+            DestroyAllNetworkObjects();
             _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
         }
 
-        public void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
+        public async void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
+           await Task.Delay(10);
             if (_isCompleted)
             {
                 return;
@@ -78,10 +86,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
                 else
                 {
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 }
             }
@@ -89,6 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
                 {
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 }
                 else
@@ -101,9 +112,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
             }
+        }
+
+        public async void DestroyAllNetworkObjects()
+        {
+           await Task.Delay(10);
+            GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
+            GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
+            GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
+            GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+            GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
+            GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
         }
     }
 }

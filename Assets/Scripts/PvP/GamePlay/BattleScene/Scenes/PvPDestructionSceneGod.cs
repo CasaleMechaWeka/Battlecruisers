@@ -612,7 +612,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 // Save changes:
                 await applicationModel.DataProvider.CloudSave();
             }
-
         }
 
         private void Done()

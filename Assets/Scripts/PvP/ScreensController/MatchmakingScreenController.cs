@@ -142,7 +142,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperA = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
                 leftPlayerRankImage.sprite = spriteWrapperA.Sprite;
                 leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
-                leftCruiserImage.sprite = sprites[SynchedServerData.Instance.playerAPrefabName.Value] != null ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
+                leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
 
                 rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
                 rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
@@ -150,7 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
                 rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
                 rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
-                leftCruiserImage.sprite = sprites[SynchedServerData.Instance.playerBPrefabName.Value] != null ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
+                leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
             }
             else
             {
@@ -160,7 +160,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
                 leftPlayerRankImage.sprite = spriteWrapperB.Sprite;
                 leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
-                leftCruiserImage.sprite = sprites[SynchedServerData.Instance.playerBPrefabName.Value] != null ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
+                leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
 
                 rightPlayerName.text = SynchedServerData.Instance.playerAName.Value;
                 rightCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
@@ -168,7 +168,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ISpriteWrapper spriteWrapperA = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
                 rightPlayerRankeImage.sprite = spriteWrapperA.Sprite;
                 rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
-                rightCruiserImage.sprite = sprites[SynchedServerData.Instance.playerAPrefabName.Value] != null ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
+                rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
             }
 
             switch (SynchedServerData.Instance.map.Value)

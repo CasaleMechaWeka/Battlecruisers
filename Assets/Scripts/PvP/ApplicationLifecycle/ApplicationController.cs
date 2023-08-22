@@ -17,7 +17,7 @@ using Unity.Services.Authentication;
 
 namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
 {
-    public class ApplicationController : LifetimeScope
+    public class ApplicationController : LifetimeScope, INetworkObject
     {
         [SerializeField] UpdateRunner m_UpdateRunner;
         [SerializeField] ConnectionManager m_ConnectionManager;
