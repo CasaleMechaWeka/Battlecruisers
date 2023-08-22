@@ -24,13 +24,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPBattleSceneGodTunnel battleSceneGodTunnel)
         {
             PvPHelper.AssertIsNotNull(applicationModel, sceneNavigator);
-
             _applicationModel = applicationModel;
             _sceneNavigator = sceneNavigator;
 
             _isCompleted = false;
             _battleSceneGodTunnel = battleSceneGodTunnel;
-
         }
 
         public void CompleteBattle(bool wasVictory, bool retryLevel)
@@ -50,9 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             _applicationModel.ShowPostBattleScreen = true;
             PvPTimeBC.Instance.TimeScale = 1;
-
-                _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
-
+            _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
         }
 
         public void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
@@ -88,8 +84,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 {
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 }
-
-
             }
             else
             {
@@ -109,7 +103,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     _applicationModel.DataProvider.SaveGame();
                     _sceneNavigator.GoToScene(PvPSceneNames.DESTRUCTION_SCENE, true);
                 }
-
             }
         }
     }

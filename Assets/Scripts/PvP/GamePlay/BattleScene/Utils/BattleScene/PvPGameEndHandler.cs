@@ -149,18 +149,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (_ai_RightPlayer != null)
                 _ai_RightPlayer?.DisposeManagedState();
             victoryCruiser.MakeInvincible();
-            //    _navigationPermitter.IsMatch = false;
-            //    _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-            // DestroyCruiserBuildables(victoryCruiser);
-            //    _uiManager.HideCurrentlyShownMenu();
-            //    _uiManager.HideItemDetails();
-            //    _targetIndicator.Hide();
-            //    _windManager.Stop();
-            //    _buildingCategoryPermitter.AllowNoCategories();
-            // Want to play cruiser sinking animation in real time, regardless of time player has set
-            // _speedButtonGroup.SelectDefaultButton();
             _battleSceneGodTunnel.HandleCruiserDestroyed();
             _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
             _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S);
