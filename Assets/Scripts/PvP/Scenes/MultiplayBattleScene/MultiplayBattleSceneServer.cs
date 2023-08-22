@@ -6,6 +6,7 @@ using Unity.Netcode;
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine.SceneManagement;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Network.Multiplay.Matchplay.Server;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -100,6 +101,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             else if (SynchedServerData.Instance.playerBClientNetworkId.Value == clientId)
             {
                 PvPBattleSceneGodServer.Instance.RegisterAIOfRightPlayer();
+            }
+
+            if (m_clients.Count == 0)
+            {
+                if(Application.isEditor)
+                {
+                    UnityEditor.EditorApplication.isPlaying = false;
+                }
+                else
+                {
+                    Application.Quit();
+                }
             }
             onClientExit?.Invoke();
         }
