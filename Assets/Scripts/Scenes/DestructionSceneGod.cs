@@ -405,7 +405,10 @@ namespace BattleCruisers.Scenes
             // Award any coins:
             if (coinsToAward > 0)
             {
-                coinsCounter.SetActive(true);
+                if(applicationModel.Mode != GameMode.Skirmish)
+                {
+                    coinsCounter.SetActive(true);
+                }    
             }
 
             // TODO: level rating (maybe?)
@@ -538,17 +541,21 @@ namespace BattleCruisers.Scenes
         {
             // Update GameModel vars
             // lifetime damage (this value is all we need for rank image/titles elsewhere):
-            long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
-            applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+            if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
+            {
+                long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
+                applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
 
-            // we need XPToNextLevel to populate any XP progress bars:
-            long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+                // we need XPToNextLevel to populate any XP progress bars:
+                long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
 
-            // Give the player their coins:
-            applicationModel.DataProvider.GameModel.Coins += coinsToAward;
-
-            // Save changes:
-            await applicationModel.DataProvider.CloudSave();
+                // Give the player their coins:
+                applicationModel.DataProvider.GameModel.Coins += coinsToAward;
+               
+                // Save changes:
+                await applicationModel.DataProvider.CloudSave();
+            }
+                
         }
 
         private void Done()

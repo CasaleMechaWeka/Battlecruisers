@@ -134,7 +134,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
 
 
-        private void OpenProfile()
+        public void OpenProfile()
         {
             playerInfoPanelController.gameObject.SetActive(true);
             ScreensSceneGod.Instance.cameraOfCaptains.SetActive(true);
