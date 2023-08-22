@@ -444,7 +444,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
             }*/
 
-            if (IsPlayerCruiser && _enemyCruiser.IsAlive)
+            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
                 PvPBattleSceneGodServer.AddPlayedTime(PvPTargetType.PlayedTime, _time.DeltaTime);
         }
 
