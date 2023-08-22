@@ -10,8 +10,8 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Animations;
-using UnityEditor.Animations;
+//using UnityEngine.Animations;
+//using UnityEditor.Animations;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
