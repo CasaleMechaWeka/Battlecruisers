@@ -14,7 +14,7 @@ using System;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Commands;
-
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -130,17 +130,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         arenas[cur_idx].gameObject.SetActive(false);
                     });
             }
-
+            _dataProvider.GameModel.GameMap = IndexCurrentArena;
         }
-
-
-
-
-
-
-
-
-
         private void StartBattle()
         {
             //  if (AuthenticationService.Instance.IsSignedIn)
