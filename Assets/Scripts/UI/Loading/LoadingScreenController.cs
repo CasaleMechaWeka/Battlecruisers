@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.Loading
 
         private static bool IsFirstTime = true;
         public static LoadingScreenController Instance { get; private set; }
+        public IApplicationModel applicationModel;
         public GameObject logos;
 
         async void Start()
@@ -27,7 +28,7 @@ namespace BattleCruisers.UI.Loading
 
             Helper.AssertIsNotNull(root, loadingText);
 
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            applicationModel = ApplicationModelProvider.ApplicationModel;
             ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
             string subTitle = String.Empty;
 
@@ -59,6 +60,10 @@ namespace BattleCruisers.UI.Loading
                     break;
                 }
             }
+
+            // get cloud data
+            CloudLoad();
+
             IsFirstTime = false;
         }
 
@@ -78,6 +83,14 @@ namespace BattleCruisers.UI.Loading
                                 Destroy(audioListener);
                             }
                         }*/
+        }
+
+        private void CloudLoad()
+        {
+            if (IsFirstTime)
+            {
+                applicationModel.DataProvider.CloudLoad();
+            }
         }
 
         private string FindLoadingText()

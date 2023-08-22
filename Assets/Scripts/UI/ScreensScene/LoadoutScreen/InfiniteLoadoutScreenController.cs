@@ -150,6 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public override void Cancel()
         {
             _dataProvider.SaveGame();
+            _dataProvider.CloudSave();
             _comparingFamilyTracker.SetComparingFamily(null);
             _screensSceneGod.GotoHubScreen();
         }
