@@ -130,12 +130,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         arenas[cur_idx].gameObject.SetActive(false);
                     });
             }
-            _dataProvider.GameModel.GameMap = IndexCurrentArena;
+         //   _dataProvider.GameModel.GameMap = IndexCurrentArena;
         }
         private void StartBattle()
         {
             //  if (AuthenticationService.Instance.IsSignedIn)
             //  {
+            _dataProvider.GameModel.GameMap = IndexCurrentArena;
             _screenSceneGod.LoadPvPBattleScene();
             //  }
         }

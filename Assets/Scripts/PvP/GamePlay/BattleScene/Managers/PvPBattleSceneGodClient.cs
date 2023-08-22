@@ -42,6 +42,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.D
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -50,27 +52,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     {
         private PvPUserTargetTracker _userTargetTracker;
         private PvPAudioInitialiser _audioInitialiser;
+        private PvPCruiserDeathManager _cruiserDeathManager;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
+        private IApplicationModel applicationModel;
+        private PvPBattleSceneGodComponents components;
+        private PvPNavigationPermitters navigationPermitters;
+        private IPvPSpriteProvider spriteProvider;
+        private IPvPCameraComponents cameraComponents;
+
+
         public PvPCameraInitialiser cameraInitialiser;
         public PvPTopPanelInitialiser topPanelInitialiser;
         public PvPLeftPanelInitialiser leftPanelInitialiser;
         public PvPRightPanelInitialiser rightPanelInitialiser;
-        private PvPCruiserDeathManager _cruiserDeathManager;
-        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
-
-        public IPvPUIManager uiManager;
-        public ILocTable commonStrings;
-        public Dictionary<string, AudioClip> projectileImpactSounds = new Dictionary<string, AudioClip>();
-
-        private IApplicationModel applicationModel;
-        public IDataProvider dataProvider;
-        public IPvPPrefabFactory prefabFactory;
-        private IPvPSpriteProvider spriteProvider;
-        public PvPFactoryProvider factoryProvider;
-        private PvPBattleSceneGodComponents components;
-        private PvPNavigationPermitters navigationPermitters;
-        private IPvPCameraComponents cameraComponents;
-        public PvPCruiser playerCruiser;
-        public PvPCruiser enemyCruiser;
         private IPvPBattleSceneHelper pvpBattleHelper;
         private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
@@ -82,6 +76,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPWindManager windManager;
         ISceneNavigator sceneNavigator;
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
+        private bool isReadyToShowCaptainExo = false;
+
+
+        public IPvPUIManager uiManager;
+        public ILocTable commonStrings;
+        public Dictionary<string, AudioClip> projectileImpactSounds = new Dictionary<string, AudioClip>();
+        public IDataProvider dataProvider;
+        public IPvPPrefabFactory prefabFactory;
+        public PvPFactoryProvider factoryProvider;
+        public PvPCruiser playerCruiser;
+        public PvPCruiser enemyCruiser;
+        public CaptainExo leftCaptain, rightCaptain;
+        public Transform leftContainer, rightContainer;
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -323,18 +330,109 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     components.UpdaterProvider.SwitchableUpdater,
                     navigationPermitters.HotkeyFilter,
                     cameraComponents.CameraFocuser,
-                //    rightPanelComponents.SpeedComponents,
+                    //    rightPanelComponents.SpeedComponents,
                     rightPanelComponents.MainMenuManager,
                     uiManager);
             playerCruiser.Destroyed += PlayerCruiser_Destroyed;
             enemyCruiser.Destroyed += EnemyCruiser_Destroyed;
 
-
+            // Captains
+            if (SynchedServerData.Instance != null)
+            {
+                SynchedServerData.Instance.captainAPrefabName.OnValueChanged += CaptainAPrefabNameChanged;
+                SynchedServerData.Instance.captainBPrefabName.OnValueChanged += CaptainBPrefabNameChanged;
+            }
+            isReadyToShowCaptainExo = true;
+            LoadAllCaptains();
             // pvp
             PvPHeckleMessageManager.Instance.Initialise(dataProvider, factoryProvider.Sound.UISoundPlayer);
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
         }
+
+        private async void LoadAllCaptains()
+        {
+            if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
+            {
+                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+
+                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
+                resultA.Prefab.StaticInitialise(commonStrings);
+
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                {
+                    if (leftCaptain == null)
+                        leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                }
+                else
+                {
+                    if (rightCaptain == null)
+                        rightCaptain = Instantiate(resultA.Prefab, rightContainer) as CaptainExo;
+                }
+            }
+            if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
+            {
+                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+
+                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
+                resultB.Prefab.StaticInitialise(commonStrings);
+
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                {
+                    if (rightCaptain == null)
+                        rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
+                }
+                else
+                {
+                    if (leftCaptain == null)
+                        leftCaptain = Instantiate(resultB.Prefab, leftContainer) as CaptainExo;
+                }
+            }
+        }
+        private async void CaptainAPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
+        {
+            if (newVal.ToString() != string.Empty)
+            {
+                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+
+                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                resultA.Prefab.StaticInitialise(commonStrings);
+
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                {
+                    if (leftCaptain == null)
+                        leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                }
+                else
+                {
+                    if (rightCaptain == null)
+                        rightCaptain = Instantiate(resultA.Prefab, rightContainer) as CaptainExo;
+                }
+            }
+        }
+
+        private async void CaptainBPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
+        {
+            if (newVal.ToString() != string.Empty)
+            {
+                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+
+                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                resultB.Prefab.StaticInitialise(commonStrings);
+
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                {
+                    if (rightCaptain == null)
+                        rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
+                }
+                else
+                {
+                    if (leftCaptain == null)
+                        leftCaptain = Instantiate(resultB.Prefab, leftContainer) as CaptainExo;
+                }
+            }
+        }
+
 
         private void PlayerCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
@@ -398,7 +496,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
 
-
+        private void Update()
+        {
+            if(isReadyToShowCaptainExo && (leftCaptain == null || rightCaptain == null))
+            {
+                LoadAllCaptains();
+                Debug.Log("===> Loading CaptainExos");
+            }
+        }
         IEnumerator iLoadedPvPScene()
         {
 
