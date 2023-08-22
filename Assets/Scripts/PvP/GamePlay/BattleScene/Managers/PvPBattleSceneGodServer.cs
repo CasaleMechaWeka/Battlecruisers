@@ -162,8 +162,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
             droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
 
-
-
             droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
             droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
             droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
@@ -176,13 +174,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
             _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
-
-
-
-
-
-
-
 
             string logName = "Battle_Begin";
 #if LOG_ANALYTICS
@@ -202,12 +193,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void RegisteredAllBuildalbesToServer()
         {
-
-            // ai should be created when the player leave battle arena.
-/*            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, 1 *//*current level num*//*);
-            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 *//*current level num*//*);
-*/
-
             _gameEndMonitor
                 = new PvPGameEndMonitor(
                     new PvPCruiserDestroyedMonitor(
@@ -217,17 +202,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     new PvPGameEndHandler(
                         playerACruiser,
                         playerBCruiser,
-/*                        ai_LeftPlayer,
-                        ai_RightPlayer,*/
                         _battleSceneGodTunnel,
                         components.Deferrer
-                        //    cameraComponents.CruiserDeathCameraFocuser,
-                        //    navigationPermitters.NavigationFilter,
-                        //    uiManager,
-                        //    components.TargetIndicator,
-                        //    //windManager,
-                        //    helper.BuildingCategoryPermitter,
-                        //    rightPanelComponents.SpeedComponents.SpeedButtonGroup
                         ));
 
             deadBuildables = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
