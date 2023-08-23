@@ -52,14 +52,16 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void OnClicked()
         {
-            _clickedFeedback.SetActive(true);
-            _captainsContainer.visualOfCaptains[_index].SetActive(true);
-            _captainsContainer.captainDataChanged.Invoke(this, new CaptainDataEventArgs
+            if (!_clickedFeedback.activeSelf)
             {
-                captainData = _captainData,
-                captainImage = _captainSprite
-            });
+                _clickedFeedback.SetActive(true);
+                _captainsContainer.visualOfCaptains[_index].SetActive(true);
+                _captainsContainer.captainDataChanged.Invoke(this, new CaptainDataEventArgs
+                {
+                    captainData = _captainData,
+                    captainImage = _captainSprite
+                });
+            }
         }
     }
-
 }

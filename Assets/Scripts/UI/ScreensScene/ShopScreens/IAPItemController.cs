@@ -41,12 +41,14 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void OnClicked()
         {
-            _clickedFeedback.SetActive(true);
-
-            _blackMarketScreenController.iapDataChanged.Invoke(this, new IAPDataEventArgs
+            if (!_clickedFeedback.activeSelf) 
             {
-                iapData = _iapData
-            });
+                _clickedFeedback.SetActive(true);
+                _blackMarketScreenController.iapDataChanged.Invoke(this, new IAPDataEventArgs
+                {
+                    iapData = _iapData
+                });
+            }
         }
     }
 }
