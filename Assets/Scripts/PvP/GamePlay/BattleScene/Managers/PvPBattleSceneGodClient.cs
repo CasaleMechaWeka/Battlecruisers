@@ -361,21 +361,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultA.Prefab.StaticInitialise(commonStrings);
                 if (leftCaptain == null)
+                {
                     leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                    leftCaptain.transform.localScale = Vector3.one * 0.5f;
+                }
+                   
 
                 if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
                 {
                     IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
                     resultB.Prefab.StaticInitialise(commonStrings);
                     if (rightCaptain == null)
+                    {
                         rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
+                        rightCaptain.transform.localScale = Vector3.one * 0.5f;
+                    }                        
                 }
                 else
                 {
                     IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                     resultB.Prefab.StaticInitialise(commonStrings);
                     if (rightCaptain == null)
+                    {
                         rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
+                        rightCaptain.transform.localScale = Vector3.one * 0.5f;
+                    }                       
                 }
             }
             else
@@ -385,26 +395,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultB.Prefab.StaticInitialise(commonStrings);
                 if (rightCaptain == null)
+                {
                     rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
+                    rightCaptain.transform.localScale = Vector3.one * 0.5f;
+                }                   
 
                 if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
                 {
                     IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
                     resultA.Prefab.StaticInitialise(commonStrings);
                     if (leftCaptain == null)
+                    {
                         leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                        leftCaptain.transform.localScale = Vector3.one * 0.5f;
+                    }                        
                 }
                 else
                 {
                     IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                     resultA.Prefab.StaticInitialise(commonStrings);
                     if (leftCaptain == null)
+                    {
                         leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                        leftCaptain.transform.localScale = Vector3.one * 0.5f;
+                    }                        
                 }
             }
 
-            captainController.leftCaptain = leftCaptain;
-            captainController.rightCaptain = rightCaptain;
+/*            captainController.leftCaptain = leftCaptain;
+            captainController.rightCaptain = rightCaptain;*/
+            captainController.Initialize(leftCaptain, rightCaptain);            
         }
         private async void CaptainAPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
         {

@@ -694,12 +694,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (Faction == PvPFaction.Reds)
             {
-                PvPBattleSceneGodServer.AddDeadBuildable_Left(TargetType, (int)(buildTimeInS * numOfDronesRequired));
-                //BattleSceneGod.ShowDeadBuildableStats();
+                int val = (int)(buildTimeInS * numOfDronesRequired);
+                PvPBattleSceneGodServer.AddDeadBuildable_Left(TargetType, val);
             }
             else
             {
-                PvPBattleSceneGodServer.AddDeadBuildable_Right(TargetType, (int)(buildTimeInS * numOfDronesRequired));
+                int val = (int)(buildTimeInS * numOfDronesRequired);
+                PvPBattleSceneGodServer.AddDeadBuildable_Right(TargetType, val);
             }
         }
 
@@ -760,6 +761,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
                 //   _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
+
+                if(Faction == PvPFaction.Reds)
+                {
+                    if (TargetType == PvPTargetType.Ships)
+                    {
+                        if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoLeftHappy(); else PvPCaptainExoHUDController.Instance.DoLeftTaunt();
+                        PvPCaptainExoHUDController.Instance.DoRightAngry();
+                        return;
+                    }
+                    if (TargetType == PvPTargetType.Buildings)
+                    {
+                        if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoLeftHappy(); else PvPCaptainExoHUDController.Instance.DoLeftTaunt();
+                        PvPCaptainExoHUDController.Instance.DoRightAngry();
+                        return;
+                    }
+                }
+                else
+                {
+                    if (TargetType == PvPTargetType.Ships)
+                    {
+                        if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoRightHappy(); else PvPCaptainExoHUDController.Instance.DoRightTaunt();
+                        PvPCaptainExoHUDController.Instance.DoLeftAngry();
+                        return;
+                    }
+                    if (TargetType == PvPTargetType.Buildings)
+                    {
+                        if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoRightHappy(); else PvPCaptainExoHUDController.Instance.DoRightTaunt();
+                        PvPCaptainExoHUDController.Instance.DoLeftAngry();
+                        return;
+                    }
+                }
+
             }
 
         }

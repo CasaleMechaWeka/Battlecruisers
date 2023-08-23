@@ -521,7 +521,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected override void OnDestroyedEvent()
         {
             if (IsClient)
+            {
+                    if(Faction == PvPFaction.Blues)
+                    {
+                        PvPCaptainExoHUDController.Instance.DoLeftAngry();
+                        PvPCaptainExoHUDController.Instance.DoRightHappy();
+                    }
+                    else
+                    {
+                        PvPCaptainExoHUDController.Instance.DoLeftHappy();
+                        PvPCaptainExoHUDController.Instance.DoRightAngry();
+                    }
                 base.OnDestroyedEvent();
+            }                
             if (IsServer)
                 OnDestroyedEventClientRpc();
         }
