@@ -9,6 +9,7 @@ using BattleCruisers.Utils;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
@@ -19,9 +20,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IComparingItemFamilyTracker _itemFamilyTracker;
         private IGameModel _gameModel;
         private UnitKey _unitkey;
+
+        public SelectUnitButton selectUnitButton;
         public override IComparableItem Item => _unitPrefab.Buildable;
         public TextMeshProUGUI _unitName;
         private RectTransform _selectedFeedback;
+        public Button toggleSelectionButton;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
@@ -44,11 +48,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemFamilyTracker.ComparingFamily.ValueChanged += OnUnitListChange;
             Assert.IsNotNull(unitPrefab);
             _unitPrefab = unitPrefab;
+
+            toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
+            toggleSelectionButton.gameObject.SetActive(false);
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
+
+            toggleSelectionButton.gameObject.SetActive(true);
 
             _comparingFamiltyTracker.SetComparingFamily(itemFamily);
             if (_comparingFamiltyTracker.ComparingFamily.Value == itemFamily)
@@ -75,6 +84,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void OnUnitListChange(object sender, EventArgs e)
         {
+            UpdateSelectedFeedback();
+        }
+
+        private void OnSelectionToggleClicked()
+        {
+            selectUnitButton.ToggleUnitSelection();
             UpdateSelectedFeedback();
         }
     }

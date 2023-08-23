@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
@@ -21,9 +22,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IComparingItemFamilyTracker _itemFamilyTracker;
         private IGameModel _gameModel;
         private BuildingKey _buildingKey;
+
+        public SelectBuildingButton selectBuildingButton;
         public override IComparableItem Item => _buildingPrefab.Buildable;
         public TextMeshProUGUI _buildingName;
         private RectTransform _selectedFeedback;
+        public Button toggleSelectionButton;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
@@ -45,12 +49,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _buildingPrefab = buildingPrefab;
             _buildingName.text = (buildingPrefab.Buildable.Name).ToString();
 
+            toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
+            toggleSelectionButton.gameObject.SetActive(false);
+
+
             UpdateSelectedFeedback();
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
+
+            toggleSelectionButton.gameObject.SetActive(true);
+
             _comparingFamiltyTracker.SetComparingFamily(ItemFamily.Buildings);
             if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Buildings)
             {
@@ -76,6 +87,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void OnListChange(object sender, EventArgs e)
         {
+            UpdateSelectedFeedback();
+        }
+
+        private void OnSelectionToggleClicked()
+        {
+            selectBuildingButton.ToggleBuildingSelection();
             UpdateSelectedFeedback();
         }
     }

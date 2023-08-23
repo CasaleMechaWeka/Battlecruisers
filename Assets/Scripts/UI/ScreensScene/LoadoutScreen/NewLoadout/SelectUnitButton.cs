@@ -59,6 +59,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Enabled = IsOverLimit();
         }
 
+        public void ToggleUnitSelection() { OnClicked(); }
+
         protected override void OnClicked()
         {
             base.OnClicked();
@@ -70,9 +72,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
             List<UnitKey> unitKeys = playerLoadout.GetUnitKeys(displayUnit.Category);
             Assert.IsNotNull(unitKeys);
-            if(!unitKeys.Contains(unitKey))
+            if (!unitKeys.Contains(unitKey))
             {
-                if(playerLoadout.GetUnitListSize(displayUnit.Category) <= unitLimit)
+                if (playerLoadout.GetUnitListSize(displayUnit.Category) <= unitLimit)
                     playerLoadout.AddUnitItem(displayUnit.Category, unitKey);
                 _dataProvider.SaveGame();
                 limit.text = playerLoadout.GetUnitListSize(displayUnit.Category).ToString();
@@ -97,7 +99,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 selectText.SetActive(false);
                 deselectText.SetActive(true);
             }
-            else 
+            else
             {
                 checkBox.SetActive(false);
                 Enabled = IsOverLimit();
@@ -105,7 +107,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 deselectText.SetActive(false);
             }
         }
-        
+
         private bool ShouldBeEnabled()
         {
             if (_comparingFamily.Value == ItemFamily.Units)
@@ -116,13 +118,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 //do nothing
             }
-               
+
             return flag;
         }
 
         private void UpdateSelectUnitButton(object sender, EventArgs e)
         {
-            if(ShouldBeEnabled())
+            if (ShouldBeEnabled())
             {
                 Enabled = IsOverLimit();
             }
@@ -158,8 +160,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     ((loadout.GetUnitListSize(_unitDetails.SelectedItem.Value.Category) == 1 && deselectText.activeSelf)))
                 {
                     return false;
-                } 
-            } 
+                }
+            }
             return true;
         }
     }

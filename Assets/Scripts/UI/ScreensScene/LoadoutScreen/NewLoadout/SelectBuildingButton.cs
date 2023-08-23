@@ -60,6 +60,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Enabled = ShouldBeEnabled();
         }
 
+        public void ToggleBuildingSelection() { OnClicked(); }
+
         protected override void OnClicked()
         {
             base.OnClicked();
