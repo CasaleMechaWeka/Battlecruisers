@@ -444,12 +444,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
             }*/
 
-            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
+            if (_enemyCruiser != null && _enemyCruiser.IsAlive)
             {
-                if (Faction == PvPFaction.Blues)
-                    PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
-                else
-                    PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
+                if (IsServer)
+                {                    
+                    if (Faction == PvPFaction.Blues)
+                    {
+                        PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
+                    }
+                    if (Faction == PvPFaction.Reds)
+                    {
+                        PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
+                    }
+                }
             }
         }
 
@@ -550,9 +557,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         [ServerRpc(RequireOwnership = true)]
         public void PvP_UnhighlightSlotsServerRpc()
-        { 
-            if(!IsDestroyed)
-            SlotHighlighter?.UnhighlightSlots();
+        {
+            if (!IsDestroyed)
+                SlotHighlighter?.UnhighlightSlots();
         }
 
 

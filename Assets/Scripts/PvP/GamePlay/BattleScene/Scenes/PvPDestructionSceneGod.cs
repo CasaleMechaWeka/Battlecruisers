@@ -265,7 +265,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
-            Debug.Log("======> levelTimeInSeconds : " + levelTimeInSeconds);
             coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
             coinsText.text = "+" + coinsToAward.ToString();
 

@@ -35,10 +35,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
             if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
             {
-                if (Faction == PvPFaction.Blues)
-                    PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
-                else
-                    PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
+                if (IsServer)
+                {
+                    if (Faction == PvPFaction.Blues)
+                    {
+                        PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
+                        Debug.Log("======> Blues Time ---> " + PvPBattleSceneGodServer.deadBuildables_left[PvPTargetType.PlayedTime].GetPlayedTime());
+                    }
+                    else
+                    {
+                        PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
+                        Debug.Log("======> Reds Time ---> " + PvPBattleSceneGodServer.deadBuildables_right[PvPTargetType.PlayedTime].GetPlayedTime());
+                    }
+                }
             }
         }
 
