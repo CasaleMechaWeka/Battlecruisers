@@ -43,11 +43,14 @@ namespace BattleCruisers.UI.ScreensScene
         }
         public void OnClicked()
         {
-            _clickedFeedback.SetActive(true);
-            _hecklesContainer.heckleDataChanged.Invoke(this, new HeckleDataEventArgs
+            if (!_clickedFeedback.activeSelf)
             {
-                heckleData = _heckleData
-            });
+                _clickedFeedback.SetActive(true);
+                _hecklesContainer.heckleDataChanged.Invoke(this, new HeckleDataEventArgs
+                {
+                    heckleData = _heckleData
+                });
+            }
         }
     }
 }
