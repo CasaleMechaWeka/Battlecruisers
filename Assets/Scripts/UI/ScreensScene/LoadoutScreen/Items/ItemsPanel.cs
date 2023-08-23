@@ -26,6 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public HeckleItemContainerV2 HeckleItemContainerV2Prefab;
         public Transform heckleParent;
+        public SelectHeckleButton toggleHeckleSelectionButton;
 
         // Heckle Logic
 
@@ -65,6 +66,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     {
                         HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
                         heckleContainer.heckleData = heckleData;
+                        heckleContainer.toggleSelectionButton = toggleHeckleSelectionButton;
                         IItemButton button = heckleContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                         buttons.Add(button);
                         heckleContainer.gameObject.SetActive(true);

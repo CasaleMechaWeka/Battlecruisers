@@ -2,6 +2,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System;
@@ -18,6 +19,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IHeckleData _heckleData;
         private IGameModel _gameModel;
         private ItemsPanel _itemsPanel;
+
+        public SelectHeckleButton selectHeckleButton;
+        public Button toggleSelectionButton;
 
         public override void ShowDetails()
         {
@@ -43,12 +47,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemFamilyTracker = comparingItemFamily;
             _itemFamilyTracker.ComparingFamily.ValueChanged += OnHeckleListChange;
             _itemName.text = Mathf.Max(108, 217 * heckleData.Index).ToString().Substring(0, 3);
+
+            toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
+            toggleSelectionButton.gameObject.SetActive(false);
+
             UpdateSelectedFeedback();
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
+
+            toggleSelectionButton.gameObject.SetActive(true);
+
             _itemsPanel.CurrentHeckleButton = this;
             _comparingFamiltyTracker.SetComparingFamily(itemFamily);
             if (_comparingFamiltyTracker.ComparingFamily.Value == itemFamily)
@@ -74,6 +85,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
         private void OnHeckleListChange(object sender, EventArgs e)
         {
+            UpdateSelectedFeedback();
+        }
+
+        private void OnSelectionToggleClicked()
+        {
+            selectHeckleButton.ToggleHeckleSelection();
             UpdateSelectedFeedback();
         }
     }

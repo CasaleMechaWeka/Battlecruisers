@@ -56,6 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             //    limit.text = _dataProvider.GameModel.PlayerLoadout.CurrentHeckles.Count.ToString();
         }
 
+        public void ToggleHeckleSelection() { OnClicked(); }
 
         protected override void OnClicked()
         {
