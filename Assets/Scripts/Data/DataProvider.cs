@@ -37,6 +37,7 @@ namespace BattleCruisers.Data
         public IGameModel GameModel => _gameModel;
         public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
+        public bool pvpServerAvailable { get; set; }
         public DataProvider(IStaticData staticData, ISerializer serializer)
         {
             Helper.AssertIsNotNull(staticData, serializer);
@@ -177,6 +178,7 @@ namespace BattleCruisers.Data
         {
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
+            pvpServerAvailable = RemoteConfigService.Instance.appConfig.GetBool("PVP_SERVER_AVAILABLE");
         }
 
         public async Task SyncCaptainsCost()

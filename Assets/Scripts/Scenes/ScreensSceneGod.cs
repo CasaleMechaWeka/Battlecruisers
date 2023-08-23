@@ -139,9 +139,24 @@ namespace BattleCruisers.Scenes
                 {
                     Debug.Log(ex.Message);
                 }
+
+                // set pvp status in Battle Hub
+                if (_dataProvider.pvpServerAvailable)
+                {
+                    // server available
+                    hubScreen.serverStatusPanel.SetActive(false);
+                }
+                else
+                {
+                    // server NOT available
+                    hubScreen.serverStatusPanel.SetActive(true);
+                }
             }
             else
             {
+                // turn off server status panel anyway, there is no server to be maintained:
+                hubScreen.serverStatusPanel.SetActive(false);
+
                 // if not Internet Connection or Sign in, we will use local data.
             }
 
