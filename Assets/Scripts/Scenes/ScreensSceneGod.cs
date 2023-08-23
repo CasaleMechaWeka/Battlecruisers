@@ -134,28 +134,35 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     await _dataProvider.LoadBCData();
+
+                    // set pvp status in Battle Hub
+                    bool serverStatus = await _dataProvider.GetPVPServerStatus();
+                    if (serverStatus)
+                    {
+                        // server available
+                        hubScreen.serverStatusPanel.SetActive(false);
+                        hubScreen.titleOfBattleButton.text = commonStrings.GetString("BattleOnline");
+                        Debug.Log("PVP Server Available.");
+                    }
+                    else
+                    {
+                        // server NOT available
+                        hubScreen.serverStatusPanel.SetActive(true);
+                        hubScreen.titleOfBattleButton.text = commonStrings.GetString("BattleBots");
+                        Debug.Log("PVP Server Unavailable.");
+                    }
                 }
                 catch (Exception ex)
                 {
                     Debug.Log(ex.Message);
-                }
-
-                // set pvp status in Battle Hub
-                if (_dataProvider.pvpServerAvailable)
-                {
-                    // server available
-                    hubScreen.serverStatusPanel.SetActive(false);
-                }
-                else
-                {
-                    // server NOT available
-                    hubScreen.serverStatusPanel.SetActive(true);
                 }
             }
             else
             {
                 // turn off server status panel anyway, there is no server to be maintained:
                 hubScreen.serverStatusPanel.SetActive(false);
+                hubScreen.titleOfBattleButton.text = commonStrings.GetString("BattleBots");
+                Debug.Log("Offline, can't find out status of PVP Server.");
 
                 // if not Internet Connection or Sign in, we will use local data.
             }

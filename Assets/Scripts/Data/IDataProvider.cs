@@ -42,6 +42,7 @@ namespace BattleCruisers.Data
         Task<bool> SyncInventoryFromCloud();
         Task<bool> SyncCoinsToCloud();
         Task<bool> SyncCreditsToCloud();
+        Task<bool> GetPVPServerStatus();
         Task SyncCaptainsCost();
         Task SyncHecklesCost();
 

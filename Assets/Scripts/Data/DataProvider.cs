@@ -178,7 +178,12 @@ namespace BattleCruisers.Data
         {
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
-            pvpServerAvailable = RemoteConfigService.Instance.appConfig.GetBool("PVP_SERVER_AVAILABLE");
+        }
+
+
+        public async Task<bool> GetPVPServerStatus()
+        {
+            return RemoteConfigService.Instance.appConfig.GetBool("PVP_SERVER_AVAILABLE");
         }
 
         public async Task SyncCaptainsCost()
