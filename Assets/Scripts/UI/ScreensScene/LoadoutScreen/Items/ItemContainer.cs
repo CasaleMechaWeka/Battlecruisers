@@ -24,6 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     /// </summary>
     public abstract class ItemContainer : MonoBehaviour
     {
+        private IItemButton _itemButton;
         private IGameModel _gameModel;
         private NewItemMark _newItemMark;
         protected ItemsPanel _itemsPanel;
@@ -56,6 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             itemButton.IsVisible = isItemUnlocked;
             UpdateNewItemMarkVisibility();
 
+            _itemButton = itemButton;
             return itemButton;
         }
 
@@ -72,6 +74,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             Logging.LogMethod(Tags.LOADOUT_SCREEN);
             MakeOld(_gameModel);
             UpdateNewItemMarkVisibility();
+        }
+
+        private void OnDisable()
+        {
+            if(_itemButton == _itemsPanel.GetFirstItemButton())
+            {
+                MakeOld(_gameModel);
+                UpdateNewItemMarkVisibility();
+            }
         }
 
         protected abstract bool IsUnlocked(IGameModel gameModel);
