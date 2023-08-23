@@ -31,9 +31,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Localization;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Models.PrefabKeys;
 using Unity.Services.Authentication;
+using UnityEngine.Localization.Components;
 
 namespace BattleCruisers.Scenes
 {
@@ -141,14 +143,14 @@ namespace BattleCruisers.Scenes
                     {
                         // server available
                         hubScreen.serverStatusPanel.SetActive(false);
-                        hubScreen.titleOfBattleButton.text = screensSceneStrings.GetString("BattleOnline");
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
                         Debug.Log("PVP Server Available.");
                     }
                     else
                     {
                         // server NOT available
                         hubScreen.serverStatusPanel.SetActive(true);
-                        hubScreen.titleOfBattleButton.text = screensSceneStrings.GetString("BattleBots");
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                         Debug.Log("PVP Server Unavailable.");
                     }
                 }
@@ -161,7 +163,7 @@ namespace BattleCruisers.Scenes
             {
                 // turn off server status panel anyway, there is no server to be maintained:
                 hubScreen.serverStatusPanel.SetActive(false);
-                hubScreen.titleOfBattleButton.text = screensSceneStrings.GetString("BattleBots");
+                hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                 Debug.Log("Offline, can't find out status of PVP Server.");
 
                 // if not Internet Connection or Sign in, we will use local data.
