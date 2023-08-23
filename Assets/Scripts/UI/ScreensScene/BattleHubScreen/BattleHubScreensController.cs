@@ -42,6 +42,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public Text titleOfBattleButton;
 
+        public GameObject serverStatusPanel;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -82,9 +84,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
         }
-
-
-
 
         private void GoHome()
         {

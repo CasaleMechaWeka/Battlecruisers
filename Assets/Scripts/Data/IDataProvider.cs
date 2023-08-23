@@ -21,6 +21,8 @@ namespace BattleCruisers.Data
         List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
 
+        public bool pvpServerAvailable { get; set; }
+
         ILevel GetLevel(int levelNum);
         IPvPLevel GetPvPLevel(Map map);
         void SaveGame();
@@ -40,6 +42,7 @@ namespace BattleCruisers.Data
         Task<bool> SyncInventoryFromCloud();
         Task<bool> SyncCoinsToCloud();
         Task<bool> SyncCreditsToCloud();
+        Task<bool> GetPVPServerStatus();
         Task SyncCaptainsCost();
         Task SyncHecklesCost();
 
