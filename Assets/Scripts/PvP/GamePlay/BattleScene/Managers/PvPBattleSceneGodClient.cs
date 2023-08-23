@@ -89,6 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPCruiser enemyCruiser;
         public CaptainExo leftCaptain, rightCaptain;
         public Transform leftContainer, rightContainer;
+        private PvPCaptainExoHUDController captainController;
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -200,9 +201,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             /*currentLevel = pvpBattleHelper.GetPvPLevel();*/
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-
+            captainController = GetComponent<PvPCaptainExoHUDController>();
             // components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater,);
-
         }
 
         private async void InitialiseAsync()
@@ -354,7 +354,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (SynchedServerData.Instance == null)
                 return;
-            if(SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
                 IPrefabFetcher prefabFetcher = new PrefabFetcher();
 
@@ -363,7 +363,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 if (leftCaptain == null)
                     leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
 
-                if(SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
+                if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
                 {
                     IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
                     resultB.Prefab.StaticInitialise(commonStrings);
@@ -402,6 +402,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
                 }
             }
+
+            captainController.leftCaptain = leftCaptain;
+            captainController.rightCaptain = rightCaptain;
         }
         private async void CaptainAPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
         {
@@ -512,10 +515,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void Update()
         {
-            if(isReadyToShowCaptainExo && (leftCaptain == null || rightCaptain == null))
+            if (isReadyToShowCaptainExo && (leftCaptain == null || rightCaptain == null))
             {
                 LoadAllCaptains();
-                Debug.Log("===> Loading CaptainExos");
             }
         }
         IEnumerator iLoadedPvPScene()
