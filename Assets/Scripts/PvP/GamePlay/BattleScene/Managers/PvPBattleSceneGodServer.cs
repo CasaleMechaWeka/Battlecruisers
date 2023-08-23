@@ -53,7 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static bool GameOver;
         private IPvPBattleSceneHelper pvpBattleHelper;
 
-        public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables;
+        public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables_left;
+        public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables_right;
         public static Sprite enemyCruiserSprite;
         public static string enemyCruiserName;
 
@@ -217,12 +218,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         components.Deferrer
                         ));
 
-            deadBuildables = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
-            deadBuildables.Add(PvPTargetType.Aircraft, new PvPDeadBuildableCounter());
-            deadBuildables.Add(PvPTargetType.Ships, new PvPDeadBuildableCounter());
-            deadBuildables.Add(PvPTargetType.Cruiser, new PvPDeadBuildableCounter());
-            deadBuildables.Add(PvPTargetType.Buildings, new PvPDeadBuildableCounter());
-            deadBuildables.Add(PvPTargetType.PlayedTime, new PvPDeadBuildableCounter());
+            deadBuildables_left = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
+            deadBuildables_left.Add(PvPTargetType.Aircraft, new PvPDeadBuildableCounter());
+            deadBuildables_left.Add(PvPTargetType.Ships, new PvPDeadBuildableCounter());
+            deadBuildables_left.Add(PvPTargetType.Cruiser, new PvPDeadBuildableCounter());
+            deadBuildables_left.Add(PvPTargetType.Buildings, new PvPDeadBuildableCounter());
+            deadBuildables_left.Add(PvPTargetType.PlayedTime, new PvPDeadBuildableCounter());
+
+
+            deadBuildables_right = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
+            deadBuildables_right.Add(PvPTargetType.Aircraft, new PvPDeadBuildableCounter());
+            deadBuildables_right.Add(PvPTargetType.Ships, new PvPDeadBuildableCounter());
+            deadBuildables_right.Add(PvPTargetType.Cruiser, new PvPDeadBuildableCounter());
+            deadBuildables_right.Add(PvPTargetType.Buildings, new PvPDeadBuildableCounter());
+            deadBuildables_right.Add(PvPTargetType.PlayedTime, new PvPDeadBuildableCounter());
 
 
             if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
@@ -242,7 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
         }
-        public static void AddDeadBuildable(PvPTargetType type, int value)
+        public static void AddDeadBuildable_Left(PvPTargetType type, int value)
         {
             if (!GameOver)
             {
@@ -250,7 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 {
                     return;
                 }
-                deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                deadBuildables_left[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == PvPTargetType.Cruiser)
                 {
@@ -259,11 +268,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        public static void AddPlayedTime(PvPTargetType type, float dt)
+        public static void AddPlayedTime_Left(PvPTargetType type, float dt)
         {
             if (!GameOver)
             {
-                deadBuildables?[type]?.AddPlayedTime(dt);
+                deadBuildables_left?[type]?.AddPlayedTime(dt);
+            }
+        }
+
+
+        public static void AddDeadBuildable_Right(PvPTargetType type, int value)
+        {
+            if (!GameOver)
+            {
+                if (type == PvPTargetType.Satellite || type == PvPTargetType.Rocket)
+                {
+                    return;
+                }
+                deadBuildables_right[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
+                if (type == PvPTargetType.Cruiser)
+                {
+                    GameOver = true;
+                }
+            }
+        }
+
+        public static void AddPlayedTime_Right(PvPTargetType type, float dt)
+        {
+            if (!GameOver)
+            {
+                deadBuildables_right?[type]?.AddPlayedTime(dt);
             }
         }
         public void RegisterAIOfLeftPlayer()

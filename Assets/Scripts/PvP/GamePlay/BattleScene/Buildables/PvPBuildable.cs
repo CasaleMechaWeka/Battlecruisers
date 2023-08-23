@@ -694,8 +694,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (Faction == PvPFaction.Reds)
             {
-                PvPBattleSceneGodServer.AddDeadBuildable(TargetType, (int)(buildTimeInS * numOfDronesRequired));
+                PvPBattleSceneGodServer.AddDeadBuildable_Left(TargetType, (int)(buildTimeInS * numOfDronesRequired));
                 //BattleSceneGod.ShowDeadBuildableStats();
+            }
+            else
+            {
+                PvPBattleSceneGodServer.AddDeadBuildable_Right(TargetType, (int)(buildTimeInS * numOfDronesRequired));
             }
         }
 

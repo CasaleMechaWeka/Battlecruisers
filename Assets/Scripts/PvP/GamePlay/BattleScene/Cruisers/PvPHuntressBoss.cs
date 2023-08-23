@@ -41,6 +41,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 }
                 //Debug.Log(maxHealth);
             }
+
+            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
+            {
+                if (Faction == PvPFaction.Blues)
+                    PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
+                else
+                    PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
+            }
         }
 
         public override void StaticInitialise(ILocTable commonStrings)

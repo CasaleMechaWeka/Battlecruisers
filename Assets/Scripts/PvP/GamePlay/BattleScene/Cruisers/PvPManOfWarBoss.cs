@@ -33,6 +33,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 _healthTracker.SetHealth(0 + unit.Health);
                 //Debug.Log(unit.Health);
             }
+            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
+            {
+                if (Faction == PvPFaction.Blues)
+                    PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
+                else
+                    PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
+            }
         }
 
         public override void StaticInitialise(ILocTable commonStrings)

@@ -352,40 +352,54 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private async void LoadAllCaptains()
         {
-            if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
+            if (SynchedServerData.Instance == null)
+                return;
+            if(SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
                 IPrefabFetcher prefabFetcher = new PrefabFetcher();
 
-                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
+                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultA.Prefab.StaticInitialise(commonStrings);
+                if (leftCaptain == null)
+                    leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
 
-                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                if(SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
                 {
-                    if (leftCaptain == null)
-                        leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                    IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
+                    resultB.Prefab.StaticInitialise(commonStrings);
+                    if (rightCaptain == null)
+                        rightCaptain = Instantiate(resultA.Prefab, rightContainer) as CaptainExo;
                 }
                 else
                 {
+                    IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                    resultB.Prefab.StaticInitialise(commonStrings);
                     if (rightCaptain == null)
                         rightCaptain = Instantiate(resultA.Prefab, rightContainer) as CaptainExo;
                 }
             }
-            if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
+            else
             {
                 IPrefabFetcher prefabFetcher = new PrefabFetcher();
 
-                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
+                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultB.Prefab.StaticInitialise(commonStrings);
+                if (rightCaptain == null)
+                    rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
 
-                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
                 {
-                    if (rightCaptain == null)
-                        rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
+                    IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
+                    resultA.Prefab.StaticInitialise(commonStrings);
+                    if (leftCaptain == null)
+                        leftCaptain = Instantiate(resultA.Prefab, rightContainer) as CaptainExo;
                 }
                 else
                 {
+                    IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                    resultA.Prefab.StaticInitialise(commonStrings);
                     if (leftCaptain == null)
-                        leftCaptain = Instantiate(resultB.Prefab, leftContainer) as CaptainExo;
+                        leftCaptain = Instantiate(resultA.Prefab, rightContainer) as CaptainExo;
                 }
             }
         }

@@ -40,8 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
 
-            _gameEndHandler.HandleCruiserDestroyed(e.WasPlayerVictory, GetTotalDestructionScore());
-
+            _gameEndHandler.HandleCruiserDestroyed(e.WasPlayerVictory, e.WasPlayerVictory ? GetTotalDestructionScore_Left() : GetTotalDestructionScore_Right());
             GameEnded?.Invoke(this, EventArgs.Empty);
         }
 
@@ -62,9 +61,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         }
 
-        private static long GetTotalDestructionScore()
+        private static long GetTotalDestructionScore_Left()
         {
-            Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables;
+            Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_left;
             long ds = 0;
             foreach (KeyValuePair<PvPTargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
             {
@@ -73,6 +72,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return ds;
         }
 
+        private static long GetTotalDestructionScore_Right()
+        {
+            Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_right;
+            long ds = 0;
+            foreach (KeyValuePair<PvPTargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
+            {
+                ds += kvp.Value.GetTotalDamageInCredits();
+            }
+            return ds;
+        }
         public void RegisterAIOfLeftPlayer(IPvPArtificialIntelligence ai_LeftPlayer)
         {
             _gameEndHandler.RegisterAIOfLeftPlayer(ai_LeftPlayer);
