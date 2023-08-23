@@ -138,7 +138,7 @@ namespace BattleCruisers.Scenes
                     await _dataProvider.LoadBCData();
 
                     // set pvp status in Battle Hub
-                    bool serverStatus = await _dataProvider.GetPVPServerStatus();
+                    bool serverStatus = await _dataProvider.RefreshPVPServerStatus();
                     if (serverStatus)
                     {
                         // server available

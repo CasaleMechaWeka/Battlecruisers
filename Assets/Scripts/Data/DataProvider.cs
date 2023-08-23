@@ -181,9 +181,10 @@ namespace BattleCruisers.Data
         }
 
 
-        public async Task<bool> GetPVPServerStatus()
+        public async Task<bool> RefreshPVPServerStatus()
         {
-            return RemoteConfigService.Instance.appConfig.GetBool("PVP_SERVER_AVAILABLE");
+            pvpServerAvailable = RemoteConfigService.Instance.appConfig.GetBool("PVP_SERVER_AVAILABLE");
+            return pvpServerAvailable;
         }
 
         public async Task SyncCaptainsCost()
