@@ -38,16 +38,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void Update()
         {
-            if(isConnected && NetworkManager.Singleton.ConnectedClients.Count == 0)
+            if (isConnected && NetworkManager.Singleton.ConnectedClients.Count == 0)
             {
-                if (Application.isEditor)
-                {
-                    UnityEditor.EditorApplication.isPlaying = false;
-                }
-                else
-                {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
                     Application.Quit();
-                }
+#endif
             }
         }
         void OnClientEntered()
@@ -120,14 +117,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             if (m_clients.Count == 0)
             {
-                if(Application.isEditor)
-                {
-                    UnityEditor.EditorApplication.isPlaying = false;
-                }
-                else
-                {
-                    Application.Quit();
-                }
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
             }
             onClientExit?.Invoke();
         }
