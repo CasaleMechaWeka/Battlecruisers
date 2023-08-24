@@ -90,6 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     if (IsDestroyed)
                     {
                         EnableShield();
+                        OnHealthRecoveredClientRpc();
                     }
 
                     RepairCommandExecute(Stats.ShieldRechargeRatePerS * _time.DeltaTime);
@@ -115,6 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             DisableShield();
             InvokeDestroyedEvent();
             _timeSinceDamageInS = 0;
+            OnHealthGoneClientRpc();
         }
 
         protected override void OnTakeDamage()
@@ -179,6 +181,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
                 PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(soundType, soundName), position);
+        }
+
+        [ClientRpc]
+        private void OnHealthGoneClientRpc()
+        {
+            if (IsClient)
+                visuals.SetActive(false);
+        }
+
+        [ClientRpc]
+        private void OnHealthRecoveredClientRpc()
+        {
+            if(IsClient)
+                visuals.SetActive(true);
         }
 
     }
