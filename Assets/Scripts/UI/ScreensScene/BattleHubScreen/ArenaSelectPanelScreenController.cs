@@ -16,6 +16,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -51,6 +52,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private IDataProvider _dataProvider;
         private INextLevelHelper _nextLevelHelper;
 
+        public ILocTable screensSceneTable;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -75,6 +78,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             navLeftButton.Initialise(soundPlayer, _previousSetCommand);
 
             DOTween.Init();
+
+            screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
         }
 
         public void OnEnable()
@@ -169,9 +174,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 else
                 {
                     if (_dataProvider.GameModel.Coins < _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcoins)
-                        MessageBox.Instance.ShowMessage("Insufficient Coins");
+                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
                     if (_dataProvider.GameModel.Credits < _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcredits)
-                        MessageBox.Instance.ShowMessage("Insufficient Credits");
+                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCredits"));
                 }
             }
         }
