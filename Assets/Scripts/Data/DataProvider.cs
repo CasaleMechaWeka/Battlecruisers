@@ -37,6 +37,7 @@ namespace BattleCruisers.Data
         public IGameModel GameModel => _gameModel;
         public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
+        public PvPConfig pvpConfig { get; set; }
         public bool pvpServerAvailable { get; set; }
         public DataProvider(IStaticData staticData, ISerializer serializer)
         {
@@ -178,6 +179,9 @@ namespace BattleCruisers.Data
         {
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
+
+            var pvpConfigJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_CONFIG");
+            pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
         }
 
 
@@ -372,6 +376,46 @@ namespace BattleCruisers.Data
             return $"{id}:{amount}";
         }
     }
+
+    [Serializable]
+    public struct PvPConfig
+    {
+        public List<Arena> arenas;
+    }
+
+    [Serializable]
+    public struct Arena
+    {
+        public string id;
+        public int costcoins;
+        public int costcredits;
+        public int prizecoins;
+        public int prizecredits;
+        public int prizenukes;
+        public int consolationcredits;
+        public int consolationnukes;
+
+        public Arena(
+        string id,
+        int costcoins,
+        int costcredits,
+        int prizecoins,
+        int prizecredits,
+        int prizenukes,
+        int consolationcredits,
+        int consolationnukes)
+        {
+            this.id = id;
+            this.costcoins = costcoins;
+            this.costcredits = costcredits;
+            this.prizecoins = prizecoins;
+            this.prizecredits = prizecredits;
+            this.prizenukes = prizenukes;
+            this.consolationcredits = consolationcredits;
+            this.consolationnukes = consolationnukes;
+        }
+    }
+
     struct UserAttributes { }
 
     struct AppAttributes { }

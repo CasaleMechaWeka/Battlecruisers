@@ -35,6 +35,7 @@ namespace BattleCruisers.UI.ScreensScene
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
         public GameObject content;
+        private ILocTable screensSceneTable;
 
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -46,6 +47,7 @@ namespace BattleCruisers.UI.ScreensScene
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             firstNameString = captainName.text;
             firstDescrtiptionString = captainDescription.text;
+            screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
         }
 
         private async void OnEnable()
@@ -78,32 +80,32 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            MessageBox.Instance.ShowMessage("You got " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
                         }
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            MessageBox.Instance.ShowMessage("Try again later!");
+                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
                         }
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        MessageBox.Instance.ShowMessage("Try again later!");
+                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
                 else
                 {
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                    MessageBox.Instance.ShowMessage("Insufficient Coins!");
+                    MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
                     return;
                 }
             }
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                MessageBox.Instance.ShowMessage("You have no Internet Connection!");
+                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("NoInternetConnection"));
             }
         }
 

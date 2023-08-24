@@ -67,6 +67,7 @@ namespace BattleCruisers.Scenes
         public const string AuthProfileCommandLineArg = "-AuthProfile";
         public ILocTable commonStrings;
         public ILocTable hecklesStrings;
+        public ILocTable screenSceneStrings;
 
         public static LandingSceneGod Instance;
         public LoginType loginType = LoginType.None;
@@ -216,6 +217,7 @@ namespace BattleCruisers.Scenes
             SceneNavigator = this;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             hecklesStrings = await LocTableFactory.Instance.LoadHecklesTableAsync();
+            screenSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
 
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
