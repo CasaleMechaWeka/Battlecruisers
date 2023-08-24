@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 Debug.Log("Sync failed");
             }
-            
+
         }
 
         public void Initialise(
@@ -98,7 +98,6 @@ namespace BattleCruisers.UI.ScreensScene
             iapDataChanged += IAPDataChangedHandler;
             commonStrings = LandingSceneGod.Instance.commonStrings;
             screenSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
-            Debug.Log(screenSceneStrings.GetString("CoinsPack100Purchased"));
         }
         private void Start()
         {
