@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
@@ -13,21 +14,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public IPvPModalMenu MainMenu { get; }
         // public PvPSpeedComponents SpeedComponents { get; }
         public PvPHelpButton HelpButton { get; }
+        public PvPHecklePanelController HacklePanelController { get; }
 
         public PvPRightPanelComponents(
             IPvPInformatorPanel informatorPanel,
             IPvPMainMenuManager mainMenuManager,
             IPvPModalMenu mainMenu,
          //   PvPSpeedComponents speedComponents,
+            PvPHecklePanelController pvPHecklePanelController,
             PvPHelpButton helpButton)
         {
-            PvPHelper.AssertIsNotNull(informatorPanel, mainMenuManager, mainMenu, /*speedComponents,*/ helpButton);
+            PvPHelper.AssertIsNotNull(informatorPanel, mainMenuManager, mainMenu, /*speedComponents,*/pvPHecklePanelController, helpButton);
 
             InformatorPanel = informatorPanel;
             MainMenuManager = mainMenuManager;
             MainMenu = mainMenu;
         //    SpeedComponents = speedComponents;
             HelpButton = helpButton;
+            HacklePanelController = pvPHecklePanelController;
         }
     }
 }

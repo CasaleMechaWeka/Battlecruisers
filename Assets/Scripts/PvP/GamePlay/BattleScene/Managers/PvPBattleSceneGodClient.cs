@@ -293,7 +293,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     factoryProvider.Sound.PrioritisedSoundPlayer,
                     factoryProvider.Sound.UISoundPlayer);
             pvpBattleHelper.InitialiseUIManager(args);
-            _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager);
+            _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager, rightPanelComponents.HacklePanelController);
 
 
             // Audio

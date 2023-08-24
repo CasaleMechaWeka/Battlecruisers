@@ -60,7 +60,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 );
 
             IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, perFrameUpdater, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
-            heckleController.Initialise(applicationModel.DataProvider, soundPlayer);
+            heckleController.Initialise(applicationModel.DataProvider, soundPlayer, uiManager);
+            uiManager.SetHecklePanel(heckleController);
         //    PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
@@ -71,6 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     informator,
                     mainMenuManager,
                     modalMenu,
+                    heckleController,
                   //  speedComponents,
                     helpButton);
         }

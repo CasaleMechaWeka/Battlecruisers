@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Explanation;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
 {
@@ -21,7 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         void PeakUnitDetails(IPvPUnit unit);
         void UnpeakUnitDetails();
         void UnpeakBuildingDetails();
-
+        void SetHecklePanel(PvPHecklePanelController hecklePanel);
+        PvPHecklePanelController hecklePanelController { get; set; }
         // void SetExplanationPanel(IPvPExplanationPanel explanationPanelValue);
     }
 }

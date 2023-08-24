@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.UI;
@@ -23,13 +24,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private IDataProvider _dataProvider;
         private IPvPSingleSoundPlayer _soundPlayer;
-
+        private IPvPUIManager _puUIManager;
         private bool isOpened;
-        public async void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer)
+        public async void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer, IPvPUIManager uiManager)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer, closed, opened, hecklesButton);
             _dataProvider = dataProvider;
             _soundPlayer = soundPlayer;
+            _puUIManager = uiManager;
 
             hecklesButton.gameObject.GetComponent<Image>().sprite = closed;
             isOpened = false;
@@ -56,7 +58,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 hecklesButton.gameObject.GetComponent<Image>().sprite = opened;
                 isOpened = true;
                 HecklePanel.Show();
+                _puUIManager.HideItemDetails();
             }
+        }
+
+        public void Show()
+        {
+            hecklesButton.gameObject.GetComponent<Image>().sprite = opened;
+            isOpened = true;
+            HecklePanel.Show();
+        }
+        public void Hide()
+        {
+            hecklesButton.gameObject.GetComponent<Image>().sprite = closed;
+            isOpened = false;
+            HecklePanel.Hide();
         }
     }
 }
