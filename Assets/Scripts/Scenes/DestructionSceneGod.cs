@@ -100,12 +100,30 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private long scoreDivider;
 
+        // rewards panel parent
+        [SerializeField]
+        private GameObject rewardsCounter;
+
         // coins variables:
         private int coinsToAward;
         [SerializeField]
         private GameObject coinsCounter;
         [SerializeField]
         private Text coinsText;
+
+        // credits variables:
+        private long creditsToAward;
+        [SerializeField]
+        private GameObject creditsCounter;
+        [SerializeField]
+        private Text creditsText;
+
+        // nukes variables:
+        private int nukesToAward;
+        [SerializeField]
+        private GameObject nukesCounter;
+        [SerializeField]
+        private Text nukesText;
 
         async void Start()
         {
@@ -184,8 +202,8 @@ namespace BattleCruisers.Scenes
                 destructionCards[i].gameObject.SetActive(false);
             }
 
-            // Turn off Coins Counter by default:
-            coinsCounter.SetActive(false);
+            // Turn off Rewards Counter by default:
+            rewardsCounter.SetActive(false);
 
             // Turn off Level Up Modal by default:
             levelUpModal.SetActive(false);
@@ -208,8 +226,8 @@ namespace BattleCruisers.Scenes
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
-            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
-            coinsText.text = "+" + coinsToAward.ToString();
+
+            CalculateRewards();
 
             // Set XP bar current/max values:
             if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
@@ -236,7 +254,7 @@ namespace BattleCruisers.Scenes
         // DOES NOT awards any rewards.
         private void PopulateScreenFake()
         {
-            long randomVal = 1000000000;
+            long randomVal = 10000;
 
             allTimeVal = randomVal;
             levelTimeInSeconds = UnityEngine.Random.Range(300, 600);
@@ -244,6 +262,8 @@ namespace BattleCruisers.Scenes
             shipsVal = randomVal / UnityEngine.Random.Range(4, 6);
             cruiserVal = randomVal / UnityEngine.Random.Range(4, 6);
             buildingsVal = randomVal / UnityEngine.Random.Range(4, 6);
+
+            nukesToAward = UnityEngine.Random.Range(0,10);
 
             // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
             destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
@@ -261,8 +281,8 @@ namespace BattleCruisers.Scenes
                 destructionCards[i].gameObject.SetActive(false);
             }
 
-            // Turn off Coins Counter by default:
-            coinsCounter.SetActive(false);
+            // Turn off Rewards Counter by default:
+            rewardsCounter.SetActive(false);
 
             // Turn off Level Up Modal by default:
             levelUpModal.SetActive(false);
@@ -285,20 +305,8 @@ namespace BattleCruisers.Scenes
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
-            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
-            coinsText.text = "+" + coinsToAward.ToString();
 
-            // Set XP bar current/max values:
-            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
-            {
-                levelBar.maxValue = 1;
-                levelBar.value = 1;
-            }
-            else
-            {
-                levelBar.maxValue = nextLevelXP;
-                levelBar.value = currentXP;
-            }
+            CalculateRewards();
 
             screenTitle.text = "Debug Mode";
             realScene = false;
@@ -402,16 +410,14 @@ namespace BattleCruisers.Scenes
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider);
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
-            // Award any coins:
-            if (coinsToAward > 0)
+            // Award any rewards:
+            if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
             {
-                if(applicationModel.Mode != GameMode.Skirmish)
+                if(BattleSceneGod.deadBuildables == null || applicationModel.Mode != GameMode.Skirmish)
                 {
-                    coinsCounter.SetActive(true);
+                    rewardsCounter.SetActive(true);
                 }    
             }
-
-            // TODO: level rating (maybe?)
 
             // Interpolate Lifetime Damage (same deal as regular damage)
             yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
@@ -496,6 +502,42 @@ namespace BattleCruisers.Scenes
             return score;
         }
 
+        private void CalculateRewards()
+        {
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
+            if (coinsToAward > 0)
+            {
+                coinsCounter.SetActive(true);
+                coinsText.text = "+" + coinsToAward.ToString();
+            }
+            else
+            {
+                coinsCounter.SetActive(false);
+            }
+
+            creditsToAward = CalculateCredits();
+            if (creditsToAward > 0)
+            {
+                creditsCounter.SetActive(true);
+                creditsText.text = "+" + creditsToAward.ToString();
+            }
+            else
+            {
+                creditsCounter.SetActive(false);
+            }
+
+            nukesToAward = CalculateNukes();
+            if (nukesToAward > 0)
+            {
+                nukesCounter.SetActive(true);
+                nukesText.text = "+" + nukesToAward.ToString();
+            }
+            else
+            {
+                nukesCounter.SetActive(false);
+            }
+        }
+
         private int CalculateCoins(long score)
         {
             // 5 coins
@@ -527,6 +569,21 @@ namespace BattleCruisers.Scenes
             return 0;
         }
 
+        private long CalculateCredits()
+        {
+            long creditsAward = (cruiserVal + buildingsVal) / scoreDivider;
+            return creditsAward;
+        }
+
+        private int CalculateNukes()
+        {
+            // Nuke Calculation Goes Here?
+
+
+
+            return 0;
+        }
+
         void Update()
         {
             if (Input.GetKeyUp(KeyCode.Escape)
@@ -549,8 +606,10 @@ namespace BattleCruisers.Scenes
                 // we need XPToNextLevel to populate any XP progress bars:
                 long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
 
-                // Give the player their coins:
+                // Give the player their rewards:
                 applicationModel.DataProvider.GameModel.Coins += coinsToAward;
+                applicationModel.DataProvider.GameModel.Credits += creditsToAward;
+                //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
                
                 // Save changes:
                 await applicationModel.DataProvider.CloudSave();

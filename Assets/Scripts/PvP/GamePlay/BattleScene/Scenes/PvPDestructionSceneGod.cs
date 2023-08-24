@@ -94,12 +94,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         [SerializeField]
         private long scoreDivider;
 
+        // rewards panel parent
+        [SerializeField]
+        private GameObject rewardsCounter;
+
         // coins variables:
         private int coinsToAward;
         [SerializeField]
         private GameObject coinsCounter;
         [SerializeField]
         private Text coinsText;
+
+        // credits variables:
+        private long creditsToAward;
+        [SerializeField]
+        private GameObject creditsCounter;
+        [SerializeField]
+        private Text creditsText;
+
+        // nukes variables:
+        private int nukesToAward;
+        [SerializeField]
+        private GameObject nukesCounter;
+        [SerializeField]
+        private Text nukesText;
 
 
         public Sprite BlackRig;
@@ -242,7 +260,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             // Turn off Coins Counter by default:
-            coinsCounter.SetActive(false);
+            rewardsCounter.SetActive(false);
 
             // Turn off Level Up Modal by default:
             levelUpModal.SetActive(false);
@@ -265,8 +283,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
-            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
-            coinsText.text = "+" + coinsToAward.ToString();
+
+            CalculateRewards();
 
             // Set XP bar current/max values:
             if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
@@ -319,7 +337,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             // Turn off Coins Counter by default:
-            coinsCounter.SetActive(false);
+            rewardsCounter.SetActive(false);
 
             // Turn off Level Up Modal by default:
             levelUpModal.SetActive(false);
@@ -356,6 +374,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 levelBar.maxValue = nextLevelXP;
                 levelBar.value = currentXP;
             }
+
+            CalculateRewards();
 
             screenTitle.text = "Debug Mode";
             realScene = false;
@@ -459,12 +479,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider);
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
-            // Award any coins:
-            if (coinsToAward > 0)
+            // Award any rewards:
+            if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
             {
-                if (applicationModel.Mode != GameMode.Skirmish)
+                if (BattleSceneGod.deadBuildables == null || applicationModel.Mode != GameMode.Skirmish)
                 {
-                    coinsCounter.SetActive(true);
+                    rewardsCounter.SetActive(true);
                 }
             }
 
@@ -546,6 +566,42 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             levelUpModal.SetActive(false);
         }
 
+        private void CalculateRewards()
+        {
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
+            if (coinsToAward > 0)
+            {
+                coinsCounter.SetActive(true);
+                coinsText.text = "+" + coinsToAward.ToString();
+            }
+            else
+            {
+                coinsCounter.SetActive(false);
+            }
+
+            creditsToAward = CalculateCredits();
+            if (creditsToAward > 0)
+            {
+                creditsCounter.SetActive(true);
+                creditsText.text = "+" + creditsToAward.ToString();
+            }
+            else
+            {
+                creditsCounter.SetActive(false);
+            }
+
+            nukesToAward = CalculateNukes();
+            if (nukesToAward > 0)
+            {
+                nukesCounter.SetActive(true);
+                nukesText.text = "+" + nukesToAward.ToString();
+            }
+            else
+            {
+                nukesCounter.SetActive(false);
+            }
+        }
+
         private long CalculateScore(float time, long damage, long constant)
         {
             // feels weird to make this a method but I don't like doing it directly in the animation methods:
@@ -584,6 +640,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return 0;
         }
 
+        private long CalculateCredits()
+        {
+            long creditsAward = (cruiserVal + buildingsVal) / scoreDivider;
+            return creditsAward;
+        }
+
+        private int CalculateNukes()
+        {
+            // Nuke Calculation Goes Here?
+
+
+
+            return 0;
+        }
+
         void Update()
         {
             if (Input.GetKeyUp(KeyCode.Escape)
@@ -606,8 +677,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 // we need XPToNextLevel to populate any XP progress bars:
                 long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
 
-                // Give the player their coins:
+                // Give the player their rewards:
                 applicationModel.DataProvider.GameModel.Coins += coinsToAward;
+                applicationModel.DataProvider.GameModel.Credits += creditsToAward;
+                //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
 
                 // Save changes:
                 await applicationModel.DataProvider.CloudSave();
