@@ -348,6 +348,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PvPHeckleMessageManager.Instance.Initialise(dataProvider, factoryProvider.Sound.UISoundPlayer);
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
+            ApplicationModelProvider.ApplicationModel.Mode = BattleCruisers.Data.GameMode.PvP_1VS1;
         }
 
         private async void LoadAllCaptains()

@@ -182,15 +182,23 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GotoPvPMode()
         {
            
-            playerInfoPanelController.gameObject.SetActive(false);
-            GoToScreen(arenaSelectPanel);
+            if(ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
+            {
+                playerInfoPanelController.gameObject.SetActive(false);
+                GoToScreen(arenaSelectPanel);
+            }
+            else
+            {
+                coinBattleController.BattleButtonClicked();
+            }
+
             /*            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                         {
                             GoToScreen(arenaSelectPanel);
                         }
                         else
                         {
-                            coinBattleController.BattleButtonClicked();
+                        
                         }*/
         }
 

@@ -102,8 +102,8 @@ namespace BattleCruisers.Scenes
         public Transform ContainerCaptain;
 
         public static ScreensSceneGod Instance;
-
         private CaptainExo charlie;
+        public bool serverStatus;
 
         async void Start()
         {
@@ -138,7 +138,7 @@ namespace BattleCruisers.Scenes
                     await _dataProvider.LoadBCData();
 
                     // set pvp status in Battle Hub
-                    bool serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                    serverStatus = await _dataProvider.RefreshPVPServerStatus();
                     if (serverStatus)
                     {
                         // server available
