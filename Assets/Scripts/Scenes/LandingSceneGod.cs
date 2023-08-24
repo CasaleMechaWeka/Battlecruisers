@@ -156,8 +156,6 @@ namespace BattleCruisers.Scenes
             // Attempt signin without user input:
             try
             {
-                _GoogleAuthentication = new GoogleAuthentication();
-                _GoogleAuthentication.InitializePlayGamesLogin();
                 await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
             }
             catch (Exception ex)
