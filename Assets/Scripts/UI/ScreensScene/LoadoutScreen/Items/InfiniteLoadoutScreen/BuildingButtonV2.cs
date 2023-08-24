@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
@@ -52,14 +52,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
             toggleSelectionButton.gameObject.SetActive(false);
 
-
             UpdateSelectedFeedback();
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
-
             toggleSelectionButton.gameObject.SetActive(true);
 
             _comparingFamiltyTracker.SetComparingFamily(ItemFamily.Buildings);
@@ -92,8 +90,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void OnSelectionToggleClicked()
         {
-            selectBuildingButton.ToggleBuildingSelection();
-            UpdateSelectedFeedback();
+            if (GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
+            {
+                selectBuildingButton.ToggleBuildingSelection();
+                UpdateSelectedFeedback();
+            }
         }
     }
 }
