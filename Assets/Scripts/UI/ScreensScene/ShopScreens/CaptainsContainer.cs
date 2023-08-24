@@ -80,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
                         }
                         else
                         {
