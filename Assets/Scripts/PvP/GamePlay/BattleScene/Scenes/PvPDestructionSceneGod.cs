@@ -720,7 +720,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             {
                 numString = "0" + rank.ToString();
             }
-            return rank.ToString();
+            return numString;
         }
 
         private string FormatTime(float num)
