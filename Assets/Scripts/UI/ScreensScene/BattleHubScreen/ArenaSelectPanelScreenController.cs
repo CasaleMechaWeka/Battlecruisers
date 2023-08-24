@@ -154,10 +154,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void UpdateValueStrings(int index)
         {
             // index 0 is a Template with 0s in all fields.
-            costCoinsText.text = _dataProvider.pvpConfig.arenas[index + 1].costcoins.ToString();
-            costCreditsText.text = _dataProvider.pvpConfig.arenas[index + 1].costcredits.ToString();
-            prizeCoinsText.text = _dataProvider.pvpConfig.arenas[index + 1].prizecoins.ToString();
-            prizeCreditsText.text = _dataProvider.pvpConfig.arenas[index + 1].prizecredits.ToString();
+            costCoinsText.text = _dataProvider.GameModel.Arenas[index + 1].costcoins.ToString();
+            costCreditsText.text = _dataProvider.GameModel.Arenas[index + 1].costcredits.ToString();
+            prizeCoinsText.text = _dataProvider.GameModel.Arenas[index + 1].prizecoins.ToString();
+            prizeCreditsText.text = _dataProvider.GameModel.Arenas[index + 1].prizecredits.ToString();
 
         }
 
@@ -165,17 +165,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             if (AuthenticationService.Instance.IsSignedIn)
             {
-                if (_dataProvider.GameModel.Coins >= _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcoins
-                    && _dataProvider.GameModel.Credits >= _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcredits)
+                if (_dataProvider.GameModel.Coins >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins
+                    && _dataProvider.GameModel.Credits >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
                 {
                     _dataProvider.GameModel.GameMap = IndexCurrentArena;
                     _screenSceneGod.LoadPvPBattleScene();
                 }
                 else
                 {
-                    if (_dataProvider.GameModel.Coins < _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcoins)
+                    if (_dataProvider.GameModel.Coins < _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins)
                         MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
-                    if (_dataProvider.GameModel.Credits < _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcredits)
+                    if (_dataProvider.GameModel.Credits < _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
                         MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCredits"));
                 }
             }

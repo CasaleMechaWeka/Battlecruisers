@@ -353,8 +353,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             // apply economy because here is end of starting PvPbattle.
 
-            dataProvider.GameModel.Coins -= dataProvider.pvpConfig.arenas[dataProvider.GameModel.GameMap + 1].costcoins;
-            dataProvider.GameModel.Credits -= dataProvider.pvpConfig.arenas[dataProvider.GameModel.GameMap + 1].costcredits;
+            dataProvider.GameModel.Coins -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
+            dataProvider.GameModel.Credits -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcredits;
             dataProvider.SaveGame();
             await dataProvider.SyncCoinsToCloud();
             await dataProvider.SyncCreditsToCloud();

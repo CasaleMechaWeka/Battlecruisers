@@ -37,7 +37,7 @@ namespace BattleCruisers.Data
         public IGameModel GameModel => _gameModel;
         public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
-        public PvPConfig pvpConfig { get; set; }
+   /*     public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
         public DataProvider(IStaticData staticData, ISerializer serializer)
         {
@@ -181,7 +181,13 @@ namespace BattleCruisers.Data
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
 
             var pvpConfigJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_CONFIG");
-            pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
+            PvPConfig pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
+            for(int i = 0; i < pvpConfig.arenas.Count; i ++)
+            {
+                _gameModel.Arenas[i] = pvpConfig.arenas[i];
+            }
+
+            SaveGame();
         }
 
 
@@ -396,14 +402,14 @@ namespace BattleCruisers.Data
         public int consolationnukes;
 
         public Arena(
-        string id,
-        int costcoins,
-        int costcredits,
-        int prizecoins,
-        int prizecredits,
-        int prizenukes,
-        int consolationcredits,
-        int consolationnukes)
+        string id = "Template",
+        int costcoins = 0,
+        int costcredits = 0,
+        int prizecoins = 0,
+        int prizecredits = 0,
+        int prizenukes = 0,
+        int consolationcredits = 0,
+        int consolationnukes = 0)
         {
             this.id = id;
             this.costcoins = costcoins;

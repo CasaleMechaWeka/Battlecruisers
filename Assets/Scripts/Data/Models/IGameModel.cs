@@ -15,6 +15,7 @@ namespace BattleCruisers.Data.Models
         long Credits { get; set; }
         string PlayerName { get; set; }
         int GameMap { get; set; }
+        List<Arena> Arenas { get; set; }
         List<int> CaptainExoList { get; set; }
         List<int> HeckleList { get; set; }
         List<CaptainData> Captains { get; set; }
@@ -27,7 +28,7 @@ namespace BattleCruisers.Data.Models
         bool FirstNonTutorialBattle { get; }
         Loadout PlayerLoadout { get; set; }
         BattleResult LastBattleResult { get; set; }
-/*        int RankData { get; set; }*/
+        /*        int RankData { get; set; }*/
         public bool PremiumEdition { get; set; }
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }

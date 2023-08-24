@@ -20,7 +20,7 @@ namespace BattleCruisers.Data
 
         List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
-        public PvPConfig pvpConfig { get; set; }
+ /*       public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
 
         ILevel GetLevel(int levelNum);

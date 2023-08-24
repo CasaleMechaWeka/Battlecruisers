@@ -183,7 +183,12 @@ namespace BattleCruisers.Data.Models
             get => _heckles;
             set => _heckles = value;
         }
-
+        public List<Arena> _arenas;
+        public List<Arena> Arenas
+        {
+            get => _arenas;
+            set => _arenas = value;
+        }
         public List<CaptainData> _captains;
         public List<CaptainData> Captains
         {
@@ -486,6 +491,20 @@ namespace BattleCruisers.Data.Models
             _coins = 50;
             _credits = 0;
             _gameMap = 0;
+
+            _arenas = new List<Arena>
+            {
+                new Arena(),
+                new Arena("PracticeWreckyards", prizecredits: 100),
+                new Arena("OzPenitentiary", prizecoins:1),
+                new Arena("SanFranciscoFightClub", costcoins:1, prizecoins:3, prizecredits: 500),
+                new Arena("UACBattleNight", costcredits:100, prizecredits: 500),
+                new Arena("NuclearDome", costcoins:3, prizecoins:4,prizecredits:400, prizenukes: 1, consolationnukes: 1),
+                new Arena("UACArena", costcredits:1500, prizecredits: 400),
+                new Arena("RioBattlesport", costcoins:10, prizecoins:15, prizecredits:2000, consolationcredits:2000),
+                new Arena("UACUltimate", costcoins: 10000, prizecredits:20000),
+                new Arena("MercenaryOne", costcoins:50, prizecredits:50000, prizenukes: 1),
+            };
         }
 
         public GameModel(
