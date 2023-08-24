@@ -92,6 +92,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 selectHeckleButton.ToggleHeckleSelection();
                 UpdateSelectedFeedback();
             }
+            else
+            {
+                OnClicked();
+            }
         }
     }
 }

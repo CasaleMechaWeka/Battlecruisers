@@ -93,6 +93,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 selectBuildingButton.ToggleBuildingSelection();
                 UpdateSelectedFeedback();
             }
+            else
+            {
+                OnClicked();
+            }
         }
     }
 }
