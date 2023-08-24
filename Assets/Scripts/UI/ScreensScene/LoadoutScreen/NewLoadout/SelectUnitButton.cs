@@ -74,8 +74,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(unitKeys);
             if (!unitKeys.Contains(unitKey))
             {
-                if (playerLoadout.GetUnitListSize(displayUnit.Category) <= unitLimit)
+                if (playerLoadout.GetUnitListSize(displayUnit.Category) < unitLimit)
+                {
                     playerLoadout.AddUnitItem(displayUnit.Category, unitKey);
+                    UpdateSelectText(true);
+                }
                 _dataProvider.SaveGame();
                 limit.text = playerLoadout.GetUnitListSize(displayUnit.Category).ToString();
                 UpdateSelectText(true);
