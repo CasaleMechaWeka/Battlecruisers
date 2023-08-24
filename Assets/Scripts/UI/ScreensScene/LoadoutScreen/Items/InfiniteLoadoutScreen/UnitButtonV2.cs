@@ -50,14 +50,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _unitPrefab = unitPrefab;
 
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
-            toggleSelectionButton.gameObject.SetActive(false);
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
 
-            toggleSelectionButton.gameObject.SetActive(true);
 
             _comparingFamiltyTracker.SetComparingFamily(itemFamily);
             if (_comparingFamiltyTracker.ComparingFamily.Value == itemFamily)

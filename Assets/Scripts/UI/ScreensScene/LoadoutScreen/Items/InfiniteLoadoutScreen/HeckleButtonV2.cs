@@ -49,7 +49,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemName.text = Mathf.Max(108, 217 * heckleData.Index).ToString().Substring(0, 3);
 
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
-            toggleSelectionButton.gameObject.SetActive(false);
 
             UpdateSelectedFeedback();
         }
@@ -57,8 +56,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected override void OnClicked()
         {
             base.OnClicked();
-
-            toggleSelectionButton.gameObject.SetActive(true);
 
             _itemsPanel.CurrentHeckleButton = this;
             _comparingFamiltyTracker.SetComparingFamily(itemFamily);

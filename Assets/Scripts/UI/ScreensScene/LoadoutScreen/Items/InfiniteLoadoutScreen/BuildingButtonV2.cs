@@ -50,7 +50,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _buildingName.text = (buildingPrefab.Buildable.Name).ToString();
 
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
-            toggleSelectionButton.gameObject.SetActive(false);
 
             UpdateSelectedFeedback();
         }
@@ -58,7 +57,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected override void OnClicked()
         {
             base.OnClicked();
-            toggleSelectionButton.gameObject.SetActive(true);
 
             _comparingFamiltyTracker.SetComparingFamily(ItemFamily.Buildings);
             if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Buildings)
