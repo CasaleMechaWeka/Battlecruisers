@@ -143,7 +143,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     });
             }
 
-         //   _dataProvider.GameModel.GameMap = IndexCurrentArena;
+            //   _dataProvider.GameModel.GameMap = IndexCurrentArena;
         }
 
         private void UpdateValueStrings(int index)
@@ -158,11 +158,22 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void StartBattle()
         {
-            //  if (AuthenticationService.Instance.IsSignedIn)
-            //  {
-            _dataProvider.GameModel.GameMap = IndexCurrentArena;
-            _screenSceneGod.LoadPvPBattleScene();
-            //  }
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                if (_dataProvider.GameModel.Coins >= _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcoins
+                    && _dataProvider.GameModel.Credits >= _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcredits)
+                {
+                    _dataProvider.GameModel.GameMap = IndexCurrentArena;
+                    _screenSceneGod.LoadPvPBattleScene();
+                }
+                else
+                {
+                    if (_dataProvider.GameModel.Coins < _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcoins)
+                        MessageBox.Instance.ShowMessage("Insufficient Coins");
+                    if (_dataProvider.GameModel.Credits < _dataProvider.pvpConfig.arenas[indexCurrentArena + 1].costcredits)
+                        MessageBox.Instance.ShowMessage("Insufficient Credits");
+                }
+            }
         }
     }
 }

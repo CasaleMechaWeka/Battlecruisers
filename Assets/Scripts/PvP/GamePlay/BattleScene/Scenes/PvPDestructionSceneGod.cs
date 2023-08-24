@@ -680,8 +680,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 // Give the player their rewards:
                 applicationModel.DataProvider.GameModel.Coins += coinsToAward;
                 applicationModel.DataProvider.GameModel.Credits += creditsToAward;
+                applicationModel.DataProvider.SaveGame();
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
-
+                await applicationModel.DataProvider.SyncCoinsToCloud();
+                await applicationModel.DataProvider.SyncCreditsToCloud();
                 // Save changes:
                 await applicationModel.DataProvider.CloudSave();
             }

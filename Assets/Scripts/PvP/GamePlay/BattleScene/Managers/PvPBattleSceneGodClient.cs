@@ -349,6 +349,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
             ApplicationModelProvider.ApplicationModel.Mode = BattleCruisers.Data.GameMode.PvP_1VS1;
+
+            // apply economy because here is end of starting PvPbattle.
+
+            dataProvider.GameModel.Coins -= dataProvider.pvpConfig.arenas[dataProvider.GameModel.GameMap + 1].costcoins;
+            dataProvider.GameModel.Credits -= dataProvider.pvpConfig.arenas[dataProvider.GameModel.GameMap + 1].costcredits;
+            dataProvider.SaveGame();
+            await dataProvider.SyncCoinsToCloud();
+            await dataProvider.SyncCreditsToCloud();
         }
 
         private async void LoadAllCaptains()
