@@ -209,6 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPClickHandlerWrapper clickHandlerWrapper = GetComponent<PvPClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
+            
             Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
             Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
 
@@ -220,6 +221,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UnitTargets = new PvPUnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
+
+            if(IsClient)
+                _cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
         }
 
 

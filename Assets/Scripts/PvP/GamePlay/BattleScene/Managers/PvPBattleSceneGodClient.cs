@@ -90,6 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public CaptainExo leftCaptain, rightCaptain;
         public Transform leftContainer, rightContainer;
         private PvPCaptainExoHUDController captainController;
+        public IPvPUserChosenTargetHelper userChosenTargetHelper;
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -258,7 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser.pvp_IdleDronesEnded.OnValueChanged += IdleDronesEnded_ValueChanged;
 
             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
-            IPvPUserChosenTargetHelper userChosenTargetHelper
+            userChosenTargetHelper
                 = pvpBattleHelper.CreateUserChosenTargetHelper(
                             playerCruiserUserChosenTargetManager,
                             factoryProvider.Sound.PrioritisedSoundPlayer,
@@ -374,7 +375,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
                     leftCaptain.transform.localScale = Vector3.one * 0.5f;
                 }
-                   
+
 
                 if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
                 {
@@ -384,7 +385,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     {
                         rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
                         rightCaptain.transform.localScale = Vector3.one * 0.5f;
-                    }                        
+                    }
                 }
                 else
                 {
@@ -394,7 +395,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     {
                         rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
                         rightCaptain.transform.localScale = Vector3.one * 0.5f;
-                    }                       
+                    }
                 }
             }
             else
@@ -407,7 +408,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 {
                     rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
                     rightCaptain.transform.localScale = Vector3.one * 0.5f;
-                }                   
+                }
 
                 if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
                 {
@@ -417,7 +418,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     {
                         leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
                         leftCaptain.transform.localScale = Vector3.one * 0.5f;
-                    }                        
+                    }
                 }
                 else
                 {
@@ -427,13 +428,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     {
                         leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
                         leftCaptain.transform.localScale = Vector3.one * 0.5f;
-                    }                        
+                    }
                 }
             }
 
-/*            captainController.leftCaptain = leftCaptain;
-            captainController.rightCaptain = rightCaptain;*/
-            captainController.Initialize(leftCaptain, rightCaptain);            
+            /*            captainController.leftCaptain = leftCaptain;
+                        captainController.rightCaptain = rightCaptain;*/
+            captainController.Initialize(leftCaptain, rightCaptain);
         }
         private async void CaptainAPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
         {

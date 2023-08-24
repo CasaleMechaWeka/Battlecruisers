@@ -54,6 +54,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
+            if (IsClient)
+                _doubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
         }
 
 

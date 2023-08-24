@@ -1,6 +1,9 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click
@@ -9,19 +12,52 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         public void OnDoubleClick(IPvPBuilding playerBuliding)
         {
-            Assert.AreEqual(PvPFaction.Blues, playerBuliding.Faction);
+            /*   Assert.AreEqual(PvPFaction.Blues, playerBuliding.Faction);*/
 
-            if (playerBuliding.ToggleDroneConsumerFocusCommand.CanExecute)
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
-                // Building construction or factory production
-                playerBuliding.ToggleDroneConsumerFocusCommand.ExecuteIfPossible();
+                if (playerBuliding.Faction == PvPFaction.Blues)
+                {
+                    if (playerBuliding.ToggleDroneConsumerFocusCommand.CanExecute)
+                    {
+                        // Building construction or factory production
+                        playerBuliding.ToggleDroneConsumerFocusCommand.ExecuteIfPossible();
+                    }
+                    else if (playerBuliding.RepairCommand.CanExecute)
+                    {
+                        // Building repairs
+                        IPvPDroneConsumer repairDroneConsumer = playerBuliding.ParentCruiser.RepairManager.GetDroneConsumer(playerBuliding);
+                        playerBuliding.ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+                    }
+                }
+                else
+                {
+                    PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerBuliding);
+                }
             }
-            else if (playerBuliding.RepairCommand.CanExecute)
+            else
             {
-                // Building repairs
-                IPvPDroneConsumer repairDroneConsumer = playerBuliding.ParentCruiser.RepairManager.GetDroneConsumer(playerBuliding);
-                playerBuliding.ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+                if (playerBuliding.Faction == PvPFaction.Blues)
+                {
+                    PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerBuliding);
+                }
+                else
+                {
+                    if (playerBuliding.ToggleDroneConsumerFocusCommand.CanExecute)
+                    {
+                        // Building construction or factory production
+                        playerBuliding.ToggleDroneConsumerFocusCommand.ExecuteIfPossible();
+                    }
+                    else if (playerBuliding.RepairCommand.CanExecute)
+                    {
+                        // Building repairs
+                        IPvPDroneConsumer repairDroneConsumer = playerBuliding.ParentCruiser.RepairManager.GetDroneConsumer(playerBuliding);
+                        playerBuliding.ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+                    }
+
+                }
             }
+
         }
     }
 }

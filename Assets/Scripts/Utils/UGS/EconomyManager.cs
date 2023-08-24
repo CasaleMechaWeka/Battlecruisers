@@ -24,7 +24,15 @@ namespace BattleCruisers.Utils.UGS.Samples
 
         public static async Task SetEconomyBalance(string currencyId, long balance)
         {
-            await EconomyService.Instance.PlayerBalances.SetBalanceAsync(currencyId, balance);
+            try
+            {
+                await EconomyService.Instance.PlayerBalances.SetBalanceAsync(currencyId, balance);
+            }
+            catch 
+            {
+                Debug.Log("Currencies not synche to cloud");
+            }
+          
         }
 
         public static async Task<MakeVirtualPurchaseResult> MakeVirtualPurchaseAsync(string virtualPurchaseId)
