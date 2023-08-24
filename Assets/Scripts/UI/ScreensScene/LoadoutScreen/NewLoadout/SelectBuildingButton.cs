@@ -75,11 +75,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(buildingKeys);
             if (!buildingKeys.Contains(buildingKey))
             {
-                if (playerLoadout.GetBuildingListSize(displayBuilding.Category) <= buildingLimit)
+                if (playerLoadout.GetBuildingListSize(displayBuilding.Category) < buildingLimit)
+                {
                     playerLoadout.AddbuildItem(displayBuilding.Category, buildingKey);
+                    UpdateSelectText(true);
+                }
                 _dataProvider.SaveGame();
                 limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
-                UpdateSelectText(true);
             }
             else
             {
