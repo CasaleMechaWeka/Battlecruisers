@@ -122,7 +122,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         private void OpenShop()
         {
-            //    GoToScreen(shopPanel);
+            //  GoToScreen(shopPanel);
             playerInfoPanelController.gameObject.SetActive(true);
             ProfilePanelScreenController.Instance?.captainsPanel?.RemoveAllCaptainsFromRenderCamera();
             ProfilePanelScreenController.Instance?.captainsPanel?.gameObject.SetActive(false);
@@ -188,7 +188,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
-           
             if(ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
             {
                 playerInfoPanelController.gameObject.SetActive(false);

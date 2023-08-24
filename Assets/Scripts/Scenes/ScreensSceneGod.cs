@@ -36,6 +36,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Models.PrefabKeys;
 using Unity.Services.Authentication;
 using UnityEngine.Localization.Components;
+using BattleCruisers.UI;
 
 namespace BattleCruisers.Scenes
 {
@@ -136,22 +137,30 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     await _dataProvider.LoadBCData();
-
-                    // set pvp status in Battle Hub
-                    serverStatus = await _dataProvider.RefreshPVPServerStatus();
-                    if (serverStatus)
+                    if(_dataProvider.GameModel.NumOfLevelsCompleted >= 10)
                     {
-                        // server available
-                        hubScreen.serverStatusPanel.SetActive(false);
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
-                        Debug.Log("PVP Server Available.");
+                        // set pvp status in Battle Hub
+                        serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                        if (serverStatus)
+                        {
+                            // server available
+                            hubScreen.serverStatusPanel.SetActive(false);
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
+                            Debug.Log("PVP Server Available.");
+                        }
+                        else
+                        {
+                            // server NOT available
+                            hubScreen.serverStatusPanel.SetActive(true);
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
+                            Debug.Log("PVP Server Unavailable.");
+                        }
                     }
                     else
                     {
-                        // server NOT available
-                        hubScreen.serverStatusPanel.SetActive(true);
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
-                        Debug.Log("PVP Server Unavailable.");
+                        hubScreen.serverStatusPanel.SetActive(false);
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("NotPassed10Levels");
+                        hubScreen.battleButton.GetComponent<CanvasGroupButton>().Enabled = false;
                     }
                 }
                 catch (Exception ex)
@@ -200,13 +209,6 @@ namespace BattleCruisers.Scenes
                 _musicPlayer = Substitute.For<IMusicPlayer>();
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
-
-            // load charlie for Screenscene UI animation effect
-            /*            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
-                        charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
-                        characterOfCharlie = charlie.gameObject;
-                        cameraOfCharacter.SetActive(true);
-                        cameraOfCaptains.SetActive(false);*/
             ShowCharlieOnMainMenu();
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
