@@ -7,6 +7,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using UnityEngine.Assertions;
@@ -20,6 +21,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ArenaSelectPanelScreenController : ScreenController
     {
+        public Text costCoinsText;
+        public Text costCreditsText;
+        public Text prizeCoinsText;
+        public Text prizeCreditsText;
+
         public RectTransform[] arenas;
         private int indexCurrentArena = 0;
         private ICommand _nextSetCommand, _previousSetCommand;
@@ -71,6 +77,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             DOTween.Init();
         }
 
+        public void OnEnable()
+        {
+            UpdateValueStrings(IndexCurrentArena);
+        }
 
         private void NextSetCommandExecute()
         {
@@ -116,6 +126,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     .OnComplete(() =>
                     {
                         arenas[cur_idx].gameObject.SetActive(false);
+                        UpdateValueStrings(next_idx);
                     });
             }
             else if (cur_idx < IndexCurrentArena)
@@ -128,10 +139,23 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     .OnComplete(() =>
                     {
                         arenas[cur_idx].gameObject.SetActive(false);
+                        UpdateValueStrings(next_idx);
                     });
             }
+
          //   _dataProvider.GameModel.GameMap = IndexCurrentArena;
         }
+
+        private void UpdateValueStrings(int index)
+        {
+            // index 0 is a Template with 0s in all fields.
+            costCoinsText.text = _dataProvider.pvpConfig.arenas[index + 1].costcoins.ToString();
+            costCreditsText.text = _dataProvider.pvpConfig.arenas[index + 1].costcredits.ToString();
+            prizeCoinsText.text = _dataProvider.pvpConfig.arenas[index + 1].prizecoins.ToString();
+            prizeCreditsText.text = _dataProvider.pvpConfig.arenas[index + 1].prizecredits.ToString();
+
+        }
+
         private void StartBattle()
         {
             //  if (AuthenticationService.Instance.IsSignedIn)
