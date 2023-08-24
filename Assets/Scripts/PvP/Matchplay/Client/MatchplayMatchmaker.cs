@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using Unity.Services.Matchmaker;
 using Unity.Services.Matchmaker.Models;
-
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 {
@@ -160,7 +160,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             {
 
             };
-            var queueName = "bc-1vs1-queue";   /*data.userGamePreferences.ToMultiplayQueue();*/
+        //    var queueName = "bc-1vs1-queue";   /*data.userGamePreferences.ToMultiplayQueue();*/
+            var queueName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.QueueName;
             return new CreateTicketOptions(queueName, attributes);
         }
 

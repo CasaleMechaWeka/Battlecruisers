@@ -186,7 +186,10 @@ namespace BattleCruisers.Data
             {
                 _gameModel.Arenas[i] = pvpConfig.arenas[i];
             }
-
+            
+            var pvpQueueName = RemoteConfigService.Instance.appConfig.GetString("PvP_QUEUE");
+            if(_gameModel.QueueName != pvpQueueName)
+                _gameModel.QueueName = pvpQueueName;
             SaveGame();
         }
 

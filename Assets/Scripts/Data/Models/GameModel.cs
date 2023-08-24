@@ -211,6 +211,12 @@ namespace BattleCruisers.Data.Models
             set => _gameMap = value;
         }
 
+        private string _queueName;
+        public string QueueName
+        {
+            get => _queueName;
+            set => _queueName = value;
+        }
 
         private string _playerName;
         public String PlayerName
@@ -505,6 +511,8 @@ namespace BattleCruisers.Data.Models
                 new Arena("UACUltimate", costcoins: 10000, prizecredits:20000),
                 new Arena("MercenaryOne", costcoins:50, prizecredits:50000, prizenukes: 1),
             };
+
+            _queueName = "bc-1vs1-queue";
         }
 
         public GameModel(
