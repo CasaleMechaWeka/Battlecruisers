@@ -46,6 +46,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     Application.Quit();
 #endif
             }
+
+            if (Time.time > 300f)
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                    Application.Quit();
+#endif
+            }
         }
         void OnClientEntered()
         {

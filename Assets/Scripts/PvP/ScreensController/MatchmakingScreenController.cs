@@ -23,11 +23,13 @@ using static BattleCruisers.Data.Static.StaticPrefabKeys;
 using System.Runtime.CompilerServices;
 using BattleCruisers.Utils.DataStrctures;
 using static Unity.Collections.AllocatorManager;
+using BattleCruisers.Network.Multiplay.Gameplay.GameState;
+using BattleCruisers.Network.Multiplay.ConnectionManagement;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
     public class MatchmakingScreenController : ScreenController
-    {
+    {        
         private ISceneNavigator _sceneNavigator;
         private ITrashTalkData _trashTalkData;
         private ILocTable _storyStrings;
@@ -130,6 +132,10 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             _storyStrings = storyString;
         }
 
+        public async void OnFlee()
+        {
+           
+        }
         public async void FoundCompetitor()
         {
 

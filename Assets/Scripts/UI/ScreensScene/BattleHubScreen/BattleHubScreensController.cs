@@ -43,6 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text titleOfBattleButton;
 
         public GameObject serverStatusPanel;
+        public GameObject offlinePlayOnly;
+        public GameObject battle1vAI;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,

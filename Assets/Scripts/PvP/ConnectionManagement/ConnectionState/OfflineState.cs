@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         LocalLobby m_LocalLobby;
         [Inject]
         LocalLobbyUser m_LocalLobbyUser;
-        const string k_MainMenuSceneName = "MainMenu";
+        const string k_MainMenuSceneName = "ScreensScene";
 
         public override void Enter()
         {
@@ -33,10 +33,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             m_ConnectionManager.NetworkManager.Shutdown();
             m_ConnectionManager.IsConnecting = false;
-            if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)
+/*            if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)
             {
                 SceneLoaderWrapper.Instance.LoadScene(k_MainMenuSceneName, useNetworkSceneManager: false);
-            }
+            }*/
         }
 
         public override void Exit() { }

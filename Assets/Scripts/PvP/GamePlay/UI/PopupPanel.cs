@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -13,9 +9,9 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
     public class PopupPanel : MonoBehaviour
     {
         [SerializeField]
-        TextMeshProUGUI m_TitleText;
+        Text m_TitleText;
         [SerializeField]
-        TextMeshProUGUI m_MainText;
+        Text m_MainText;
         [SerializeField]
         GameObject m_ConfirmButton;
         [SerializeField]

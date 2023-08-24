@@ -150,6 +150,7 @@ namespace BattleCruisers.Data.Serialization
             GetBalancesResult balanceResult = null;
             try
             {
+                if (this == null) return false;
                 balanceResult = await EconomyManager.GetEconomyBalances();
                 if (this == null) return false;
                 if (balanceResult is null) return false;

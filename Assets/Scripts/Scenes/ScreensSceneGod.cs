@@ -146,12 +146,16 @@ namespace BattleCruisers.Scenes
                             // server available
                             hubScreen.serverStatusPanel.SetActive(false);
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
+                            hubScreen.battle1vAI.SetActive(false);
+                            hubScreen.offlinePlayOnly.SetActive(false);
                             Debug.Log("PVP Server Available.");
                         }
                         else
                         {
                             // server NOT available
                             hubScreen.serverStatusPanel.SetActive(true);
+                            hubScreen.battle1vAI.SetActive(true);
+                            hubScreen.offlinePlayOnly.SetActive(false);
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                             Debug.Log("PVP Server Unavailable.");
                         }
@@ -159,6 +163,8 @@ namespace BattleCruisers.Scenes
                     else
                     {
                         hubScreen.serverStatusPanel.SetActive(false);
+                        hubScreen.battle1vAI.SetActive(false);
+                        hubScreen.offlinePlayOnly.SetActive(true);
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("NotPassed10Levels");
                         hubScreen.battleButton.GetComponent<CanvasGroupButton>().Enabled = false;
                     }
