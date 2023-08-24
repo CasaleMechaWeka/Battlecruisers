@@ -87,8 +87,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void GoHome()
         {
-            playerInfoPanelController.gameObject.SetActive(false);
-            _screensSceneGod.GoToHomeScreen();
+            if(_currentScreen == arenaSelectPanel)
+            {
+                OpenBattleHub();
+            }
+            else
+            {
+                playerInfoPanelController.gameObject.SetActive(false);
+                _screensSceneGod.GoToHomeScreen();
+            }
         }
         private void UnselectAll()
         {
