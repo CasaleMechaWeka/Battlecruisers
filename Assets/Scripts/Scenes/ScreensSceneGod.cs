@@ -239,6 +239,14 @@ namespace BattleCruisers.Scenes
             }
             else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
+                _applicationModel.ShowPostBattleScreen = false;
+                _applicationModel.Mode = GameMode.Campaign;
+                fullScreenads.OpenAdvert();
+                GotoHubScreen();
+            }
+            else if(_applicationModel.Mode == GameMode.PvP_1VS1)
+            {
+                _applicationModel.ShowPostBattleScreen = false;
                 _applicationModel.Mode = GameMode.Campaign;
                 fullScreenads.OpenAdvert();
                 GotoHubScreen();
