@@ -73,8 +73,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         NetworkManager m_NetworkManager;
         [Inject]
-        ProfileManager m_ProfileManager;
-        [Inject] LobbyServiceFacade m_LobbyServiceFacade;
+        ProfileManager m_ProfileManager;        
         public NetworkManager NetworkManager => m_NetworkManager;
 
         [SerializeField]
@@ -255,9 +254,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             await Manager.CancelMatchmaking();
         }
-        public  async Task RequestShutdown()
+        public  void RequestShutdown()
         {
-            await Task.Delay(10);
             m_CurrentState.OnUserRequestedShutdown();
         }
     }

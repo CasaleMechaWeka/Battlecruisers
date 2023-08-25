@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 #endif
             }
 
-            if (!isConnected && Time.time > 300f)
+            if (!isConnected && Time.time > 180f)
             {
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;

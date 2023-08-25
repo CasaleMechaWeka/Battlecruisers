@@ -1,17 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using BattleCruisers.Data;
-using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
-using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine.UI;
@@ -19,12 +14,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Data.Static;
-using static BattleCruisers.Data.Static.StaticPrefabKeys;
-using System.Runtime.CompilerServices;
-using BattleCruisers.Utils.DataStrctures;
-using static Unity.Collections.AllocatorManager;
-using BattleCruisers.Network.Multiplay.Gameplay.GameState;
-using BattleCruisers.Network.Multiplay.ConnectionManagement;
+
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -210,7 +200,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             await Task.Delay(100);
             animator.SetBool("Found", true);
-            //   StartCoroutine(iTrashTalk());
         }
 
         private int CalculateRank(long score)
