@@ -104,6 +104,7 @@ namespace BattleCruisers.Scenes
         private int coin3Threshold;
         private int coin4Threshold;
         private int coin5Threshold;
+        private int creditMax;
 
         // rewards panel parent
         [SerializeField]
@@ -158,6 +159,7 @@ namespace BattleCruisers.Scenes
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditmax", out creditMax);
 
             // Populate screen:
             if (BattleSceneGod.deadBuildables != null)
@@ -592,6 +594,10 @@ namespace BattleCruisers.Scenes
         private long CalculateCredits()
         {
             long creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
+            if(creditsAward > creditMax)
+            {
+                return (long)creditMax;
+            }
             return creditsAward;
         }
 

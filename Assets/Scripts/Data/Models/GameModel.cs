@@ -533,7 +533,8 @@ namespace BattleCruisers.Data.Models
                 { "coin2threshold", 2000 },
                 { "coin3threshold", 3000 },
                 { "coin4threshold", 4000 },
-                { "coin5threshold", 5000 }
+                { "coin5threshold", 5000 },
+                { "creditmax", 1250 }
             };
 
             _battleWinScore = 0;
