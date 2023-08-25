@@ -12,6 +12,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Services.Authentication;
 using System;
 using BattleCruisers.Data.Models.PrefabKeys;
+using UnityEngine.PlayerLoop;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -27,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ISingleSoundPlayer _soundPlayer;
         private IPrefabFactory _prefabFactory;
         private IDataProvider _dataProvider;
-
+        private CaptainExoKey loadedCaptain;
 
         public void Initialise(
         IScreensSceneGod screensSceneGod,
@@ -44,6 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             applyBtn.Initialise(_soundPlayer, ApplyName);
             CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            loadedCaptain = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
             charlieImage.sprite = captain.CaptainExoImage;
 
             inputField.text = _dataProvider.GameModel.PlayerName;
@@ -51,13 +53,24 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             btnLabel.SetActive(true);
         }
 
-       async void ApplyName()
+        public void Update()
+        {
+            if(loadedCaptain != _dataProvider.GameModel.PlayerLoadout.CurrentCaptain)
+            {
+                CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                loadedCaptain = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
+                charlieImage.sprite = captain.CaptainExoImage;
+            }
+        }
+
+        async void ApplyName()
         {
             btnLabel.SetActive(false);
             spinner.SetActive(true);
             applyBtn.enabled = false;
             string oldPlayerName = string.Empty;
-            if(inputField.text != _dataProvider.GameModel.PlayerName)
+            CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            if (inputField.text != _dataProvider.GameModel.PlayerName)
             {
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
@@ -67,6 +80,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         _dataProvider.GameModel.PlayerName = inputField.text;
                         _dataProvider.SaveGame();
                         await _dataProvider.CloudSave();
+                        string name = inputField.text + "#" + captain.captainName;
+                        Debug.Log(name);    
+                        await AuthenticationService.Instance.UpdatePlayerNameAsync(name);
                         PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
                         ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
                     }
