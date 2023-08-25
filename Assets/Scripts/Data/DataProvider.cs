@@ -177,14 +177,21 @@ namespace BattleCruisers.Data
 
         void GetConfigValues()
         {
+            var gameConfigs = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
+
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
 
             var pvpConfigJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_CONFIG");
             PvPConfig pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
+            List<Arena> rcArenas = new List<Arena>();
             for(int i = 0; i < pvpConfig.arenas.Count; i ++)
             {
-                _gameModel.Arenas[i] = pvpConfig.arenas[i];
+                rcArenas.Add(pvpConfig.arenas[i]);
+            }
+            if(rcArenas != null && rcArenas.Count > 0)
+            {
+                _gameModel.Arenas = rcArenas;
             }
             
             var pvpQueueName = RemoteConfigService.Instance.appConfig.GetString("PvP_QUEUE");
@@ -423,6 +430,12 @@ namespace BattleCruisers.Data
             this.consolationcredits = consolationcredits;
             this.consolationnukes = consolationnukes;
         }
+    }
+
+    [Serializable]
+    public struct GameConfig
+    {
+        public Dictionary<string, int> configs;
     }
 
     struct UserAttributes { }

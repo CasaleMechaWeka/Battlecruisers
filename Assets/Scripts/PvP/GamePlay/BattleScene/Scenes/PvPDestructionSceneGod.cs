@@ -284,7 +284,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
 
-            CalculateRewards();
+            if (applicationModel.Mode != GameMode.Skirmish)
+            {
+                CalculateRewards();
+            }
 
             // Set XP bar current/max values:
             if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
@@ -374,7 +377,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 levelBar.maxValue = nextLevelXP;
                 levelBar.value = currentXP;
             }
-
+            
             CalculateRewards();
 
             screenTitle.text = "Debug Mode";
@@ -480,9 +483,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
             // Award any rewards:
-            if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
+            if (applicationModel.Mode != GameMode.Skirmish)
             {
-                if (BattleSceneGod.deadBuildables == null || applicationModel.Mode != GameMode.Skirmish)
+                if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
                 {
                     rewardsCounter.SetActive(true);
                 }
