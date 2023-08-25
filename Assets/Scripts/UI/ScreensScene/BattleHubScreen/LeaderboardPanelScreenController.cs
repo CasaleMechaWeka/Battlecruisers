@@ -10,6 +10,9 @@ using Unity.Services.Leaderboards;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
+using Unity.Services.Authentication;
+using Unity.Services.CloudCode;
+using System.Linq;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -34,6 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 double eol = 1200;
                 try
                 {
+                    //await AuthenticationService.Instance.UpdatePlayerNameAsync(dataProvider.GameModel.PlayerName);
                     await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, eol);
                 }
                 catch(Exception e)
@@ -49,13 +53,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     {
                         if(entry != null)
                         {
+                            IList<string> list = entry.PlayerName.Split("#").ToList<string>();
+                            Debug.Log(list[1]);
                             if(entry.Rank == 0)
                             {
-                                TopPlayer.Initialise(soundPlayer, prefabFactory, entry.PlayerName, entry.Score, entry.Rank);
+                                TopPlayer.Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
                             }
                             else
                             {
-                                Players[i].Initialise(soundPlayer, prefabFactory, entry.PlayerName, entry.Score, entry.Rank);
+                                Players[i].Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
                                 i++;
                             }
                         }
