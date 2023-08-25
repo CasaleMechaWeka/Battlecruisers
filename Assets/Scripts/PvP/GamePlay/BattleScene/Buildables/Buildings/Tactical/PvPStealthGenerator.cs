@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompletedClientRpc();
             }
             if (IsClient)
-                OnBuildableCompletedClientRpc();
+                OnBuildableCompleted_PvPClient();
         }
 
 

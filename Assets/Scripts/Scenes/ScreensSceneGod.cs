@@ -37,6 +37,10 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using Unity.Services.Authentication;
 using UnityEngine.Localization.Components;
 using BattleCruisers.UI;
+using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
+using BattleCruisers.Network.Multiplay.ConnectionManagement;
+using BattleCruisers.Network.Multiplay.Gameplay.UI;
+using BattleCruisers.Network.Multiplay.Infrastructure;
 
 namespace BattleCruisers.Scenes
 {
@@ -114,7 +118,7 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-
+            DestroyAllNetworkObjects();
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
@@ -315,6 +319,28 @@ namespace BattleCruisers.Scenes
             if (Instance == null)
                 Instance = this;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
+        }
+
+        public async void DestroyAllNetworkObjects()
+        {
+            await Task.Delay(10);
+            if (GameObject.Find("ApplicationController") != null)
+                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
+
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("PopupPanelManager") != null)
+                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UIMessageManager") != null)
+                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UpdateRunner") != null)
+                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
+
+            if (GameObject.Find("NetworkManager") != null)
+                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
         }
 
         void ShowCharlieOnMainMenu()

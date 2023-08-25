@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public async void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
-           await Task.Delay(10);
+            await Task.Delay(10);
 
             if (_isCompleted)
             {
@@ -109,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 }
                 else
                 {
-                
+
                     DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 }
@@ -118,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
                 {
-                
+
                     DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 }
@@ -132,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
-                
+
                     DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
@@ -142,12 +142,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async void DestroyAllNetworkObjects()
         {
             await Task.Delay(10);
-            GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
-            GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
-            GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
-            GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
-            GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
-            GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
+            if (GameObject.Find("ApplicationController") != null)
+                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
+
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("PopupPanelManager") != null)
+                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UIMessageManager") != null)
+                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UpdateRunner") != null)
+                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
+
+            if (GameObject.Find("NetworkManager") != null)
+                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
         }
     }
 }

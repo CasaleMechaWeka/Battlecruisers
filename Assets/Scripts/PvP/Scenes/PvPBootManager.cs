@@ -40,6 +40,8 @@ using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Random = UnityEngine.Random;
+using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
+using BattleCruisers.Network.Multiplay.Gameplay.UI;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -130,12 +132,34 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private void onMatchmakingFailed()
         {
-
+            DestroyAllNetworkObjects();
         }
 
         private void onMatchmakingStarted()
         {
 
+        }
+
+        public async void DestroyAllNetworkObjects()
+        {
+            await Task.Delay(10);
+            if (GameObject.Find("ApplicationController") != null)
+                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
+
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("PopupPanelManager") != null)
+                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UIMessageManager") != null)
+                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UpdateRunner") != null)
+                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
+
+            if (GameObject.Find("NetworkManager") != null)
+                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
         }
 
         private async Task JoinWithLobbyRequest()
@@ -207,7 +231,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 {
                     ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName, DataObject.IndexOptions.S1),
                     ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
-                 //   ["Rank"] = new DataObject(DataObject.VisibilityOptions.Public, CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore).ToString(), DataObject.IndexOptions.N2)
+                    //   ["Rank"] = new DataObject(DataObject.VisibilityOptions.Public, CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore).ToString(), DataObject.IndexOptions.N2)
                 };
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                 if (lobbyCreationAttemp.Success)
@@ -257,7 +281,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         protected override void Awake()
         {
             base.Awake();
-         //   TrySignIn();
+            //   TrySignIn();
         }
 
 
@@ -343,7 +367,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             trashDataList.Initialise(storyStrings);
             ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
-            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData, commonStrings, storyStrings); 
+            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData, commonStrings, storyStrings);
 
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();

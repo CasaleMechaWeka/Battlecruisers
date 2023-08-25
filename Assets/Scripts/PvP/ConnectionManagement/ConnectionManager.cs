@@ -73,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         NetworkManager m_NetworkManager;
         [Inject]
-        ProfileManager m_ProfileManager;        
+        ProfileManager m_ProfileManager;
         public NetworkManager NetworkManager => m_NetworkManager;
 
         [SerializeField]
@@ -245,6 +245,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 return;
             if (int.TryParse(Port, out int port))
             {
+                Debug.Log("===> StartedMatch : " + Manager.User.Data.userName + IP + port);
                 StartClientIp(Manager.User.Data.userName, IP, port);
                 IsConnecting = true;
             }
@@ -254,7 +255,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             await Manager.CancelMatchmaking();
         }
-        public  void RequestShutdown()
+        public void RequestShutdown()
         {
             m_CurrentState.OnUserRequestedShutdown();
         }
