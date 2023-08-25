@@ -8,6 +8,8 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
+using TMPro;
+using Unity.Services.Authentication;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -31,6 +33,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton, languageButton, premiumButton;
 
         public bool showGameSettingsFirst = true;
+
+        public GameObject idContainer;
+        public TextMeshProUGUI idString;
+
         //public GameObject premiumTab;
 
 
@@ -132,6 +138,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ShowTab(); //Hotkeys tab - only show for keyboard devices
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
+            DisplayUserID();
 
 // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if (UNITY_ANDROID || UNITY_IOS)
@@ -269,6 +277,20 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             languageButton.IsSelected = true;
             videoPanel.Show();
+
+        }
+
+        private void DisplayUserID()
+        {
+            if (AuthenticationService.Instance.PlayerId != null)
+            {
+                idContainer.SetActive(true);
+                idString.text = "ID: " + AuthenticationService.Instance.PlayerId;
+            }
+            else
+            {
+                idContainer.SetActive(false);
+            }
 
         }
 
