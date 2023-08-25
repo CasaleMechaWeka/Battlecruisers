@@ -521,7 +521,14 @@ namespace BattleCruisers.Data.Models
 
             _queueName = "bc-1vs1-queue";
 
-            _gameConfigs = new Dictionary<string, int>() { { "coindivider", 10 }, { "creditdivider", 100 } };
+            _gameConfigs = new Dictionary<string, int>() { { "scoredivider", 10 },
+                { "creditdivider", 100 },
+                { "coin1threshold", 1000 },
+                { "coin2threshold", 2000 },
+                { "coin3threshold", 3000 },
+                { "coin4threshold", 4000 },
+                { "coin5threshold", 5000 }
+            };
         }
 
         public GameModel(

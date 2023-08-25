@@ -90,9 +90,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private float timeStep; // used as the basis for all WaitForSeconds() returns 
 
-        // value to divide the score by:
-        [SerializeField]
-        private long scoreDivider;
+        // values to control scores and rewards:
+        private int scoreDivider;
+        private int creditDivider;
+        private int coin1Threshold;
+        private int coin2Threshold;
+        private int coin3Threshold;
+        private int coin4Threshold;
+        private int coin5Threshold;
 
         // rewards panel parent
         [SerializeField]
@@ -155,6 +160,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 _sceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
 
             }
+
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditdivider", out creditDivider);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
 
             PopulateScreen();
 /*            // Populate screen:
@@ -363,7 +376,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
-            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
             coinsText.text = "+" + coinsToAward.ToString();
 
             // Set XP bar current/max values:
@@ -479,7 +492,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
 
             // Interpolate game score:
-            levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider);
+            levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
             // Award any rewards:
@@ -571,7 +584,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private void CalculateRewards()
         {
-            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
             if (coinsToAward > 0)
             {
                 coinsCounter.SetActive(true);
@@ -605,13 +618,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
         }
 
-        private long CalculateScore(float time, long damage, long constant)
+        private long CalculateScore(float time, long damage)
         {
             // feels weird to make this a method but I don't like doing it directly in the animation methods:
             long score = 0;
             if (damage > 0)
             {
-                score = (damage * 1000) / ((long)Mathf.Pow(time, 2.0f) / constant);
+                score = (damage * 1000) / ((long)Mathf.Pow(time, 2.0f) / scoreDivider);
             }
             return score;
         }
@@ -619,27 +632,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private int CalculateCoins(long score)
         {
             // 5 coins
-            if (score >= 5000)
+            if (score >= coin5Threshold)
             {
                 return 5;
             }
             // 4 coins
-            if (score >= 4000)
+            if (score >= coin4Threshold)
             {
                 return 4;
             }
             // 3 coins
-            if (score >= 3000)
+            if (score >= coin3Threshold)
             {
                 return 3;
             }
             // 2 coins
-            else if (score >= 2000)
+            else if (score >= coin2Threshold)
             {
                 return 2;
             }
             // 1 coin
-            else if (score >= 1000)
+            else if (score >= coin1Threshold)
             {
                 return 1;
             }
@@ -649,7 +662,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private long CalculateCredits()
         {
-            long creditsAward = (cruiserVal + buildingsVal) / scoreDivider;
+            long creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
             return creditsAward;
         }
 
