@@ -42,6 +42,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 return;
             }
+            if (wasVictory)
+            {
+                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore += 1;
+            }
+            else
+            {
+
+                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore -= 1;
+            }
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
@@ -60,9 +69,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
            await Task.Delay(10);
+
             if (_isCompleted)
             {
                 return;
+            }
+            if (wasVictory)
+            {
+                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore += 1;
+            }
+            else
+            {
+
+                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore -= 1;
             }
             _isCompleted = true;
             BattleCompleted?.Invoke(this, EventArgs.Empty);

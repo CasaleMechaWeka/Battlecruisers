@@ -160,13 +160,13 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 value: m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName),
             // Example "Score" range filter (Score is a custom numeric field in this example)
             new QueryFilter(
-                field: QueryFilter.FieldOptions.N1, // N1 = "Destruction Score"
-                op: QueryFilter.OpOptions.GT,
-                value: "0"),
-            new QueryFilter(
+                field: QueryFilter.FieldOptions.N1, // N1 = "Battle Win Score"
+                op: QueryFilter.OpOptions.EQ,
+                value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),
+/*            new QueryFilter(
                 field: QueryFilter.FieldOptions.N2, // N2 = "Rank"
                 op: QueryFilter.OpOptions.EQ,
-                value: "0"),
+                value: "0"),*/
             };
 
 
@@ -206,8 +206,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 var lobbyData = new Dictionary<string, DataObject>()
                 {
                     ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName, DataObject.IndexOptions.S1),
-                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore.ToString(), DataObject.IndexOptions.N1),
-                    ["Rank"] = new DataObject(DataObject.VisibilityOptions.Public, CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore).ToString(), DataObject.IndexOptions.N2)
+                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
+                 //   ["Rank"] = new DataObject(DataObject.VisibilityOptions.Public, CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore).ToString(), DataObject.IndexOptions.N2)
                 };
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                 if (lobbyCreationAttemp.Success)

@@ -162,6 +162,12 @@ namespace BattleCruisers.Data.Models
             set => _totalVoyages = value;
         }
 
+        private int _battleWinScore;
+        public int BattleWinScore
+        {
+            get => _battleWinScore;
+            set { _battleWinScore = value; if (_battleWinScore < 0) _battleWinScore = 0; }
+        }
 
         private List<int> _captainExoList;
         public List<int> CaptainExoList
@@ -189,7 +195,7 @@ namespace BattleCruisers.Data.Models
             get => _arenas;
             set => _arenas = value;
         }
-        public Dictionary<String,int> _gameConfigs;
+        public Dictionary<String, int> _gameConfigs;
         public Dictionary<String, int> GameConfigs
         {
             get => _gameConfigs;
@@ -529,6 +535,8 @@ namespace BattleCruisers.Data.Models
                 { "coin4threshold", 4000 },
                 { "coin5threshold", 5000 }
             };
+
+            _battleWinScore = 0;
         }
 
         public GameModel(
