@@ -143,7 +143,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             isConnected = true;
             onClientEntered?.Invoke();
         }
-
-
     }
 }
