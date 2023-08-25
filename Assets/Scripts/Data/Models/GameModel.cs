@@ -189,6 +189,13 @@ namespace BattleCruisers.Data.Models
             get => _arenas;
             set => _arenas = value;
         }
+        public Dictionary<String,int> _gameConfigs;
+        public Dictionary<String, int> GameConfigs
+        {
+            get => _gameConfigs;
+            set => _gameConfigs = value;
+        }
+
         public List<CaptainData> _captains;
         public List<CaptainData> Captains
         {
@@ -513,6 +520,8 @@ namespace BattleCruisers.Data.Models
             };
 
             _queueName = "bc-1vs1-queue";
+
+            _gameConfigs = new Dictionary<string, int>() { { "coindivider", 10 }, { "creditdivider", 100 } };
         }
 
         public GameModel(

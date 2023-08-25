@@ -14,6 +14,7 @@ using Unity.Services.Economy;
 using System;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 using BattleCruisers.Scenes;
 using Unity.Services.Authentication;
@@ -177,7 +178,9 @@ namespace BattleCruisers.Data
 
         void GetConfigValues()
         {
-            var gameConfigs = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
+            var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
+            GameConfig gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigsJson); //JsonUtility.FromJson<GameConfig>(gameConfigsJson);
+            _gameModel.GameConfigs = gameConfig.gameconfigs;
 
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
@@ -435,7 +438,7 @@ namespace BattleCruisers.Data
     [Serializable]
     public struct GameConfig
     {
-        public Dictionary<string, int> configs;
+        public Dictionary<string, int> gameconfigs;
     }
 
     struct UserAttributes { }
