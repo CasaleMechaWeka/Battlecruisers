@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 try
                 {
                     //await AuthenticationService.Instance.UpdatePlayerNameAsync(dataProvider.GameModel.PlayerName);
-                    await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, eol);
+                    //await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, eol);
                 }
                 catch(Exception e)
                 {
