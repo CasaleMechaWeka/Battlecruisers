@@ -54,48 +54,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPGameEndHandler(
             IPvPCruiser playerACruiser,
             IPvPCruiser playerBCruiser,
-            /*            IPvPArtificialIntelligence ai_LeftPlayer,
-                        IPvPArtificialIntelligence ai_RightPlayer,*/
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IPvPDeferrer deferrer
-        //    IPvPCruiserDeathCameraFocuser cameraFocuser,
-        //    IPvPPermitter navigationPermitter,
-        //    IPvPUIManager uiManager,
-        //    IPvPTargetIndicator targetIndicator,
-        //      IPvPWindManager windManager,
-        //    IPvPBuildingCategoryPermitter buildingCategoryPermitter,
-        //    IPvPToggleButtonGroup speedButtonGroup
             )
         {
             PvPHelper.AssertIsNotNull(
                 playerACruiser,
                 playerBCruiser,
-                /*                ai_LeftPlayer,
-                                ai_RightPlayer,*/
                 battleSceneGodTunnel,
                 deferrer
-                //    cameraFocuser,
-                //    navigationPermitter,
-                //    uiManager,
-                //    targetIndicator,
-                // windManager,
-                //    speedButtonGroup
                 );
 
             _playerACruiser = playerACruiser;
             _playerBCruiser = playerBCruiser;
-            /*            _ai_LeftPlayer = ai_LeftPlayer;
-                        _ai_RightPlayer = ai_RightPlayer;*/
             _battleSceneGodTunnel = battleSceneGodTunnel;
             _deferrer = deferrer;
-            //   _cameraFocuser = cameraFocuser;
-            //   _navigationPermitter = navigationPermitter;
-            //   _uiManager = uiManager;
-            //   _targetIndicator = targetIndicator;
-            //   _windManager = windManager;
-            //   _buildingCategoryPermitter = buildingCategoryPermitter;
-            //   _speedButtonGroup = speedButtonGroup;
-
             _handledCruiserDeath = false;
             _handledGameEnd = false;
         }
@@ -140,7 +113,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //---> Code by ANUJ
             ClearProjectiles();
             //<---
-            //    _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             if (_ai_LeftPlayer != null)
                 _ai_LeftPlayer.DisposeManagedState();
             if (_ai_RightPlayer != null)
@@ -223,7 +195,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 if (_ai_RightPlayer != null)
                     _ai_RightPlayer.DisposeManagedState();
             }
-            //  _windManager.DisposeManagedState();
         }
     }
 }

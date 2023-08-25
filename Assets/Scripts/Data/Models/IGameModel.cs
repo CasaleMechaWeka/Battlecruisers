@@ -15,8 +15,10 @@ namespace BattleCruisers.Data.Models
         long Credits { get; set; }
         string PlayerName { get; set; }
         int GameMap { get; set; }
+        int BattleWinScore { get; set; }
         string QueueName { get; set; }
         List<Arena> Arenas { get; set; }
+        Dictionary<string, int> GameConfigs { get; set; }
         List<int> CaptainExoList { get; set; }
         List<int> HeckleList { get; set; }
         List<CaptainData> Captains { get; set; }
