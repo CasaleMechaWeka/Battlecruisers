@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.Configuration
             var firstWord = FirstWordList[UnityEngine.Random.Range(0, FirstWordList.Length - 1)];
             var secondWord = SecondWordList[UnityEngine.Random.Range(0, SecondWordList.Length - 1)];
 
-            return firstWord + " " + secondWord + DateTime.Now.ToString();
+            return firstWord + " " + secondWord + Time.time.ToString();
         }
     }
 }
