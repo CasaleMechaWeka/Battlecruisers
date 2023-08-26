@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IItemDetailsDisplayer<ICruiser> cruiserDetails, 
+            IItemDetailsDisplayer<ICruiser> cruiserDetails,
             IComparisonStateTracker comparisonStateTracker,
             IHullNameToKey hullNameToKey,
             IDataProvider dataProvider)
@@ -59,6 +59,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             Enabled = ShouldBeEnabled();
         }
+
+        public void OnClickedAction() { OnClicked(); }
 
         protected override void OnClicked()
         {

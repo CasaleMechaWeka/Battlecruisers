@@ -41,6 +41,7 @@ using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes
 {
@@ -141,7 +142,7 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     await _dataProvider.LoadBCData();
-                    if(_dataProvider.GameModel.NumOfLevelsCompleted >= 10)
+                    if (_dataProvider.GameModel.NumOfLevelsCompleted >= 10)
                     {
                         // set pvp status in Battle Hub
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
@@ -240,6 +241,8 @@ namespace BattleCruisers.Scenes
             characterOfBlackmarket.SetActive(false);
             processingPanel.SetActive(false);
 
+            processingPanel.GetComponentInChildren<Text>().text = screensSceneStrings.GetString("Processing");
+
             if (_applicationModel.ShowPostBattleScreen)
             {
                 _applicationModel.ShowPostBattleScreen = false;
@@ -256,7 +259,7 @@ namespace BattleCruisers.Scenes
                 fullScreenads.OpenAdvert();
                 GotoHubScreen();
             }
-            else if(_applicationModel.Mode == GameMode.PvP_1VS1)
+            else if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 _applicationModel.ShowPostBattleScreen = false;
                 _applicationModel.Mode = GameMode.Campaign;
