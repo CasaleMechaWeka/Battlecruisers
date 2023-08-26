@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemFamilyTracker = itemFamilyTracker;
 
             _itemFamilyToCompare = itemFamilyToCompare;
-     //       _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
+            //       _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
         }
 
         private void _itemPanels_PotentialMatchChange(object sender, EventArgs e)
@@ -43,10 +43,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IsSelected = _itemPanels.IsMatch(itemType);
         }
 
+        public void OnClickedAction() { OnClicked(); }
+
         protected override void OnClicked()
         {
             base.OnClicked();
-            _itemPanels.ShowItemsPanel(itemType);            
+            _itemPanels.ShowItemsPanel(itemType);
             _itemFamilyTracker.SetComparingFamily(ItemFamily);
             _itemFamilyTracker.SetComparingFamily(null);
         }

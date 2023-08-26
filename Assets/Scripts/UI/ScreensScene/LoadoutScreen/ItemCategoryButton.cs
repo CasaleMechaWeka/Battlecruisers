@@ -115,6 +115,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IsSelected = _itemPanels.IsMatch(itemType);
         }
 
+        public void OnClickedAction() { OnClicked(); }
+
         protected override void OnClicked()
         {
             base.OnClicked();
