@@ -143,23 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         public async void DestroyAllNetworkObjects()
         {
             await Task.Delay(10);
-            if (GameObject.Find("ApplicationController") != null)
-                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
-
-            if (GameObject.Find("ConnectionManager") != null)
-                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("PopupPanelManager") != null)
-                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("UIMessageManager") != null)
-                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("UpdateRunner") != null)
-                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
-
-            if (GameObject.Find("NetworkManager") != null)
-                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
+            MatchmakingScreenController.Instance.FailedMatchmaking();
         }
 
         private async Task JoinWithLobbyRequest()
@@ -170,6 +154,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 return;
             }
+
+            m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
+            m_LocalUser.DisplayName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName;            
+            m_LocalLobby.AddUser(m_LocalUser);
 
             List<QueryFilter> mFilters = new List<QueryFilter>()
             {
@@ -327,7 +315,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             Debug.Log($"Signed in. Unity Player ID {AuthenticationService.Instance.PlayerId}");
             m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
-            m_LocalUser.DisplayName = m_NameGenerationData.GenerateName();
+            m_LocalUser.DisplayName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName;
             // The local LobbyUser object will be hooked into UI before the LocalLobby is populated during lobby join, so the LocalLobby must know about it already when that happens.
             m_LocalLobby.AddUser(m_LocalUser);
         }

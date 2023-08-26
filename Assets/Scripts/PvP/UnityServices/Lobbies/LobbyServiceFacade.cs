@@ -10,7 +10,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
@@ -40,6 +40,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         RateLimitCooldown m_RateLimitJoin;
         RateLimitCooldown m_RateLimitQuickJoin;
         RateLimitCooldown m_RateLimitHost;
+        RateLimitCooldown m_RateLimitLobbyQuery;
 
         public Lobby CurrentUnityLobby { get; private set; }
 
@@ -65,6 +66,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             m_RateLimitJoin = new RateLimitCooldown(3f);
             m_RateLimitQuickJoin = new RateLimitCooldown(10f);
             m_RateLimitHost = new RateLimitCooldown(3f);
+            m_RateLimitLobbyQuery = new RateLimitCooldown(30f);
         }
 
         public void Dispose()
@@ -90,13 +92,20 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 m_IsTracking = true;
                 m_IsMatchmaking = false;
+                m_RateLimitLobbyQuery.PutOnCooldown();
                 // 2s update cadence is arbitrary and is here to demonstrate the fact that this update can be rather infrequent
                 // the actual rate limits are tracked via the RateLimitCooldown objects defined above
                 m_UpdateRunner.Subscribe(UpdateLobby, 2f);
                 m_JoinedLobbyContentHeartbeat.BeginTracking();
+                MatchmakingScreenController.Instance.CanceledMatchmaking += CanceledMatchmaking;
+                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
             }
         }
 
+        private async void CanceledMatchmaking()
+        {
+            await EndTracking();
+        }
         public async Task EndTracking()
         {
             var task = Task.CompletedTask;
@@ -138,8 +147,10 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         async void UpdateLobby(float unused)
         {
-            if (!m_RateLimitQuery.CanCall)
+            if (!m_IsMatchmaking && m_RateLimitLobbyQuery.CanCall)
             {
+                await EndTracking();
+                OnMatchMakingFailed();
                 return;
             }
 
@@ -159,8 +170,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (m_LocalLobby.MatchIP != null && m_LocalLobby.MatchPort != null)
                 {
                     Debug.Log($"IP Address = {m_LocalLobby.MatchIP} --- Port = {m_LocalLobby.MatchPort}");
-                    m_ConnectionManager.StartMatch(m_LocalLobby.MatchIP, m_LocalLobby.MatchPort);                    
-                    // return;
+                    m_ConnectionManager.StartMatch(m_LocalLobby.MatchIP, m_LocalLobby.MatchPort);
+                    /*                    await EndTracking();
+                                        return;*/
                 }
 
                 // as client, check if host is still in lobby
@@ -180,7 +192,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                             return;
                         }
                     }
-                    m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
+                    //   m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
                     await EndTracking();
                     OnMatchMakingFailed();
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
@@ -200,7 +212,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                             Debug.Log($"IP Address = {matchResult.IP} --- Port = {matchResult.Port}");
                             m_LocalLobby.MatchIP = matchResult.IP;
                             m_LocalLobby.MatchPort = matchResult.Port;
-                            // await m_LobbyApiInterface.UpdateLobby(m_LocalLobby.LobbyID, m_LocalLobby.GetDataForUnityServices(), false);
+                            await m_LobbyApiInterface.UpdateLobby(m_LocalLobby.LobbyID, m_LocalLobby.GetDataForUnityServices(), false);
                         }
                         else if (matchResult.result == GetMatchmakingResult.Failed)
                         {
@@ -208,7 +220,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                             await EndTracking();
                             OnMatchMakingFailed();
                         }
-
                     }
                 }
             }

@@ -292,7 +292,7 @@ namespace BattleCruisers.Scenes
 #if PLATFORM_ANDROID
                 try
                 {
-                    
+
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
 
                     // turn the button back on if it fails I guess?
@@ -443,7 +443,8 @@ namespace BattleCruisers.Scenes
 
             if (sceneName == SceneNames.PvP_BOOT_SCENE)
             {
-                MatchmakingScreenController.Instance.Destroy();
+                if (MatchmakingScreenController.Instance != null)
+                    MatchmakingScreenController.Instance.Destroy();
             }
             else
             {
@@ -526,7 +527,7 @@ namespace BattleCruisers.Scenes
             AuthenticationService.Instance.SignInFailed -= SignFailed;
             AuthenticationService.Instance.Expired -= Expired;
 
-        //    InternetConnectivity.ValueChanged -= TestEventHandler;
+            //    InternetConnectivity.ValueChanged -= TestEventHandler;
         }
 
         public static async Task<bool> CheckForInternetConnection(int timeoutMs = 10000, string url = "https://www.google.com")

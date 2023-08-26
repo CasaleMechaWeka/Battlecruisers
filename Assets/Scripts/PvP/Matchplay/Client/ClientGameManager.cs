@@ -37,10 +37,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 
         async Task InitAsync()
         {
-            // var unityAuthenticationInitOptions = new InitializationOptions();
-            // unityAuthenticationInitOptions.SetProfile($"{ProfileName} {LocalProfileTool.LocalProfileSuffix}");
-            // await Unity.Services.Core.UnityServices.InitializeAsync(unityAuthenticationInitOptions);
-
             NetworkClient = new MatchplayNetworkClient();
             Matchmaker = new MatchplayMatchmaker();
 
@@ -58,28 +54,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             Initialized = true;
         }
 
-        // public void BeginConnection(string ip, int port)
-        // {
-        //     Debug.Log($"Starting networkClient @ {ip}:{port}\nWith : {User}");
-        //     NetworkClient.StartClient(ip, port);
-        // }
-
         public void Disconnect()
         {
             NetworkClient.DisconnectClient();
         }
-
-        // public async Task MatchmakeAsync(Action<MatchmakerPollingResult> onMatchmakerResponse = null)
-        // {
-        //     if (Matchmaker.IsMatchmaking)
-        //     {
-        //         Debug.LogWarning("Already matchmaking, please wait or cancel.");
-        //         return;
-        //     }
-        //     var matchResult = await GetMatchAsync();
-        //     onMatchmakerResponse?.Invoke(matchResult);
-        // }
-
 
         public async Task CancelMatchmaking()
         {
@@ -115,17 +93,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             User.QueuePreference = queue;
         }
 
-
-        // async Task<MatchmakerPollingResult> GetMatchAsync()
-        // {
-        //     Debug.Log($"Beginning Matchmaking with {User}");
-        //     var matchmakingResult = await Matchmaker.Matchmake(User.Data);
-        //     if (matchmakingResult.result == MatchmakerPollingResult.Success)
-        //         BeginConnection(matchmakingResult.ip, matchmakingResult.port);
-        //     else
-        //         Debug.LogWarning($"{matchmakingResult.result} : {matchmakingResult.resultMessage}");
-        //     return matchmakingResult.result;
-        // }
 
         public async Task<MatchmakingResult> GetMatchAsyncInLobby()
         {

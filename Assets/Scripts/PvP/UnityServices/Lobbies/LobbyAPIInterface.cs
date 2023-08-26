@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return await LobbyService.Instance.GetLobbyAsync(lobbyId);
             }
-            catch (LobbyServiceException)
+            catch
             {
                 return null;
             }

@@ -234,6 +234,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             else
             {
+                Debug.Log("===>" + matchmakingResult.resultMessage);
                 return (null, null, GetMatchmakingResult.Failed);
             }
         }

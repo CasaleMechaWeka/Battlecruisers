@@ -16,8 +16,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void Enter()
         {
             if (m_lobbyServiceFacade.CurrentUnityLobby != null)
-            {              
-                m_lobbyServiceFacade.BeginTracking();
+            {
+                //    m_lobbyServiceFacade.BeginTracking();    // BeginTracking is being used for other purpose
             }
         }
 

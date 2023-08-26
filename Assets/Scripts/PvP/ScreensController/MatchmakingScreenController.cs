@@ -17,11 +17,12 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
     public class MatchmakingScreenController : ScreenController
-    {        
+    {
         private ISceneNavigator _sceneNavigator;
         private ITrashTalkData _trashTalkData;
         private ILocTable _storyStrings;
@@ -67,6 +68,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite Yeti;
 
         private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
+        public Action CanceledMatchmaking;
+        public GameObject fleeButton;
         public static MatchmakingScreenController Instance { get; private set; }
 
 
@@ -84,6 +87,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         async void Start()
         {
             Instance = this;
+            fleeButton.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
@@ -231,22 +235,30 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 " Please check Internet connection!", true, FailedMatchmaking);
         }
 
-        private void FailedMatchmaking()
+        public void FailedMatchmaking()
         {
-            /*            GameObject[] objs = GameObject.FindGameObjectsWithTag("ShouldBeDestroyedOnNonPvP");
-                        foreach (GameObject obj in objs)
-                        {
-                            Destroy(obj);
-                        }*/
-            GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
-            GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
-            GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
-            GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
-            GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
-            GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
+            CanceledMatchmaking();
+            if (GameObject.Find("ApplicationController") != null)
+                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
+
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("PopupPanelManager") != null)
+                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UIMessageManager") != null)
+                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UpdateRunner") != null)
+                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
+
+            if (GameObject.Find("NetworkManager") != null)
+                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
 
             _sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            Destroy(gameObject);
         }
 
         public void Destroy()
