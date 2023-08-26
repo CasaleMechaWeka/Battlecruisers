@@ -159,8 +159,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (m_LocalLobby.MatchIP != null && m_LocalLobby.MatchPort != null)
                 {
                     Debug.Log($"IP Address = {m_LocalLobby.MatchIP} --- Port = {m_LocalLobby.MatchPort}");
-                    m_ConnectionManager.StartMatch(m_LocalLobby.MatchIP, m_LocalLobby.MatchPort);
-                    await EndTracking();
+                    m_ConnectionManager.StartMatch(m_LocalLobby.MatchIP, m_LocalLobby.MatchPort);                    
                     // return;
                 }
 
