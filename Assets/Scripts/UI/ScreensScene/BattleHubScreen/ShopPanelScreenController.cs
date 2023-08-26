@@ -7,9 +7,11 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using UnityEditor.Build.Utilities;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
@@ -27,6 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         public Transform captainCamContainer;
+        private ILocTable commonStrings;
 
 
         public void Initialise(
@@ -51,6 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
+            commonStrings = LandingSceneGod.Instance.commonStrings;
         }
 
 
@@ -184,6 +188,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (index == 0)
                     {
                         captainsContainer.captainPrice.text = "0"; // CaptainExo000 is default item. :)
+                        captainsContainer.captainName.text = commonStrings.GetString(_dataProvider.GameModel.Captains[0].nameStringKeyBase);
+                        captainsContainer.captainDescription.text = commonStrings.GetString(_dataProvider.GameModel.Captains[0].descriptionKeyBase);
                     }
                     captainExo.gameObject.SetActive(true);
                     if (_dataProvider.GameModel.Captains[index].IsOwned)
