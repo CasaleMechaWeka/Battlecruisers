@@ -16,6 +16,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using Unity.Services.CloudCode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using Unity.Services.Leaderboards;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 {
@@ -707,6 +711,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 applicationModel.DataProvider.GameModel.Coins += coinsToAward;
                 applicationModel.DataProvider.GameModel.Credits += creditsToAward;
                 applicationModel.DataProvider.SaveGame();
+
+                //Update Leaderboard
+                double score = (double)applicationModel.DataProvider.GameModel.BattleWinScore;
+                const string LeaderboardID = "BC-PvP1v1Leaderboard";
+                await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
                 await applicationModel.DataProvider.SyncCoinsToCloud();
                 await applicationModel.DataProvider.SyncCreditsToCloud();

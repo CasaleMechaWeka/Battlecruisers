@@ -13,6 +13,7 @@ using System;
 using Unity.Services.Authentication;
 using Unity.Services.CloudCode;
 using System.Linq;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
