@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         public int _IAPCoins;
         public int IAPCoins => _IAPCoins;
 
-        public IAPData(int iapType = 0, string iapNameKeyBase = "Coins100Pack", string iapDescriptionKeybase = "Coins100Pack", string iapIconName = "Coins100Pack", float iapCost = 0.99f, int iapCoins = 100)
+        public IAPData(int iapType = 0, string iapNameKeyBase = "Coins100Name", string iapDescriptionKeybase = "Coins100Description", string iapIconName = "Coins100Pack", float iapCost = 0.99f, int iapCoins = 100)
         {
             _IAPType = iapType;
             _IAPNameKeyBase = iapNameKeyBase;
