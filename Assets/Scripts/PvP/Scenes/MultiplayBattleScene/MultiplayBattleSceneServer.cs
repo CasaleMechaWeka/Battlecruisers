@@ -107,10 +107,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void OnDestroy()
         {
-            NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManager_OnSceneEvent;
-            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
-            onClientEntered -= OnClientEntered;
-            onClientExit -= OnClientExit;
+            if(NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+            {
+                NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManager_OnSceneEvent;
+                NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+                onClientEntered -= OnClientEntered;
+                onClientExit -= OnClientExit;
+            }
         }
 
 
