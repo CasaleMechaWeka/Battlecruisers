@@ -110,8 +110,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenBattleHub()
         {
             playerInfoPanelController.gameObject.SetActive(true);
-            ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
-            ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+            //--->CODE CHANGED BY ANUJ
+            if (_applicationModel.Mode != GameMode.PvP_1VS1)
+            {
+                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
+                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+            }
+            //<---
             GoToScreen(battlePanel);
             UnselectAll();
         }
