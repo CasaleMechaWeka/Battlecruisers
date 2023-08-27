@@ -22,6 +22,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using BattleCruisers.Data.Models;
+using Unity.Services.CloudCode;
+using Unity.Services.Leaderboards;
 
 namespace BattleCruisers.Scenes
 {
@@ -642,6 +644,7 @@ namespace BattleCruisers.Scenes
                 applicationModel.DataProvider.GameModel.Coins += coinsToAward;
                 applicationModel.DataProvider.GameModel.Credits += creditsToAward;
                 applicationModel.DataProvider.SaveGame();
+
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
                 await applicationModel.DataProvider.SyncCoinsToCloud();
                 await applicationModel.DataProvider.SyncCreditsToCloud();
