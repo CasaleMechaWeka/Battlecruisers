@@ -31,6 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void Start()
         {
+            Debug.Log("==================> Server Called");
             if (!NetworkManager.Singleton.IsServer)
             {
                 enabled = false;
@@ -69,25 +70,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             switch(sceneEvent.SceneEventType)
             {
                 case SceneEventType.Load:
-          
+                    Debug.Log("==================> Load");
+                    OnAddClient(sceneEvent.ClientId);
                     break;
                 case SceneEventType.Unload:
-             
+                    Debug.Log("==================> UnLoad");
                     break;
                 case SceneEventType.LoadComplete:
-             
+                    Debug.Log("==================> LoadComplete");
                     break;
                 case SceneEventType.UnloadComplete:
-           
+                    Debug.Log("==================> UnLoadComplete");
                     break;
                 case SceneEventType.LoadEventCompleted:
-
+                    Debug.Log("==================> LoadEventCompleted");
                     break;
                 case SceneEventType.UnloadEventCompleted:
-       
+                    Debug.Log("==================> UnLoadEventCompleted");
                     break;
                 case SceneEventType.SynchronizeComplete:
-                    OnSynchronizeComplete(sceneEvent.ClientId);
+                    Debug.Log("==================> SynchronizeComplete");
+                    //    OnSynchronizeComplete(sceneEvent.ClientId);
                     break;
             }
         }
@@ -115,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
 
-        void OnSynchronizeComplete(ulong clientID)
+        void OnAddClient(ulong clientID)
         {
             m_clients.Add(clientID);
             isConnected = true;
