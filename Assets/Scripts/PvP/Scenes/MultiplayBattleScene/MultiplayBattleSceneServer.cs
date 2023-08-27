@@ -56,10 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             if (!isConnected && Time.time > 180f)
             {
 #if UNITY_EDITOR
-                NetworkManager.Singleton.Shutdown();
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
-                    NetworkManager.Singleton.Shutdown();
                     Application.Quit();
 #endif
             }
@@ -138,11 +136,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             if (m_clients.Count == 0)
             {
-#if UNITY_EDITOR
-                NetworkManager.Singleton.Shutdown();
+#if UNITY_EDITOR             
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
-                NetworkManager.Singleton.Shutdown();
                 Application.Quit();
 #endif
             }

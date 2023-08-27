@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         public MatchplayNetworkClient()
         {
             m_NetworkManager = NetworkManager.Singleton;
-            m_NetworkManager.OnClientDisconnectCallback += RemoteDisconnect;
+        //    m_NetworkManager.OnClientDisconnectCallback += RemoteDisconnect;
         }
 
 
@@ -104,7 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         {
             if (m_NetworkManager != null && m_NetworkManager.CustomMessagingManager != null)
             {
-                m_NetworkManager.OnClientDisconnectCallback -= RemoteDisconnect;
+                // m_NetworkManager.OnClientDisconnectCallback -= RemoteDisconnect;
             }
         }
     }

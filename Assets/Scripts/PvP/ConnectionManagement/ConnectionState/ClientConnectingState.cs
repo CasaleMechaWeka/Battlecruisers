@@ -33,7 +33,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void Exit() { }
         public override void OnClientConnected(ulong _)
         {
-            //    m_ConnectStatusPublisher.Publish(ConnectStatus.Success);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnected);
         }
 
@@ -44,17 +43,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         protected void StartingClientFailedAsync()
         {
-            /*            MatchmakingScreenController.Instance.NotFound();
-                      var disconnectReason = m_ConnectionManager.NetworkManager.DisconnectReason;
-                       if (string.IsNullOrEmpty(disconnectReason))
-                       {
-                           m_ConnectStatusPublisher.Publish(ConnectStatus.StartClientFailed);
-                       }
-                       else
-                       {
-                           var connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
-                           m_ConnectStatusPublisher.Publish(connectStatus);
-                       }*/
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
         }
 

@@ -32,8 +32,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_LobbyServiceFacade.EndTracking();
 #pragma warning restore 4014
 
-            m_ConnectionManager.NetworkManager.Shutdown();
-            m_ConnectionManager.IsConnecting = false;
             if (MatchmakingScreenController.Instance != null)
                 MatchmakingScreenController.Instance.Destroy();
 /*            if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)
