@@ -60,7 +60,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             _applicationModel.DataProvider.SaveGame();
 
-            _applicationModel.ShowPostBattleScreen = true;
+            //--->CODE CHANGED BY ANUJ
+            //_applicationModel.ShowPostBattleScreen = true;
+            //<---
             PvPTimeBC.Instance.TimeScale = 1;
             DestroyAllNetworkObjects();
             _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
@@ -89,7 +91,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (NetworkManager.Singleton.IsConnectedClient)
                 NetworkManager.Singleton.Shutdown(true);
 
-            _applicationModel.ShowPostBattleScreen = true;
+            //--->CODE CHANGED BY ANUJ
+            //_applicationModel.ShowPostBattleScreen = true;
+            //<---
             PvPTimeBC.Instance.TimeScale = 1;
 
             if (wasVictory)

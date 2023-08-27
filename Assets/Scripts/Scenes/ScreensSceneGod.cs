@@ -262,7 +262,7 @@ namespace BattleCruisers.Scenes
             else if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 _applicationModel.ShowPostBattleScreen = false;
-                _applicationModel.Mode = GameMode.Campaign;
+                //_applicationModel.Mode = GameMode.Campaign;
                 fullScreenads.OpenAdvert();
                 GotoHubScreen();
             }
@@ -365,8 +365,16 @@ namespace BattleCruisers.Scenes
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
             await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
-
-            GoToScreen(postBattleScreen, playDefaultMusic: false);
+            //--->CODE CHANGED BY ANUJ
+            if(_applicationModel.Mode == GameMode.PvP_1VS1) 
+            {
+                GoToScreen(hubScreen);
+            }
+            else 
+            {
+                GoToScreen(postBattleScreen, playDefaultMusic: false);
+            }
+            //<---
         }
 
         public void GoToHomeScreen()
