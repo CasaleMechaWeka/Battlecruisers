@@ -115,14 +115,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             //--->CODE CHANGED BY ANUJ
             if (_applicationModel.Mode != GameMode.PvP_1VS1)
             {
-                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
-                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+                if (ScreensSceneGod.Instance.cameraOfCaptains != null)
+                    ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
+                if (ScreensSceneGod.Instance.cameraOfCharacter != null)
+                    ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             }
             //<---
             GoToScreen(battlePanel);
             offlinePlayOnly.SetActive(true);
             battle1vAI.SetActive(true);
             offlineLockedText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineLockedSubtitle");
+            titleOfBattleButton.text = LandingSceneGod.Instance.commonStrings.GetString("CoinBattleDescription");
             UnselectAll();
         }
 
@@ -200,17 +203,19 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
-            if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
+            /*if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
             {
                 playerInfoPanelController.gameObject.SetActive(false);
                 GoToScreen(arenaSelectPanel);
             }
             else
             {
-                coinBattleController.BattleButtonClicked();
+            */
+            coinBattleController.BattleButtonClicked();
+            /* 
             }
 
-            /*            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                       if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                         {
                             GoToScreen(arenaSelectPanel);
                         }

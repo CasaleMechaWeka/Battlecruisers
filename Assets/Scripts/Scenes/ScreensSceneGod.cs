@@ -150,7 +150,7 @@ namespace BattleCruisers.Scenes
                         {
                             // server available
                             hubScreen.serverStatusPanel.SetActive(false);
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             hubScreen.battle1vAI.SetActive(false);
                             hubScreen.offlinePlayOnly.SetActive(false);
                             Debug.Log("PVP Server Available.");
@@ -161,7 +161,7 @@ namespace BattleCruisers.Scenes
                             hubScreen.serverStatusPanel.SetActive(true);
                             hubScreen.battle1vAI.SetActive(true);
                             hubScreen.offlinePlayOnly.SetActive(false);
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             Debug.Log("PVP Server Unavailable.");
                         }
                     }
@@ -370,11 +370,11 @@ namespace BattleCruisers.Scenes
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
             await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
             //--->CODE CHANGED BY ANUJ
-            if(_applicationModel.Mode == GameMode.PvP_1VS1) 
+            if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 GoToScreen(hubScreen);
             }
-            else 
+            else
             {
                 GoToScreen(postBattleScreen, playDefaultMusic: false);
             }
