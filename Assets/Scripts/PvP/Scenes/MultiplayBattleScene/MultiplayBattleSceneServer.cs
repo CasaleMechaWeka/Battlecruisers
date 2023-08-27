@@ -29,7 +29,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void Start()
         {
-            Debug.Log("==================> Server Called");
             if (!NetworkManager.Singleton.IsServer)
             {
                 enabled = false;
@@ -37,7 +36,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
             NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManager_OnSceneEvent;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
-            Debug.Log("==================> AAAAAAA");
         }
 
         private void Update()
@@ -66,27 +64,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             switch(sceneEvent.SceneEventType)
             {
-                case SceneEventType.Load:
-                    Debug.Log("==================> Load");
-                    
+                case SceneEventType.Load:                    
                     break;
                 case SceneEventType.Unload:
-                    Debug.Log("==================> UnLoad");
                     break;
                 case SceneEventType.LoadComplete:
-                    Debug.Log("==================> LoadComplete");
                     break;
                 case SceneEventType.UnloadComplete:
-                    Debug.Log("==================> UnLoadComplete");
                     break;
                 case SceneEventType.LoadEventCompleted:
-                    Debug.Log("==================> LoadEventCompleted");
                     break;
                 case SceneEventType.UnloadEventCompleted:
-                    Debug.Log("==================> UnLoadEventCompleted");
                     break;
                 case SceneEventType.SynchronizeComplete:
-                    Debug.Log("==================> SynchronizeComplete");
                     OnAddClient(sceneEvent.ClientId);
                     break;
             }
@@ -94,10 +84,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void OnClientEntered()
         {
-            Debug.Log("==================> CCCCCCCC");
             if (m_clients.Count == MaxConnectedPlayers)
             {
-                Debug.Log("==================> DDDDDDD");
                 GetComponent<PvPBattleSceneGodServer>().Initialise();
             }
         }
@@ -117,7 +105,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void OnAddClient(ulong clientID)
         {
-            Debug.Log("==================> BBBBBBB");
             m_clients.Add(clientID);
             isConnected = true;
             OnClientEntered();

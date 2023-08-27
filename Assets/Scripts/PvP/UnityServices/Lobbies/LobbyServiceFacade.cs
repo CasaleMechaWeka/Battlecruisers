@@ -97,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 // the actual rate limits are tracked via the RateLimitCooldown objects defined above
                 m_UpdateRunner.Subscribe(UpdateLobby, 2f);
                 m_JoinedLobbyContentHeartbeat.BeginTracking();
-                MatchmakingScreenController.Instance.CanceledMatchmaking += CanceledMatchmaking;
+                // MatchmakingScreenController.Instance.CanceledMatchmaking += CanceledMatchmaking;
                 MatchmakingScreenController.Instance.fleeButton.SetActive(true);
             }
         }
