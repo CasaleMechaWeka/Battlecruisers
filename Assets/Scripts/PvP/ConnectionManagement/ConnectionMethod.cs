@@ -91,8 +91,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
             m_ConnectionManager.NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
 
-            // Debug.Log("payloadbytes =========== " + payload);
-
             var utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
             utp.SetConnectionData(m_Ipaddress, m_Port);
         }
