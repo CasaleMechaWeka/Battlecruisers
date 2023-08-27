@@ -2,6 +2,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
+using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -26,6 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private IDataProvider _dataProvider;
         public Transform captainCamContainer;
         private ILocTable commonStrings;
+        public Image captainsButtonImage, hecklesButtonImage;
 
 
         public void Initialise(
@@ -51,6 +53,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
+            // Set default active button color
+            captainsButtonImage.color = new Color32(255, 255, 255, 255);
+
+
+            // Set the other button to inactive color
+            hecklesButtonImage.color = new Color32(194, 59, 33, 255);   
+
         }
 
 
@@ -69,11 +78,24 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void CaptainsButton_OnClick()
         {
             InitiaiseCaptains();
+
+            // Set this button to active color
+            captainsButtonImage.color = new Color32(255, 255, 255, 255); 
+
+
+            // Set the other button to inactive color
+            hecklesButtonImage.color = new Color32(194, 59, 33, 255);   
         }
 
         public void HeckesButton_OnClick()
         {
             InitialiseHeckles();
+
+            // Set this button to active color
+            hecklesButtonImage.color = new Color32(255, 255, 255, 255); 
+
+            // Set the other button to inactive color
+            captainsButtonImage.color = new Color32(194, 59, 33, 255); 
         }
 
         private void RemoveAllCaptainsFromRenderCamera()
