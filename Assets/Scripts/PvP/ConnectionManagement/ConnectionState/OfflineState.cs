@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
 
 #pragma warning disable 4014
-            m_LobbyServiceFacade.EndTracking();
+          //  m_LobbyServiceFacade.EndTracking();
 #pragma warning restore 4014
 
             if (MatchmakingScreenController.Instance != null)

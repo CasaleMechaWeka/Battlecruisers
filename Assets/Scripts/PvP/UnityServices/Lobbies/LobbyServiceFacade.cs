@@ -147,10 +147,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         async void UpdateLobby(float unused)
         {
-            if (!m_IsMatchmaking && m_RateLimitLobbyQuery.CanCall)
+            if (!m_RateLimitQuery.CanCall)
             {
-                await EndTracking();
-                OnMatchMakingFailed();
                 return;
             }
 
@@ -159,7 +157,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 var lobby = await m_LobbyApiInterface.GetLobby(m_LocalLobby.LobbyID);
                 if (lobby == null)
                 {
-                    await EndTracking();
+                //    await EndTracking();
                     OnMatchMakingFailed();
                     return;
                 }
@@ -193,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                         }
                     }
                     //   m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
-                    await EndTracking();
+                 //   await EndTracking();
                     OnMatchMakingFailed();
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
                 }
@@ -217,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                         else if (matchResult.result == GetMatchmakingResult.Failed)
                         {
                             Debug.Log("Matchmaking Failed");
-                            await EndTracking();
+                        //    await EndTracking();
                             OnMatchMakingFailed();
                         }
                     }

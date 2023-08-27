@@ -237,7 +237,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void FailedMatchmaking()
         {
-            CanceledMatchmaking();
+            // CanceledMatchmaking();
             if (GameObject.Find("ApplicationController") != null)
                 GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
 
