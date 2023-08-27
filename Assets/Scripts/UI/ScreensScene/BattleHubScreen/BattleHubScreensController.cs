@@ -45,6 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject serverStatusPanel;
         public GameObject offlinePlayOnly;
         public GameObject battle1vAI;
+        public Text offlineLockedText;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -85,11 +86,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
+
         }
 
         private void GoHome()
         {
-            if(_currentScreen == arenaSelectPanel)
+            if (_currentScreen == arenaSelectPanel)
             {
                 OpenBattleHub();
             }
@@ -118,6 +120,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             //<---
             GoToScreen(battlePanel);
+            offlinePlayOnly.SetActive(true);
+            battle1vAI.SetActive(true);
+            offlineLockedText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineLockedSubtitle");
             UnselectAll();
         }
 
@@ -195,7 +200,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
-            if(ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
+            if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
             {
                 playerInfoPanelController.gameObject.SetActive(false);
                 GoToScreen(arenaSelectPanel);
