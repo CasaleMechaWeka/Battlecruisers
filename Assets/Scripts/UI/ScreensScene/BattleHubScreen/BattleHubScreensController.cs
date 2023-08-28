@@ -135,7 +135,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             offlinePlayOnly.SetActive(true);
             battle1vAI.SetActive(true);
             offlineLockedText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineLockedSubtitle");
-            titleOfBattleButton.text = LandingSceneGod.Instance.commonStrings.GetString("CoinBattleDescription");
             UnselectAll();
         }
 
