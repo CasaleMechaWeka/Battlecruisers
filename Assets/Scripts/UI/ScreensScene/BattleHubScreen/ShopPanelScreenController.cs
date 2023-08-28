@@ -10,6 +10,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -58,8 +59,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
 
             // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);   
+            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
 
+            DateTime utcNow = DateTime.UtcNow;
+            Debug.Log("Current UTC Time: " + utcNow.ToString());
         }
 
 
@@ -80,11 +83,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             InitiaiseCaptains();
 
             // Set this button to active color
-            captainsButtonImage.color = new Color32(255, 255, 255, 255); 
+            captainsButtonImage.color = new Color32(255, 255, 255, 255);
 
 
             // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);   
+            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
         }
 
         public void HeckesButton_OnClick()
@@ -92,10 +95,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             InitialiseHeckles();
 
             // Set this button to active color
-            hecklesButtonImage.color = new Color32(255, 255, 255, 255); 
+            hecklesButtonImage.color = new Color32(255, 255, 255, 255);
 
             // Set the other button to inactive color
-            captainsButtonImage.color = new Color32(194, 59, 33, 255); 
+            captainsButtonImage.color = new Color32(194, 59, 33, 255);
         }
 
         private void RemoveAllCaptainsFromRenderCamera()
