@@ -140,7 +140,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             //  GoToScreen(shopPanel);
             playerInfoPanelController.gameObject.SetActive(true);
             ProfilePanelScreenController.Instance?.captainsPanel?.RemoveAllCaptainsFromRenderCamera();
-            ProfilePanelScreenController.Instance?.captainsPanel?.gameObject.SetActive(false);
+            if (ProfilePanelScreenController.Instance?.captainsPanel != null)
+                ProfilePanelScreenController.Instance?.captainsPanel?.gameObject.SetActive(false);
             _screensSceneGod.GotoShopScreen();
             UnselectAll();
         }
