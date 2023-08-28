@@ -119,7 +119,15 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 portNum = k_DefaultPort;
             }
             ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-            m_ConnectionManager.StartClientIp(k_DefaultLobbyName, ip, portNum);
+
+
+#if UNITY_EDITOR
+            if (ParrelSync.ClonesManager.IsClone())
+            {
+                m_ConnectionManager.StartClientIp(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, ip, portNum);
+            }
+#endif
+            m_ConnectionManager.StartHostIp(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, ip, portNum);
         }
 
         private void JoinWithLobby()
@@ -173,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             // Example "Score" range filter (Score is a custom numeric field in this example)
             new QueryFilter(
                 field: QueryFilter.FieldOptions.N1, // N1 = "Battle Win Score"
-                op: QueryFilter.OpOptions.EQ,
+                op: QueryFilter.OpOptions.GE,
                 value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),
 /*            new QueryFilter(
                 field: QueryFilter.FieldOptions.N2, // N2 = "Rank"
@@ -186,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             new QueryOrder(true, QueryOrder.FieldOptions.AvailableSlots),
             new QueryOrder(false, QueryOrder.FieldOptions.Created),
-            new QueryOrder(false, QueryOrder.FieldOptions.Name),
+            new QueryOrder(false, QueryOrder.FieldOptions.N1),
         };
 
 
@@ -199,8 +207,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
 
-                var randomLobby = foundLobbies[Random.Range(0, foundLobbies.Count)];
+            //    var randomLobby = foundLobbies[Random.Range(0, foundLobbies.Count)];
 
+                var randomLobby = foundLobbies[0];
                 var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: randomLobby.Id, null);
 
                 if (lobbyJoinAttemp.Success)
@@ -209,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                     {
                         Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                        m_LobbyServiceFacade.BeginTracking();
+                        m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                     }
                 }
             }
@@ -218,8 +227,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 var lobbyData = new Dictionary<string, DataObject>()
                 {
                     ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName, DataObject.IndexOptions.S1),
-                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
-                    //   ["Rank"] = new DataObject(DataObject.VisibilityOptions.Public, CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore).ToString(), DataObject.IndexOptions.N2)
+                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),                   
                 };
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                 if (lobbyCreationAttemp.Success)
@@ -229,26 +237,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                     {
                         Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                        m_LobbyServiceFacade.BeginTracking();
+                        m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                     }
                 }
             }
-        }
-
-
-        private int CalculateRank(long score)
-        {
-
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
-            {
-                long x = 2500 + 2500 * i * i;
-                //Debug.Log(x);
-                if (score < x)
-                {
-                    return i;
-                }
-            }
-            return StaticPrefabKeys.Ranks.AllRanks.Count;
         }
 
         IEnumerator iStartPvP()

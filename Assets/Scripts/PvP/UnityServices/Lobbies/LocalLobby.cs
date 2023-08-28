@@ -248,9 +248,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         public Dictionary<string, DataObject> GetDataForUnityServices() =>
             new Dictionary<string, DataObject>()
             {
-                // {"RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Public,  RelayJoinCode)},
-                {"MatchIP", new DataObject(DataObject.VisibilityOptions.Member, MatchIP)},
-                {"MatchPort", new DataObject(DataObject.VisibilityOptions.Member, MatchPort)}
+                {"RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Public,  RelayJoinCode)},
+/*                {"MatchIP", new DataObject(DataObject.VisibilityOptions.Member, MatchIP)},
+                {"MatchPort", new DataObject(DataObject.VisibilityOptions.Member, MatchPort)}*/
             };
 
         public void ApplyRemoteData(Lobby lobby)
@@ -264,15 +264,15 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             if (lobby.Data != null)
             {
-                // info.RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null; // By providing RelayCode through the lobby data with Member visibility, we ensure a client is connected to the lobby before they could attempt a relay connection, preventing timing issues between them.
-                info.MatchIP = lobby.Data.ContainsKey("MatchIP") ? lobby.Data["MatchIP"].Value : null;
-                info.MatchPort = lobby.Data.ContainsKey("MatchPort") ? lobby.Data["MatchPort"].Value : null;
+                info.RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null; // By providing RelayCode through the lobby data with Member visibility, we ensure a client is connected to the lobby before they could attempt a relay connection, preventing timing issues between them.
+                /*                info.MatchIP = lobby.Data.ContainsKey("MatchIP") ? lobby.Data["MatchIP"].Value : null;
+                                info.MatchPort = lobby.Data.ContainsKey("MatchPort") ? lobby.Data["MatchPort"].Value : null;*/
             }
             else
             {
-                // info.RelayJoinCode = null;
-                info.MatchIP = null;
-                info.MatchPort = null;
+                info.RelayJoinCode = null;
+                /*                info.MatchIP = null;
+                                info.MatchPort = null;*/
             }
 
             var lobbyUsers = new Dictionary<string, LocalLobbyUser>();

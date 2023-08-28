@@ -3,8 +3,10 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using Unity.Multiplayer.Samples.Utilities;
 using Unity.Multiplayer.Samples.BossRoom;
 using Unity.Netcode;
+
 using UnityEngine;
 using VContainer;
+
 
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
@@ -21,10 +23,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
-            SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
-
-            //  SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true);
-
+            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
                 m_LobbyServiceFacade.BeginTracking();
@@ -38,9 +37,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void OnClientConnected(ulong clientId)
         {
-
-            SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true, UnityEngine.SceneManagement.LoadSceneMode.Single);
-
+            SceneLoaderWrapper.Instance.LoadScene("PvPBattleScene", useNetworkSceneManager: true, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
 
         public override void OnClientDisconnect(ulong clientId)

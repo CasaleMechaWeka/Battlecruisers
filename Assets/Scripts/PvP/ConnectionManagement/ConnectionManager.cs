@@ -143,8 +143,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             NetworkManager.NetworkConfig.ForceSamePrefabs = false;
             NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
-            // NetworkManager.OnServerStarted += OnServerStarted;
-            // NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
+            NetworkManager.OnServerStarted += OnServerStarted;
+            NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
             m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
             DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
@@ -154,8 +154,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
-            // NetworkManager.OnServerStarted -= OnServerStarted;
-            // NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
+            NetworkManager.OnServerStarted -= OnServerStarted;
+            NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
             NetworkManager.OnTransportFailure -= OnTransportFailure;
         }
 
