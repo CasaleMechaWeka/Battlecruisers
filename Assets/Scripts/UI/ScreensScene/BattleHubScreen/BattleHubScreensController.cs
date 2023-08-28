@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using Unity.Services.Authentication;
+using TMPro;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -46,6 +47,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject offlinePlayOnly;
         public GameObject battle1vAI;
         public Text offlineLockedText;
+        public TMP_Text continueTitle;
+        public TMP_Text continueSubtitle;
+        public TMP_Text levelsTitle;
+        public TMP_Text skirmishTitle;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -86,6 +91,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
+
+            continueTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaign");
+            continueSubtitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaignDescription");
+            levelsTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("LevelSelect");
+            skirmishTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("SkirmishMode");
 
         }
 
