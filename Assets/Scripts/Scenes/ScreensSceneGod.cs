@@ -172,6 +172,7 @@ namespace BattleCruisers.Scenes
                         hubScreen.serverStatusPanel.SetActive(false);
                         hubScreen.battle1vAI.SetActive(false);
                         hubScreen.offlinePlayOnly.SetActive(true);
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("NotPassed10Levels");
                         hubScreen.battleButton.GetComponent<CanvasGroupButton>().Enabled = false;
                     }
