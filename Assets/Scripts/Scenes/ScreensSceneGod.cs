@@ -150,6 +150,7 @@ namespace BattleCruisers.Scenes
                         {
                             // server available
                             hubScreen.serverStatusPanel.SetActive(false);
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             hubScreen.battle1vAI.SetActive(false);
                             hubScreen.offlinePlayOnly.SetActive(false);
@@ -161,6 +162,7 @@ namespace BattleCruisers.Scenes
                             hubScreen.serverStatusPanel.SetActive(true);
                             hubScreen.battle1vAI.SetActive(true);
                             hubScreen.offlinePlayOnly.SetActive(false);
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             Debug.Log("PVP Server Unavailable.");
                         }
