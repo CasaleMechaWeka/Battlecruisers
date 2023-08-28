@@ -395,7 +395,6 @@ namespace BattleCruisers.Scenes
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
             GoToScreen(homeScreen);
-            AdvertisingBanner.startAdvert();
         }
 
         public void GoToLevelsScreen()
@@ -436,6 +435,7 @@ namespace BattleCruisers.Scenes
             cameraOfCaptains.SetActive(true);
             GoToScreen(blackMarketScreen);
             blackMarketScreen.InitialiseIAPs();
+            AdvertisingBanner.startAdvert();
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
