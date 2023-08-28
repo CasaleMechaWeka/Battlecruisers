@@ -29,6 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Transform captainCamContainer;
         private ILocTable commonStrings;
         public Image captainsButtonImage, hecklesButtonImage;
+        public Text blackMarketText;
 
 
         public void Initialise(
@@ -60,6 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             // Set the other button to inactive color
             hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+            blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
 
             DateTime utcNow = DateTime.UtcNow;
             Debug.Log("Current UTC Time: " + utcNow.ToString());
