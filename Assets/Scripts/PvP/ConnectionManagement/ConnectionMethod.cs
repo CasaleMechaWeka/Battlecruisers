@@ -14,6 +14,7 @@ using Unity.Services.Relay;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -47,6 +48,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 playerId = playerId,
                 playerName = playerName,
+                playerHullPrefabName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName,
+                playerScore = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore,
+                playerNetworkId = 0,
+                playerCaptainPrefabName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,
+                playerGameMap = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap,
                 isDebug = Debug.isDebugBuild
             });
 
@@ -84,24 +90,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override async Task SetupClientConnectionAsync()
         {
-            // SetConnectionPayload(GetPlayerId(), m_PlayerName);
-
-            var userData = m_ConnectionManager.Manager.User.Data;
-            var payload = JsonUtility.ToJson(userData);
-            var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
-            m_ConnectionManager.NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
-
+            SetConnectionPayload(GetPlayerId(), m_PlayerName);
             var utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
             utp.SetConnectionData(m_Ipaddress, m_Port);
         }
 
         public override async Task SetupHostConnectionAsync()
         {
-            //    SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
-            var userData = m_ConnectionManager.Manager.User.Data;
-            var payload = JsonUtility.ToJson(userData);
-            var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
-            m_ConnectionManager.NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
+            SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
             var utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
             utp.SetConnectionData(m_Ipaddress, m_Port);
         }
@@ -127,12 +123,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override async Task SetupClientConnectionAsync()
         {
             Debug.Log("Setting up Unity Relay client");
-
-            //    SetConnectionPayload(GetPlayerId(), m_PlayerName);
-            var userData = m_ConnectionManager.Manager.User.Data;
-            var payload = JsonUtility.ToJson(userData);
-            var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
-            m_ConnectionManager.NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
+            SetConnectionPayload(GetPlayerId(), m_PlayerName);
             if (m_LobbyServiceFacade.CurrentUnityLobby == null)
             {
                 throw new Exception("Trying to start relay while Lobby isn't set");
@@ -157,11 +148,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             Debug.Log("Setting up Unity Relay host");
 
-            // SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
-            var userData = m_ConnectionManager.Manager.User.Data;
-            var payload = JsonUtility.ToJson(userData);
-            var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
-            m_ConnectionManager.NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
+            SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
+
+
             // Create relay allocation
             Allocation hostAllocation = await RelayService.Instance.CreateAllocationAsync(m_ConnectionManager.MaxConnectedPlayers, region: null);
             var joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);

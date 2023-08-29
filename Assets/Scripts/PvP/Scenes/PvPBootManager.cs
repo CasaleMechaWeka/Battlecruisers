@@ -124,6 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 #if UNITY_EDITOR
             if (ParrelSync.ClonesManager.IsClone())
             {
+                Debug.Log("======> calling me here ===>>>");
                 m_ConnectionManager.StartClientIp(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, ip, portNum);
             }
 #endif
@@ -269,53 +270,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
-        }
-
-        private async void TrySignIn()
-        {
-            try
-            {
-                var unityAuthenticationInitOptions = new InitializationOptions();
-                var profile = m_ProfileManager.Profile;
-
-                if (profile.Length > 0)
-                {
-                    try
-                    {
-                        /*{LocalProfileTool.LocalProfileSuffix}*/
-                        unityAuthenticationInitOptions.SetProfile($"{profile}");
-
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.Log(e.ToString());
-                    }
-                }
-                await m_AuthServiceFacade.InitializeAndSignInAsync(unityAuthenticationInitOptions);
-                OnAuthSignIn();
-                m_ProfileManager.onProfileChanged += OnProfileChanged;
-                m_ConnectionManager.Manager = new Matchplay.Client.ClientGameManager();
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.ToString());
-                OnSignInFailed();
-            }
-        }
-
-        private void OnAuthSignIn()
-        {
-            Debug.Log($"Signed in. Unity Player ID {AuthenticationService.Instance.PlayerId}");
-            m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
-            m_LocalUser.DisplayName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName;
-            // The local LobbyUser object will be hooked into UI before the LocalLobby is populated during lobby join, so the LocalLobby must know about it already when that happens.
-            m_LocalLobby.AddUser(m_LocalUser);
-        }
-
-
-        private void OnSignInFailed()
-        {
-
         }
 
         void OnDestroy()

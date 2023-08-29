@@ -56,21 +56,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
-            var connectionData = request.Payload;
-            var clientId = request.ClientNetworkId;
-            // This happens when starting as a host, before the end of the StartHost call. In that case, we simply approve ourselves.
-            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
-            {
-/*                var payload = System.Text.Encoding.UTF8.GetString(connectionData);
-                var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload); // https://docs.unity3d.com/2020.2/Documentation/Manual/JSONSerialization.html
-
-                SessionManager<SessionPlayerData>.Instance.SetupConnectingPlayerSessionData(clientId, connectionPayload.playerId,
-                    new SessionPlayerData(clientId, connectionPayload.playerName, new NetworkGuid(), 0, true));*/
-
-                // connection approval will create a player object for you
-                response.Approved = true;
-                response.CreatePlayerObject = true;          
-            }
+            response.Approved = true;
+            response.Pending = false;
+            response.CreatePlayerObject = true;
         }
 
         async void StartHost()

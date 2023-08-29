@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             if (m_lobbyServiceFacade.CurrentUnityLobby != null)
             {
-                //    m_lobbyServiceFacade.BeginTracking();    // BeginTracking is being used for other purpose
+                m_lobbyServiceFacade.BeginTracking();
             }
         }
 

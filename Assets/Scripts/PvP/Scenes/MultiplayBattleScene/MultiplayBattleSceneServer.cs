@@ -29,34 +29,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void Start()
         {
+            Debug.Log("===> IsServer ? " + NetworkManager.Singleton.IsServer);
+            Debug.Log("===> IsHost ? " + NetworkManager.Singleton.IsHost);
+            Debug.Log("===> IsClient ? " + NetworkManager.Singleton.IsClient);
             if (!NetworkManager.Singleton.IsServer)
             {
                 enabled = false;
                 return;
             }
-            NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManager_OnSceneEvent;
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+        //    NetworkManager.Singleton.SceneManager.OnSceneEvent += SceneManager_OnSceneEvent;
+        //    NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
 
         private void Update()
         {
-            if (isConnected && NetworkManager.Singleton.ConnectedClients.Count == 0)
-            {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                    Application.Quit();
-#endif
-            }
 
-            if (!isConnected && Time.time > 180f)
-            {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                    Application.Quit();
-#endif
-            }
         }
 
 
@@ -89,20 +76,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 GetComponent<PvPBattleSceneGodServer>().Initialise();
             }
         }
-        void OnClientExit()
-        {
-        }
-
         void OnDestroy()
         {
             if(NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
             {
-                NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManager_OnSceneEvent;
-                NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+            //   NetworkManager.Singleton.SceneManager.OnSceneEvent -= SceneManager_OnSceneEvent;
+            //    NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
             }
         }
-
-
         void OnAddClient(ulong clientID)
         {
             m_clients.Add(clientID);
@@ -113,23 +94,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void OnClientDisconnect(ulong clientId)
         {
             m_clients.Remove(clientId);
-            if (SynchedServerData.Instance.playerAClientNetworkId.Value == clientId)
+/*            if (SynchedServerData.Instance.playerAClientNetworkId.Value == clientId)
             {
                 PvPBattleSceneGodServer.Instance.RegisterAIOfLeftPlayer();
             }
             else if (SynchedServerData.Instance.playerBClientNetworkId.Value == clientId)
             {
                 PvPBattleSceneGodServer.Instance.RegisterAIOfRightPlayer();
-            }
-
-            if (m_clients.Count == 0)
-            {
-#if UNITY_EDITOR             
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
-            }
+            }*/
         }
     }
 }

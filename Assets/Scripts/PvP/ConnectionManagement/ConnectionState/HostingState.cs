@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
-            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+//            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
                 m_LobbyServiceFacade.BeginTracking();
@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void OnClientConnected(ulong clientId)
         {
-            SceneLoaderWrapper.Instance.LoadScene("PvPBattleScene", useNetworkSceneManager: true, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
 
         public override void OnClientDisconnect(ulong clientId)
@@ -91,39 +91,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         ///  <param name="response"> Our response to the approval process. In case of connection refusal with custom return message, we delay using the Pending field.
         public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
-            var connectionData = request.Payload;
-            var clientId = request.ClientNetworkId;
-            if (connectionData.Length > k_MaxConnectPayload)
-            {
-                // If connectionData too high, deny immediately to avoid wasting time on the server. This is intended as
-                // a bit of light protection against DOS attacks that rely on sending silly big buffers of garbage.
-                response.Approved = false;
-                return;
-            }
-
-            var payload = System.Text.Encoding.UTF8.GetString(connectionData);
-            var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload); // https://docs.unity3d.com/2020.2/Documentation/Manual/JSONSerialization.html
-            var gameReturnStatus = GetConnectStatus(connectionPayload);
-
-            if (gameReturnStatus == ConnectStatus.Success)
-            {
-                SessionManager<SessionPlayerData>.Instance.SetupConnectingPlayerSessionData(clientId, connectionPayload.playerId,
-                    new SessionPlayerData(clientId, connectionPayload.playerName, new NetworkGuid(), 0, true));
-
-                // connection approval will create a player object for you
-                response.Approved = true;
-                response.CreatePlayerObject = true;
-                response.Position = Vector3.zero;
-                response.Rotation = Quaternion.identity;
-                return;
-            }
-
-            response.Approved = false;
-            response.Reason = JsonUtility.ToJson(gameReturnStatus);
-            if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-            {
-                m_LobbyServiceFacade.RemovePlayerFromLobbyAsync(connectionPayload.playerId, m_LobbyServiceFacade.CurrentUnityLobby.Id);
-            }
+            response.Approved = true;
+            response.Pending = false;
+            response.CreatePlayerObject = true;
         }
 
         ConnectStatus GetConnectStatus(ConnectionPayload connectionPayload)

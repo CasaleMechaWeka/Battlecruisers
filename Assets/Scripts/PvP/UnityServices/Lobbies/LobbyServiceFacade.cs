@@ -106,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         {
             await EndTracking();
         }
-        public async Task EndTracking()
+        public Task EndTracking()
         {
             var task = Task.CompletedTask;
             if (CurrentUnityLobby != null)
@@ -139,10 +139,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 m_JoinedLobbyContentHeartbeat.EndTracking();
             }
 
-            // m_ConnectionManager.IsMatchmaking = false;
-            m_IsMatchmaking = false;
-            await m_ConnectionManager.CancelMatchmaking();
-            return;
+            return task;
         }
 
         async void UpdateLobby(float unused)
@@ -155,34 +152,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             try
             {
                 var lobby = await m_LobbyApiInterface.GetLobby(m_LocalLobby.LobbyID);
-                if (lobby == null)
-                {
-                //    await EndTracking();
-                    OnMatchMakingFailed();
-                    return;
-                }
 
                 CurrentUnityLobby = lobby;
                 m_LocalLobby.ApplyRemoteData(lobby);
 
-                if (m_LocalLobby.MatchIP != null && m_LocalLobby.MatchPort != null)
-                {
-                    Debug.Log($"IP Address = {m_LocalLobby.MatchIP} --- Port = {m_LocalLobby.MatchPort}");
-                    m_ConnectionManager.StartMatch(m_LocalLobby.MatchIP, m_LocalLobby.MatchPort);
-                    /*                    await EndTracking();
-                                        return;*/
-                }
-
                 // as client, check if host is still in lobby
                 if (!m_LocalUser.IsHost)
                 {
-                    if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
-                    {
-                        if (m_IsMatchmaking)
-                            return;
-                        m_IsMatchmaking = true;
-                        OnMatchMakingStarted();
-                    }
                     foreach (var lobbyUser in m_LocalLobby.LobbyUsers)
                     {
                         if (lobbyUser.Value.IsHost)
@@ -190,35 +166,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                             return;
                         }
                     }
-                    //   m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
-                 //   await EndTracking();
-                    OnMatchMakingFailed();
+                    m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
+                    await EndTracking();
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
-                }
-                else
-                {
-                    if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
-                    {
-
-                        if (m_IsMatchmaking)
-                            return;
-                        m_IsMatchmaking = true;
-                        OnMatchMakingStarted();
-                        var matchResult = await m_ConnectionManager.GetMatchmaking(m_LocalLobby.LobbyID);
-                        if (matchResult.result == GetMatchmakingResult.Success)
-                        {
-                            Debug.Log($"IP Address = {matchResult.IP} --- Port = {matchResult.Port}");
-                            m_LocalLobby.MatchIP = matchResult.IP;
-                            m_LocalLobby.MatchPort = matchResult.Port;
-                            await m_LobbyApiInterface.UpdateLobby(m_LocalLobby.LobbyID, m_LocalLobby.GetDataForUnityServices(), false);
-                        }
-                        else if (matchResult.result == GetMatchmakingResult.Failed)
-                        {
-                            Debug.Log("Matchmaking Failed");
-                        //    await EndTracking();
-                            OnMatchMakingFailed();
-                        }
-                    }
                 }
             }
             catch (LobbyServiceException e)

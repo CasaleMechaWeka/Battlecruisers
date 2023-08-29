@@ -59,6 +59,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     {
         public string playerId;
         public string playerName;
+        public string playerHullPrefabName;
+        public long playerScore;
+        public ulong playerNetworkId;
+        public string playerCaptainPrefabName;
+        public int playerGameMap;
         public bool isDebug;
     }
 
@@ -146,7 +151,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             NetworkManager.OnServerStarted += OnServerStarted;
             NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
-            m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
+        //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
             DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
         }
 
