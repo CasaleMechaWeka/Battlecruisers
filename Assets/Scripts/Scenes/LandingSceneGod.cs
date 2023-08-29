@@ -149,7 +149,6 @@ namespace BattleCruisers.Scenes
             googleBtn.Initialise(soundPlayer, GoogleLogin);
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
 
-#if PLATFORM_ANDROID
             _GoogleAuthentication = new GoogleAuthentication();
             _GoogleAuthentication.InitializePlayGamesLogin();
 
@@ -162,7 +161,7 @@ namespace BattleCruisers.Scenes
             {
                 Debug.Log(ex.Message);
             }
-#endif
+
             try
             {
                 var options = new InitializationOptions();
@@ -289,10 +288,8 @@ namespace BattleCruisers.Scenes
                 labelGoogle.SetActive(false);
                 loginType = LoginType.Google;
 
-#if PLATFORM_ANDROID
                 try
                 {
-                    Debug.Log("Platform: ANDROID_PLATFORM");
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
 
                     // turn the button back on if it fails I guess?
@@ -308,7 +305,6 @@ namespace BattleCruisers.Scenes
                 {
                     Debug.Log(ex.Message);
                 }
-#endif
             }
         }
 
