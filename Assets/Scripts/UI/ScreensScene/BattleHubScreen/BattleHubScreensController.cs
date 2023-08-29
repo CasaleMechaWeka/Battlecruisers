@@ -47,10 +47,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject offlinePlayOnly;
         public GameObject battle1vAI;
         public Text offlineLockedText;
-        public TMP_Text continueTitle;
-        public TMP_Text continueSubtitle;
-        public TMP_Text levelsTitle;
-        public TMP_Text skirmishTitle;
+        public TextMeshProUGUI continueTitle;
+        public TextMeshProUGUI continueSubtitle;
+        public TextMeshProUGUI levelsTitle;
+        public TextMeshProUGUI skirmishTitle;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
