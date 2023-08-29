@@ -7,7 +7,7 @@ using BattleCruisers.Utils;
 using System;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private HullKey _hullKey;
         private IBroadcastingProperty<HullKey> _selectedHull;
         private RectTransform _selectedFeedback;
-        public TextMeshProUGUI _unitName;
+        public Text _unitName;
 
         private Cruiser _cruiserPrefab;
         public override IComparableItem Item => _cruiserPrefab;

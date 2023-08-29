@@ -7,7 +7,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
@@ -23,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public SelectUnitButton selectUnitButton;
         public override IComparableItem Item => _unitPrefab.Buildable;
-        public TextMeshProUGUI _unitName;
+        public Text _unitName;
         private RectTransform _selectedFeedback;
         public Button toggleSelectionButton;
 

@@ -9,7 +9,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
@@ -25,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public SelectBuildingButton selectBuildingButton;
         public override IComparableItem Item => _buildingPrefab.Buildable;
-        public TextMeshProUGUI _buildingName;
+        public Text _buildingName;
         private RectTransform _selectedFeedback;
         public Button toggleSelectionButton;
 
