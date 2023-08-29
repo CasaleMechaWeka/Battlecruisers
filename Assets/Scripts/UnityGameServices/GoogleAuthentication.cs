@@ -38,7 +38,7 @@ namespace BattleCruisers.Utils.Network
         //Fetch the Token / Auth code
         public async Task Authenticate(SignInInteractivity interactivity)
         {
-            string c;
+            string c = "";
             //The compiler doesn't like it if "interactivity" isn't passed into Authenticate().
             //This diverges from tutorials and documentation!
             PlayGamesPlatform.Instance.Authenticate(interactivity, (success) =>
@@ -48,7 +48,7 @@ namespace BattleCruisers.Utils.Network
                     // This is the recommended replacement for "PlayGamesPlatform.Instance.RequestServerSideAccess()":
                     c = ((PlayGamesLocalUser)Social.localUser).GetIdToken();
                     Debug.Log("Authorization code: " + c);
-                    SignInWithGoogleAsync(c);
+
                     Token = c;
                 }
                 else
@@ -57,6 +57,14 @@ namespace BattleCruisers.Utils.Network
                     Debug.Log("Login Unsuccessful");
                 }
             });
+            try
+            {
+                await SignInWithGoogleAsync(c);
+            }
+            catch (AuthenticationException ex)
+            {
+                Debug.LogException(ex);
+            }
         }
 
         public void LoginGoogle()

@@ -292,7 +292,7 @@ namespace BattleCruisers.Scenes
 #if PLATFORM_ANDROID
                 try
                 {
-
+                    Debug.Log("Platform: ANDROID_PLATFORM");
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
 
                     // turn the button back on if it fails I guess?
