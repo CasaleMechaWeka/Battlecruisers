@@ -12,7 +12,6 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using Unity.Services.Authentication;
-using TMPro;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -47,10 +46,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject offlinePlayOnly;
         public GameObject battle1vAI;
         public Text offlineLockedText;
-        public TextMeshProUGUI continueTitle;
-        public TextMeshProUGUI continueSubtitle;
-        public TextMeshProUGUI levelsTitle;
-        public TextMeshProUGUI skirmishTitle;
+        public Text continueTitle;
+        public Text continueSubtitle;
+        public Text levelsTitle;
+        public Text skirmishTitle;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -187,12 +186,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Continue()
         {
-            if(_lastBattleResult == null)
+            if (_lastBattleResult == null)
             {
                 playerInfoPanelController.gameObject.SetActive(false);
                 _screensSceneGod.GoToTrashScreen(1);
             }
-            else 
+            else
             {
                 Assert.IsNotNull(_lastBattleResult);
                 playerInfoPanelController.gameObject.SetActive(false);
