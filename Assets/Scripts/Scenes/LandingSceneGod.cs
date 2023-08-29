@@ -96,6 +96,8 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
+            Debug.Log("=========> Platform: " + Application.platform.ToString());
+
             Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
             Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
