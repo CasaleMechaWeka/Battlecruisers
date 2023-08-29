@@ -32,12 +32,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_LobbyServiceFacade.EndTracking();
 #pragma warning restore 4014
 
-/*            if (MatchmakingScreenController.Instance != null)
-                MatchmakingScreenController.Instance.Destroy();*/
-/*            if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)
-            {
-                SceneLoaderWrapper.Instance.LoadScene(k_MainMenuSceneName, useNetworkSceneManager: false);
-            }*/
+            if (MatchmakingScreenController.Instance != null)
+                MatchmakingScreenController.Instance.FailedMatchmaking();
+            /*            if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)
+                        {
+                            SceneLoaderWrapper.Instance.LoadScene(k_MainMenuSceneName, useNetworkSceneManager: false);
+                        }*/
         }
 
         public override void Exit() { }

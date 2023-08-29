@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Utils;
 using Unity.Netcode.Transports.UTP;
@@ -13,7 +11,6 @@ using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
@@ -26,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     {
         protected ConnectionManager m_ConnectionManager;
         readonly ProfileManager m_ProfileManager;
-        protected readonly string m_PlayerName;
+        protected readonly string m_PlayerName;        
 
         public abstract Task SetupHostConnectionAsync();
 
@@ -130,6 +127,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
 
             Debug.Log($"Setting Unity Relay client with join code {m_LocalLobby.RelayJoinCode}");
+/*            while(string.IsNullOrEmpty(m_LocalLobby.RelayJoinCode))
+            {
+                var lobby = await m_LobbyServiceFacade.GetLobby(m_LocalLobby.LobbyID);
+                if (lobby == null) { break; }
+                m_LobbyServiceFacade.SetRemoteLobby(lobby);
+            }*/
 
             // Create client joining allocation from join code
             var joinedAllocation = await RelayService.Instance.JoinAllocationAsync(m_LocalLobby.RelayJoinCode);

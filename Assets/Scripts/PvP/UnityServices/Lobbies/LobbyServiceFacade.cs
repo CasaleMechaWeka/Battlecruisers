@@ -80,6 +80,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
         }
 
+
         public void SetRemoteLobby(Lobby lobby)
         {
             CurrentUnityLobby = lobby;
@@ -95,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 m_RateLimitLobbyQuery.PutOnCooldown();
                 // 2s update cadence is arbitrary and is here to demonstrate the fact that this update can be rather infrequent
                 // the actual rate limits are tracked via the RateLimitCooldown objects defined above
-                m_UpdateRunner.Subscribe(UpdateLobby, 2f);
+                m_UpdateRunner.Subscribe(UpdateLobby, 3f);
                 m_JoinedLobbyContentHeartbeat.BeginTracking();
                 // MatchmakingScreenController.Instance.CanceledMatchmaking += CanceledMatchmaking;
                 MatchmakingScreenController.Instance.fleeButton.SetActive(true);
@@ -142,6 +143,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             return task;
         }
 
+
         async void UpdateLobby(float unused)
         {
             if (!m_RateLimitQuery.CanCall)
@@ -152,7 +154,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             try
             {
                 var lobby = await m_LobbyApiInterface.GetLobby(m_LocalLobby.LobbyID);
-
+                if (lobby == null)
+                    return;
                 CurrentUnityLobby = lobby;
                 m_LocalLobby.ApplyRemoteData(lobby);
 
@@ -166,7 +169,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                             return;
                         }
                     }
-                    m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
+                    //        m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
                     await EndTracking();
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
                 }
@@ -198,8 +201,10 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             try
             {
                 var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, hostUserData, lobbyData);
-
-                return (true, lobby);
+                if (lobby != null)
+                    return (true, lobby);
+                else
+                    return (false, lobby);
             }
             catch (LobbyServiceException e)
             {
@@ -233,7 +238,10 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (!string.IsNullOrEmpty(lobbyCode))
                 {
                     var lobby = await m_LobbyApiInterface.JoinLobbyByCode(AuthenticationService.Instance.PlayerId, lobbyCode, m_LocalUser.GetDataForUnityServices());
-                    return (true, lobby);
+                    if (lobby != null)
+                        return (true, lobby);
+                    else
+                        return (false, null);
                 }
                 else
                 {

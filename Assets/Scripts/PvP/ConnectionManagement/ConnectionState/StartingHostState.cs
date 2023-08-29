@@ -5,7 +5,8 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine;
 using VContainer;
 using Unity.Netcode;
-
+using UnityEngine.Android;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -56,6 +57,22 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
+            var connectionData = request.Payload;
+            var clientId = request.ClientNetworkId;
+            SynchedServerData m_SynchedServerData = GameObject.Instantiate(Resources.Load<SynchedServerData>("SynchedServerData"));
+            m_SynchedServerData.GetComponent<NetworkObject>().Spawn();
+            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
+            {
+                var payload = System.Text.Encoding.UTF8.GetString(connectionData);
+                var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
+                connectionPayload.playerNetworkId = clientId;
+
+                m_SynchedServerData.playerAPrefabName.Value = connectionPayload.playerHullPrefabName;
+                m_SynchedServerData.playerAClientNetworkId.Value = clientId;
+                m_SynchedServerData.playerAName.Value = connectionPayload.playerName;
+                m_SynchedServerData.playerAScore.Value = connectionPayload.playerScore;
+                m_SynchedServerData.captainAPrefabName.Value = connectionPayload.playerCaptainPrefabName;
+            }
             response.Approved = true;
             response.Pending = false;
             response.CreatePlayerObject = true;

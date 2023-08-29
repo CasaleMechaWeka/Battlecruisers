@@ -44,8 +44,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 Player = new Player(id: requesterUasId, data: hostUserData),
                 Data = lobbyData
             };
+            try
+            {
+                return await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createOptions);
+            }
+            catch
+            {
+                return null;
+            }
 
-            return await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createOptions);
+           
         }
 
         public async Task DeleteLobby(string lobbyId)
@@ -56,7 +64,15 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         public async Task<Lobby> JoinLobbyByCode(string requesterUasId, string lobbyCode, Dictionary<string, PlayerDataObject> localUserData)
         {
             JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions { Player = new Player(id: requesterUasId, data: localUserData) };
-            return await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, joinOptions);
+            try
+            {
+                return await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, joinOptions);
+            }
+            catch
+            {
+                return null;
+            }
+            
         }
 
         public async Task<Lobby> JoinLobbyById(string requesterUasId, string lobbyId, Dictionary<string, PlayerDataObject> localUserData)

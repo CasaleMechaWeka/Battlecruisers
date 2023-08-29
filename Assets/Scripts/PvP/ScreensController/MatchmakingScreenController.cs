@@ -130,7 +130,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void OnFlee()
         {
-            FailedMatchmaking();
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
         }
         public async void FoundCompetitor()
         {

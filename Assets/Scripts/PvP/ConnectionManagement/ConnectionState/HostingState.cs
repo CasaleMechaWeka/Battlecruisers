@@ -6,8 +6,7 @@ using Unity.Netcode;
 
 using UnityEngine;
 using VContainer;
-
-
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -91,6 +90,22 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         ///  <param name="response"> Our response to the approval process. In case of connection refusal with custom return message, we delay using the Pending field.
         public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
+            var connectionData = request.Payload;
+            var clientId = request.ClientNetworkId;
+
+            if (clientId != m_ConnectionManager.NetworkManager.LocalClientId)
+            {
+                var payload = System.Text.Encoding.UTF8.GetString(connectionData);
+                var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
+                connectionPayload.playerNetworkId = clientId;
+
+                SynchedServerData.Instance.playerBPrefabName.Value = connectionPayload.playerHullPrefabName;
+                SynchedServerData.Instance.playerBClientNetworkId.Value = clientId;
+                SynchedServerData.Instance.playerBName.Value = connectionPayload.playerName;
+                SynchedServerData.Instance.playerBScore.Value = connectionPayload.playerScore;
+                SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
+            }
+
             response.Approved = true;
             response.Pending = false;
             response.CreatePlayerObject = true;

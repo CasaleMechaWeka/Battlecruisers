@@ -42,6 +42,7 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using Random = UnityEngine.Random;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -124,7 +125,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 #if UNITY_EDITOR
             if (ParrelSync.ClonesManager.IsClone())
             {
-                Debug.Log("======> calling me here ===>>>");
                 m_ConnectionManager.StartClientIp(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, ip, portNum);
             }
 #endif
@@ -157,6 +157,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private async Task JoinWithLobbyRequest()
         {
+            Debug.Log("===> " + "JoinWithLobbyRequest");
             bool playerIsAuthorized = await m_AuthenticationServiceFacade.EnsurePlayerIsAuthorized();
 
             if (!playerIsAuthorized)
@@ -165,7 +166,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             }
 
             m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
-            m_LocalUser.DisplayName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName;            
+            m_LocalUser.DisplayName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName;
             m_LocalLobby.AddUser(m_LocalUser);
 
             List<QueryFilter> mFilters = new List<QueryFilter>()
@@ -176,18 +177,14 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 op: QueryFilter.OpOptions.GT,
                 value: "0"),
             new QueryFilter(
-                field: QueryFilter.FieldOptions.S1, // S1 = "GameMap"
+                field: QueryFilter.FieldOptions.N1, // N1 = "GameMap"
                 op: QueryFilter.OpOptions.EQ,
-                value: m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName),
+                value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap.ToString()),
             // Example "Score" range filter (Score is a custom numeric field in this example)
             new QueryFilter(
-                field: QueryFilter.FieldOptions.N1, // N1 = "Battle Win Score"
+                field: QueryFilter.FieldOptions.N2, // N2 = "Score :  Battle Win"
                 op: QueryFilter.OpOptions.GE,
                 value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),
-/*            new QueryFilter(
-                field: QueryFilter.FieldOptions.N2, // N2 = "Rank"
-                op: QueryFilter.OpOptions.EQ,
-                value: "0"),*/
             };
 
 
@@ -208,18 +205,47 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
 
-            //    var randomLobby = foundLobbies[Random.Range(0, foundLobbies.Count)];
-
-                var randomLobby = foundLobbies[0];
-                var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: randomLobby.Id, null);
-
-                if (lobbyJoinAttemp.Success)
+                //    var randomLobby = foundLobbies[Random.Range(0, foundLobbies.Count)];             
+                bool joined = false;
+                foreach (Lobby lobby in foundLobbies)
                 {
-                    m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
-                    if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                    string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
+                    if (string.IsNullOrEmpty(RelayJoinCode))
+                        continue;
+                    else
                     {
-                        Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                        m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                        var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+
+                        if (lobbyJoinAttemp.Success)
+                        {
+                            m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                            if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                            {
+                                Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                joined = true;
+                            }
+                        }
+                        break;
+                    }
+                }
+                if(!joined)
+                {
+                    var lobbyData = new Dictionary<string, DataObject>()
+                    {
+                        ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap.ToString(), DataObject.IndexOptions.N1),
+                        ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N2),
+                    };
+                    var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                    if (lobbyCreationAttemp.Success)
+                    {
+                        m_LocalUser.IsHost = true;
+                        m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
+                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                        {
+                            Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+                            m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                        }
                     }
                 }
             }
@@ -227,8 +253,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 var lobbyData = new Dictionary<string, DataObject>()
                 {
-                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName, DataObject.IndexOptions.S1),
-                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),                   
+                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap.ToString(), DataObject.IndexOptions.N1),
+                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N2),
                 };
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                 if (lobbyCreationAttemp.Success)
@@ -254,7 +280,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             }
             else
             {
-                // should be tested, still not confirmed.
                 JoinWithLobby();
             }
         }
@@ -293,6 +318,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private async void Start()
         {
+            if (NetworkManager.Singleton.IsConnectedClient)  // I am not sure, PvPBootScene.unity is being loaded twice
+                return;
             Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
