@@ -187,10 +187,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Continue()
         {
-            Assert.IsNotNull(_lastBattleResult);
-            playerInfoPanelController.gameObject.SetActive(false);
-            int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
-            _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
+            if(_lastBattleResult == null)
+            {
+                playerInfoPanelController.gameObject.SetActive(false);
+                _screensSceneGod.GoToTrashScreen(1);
+            }
+            else 
+            {
+                Assert.IsNotNull(_lastBattleResult);
+                playerInfoPanelController.gameObject.SetActive(false);
+                int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
+                _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
+            }
         }
 
         public void GoToLevelsScreen()
