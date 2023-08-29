@@ -11,6 +11,7 @@ using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -62,9 +63,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             // Set the other button to inactive color
             hecklesButtonImage.color = new Color32(194, 59, 33, 255);
             blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
-
-            DateTime utcNow = DateTime.UtcNow;
-            Debug.Log("Current UTC Time: " + utcNow.ToString());
         }
 
 
@@ -191,10 +189,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-
+            DateTime utcNow = DateTime.UtcNow;
+            List<int> exoBaseList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            for (int i = 0; i < exoBaseList.Count; i++)
+            {
+                exoBaseList[i] = 1 + ((2 * exoBaseList[i] + utcNow.Day + utcNow.Month) % 39);
+            }
+            exoBaseList.Insert(0, 0);
 
             byte ii = 0;
-            foreach (int index in _dataProvider.GameModel.CaptainExoList)
+            foreach (int index in exoBaseList)
             {
                 GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
                 CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[index]), captainCamContainer);
