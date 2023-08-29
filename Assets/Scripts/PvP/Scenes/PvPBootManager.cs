@@ -157,7 +157,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private async Task JoinWithLobbyRequest()
         {
-            Debug.Log("===> " + "JoinWithLobbyRequest");
             bool playerIsAuthorized = await m_AuthenticationServiceFacade.EnsurePlayerIsAuthorized();
 
             if (!playerIsAuthorized)
@@ -174,15 +173,15 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             // Let's search for games with open slots (AvailableSlots greater than 0)
             new QueryFilter(
                 field: QueryFilter.FieldOptions.AvailableSlots,
-                op: QueryFilter.OpOptions.GT,
-                value: "0"),
-            new QueryFilter(
-                field: QueryFilter.FieldOptions.N1, // N1 = "GameMap"
                 op: QueryFilter.OpOptions.EQ,
-                value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap.ToString()),
+                value: "1"),
+            new QueryFilter(
+                field: QueryFilter.FieldOptions.S1, // S1 = "GameMap"
+                op: QueryFilter.OpOptions.EQ,
+                value: ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap)),
             // Example "Score" range filter (Score is a custom numeric field in this example)
             new QueryFilter(
-                field: QueryFilter.FieldOptions.N2, // N2 = "Score :  Battle Win"
+                field: QueryFilter.FieldOptions.N1, // N1 = "Score :  Battle Win"
                 op: QueryFilter.OpOptions.GE,
                 value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),
             };
@@ -190,7 +189,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             List<QueryOrder> mOrders = new List<QueryOrder>
         {
-            new QueryOrder(true, QueryOrder.FieldOptions.AvailableSlots),
+            // new QueryOrder(true, QueryOrder.FieldOptions.AvailableSlots),
             new QueryOrder(false, QueryOrder.FieldOptions.Created),
             new QueryOrder(false, QueryOrder.FieldOptions.N1),
         };
@@ -203,9 +202,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             if (foundLobbies.Any())
             {
-                Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
-
-                //    var randomLobby = foundLobbies[Random.Range(0, foundLobbies.Count)];             
+                Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));          
                 bool joined = false;
                 foreach (Lobby lobby in foundLobbies)
                 {
@@ -233,8 +230,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 {
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
-                        ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap.ToString(), DataObject.IndexOptions.N1),
-                        ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N2),
+                        ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap), DataObject.IndexOptions.S1),
+                        ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
                     };
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                     if (lobbyCreationAttemp.Success)
@@ -253,8 +250,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 var lobbyData = new Dictionary<string, DataObject>()
                 {
-                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap.ToString(), DataObject.IndexOptions.N1),
-                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N2),
+                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap), DataObject.IndexOptions.S1),
+                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
                 };
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                 if (lobbyCreationAttemp.Success)
@@ -270,6 +267,30 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             }
         }
 
+       string ConvertToScene(Map map)
+        {
+            switch (map)
+            {
+                case Map.PracticeWreckyards:
+                    return "PracticeWreckyards";
+                case Map.OzPenitentiary:
+                    return "OzPenitentiary";
+                case Map.SanFranciscoFightClub:
+                    return "SanFranciscoFightClub";
+                case Map.UACBattleNight:
+                    return "UACBattleNight";
+                case Map.UACArena:
+                    return "UACArena";
+                case Map.RioBattlesport:
+                    return "RioBattlesport";
+                case Map.UACUltimate:
+                    return "UACUltimate";
+                case Map.MercenaryOne:
+                    return "MercenaryOne";
+                default:
+                    return "PvPBattleScene";
+            }
+        }
         IEnumerator iStartPvP()
         {
             yield return new WaitForEndOfFrame();

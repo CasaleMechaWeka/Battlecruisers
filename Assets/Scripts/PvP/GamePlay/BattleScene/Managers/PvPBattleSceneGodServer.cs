@@ -99,6 +99,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
             }
         }
+        private async void Start()
+        {
+         //   await Initialise();
+        }
 
         void OnNetworkSpawn()
         {
@@ -120,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
         }
-        public async void Initialise()
+        private async Task Initialise()
         {
             await _Initialise();
         }
@@ -360,10 +364,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         )
         {
             return new PvPBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
-        }
-        void Update()
-        {
-
         }
     }
 }

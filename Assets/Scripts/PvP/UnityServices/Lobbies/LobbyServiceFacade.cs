@@ -170,7 +170,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                         }
                     }
                     //        m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
-                    await EndTracking();
+                    m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
+                    // await EndTracking();
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
                 }
             }

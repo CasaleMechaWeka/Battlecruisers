@@ -81,6 +81,7 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
         }
         protected override void OnDestroy()
         {
+            Application.wantsToQuit -= OnWantToQuit;
             m_Subscriptions?.Dispose();
             m_LobbyServiceFacade?.EndTracking();
             base.OnDestroy();
