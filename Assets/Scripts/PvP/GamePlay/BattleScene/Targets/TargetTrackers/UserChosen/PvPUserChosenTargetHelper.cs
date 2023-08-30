@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
+using System.Diagnostics;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen
 {
@@ -62,8 +63,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public void ToggleChosenTarget(IPvPTarget target)
         {
-            // Logging.Log(Tags.USER_CHOSEN_TARGET, target);
-
             if (ReferenceEquals(UserChosenTarget, target))
             {
                 // Clear user chosen target

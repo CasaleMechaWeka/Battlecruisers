@@ -367,8 +367,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
             Helper.AssertIsNotNull(factoryProvider);
-
-
             _factoryProvider = factoryProvider;
             _targetFactories = _factoryProvider.Targets;
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
@@ -376,14 +374,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-
-            _clickHandler.SingleClick += ClickHandler_SingleClick;
-            _clickHandler.DoubleClick += ClickHandler_DoubleClick;
-
+            if(!IsHost)
+            {
+                _clickHandler.SingleClick += ClickHandler_SingleClick;
+                _clickHandler.DoubleClick += ClickHandler_DoubleClick;
+            }
             _healthBar.Initialise(this, followDamagable: true);
-
-            Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
-            //  _parent.SetActive(false);
         }
 
         public virtual void Activate(IPvPCruiser parentCruiser, IPvPCruiser enemyCruiser, IPvPCruiserSpecificFactories cruiserSpecificFactories)

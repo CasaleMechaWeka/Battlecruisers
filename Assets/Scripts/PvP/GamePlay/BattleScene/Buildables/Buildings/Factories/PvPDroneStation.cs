@@ -18,10 +18,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPDroneStation : PvPBuilding
     {
         public int numOfDronesProvided;
-
         // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
 
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.DroneStation;
         public override PvPTargetValue TargetValue => PvPTargetValue.Medium;

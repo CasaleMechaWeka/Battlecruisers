@@ -149,10 +149,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
             IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             IPvPUserChosenTargetHelper playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
-                playerACruiserUserChosenTargetManager
-                /* playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
-                components.TargetIndicator */);
+                playerACruiserUserChosenTargetManager);
             IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            IPvPUserChosenTargetHelper playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
+                playerBCruiserUserChosenTargetManager);
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync();
             await factoryProvider.Initialise();

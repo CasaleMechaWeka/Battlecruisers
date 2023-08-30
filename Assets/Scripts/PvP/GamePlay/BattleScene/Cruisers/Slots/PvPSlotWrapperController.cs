@@ -31,7 +31,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 if (!_slotsByName.ContainsKey(_slots[i].gameObject.name))
                 {
                     _slotsByName.Add(_slots[i].gameObject.name, _slots[i]);
-                    Debug.Log("===> " + _slots[i].gameObject.name);
                 }
             }
             IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);

@@ -137,14 +137,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
         public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
-    IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
-    // IPrioritisedSoundPlayer soundPlayer,
-    // ITargetIndicator targetIndicator
-    )
+            IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
+            )
         {
             PvPHelper.AssertIsNotNull(playerCruiserUserChosenTargetManager);
-
-            return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager /*, soundPlayer, targetIndicator*/);
+            return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager);
         }
 
         public override IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum)

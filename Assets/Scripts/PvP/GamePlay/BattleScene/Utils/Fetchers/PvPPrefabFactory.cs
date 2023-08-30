@@ -84,22 +84,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             ulong clientID) where TBuildable : class, IPvPBuilding
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
-
-            //   var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPBuildingKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
-
-            //   if (IsLoaded)
-            //   {
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
             buildableWrapper.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.StaticInitialise(_commonStrings);
-            buildableWrapper.Buildable.Initialise(factoryProvider);
-            // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
+            buildableWrapper.Buildable.Initialise(factoryProvider);           
             return buildableWrapper.Buildable;
-            //    }
-            //   return null;
-
         }
         public PvPBuildableOutlineController CreateOutline(PvPBuildableOutlineController outlinePrefab)
         {

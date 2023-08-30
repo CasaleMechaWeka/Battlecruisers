@@ -143,11 +143,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void Start()
         {
             if (IsClient && IsOwner)
-            {                
+            {
                 PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
             }
             else if (IsClient && !IsOwner)
-            {                
+            {
                 PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
             }
             if (NetworkManager.Singleton.IsServer)
@@ -321,7 +321,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
-            Debug.Log("===> AAA me here");
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser(IsOwner, SynchedServerData.Instance.GetTeam());
 
@@ -336,8 +335,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
         {
-            // Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
-
             SelectedBuildingPrefab = buildingPrefab;
             return ConstructSelectedBuilding(slot);
         }
@@ -630,21 +627,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void BuildingStartedClientRpc(ulong objectId)
         {
-            if (IsClient && IsOwner)
+            if (!IsHost && IsOwner)
             {
-                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                // foreach (NetworkObject obj in objs)
-                // {
-                //     if (obj.NetworkObjectId == objectId)
-                //     {
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
                 IPvPBuilding building = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>().Buildable.Parse<IPvPBuilding>();
                 BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
-                //     }
-                // }
             }
         }
-
     }
 
     public enum Team { LEFT, RIGHT }
