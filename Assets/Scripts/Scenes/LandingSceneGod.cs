@@ -46,7 +46,7 @@ namespace BattleCruisers.Scenes
 
         [Header("For testing")]
         public bool testCreditsScene = false;
-        public bool displayOnscreenLogs = false;
+        public bool displayOnscreenLogs;
 
         [Header("For testing")]
         public bool testCutScene = false;
@@ -301,20 +301,6 @@ namespace BattleCruisers.Scenes
                 {
                     LogToScreen("awaiting Google Authentication");
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
-
-                    // turn the button back on if it fails I guess?
-                    // should probably display some kind of error modal to users too.
-                    if (!AuthenticationService.Instance.IsSignedIn)
-                    {
-                        LogToScreen("Authentication failed.");
-                        SetInteractable(true);
-                        spinGoogle.SetActive(false);
-                        labelGoogle.SetActive(true);
-                    }
-                    else
-                    {
-                        LogToScreen("Authenticated");
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -371,6 +357,7 @@ namespace BattleCruisers.Scenes
 
         private void SignFailed(RequestFailedException exception)
         {
+            LogToScreen(exception.Message);
             SetInteractable(true);
             spinGuest.SetActive(false);
             spinGoogle.SetActive(false);
