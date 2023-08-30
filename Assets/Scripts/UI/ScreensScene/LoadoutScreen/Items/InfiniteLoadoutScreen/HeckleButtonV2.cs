@@ -87,15 +87,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void OnSelectionToggleClicked()
         {
-            if (GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
-            {
-                selectHeckleButton.ToggleHeckleSelection();
-                UpdateSelectedFeedback();
-            }
-            else
-            {
+            if (!GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
                 OnClicked();
-            }
+
+            selectHeckleButton.ToggleHeckleSelection();
+
         }
     }
 }

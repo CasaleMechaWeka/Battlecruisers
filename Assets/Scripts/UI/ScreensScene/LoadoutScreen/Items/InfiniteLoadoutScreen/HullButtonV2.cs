@@ -85,10 +85,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
         private void OnSelectionButtonClicked()
         {
-            if (GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
-                selectCruiserButton.OnClickedAction();
-            else
+            if (!GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
                 OnClicked();
+            selectCruiserButton.OnClickedAction();
+
         }
     }
 }

@@ -86,15 +86,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void OnSelectionToggleClicked()
         {
-            if (GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
-            {
-                selectUnitButton.ToggleUnitSelection();
-                UpdateSelectedFeedback();
-            }
-            else
-            {
+            if (!GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
                 OnClicked();
-            }
+            selectUnitButton.ToggleUnitSelection();
+
         }
     }
 }
