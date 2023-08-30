@@ -143,15 +143,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void Start()
         {
             if (IsClient && IsOwner)
-            {
+            {                
                 PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
             }
-
             else if (IsClient && !IsOwner)
-            {
+            {                
                 PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
             }
-
             if (NetworkManager.Singleton.IsServer)
                 _healthTracker.SetMaxHealth();
         }
@@ -159,12 +157,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public async void Initialise_Client_PvP(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
         {
-            //  if (IsClient && IsOwner)
-            //    {
             FactoryProvider = factoryProvider;
             _uiManager = uiManager;
             _helper = helper;
-
             SlotAccessor = _slotWrapperController.Initialise(this);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
@@ -180,9 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
                 Assert.IsNotNull(unitReadySignalInitialiser);
                 _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
-                // PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
             }
-            //   }
         }
 
 
@@ -209,7 +202,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPClickHandlerWrapper clickHandlerWrapper = GetComponent<PvPClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
-            
+
             Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
             Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
 
@@ -222,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
-            if(IsClient)
+            if (IsClient)
                 _cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
         }
 
@@ -328,8 +321,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
-            // Logging.LogMethod(Tags.CRUISER);
-
+            Debug.Log("===> AAA me here");
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser(IsOwner, SynchedServerData.Instance.GetTeam());
 
@@ -451,7 +443,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (_enemyCruiser != null && _enemyCruiser.IsAlive)
             {
                 if (IsServer)
-                {                    
+                {
                     if (Faction == PvPFaction.Blues)
                     {
                         PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
@@ -526,18 +518,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             if (IsClient)
             {
-                    if(Faction == PvPFaction.Blues)
-                    {
-                        PvPCaptainExoHUDController.Instance.DoLeftAngry();
-                        PvPCaptainExoHUDController.Instance.DoRightHappy();
-                    }
-                    else
-                    {
-                        PvPCaptainExoHUDController.Instance.DoLeftHappy();
-                        PvPCaptainExoHUDController.Instance.DoRightAngry();
-                    }
+                if (Faction == PvPFaction.Blues)
+                {
+                    PvPCaptainExoHUDController.Instance.DoLeftAngry();
+                    PvPCaptainExoHUDController.Instance.DoRightHappy();
+                }
+                else
+                {
+                    PvPCaptainExoHUDController.Instance.DoLeftHappy();
+                    PvPCaptainExoHUDController.Instance.DoRightAngry();
+                }
                 base.OnDestroyedEvent();
-            }                
+            }
             if (IsServer)
                 OnDestroyedEventClientRpc();
         }

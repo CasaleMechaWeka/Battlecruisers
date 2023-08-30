@@ -22,16 +22,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPSlotAccessor Initialise(IPvPCruiser parentCruiser)
         {
             Assert.IsNotNull(parentCruiser);
-
             IPvPBuildingPlacer buildingPlacer
                 = new PvPBuildingPlacer(
                     new PvPBuildingPlacerCalculator());
             IPvPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
             for (int i = 0; i < _slots.Count; ++i)
             {
-                 _slotsByName.Add(_slots[i].gameObject.name, _slots[i]);
+                if (!_slotsByName.ContainsKey(_slots[i].gameObject.name))
+                {
+                    _slotsByName.Add(_slots[i].gameObject.name, _slots[i]);
+                    Debug.Log("===> " + _slots[i].gameObject.name);
+                }
             }
-                IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
+            IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
             return new PvPSlotAccessor(typeToSlots);
         }

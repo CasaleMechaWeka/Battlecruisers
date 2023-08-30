@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //   {
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
-            buildableWrapper.GetComponent<NetworkObject>().DontDestroyWithOwner = true;
+            buildableWrapper.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.StaticInitialise(_commonStrings);
             buildableWrapper.Buildable.Initialise(factoryProvider);
@@ -140,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPCruiser cruiser = Object.Instantiate(cruiserPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
             cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId);
-            cruiser.GetComponent<NetworkObject>().DontDestroyWithOwner = true;
+            cruiser.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
             cruiser.StaticInitialise(_commonStrings);
             return cruiser;
         }
