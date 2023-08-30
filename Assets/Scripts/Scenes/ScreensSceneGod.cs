@@ -227,7 +227,11 @@ namespace BattleCruisers.Scenes
 
             CaptainExo cap = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             string playerName = _dataProvider.GameModel.PlayerName + "#" + cap.captainName;
-            await AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
+
+            if (IsInternetAccessable)
+            {
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
+            }
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
