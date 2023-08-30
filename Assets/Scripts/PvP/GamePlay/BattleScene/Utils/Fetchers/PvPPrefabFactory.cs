@@ -207,13 +207,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task<IPvPAudioSourcePoolable> CreateAudioSource(IPvPDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);
-            //    var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(PvPStaticPrefabKeys.AudioSource, _prefabCache.AudioSource);
-            //    if (IsLoaded)
-            //    {
             PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
             return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
-            //    }
-            //    return null;
         }
 
         public PvPPrefab GetPrefab(string prefabPath)

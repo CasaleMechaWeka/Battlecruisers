@@ -101,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async void Start()
         {
-         //   await Initialise();
+            await Initialise();
         }
 
         void OnNetworkSpawn()
@@ -146,7 +146,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             Assert.IsNotNull(components);
-            components.Initialise_Server();
+            components.Initialise(applicationModel.DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
             IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
@@ -156,54 +156,55 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 components.TargetIndicator */);
             IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
+            await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync();
             await factoryProvider.Initialise();
-            // StartCoroutine(iInitialiseFactoryProvider());
-            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
-            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
+    //        IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+            /*                    playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+                                playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
 
-            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
-            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);
 
-            enemyCruiserSprite = playerACruiser.Sprite;
-            enemyCruiserName = playerACruiser.Name;
+                                cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, *//*cameraComponents.CameraFocuser,*//* playerACruiserUserChosenTargetManager);
+                                cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager *//*, playerBCruiseruserChosenTargetHelper*//*);
 
-            playerBCruiserSprite = playerBCruiser.Sprite;
-            playerBCruiserName = playerBCruiser.Name;
+                                enemyCruiserSprite = playerACruiser.Sprite;
+                                enemyCruiserName = playerACruiser.Name;
 
-            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+                                playerBCruiserSprite = playerBCruiser.Sprite;
+                                playerBCruiserName = playerBCruiser.Name;
 
-            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
-            droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
-            droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
-            droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
+                                // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
-            droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
-            droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
-            droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
-            droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
+                                droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+                                droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
+                                droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
+                                droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
 
-            IPvPTime time = PvPTimeBC.Instance;
-            _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
-            _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
+                                droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
+                                droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
+                                droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
+                                droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
 
-            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+                                IPvPTime time = PvPTimeBC.Instance;
+                                _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
+                                _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
 
-            _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+                                components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
-            string logName = "Battle_Begin";
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-            try
-            {
-                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.Message);
-            }
+                                _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+
+                                string logName = "Battle_Begin";
+                    #if LOG_ANALYTICS
+                        Debug.Log("Analytics: " + logName);
+                    #endif
+                                try
+                                {
+                                    AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.Flush();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.Log(ex.Message);
+                                }*/
         }
 
 

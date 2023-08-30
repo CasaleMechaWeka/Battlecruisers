@@ -105,41 +105,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         // Not in constructor because of circular dependency
         public async Task Initialise( /* IPvPUIManager uiManager */)
         {
-            // Assert.IsNotNull(uiManager);
-
-
             IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
             DroneMonitor = new PvPDroneMonitor(droneFactory);
 
             PvPPoolProviders poolProviders = new PvPPoolProviders(this, droneFactory);
             PoolProviders = poolProviders;
             await poolProviders.SetInitialCapacities();
-
-            //    Sound = new PvPSoundFactoryProvider(_components, poolProviders);
         }
-
-        /*        IEnumerator iInitialise()
-                {
-                    yield return null;
-                    IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
-                    DroneMonitor = new PvPDroneMonitor(droneFactory);
-
-                    PvPPoolProviders poolProviders = new PvPPoolProviders(this, droneFactory);
-                    PoolProviders = poolProviders;
-                    poolProviders.SetInitialCapacities();
-                }*/
 
         public void Initialise(IPvPUIManager uiManager)
         {
             Assert.IsNotNull(uiManager);
-
-            /*            IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
-                        DroneMonitor = new PvPDroneMonitor(droneFactory);
-
-                        PvPPoolProviders poolProviders = new PvPPoolProviders(this, uiManager, droneFactory);
-                        PoolProviders = poolProviders;
-                        poolProviders.SetInitialCapacities();*/
-
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
         }
 

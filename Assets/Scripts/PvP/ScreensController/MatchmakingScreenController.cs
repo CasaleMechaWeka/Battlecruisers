@@ -70,6 +70,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         public Action CanceledMatchmaking;
         public GameObject fleeButton;
+
+        // PlayerA data should be stored here temporalliy
+        public string playerAPrefabName;
+        public ulong playerAClientNetworkId;
+        public string playerAName;
+        public long playerAScore;
+        public string captainAPrefabName;
+
         public static MatchmakingScreenController Instance { get; private set; }
 
 

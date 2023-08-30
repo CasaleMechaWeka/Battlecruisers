@@ -48,10 +48,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPHotkeyInitialiser hotkeyInitialiser;
         public PvPHotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
 
-
-
-
-
         public IPvPDeferrer Deferrer { get; private set; }
         public IPvPDeferrer RealTimeDeferrer { get; private set; }
 
@@ -60,40 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPUpdaterProvider _updaterProvider;
         public IPvPUpdaterProvider UpdaterProvider => _updaterProvider;
 
-
-
-
-        [SerializeField] NetcodeHooks m_NetcodeHooks;
-
-        private void Awake()
-        {
-            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;            
-        }
-        void OnNetworkSpawn()
-        {
-            if (NetworkManager.Singleton.IsServer)
-            {
-                enabled = false;
-                return;
-            }
-        }
-
-        void OnNetworkDespawn()
-        {
-
-        }
-
-        void Destroy()
-        {
-            if (m_NetcodeHooks)
-            {
-                m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
-                m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
-            }
-        }
-
-        public void Initialise_Client(ISettingsManager settingsManager)
+        //        public void Initialise_Client(ISettingsManager settingsManager)
+        public void Initialise(ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(
                 backgroundClickableEmitter,
@@ -123,42 +87,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             LifetimeEvents = lifetimeEvents;
             targetIndicator.Initialise();
 
-
-
-            Deferrer = GetComponent<PvPTimeScaleDeferrer>();
-            Assert.IsNotNull(Deferrer);
-
-            RealTimeDeferrer = GetComponent<PvPRealTimeDeferrer>();
-            Assert.IsNotNull(RealTimeDeferrer);
-
-            _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
-            Assert.IsNotNull(_updaterProvider);
-            _updaterProvider.Initialise();
-
-
-        }
-
-
-        public void Initialise_Server()
-        {
-            PvPHelper.AssertIsNotNull(
-                backgroundClickableEmitter,
-                targetIndicator,
-                prioritisedSoundPlayerAudioSource,
-                uiSoundsAudioSource,
-                musicPlayerInitialiser,
-                windInitialiser,
-                cloudInitialiser,
-                hotkeyInitialiser);
-
-            SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
-            Assert.IsNotNull(SkyboxInitialiser);
-
-            PvPLifetimeEventBroadcaster lifetimeEvents = GetComponent<PvPLifetimeEventBroadcaster>();
-            Assert.IsNotNull(lifetimeEvents);
-            LifetimeEvents = lifetimeEvents;
-            targetIndicator.Initialise();
-
             Deferrer = GetComponent<PvPTimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
 
@@ -170,9 +98,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _updaterProvider.Initialise();
         }
 
-        void Start()
-        {
 
-        }
+        /*        public void Initialise_Server()
+                {
+                    PvPHelper.AssertIsNotNull(
+                        backgroundClickableEmitter,
+                        targetIndicator,
+                        prioritisedSoundPlayerAudioSource,
+                        uiSoundsAudioSource,
+                        musicPlayerInitialiser,
+                        windInitialiser,
+                        cloudInitialiser,
+                        hotkeyInitialiser);
+
+                    SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
+                    Assert.IsNotNull(SkyboxInitialiser);
+
+                    PvPLifetimeEventBroadcaster lifetimeEvents = GetComponent<PvPLifetimeEventBroadcaster>();
+                    Assert.IsNotNull(lifetimeEvents);
+                    LifetimeEvents = lifetimeEvents;
+                    targetIndicator.Initialise();
+
+                    Deferrer = GetComponent<PvPTimeScaleDeferrer>();
+                    Assert.IsNotNull(Deferrer);
+
+                    RealTimeDeferrer = GetComponent<PvPRealTimeDeferrer>();
+                    Assert.IsNotNull(RealTimeDeferrer);
+
+                    _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
+                    Assert.IsNotNull(_updaterProvider);
+                    _updaterProvider.Initialise();
+                }*/
     }
 }

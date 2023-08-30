@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public async Task SetInitialCapacity()
         {
             await TinyBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
-            await HighCalibreBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
+/*            await HighCalibreBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
             await BulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
             await BombExplosionPool.AddCapacity(PvPInitialCapacity.BOMB);
             await FlakExplosionsPool.AddCapacity(PvPInitialCapacity.FLAK);
@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await LargeExplosionsPool.AddCapacity(PvPInitialCapacity.LARGE);
             await NovaShellImpactPool.AddCapacity(PvPInitialCapacity.LARGE);
             await RocketShellImpactPool.AddCapacity(PvPInitialCapacity.MEDIUM);
-            await HugeExplosionsPool.AddCapacity(PvPInitialCapacity.HUGE);
+            await HugeExplosionsPool.AddCapacity(PvPInitialCapacity.HUGE);*/
         }
     }
 }

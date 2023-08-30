@@ -48,10 +48,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Visibility 
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
-            if (IsClient)
-                base.OnValueChangedIsEnableRenderes(isEnabled);
             if (IsServer)
                 OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+            else
+                base.OnValueChangedIsEnableRenderes(isEnabled);
         }
 
 
@@ -84,7 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
         {
             base.CallRpc_ToggleDroneConsumerFocusCommandExecute();
-            if (IsClient)
+            if (!IsHost)
                 OnToggleDroneConsumerFocusCommandExecuteServerRpc();
         }
 
@@ -97,15 +97,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnBuildableCompleted();
                 OnBuildableCompletedClientRpc();
             }
-            if (IsClient)
+            else
                 OnBuildableCompleted_PvPClient();
         }
 
         // Placement Sound
         protected override void PlayPlacementSound()
         {
-            base.PlayPlacementSound();
-
             if (IsServer)
                 PlayPlacementSoundClientRpc();
         }
@@ -115,26 +113,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsServer)
                 base.DestroyMe();
-            if (IsClient)
+            else
                 OnDestroyMeServerRpc();
         }
 
         // Death Sound
         protected override void CallRpc_PlayDeathSound()
         {
-            if (IsClient)
-                base.CallRpc_PlayDeathSound();
             if (IsServer)
                 OnPlayDeathSoundClientRpc();
+            else
+                base.CallRpc_PlayDeathSound();
         }
 
         // BuildableConstructionCompletedSound
         protected override void PlayBuildableConstructionCompletedSound()
         {
-            if (IsClient)
-                base.PlayBuildableConstructionCompletedSound();
             if (IsServer)
                 PlayBuildableConstructionCompletedSoundClientRpc();
+            else
+                base.PlayBuildableConstructionCompletedSound();
         }
         // ProgressController Visible
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
@@ -162,10 +160,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnDestroyedEvent()
         {
-            if (IsClient)
-                base.OnDestroyedEvent();
             if (IsServer)
                 OnDestroyedEventClientRpc();
+            else
+                base.OnDestroyedEvent();
         }
 
 
@@ -176,7 +174,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 if (PvP_BuildProgress.Value != BuildProgress)
                     PvP_BuildProgress.Value = BuildProgress;
             }
-            if (IsClient)
+            else
             {
                 BuildProgress = PvP_BuildProgress.Value;
             }
@@ -199,25 +197,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnSetHealthbarOffsetClientRpc(Vector2 offset)
         {
-            HealthBar.Offset = offset;
+            if (!IsHost)
+                HealthBar.Offset = offset;
         }
 
         [ClientRpc]
         private void OnSetPositionClientRpc(Vector3 pos)
         {
-            Position = pos;
+            if (!IsHost)
+                Position = pos;
         }
 
         [ClientRpc]
         private void OnSetRotationClientRpc(Quaternion rotation)
         {
-            Rotation = rotation;
+            if (!IsHost)
+                Rotation = rotation;
         }
 
         [ClientRpc]
         private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
         {
-            IsDroneConsumerFocusable_PvPClient = isFocusable;
+            if (!IsHost)
+                IsDroneConsumerFocusable_PvPClient = isFocusable;
         }
 
         [ServerRpc]
@@ -234,7 +236,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void PlayPlacementSoundClientRpc()
         {
-            PlayPlacementSound();
+            base.PlayPlacementSound();
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -262,7 +264,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
         {
-            BuildableState = state;
+            if (!IsHost)
+                BuildableState = state;
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -275,7 +278,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnSyncFationClientRpc(PvPFaction faction)
         {
-            Faction = faction;
+            if (!IsHost)
+                Faction = faction;
         }
 
         [ServerRpc(RequireOwnership = true)]

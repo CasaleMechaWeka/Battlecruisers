@@ -741,10 +741,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void ToggleDroneConsumerFocusCommandExecute()
         {
-            if (IsClient)
-                CallRpc_ToggleDroneConsumerFocusCommandExecute();
             if (IsServer)
                 ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
+            else
+                CallRpc_ToggleDroneConsumerFocusCommandExecute();
         }
 
 
@@ -756,13 +756,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void CallRpc_PlayDeathSound()
         {
-            if (IsClient)
+            if (!IsHost)
             {
                 _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
                 //   _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
 
-                if(Faction == PvPFaction.Reds)
+                if (Faction == PvPFaction.Reds)
                 {
                     if (TargetType == PvPTargetType.Ships)
                     {
@@ -792,7 +792,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         return;
                     }
                 }
-
             }
 
         }

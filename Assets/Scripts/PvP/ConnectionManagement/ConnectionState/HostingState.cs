@@ -7,6 +7,7 @@ using Unity.Netcode;
 using UnityEngine;
 using VContainer;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -98,7 +99,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 var payload = System.Text.Encoding.UTF8.GetString(connectionData);
                 var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
                 connectionPayload.playerNetworkId = clientId;
+                // Player A
+                SynchedServerData.Instance.playerAPrefabName.Value = MatchmakingScreenController.Instance.playerAPrefabName;  
+                SynchedServerData.Instance.playerAClientNetworkId.Value = MatchmakingScreenController.Instance.playerAClientNetworkId;
+                SynchedServerData.Instance.playerAName.Value = MatchmakingScreenController.Instance.playerAName;
+                SynchedServerData.Instance.playerAScore.Value = MatchmakingScreenController.Instance.playerAScore;
+                SynchedServerData.Instance.captainAPrefabName.Value = MatchmakingScreenController.Instance.captainAPrefabName;
 
+                // Player B
                 SynchedServerData.Instance.playerBPrefabName.Value = connectionPayload.playerHullPrefabName;
                 SynchedServerData.Instance.playerBClientNetworkId.Value = clientId;
                 SynchedServerData.Instance.playerBName.Value = connectionPayload.playerName;

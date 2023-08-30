@@ -44,6 +44,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -135,8 +136,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         static PvPBattleSceneGodClient s_pvpBattleSceneGodClient;
 
-
-
         void Awake()
         {
             if (m_NetcodeHooks)
@@ -145,18 +144,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
             }
         }
-
-
-
         void OnNetworkSpawn()
         {
-            if (NetworkManager.Singleton.IsServer)
-            {
-                enabled = false;
-                return;
-            }
-
-            StaticInitialiseAsync();
+            if (!NetworkManager.Singleton.IsHost)
+                StaticInitialiseAsync();
         }
         void OnNetworkDespawn()
         {
@@ -172,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
 
-        private async void StaticInitialiseAsync()
+        public async Task StaticInitialiseAsync()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
@@ -181,29 +172,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
-            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
+            if (!NetworkManager.Singleton.IsHost)
+            {
+                IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
+                IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
+                prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
+            }
+
+            prefabFactory = NetworkManager.Singleton.IsHost ? PvPBattleSceneGodServer.Instance.prefabFactory : prefabFactory;
+
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-            //     _battleSceneGodTunnel.BattleCompleted.OnValueChanged += OnTunnelBattleCompleted_ValueChanged;
+            
             Assert.IsNotNull(components);
-            components.Initialise_Client(applicationModel.DataProvider.SettingsManager);
+            components.Initialise(applicationModel.DataProvider.SettingsManager);
 
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
-            factoryProvider.Initialise(uiManager);
-            /*currentLevel = pvpBattleHelper.GetPvPLevel();*/
+            factoryProvider.Initialise(uiManager);           
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            captainController = GetComponent<PvPCaptainExoHUDController>();
-            // components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater,);
+            captainController = GetComponent<PvPCaptainExoHUDController>();            
         }
 
         private async void InitialiseAsync()

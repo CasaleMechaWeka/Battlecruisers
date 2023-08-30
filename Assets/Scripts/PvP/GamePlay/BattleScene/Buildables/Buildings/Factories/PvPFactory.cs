@@ -215,14 +215,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnUnit_BuildingStarted(ulong objectId)
         {
-            if (IsClient)
+            if (!IsHost)
             {
 
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
                 IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
                 UnitUnderConstruction = unit;
-                UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));                
-
+                UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
             }
         }
 
@@ -384,7 +383,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnIsUnitPausedValueChanged(bool isUnitPaused)
         {
-            if (IsClient)
+            if (!IsHost)
                 _isUnitPaused.Value = isUnitPaused;
         }
 

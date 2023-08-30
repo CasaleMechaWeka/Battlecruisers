@@ -7,6 +7,7 @@ using VContainer;
 using Unity.Netcode;
 using UnityEngine.Android;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -67,11 +68,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
                 connectionPayload.playerNetworkId = clientId;
 
-                m_SynchedServerData.playerAPrefabName.Value = connectionPayload.playerHullPrefabName;
-                m_SynchedServerData.playerAClientNetworkId.Value = clientId;
-                m_SynchedServerData.playerAName.Value = connectionPayload.playerName;
-                m_SynchedServerData.playerAScore.Value = connectionPayload.playerScore;
-                m_SynchedServerData.captainAPrefabName.Value = connectionPayload.playerCaptainPrefabName;
+                MatchmakingScreenController.Instance.playerAPrefabName = connectionPayload.playerHullPrefabName;
+                MatchmakingScreenController.Instance.playerAClientNetworkId = clientId;
+                MatchmakingScreenController.Instance.playerAName = connectionPayload.playerName;
+                MatchmakingScreenController.Instance.playerAScore = connectionPayload.playerScore;
+                MatchmakingScreenController.Instance.captainAPrefabName = connectionPayload.playerCaptainPrefabName;
             }
             response.Approved = true;
             response.Pending = false;
@@ -95,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 Debug.LogException(e);
                 StartHostFailed();
-     //           throw;
+                //           throw;
             }
         }
     }

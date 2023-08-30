@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             get { return _target; }
             set
             {
-             //   Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  {_target?.ToString()} > {value?.ToString()}");
+                //   Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  {_target?.ToString()} > {value?.ToString()}");
 
                 _target = value;
                 _outsideRangeMovementController.Target = _target;
@@ -114,7 +114,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override async void OnBuildableCompleted()
         {
 
-            if(IsServer)
+            if (IsServer)
             {
                 base.OnBuildableCompleted();
 
@@ -149,7 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
             }
 
-            if(IsClient)
+            else
             {
                 OnBuildableCompleted_PvPClient();
                 List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
@@ -192,7 +192,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)
         {
-          //  Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
+            //  Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
             UpdateMovementController();
         }
 
@@ -231,12 +231,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 if (_inRangeTargetTracker.ContainsTarget(Target))
                 {
-                 //   Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  In range movement controller");
+                    //   Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  In range movement controller");
                     return _inRangeMovementController;
                 }
                 else
                 {
-                 //   Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  Outside of range movement controller");
+                    //   Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  Outside of range movement controller");
                     return _outsideRangeMovementController;
                 }
             }
@@ -301,7 +301,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 if (pvp_RotationY.Value != transform.eulerAngles.y)
                     pvp_RotationY.Value = transform.eulerAngles.y;
             }
-            if (IsClient)
+            else
             {
                 BuildProgress = PvP_BuildProgress.Value;
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x, pvp_RotationY.Value, transform.eulerAngles.z);
@@ -313,10 +313,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Visibility 
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
-            if (IsClient)
-                base.OnValueChangedIsEnableRenderes(isEnabled);
             if (IsServer)
                 OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+            else
+                base.OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         // ProgressController Visible
@@ -343,24 +343,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableProgressEvent()
         {
-            if (IsClient)
-                base.OnBuildableProgressEvent();
             if (IsServer)
                 OnBuildableProgressEventClientRpc();
+            else
+                base.OnBuildableProgressEvent();
         }
         protected override void OnCompletedBuildableEvent()
         {
-            if (IsClient)
-                base.OnCompletedBuildableEvent();
             if (IsServer)
                 OnCompletedBuildableEventClientRpc();
+            else
+                base.OnCompletedBuildableEvent();
         }
         protected override void OnDestroyedEvent()
         {
-            if (IsClient)
-                base.OnDestroyedEvent();
             if (IsServer)
                 OnDestroyedEventClientRpc();
+            else
+                base.OnDestroyedEvent();
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
@@ -374,24 +374,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
-            _buildableProgress.gameObject.SetActive(isEnabled);
-            if (!isEnabled)
+            if (!IsHost)
             {
-                Invoke("ActiveTrail", 0.5f);
+                _buildableProgress.gameObject.SetActive(isEnabled);
+                if (!isEnabled)
+                {
+                    Invoke("ActiveTrail", 0.5f);
+                }
             }
-
         }
 
         [ClientRpc]
         private void OnSetPositionClientRpc(Vector3 pos)
         {
-            Position = pos;
+            if (!IsHost)
+                Position = pos;
         }
 
         [ClientRpc]
         private void OnSetRotationClientRpc(Quaternion rotation)
         {
-            Rotation = rotation;
+            if (!IsHost)
+                Rotation = rotation;
         }
 
         [ClientRpc]
@@ -428,7 +432,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
         {
-            BuildableState = state;
+            if (!IsHost)
+                BuildableState = state;
         }
     }
 }

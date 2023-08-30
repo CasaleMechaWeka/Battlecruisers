@@ -1,4 +1,7 @@
 
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using Unity.Netcode;
+
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     abstract class OnlineState : ConnectionState

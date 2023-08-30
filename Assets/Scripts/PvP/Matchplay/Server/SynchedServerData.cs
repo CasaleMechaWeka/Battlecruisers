@@ -133,8 +133,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 Debug.Log("Loading dynamic prefab on the clients... ---> " + iKey.PrefabPath);
                 LoadAddressableClientRpc(iKey.PrefabPath);
 
-
-
                 //load the prefab on the server, so that any late-joiner will need to load that prefab also
                 DynamicPrefabLoadingUtilities.LoadDynamicPrefab(assetGuid /*, m_InGameUI.ArtificialDelayMilliseconds*/, iPrefab);
 
@@ -150,7 +148,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                         // var obj = Spawn(assetGuid);
                         return true;
                     }
-
                     m_SynchronousSpawnTimeoutTimer += Time.deltaTime;
                     await Task.Yield();
                 }
@@ -213,7 +210,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(networkObjectId);
             obj.gameObject.SetActive(true);
-            
         }
 
         [ClientRpc]
@@ -221,7 +217,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(networkObjectId);
             obj.gameObject.SetActive(false);
-            
         }
     }
 }

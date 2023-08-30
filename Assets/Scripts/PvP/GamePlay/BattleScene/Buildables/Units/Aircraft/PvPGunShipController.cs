@@ -127,7 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 OnBuildableCompletedClientRpc();
             }
-            if (IsClient)
+            else
             {
                 OnBuildableCompleted_PvPClient();
                 List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
@@ -252,7 +252,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 if (PvP_BuildProgress.Value != BuildProgress)
                     PvP_BuildProgress.Value = BuildProgress;
             }
-            if (IsClient)
+            else
             {
                 BuildProgress = PvP_BuildProgress.Value;
 
@@ -264,10 +264,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Visibility 
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
-            if (IsClient)
-                base.OnValueChangedIsEnableRenderes(isEnabled);
             if (IsServer)
                 OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+            else
+                base.OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         // ProgressController Visible
@@ -294,24 +294,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableProgressEvent()
         {
-            if (IsClient)
-                base.OnBuildableProgressEvent();
             if (IsServer)
                 OnBuildableProgressEventClientRpc();
+            else
+                base.OnBuildableProgressEvent();
         }
         protected override void OnCompletedBuildableEvent()
         {
-            if (IsClient)
-                base.OnCompletedBuildableEvent();
             if (IsServer)
                 OnCompletedBuildableEventClientRpc();
+            else
+                base.OnCompletedBuildableEvent();
         }
         protected override void OnDestroyedEvent()
         {
-            if (IsClient)
-                base.OnDestroyedEvent();
             if (IsServer)
                 OnDestroyedEventClientRpc();
+            else
+                base.OnDestroyedEvent();
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
@@ -340,13 +340,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnSetPositionClientRpc(Vector3 pos)
         {
-            Position = pos;
+            if (!IsHost)
+                Position = pos;
         }
 
         [ClientRpc]
         private void OnSetRotationClientRpc(Quaternion rotation)
         {
-            Rotation = rotation;
+            if (!IsHost)
+                Rotation = rotation;
         }
 
         [ClientRpc]
@@ -383,7 +385,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
         {
-            BuildableState = state;
+            if (!IsHost)
+                BuildableState = state;
         }
     }
 }

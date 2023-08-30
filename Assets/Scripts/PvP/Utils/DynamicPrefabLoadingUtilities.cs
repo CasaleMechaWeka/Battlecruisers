@@ -32,14 +32,6 @@ namespace BattleCruisers.Network.Multiplay.Utils
         public static bool IsPrefabLoadedOnAllClients(AddressableGUID assetGuid) =>
             s_LoadedDynamicPrefabResourceHandles.ContainsKey(assetGuid);
 
-
-/*        public static void Initialize()
-        {
-            HashOfDynamicPrefabGUIDs = k_EmptyDynamicPrefabHash;
-            s_LoadedDynamicPrefabResourceHandles = new Dictionary<AddressableGUID, PvPPrefab>(new AddressableGUIDEqualityComparer());
-            s_DynamicPrefabGUIDs = new List<AddressableGUID>();
-            s_PrefabHashToClientIds = new Dictionary<int, HashSet<ulong>>();
-        }*/
         public static bool TryGetLoadedGameObjectFromGuid(AddressableGUID assetGuid, out PvPPrefab loadedGameObject)
         {
             return s_LoadedDynamicPrefabResourceHandles.TryGetValue(assetGuid, out loadedGameObject);
