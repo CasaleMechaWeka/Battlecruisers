@@ -138,6 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void Awake()
         {
+            s_pvpBattleSceneGodClient = this;
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
