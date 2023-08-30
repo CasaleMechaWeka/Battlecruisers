@@ -239,7 +239,7 @@ namespace BattleCruisers.Scenes
 
             _GoogleAuthentication = new GoogleAuthentication();
             _GoogleAuthentication.InitializePlayGamesLogin();
-            await AttemptSilentSigningAsync();
+            //await AttemptSilentSigningAsync();
 
             // should be enabled after completion initialization
             googleBtn.Initialise(soundPlayer, GoogleLogin);
