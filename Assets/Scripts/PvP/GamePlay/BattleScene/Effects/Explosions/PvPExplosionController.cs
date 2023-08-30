@@ -49,9 +49,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             if (!IsHost)
             {
                 IsVisible = isVisible;
-                if (IsVisible)
-                    _explosion.Play();
             }
+            if (isVisible)
+                _explosion.Play();
         }
     }
 

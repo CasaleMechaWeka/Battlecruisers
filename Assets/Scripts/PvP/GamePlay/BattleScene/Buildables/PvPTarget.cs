@@ -173,8 +173,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsDestroyed)
             {
                 _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
-                /*             PvP_Rotation.OnValueChanged -= OnPvPRotationChanged;
-                             PvP_Position.OnValueChanged -= OnPvPPositionChanged;*/
             }
         }
 

@@ -374,7 +374,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-            if(!IsHost)
+            if (!IsHost)
             {
                 _clickHandler.SingleClick += ClickHandler_SingleClick;
                 _clickHandler.DoubleClick += ClickHandler_DoubleClick;
@@ -651,7 +651,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void Deactivate()
         {
             //   Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
-            if (IsClient)
+            if (!IsHost)
                 return;
             Assert.IsTrue(_parent.activeSelf);
             _parent.SetActive(false);
@@ -661,7 +661,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             if (_parent.GetComponent<PvPUnitWrapper>() is not null && IsServer)
             {
-
                 _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
             }
             Deactivated?.Invoke(this, EventArgs.Empty);
@@ -686,7 +685,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildRateBoostableGroup.CleanUp();
 
             CallRpc_PlayDeathSound();
-            //    _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
 
             if (Faction == PvPFaction.Reds)
             {
@@ -752,7 +750,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void CallRpc_PlayDeathSound()
         {
-            if (!IsHost)
+            if (IsClient)
             {
                 _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
