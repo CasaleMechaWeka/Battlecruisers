@@ -181,7 +181,10 @@ namespace BattleCruisers.Scenes
                     }
                 }
 
-                await UnityServices.InitializeAsync(options);
+                if (CurrentInternetConnectivity.IsConnected)
+                {
+                    await UnityServices.InitializeAsync(options);
+                }
 
                 #if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
