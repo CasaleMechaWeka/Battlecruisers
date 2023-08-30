@@ -43,6 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public event EventHandler VisibleSetChanged;
 
+        public GameObject secretLevelsHint;
+
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -89,6 +91,12 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }
+            if (numOfLevelsUnlocked < 31)
+                secretLevelsHint.SetActive(false);
+            else
+                secretLevelsHint.SetActive(true);
+            Debug.Log("NumOfLevelsUnlocked:" + numOfLevelsUnlocked);
+
         }
 
         public override void OnPresenting(object activationParameter)
@@ -122,6 +130,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             VisibleLevelsSet.IsVisible = false;
             VisibleSetIndex = setIndex;
             VisibleLevelsSet.IsVisible = true;
+
         }
 
         private void NextSetCommandExecute()
