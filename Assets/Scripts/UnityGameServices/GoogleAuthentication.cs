@@ -47,7 +47,7 @@ namespace BattleCruisers.Utils.Network
                     // This is the recommended replacement for "PlayGamesPlatform.Instance.RequestServerSideAccess()":
                     c = ((PlayGamesLocalUser)Social.localUser).GetIdToken();
                     Debug.Log("Authorization code: " + c);
-
+                    SignInWithGoogleAsync(c);
                     Token = c;
                 }
                 else
@@ -56,14 +56,6 @@ namespace BattleCruisers.Utils.Network
                     Debug.Log("Login Unsuccessful");
                 }
             });
-            try
-            {
-                await SignInWithGoogleAsync(c);
-            }
-            catch (AuthenticationException ex)
-            {
-                Debug.LogException(ex);
-            }
         }
 
         public void LoginGoogle()

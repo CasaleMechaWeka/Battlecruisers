@@ -28,6 +28,7 @@ using BattleCruisers.Utils.Properties;
 using System.IO;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
@@ -38,11 +39,14 @@ namespace BattleCruisers.Scenes
 
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
+        public Text onscreenLogging;
+
         private string _lastSceneLoaded;
         private IHintProvider _hintProvider;
 
         [Header("For testing")]
         public bool testCreditsScene = false;
+        public bool displayOnscreenLogs = false;
 
         [Header("For testing")]
         public bool testCutScene = false;
@@ -94,9 +98,18 @@ namespace BattleCruisers.Scenes
         private INetworkState ConnectedState = new InternetConnectivity(true);
         private INetworkState DisconnectedState = new InternetConnectivity(false);
 
+        private void LogToScreen(string log)
+        {
+            if (displayOnscreenLogs)
+            {
+                onscreenLogging.text = log;
+            }
+        }
+
         async void Start()
         {
             Debug.Log("=========> Platform: " + Application.platform.ToString());
+            LogToScreen(Application.platform.ToString());
 
             Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
             Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
@@ -148,22 +161,6 @@ namespace BattleCruisers.Scenes
                 audioSource
                 );
 
-            googleBtn.Initialise(soundPlayer, GoogleLogin);
-            guestBtn.Initialise(soundPlayer, AnonymousLogin);
-
-            _GoogleAuthentication = new GoogleAuthentication();
-            _GoogleAuthentication.InitializePlayGamesLogin();
-
-            // Attempt signin without user input:
-            try
-            {
-                await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.Message);
-            }
-
             try
             {
                 var options = new InitializationOptions();
@@ -186,7 +183,7 @@ namespace BattleCruisers.Scenes
 
                 await UnityServices.InitializeAsync(options);
 
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
                 {
                     // When using a ParrelSync clone, switch to a different authentication profile to force the clone
@@ -194,7 +191,7 @@ namespace BattleCruisers.Scenes
                     string customArgument = ParrelSync.ClonesManager.GetArgument();
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
-#endif
+                #endif
 
                 if (InternetConnectivity.Value)
                 {
@@ -234,14 +231,19 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-
             // add event handlers to authentication
             AuthenticationService.Instance.SignedIn += SignedIn;
             AuthenticationService.Instance.SignedOut += SignedOut;
             AuthenticationService.Instance.Expired += Expired;
             AuthenticationService.Instance.SignInFailed += SignFailed;
 
+            _GoogleAuthentication = new GoogleAuthentication();
+            _GoogleAuthentication.InitializePlayGamesLogin();
+            await AttemptSilentSigningAsync();
+
             // should be enabled after completion initialization
+            googleBtn.Initialise(soundPlayer, GoogleLogin);
+            guestBtn.Initialise(soundPlayer, AnonymousLogin);
             googleBtn.gameObject.SetActive(true);
             guestBtn.gameObject.SetActive(true);
         }
@@ -264,7 +266,7 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
 
             // When running in the Editor make a unique ID from the Application.dataPath.
             // This will work for cloning projects manually, or with Virtual Projects.
@@ -274,14 +276,15 @@ namespace BattleCruisers.Scenes
                 .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
             Array.Resize(ref hashedBytes, 16);
             return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
-#else
+            #else
             return "";
-#endif
+            #endif
         }
 
         public async void GoogleLogin()
         {
             Debug.Log("===> trying to login with Google");
+            LogToScreen("Trying to login with Google");
 
             if (!AuthenticationService.Instance.IsSignedIn)
             {
@@ -289,26 +292,48 @@ namespace BattleCruisers.Scenes
                 spinGoogle.SetActive(true);
                 labelGoogle.SetActive(false);
                 loginType = LoginType.Google;
+                LogToScreen("Login Type: Google");
 
                 try
                 {
+                    LogToScreen("awaiting Google Authentication");
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
 
                     // turn the button back on if it fails I guess?
                     // should probably display some kind of error modal to users too.
                     if (!AuthenticationService.Instance.IsSignedIn)
                     {
+                        LogToScreen("Authentication failed.");
                         SetInteractable(true);
                         spinGoogle.SetActive(false);
                         labelGoogle.SetActive(true);
                     }
+                    else
+                    {
+                        LogToScreen("Authenticated");
+                    }
                 }
                 catch (Exception ex)
                 {
+                    LogToScreen(ex.Message);
                     Debug.Log(ex.Message);
                 }
             }
         }
+
+        // Attempt signin without user input:
+        private async Task AttemptSilentSigningAsync()
+        {
+            try
+            {
+                await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
+            }
+            catch (Exception ex)
+            {
+                LogToScreen(ex.Message);
+                Debug.Log(ex.Message);
+            }
+}
 
         public async void AnonymousLogin()
         {
@@ -469,17 +494,16 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCENE_NAVIGATION, sceneName);
             _lastSceneLoaded = sceneName;
         }
+        
+        //void Update()
+        //{
+        //    if (!isUpdatingInternetConnectivity)
+        //    {
+        //        isUpdatingInternetConnectivity = true;
+        //        iUpdateInternetConnectivity();
+        //    }
+        //}
 
-
-
-        /*        void Update()
-                {
-                    if (!isUpdatingInternetConnectivity)
-                    {
-                        isUpdatingInternetConnectivity = true;
-                        iUpdateInternetConnectivity();
-                    }
-                }*/
         bool isUpdatingInternetConnectivity = false;
         async void iUpdateInternetConnectivity()
         {
