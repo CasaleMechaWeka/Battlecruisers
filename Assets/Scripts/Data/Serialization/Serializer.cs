@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System;
 using System.Reflection;
+using System.Linq;
 using Unity.Services.Economy;
 using Unity.Services.Economy.Model;
 using BattleCruisers.Utils.UGS.Samples;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data.Serialization
 {
@@ -46,9 +48,104 @@ namespace BattleCruisers.Data.Serialization
 
             FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open);
 
-            GameModel game = (GameModel)_binaryFormatter.Deserialize(file);
+            object output = _binaryFormatter.Deserialize(file);
+            GameModel game;
+
+            // We need to track Save vs Install versions
+            // since we don't do that right now, I'm just checking inside the Loadout to see whether the user has a captains set.
+            // Not having a captain set causes the game to hang on the first load screen, so this is a good test now.
+            // It should be changed to a version check though.
+            var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
+            Loadout loadout = (Loadout)plo;
+
+            if (loadout.CurrentCaptain == null)
+            {
+                // make GameModel as compatible as possible
+                game = MakeCompatible(output);
+            }
+            else
+            {
+                // assign as was previously done
+                game = (GameModel)output;
+            }
+
             file.Close();
             return game;
+        }
+
+        private GameModel MakeCompatible(object gameData)
+        {
+            // vars
+            var tut = gameData.GetType().GetProperty("HasAttemptedTutorial").GetValue(gameData);
+            var lds = gameData.GetType().GetProperty("LifetimeDestructionScore").GetValue(gameData);
+            var bds = gameData.GetType().GetProperty("BestDestructionScore").GetValue(gameData);
+            var plo = gameData.GetType().GetProperty("PlayerLoadout").GetValue(gameData);
+            var lbr = gameData.GetType().GetProperty("LastBattleResult").GetValue(gameData);
+            List<HullKey> _unlockedHulls = new List<HullKey>();
+            foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
+            {
+                _unlockedHulls.Add(hull);
+            }
+
+            List<BuildingKey> _unlockedBuildings = new List<BuildingKey>();
+            foreach (var building in gameData.GetType().GetProperty("UnlockedBuildings").GetValue(gameData) as IReadOnlyCollection<BuildingKey>)
+            {
+                _unlockedBuildings.Add(building);
+            }
+
+            List<UnitKey> _unlockedUnits = new List<UnitKey>();
+            foreach (var unit in gameData.GetType().GetProperty("UnlockedUnits").GetValue(gameData) as IReadOnlyCollection<UnitKey>)
+            {
+                _unlockedUnits.Add(unit);
+            }
+
+            // compiler doesn't like them being cast when they're assigned, so they're cast here
+            bool _hasAttemptedTutorial = (bool)tut;
+            long _lifetimeDestructionScore = (long)lds;
+            long _bestDestructionScore = (long)bds;
+            Loadout _playerLoadout = (Loadout)plo;
+            BattleResult _lastBattleResult = (BattleResult)lbr;
+
+            // GameModel gets constructed from the fields we've pulled out of gameData:
+            GameModel compatibleGameModel = new GameModel(
+                _hasAttemptedTutorial,
+                _lifetimeDestructionScore,
+                _bestDestructionScore,
+                _playerLoadout,
+                _lastBattleResult,
+                _unlockedHulls,
+                _unlockedBuildings,
+                _unlockedUnits
+                );
+
+            // ##############################################
+            //                  New Fields
+            // ##############################################
+
+            // Selected Captain
+            if (_playerLoadout.CurrentCaptain == null)
+            {
+                compatibleGameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
+            }
+
+            // Player Name
+            string _playerName = gameData.GetType().GetProperty("PlayerName").GetValue(gameData) as string;
+            if (_playerName == null || _playerName == "")
+            {
+                compatibleGameModel.PlayerName = "Charlie";
+            }
+            else
+            {
+                compatibleGameModel.PlayerName = _playerName;
+            }
+
+            // What levels have been completed, and at what difficulty
+            foreach (var level in gameData.GetType().GetProperty("CompletedLevels").GetValue(gameData) as IReadOnlyCollection<CompletedLevel>)
+            {
+                compatibleGameModel.AddCompletedLevel(level);
+            }
+
+            return compatibleGameModel;
         }
 
         public void DeleteSavedGame()
