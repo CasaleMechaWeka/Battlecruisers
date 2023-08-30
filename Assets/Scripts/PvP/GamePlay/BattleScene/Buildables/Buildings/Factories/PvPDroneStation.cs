@@ -279,7 +279,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+                OnDestroyedEvent();
         }
     }
 }
