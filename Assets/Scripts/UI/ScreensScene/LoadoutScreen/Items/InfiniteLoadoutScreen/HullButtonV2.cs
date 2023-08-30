@@ -21,6 +21,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private Cruiser _cruiserPrefab;
         public override IComparableItem Item => _cruiserPrefab;
         public GameObject clickedFeedBack;
+        public Button toggleHullButton;
+        public SelectCruiserButton selectCruiserButton;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
@@ -44,6 +46,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _unitName.text = (cruiserPrefab.Name).ToString();
 
             UpdateSelectedFeedback();
+
+            toggleHullButton.onClick.AddListener(OnSelectionButtonClicked);
+
         }
 
         private void _selectedHull_ValueChanged(object sender, EventArgs e)
@@ -77,6 +82,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public override void ShowDetails()
         {
             _itemDetailsManager.ShowDetails(_cruiserPrefab);
+        }
+        private void OnSelectionButtonClicked()
+        {
+            if (GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
+                selectCruiserButton.OnClickedAction();
+            else
+                OnClicked();
         }
     }
 }
