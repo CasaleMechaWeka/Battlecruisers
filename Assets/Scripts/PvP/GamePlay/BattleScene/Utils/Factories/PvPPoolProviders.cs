@@ -81,11 +81,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task SetInitialCapacities()
         {
             await _explosionPoolProvider.SetInitialCapacity();
-/*            await _shipDeathPoolProvider.SetInitialCapacity();
+            await _shipDeathPoolProvider.SetInitialCapacity();
             await _projectilePoolProvider.SetInitialCapacity();
             await _unitPoolProvider.SetInitialCapacity();
-            await _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);*/
-
+            await _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
         }
     }
 }

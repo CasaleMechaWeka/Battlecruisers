@@ -75,23 +75,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         [ClientRpc]
         private void SetPositionClientRpc(Vector3 position)
         {
-            Position = position;
-
+            if (!IsHost)
+                Position = position;
         }
 
         [ClientRpc]
         private void SetVisibleClientRpc(bool isVisible)
         {
-            IsVisible = isVisible;
-            if (IsVisible)
+            if (!IsHost)
             {
-                sinkingAnimation.Play();
-                /*            foreach (IPvPParticleSystemGroup effect in effects)
-                            {
-                                effect.Play();
-                            }*/
-                iPlayEffects();
+                IsVisible = isVisible;
+                if (IsVisible)
+                {
+                    sinkingAnimation.Play();
+                    iPlayEffects();
+                }
             }
+
         }
 
 

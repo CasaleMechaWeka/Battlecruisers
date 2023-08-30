@@ -142,7 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void Start()
         {
-/*            if (IsClient && IsOwner)
+            if (IsClient && IsOwner)
             {
                 PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
             }
@@ -153,7 +153,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
 
             if (NetworkManager.Singleton.IsServer)
-                _healthTracker.SetMaxHealth();*/
+                _healthTracker.SetMaxHealth();
         }
 
 

@@ -130,7 +130,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async Task _Initialise()
         {
-
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
 
@@ -141,7 +140,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
-
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -158,53 +156,53 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync();
             await factoryProvider.Initialise();
-    //        IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            /*                    playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
-                                playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
+            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+            playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
 
 
-                                cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, *//*cameraComponents.CameraFocuser,*//* playerACruiserUserChosenTargetManager);
-                                cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager *//*, playerBCruiseruserChosenTargetHelper*//*);
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager/*, playerBCruiseruserChosenTargetHelper*/);
 
-                                enemyCruiserSprite = playerACruiser.Sprite;
-                                enemyCruiserName = playerACruiser.Name;
+            enemyCruiserSprite = playerACruiser.Sprite;
+            enemyCruiserName = playerACruiser.Name;
 
-                                playerBCruiserSprite = playerBCruiser.Sprite;
-                                playerBCruiserName = playerBCruiser.Name;
+            playerBCruiserSprite = playerBCruiser.Sprite;
+            playerBCruiserName = playerBCruiser.Name;
 
-                                // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
-                                droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
-                                droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
-                                droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
-                                droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
+            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
+            droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
+            droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
 
-                                droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
-                                droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
-                                droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
-                                droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
+            droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
+            droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
+            droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
 
-                                IPvPTime time = PvPTimeBC.Instance;
-                                _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
-                                _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
+            IPvPTime time = PvPTimeBC.Instance;
+            _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
+            _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
 
-                                components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
-                                _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+            _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
 
-                                string logName = "Battle_Begin";
-                    #if LOG_ANALYTICS
+            string logName = "Battle_Begin";
+#if LOG_ANALYTICS
                         Debug.Log("Analytics: " + logName);
-                    #endif
-                                try
-                                {
-                                    AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                                    AnalyticsService.Instance.Flush();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Debug.Log(ex.Message);
-                                }*/
+#endif
+            try
+            {
+                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
         }
 
 
