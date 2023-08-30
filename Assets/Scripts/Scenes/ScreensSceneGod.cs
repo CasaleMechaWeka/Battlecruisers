@@ -142,39 +142,27 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     await _dataProvider.LoadBCData();
-                    if (_dataProvider.GameModel.NumOfLevelsCompleted >= 10)
+                    // set pvp status in Battle Hub
+                    serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                    if (serverStatus)
                     {
-                        // set pvp status in Battle Hub
-                        serverStatus = await _dataProvider.RefreshPVPServerStatus();
-                        if (serverStatus)
-                        {
-                            // server available
-                            hubScreen.serverStatusPanel.SetActive(false);
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
-                            hubScreen.battle1vAI.SetActive(false);
-                            hubScreen.offlinePlayOnly.SetActive(false);
-                            Debug.Log("PVP Server Available.");
-                        }
-                        else
-                        {
-                            // server NOT available
-                            hubScreen.serverStatusPanel.SetActive(true);
-                            hubScreen.battle1vAI.SetActive(true);
-                            hubScreen.offlinePlayOnly.SetActive(false);
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
-                            Debug.Log("PVP Server Unavailable.");
-                        }
+                        // server available
+                        hubScreen.serverStatusPanel.SetActive(false);
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
+                        hubScreen.battle1vAI.SetActive(false);
+                        hubScreen.offlinePlayOnly.SetActive(false);
+                        Debug.Log("PVP Server Available.");
                     }
                     else
                     {
-                        hubScreen.serverStatusPanel.SetActive(false);
-                        hubScreen.battle1vAI.SetActive(false);
-                        hubScreen.offlinePlayOnly.SetActive(true);
+                        // server NOT available
+                        hubScreen.serverStatusPanel.SetActive(true);
+                        hubScreen.battle1vAI.SetActive(true);
+                        hubScreen.offlinePlayOnly.SetActive(false);
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("NotPassed10Levels");
-                        hubScreen.battleButton.GetComponent<CanvasGroupButton>().Enabled = false;
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
+                        Debug.Log("PVP Server Unavailable.");
                     }
                 }
                 catch (Exception ex)
