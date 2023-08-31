@@ -85,16 +85,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             if (!IsHost)
             {
                 IsVisible = isVisible;
-                if (IsVisible)
-                {
-                    sinkingAnimation.Play();
-                    iPlayEffects();
-                }
             }
-
+            if (isVisible)
+            {
+                sinkingAnimation.Play();
+                iPlayEffects();
+            }
         }
-
-
         private async Task iPlayEffects()
         {
             await Task.Yield();
