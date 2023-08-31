@@ -15,7 +15,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -134,7 +133,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnBuildableCompleted_PvPClient();
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
-
             }
 
         }
@@ -328,7 +326,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // ProgressController Visible
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
-            OnProgressControllerVisibleClientRpc(isEnabled);
+            if (IsServer)
+            {
+                OnProgressControllerVisibleClientRpc(isEnabled);
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+            }
+            else
+                base.CallRpc_ProgressControllerVisible(isEnabled);
         }
 
         // set Position of PvPBuildable
@@ -374,22 +378,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
-            OnValueChangedIsEnableRenderes(isEnabled);
+            if (!IsHost)
+                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
+            _buildableProgress.gameObject.SetActive(isEnabled);
             if (!IsHost)
             {
-                _buildableProgress.gameObject.SetActive(isEnabled);
                 if (!isEnabled)
                 {
                     Invoke("ActiveTrail", 0.5f);
-                    /*                if (GetComponent<NetworkTransform>() != null)
-                                        GetComponent<NetworkTransform>().enabled = true;
-                                    if (GetComponent<NetworkRigidbody2D>() != null)
-                                        GetComponent<NetworkRigidbody2D>().enabled = true;*/
                 }
             }
         }
@@ -418,26 +419,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
-            OnBuildableProgressEvent();
+            if (!IsHost)
+                OnBuildableProgressEvent();
         }
 
 
         [ClientRpc]
         private void OnCompletedBuildableEventClientRpc()
         {
-            OnCompletedBuildableEvent();
+            if (!IsHost)
+                OnCompletedBuildableEvent();
         }
 
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+                OnDestroyedEvent();
         }
 
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
-            OnBuildableCompleted();
+            if (!IsHost)
+                OnBuildableCompleted();
         }
 
         [ClientRpc]
