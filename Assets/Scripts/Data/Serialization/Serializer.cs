@@ -127,7 +127,7 @@ namespace BattleCruisers.Data.Serialization
             }
 
             // Heckles
-            if(_playerLoadout.CurrentHeckles == null)
+            if (_playerLoadout.CurrentHeckles == null)
             {
                 compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
             }
@@ -202,7 +202,16 @@ namespace BattleCruisers.Data.Serialization
                         Debug.Log(savedData["GameModel"]);
 
                         //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
-                        return saveModel;
+                        if (saveModel._lifetimeDestructionScore >= game.LifetimeDestructionScore)
+                        {
+                            Debug.Log("Cloud save up to date");
+                            return saveModel;
+                        }
+                        else
+                        {
+                            Debug.Log("Cloud save not up to date");
+                            return null;
+                        }
                     }
                     else
                     {
@@ -261,7 +270,7 @@ namespace BattleCruisers.Data.Serialization
                     {
                         dataProvider.GameModel.Coins = balance.Balance;
                     }
-                    if(balance.Balance > 0 && balance.CurrencyId == "CREDIT")
+                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
                     {
                         dataProvider.GameModel.Credits = balance.Balance;
                     }
@@ -306,17 +315,17 @@ namespace BattleCruisers.Data.Serialization
                 if (inventoryResult is null) return false;
                 foreach (var inventory in inventoryResult.PlayersInventoryItems)
                 {
-                    if(inventory.GetItemDefinition().Name.Contains("Captain"))
+                    if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
                         dataProivder.GameModel.Captains[index].isOwned = true;
                     }
-                    if(inventory.GetItemDefinition().Name.Contains("Heckle"))
+                    if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
                         dataProivder.GameModel.Heckles[index].isOwned = true;
                     }
-                   
+
                 }
                 dataProivder.SaveGame();
                 return true;
