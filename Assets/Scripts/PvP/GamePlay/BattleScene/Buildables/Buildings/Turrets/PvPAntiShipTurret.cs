@@ -244,7 +244,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
-                _buildableProgress.gameObject.SetActive(isEnabled);
+            _buildableProgress.gameObject.SetActive(isEnabled);
         }
 
         [ClientRpc]
