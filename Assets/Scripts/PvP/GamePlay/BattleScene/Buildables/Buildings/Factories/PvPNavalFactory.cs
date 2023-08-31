@@ -43,7 +43,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
             if (IsServer)
+            {
                 OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+            }
             else
                 base.OnValueChangedIsEnableRenderes(isEnabled);
         }
@@ -251,7 +253,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
-            OnValueChangedIsEnableRenderes(isEnabled);
+            if (!IsHost)
+                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]

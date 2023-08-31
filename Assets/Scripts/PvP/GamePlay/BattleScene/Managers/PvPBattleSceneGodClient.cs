@@ -188,7 +188,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-            
+
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
 
@@ -196,10 +196,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
-            factoryProvider.Initialise(uiManager);           
+            factoryProvider.Initialise(uiManager);
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            captainController = GetComponent<PvPCaptainExoHUDController>();            
+            captainController = GetComponent<PvPCaptainExoHUDController>();
         }
 
         private async void InitialiseAsync()
@@ -230,7 +230,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             sceneNavigator = LandingSceneGod.SceneNavigator;
             IPvPBattleCompletionHandler battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator, _battleSceneGodTunnel);
             _battleSceneGodTunnel.battleCompletionHandler = battleCompletionHandler;
-            PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, "Player A", "Player B");
+            PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, SynchedServerData.Instance.playerAName.Value, SynchedServerData.Instance.playerBName.Value);
             leftPanelComponents
                 = leftPanelInitialiser.Initialise(
                     playerCruiser,

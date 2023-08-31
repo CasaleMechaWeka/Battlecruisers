@@ -41,8 +41,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
             else
             {
-                playerLeftHealthBarHelpLabel.text = enemyName;
-                playerRightHealthBarHelpLabel.text = playerName;
+                playerLeftHealthBarHelpLabel.text = playerName;
+                playerRightHealthBarHelpLabel.text = enemyName;
 
                 PvPCruiserHealthBarInitialiser playerLeftHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("PlayerLeftCruiserHealth/Foreground");
                 Assert.IsNotNull(playerLeftHealthInitialiser);
