@@ -96,17 +96,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _isActiveAndAlive = false;
             OnSetPosition_Visible(Position, false);
             gameObject.SetActive(false);
-
         }
 
         // should be called by client
         public virtual void Initialise()
         {
-            Logging.LogMethod(Tags.SHELLS);
-
-            _rigidBody = GetComponent<Rigidbody2D>();
-            Assert.IsNotNull(_rigidBody);
-            _isActiveAndAlive = false;
+            if (!IsHost)
+            {
+                _rigidBody = GetComponent<Rigidbody2D>();
+                Assert.IsNotNull(_rigidBody);
+                _isActiveAndAlive = false;
+            }
         }
 
         public virtual void Activate(TPvPActivationArgs activationArgs)
@@ -155,13 +155,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (_targetToDamage != null)
             {
                 DestroyProjectile();
-                //if (_targetToDamage.IsShield())
-                //{
-                //    _singleDamageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
-                //}
-                //else{
                 _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
-                //}
                 _isActiveAndAlive = false;
             }
             else if (MovementController != null)
@@ -176,7 +170,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            if (IsClient)
+            if (!IsHost)
                 return;
             Logging.LogMethod(Tags.SHELLS);
 
@@ -193,8 +187,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void DestroyProjectile()
         {
-            Logging.LogMethod(Tags.SHELLS);
-
             ShowExplosion();
             RemoveFromScene();
         }
@@ -202,11 +194,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            /*            string filePath = AssetDatabase.GetAssetPath(_impactSound.AudioClip);
-                        string fileName = System.IO.Path.GetFileName(filePath);
-                        OnPlayExplosionSound(PvPSoundType.Explosions, fileName.Split(".")[0], transform.position);*/
+            Debug.Log("===> show explosion");
             OnPlayExplosionSound(PvPSoundType.Explosions, _impactSound.AudioClip.name, transform.position);
-            // _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
         }
 
         private void AdjustGameObjectDirection()

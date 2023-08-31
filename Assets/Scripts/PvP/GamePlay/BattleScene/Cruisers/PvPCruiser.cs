@@ -506,36 +506,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         protected override void OnDamagedEventCalled(ulong objectId)
         {
-            if (IsClient)
-                base.OnDamagedEventCalled(objectId);
             if (IsServer)
                 OnDamagedEventCalledClientRpc(objectId);
+            else
+                base.OnDamagedEventCalled(objectId);
         }
 
         protected override void OnDestroyedEvent()
         {
-            if (IsClient)
+            if (Faction == PvPFaction.Blues)
             {
-                if (Faction == PvPFaction.Blues)
-                {
-                    PvPCaptainExoHUDController.Instance.DoLeftAngry();
-                    PvPCaptainExoHUDController.Instance.DoRightHappy();
-                }
-                else
-                {
-                    PvPCaptainExoHUDController.Instance.DoLeftHappy();
-                    PvPCaptainExoHUDController.Instance.DoRightAngry();
-                }
-                base.OnDestroyedEvent();
+                PvPCaptainExoHUDController.Instance.DoLeftAngry();
+                PvPCaptainExoHUDController.Instance.DoRightHappy();
             }
+            else
+            {
+                PvPCaptainExoHUDController.Instance.DoLeftHappy();
+                PvPCaptainExoHUDController.Instance.DoRightAngry();
+            }
+
             if (IsServer)
                 OnDestroyedEventClientRpc();
+            else
+            {
+                base.OnDestroyedEvent();
+            }
         }
 
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+                OnDestroyedEvent();
         }
         [ServerRpc(RequireOwnership = true)]
         public void PvP_HighlightAvailableSlotsServerRpc(PvPSlotType SlotType, PvPBuildingFunction BuildingFunction, bool PreferFromFront, ServerRpcParams serverRpcParams = default)
@@ -618,7 +620,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void OnDamagedEventCalledClientRpc(ulong objectId)
         {
-            OnDamagedEventCalled(objectId);
+            if (!IsHost)
+                OnDamagedEventCalled(objectId);
         }
 
         [ClientRpc]

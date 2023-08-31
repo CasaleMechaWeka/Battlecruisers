@@ -145,8 +145,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
 
 
-            if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
-            {
+//            if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
+//            {
                 leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
                 leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
                 int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
@@ -162,8 +162,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
                 rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
                 leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
-            }
-            else
+//            }
+/*            else
             {
                 leftPlayerName.text = SynchedServerData.Instance.playerBName.Value;
                 leftCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
@@ -180,7 +180,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 rightPlayerRankeImage.sprite = spriteWrapperA.Sprite;
                 rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
                 rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
-            }
+            }*/
 
             switch (SynchedServerData.Instance.map.Value)
             {

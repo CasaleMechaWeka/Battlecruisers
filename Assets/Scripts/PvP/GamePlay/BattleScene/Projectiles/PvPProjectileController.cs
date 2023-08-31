@@ -23,8 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             OnPlayExplosionSoundClientRpc(type, name, position);
         }
-
-
         private void Awake()
         {
             Initialise();
@@ -48,16 +46,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
         {
-            transform.position = position;
-            gameObject.SetActive(visible);
+            if(!IsHost)
+            {
+                transform.position = position;
+                gameObject.SetActive(visible);
+            }
         }
 
         [ClientRpc]
         private void OnActiveClientRpc(Vector3 velocity, float gravityScale, bool isAlive)
         {
-            _rigidBody.velocity = velocity;
-            _rigidBody.gravityScale = gravityScale;
-            _isActiveAndAlive = isAlive;
+            if(!IsHost)
+            {
+                _rigidBody.velocity = velocity;
+                _rigidBody.gravityScale = gravityScale;
+                _isActiveAndAlive = isAlive;
+            }
         }
 
         [ClientRpc]

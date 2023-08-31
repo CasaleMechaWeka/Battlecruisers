@@ -312,11 +312,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                // NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
-                // foreach (NetworkObject obj in objs)
-                // {
-                //     if (obj.NetworkObjectId == objectId)
-                //     {
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
                 IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
                 if (damageSource == null)
@@ -325,8 +320,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
                 if (damageSource != null)
                     Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
-                //     }
-                // }
             }
 
         }
