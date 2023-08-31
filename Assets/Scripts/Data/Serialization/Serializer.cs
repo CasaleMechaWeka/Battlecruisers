@@ -125,6 +125,12 @@ namespace BattleCruisers.Data.Serialization
                 compatibleGameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
             }
 
+            // Heckles
+            if(_playerLoadout.CurrentHeckles == null)
+            {
+                compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
+            }
+
             // Player Name
             string _playerName = gameData.GetType().GetProperty("PlayerName").GetValue(gameData) as string;
             if (_playerName == null || _playerName == "")
