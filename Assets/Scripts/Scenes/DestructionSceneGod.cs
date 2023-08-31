@@ -636,10 +636,11 @@ namespace BattleCruisers.Scenes
             if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
             {
                 long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
-                applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                applicationModel.DataProvider.GameModel.LifetimeDestructionScore = allTimeVal;
 
                 // we need XPToNextLevel to populate any XP progress bars:
                 long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+                Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
 
                 // Give the player their rewards:
                 applicationModel.DataProvider.GameModel.Coins += coinsToAward;
@@ -648,12 +649,13 @@ namespace BattleCruisers.Scenes
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
 
                 try
-                {
+                {/*
                     await applicationModel.DataProvider.SyncCoinsToCloud();
                     await applicationModel.DataProvider.SyncCreditsToCloud();
 
                     // Save changes:
                     await applicationModel.DataProvider.CloudSave();
+                    */
                 }
                 catch (Exception ex)
                 {
@@ -714,6 +716,24 @@ namespace BattleCruisers.Scenes
             else
             {
                 return "Owwww";
+            }
+        }
+
+        void OnApplicationQuit()
+        {
+            applicationModel.DataProvider.SaveGame();
+            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            try
+            {
+                applicationModel.DataProvider.SyncCoinsToCloud();
+                applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
             }
         }
     }

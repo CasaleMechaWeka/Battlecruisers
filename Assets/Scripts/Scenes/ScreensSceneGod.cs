@@ -651,7 +651,22 @@ namespace BattleCruisers.Scenes
                     }
                 }
             }
+        }
 
+        void OnApplicationQuit()
+        {
+            try
+            {
+                _applicationModel.DataProvider.SyncCoinsToCloud();
+                _applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                _applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
         }
     }
 }
