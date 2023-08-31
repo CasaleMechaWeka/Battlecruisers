@@ -122,6 +122,7 @@ namespace BattleCruisers.Data.Serialization
             // Selected Captain
             if (_playerLoadout.CurrentCaptain == null)
             {
+                compatibleGameModel.PlayerLoadout.PurchaseExo("CaptainExo000");
                 compatibleGameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
             }
 

@@ -291,8 +291,16 @@ namespace BattleCruisers.Data.Models
 
         public void PurchaseExo(string exoKey)
         {
-            if (!_ownedExosKeys.Contains(exoKey))
+            if (_ownedExosKeys != null)
             {
+                if (!_ownedExosKeys.Contains(exoKey))
+                {
+                    _ownedExosKeys.Add(exoKey);
+                }
+            }
+            else
+            {
+                _ownedExosKeys = new List<string>();
                 _ownedExosKeys.Add(exoKey);
             }
         }
