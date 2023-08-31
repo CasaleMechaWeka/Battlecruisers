@@ -99,6 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Placement Sound
         protected override void PlayPlacementSound()
         {
+            base.PlayPlacementSound();
             if (IsServer)
                 PlayPlacementSoundClientRpc();
         }
@@ -182,7 +183,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnNewUnitChosen()
         {
             if (IsServer)
-            {                
+            {
                 OnNewUnitChosenClientRpc();
                 base.OnNewUnitChosen();
             }

@@ -64,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
         {
             base.CallRpc_ToggleDroneConsumerFocusCommandExecute();
-            if (IsClient)
+            if (!IsHost)
                 OnToggleDroneConsumerFocusCommandExecuteServerRpc();
         }
 
@@ -165,10 +165,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnNewUnitChosen()
         {
             if (IsServer)
+            {
+                OnNewUnitChosenClientRpc();
                 base.OnNewUnitChosen();
+            }
             else
-                OnNewUnitChosenServerRpc();
-
+                base.OnNewUnitChosen();
         }
 
         protected override void OnIsUnitPausedValueChanged(bool isPaused)
@@ -290,7 +292,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
-            OnBuildableCompleted();
+            if (!IsHost)
+                OnBuildableCompleted();
         }
 
         [ClientRpc]
@@ -373,31 +376,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnUnit_CompletedBuildableClientRpc(ulong objectId)
         {
-            OnUnit_CompletedBuildable(objectId);
+            if (!IsHost)
+                OnUnit_CompletedBuildable(objectId);
         }
 
         [ClientRpc]
         private void OnUnitUnderConstruction_DestroyedClientRpc()
         {
-            OnUnitUnderConstruction_Destroyed();
+            if (!IsHost)
+                OnUnitUnderConstruction_Destroyed();
         }
 
         [ClientRpc]
         private void OnIsUnitPausedValueChangedClientRpc(bool isPaused)
         {
-            OnIsUnitPausedValueChanged(isPaused);
+            if (!IsHost)
+                OnIsUnitPausedValueChanged(isPaused);
         }
 
-        [ServerRpc(RequireOwnership = true)]
-        private void OnNewUnitChosenServerRpc()
+        [ClientRpc]
+        private void OnNewUnitChosenClientRpc()
         {
-            OnNewUnitChosen();
+            if (!IsHost)
+                OnNewUnitChosen();
         }
 
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+                OnDestroyedEvent();
         }
     }
 }
