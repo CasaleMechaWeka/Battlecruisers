@@ -102,7 +102,7 @@ namespace BattleCruisers.Data
             SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
             if (saveModel == null)
             {
-                Debug.LogWarning("CloudSaveModel is null.");
+                Debug.Log("CloudSaveModel is null.");
             }
             else
             {
