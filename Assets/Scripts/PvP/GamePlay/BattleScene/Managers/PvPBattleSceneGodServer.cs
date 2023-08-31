@@ -31,6 +31,7 @@ using UnityEngine.Analytics;
 using Unity.Services.Analytics;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -52,6 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
         private IPvPBattleSceneHelper pvpBattleHelper;
+        private IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager;
+        private IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager;
 
         public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables_left;
         public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables_right;
@@ -147,14 +150,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
-            IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             IPvPUserChosenTargetHelper playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerACruiserUserChosenTargetManager);
-            IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             IPvPUserChosenTargetHelper playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync();
+
+        }
+        public async Task _Initialise_Rest()
+        {
             await factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);

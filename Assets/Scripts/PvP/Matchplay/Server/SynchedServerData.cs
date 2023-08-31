@@ -26,7 +26,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<long> playerAScore = new NetworkVariable<long>();
         public NetworkVariable<NetworkString> captainAPrefabName = new NetworkVariable<NetworkString>();
 
-
         public NetworkVariable<NetworkString> playerBPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<ulong> playerBClientNetworkId = new NetworkVariable<ulong>();
         public NetworkVariable<NetworkString> playerBName = new NetworkVariable<NetworkString>();
@@ -162,6 +161,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         }
 
+        public void InitServer()
+        {
+            InitialiseRestServerRpc();
+        }
 
         [ServerRpc(RequireOwnership = false)]
         void LoadBuildablePrefabServerRpc(PvPBuildingCategory category, string prefabName, ServerRpcParams rpcParams = default)
@@ -171,6 +174,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             TrySpawnCruiserDynamicSynchronously(buildingKey, iPrefab);
         }
 
+        [ServerRpc(RequireOwnership = false)]
+        void InitialiseRestServerRpc()
+        {
+            PvPBattleSceneGodServer.Instance._Initialise_Rest();
+        }
         [ClientRpc]
         void LoadAddressableClientRpc(string prefabPath, ClientRpcParams rpcParams = default)
         {

@@ -148,7 +148,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void OnNetworkSpawn()
         {
             if (!NetworkManager.Singleton.IsHost)
-                StaticInitialiseAsync();
+            {
+                Invoke("StaticInitialiseAsync", 0.5f);
+            }
         }
         void OnNetworkDespawn()
         {
@@ -182,7 +184,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
 
             prefabFactory = NetworkManager.Singleton.IsHost ? PvPBattleSceneGodServer.Instance.prefabFactory : prefabFactory;
-
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
 
@@ -197,9 +198,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             uiManager = pvpBattleHelper.CreateUIManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
-
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
+            if (!NetworkManager.Singleton.IsHost)
+            {
+                SynchedServerData.Instance.InitServer();
+            }
         }
 
         private async void InitialiseAsync()

@@ -182,9 +182,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnNewUnitChosen()
         {
             if (IsServer)
+            {                
+                OnNewUnitChosenClientRpc();
                 base.OnNewUnitChosen();
+            }
             else
-                OnNewUnitChosenServerRpc();
+                base.OnNewUnitChosen();
         }
 
         protected override void OnIsUnitPausedValueChanged(bool isPaused)
@@ -358,7 +361,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
             UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
-
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -399,10 +401,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnIsUnitPausedValueChanged(isPaused);
         }
 
-        [ServerRpc(RequireOwnership = true)]
-        private void OnNewUnitChosenServerRpc()
+        [ClientRpc]
+        private void OnNewUnitChosenClientRpc()
         {
-            OnNewUnitChosen();
+            if (!IsHost)
+                OnNewUnitChosen();
         }
 
         [ClientRpc]

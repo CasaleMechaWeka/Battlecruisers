@@ -207,7 +207,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
-            if (IsClient)
+            if (!IsHost)
                 EnableRenderers(isEnabled);
         }
 

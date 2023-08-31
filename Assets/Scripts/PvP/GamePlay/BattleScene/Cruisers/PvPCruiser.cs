@@ -157,7 +157,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public async void Initialise_Client_PvP(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
         {
-            FactoryProvider = factoryProvider;
+            if (!IsHost)
+                FactoryProvider = factoryProvider;
             _uiManager = uiManager;
             _helper = helper;
             SlotAccessor = _slotWrapperController.Initialise(this);

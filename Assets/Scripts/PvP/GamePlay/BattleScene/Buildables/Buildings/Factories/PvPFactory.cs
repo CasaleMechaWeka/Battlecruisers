@@ -68,6 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
                         EnsureDroneConsumerHasHighestPriority();
+                        Debug.Log("===>" + _unitWrapper.Buildable.PrefabName);
                         _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
                         Assert.IsNotNull(_unitPool);
                         NewUnitChosen?.Invoke(this, EventArgs.Empty);
@@ -227,7 +228,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnNewUnitChosen()
         {
-            if (IsServer)
+            if (IsClient)
                 NewUnitChosen?.Invoke(this, EventArgs.Empty);
         }
 
@@ -347,7 +348,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName);
             }
-
         }
 
 
@@ -360,9 +360,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void PauseBuildingUnit()
         {
-            // Logging.LogMethod(Tags.FACTORY);
-            if (IsClient)
-                OnPauseBuildingUnit();
             if (IsServer)
             {
                 if (UnitWrapper != null
@@ -373,6 +370,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     OnIsUnitPausedValueChanged(true);
                 }
             }
+            else
+                OnPauseBuildingUnit();
         }
 
         protected virtual void OnPauseBuildingUnit()
