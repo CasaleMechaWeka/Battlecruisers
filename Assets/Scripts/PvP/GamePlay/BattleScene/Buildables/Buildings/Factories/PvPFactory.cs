@@ -390,8 +390,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.LogMethod(Tags.FACTORY);
 
-            if (IsClient)
-                OnResumeBuildingUnit();
+
+
             if (IsServer)
             {
                 if (_isUnitPaused.Value)
@@ -403,6 +403,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     OnIsUnitPausedValueChanged(false);
                 }
             }
+            else
+                OnResumeBuildingUnit();
         }
 
         protected virtual void OnResumeBuildingUnit()

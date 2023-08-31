@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            if (NetworkManager.Singleton.IsClient)
+            if (!NetworkManager.Singleton.IsHost)
                 return;
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         void OnTriggerExit2D(Collider2D collider)
         {
-            if (NetworkManager.Singleton.IsClient)
+            if (!NetworkManager.Singleton.IsHost)
                 return;
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 

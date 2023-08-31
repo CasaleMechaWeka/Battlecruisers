@@ -583,10 +583,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void PvP_SetFactionClientRpc(PvPFaction faction)
         {
-            /*            if (IsOwner)
-                            Faction = PvPFaction.Blues;
-                        else
-                            Faction = PvPFaction.Reds;*/
             Faction = faction;
         }
 
