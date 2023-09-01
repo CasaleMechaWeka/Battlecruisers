@@ -49,21 +49,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         private void PlaySparksClientRpc()
         {
-            constantSparks.Play();
+            if (!IsHost)
+                constantSparks.Play();
         }
 
         [ClientRpc]
         private void StopSparksClientRpc()
         {
-            constantSparks.Stop();
+            if (!IsHost)
+                constantSparks.Stop();
         }
         [ClientRpc]
         private void HandleCollisionClientRpc(Vector3 startPos, Vector3 endPos)
         {
-            lightningBolt.StartPosition = startPos;
-            lightningBolt.EndPosition = endPos;
-            lightningBolt.Trigger();
-            _audioSource.Play();
+            if (!IsHost)
+            {
+                lightningBolt.StartPosition = startPos;
+                lightningBolt.EndPosition = endPos;
+                lightningBolt.Trigger();
+                _audioSource.Play();
+            }
         }
     }
 }
