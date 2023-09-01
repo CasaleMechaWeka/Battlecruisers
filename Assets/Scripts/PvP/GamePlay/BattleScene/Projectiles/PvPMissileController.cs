@@ -30,7 +30,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         //<---        
 
         public SpriteRenderer missile;
-
         protected override float TrailLifetimeInS => 3;
         public IPvPTarget Target { get; private set; }
 
@@ -109,7 +108,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         // Sava added these fields and methods
 
-        protected override float timeToActiveTrail => 0.1f;
+        protected override float timeToActiveTrail => 0.2f;
         protected override bool needToTeleport => true;
         private PvPSoundType _type;
         private string _name;
@@ -152,18 +151,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected override void HideEffectsOfClient()
         {
-            if (IsClient)
-                base.HideEffectsOfClient();
-            else
+            if (IsServer)
                 HideEffectsOfClientRpc();
+            else
+                base.HideEffectsOfClient();
         }
 
         protected override void ShowAllEffectsOfClient()
         {
-            if (IsClient)
-                base.ShowAllEffectsOfClient();
-            else
+            if (IsServer)
                 ShowAllEffectsOfClientRpc();
+            else
+                base.ShowAllEffectsOfClient();
         }
 
         //----------------------------- Rpcs -----------------------------
@@ -176,10 +175,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             else
                 Invoke("iSetActive", timeToActiveTrail);
         }
+
         private void iSetActive()
         {
             gameObject.SetActive(true);
         }
+
         [ClientRpc]
         private void OnPlayExplosionSoundClientRpc(PvPSoundType type, string name, Vector3 position)
         {
@@ -199,13 +200,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         protected void HideEffectsOfClientRpc()
         {
-            HideEffectsOfClient();
+            if (!IsHost)
+                HideEffectsOfClient();
         }
 
         [ClientRpc]
         protected void ShowAllEffectsOfClientRpc()
         {
-            ShowAllEffectsOfClient();
+            if (!IsHost)
+                ShowAllEffectsOfClient();
         }
     }
 }

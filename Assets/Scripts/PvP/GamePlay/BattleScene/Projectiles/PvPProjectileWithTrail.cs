@@ -68,6 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
         }
+
         public void InitialiseTril()
         {
             _trail = GetComponentInChildren<IPvPProjectileTrail>();
@@ -87,8 +88,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void OnImpactCleanUp()
         {
-            // Logging.LogMethod(Tags.SHELLS);
-
             // Dummy movement controller doesn't set velocity to 0, so need to set rigid body velocity manually.
             _rigidBody.velocity = Vector2.zero;
             MovementController = null;
@@ -99,13 +98,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void HideEffectsOfClient()
         {
-            if (IsClient)
-            {
-                _trail.HideEffects();
-            }
+            _trail.HideEffects();
         }
-
-
 
         private void OnTrailsDoneCleanup()
         {

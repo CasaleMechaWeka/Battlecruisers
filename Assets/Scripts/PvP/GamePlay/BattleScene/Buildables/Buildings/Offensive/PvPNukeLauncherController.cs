@@ -307,21 +307,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnSetHealthbarOffsetClientRpc(Vector2 offset)
         {
-            if (!IsClient)
+            if (!IsHost)
                 HealthBar.Offset = offset;
         }
 
         [ClientRpc]
         private void OnSetPositionClientRpc(Vector3 pos)
         {
-            if (!IsClient)
+            if (!IsHost)
                 Position = pos;
         }
 
         [ClientRpc]
         private void OnSetRotationClientRpc(Quaternion rotation)
         {
-            if (!IsClient)
+            if (!IsHost)
                 Rotation = rotation;
         }
 
