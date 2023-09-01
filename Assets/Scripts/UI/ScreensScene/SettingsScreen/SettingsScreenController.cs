@@ -141,8 +141,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             DisplayUserID();
 
-// #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
-#if (UNITY_ANDROID || UNITY_IOS)
+            // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
+#if THIRD_PARTY_PUBLISHER
+            applicationModel.DataProvider.GameModel.PremiumEdition = true;
+            premiumButton.gameObject.SetActive(false);
+#elif (UNITY_ANDROID || UNITY_IOS)
             premiumButton.gameObject.SetActive(false);
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
             {

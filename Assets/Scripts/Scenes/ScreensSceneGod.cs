@@ -248,21 +248,27 @@ namespace BattleCruisers.Scenes
 
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
+#if !THIRD_PARTY_PUBLISHER
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+#endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
             else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.ShowPostBattleScreen = false;
                 _applicationModel.Mode = GameMode.Campaign;
-                fullScreenads.OpenAdvert();
+#if !THIRD_PARTY_PUBLISHER
+                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+#endif
                 GotoHubScreen();
             }
             else if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 _applicationModel.ShowPostBattleScreen = false;
                 //_applicationModel.Mode = GameMode.Campaign;
-                fullScreenads.OpenAdvert();
+#if !THIRD_PARTY_PUBLISHER
+                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+#endif
                 GotoHubScreen();
             }
             else if (levelToShowCutscene == 0)

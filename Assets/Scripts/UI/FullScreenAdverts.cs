@@ -24,9 +24,9 @@ public class FullScreenAdverts : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-
+#if THIRD_PARTY_PUBLISHER
         StartPlatformSpecficAds();
+#endif
         Button btn = closeButton.GetComponent<Button>();
         btn.onClick.AddListener(CloseAdvert);
     }
@@ -50,8 +50,10 @@ public class FullScreenAdverts : MonoBehaviour
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
         settingsManager = applicationModel.DataProvider.SettingsManager;
-
-// #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
+#if THIRD_PARTY_PUBLISHER
+        gameObject.SetActive(false);
+#endif
+        // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if (UNITY_ANDROID || UNITY_IOS)
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
