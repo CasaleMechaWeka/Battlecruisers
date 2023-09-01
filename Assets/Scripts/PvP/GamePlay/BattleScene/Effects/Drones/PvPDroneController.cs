@@ -39,12 +39,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             // clientRpc
             OnChangedPositionClientRpc(activationArgs.Position);
             Faction = activationArgs.Faction;
-
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);
             state.normalizedTime = PvPRandomGenerator.Instance.Value;
             _animation.Play();
-
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
@@ -82,7 +80,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         [ClientRpc]
         private void OnChangedPositionClientRpc(Vector3 pos)
         {
-            gameObject.transform.position = pos;
+            if (!IsHost)
+                gameObject.transform.position = pos;
         }
 
     }

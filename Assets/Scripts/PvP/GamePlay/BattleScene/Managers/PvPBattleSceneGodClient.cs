@@ -45,6 +45,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -78,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         ISceneNavigator sceneNavigator;
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
-
+        private CancellationTokenSource m_cancellationToken;
 
         public IPvPUIManager uiManager;
         public ILocTable commonStrings;
@@ -139,6 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void Awake()
         {
             s_pvpBattleSceneGodClient = this;
+            m_cancellationToken = new CancellationTokenSource();
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -202,12 +204,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             captainController = GetComponent<PvPCaptainExoHUDController>();
             if (!NetworkManager.Singleton.IsHost)
             {
-                while(!SynchedServerData.Instance.IsServerInitialized.Value)
+                while(!SynchedServerData.Instance.IsServerInitialized.Value && !m_cancellationToken.Token.IsCancellationRequested)
                 {
                     await Task.Delay(10);
                     SynchedServerData.Instance.InitServer();
                 }                    
-            }
+            }            
         }
 
         private async void InitialiseAsync()

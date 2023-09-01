@@ -1,7 +1,3 @@
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -9,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -90,7 +85,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 ParentCruiser.DroneManager.NumOfDrones -= numOfDronesProvided;
             }
-
             base.OnDestroyed();
         }
 
