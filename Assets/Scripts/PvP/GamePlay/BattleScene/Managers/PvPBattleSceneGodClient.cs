@@ -202,7 +202,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             captainController = GetComponent<PvPCaptainExoHUDController>();
             if (!NetworkManager.Singleton.IsHost)
             {
-                SynchedServerData.Instance.InitServer();
+                while(!SynchedServerData.Instance.IsServerInitialized.Value)
+                {
+                    await Task.Delay(10);
+                    SynchedServerData.Instance.InitServer();
+                }                    
             }
         }
 

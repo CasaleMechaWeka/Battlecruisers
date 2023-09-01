@@ -32,6 +32,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<long> playerBScore = new NetworkVariable<long>();
         public NetworkVariable<NetworkString> captainBPrefabName = new NetworkVariable<NetworkString>();
 
+        public NetworkVariable<bool> IsServerInitialized = new NetworkVariable<bool>();
+
         public Action OnNetworkSpawned;
 
 
@@ -177,8 +179,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         [ServerRpc(RequireOwnership = false)]
         void InitialiseRestServerRpc()
         {
-            PvPBattleSceneGodServer.Instance._Initialise_Rest();
+            if (!IsServerInitialized.Value)
+            {
+                IsServerInitialized.Value = true;
+                PvPBattleSceneGodServer.Instance._Initialise_Rest();
+            }            
         }
+
         [ClientRpc]
         void LoadAddressableClientRpc(string prefabPath, ClientRpcParams rpcParams = default)
         {

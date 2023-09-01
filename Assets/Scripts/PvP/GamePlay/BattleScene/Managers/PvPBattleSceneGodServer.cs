@@ -64,6 +64,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static Sprite playerBCruiserSprite;
         public static string playerBCruiserName;
 
+        private bool isInitializingServer = false;
+
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -162,6 +164,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         public async Task _Initialise_Rest()
         {
+            if (isInitializingServer)
+                return;
+            isInitializingServer = true;
             await factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);

@@ -51,7 +51,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {            
             effects_parent.SetActive(isVisible);
         }
-
-
     }
 }
