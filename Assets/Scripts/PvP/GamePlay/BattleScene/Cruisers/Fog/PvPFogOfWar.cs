@@ -1,4 +1,5 @@
 using BattleCruisers.Utils;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog
@@ -11,15 +12,74 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPFogOfWar : PvPMonoBehaviourWrapper
     {
         public GameObject weakFog, strongFog;
+        private PvPFogStrength currentStrength;
 
         public void Initialise(PvPFogStrength fogStrength)
         {
             Helper.AssertIsNotNull(weakFog, strongFog);
-
             IsVisible = false;
-
-            weakFog.SetActive(fogStrength == PvPFogStrength.Weak);
-            strongFog.SetActive(fogStrength == PvPFogStrength.Strong);
+            currentStrength = fogStrength;
+/*            weakFog.SetActive(currentStrength == PvPFogStrength.Weak);
+            strongFog.SetActive(currentStrength == PvPFogStrength.Strong);*/
         }
+
+        protected override void CallRpc_SetPosition(Vector3 position)
+        {
+            SetPositionClientRpc(position);
+        }
+
+        protected override void CallRpc_SetVisible(bool isVisible)
+        {
+            SetVisibleClientRpc(isVisible);
+        }
+
+        [ClientRpc]
+        private void SetPositionClientRpc(Vector3 position)
+        {
+            if (!IsHost)
+                Position = position;
+        }
+
+        [ClientRpc]
+        private void SetVisibleClientRpc(bool isVisible)
+        {
+            if (!IsHost)
+            {
+                IsVisible = isVisible;
+            }
+        }
+
+        protected override void SetVisible(bool isVisible)
+        {
+            if(!isVisible)
+            {
+                weakFog.SetActive(false);
+                strongFog.SetActive(false);
+            }
+            else
+            {
+                if(IsHost && IsOwner)
+                {
+                    weakFog.SetActive(true);
+                    strongFog.SetActive(false);
+                }
+                if(IsHost && !IsOwner)
+                {
+                    weakFog.SetActive(false);
+                    strongFog.SetActive(true);
+                }
+                if (!IsHost && !IsOwner)
+                {
+                    weakFog.SetActive(false);
+                    strongFog.SetActive(true);
+                }
+                if (!IsHost && IsOwner)
+                {
+                    weakFog.SetActive(true);
+                    strongFog.SetActive(false);
+                }
+            }
+        }
+
     }
 }
