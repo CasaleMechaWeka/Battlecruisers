@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         }
 
         protected override void SetVisible(bool isVisible)
-        {            
+        {
             effects_parent.SetActive(isVisible);
         }
     }

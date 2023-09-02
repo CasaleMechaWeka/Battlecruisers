@@ -115,9 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
-            if (needToTeleport)
-                GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
-            OnSetPosition_Visible(Position, true);
+
             _targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
             _impactSound = activationArgs.ImpactSound;
@@ -131,6 +129,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
+
+            if (needToTeleport)
+                GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
+            OnSetPosition_Visible(Position, true);
+
             OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale, _isActiveAndAlive);
         }
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)

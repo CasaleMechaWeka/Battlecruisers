@@ -83,7 +83,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
             }
-
         }
 
         public override void OnNetworkDespawn()
@@ -122,18 +121,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected override void HideEffectsOfClient()
         {
-            if (IsClient)
-                base.HideEffectsOfClient();
-            else
+            if (IsServer)
                 HideEffectsOfClientRpc();
+            else
+                base.HideEffectsOfClient();
         }
 
         protected override void ShowAllEffectsOfClient()
         {
-            if (IsClient)
-                base.ShowAllEffectsOfClient();
-            else
+            if (IsServer)
                 ShowAllEffectsOfClientRpc();
+            else
+                base.ShowAllEffectsOfClient();
         }
 
         //----------------------------- Rpcs -----------------------------
@@ -172,13 +171,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         protected void HideEffectsOfClientRpc()
         {
-            HideEffectsOfClient();
+            if (!IsHost)
+                HideEffectsOfClient();
         }
 
         [ClientRpc]
         protected void ShowAllEffectsOfClientRpc()
         {
-            ShowAllEffectsOfClient();
+            if (!IsHost)
+                ShowAllEffectsOfClient();
         }
     }
 }

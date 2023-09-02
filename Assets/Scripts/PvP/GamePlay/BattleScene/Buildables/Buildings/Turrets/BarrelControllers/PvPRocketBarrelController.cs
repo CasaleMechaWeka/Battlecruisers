@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -54,6 +55,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     transform.IsMirrored(),
                     Target,
                     _targetFilter);
+            if (IsServer)
+                MuzzleFlashEffectClientRpc();
+        }
+
+        [ClientRpc]
+        void MuzzleFlashEffectClientRpc()
+        {
+            _muzzleFlash.Play();
         }
     }
 }
