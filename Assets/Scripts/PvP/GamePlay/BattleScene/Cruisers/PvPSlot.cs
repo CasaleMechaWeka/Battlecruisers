@@ -213,6 +213,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _buildingPlacer.PlaceBuilding(_baseBuilding.Value, this);
                     _baseBuilding.Value.Destroyed += OnBuildingDestroyed;
                 }
+                else
+                {
+                    pvp_Building_NetworkObjectID.Value = 0;
+                }
             }
         }
 
@@ -253,7 +257,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             PvPSlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<PvPSlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);
-            _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this, IsClient);
+            _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this, IsHost);
 
 
             _buildingPlacementFeedback = _renderer.gameObject.transform.Find("BuildingPlacedFeedback");
