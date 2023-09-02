@@ -175,6 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             //---> CODE BY ANUJ
             _rocketTarget.GameObject.SetActive(false);
             //<---
+            SetMissileVisibleClientRpc(false);
             _target.Destroyed -= _target_Destroyed;
             CleanUpTargetProcessor();
             base.DestroyProjectile();
@@ -253,18 +254,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected override void HideEffectsOfClient()
         {
-            if (IsClient)
-                base.HideEffectsOfClient();
-            else
+            if (IsServer)
                 HideEffectsOfClientRpc();
+            else
+                base.HideEffectsOfClient();
         }
 
         protected override void ShowAllEffectsOfClient()
         {
-            if (IsClient)
-                base.ShowAllEffectsOfClient();
-            else
+            if (IsServer)
                 ShowAllEffectsOfClientRpc();
+            else
+                base.ShowAllEffectsOfClient();
         }
 
         //----------------------------- Rpcs -----------------------------
@@ -300,13 +301,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         protected void HideEffectsOfClientRpc()
         {
-            HideEffectsOfClient();
+            if (!IsHost)
+                HideEffectsOfClient();
         }
 
         [ClientRpc]
         protected void ShowAllEffectsOfClientRpc()
         {
-            ShowAllEffectsOfClient();
+            if (!IsHost)
+                ShowAllEffectsOfClient();
         }
     }
 }
