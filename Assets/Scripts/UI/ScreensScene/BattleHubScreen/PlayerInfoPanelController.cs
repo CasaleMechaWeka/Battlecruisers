@@ -34,13 +34,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
             SpriteFetcher fetcher = new SpriteFetcher();
-            _rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank - 1].RankImage + ".png")).Sprite;
+            _rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
         }
 
         private int CalculateRank(long score)
         {
 
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
+            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
                 long x = 2500 + 2500 * i * i;
                 //Debug.Log(x);
@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     return i;
                 }
             }
-            return StaticPrefabKeys.Ranks.AllRanks.Count;
+            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
         }
     }
 }
