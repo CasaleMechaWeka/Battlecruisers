@@ -175,6 +175,9 @@ namespace BattleCruisers.Data.Models
             if (!_buildings.Contains(buildingToAdd))
             {
                 _buildings.Add(buildingToAdd);
+
+                if (GetBuildingListSize(buildingToAdd.BuildingCategory) < 5)
+                    AddbuildItem(buildingToAdd.BuildingCategory, buildingToAdd);
             }
         }
 
@@ -189,6 +192,9 @@ namespace BattleCruisers.Data.Models
             if (!_units.Contains(unitToAdd))
             {
                 _units.Add(unitToAdd);
+
+                if (GetUnitListSize(unitToAdd.UnitCategory) < 5)
+                    AddUnitItem(unitToAdd.UnitCategory, unitToAdd);
             }
         }
 
@@ -291,8 +297,16 @@ namespace BattleCruisers.Data.Models
 
         public void PurchaseExo(string exoKey)
         {
-            if (!_ownedExosKeys.Contains(exoKey))
+            if (_ownedExosKeys != null)
             {
+                if (!_ownedExosKeys.Contains(exoKey))
+                {
+                    _ownedExosKeys.Add(exoKey);
+                }
+            }
+            else
+            {
+                _ownedExosKeys = new List<string>();
                 _ownedExosKeys.Add(exoKey);
             }
         }

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.UI.Cameras
 {
@@ -38,6 +39,7 @@ namespace BattleCruisers.UI.Cameras
         public Camera mainCamera;
         public Skybox skybox;
         public NavigationButtonsPanel navigationButtonsPanel;
+        public CaptainsNavigationButtonsPanel captainsNavigationButtonsPanel;
         public float overviewPositionEqualityMarginInM = 2;
         public float overviewOrthographicSizeEqualityMargin = 2;
         public int edgeRegionWidthInPixels = 5;
@@ -61,7 +63,7 @@ namespace BattleCruisers.UI.Cameras
             ISwitchableUpdater switchableUpdater,
             ISingleSoundPlayer uiSoundPlayer)
         {
-            Helper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
+            Helper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel, captainsNavigationButtonsPanel);
             Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater, uiSoundPlayer);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
@@ -122,6 +124,7 @@ namespace BattleCruisers.UI.Cameras
                             overviewOrthographicSizeEqualityMargin)));
 
             navigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
+            captainsNavigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
             //these must all be private variables.
             //cameraAdjuster must be reset using the new cameraTargetProvider
             //then camera components must be reassigned in battlescenegod
@@ -133,7 +136,8 @@ namespace BattleCruisers.UI.Cameras
                     new CruiserDeathCameraFocuser(cameraFocuser),
                     skybox,
                     settings,
-                    navigationButtonsPanel);
+                    navigationButtonsPanel,
+                    captainsNavigationButtonsPanel);
         }
 
         private ICameraTargetProvider CreateCameraTargetProvider(
@@ -309,7 +313,8 @@ namespace BattleCruisers.UI.Cameras
                     new CruiserDeathCameraFocuser(cameraFocuser),
                     skybox,
                     settings,
-                    navigationButtonsPanel);
+                    navigationButtonsPanel,
+                    captainsNavigationButtonsPanel);
         }
     }
 }

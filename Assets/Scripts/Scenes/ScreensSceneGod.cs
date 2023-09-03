@@ -142,36 +142,27 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     await _dataProvider.LoadBCData();
-                    if (_dataProvider.GameModel.NumOfLevelsCompleted >= 10)
+                    // set pvp status in Battle Hub
+                    serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                    if (serverStatus)
                     {
-                        // set pvp status in Battle Hub
-                        serverStatus = await _dataProvider.RefreshPVPServerStatus();
-                        if (serverStatus)
-                        {
-                            // server available
-                            hubScreen.serverStatusPanel.SetActive(false);
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
-                            hubScreen.battle1vAI.SetActive(false);
-                            hubScreen.offlinePlayOnly.SetActive(false);
-                            Debug.Log("PVP Server Available.");
-                        }
-                        else
-                        {
-                            // server NOT available
-                            hubScreen.serverStatusPanel.SetActive(true);
-                            hubScreen.battle1vAI.SetActive(true);
-                            hubScreen.offlinePlayOnly.SetActive(false);
-                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
-                            Debug.Log("PVP Server Unavailable.");
-                        }
+                        // server available
+                        hubScreen.serverStatusPanel.SetActive(false);
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
+                        hubScreen.battle1vAI.SetActive(false);
+                        hubScreen.offlinePlayOnly.SetActive(false);
+                        Debug.Log("PVP Server Available.");
                     }
                     else
                     {
-                        hubScreen.serverStatusPanel.SetActive(false);
-                        hubScreen.battle1vAI.SetActive(false);
-                        hubScreen.offlinePlayOnly.SetActive(true);
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("NotPassed10Levels");
-                        hubScreen.battleButton.GetComponent<CanvasGroupButton>().Enabled = false;
+                        // server NOT available
+                        hubScreen.serverStatusPanel.SetActive(true);
+                        hubScreen.battle1vAI.SetActive(true);
+                        hubScreen.offlinePlayOnly.SetActive(false);
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
+                        Debug.Log("PVP Server Unavailable.");
                     }
                 }
                 catch (Exception ex)
@@ -224,7 +215,11 @@ namespace BattleCruisers.Scenes
 
             CaptainExo cap = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             string playerName = _dataProvider.GameModel.PlayerName + "#" + cap.captainName;
-            await AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
+
+            if (IsInternetAccessable)
+            {
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
+            }
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
@@ -253,21 +248,27 @@ namespace BattleCruisers.Scenes
 
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
+#if !THIRD_PARTY_PUBLISHER
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+#endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
             else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.ShowPostBattleScreen = false;
                 _applicationModel.Mode = GameMode.Campaign;
-                fullScreenads.OpenAdvert();
+#if !THIRD_PARTY_PUBLISHER
+                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+#endif
                 GotoHubScreen();
             }
             else if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 _applicationModel.ShowPostBattleScreen = false;
                 //_applicationModel.Mode = GameMode.Campaign;
-                fullScreenads.OpenAdvert();
+#if !THIRD_PARTY_PUBLISHER
+                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+#endif
                 GotoHubScreen();
             }
             else if (levelToShowCutscene == 0)
@@ -370,11 +371,11 @@ namespace BattleCruisers.Scenes
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
             await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
             //--->CODE CHANGED BY ANUJ
-            if(_applicationModel.Mode == GameMode.PvP_1VS1) 
+            if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 GoToScreen(hubScreen);
             }
-            else 
+            else
             {
                 GoToScreen(postBattleScreen, playDefaultMusic: false);
             }
@@ -392,7 +393,6 @@ namespace BattleCruisers.Scenes
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
             GoToScreen(homeScreen);
-            AdvertisingBanner.startAdvert();
         }
 
         public void GoToLevelsScreen()
@@ -433,6 +433,7 @@ namespace BattleCruisers.Scenes
             cameraOfCaptains.SetActive(true);
             GoToScreen(blackMarketScreen);
             blackMarketScreen.InitialiseIAPs();
+            AdvertisingBanner.startAdvert();
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
@@ -656,7 +657,22 @@ namespace BattleCruisers.Scenes
                     }
                 }
             }
+        }
 
+        void OnApplicationQuit()
+        {
+            try
+            {
+                _applicationModel.DataProvider.SyncCoinsToCloud();
+                _applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                _applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
         }
     }
 }

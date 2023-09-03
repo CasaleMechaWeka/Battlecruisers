@@ -44,7 +44,7 @@ namespace BattleCruisers.Data.Models
         // What difficulty those levels have been completed at.
         public Dictionary<int, int> _levelsCompleted;                          // int levelNum, enum (as int) hardestDifficulty
 
-        // Assets owned (heckle002, captainexo001, longbow, steamcopter)
+        // Assets unlocked
         public List<string> _unlockedHulls;                            // prefab filenames
         public Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
         public Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
@@ -193,7 +193,14 @@ namespace BattleCruisers.Data.Models
             game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits);
 
             // current heckles
-            game.PlayerLoadout.CurrentHeckles = _currentHeckles;
+            if (_currentHeckles != null)
+            {
+                game.PlayerLoadout.CurrentHeckles = _currentHeckles;
+            }
+            else
+            {
+                game.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
+            }
 
             // current captain
             if (_currentCaptain != null)
@@ -204,7 +211,6 @@ namespace BattleCruisers.Data.Models
             {
                 game.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
             }
-
         }
 
         private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)

@@ -13,6 +13,8 @@ namespace BattleCruisers.Data.Models
     {
         long Coins { get; set; }
         long Credits { get; set; }
+        int CoinsChange { get; set; }
+        int CreditsChange { get; set; }
         string PlayerName { get; set; }
         int GameMap { get; set; }
         int BattleWinScore { get; set; }

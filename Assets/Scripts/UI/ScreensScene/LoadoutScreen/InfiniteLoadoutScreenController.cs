@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 = new ItemDetailsDisplayer<ICruiser>(
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
-            _heckleDetails.Initialize();
+            //_heckleDetails.Initialize();
             _itemDetailsManager = new LoadoutScreen.ItemDetails.ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
             _itemDetailsManager.HeckleDetails = _heckleDetails;
 
@@ -103,8 +103,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 _comparingFamilyTracker.ComparingFamily,
                 _comparingFamilyTracker);
 
-            selectHeckleButton.Initialise(soundPlayer, dataProvider, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
-                _comparingFamilyTracker);
+            //selectHeckleButton.Initialise(soundPlayer, dataProvider, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
+            //    _comparingFamilyTracker);
 
             limitDisplayer.Initialise(dataProvider,
                 buildingDetails,
@@ -150,7 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public override void Cancel()
         {
             _dataProvider.SaveGame();
-            _dataProvider.CloudSave();
+            //_dataProvider.CloudSave();
             _comparingFamilyTracker.SetComparingFamily(null);
             _screensSceneGod.GotoHubScreen();
         }

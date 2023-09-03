@@ -20,7 +20,6 @@ namespace BattleCruisers.Utils.Network
     {
         public string Token;
         public string Error;
-#if PLATFORM_ANDROID
         public void InitializePlayGamesLogin()
         {
             var config = new PlayGamesClientConfiguration.Builder()
@@ -38,7 +37,7 @@ namespace BattleCruisers.Utils.Network
         //Fetch the Token / Auth code
         public async Task Authenticate(SignInInteractivity interactivity)
         {
-            string c;
+            string c = "";
             //The compiler doesn't like it if "interactivity" isn't passed into Authenticate().
             //This diverges from tutorials and documentation!
             PlayGamesPlatform.Instance.Authenticate(interactivity, (success) =>
@@ -151,6 +150,5 @@ namespace BattleCruisers.Utils.Network
                 Debug.LogException(ex);
             }
         }
-#endif
     }
 }

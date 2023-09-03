@@ -141,7 +141,7 @@ namespace BattleCruisers.UI.ScreensScene
                     break;
             }
 
-            iapPrice.text = "$ " + product.metadata.localizedPriceString;
+            iapPrice.text = product.metadata.localizedPriceString;
         }
         public void GoHome()
         {

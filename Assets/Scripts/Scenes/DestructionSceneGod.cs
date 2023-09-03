@@ -24,6 +24,7 @@ using TMPro;
 using BattleCruisers.Data.Models;
 using Unity.Services.CloudCode;
 using Unity.Services.Leaderboards;
+using BattleCruisers.Utils.Network;
 
 namespace BattleCruisers.Scenes
 {
@@ -151,7 +152,7 @@ namespace BattleCruisers.Scenes
 
                 nextButton.Initialise(_soundPlayer, Done);
                 _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-                
+
             }
 
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
@@ -289,7 +290,7 @@ namespace BattleCruisers.Scenes
             cruiserVal = randomVal / UnityEngine.Random.Range(4, 6);
             buildingsVal = randomVal / UnityEngine.Random.Range(4, 6);
 
-            nukesToAward = UnityEngine.Random.Range(0,10);
+            nukesToAward = UnityEngine.Random.Range(0, 10);
 
             // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
             destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
@@ -439,7 +440,7 @@ namespace BattleCruisers.Scenes
             // Award any rewards:
             if (applicationModel.Mode != GameMode.Skirmish)
             {
-                if(coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
+                if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
                 {
                     rewardsCounter.SetActive(true);
                 }
@@ -602,7 +603,7 @@ namespace BattleCruisers.Scenes
         private long CalculateCredits()
         {
             long creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
-            if(creditsAward > creditMax)
+            if (creditsAward > creditMax)
             {
                 return (long)creditMax;
             }
@@ -635,24 +636,33 @@ namespace BattleCruisers.Scenes
             if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
             {
                 long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
-                applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                applicationModel.DataProvider.GameModel.LifetimeDestructionScore = allTimeVal;
 
                 // we need XPToNextLevel to populate any XP progress bars:
                 long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+                Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
 
                 // Give the player their rewards:
                 applicationModel.DataProvider.GameModel.Coins += coinsToAward;
                 applicationModel.DataProvider.GameModel.Credits += creditsToAward;
                 applicationModel.DataProvider.SaveGame();
-
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
-                await applicationModel.DataProvider.SyncCoinsToCloud();
-                await applicationModel.DataProvider.SyncCreditsToCloud();
-                
-                // Save changes:
-                await applicationModel.DataProvider.CloudSave();
+
+                try
+                {/*
+                    await applicationModel.DataProvider.SyncCoinsToCloud();
+                    await applicationModel.DataProvider.SyncCreditsToCloud();
+
+                    // Save changes:
+                    await applicationModel.DataProvider.CloudSave();
+                    */
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex);
+                }
             }
-                
+
         }
 
         private void Done()
@@ -662,9 +672,9 @@ namespace BattleCruisers.Scenes
         }
 
         //taken from https://stackoverflow.com/questions/30180672/string-format-numbers-to-millions-thousands-with-rounding
-        private  string FormatNumber(long num)
+        private string FormatNumber(long num)
         {
-            num = num*1000;
+            num = num * 1000;
             long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
             num = num / i * i;
             if (num >= 1000000000000)
@@ -682,7 +692,7 @@ namespace BattleCruisers.Scenes
         private string FormatRankNumber(int rank)
         {
             string numString = rank.ToString();
-            if(rank < 10 )
+            if (rank < 10)
             {
                 numString = "0" + rank.ToString();
             }
@@ -708,5 +718,23 @@ namespace BattleCruisers.Scenes
                 return "Owwww";
             }
         }
-    }       
+
+        void OnApplicationQuit()
+        {
+            applicationModel.DataProvider.SaveGame();
+            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            try
+            {
+                applicationModel.DataProvider.SyncCoinsToCloud();
+                applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
+        }
+    }
 }

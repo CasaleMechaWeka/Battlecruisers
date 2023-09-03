@@ -16,5 +16,6 @@ namespace BattleCruisers.UI.Cameras
         Skybox Skybox { get; }
         ICameraCalculatorSettings Settings { get; }
         IHighlightable NavigationButtonsPanel { get; }
+        IHighlightable CaptainsNavigationButtonsPanel { get; }
     }
 }

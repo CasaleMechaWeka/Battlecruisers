@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.CoinBattleScreen
             SaveCoinBattleSettings();
 
             int maxLevel = _applicationModel.DataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
-            int levelIndex = UnityEngine.Random.Range(2, maxLevel);
+            int levelIndex = UnityEngine.Random.Range(1, maxLevel);
             _screensSceneGod.GoToTrashScreen(levelIndex);
         }
 

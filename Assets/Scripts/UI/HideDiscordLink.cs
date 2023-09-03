@@ -8,7 +8,7 @@ public class HideDiscordLink : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-#if NO_SOCIAL_MEDIA
+#if THIRD_PARTY_PUBLISHER
         DisableDiscordLink();
 #endif
     }

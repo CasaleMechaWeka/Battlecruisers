@@ -51,11 +51,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             inputField.text = _dataProvider.GameModel.PlayerName;
             spinner.SetActive(false);
             btnLabel.SetActive(true);
+            btnLabel.GetComponent<Text>().text = LandingSceneGod.Instance.commonStrings.GetString("UI/Buttons/SaveButton");
         }
 
         public void Update()
         {
-            if(loadedCaptain != _dataProvider.GameModel.PlayerLoadout.CurrentCaptain)
+            if (loadedCaptain != _dataProvider.GameModel.PlayerLoadout.CurrentCaptain)
             {
                 CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 loadedCaptain = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
@@ -81,7 +82,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         _dataProvider.SaveGame();
                         await _dataProvider.CloudSave();
                         string name = inputField.text + "#" + captain.captainName;
-                        Debug.Log(name);    
+                        Debug.Log(name);
                         await AuthenticationService.Instance.UpdatePlayerNameAsync(name);
                         PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
                         ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
@@ -95,7 +96,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         Debug.LogException(ex);
                     }
                 }
-        
+
             }
 
             gameObject.SetActive(false);

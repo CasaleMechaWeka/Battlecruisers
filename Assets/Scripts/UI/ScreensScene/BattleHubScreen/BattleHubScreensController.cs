@@ -45,6 +45,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject serverStatusPanel;
         public GameObject offlinePlayOnly;
         public GameObject battle1vAI;
+        public Text offlineLockedText;
+        public Text continueTitle;
+        public Text continueSubtitle;
+        public Text levelsTitle;
+        public Text skirmishTitle;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -85,11 +90,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
+
+            continueTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaign");
+            continueSubtitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaignDescription");
+            levelsTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("LevelSelect");
+            skirmishTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("SkirmishMode");
+
         }
 
         private void GoHome()
         {
-            if(_currentScreen == arenaSelectPanel)
+            if (_currentScreen == arenaSelectPanel)
             {
                 OpenBattleHub();
             }
@@ -113,11 +124,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             //--->CODE CHANGED BY ANUJ
             if (_applicationModel.Mode != GameMode.PvP_1VS1)
             {
-                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
-                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+                if (ScreensSceneGod.Instance.cameraOfCaptains != null)
+                    ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
+                if (ScreensSceneGod.Instance.cameraOfCharacter != null)
+                    ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             }
             //<---
             GoToScreen(battlePanel);
+            offlinePlayOnly.SetActive(true);
+            serverStatusPanel.SetActive(false);
+            battle1vAI.SetActive(true);
+            offlineLockedText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineLockedSubtitle");
             UnselectAll();
         }
 
@@ -132,7 +149,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             //  GoToScreen(shopPanel);
             playerInfoPanelController.gameObject.SetActive(true);
             ProfilePanelScreenController.Instance?.captainsPanel?.RemoveAllCaptainsFromRenderCamera();
-            ProfilePanelScreenController.Instance?.captainsPanel?.gameObject.SetActive(false);
+            if (ProfilePanelScreenController.Instance?.captainsPanel != null)
+                ProfilePanelScreenController.Instance?.captainsPanel?.gameObject.SetActive(false);
             _screensSceneGod.GotoShopScreen();
             UnselectAll();
         }
@@ -169,10 +187,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Continue()
         {
-            Assert.IsNotNull(_lastBattleResult);
-            playerInfoPanelController.gameObject.SetActive(false);
-            int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
-            _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
+            if (_lastBattleResult == null)
+            {
+                playerInfoPanelController.gameObject.SetActive(false);
+                _screensSceneGod.GoToTrashScreen(1);
+            }
+            else
+            {
+                Assert.IsNotNull(_lastBattleResult);
+                playerInfoPanelController.gameObject.SetActive(false);
+                int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
+                _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
+            }
         }
 
         public void GoToLevelsScreen()
@@ -195,17 +221,19 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
-            if(ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
+            /*if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
             {
                 playerInfoPanelController.gameObject.SetActive(false);
                 GoToScreen(arenaSelectPanel);
             }
             else
             {
-                coinBattleController.BattleButtonClicked();
+            */
+            coinBattleController.BattleButtonClicked();
+            /* 
             }
 
-            /*            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                       if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                         {
                             GoToScreen(arenaSelectPanel);
                         }

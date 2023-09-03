@@ -10,6 +10,8 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -28,6 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Transform captainCamContainer;
         private ILocTable commonStrings;
         public Image captainsButtonImage, hecklesButtonImage;
+        public Text blackMarketText;
 
 
         public void Initialise(
@@ -58,8 +61,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
 
             // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);   
-
+            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+            blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
         }
 
 
@@ -80,11 +83,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             InitiaiseCaptains();
 
             // Set this button to active color
-            captainsButtonImage.color = new Color32(255, 255, 255, 255); 
+            captainsButtonImage.color = new Color32(255, 255, 255, 255);
 
 
             // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);   
+            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
         }
 
         public void HeckesButton_OnClick()
@@ -92,10 +95,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             InitialiseHeckles();
 
             // Set this button to active color
-            hecklesButtonImage.color = new Color32(255, 255, 255, 255); 
+            hecklesButtonImage.color = new Color32(255, 255, 255, 255);
 
             // Set the other button to inactive color
-            captainsButtonImage.color = new Color32(194, 59, 33, 255); 
+            captainsButtonImage.color = new Color32(194, 59, 33, 255);
         }
 
         private void RemoveAllCaptainsFromRenderCamera()
@@ -186,10 +189,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-
+            DateTime utcNow = DateTime.UtcNow;
+            List<int> exoBaseList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            for (int i = 0; i < exoBaseList.Count; i++)
+            {
+                exoBaseList[i] = 1 + ((2 * exoBaseList[i] + utcNow.Day + utcNow.Month) % 39);
+            }
+            exoBaseList.Insert(0, 0);
 
             byte ii = 0;
-            foreach (int index in _dataProvider.GameModel.CaptainExoList)
+            foreach (int index in exoBaseList)
             {
                 GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
                 CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[index]), captainCamContainer);

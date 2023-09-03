@@ -45,7 +45,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private Text currentXPString;
         [SerializeField]
         private Text levelXPString;
-        public Text million, billion, trillion, quadrillion;
+        [SerializeField]
+        private Text totalDamage;
+        private String million, billion, trillion, quadrillion;
         public GameObject currentCaptainImage;
         public Image badgeIcon, medalIcon;
         public Text rankTitle;
@@ -69,6 +71,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _prefabFactory = prefabFactory;
 
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            million = commonStrings.GetString("Million");
+            billion = commonStrings.GetString("Billion");
+            trillion = commonStrings.GetString("Trillion");
+            quadrillion = commonStrings.GetString("Quadrillion");
 
             captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
@@ -85,12 +91,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             rankTitle.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             SpriteFetcher fetcher = new SpriteFetcher();
             rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
+
+            long lDes = dataProvider.GameModel.LifetimeDestructionScore;
+            int nextLevelXP = (int)CalculateLevelXP(rank);
+            int currentXP = (int)CalculateXpToNextLevel((int)lDes);
+            totalDamage.text = FormatNumber(lDes);
+            xpBar.setValues(currentXP, nextLevelXP);
+            currentXPString.text = FormatNumber(currentXP);
+            levelXPString.text = FormatNumber(nextLevelXP);
         }
 
         private int CalculateRank(long score)
         {
 
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
+            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
                 long x = 2500 + 2500 * i * i;
                 //Debug.Log(x);
@@ -99,7 +113,39 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     return i;
                 }
             }
-            return StaticPrefabKeys.Ranks.AllRanks.Count;
+            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
+        }
+
+        // return what the x value will be in CalculateRank()
+        // used for setting the max val of any XP progress bars
+        public long CalculateLevelXP(int i)
+        {
+            long x = 2500 + 2500 * i * i;
+            return x;
+        }
+
+        // returns the remainder of the score towards the next level,
+        // based on the current lifetime score passed in
+        public long CalculateXpToNextLevel(long score)
+        {
+            int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
+
+            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count - 1)
+            {
+                // If the current rank is already the highest, there is no remainder
+                return 0;
+            }
+
+            long currentRankThreshold = 2500 + 2500 * currentRank * currentRank;
+            long nextRankThreshold = 2500 + 2500 * (currentRank + 1) * (currentRank + 1);
+
+            long scoreDifference = nextRankThreshold - currentRankThreshold;
+            long scoreRemainder = currentRankThreshold - score;
+            if (scoreRemainder < 0)
+            {
+                scoreRemainder = 0;
+            }
+            return scoreRemainder;
         }
 
         private void Awake()
@@ -162,13 +208,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
             num = num / i * i;
             if (num >= 1000000000000)
-                return "$" + (num / 1000000000000D).ToString("0.##") + " " + quadrillion.text;
+                return "$" + (num / 1000000000000D).ToString("0.##") + " " + quadrillion;
             if (num >= 1000000000)
-                return "$" + (num / 1000000000D).ToString("0.##") + " " + trillion.text;
+                return "$" + (num / 1000000000D).ToString("0.##") + " " + trillion;
             if (num >= 1000000)
-                return "$" + (num / 1000000D).ToString("0.##") + " " + billion.text;
+                return "$" + (num / 1000000D).ToString("0.##") + " " + billion;
             if (num >= 1000)
-                return "$" + (num / 1000D).ToString("0.##") + " " + million.text;
+                return "$" + (num / 1000D).ToString("0.##") + " " + million;
 
             return "$" + num.ToString("#,0");
         }

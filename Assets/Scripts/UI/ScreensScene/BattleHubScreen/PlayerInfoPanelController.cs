@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private int CalculateRank(long score)
         {
 
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
+            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
                 long x = 2500 + 2500 * i * i;
                 //Debug.Log(x);
@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     return i;
                 }
             }
-            return StaticPrefabKeys.Ranks.AllRanks.Count;
+            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
         }
     }
 }
