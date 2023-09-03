@@ -119,7 +119,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
-            OnValueChangedIsEnableRenderes(isEnabled);
+            if (!IsHost)
+                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]
@@ -129,12 +130,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!isEnabled)
             {
                 Invoke("ActiveTrail", 0.5f);
-                /*                if (GetComponent<NetworkTransform>() != null)
-                                    GetComponent<NetworkTransform>().enabled = true;
-                                if (GetComponent<NetworkRigidbody2D>() != null)
-                                    GetComponent<NetworkRigidbody2D>().enabled = true;*/
             }
-
         }
 
         [ClientRpc]
@@ -154,32 +150,39 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnActivatePvPClientRpc()
         {
-            Activate_PvPClient();
+            if (!IsHost)
+                Activate_PvPClient();
         }
 
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
-            OnBuildableProgressEvent();
+            if (!IsHost)
+                OnBuildableProgressEvent();
         }
 
 
         [ClientRpc]
         private void OnCompletedBuildableEventClientRpc()
         {
-            OnCompletedBuildableEvent();
+            if (!IsHost)
+                OnCompletedBuildableEvent();
         }
 
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+            {
+                OnDestroyedEvent();
+            }
         }
 
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
-            OnBuildableCompleted();
+            if (!IsHost)
+                OnBuildableCompleted();
         }
 
         [ClientRpc]

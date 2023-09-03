@@ -102,7 +102,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void PlayPlacementSound()
         {
             base.PlayPlacementSound();
-
             if (IsServer)
                 PlayPlacementSoundClientRpc();
         }
@@ -120,7 +119,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void CallRpc_PlayDeathSound()
         {
             if (IsServer)
+            {
                 OnPlayDeathSoundClientRpc();
+                base.CallRpc_PlayDeathSound();
+            }
             else
                 base.CallRpc_PlayDeathSound();
         }
@@ -160,7 +162,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnDestroyedEvent()
         {
             if (IsServer)
+            {
                 OnDestroyedEventClientRpc();
+                base.OnDestroyedEvent();
+            }
             else
                 base.OnDestroyedEvent();
         }
@@ -190,14 +195,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
-            OnValueChangedIsEnableRenderes(isEnabled);
+            if (!IsHost)
+                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]
         private void OnSetHealthbarOffsetClientRpc(Vector2 offset)
         {
-            if(!IsHost)
-            HealthBar.Offset = offset;
+            if (!IsHost)
+                HealthBar.Offset = offset;
         }
 
         [ClientRpc]
@@ -236,7 +242,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void PlayPlacementSoundClientRpc()
         {
-
+            if (!IsHost)
                 PlayPlacementSound();
         }
 
@@ -248,19 +254,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnPlayDeathSoundClientRpc()
         {
-            CallRpc_PlayDeathSound();
+            if (!IsHost)
+                CallRpc_PlayDeathSound();
         }
         [ClientRpc]
         private void PlayBuildableConstructionCompletedSoundClientRpc()
         {
-            PlayBuildableConstructionCompletedSound();
+            if (!IsHost)
+                PlayBuildableConstructionCompletedSound();
         }
 
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
-            if (!IsHost)
-                _buildableProgress.gameObject.SetActive(isEnabled);
+            _buildableProgress.gameObject.SetActive(isEnabled);
         }
 
         [ClientRpc]
@@ -288,7 +295,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName)
         {
             PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
-            //    UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
         }
 
         [ClientRpc]

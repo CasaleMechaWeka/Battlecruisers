@@ -153,21 +153,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _aircraftTrail.Clear();
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
             base.Activate_PvPClient();
-            /*            PatrollingMovementController
-                            = _movementControllerFactory.CreatePatrollingMovementController(
-                                rigidBody,
-                                maxVelocityProvider: _movementControllerFactory.CreatePatrollingVelocityProvider(this),
-                                patrolPoints: GetPatrolPoints(),
-                                positionEqualityMarginInM: PositionEqualityMarginInM);
-
-
-                        ActiveMovementController = DummyMovementController;
-                        ActiveMovementController.Velocity = Vector2.zero;
-
-                        _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
-                        _onSeabed = false;
-
-                        _kamikazeController.gameObject.SetActive(false);*/
         }
 
         protected override void OnBuildableCompleted()
