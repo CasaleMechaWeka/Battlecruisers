@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
             SpriteFetcher fetcher = new SpriteFetcher();
-            _rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
+            _rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank - 1].RankImage + ".png")).Sprite;
         }
 
         private int CalculateRank(long score)
