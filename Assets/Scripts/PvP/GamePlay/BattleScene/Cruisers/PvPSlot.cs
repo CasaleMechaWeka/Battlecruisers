@@ -215,7 +215,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 }
                 else
                 {
-                    pvp_Building_NetworkObjectID.Value = 0;
+                    if (IsHost)
+                        pvp_Building_NetworkObjectID.Value = 0;
                 }
             }
         }

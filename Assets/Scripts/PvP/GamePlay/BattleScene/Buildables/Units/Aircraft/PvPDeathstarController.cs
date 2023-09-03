@@ -41,7 +41,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise( /* IPvPUIManager uiManager, */ IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(/* uiManager, */ factoryProvider);
-
             leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
             rightWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
         }
@@ -49,7 +48,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-
             // sava added
             leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
             rightWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
@@ -60,20 +58,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
             {
                 base.OnBuildableCompleted();
-
                 Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
-
                 _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
                 OnBuildableCompletedClientRpc();
             }
-
             else
             {
                 OnBuildableCompleted_PvPClient();
                 _barrelWrapper.Initialise(this, _factoryProvider);
             }
-
-
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
@@ -98,7 +91,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Stop moving
             ActiveMovementController = DummyMovementController;
-
             UnfoldWings();
             UnfoldWingsClientRpc();
         }
@@ -106,7 +98,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void UnfoldWings()
         {
             leftWing.ReachedDesiredAngle += Wing_ReachedDesiredAngle;
-
             leftWing.StartRotating();
             rightWing.StartRotating();
         }
@@ -114,7 +105,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void Wing_ReachedDesiredAngle(object sender, EventArgs e)
         {
             leftWing.ReachedDesiredAngle -= Wing_ReachedDesiredAngle;
-
             ActiveMovementController = PatrollingMovementController;
         }
 
@@ -129,7 +119,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnDestroyed();
             _barrelWrapper.DisposeManagedState();
         }
-
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         private void LateUpdate()
@@ -203,7 +192,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
-            OnValueChangedIsEnableRenderes(isEnabled);
+            if (!IsHost)
+                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]
@@ -213,12 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!isEnabled)
             {
                 Invoke("ActiveTrail", 0.5f);
-                /*                if (GetComponent<NetworkTransform>() != null)
-                                    GetComponent<NetworkTransform>().enabled = true;
-                                if (GetComponent<NetworkRigidbody2D>() != null)
-                                    GetComponent<NetworkRigidbody2D>().enabled = true;*/
             }
-
         }
 
         [ClientRpc]
@@ -238,32 +223,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnActivatePvPClientRpc()
         {
-            Activate_PvPClient();
+            if (!IsHost)
+                Activate_PvPClient();
         }
 
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
-            OnBuildableProgressEvent();
+            if (!IsHost)
+                OnBuildableProgressEvent();
         }
 
 
         [ClientRpc]
         private void OnCompletedBuildableEventClientRpc()
         {
-            OnCompletedBuildableEvent();
+            if (!IsHost)
+                OnCompletedBuildableEvent();
         }
 
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+                OnDestroyedEvent();
         }
 
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
-            OnBuildableCompleted();
+            if (!IsHost)
+                OnBuildableCompleted();
         }
 
         [ClientRpc]
@@ -275,9 +265,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void UnfoldWingsClientRpc()
         {
-            leftWing.StartRotating();
-            rightWing.StartRotating();
+            if (!IsHost)
+            {
+                leftWing.StartRotating();
+                rightWing.StartRotating();
+            }
         }
-
     }
 }
