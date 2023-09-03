@@ -88,9 +88,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             playerName.text = _dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(_dataProvider.GameModel.LifetimeDestructionScore);
-            rankTitle.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank - 1].RankNameKeyBase);
+            rankTitle.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             SpriteFetcher fetcher = new SpriteFetcher();
-            rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank - 1].RankImage + ".png")).Sprite;
+            rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
 
             long lDes = dataProvider.GameModel.LifetimeDestructionScore;
             int nextLevelXP = (int)CalculateLevelXP(rank);
@@ -104,7 +104,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private int CalculateRank(long score)
         {
 
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
+            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
                 long x = 2500 + 2500 * i * i;
                 //Debug.Log(x);
@@ -113,7 +113,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     return i;
                 }
             }
-            return StaticPrefabKeys.Ranks.AllRanks.Count;
+            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
         }
 
         // return what the x value will be in CalculateRank()
@@ -130,7 +130,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
 
-            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count)
+            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count - 1)
             {
                 // If the current rank is already the highest, there is no remainder
                 return 0;
