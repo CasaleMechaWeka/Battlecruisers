@@ -88,9 +88,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             playerName.text = _dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(_dataProvider.GameModel.LifetimeDestructionScore);
-            rankTitle.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
+            rankTitle.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank - 1].RankNameKeyBase);
             SpriteFetcher fetcher = new SpriteFetcher();
-            rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
+            rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank - 1].RankImage + ".png")).Sprite;
 
             long lDes = dataProvider.GameModel.LifetimeDestructionScore;
             int nextLevelXP = (int)CalculateLevelXP(rank);
