@@ -193,7 +193,14 @@ namespace BattleCruisers.Data.Models
             game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits);
 
             // current heckles
-            game.PlayerLoadout.CurrentHeckles = _currentHeckles;
+            if (_currentHeckles != null)
+            {
+                game.PlayerLoadout.CurrentHeckles = _currentHeckles;
+            }
+            else
+            {
+                game.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
+            }
 
             // current captain
             if (_currentCaptain != null)
