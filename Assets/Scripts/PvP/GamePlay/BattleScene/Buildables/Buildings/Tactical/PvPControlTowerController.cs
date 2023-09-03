@@ -88,6 +88,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void PlayPlacementSound()
         {
+            base.PlayPlacementSound();
+
             if (IsServer)
                 PlayPlacementSoundClientRpc();
         }
@@ -103,7 +105,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void CallRpc_PlayDeathSound()
         {
             if (IsServer)
+            {
                 OnPlayDeathSoundClientRpc();
+                base.CallRpc_PlayDeathSound();
+            }
             else
                 base.CallRpc_PlayDeathSound();
         }
@@ -139,7 +144,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnDestroyedEvent()
         {
             if (IsServer)
+            {
                 OnDestroyedEventClientRpc();
+                base.OnDestroyedEvent();
+            }
             else
                 base.OnDestroyedEvent();
         }
@@ -167,7 +175,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
         {
-            IsDroneConsumerFocusable_PvPClient = isFocusable;
+            if (!IsHost)
+                IsDroneConsumerFocusable_PvPClient = isFocusable;
         }
 
         [ServerRpc]
@@ -179,7 +188,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void PlayPlacementSoundClientRpc()
         {
-            base.PlayPlacementSound();
+            if (!IsHost)
+                base.PlayPlacementSound();
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -191,19 +201,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnPlayDeathSoundClientRpc()
         {
-            CallRpc_PlayDeathSound();
+            if (!IsHost)
+                CallRpc_PlayDeathSound();
         }
 
         [ClientRpc]
         private void PlayBuildableConstructionCompletedSoundClientRpc()
         {
-            PlayBuildableConstructionCompletedSound();
+            if (!IsHost)
+                PlayBuildableConstructionCompletedSound();
         }
 
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
-            OnBuildableCompleted();
+            if (!IsHost)
+                OnBuildableCompleted();
         }
 
         [ClientRpc]
@@ -230,7 +243,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
-            OnValueChangedIsEnableRenderes(isEnabled);
+            if (!IsHost)
+                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]
@@ -269,7 +283,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+                OnDestroyedEvent();
         }
     }
 }
