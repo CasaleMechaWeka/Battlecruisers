@@ -32,7 +32,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void Enter()
         {
             StartHost();
-            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
         }
 
         public override void Exit() { }
@@ -47,6 +46,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         void StartHostFailed()
         {
+            if (m_ConnectionManager == null)
+                return;
             m_ConnectStatusPublisher.Publish(ConnectStatus.StartHostFailed);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
         }
@@ -86,7 +87,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 await m_ConnectionMethod.SetupHostConnectionAsync();
                 Debug.Log($"Created relay allocation with join code {m_LocalLobby.RelayJoinCode}");
-
+                if (this == null)
+                    return;
                 // NGO's StartHost launches everything
                 if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
@@ -95,6 +97,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             catch (Exception e)
             {
+                if (this == null)
+                    return;
                 Debug.LogException(e);
                 StartHostFailed();
                 //           throw;

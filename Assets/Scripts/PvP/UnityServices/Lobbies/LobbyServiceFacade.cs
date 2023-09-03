@@ -500,7 +500,10 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return;
             }
-
+            if (this == null)
+                return;
+            if (CurrentUnityLobby == null)
+                return;
             var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
 
             foreach (var dataNew in data)
