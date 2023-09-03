@@ -160,6 +160,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         void OnDestroy()
         {
+            windManager?.Stop();
+            windManager?.DisposeManagedState();
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
@@ -618,6 +620,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 InitialiseAsync();
             }
         }
+
+        
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,

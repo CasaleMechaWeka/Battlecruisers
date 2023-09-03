@@ -251,7 +251,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 return;
             if (int.TryParse(Port, out int port))
             {
-                Debug.Log("===> StartedMatch : " + Manager.User.Data.userName + IP + port);
                 StartClientIp(Manager.User.Data.userName, IP, port);
                 IsConnecting = true;
             }

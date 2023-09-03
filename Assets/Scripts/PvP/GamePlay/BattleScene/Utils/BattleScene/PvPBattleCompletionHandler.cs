@@ -10,6 +10,7 @@ using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using UnityEditor.ShortcutManagement;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -55,15 +56,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
-            if (NetworkManager.Singleton.IsConnectedClient)
-                NetworkManager.Singleton.Shutdown(true);
-
             _applicationModel.DataProvider.SaveGame();
 
             //--->CODE CHANGED BY ANUJ
             //_applicationModel.ShowPostBattleScreen = true;
             //<---
             PvPTimeBC.Instance.TimeScale = 1;
+            if (NetworkManager.Singleton.IsConnectedClient)
+                NetworkManager.Singleton.Shutdown(true);
+
             DestroyAllNetworkObjects();
             _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
         }

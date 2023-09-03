@@ -10,6 +10,12 @@ using VContainer;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
+using BattleCruisers.Network.Multiplay.Gameplay.UI;
+using BattleCruisers.Network.Multiplay.Infrastructure;
+using UnityEngine;
+using BattleCruisers.Scenes;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -33,11 +39,30 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 #pragma warning restore 4014
 
             if (MatchmakingScreenController.Instance != null)
+            {
                 MatchmakingScreenController.Instance.FailedMatchmaking();
-            /*            if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)
-                        {
-                            SceneLoaderWrapper.Instance.LoadScene(k_MainMenuSceneName, useNetworkSceneManager: false);
-                        }*/
+            }                
+            else
+            {
+                if (GameObject.Find("ApplicationController") != null)
+                    GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
+
+                if (GameObject.Find("ConnectionManager") != null)
+                    GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
+
+                if (GameObject.Find("PopupPanelManager") != null)
+                    GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
+
+                if (GameObject.Find("UIMessageManager") != null)
+                    GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+
+                if (GameObject.Find("UpdateRunner") != null)
+                    GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
+
+                if (GameObject.Find("NetworkManager") != null)
+                    GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
+                LandingSceneGod.SceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+            }
         }
 
         public override void Exit() { }

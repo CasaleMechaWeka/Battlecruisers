@@ -32,6 +32,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void Enter()
         {
             StartHost();
+            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
         }
 
         public override void Exit() { }

@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
-//            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            //            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
                 m_LobbyServiceFacade.BeginTracking();
@@ -42,23 +42,24 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void OnClientDisconnect(ulong clientId)
         {
-            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
-            {
-                m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
-            }
-            else
-            {
-                var playerId = SessionManager<SessionPlayerData>.Instance.GetPlayerId(clientId);
-                if (playerId != null)
-                {
-                    var sessionData = SessionManager<SessionPlayerData>.Instance.GetPlayerData(playerId);
-                    if (sessionData.HasValue)
-                    {
-                        m_ConnectionEventPublisher.Publish(new ConnectionEventMessage() { ConnectStatus = ConnectStatus.GenericDisconnect, PlayerName = sessionData.Value.PlayerName });
-                    }
-                    SessionManager<SessionPlayerData>.Instance.DisconnectClient(clientId);
-                }
-            }
+            /*            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
+                        {
+                            m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
+                        }
+                        else
+                        {
+                            var playerId = SessionManager<SessionPlayerData>.Instance.GetPlayerId(clientId);
+                            if (playerId != null)
+                            {
+                                var sessionData = SessionManager<SessionPlayerData>.Instance.GetPlayerData(playerId);
+                                if (sessionData.HasValue)
+                                {
+                                    m_ConnectionEventPublisher.Publish(new ConnectionEventMessage() { ConnectStatus = ConnectStatus.GenericDisconnect, PlayerName = sessionData.Value.PlayerName });
+                                }
+                                SessionManager<SessionPlayerData>.Instance.DisconnectClient(clientId);
+                            }
+                        }*/
+            m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
         }
 
         public override void OnUserRequestedShutdown()
@@ -100,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
                 connectionPayload.playerNetworkId = clientId;
                 // Player A
-                SynchedServerData.Instance.playerAPrefabName.Value = MatchmakingScreenController.Instance.playerAPrefabName;  
+                SynchedServerData.Instance.playerAPrefabName.Value = MatchmakingScreenController.Instance.playerAPrefabName;
                 SynchedServerData.Instance.playerAClientNetworkId.Value = MatchmakingScreenController.Instance.playerAClientNetworkId;
                 SynchedServerData.Instance.playerAName.Value = MatchmakingScreenController.Instance.playerAName;
                 SynchedServerData.Instance.playerAScore.Value = MatchmakingScreenController.Instance.playerAScore;
