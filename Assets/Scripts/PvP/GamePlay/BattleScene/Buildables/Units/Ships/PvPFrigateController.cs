@@ -103,7 +103,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
             if (IsServer)
+            {
                 OnProgressControllerVisibleClientRpc(isEnabled);
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+            }
             else
                 base.CallRpc_ProgressControllerVisible(isEnabled);
         }
@@ -162,44 +165,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted_PvPClient();
         }
 
-        /*        protected override void StartMovementEffectsOfClient()
-                {
-                    if (IsClient)
-                        base.StartMovementEffectsOfClient();
-                    else
-                        StartMovementEffectsClientRpc();
-
-                }
-
-                protected override void StopMovementEffectsOfClient()
-                {
-                    if (IsClient)
-                        base.StopMovementEffectsOfClient();
-                    else
-                        StopMovementEffectsClientRpc();
-                }
-
-                protected override void ResetAndHideOfClient()
-                {
-                    if (IsClient)
-                        base.ResetAndHideOfClient();
-                    else
-                        ResetHideClientRpc();
-                }*/
-
         //-------------------------------------- RPCs -------------------------------------------------//
 
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
-            OnValueChangedIsEnableRenderes(isEnabled);
+            if (!IsHost)
+                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
             _buildableProgress.gameObject.SetActive(isEnabled);
-            CallRpc_ProgressControllerVisible(isEnabled);
+            if (!IsHost)
+                CallRpc_ProgressControllerVisible(isEnabled);
         }
 
         [ClientRpc]
@@ -219,31 +199,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnActivatePvPClientRpc()
         {
-            Activate_PvPClient();
+            if (!IsHost)
+                Activate_PvPClient();
         }
 
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
-            OnBuildableProgressEvent();
+            if (!IsHost)
+                OnBuildableProgressEvent();
         }
 
         [ClientRpc]
         private void OnCompletedBuildableEventClientRpc()
         {
-            OnCompletedBuildableEvent();
+            if (!IsHost)
+                OnCompletedBuildableEvent();
         }
 
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {
-            OnDestroyedEvent();
+            if (!IsHost)
+                OnDestroyedEvent();
         }
 
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
-            OnBuildableCompleted();
+            if (!IsHost)
+                OnBuildableCompleted();
         }
 
         [ClientRpc]
@@ -252,25 +237,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 BuildableState = state;
         }
-
-
-        /*        [ClientRpc]
-                private void StartMovementEffectsClientRpc()
-                {
-                    StartMovementEffectsOfClient();
-                }
-                [ClientRpc]
-                private void StopMovementEffectsClientRpc()
-                {
-                    StopMovementEffectsOfClient();
-                }
-
-                [ClientRpc]
-                private void ResetHideClientRpc()
-                {
-                    ResetAndHideOfClient();
-                }*/
-
-
     }
 }
