@@ -31,17 +31,17 @@ namespace BattleCruisers.PostBattleScreen
                 o.SetActive(false);
             yield return null;
             int rank = CalculateRank(score);
-            Assert.IsTrue(rank >= 0 && rank <= StaticPrefabKeys.Ranks.AllRanks.Count);
+            Assert.IsTrue(rank >= 0 && rank <= StaticPrefabKeys.Ranks.AllRanks.Count - 1);
             if (rank > 0)
             {
-                destructionRanks[rank - 1].SetActive(true);
+                destructionRanks[rank].SetActive(true);
             }
         }
 
         public int CalculateRank(long score)
         {
             
-            for(int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count; i++)
+            for(int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
                 long x = 2500 + 2500*i*i;
                 //Debug.Log(x);
@@ -50,7 +50,7 @@ namespace BattleCruisers.PostBattleScreen
                     return i;
                 }
             }
-            return StaticPrefabKeys.Ranks.AllRanks.Count;
+            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
         }
 
         // return what the x value will be in CalculateRank()
@@ -67,7 +67,7 @@ namespace BattleCruisers.PostBattleScreen
         {
             int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
 
-            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count)
+            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count - 1)
             {
                 // If the current rank is already the highest, there is no remainder
                 return 0;
