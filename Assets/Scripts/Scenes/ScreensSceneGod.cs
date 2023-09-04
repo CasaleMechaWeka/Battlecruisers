@@ -386,6 +386,7 @@ namespace BattleCruisers.Scenes
 
         public void GoToHomeScreen()
         {
+            homeScreen.gameObject.SetActive(true);
             ShowCharlieOnMainMenu();
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
@@ -417,6 +418,7 @@ namespace BattleCruisers.Scenes
 
         public void GotoShopScreen()
         {
+            homeScreen.gameObject.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(true);
             characterOfCharlie.SetActive(false);
@@ -428,6 +430,7 @@ namespace BattleCruisers.Scenes
 
         public void GotoBlackMarketScreen()
         {
+            homeScreen.gameObject.SetActive(false);
             characterOfBlackmarket.SetActive(true);
             characterOfShop.SetActive(false);
             characterOfCharlie.SetActive(false);
