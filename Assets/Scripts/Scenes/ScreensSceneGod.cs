@@ -149,7 +149,7 @@ namespace BattleCruisers.Scenes
                         // server available
                         hubScreen.serverStatusPanel.SetActive(false);
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
                         hubScreen.battle1vAI.SetActive(false);
                         hubScreen.offlinePlayOnly.SetActive(false);
                         Debug.Log("PVP Server Available.");
@@ -243,11 +243,11 @@ namespace BattleCruisers.Scenes
             processingPanel.SetActive(false);
 
             processingPanel.GetComponentInChildren<Text>().text = screensSceneStrings.GetString("Processing");
+            Debug.Log(_applicationModel.Mode);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
                 _applicationModel.ShowPostBattleScreen = false;
-
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
 #if !THIRD_PARTY_PUBLISHER
