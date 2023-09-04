@@ -217,7 +217,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // Tutorial status check
-            if (_levelsCompleted.ContainsKey(1))
+            if (_levelsCompleted.ContainsKey(1) || _hasAttemptedTutorial == true)
             {
                 game.HasAttemptedTutorial = true;
             }
