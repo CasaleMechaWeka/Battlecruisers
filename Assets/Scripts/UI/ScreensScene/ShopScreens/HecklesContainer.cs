@@ -66,6 +66,7 @@ namespace BattleCruisers.UI.ScreensScene
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                            ScreensSceneGod.Instance.loadoutScreen.AddHeckle(currentHeckleData);
                         }
                         else
                         {

@@ -8,6 +8,7 @@ using BattleCruisers.Utils.Fetchers;
 using System;
 using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IDictionary<ItemType, IItemsPanel> _typeToPanel;
 
         private IItemsPanel _currentlyShownPanel;
+
+        private List<IItemButton> _allItemButtons = new List<IItemButton>();
         public IItemsPanel CurrentlyShownPanel
         {
             get { return _currentlyShownPanel; }
@@ -43,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public event EventHandler PotentialMatchChange;
 
         public async Task<IList<IItemButton>> Initialise(
-            IItemDetailsManager itemDetailsManager, 
+            IItemDetailsManager itemDetailsManager,
             ItemType defaultItemTypeToShow,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
@@ -70,7 +73,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     CurrentlyShownPanel = panel;
                 }
             }
+            _allItemButtons = allItemButtons;
             return allItemButtons;
+        }
+
+        public void AddHeckle(IHeckleData heckleData)
+        {
+            ItemsPanel[] panels = GetComponentsInChildren<ItemsPanel>(includeInactive: true);
+            panels[panels.Length - 1].AddHeckle(heckleData);
+
         }
 
         public void ShowItemsPanel(ItemType itemType)

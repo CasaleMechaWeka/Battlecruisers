@@ -27,7 +27,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public HeckleItemContainerV2 HeckleItemContainerV2Prefab;
         public Transform heckleParent;
         public SelectHeckleButton toggleHeckleSelectionButton;
-
+        private IList<IItemButton> buttons = new List<IItemButton>();
+        private IItemDetailsManager _itemDetailsManager;
+        private IComparingItemFamilyTracker _comparingFamiltyTracker;
+        private IGameModel _gameModel;
+        private IBroadcastingProperty<HullKey> _selectedHull;
+        private ISingleSoundPlayer _soundPlayer;
+        private IPrefabFactory _prefabFactory;
         // Heckle Logic
 
         private HeckleButtonV2 _currentHeckleButton;
@@ -46,6 +52,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public EventHandler HeckleButtonChanged;
 
+        public void AddHeckle(IHeckleData heckleData)
+        {
+            if (heckleData.IsOwned)
+            {
+                HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
+                heckleContainer.heckleData = heckleData;
+                heckleContainer.toggleSelectionButton = toggleHeckleSelectionButton;
+                IItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, _gameModel, _selectedHull, _soundPlayer, _prefabFactory);
+                buttons.Add(button);
+                heckleContainer.gameObject.SetActive(true);
+            }
+        }
+
         public async Task<IList<IItemButton>> Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -55,22 +74,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IPrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, prefabFactory);
+
+            _itemDetailsManager = itemDetailsManager;
+            _comparingFamiltyTracker = comparingFamiltyTracker;
+            _gameModel = gameModel;
+            _selectedHull = selectedHull;
+            _soundPlayer = soundPlayer;
+            _prefabFactory = prefabFactory;
+
             await Task.Delay(10);
             if (itemType == ItemType.Heckle)
             {
                 HasUnlockedItem = true;
-                IList<IItemButton> buttons = new List<IItemButton>();
                 foreach (IHeckleData heckleData in gameModel.Heckles)
                 {
-                    if (heckleData.IsOwned)
-                    {
-                        HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
-                        heckleContainer.heckleData = heckleData;
-                        heckleContainer.toggleSelectionButton = toggleHeckleSelectionButton;
-                        IItemButton button = heckleContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
-                        buttons.Add(button);
-                        heckleContainer.gameObject.SetActive(true);
-                    }
+                    AddHeckle(heckleData);
                 }
                 _button = buttons;
                 return buttons;

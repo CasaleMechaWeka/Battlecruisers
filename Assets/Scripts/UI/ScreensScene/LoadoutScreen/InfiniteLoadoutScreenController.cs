@@ -8,6 +8,7 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -39,12 +40,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         // Heckles
         public CanvasGroupButton heckleButton;
 
+        private ISingleSoundPlayer _soundPlayer;
+        IScreensSceneGod _screensSceneGod;
+        private IList<IItemButton> _itemButtons = new List<IItemButton>();
+
+
+
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
         {
+            _soundPlayer = soundPlayer;
+            _screensSceneGod = screensSceneGod;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             base.Initialise(screensSceneGod);
@@ -122,6 +131,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     soundPlayer,
                     prefabFactory);
 
+            _itemButtons = itemButtons;
+
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
@@ -132,8 +143,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
+        public async void AddHeckle(IHeckleData heckleData)
+        {
+            itemPanels.AddHeckle(heckleData);
+            /*IList<IItemButton> itemButtons
+                = await itemPanels.Initialise(
+                    _itemDetailsManager,
+                    ItemType.Hull,
+                    _comparingFamilyTracker,
+                    _dataProvider.GameModel,
+                    selectCruiserButton.SelectedHull,
+                    _soundPlayer,
+                    _prefabFactory);
+                    */
+        }
+
         private void ShowHeckles()
         {
+
             _itemDetailsManager.HideDetails();
             itemPanels.CurrentlyShownPanel?.Hide();
             itemPanels.ShowHecklePanel();
