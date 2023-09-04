@@ -105,7 +105,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
 
         if (product != null)
         {
-            price.text = "$ " + product.metadata.localizedPriceString;
+            price.text = product.metadata.localizedPriceString;
             title.text = product.metadata.localizedTitle;
             description.text = product.metadata.localizedDescription;
             SpriteFetcher spriteFetcher = new SpriteFetcher();
