@@ -96,6 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
             _battleSceneGodTunnel.HandleCruiserDestroyed();
+            PvPBattleSceneGodClient.Instance.canFlee = false;
             _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
 
@@ -121,6 +122,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
             _battleSceneGodTunnel.HandleCruiserDestroyed();
+            PvPBattleSceneGodClient.Instance.canFlee = false;
             _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
             _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S);
         }

@@ -165,8 +165,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
         internal void ChangeState(ConnectionState nextState)
-        {
-            Debug.Log($"{name}: Changed connection state from {m_CurrentState.GetType().Name} to {nextState.GetType().Name}.");
+        {          
 
             if (m_CurrentState != null)
             {

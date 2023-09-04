@@ -46,6 +46,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using System.Threading;
+using BattleCruisers.Network.Multiplay.ConnectionManagement;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -56,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPAudioInitialiser _audioInitialiser;
         private PvPCruiserDeathManager _cruiserDeathManager;
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
-        private IApplicationModel applicationModel;        
+        private IApplicationModel applicationModel;
         private PvPNavigationPermitters navigationPermitters;
         private IPvPSpriteProvider spriteProvider;
         private IPvPCameraComponents cameraComponents;
@@ -93,6 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public Transform leftContainer, rightContainer;
         private PvPCaptainExoHUDController captainController;
         public IPvPUserChosenTargetHelper userChosenTargetHelper;
+        public bool canFlee = true;
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -153,11 +155,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 Invoke("StaticInitialiseAsync", 0.5f);
             }
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
+
         void OnNetworkDespawn()
         {
-
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
         }
+
+        void OnClientDisconnect(ulong clientID)
+        {
+            if (canFlee && clientID != NetworkManager.Singleton.LocalClientId)
+            {
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
+            }
+        }
+
         void OnDestroy()
         {
             windManager?.Stop();
@@ -191,7 +204,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
 
-            components = GetComponent<PvPBattleSceneGodComponents>();            
+            components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
 
             Assert.IsNotNull(components);
@@ -206,12 +219,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             captainController = GetComponent<PvPCaptainExoHUDController>();
             if (!NetworkManager.Singleton.IsHost)
             {
-                while(!SynchedServerData.Instance.IsServerInitialized.Value && !m_cancellationToken.Token.IsCancellationRequested)
+                while (!SynchedServerData.Instance.IsServerInitialized.Value && !m_cancellationToken.Token.IsCancellationRequested)
                 {
                     await Task.Delay(10);
                     SynchedServerData.Instance.InitServer();
-                }                    
-            }            
+                }
+            }
         }
 
         private async void InitialiseAsync()
@@ -621,7 +634,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        
+
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
