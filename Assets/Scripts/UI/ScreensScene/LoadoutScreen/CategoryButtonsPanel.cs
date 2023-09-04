@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     _buttons[6].OnClickedAction();
                 else if (index == 7f && _buttons[7].isActiveAndEnabled)
                     _buttons[7].OnClickedAction();
-                else if (index == 8f && _buttons[8].isActiveAndEnabled)
+                else if (index == 8f)
                     transform.FindNamedComponent<HeckleCategoryButton>("HeckleButton").OnClickedAction();
                 previuosIndex = index;
             }
