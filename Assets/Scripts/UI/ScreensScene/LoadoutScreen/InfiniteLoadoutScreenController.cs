@@ -103,8 +103,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 _comparingFamilyTracker.ComparingFamily,
                 _comparingFamilyTracker);
 
-            //selectHeckleButton.Initialise(soundPlayer, dataProvider, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
-            //    _comparingFamilyTracker);
+            selectHeckleButton.Initialise(soundPlayer, dataProvider, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
+                _comparingFamilyTracker);
 
             limitDisplayer.Initialise(dataProvider,
                 buildingDetails,
