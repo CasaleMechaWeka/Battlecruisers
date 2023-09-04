@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -53,12 +54,19 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 return null;
             }
 
-           
+
         }
 
         public async Task DeleteLobby(string lobbyId)
         {
-            await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
+            try
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
+            }
+            catch (LobbyServiceException e)
+            {
+                UnityEngine.Debug.Log(e.Message);
+            }
         }
 
         public async Task<Lobby> JoinLobbyByCode(string requesterUasId, string lobbyCode, Dictionary<string, PlayerDataObject> localUserData)
@@ -72,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return null;
             }
-            
+
         }
 
         public async Task<Lobby> JoinLobbyById(string requesterUasId, string lobbyId, Dictionary<string, PlayerDataObject> localUserData)

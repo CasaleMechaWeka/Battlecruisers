@@ -108,6 +108,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         public Task EndTracking()
         {
             var task = Task.CompletedTask;
+            if (this == null)
+                return task;
             if (CurrentUnityLobby != null)
             {
                 CurrentUnityLobby = null;
@@ -379,6 +381,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             string uasId = AuthenticationService.Instance.PlayerId;
             try
             {
+                if (this == null)
+                    return;
                 await m_LobbyApiInterface.RemovePlayerFromLobby(uasId, lobbyId);
             }
             catch (LobbyServiceException e)
@@ -417,6 +421,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 try
                 {
+                    if (this == null)
+                        return;
                     await m_LobbyApiInterface.DeleteLobby(lobbyId);
                 }
                 catch (LobbyServiceException e)

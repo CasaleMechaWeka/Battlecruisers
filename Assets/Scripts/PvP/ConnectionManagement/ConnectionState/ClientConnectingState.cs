@@ -26,8 +26,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
 #pragma warning disable 4014
             ConnectClientAsync();
-#pragma warning restore 4014
-            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+#pragma warning restore 4014            
         }
 
         public override void Exit() { }
@@ -55,8 +54,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 {
                     throw new System.Exception("NetworkManager StartClient failed");
                 }
-
-                //    SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
+                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
             }
             catch (Exception e)
             {

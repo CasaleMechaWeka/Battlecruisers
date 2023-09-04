@@ -101,7 +101,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     return;
                 Debug.LogException(e);
                 StartHostFailed();
-                //           throw;
             }
         }
     }

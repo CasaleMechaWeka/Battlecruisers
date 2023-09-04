@@ -131,10 +131,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             //<---
             GoToScreen(battlePanel);
-            offlinePlayOnly.SetActive(true);
-            serverStatusPanel.SetActive(false);
-            battle1vAI.SetActive(true);
-            offlineLockedText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineLockedSubtitle");
             UnselectAll();
         }
 
@@ -228,19 +224,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             else
             {
-
-                coinBattleController.BattleButtonClicked();
-      
+                coinBattleController.BattleButtonClicked();      
             }
-
-/*                       if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
-                        {
-                            GoToScreen(arenaSelectPanel);
-                        }
-                        else
-                        {
-                        
-                        }*/
         }
 
 

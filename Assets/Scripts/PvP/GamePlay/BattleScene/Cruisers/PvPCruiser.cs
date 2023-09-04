@@ -533,6 +533,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
+        protected override void OnHealthGone()
+        {
+            PvPBattleSceneGodClient.Instance.components.backgroundClickableEmitter.enabled = false;
+            OnHealthGoneClientRpc();
+            base.OnHealthGone();
+        }
+
+        [ClientRpc]
+        private void OnHealthGoneClientRpc()
+        {
+            if(!IsHost)
+            {
+                PvPBattleSceneGodClient.Instance.components.backgroundClickableEmitter.enabled = false;
+            }
+        }
+
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
         {

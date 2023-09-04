@@ -107,8 +107,7 @@ namespace BattleCruisers.Scenes
         }
 
         async void Start()
-        {
-            Debug.Log("=========> Platform: " + Application.platform.ToString());
+        {            
             LogToScreen(Application.platform.ToString());
 
             Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
@@ -142,8 +141,7 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = DisconnectedState;
 
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
-            // cheat code
-            // InternetConnectivity.ValueChanged += TestEventHandler;
+
 
             if (Instance == null)
                 Instance = this;
@@ -514,10 +512,6 @@ namespace BattleCruisers.Scenes
 
         }
 
-        void TestEventHandler(object sender, EventArgs args)
-        {
-            Debug.Log("======> InternetConnectivity EventHandler is working : " + InternetConnectivity.Value);
-        }
         public void OnRetry()
         {
             if (loginType == LoginType.Anonymous)
@@ -537,9 +531,7 @@ namespace BattleCruisers.Scenes
             AuthenticationService.Instance.SignedIn -= SignedIn;
             AuthenticationService.Instance.SignedOut -= SignedOut;
             AuthenticationService.Instance.SignInFailed -= SignFailed;
-            AuthenticationService.Instance.Expired -= Expired;
-
-            //    InternetConnectivity.ValueChanged -= TestEventHandler;
+            AuthenticationService.Instance.Expired -= Expired;            
         }
 
         public static async Task<bool> CheckForInternetConnection(int timeoutMs = 10000, string url = "https://www.google.com")

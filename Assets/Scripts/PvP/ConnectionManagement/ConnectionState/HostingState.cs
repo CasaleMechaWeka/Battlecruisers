@@ -42,25 +42,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
         public override void OnClientDisconnect(ulong clientId)
-        {
-            /*            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
-                        {
-                            m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
-                        }
-                        else
-                        {
-                            var playerId = SessionManager<SessionPlayerData>.Instance.GetPlayerId(clientId);
-                            if (playerId != null)
-                            {
-                                var sessionData = SessionManager<SessionPlayerData>.Instance.GetPlayerData(playerId);
-                                if (sessionData.HasValue)
-                                {
-                                    m_ConnectionEventPublisher.Publish(new ConnectionEventMessage() { ConnectStatus = ConnectStatus.GenericDisconnect, PlayerName = sessionData.Value.PlayerName });
-                                }
-                                SessionManager<SessionPlayerData>.Instance.DisconnectClient(clientId);
-                            }
-                        }*/
-            m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
+        {            
         }
 
         public override void OnUserRequestedShutdown()

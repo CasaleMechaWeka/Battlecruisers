@@ -174,6 +174,8 @@ namespace BattleCruisers.Scenes
             {
                 // turn off server status panel anyway, there is no server to be maintained:
                 hubScreen.serverStatusPanel.SetActive(false);
+                hubScreen.offlinePlayOnly.SetActive(true);
+                hubScreen.battle1vAI.SetActive(true);
                 hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                 Debug.Log("Offline, can't find out status of PVP Server.");
 

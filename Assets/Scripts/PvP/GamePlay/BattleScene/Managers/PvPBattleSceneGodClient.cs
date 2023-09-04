@@ -56,8 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPAudioInitialiser _audioInitialiser;
         private PvPCruiserDeathManager _cruiserDeathManager;
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
-        private IApplicationModel applicationModel;
-        private PvPBattleSceneGodComponents components;
+        private IApplicationModel applicationModel;        
         private PvPNavigationPermitters navigationPermitters;
         private IPvPSpriteProvider spriteProvider;
         private IPvPCameraComponents cameraComponents;
@@ -67,6 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPTopPanelInitialiser topPanelInitialiser;
         public PvPLeftPanelInitialiser leftPanelInitialiser;
         public PvPRightPanelInitialiser rightPanelInitialiser;
+        public PvPBattleSceneGodComponents components;
         private IPvPBattleSceneHelper pvpBattleHelper;
         private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
@@ -191,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
 
-            components = GetComponent<PvPBattleSceneGodComponents>();
+            components = GetComponent<PvPBattleSceneGodComponents>();            
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
 
             Assert.IsNotNull(components);
