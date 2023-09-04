@@ -49,6 +49,8 @@ namespace BattleCruisers.Data.Models
         public Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
         public Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
 
+        public bool _hasAttemptedTutorial;
+
         public SaveGameModel()
         { // this is the constructor for cloud load
         }
@@ -61,7 +63,7 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-                                                _saveVersion = 1;
+                                                _saveVersion = 2;
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -85,6 +87,8 @@ namespace BattleCruisers.Data.Models
             _currentCaptain = game.PlayerLoadout.CurrentCaptain.PrefabName;
             _buildLimits = computeBuildLimits(game.PlayerLoadout.GetBuildLimits());
             _unitLimits = computeUnitLimits(game.PlayerLoadout.GetUnitLimits());
+
+            _hasAttemptedTutorial = game.HasAttemptedTutorial;
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
@@ -210,6 +214,16 @@ namespace BattleCruisers.Data.Models
             else
             {
                 game.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
+            }
+
+            // Tutorial status check
+            if (_levelsCompleted.ContainsKey(1))
+            {
+                game.HasAttemptedTutorial = true;
+            }
+            else
+            {
+                game.HasAttemptedTutorial = false;
             }
         }
 
