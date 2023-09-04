@@ -148,6 +148,10 @@ namespace BattleCruisers.Data.Serialization
             {
                 compatibleGameModel.AddCompletedLevel(level);
             }
+            if (compatibleGameModel.CompletedLevels != null && compatibleGameModel.CompletedLevels.Count > 0)
+            {
+                compatibleGameModel.HasAttemptedTutorial = true;
+            }
 
             return compatibleGameModel;
         }
