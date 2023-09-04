@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 = new ItemDetailsDisplayer<ICruiser>(
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
-            //_heckleDetails.Initialize();
+            _heckleDetails.Initialize();
             _itemDetailsManager = new LoadoutScreen.ItemDetails.ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
             _itemDetailsManager.HeckleDetails = _heckleDetails;
 
