@@ -713,9 +713,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 applicationModel.DataProvider.SaveGame();
 
                 //Update Leaderboard
-                double score = (double)applicationModel.DataProvider.GameModel.BattleWinScore;
+/*                double score = (double)applicationModel.DataProvider.GameModel.BattleWinScore;
                 const string LeaderboardID = "BC-PvP1v1Leaderboard";
-                await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);*/
 
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
                 await applicationModel.DataProvider.SyncCoinsToCloud();

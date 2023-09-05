@@ -22,8 +22,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         const string LeaderboardID = "BC-PvP1v1Leaderboard";
 
         public LeaderboradPanel TopPlayer;
-        [SerializeField]
-        private List<LeaderboradPanel> Players;
+        public GameObject leaderboardPanelPrefab;
+        public Transform leaderboardPanelParent;
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -32,58 +32,41 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
-            if(Application.internetReachability != NetworkReachability.NotReachable)
+            if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                IGameModel gameModel = dataProvider.GameModel;
-                double eol = 1200;
-                try
-                {
-                    //await AuthenticationService.Instance.UpdatePlayerNameAsync(dataProvider.GameModel.PlayerName);
-                    //await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, eol);
-                }
-                catch(Exception e)
-                {
-                    e.ToString();
-                }
-
                 try
                 {
                     var score = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardID);
-                    int i = 0;
-                    foreach(var entry in score.Results)
+                    TopPlayer.gameObject.SetActive(false);
+                    Transform[] objs = leaderboardPanelParent.GetComponentsInChildren<Transform>();
+                    foreach (Transform obj in objs)
                     {
-                        if(entry != null)
+                        if (!ReferenceEquals(obj, leaderboardPanelParent))
+                            Destroy(obj.gameObject);
+                    }
+                    foreach (var entry in score.Results)
+                    {
+                        if (entry != null)
                         {
                             IList<string> list = entry.PlayerName.Split("#").ToList<string>();
-                            Debug.Log(list[1]);
-                            if(entry.Rank == 0)
+                            if (entry.Rank == 0)
                             {
+                                TopPlayer.gameObject.SetActive(true);
                                 TopPlayer.Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
                             }
                             else
                             {
-                                Players[i].Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
-                                i++;
+                                GameObject panel = Instantiate(leaderboardPanelPrefab, leaderboardPanelParent) as GameObject;
+                                panel.GetComponent<LeaderboradPanel>().Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
                             }
                         }
-                        else
-                        {
-                            return;
-                        }
-                    }
-                    for (int j = i; j < 16; j++)
-                    {
-                        Players[j].gameObject.SetActive(false);
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     e.ToString();
                 }
-
             }
-            
-            
         }
     }
 }

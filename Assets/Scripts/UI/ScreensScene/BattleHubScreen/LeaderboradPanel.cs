@@ -30,12 +30,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             Text name = PlayerName.gameObject.GetComponent<Text>();
             name.text = playerName;
             Text eolString = EOL.GetComponent<Text>();
-            eolString.text = eol.ToString();
+            eolString.text = eol.ToString("#.00");
             Text number = PlaceNumber.GetComponent<Text>();
             number.text = (placenumber + 1).ToString();
             Image image = Captain.GetComponent<Image>();
             image.sprite = captainexo.captainExoImage;
         }
     }
-
 }

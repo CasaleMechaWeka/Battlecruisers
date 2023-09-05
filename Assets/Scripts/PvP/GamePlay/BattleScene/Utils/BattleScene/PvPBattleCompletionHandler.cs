@@ -10,7 +10,7 @@ using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-
+using Unity.Services.Leaderboards;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -54,6 +54,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
                 _applicationModel.DataProvider.SaveGame();
             }
+
+            double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
+            const string LeaderboardID = "BC-PvP1v1Leaderboard";
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
@@ -119,6 +124,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
                 _applicationModel.DataProvider.SaveGame();
             }
+
+            double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
+            const string LeaderboardID = "BC-PvP1v1Leaderboard";
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+
             _isCompleted = true;
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();

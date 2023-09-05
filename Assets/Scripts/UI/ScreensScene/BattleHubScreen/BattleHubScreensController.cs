@@ -95,7 +95,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             continueSubtitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaignDescription");
             levelsTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("LevelSelect");
             skirmishTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("SkirmishMode");
-
         }
 
         private void GoHome()
@@ -156,6 +155,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             playerInfoPanelController.gameObject.SetActive(true);
             ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
             ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+            leaderboardPanel.Initialise(_screensSceneGod, _soundPlayer, _prefabFactory, _dataProvider, _nextLevelHelper);
             GoToScreen(leaderboardPanel);
             UnselectAll();
         }
