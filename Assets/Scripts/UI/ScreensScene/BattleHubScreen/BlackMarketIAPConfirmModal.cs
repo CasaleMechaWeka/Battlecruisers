@@ -105,8 +105,19 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
 
         if (product != null)
         {
-            price.text = "$ " + product.metadata.localizedPriceString;
+            price.text = product.metadata.localizedPriceString;
             title.text = product.metadata.localizedTitle;
+#if UNITY_ANDROID || UNITY_EDITOR
+            // On Android, the Play store appends the app name in parentheses to the defined name value.
+            // For example, if the product name is "1,000 Gems" for an app named "Gem Collector", it will return "1,000 Gems (Gem Collector)".
+            // Since the appended app name isn't wanted, trim it off before returning the value.
+            int lastParen = title.text.LastIndexOf("(");
+            Debug.Log(title.text.LastIndexOf("("));
+            if (lastParen > -1)
+            {
+                title.text = title.text.Substring(0, lastParen - 1).Trim();
+            }
+#endif
             description.text = product.metadata.localizedDescription;
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             ISpriteWrapper spriteWrapper = await spriteFetcher.GetSpriteAsync(spritePath);
