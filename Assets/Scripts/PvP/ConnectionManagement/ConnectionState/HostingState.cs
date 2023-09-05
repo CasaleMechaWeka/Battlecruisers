@@ -98,6 +98,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 SynchedServerData.Instance.playerBScore.Value = connectionPayload.playerScore;
                 SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
                 SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
+
+                MatchmakingScreenController.Instance.fleeButton.SetActive(false);
             }
             response.Approved = true;
             response.Pending = false;

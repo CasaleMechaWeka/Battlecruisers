@@ -167,7 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (canFlee && clientID != NetworkManager.Singleton.LocalClientId)
             {
-                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
+                if (GameObject.Find("ConnectionManager") != null)
+                    GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
             }
         }
 

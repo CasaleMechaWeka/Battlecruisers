@@ -113,7 +113,7 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
-            _uiAudioSource = GetComponent<AudioSource>();
+
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
             Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
@@ -187,6 +187,9 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
+            if (this == null)
+                return;
+            _uiAudioSource = GetComponent<AudioSource>();
             _soundPlayer
                 = new SingleSoundPlayer(
                     new SoundFetcher(),

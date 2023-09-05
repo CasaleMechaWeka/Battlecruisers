@@ -445,7 +445,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return;
             }
-
             try
             {
                 var result = await m_LobbyApiInterface.UpdatePlayer(CurrentUnityLobby.Id, AuthenticationService.Instance.PlayerId, data, null, null);
@@ -455,16 +454,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     CurrentUnityLobby = result; // Store the most up-to-date lobby now since we have it, instead of waiting for the next heartbeat.
                 }
             }
-            catch (LobbyServiceException e)
+            catch
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
-                {
-                    m_RateLimitQuery.PutOnCooldown();
-                }
-                else if (e.Reason != LobbyExceptionReason.LobbyNotFound && !m_LocalUser.IsHost) // If Lobby is not found and if we are not the host, it has already been deleted. No need to publish the error here.
-                {
-                    PublishError(e);
-                }
+
             }
         }
 
@@ -554,7 +546,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         /// </summary>
         public void DoLobbyHeartbeat(float dt)
         {
-
             m_HeartbeatTime += dt;
             if (m_HeartbeatTime > k_HeartbeatPeriod)
             {

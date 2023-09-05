@@ -163,6 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 return;
             }
+            string wantMap = ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap);
 
             m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
             m_LocalUser.DisplayName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName;
@@ -178,7 +179,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             new QueryFilter(
                 field: QueryFilter.FieldOptions.S1, // S1 = "GameMap"
                 op: QueryFilter.OpOptions.EQ,
-                value: ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap)),
+                value: wantMap),
             new QueryFilter(
                 field: QueryFilter.FieldOptions.N1, // N1 = "Score :  Battle Win"
                 op: QueryFilter.OpOptions.GE,
@@ -187,12 +188,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             List<QueryOrder> mOrders = new List<QueryOrder>
         {
-            // new QueryOrder(true, QueryOrder.FieldOptions.AvailableSlots),
             new QueryOrder(false, QueryOrder.FieldOptions.Created),
             new QueryOrder(false, QueryOrder.FieldOptions.N1),
         };
-
-
 
             QueryResponse response = await m_LobbyServiceFacade.QueryLobbyListAsync(mFilters, mOrders);
 
@@ -200,7 +198,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             if (foundLobbies.Any())
             {
-                Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));          
+                Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
                 bool joined = false;
                 foreach (Lobby lobby in foundLobbies)
                 {
@@ -209,26 +207,29 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         continue;
                     else
                     {
-                        var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
-
-                        if (lobbyJoinAttemp.Success)
+                        if(lobby.Data["GameMap"].Value == wantMap)
                         {
-                            m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
-                            if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                            var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+
+                            if (lobbyJoinAttemp.Success)
                             {
-                                Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                                joined = true;
+                                m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                                if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                                {
+                                    Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                    m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                    joined = true;
+                                }
                             }
+                            break;
                         }
-                        break;
                     }
                 }
-                if(!joined)
+                if (!joined)
                 {
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
-                        ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap), DataObject.IndexOptions.S1),
+                        ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
                         ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
                     };
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
@@ -248,7 +249,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 var lobbyData = new Dictionary<string, DataObject>()
                 {
-                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap), DataObject.IndexOptions.S1),
+                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
                     ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
                 };
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
@@ -265,7 +266,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             }
         }
 
-       string ConvertToScene(Map map)
+        string ConvertToScene(Map map)
         {
             switch (map)
             {
