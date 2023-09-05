@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
@@ -58,9 +59,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         protected override void OnClicked()
         {
             base.OnClicked();
-            _repairable.clickedRepairButton?.Invoke();
-            /*            IPvPDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
-                        _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);*/
+            if (NetworkManager.Singleton.IsServer)
+            {
+                IPvPDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
+                _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+            }
+            else if (!NetworkManager.Singleton.IsHost)
+                _repairable.clickedRepairButton?.Invoke();
         }
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)

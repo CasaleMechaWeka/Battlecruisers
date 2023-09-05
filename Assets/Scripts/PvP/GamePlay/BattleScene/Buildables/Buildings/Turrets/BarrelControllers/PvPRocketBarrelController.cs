@@ -15,7 +15,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPRocketSpawner _middleSpawner;
         private IPvPCruisingProjectileStats _rocketStats;
 
-        public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
+        public override Vector3 ProjectileSpawnerPosition
+        {
+            get
+            {
+                if(_middleSpawner != null) return _middleSpawner.transform.position;
+                return Vector3.zero;
+            }
+        }
+           
         public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
