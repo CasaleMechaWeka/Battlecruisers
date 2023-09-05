@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject serverStatusPanel;
         public GameObject offlinePlayOnly;
         public GameObject battle1vAI;
-        public Text offlineLockedText;
+        public Text offlineOnlyText;
         public Text continueTitle;
         public Text continueSubtitle;
         public Text levelsTitle;
@@ -95,6 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             continueSubtitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaignDescription");
             levelsTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("LevelSelect");
             skirmishTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("SkirmishMode");
+            offlineOnlyText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineOnlySubtitle");
         }
 
         private void GoHome()
@@ -224,7 +225,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             else
             {
-                coinBattleController.BattleButtonClicked();      
+                coinBattleController.BattleButtonClicked();
             }
         }
 
