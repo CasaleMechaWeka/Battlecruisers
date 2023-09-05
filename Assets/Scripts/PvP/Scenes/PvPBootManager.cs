@@ -179,14 +179,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 field: QueryFilter.FieldOptions.S1, // S1 = "GameMap"
                 op: QueryFilter.OpOptions.EQ,
                 value: ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap)),
-            // Example "Score" range filter (Score is a custom numeric field in this example)
             new QueryFilter(
                 field: QueryFilter.FieldOptions.N1, // N1 = "Score :  Battle Win"
                 op: QueryFilter.OpOptions.GE,
                 value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),
             };
 
-            Debug.Log("=========> Map ---> " + ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap));
             List<QueryOrder> mOrders = new List<QueryOrder>
         {
             // new QueryOrder(true, QueryOrder.FieldOptions.AvailableSlots),
