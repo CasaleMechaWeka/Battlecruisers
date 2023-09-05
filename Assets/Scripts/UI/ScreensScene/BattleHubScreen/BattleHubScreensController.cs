@@ -229,8 +229,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
         }
 
-
-
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
         {
 

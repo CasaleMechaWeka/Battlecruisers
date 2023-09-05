@@ -83,6 +83,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _prefabFactory = prefabFactory;
 
             await Task.Delay(10);
+            if (this == null)
+                return null;
             if (itemType == ItemType.Heckle)
             {
                 HasUnlockedItem = true;
@@ -95,6 +97,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
             else
             {
+                if (this == null)
+                    return null;
                 ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
                 IList<IItemButton> buttons = new List<IItemButton>();
 

@@ -432,6 +432,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             GameOver = false;
             string logName = "Battle_Begin";
+            LandingSceneGod.Instance.coinBattleLevelNum = -1;
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif

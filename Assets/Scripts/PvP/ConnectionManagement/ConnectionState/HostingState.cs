@@ -29,6 +29,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 m_LobbyServiceFacade.BeginTracking();
             }
             MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+            MatchmakingScreenController.Instance.vsAIButton.SetActive(true);
         }
 
         public override void Exit()
@@ -100,6 +101,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
 
                 MatchmakingScreenController.Instance.fleeButton.SetActive(false);
+                MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
             }
             response.Approved = true;
             response.Pending = false;

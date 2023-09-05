@@ -94,7 +94,7 @@ namespace BattleCruisers.Scenes
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
         public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
-
+        public int coinBattleLevelNum = -1;
         private INetworkState ConnectedState = new InternetConnectivity(true);
         private INetworkState DisconnectedState = new InternetConnectivity(false);
 
@@ -107,7 +107,7 @@ namespace BattleCruisers.Scenes
         }
 
         async void Start()
-        {            
+        {
             LogToScreen(Application.platform.ToString());
 
             Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
@@ -184,7 +184,7 @@ namespace BattleCruisers.Scenes
                     await UnityServices.InitializeAsync(options);
                 }
 
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
                 {
                     // When using a ParrelSync clone, switch to a different authentication profile to force the clone
@@ -192,7 +192,7 @@ namespace BattleCruisers.Scenes
                     string customArgument = ParrelSync.ClonesManager.GetArgument();
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
-                #endif
+#endif
 
                 if (InternetConnectivity.Value)
                 {
@@ -267,7 +267,7 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
 
             // When running in the Editor make a unique ID from the Application.dataPath.
             // This will work for cloning projects manually, or with Virtual Projects.
@@ -277,9 +277,9 @@ namespace BattleCruisers.Scenes
                 .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
             Array.Resize(ref hashedBytes, 16);
             return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
-            #else
+#else
             return "";
-            #endif
+#endif
         }
 
         public async void GoogleLogin()
@@ -320,7 +320,7 @@ namespace BattleCruisers.Scenes
                 LogToScreen(ex.Message);
                 Debug.Log(ex.Message);
             }
-}
+        }
 
         public async void AnonymousLogin()
         {
@@ -459,7 +459,8 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                LoadingScreenController.Instance.Destroy();
+                if (LoadingScreenController.Instance != null)
+                    LoadingScreenController.Instance.Destroy();
             }
         }
 
@@ -482,7 +483,7 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCENE_NAVIGATION, sceneName);
             _lastSceneLoaded = sceneName;
         }
-        
+
         //void Update()
         //{
         //    if (!isUpdatingInternetConnectivity)
@@ -531,7 +532,7 @@ namespace BattleCruisers.Scenes
             AuthenticationService.Instance.SignedIn -= SignedIn;
             AuthenticationService.Instance.SignedOut -= SignedOut;
             AuthenticationService.Instance.SignInFailed -= SignFailed;
-            AuthenticationService.Instance.Expired -= Expired;            
+            AuthenticationService.Instance.Expired -= Expired;
         }
 
         public static async Task<bool> CheckForInternetConnection(int timeoutMs = 10000, string url = "https://www.google.com")

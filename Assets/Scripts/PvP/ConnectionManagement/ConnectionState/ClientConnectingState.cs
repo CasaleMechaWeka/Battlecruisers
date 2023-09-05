@@ -54,7 +54,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 {
                     throw new System.Exception("NetworkManager StartClient failed");
                 }
-                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+/*                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+                MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
             }
             catch (Exception e)
             {

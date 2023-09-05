@@ -258,7 +258,10 @@ namespace BattleCruisers.Scenes
 #if !THIRD_PARTY_PUBLISHER
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
-                GotoHubScreen();
+                if (LandingSceneGod.Instance.coinBattleLevelNum == -1)
+                    GotoHubScreen();
+                else
+                    GoToTrashScreen(LandingSceneGod.Instance.coinBattleLevelNum);
             }
             else if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
@@ -512,9 +515,7 @@ namespace BattleCruisers.Scenes
                     //_musicPlayer.PlayTrashMusic();
                     GoToScreen(trashScreen, playDefaultMusic: false);
                     //_musicPlayer.PlayTrashMusic();
-
                 }
-
             }
             else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
@@ -539,7 +540,6 @@ namespace BattleCruisers.Scenes
 
             if (_applicationModel.Mode == GameMode.Campaign || _applicationModel.Mode == GameMode.CoinBattle)
             {
-
                 levelToShowCutscene = 0;
                 GoToScreen(trashScreen, playDefaultMusic: false);
             }

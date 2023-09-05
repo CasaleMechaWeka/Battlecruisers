@@ -18,6 +18,7 @@ using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using System;
+using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -70,6 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         public Action CanceledMatchmaking;
         public GameObject fleeButton;
+        public GameObject vsAIButton;
 
         // PlayerA data should be stored here temporalliy
         public string playerAPrefabName;
@@ -97,6 +99,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             Instance = this;
             fleeButton.SetActive(false);
+            vsAIButton.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
@@ -173,78 +176,45 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
         }
+
+        public void VsAI()
+        {
+            ApplicationModelProvider.ApplicationModel.Mode = Data.GameMode.CoinBattle;
+            SaveCoinBattleSettings();
+
+            int maxLevel = dataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
+            int levelIndex = UnityEngine.Random.Range(1, maxLevel);
+            LandingSceneGod.Instance.coinBattleLevelNum = levelIndex;
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
+        }
+
+        private void SaveCoinBattleSettings()
+        {
+            dataProvider.GameModel.CoinBattle
+                = new CoinBattleModel(
+                    dataProvider.SettingsManager.AIDifficulty,
+                    dataProvider.GameModel.PlayerLoadout.Hull
+                    );
+            dataProvider.SaveGame();
+        }
         public async void FoundCompetitor()
         {
+            leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
+            leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
+            int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
+            ISpriteWrapper spriteWrapperA = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
+            leftPlayerRankImage.sprite = spriteWrapperA.Sprite;
+            leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
+            leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
 
-
-//            if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
-//            {
-                leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
-                leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
-                int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
-                ISpriteWrapper spriteWrapperA = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
-                leftPlayerRankImage.sprite = spriteWrapperA.Sprite;
-                leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
-                leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
-
-                rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
-                rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
-                int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
-                ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
-                rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
-                rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
-                leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
-//            }
-/*            else
-            {
-                leftPlayerName.text = SynchedServerData.Instance.playerBName.Value;
-                leftCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
-                int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
-                ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
-                leftPlayerRankImage.sprite = spriteWrapperB.Sprite;
-                leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
-                leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
-
-                rightPlayerName.text = SynchedServerData.Instance.playerAName.Value;
-                rightCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
-                int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
-                ISpriteWrapper spriteWrapperA = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
-                rightPlayerRankeImage.sprite = spriteWrapperA.Sprite;
-                rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
-                rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
-            }*/
-
-/*            switch (SynchedServerData.Instance.map.Value)
-            {
-                case Map.PracticeWreckyards:
-                    vsTitile.text = screensSceneStrings.GetString("Arena01Name");
-                    break;
-                case Map.OzPenitentiary:
-                    vsTitile.text = screensSceneStrings.GetString("Arena02Name");
-                    break;
-                case Map.UACUltimate:
-                    vsTitile.text = screensSceneStrings.GetString("Arena08Name");
-                    break;
-                case Map.RioBattlesport:
-                    vsTitile.text = screensSceneStrings.GetString("Arena07Name");
-                    break;
-                case Map.NuclearDome:
-                    vsTitile.text = screensSceneStrings.GetString("Arena05Name");
-                    break;
-                case Map.MercenaryOne:
-                    vsTitile.text = screensSceneStrings.GetString("Arena09Name");
-                    break;
-                case Map.SanFranciscoFightClub:
-                    vsTitile.text = screensSceneStrings.GetString("Arena03Name");
-                    break;
-                case Map.UACArena:
-                    vsTitile.text = screensSceneStrings.GetString("Arena06Name");
-                    break;
-                case Map.UACBattleNight:
-                    vsTitile.text = screensSceneStrings.GetString("Arena04Name");
-                    break;
-            }*/
-
+            rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
+            rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
+            int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
+            ISpriteWrapper spriteWrapperB = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
+            rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
+            rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
+            leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
             await Task.Delay(100);
             animator.SetBool("Found", true);
         }
