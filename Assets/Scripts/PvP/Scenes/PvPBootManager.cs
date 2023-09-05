@@ -186,7 +186,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),
             };
 
-
+            Debug.Log("=========> Map ---> " + ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap));
             List<QueryOrder> mOrders = new List<QueryOrder>
         {
             // new QueryOrder(true, QueryOrder.FieldOptions.AvailableSlots),

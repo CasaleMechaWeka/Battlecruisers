@@ -43,14 +43,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 return;
             }
-            if (wasVictory)
+            var Ratings = EloRating(SynchedServerData.Instance.playerARating.Value, SynchedServerData.Instance.playerBRating.Value, 30, wasVictory);
+            if (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
             {
-                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore += 1;
+                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
+                _applicationModel.DataProvider.SaveGame();
             }
             else
             {
-
-                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore -= 1;
+                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
+                _applicationModel.DataProvider.SaveGame();
             }
             _isCompleted = true;
 
@@ -69,6 +71,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
         }
 
+        private float Probability(float rating1, float rating2)
+        {
+            return 1.0f * 1.0f
+            / (1
+               + 1.0f
+                     * (float)(Math.Pow(
+                         10, 1.0f * (rating1 - rating2)
+                                 / 400)));
+        }
+        private (float, float) EloRating(float Ra, float Rb, int K, bool d)
+        {
+            float Pb = Probability(Ra, Rb);
+            float Pa = Probability(Rb, Ra);
+
+            if (d == true)
+            {
+                Ra = Ra + K * (1 - Pa);
+                Rb = Rb + K * (0 - Pb);
+            }
+
+            else
+            {
+                Ra = Ra + K * (0 - Pa);
+                Rb = Rb + K * (1 - Pb);
+            }
+            return (Ra, Rb);
+        }
+
         public async void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
             await Task.Delay(10);
@@ -77,14 +107,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 return;
             }
-            if (wasVictory)
+
+            var Ratings = EloRating(SynchedServerData.Instance.playerARating.Value, SynchedServerData.Instance.playerBRating.Value, 30, wasVictory);
+            if(SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
             {
-                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore += 1;
+                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
+                _applicationModel.DataProvider.SaveGame();
             }
             else
             {
-
-                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore -= 1;
+                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
+                _applicationModel.DataProvider.SaveGame();
             }
             _isCompleted = true;
             BattleCompleted?.Invoke(this, EventArgs.Empty);

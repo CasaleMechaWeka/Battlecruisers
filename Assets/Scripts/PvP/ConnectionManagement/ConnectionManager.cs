@@ -64,6 +64,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public ulong playerNetworkId;
         public string playerCaptainPrefabName;
         public int playerGameMap;
+        public float playerRating;
         public bool isDebug;
     }
 

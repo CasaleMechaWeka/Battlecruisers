@@ -175,8 +175,8 @@ namespace BattleCruisers.Data.Models
             set => _totalVoyages = value;
         }
 
-        private int _battleWinScore;
-        public int BattleWinScore
+        private float _battleWinScore;
+        public float BattleWinScore
         {
             get => _battleWinScore;
             set { _battleWinScore = value; if (_battleWinScore < 0) _battleWinScore = 0; }

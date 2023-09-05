@@ -89,6 +89,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 SynchedServerData.Instance.playerAName.Value = MatchmakingScreenController.Instance.playerAName;
                 SynchedServerData.Instance.playerAScore.Value = MatchmakingScreenController.Instance.playerAScore;
                 SynchedServerData.Instance.captainAPrefabName.Value = MatchmakingScreenController.Instance.captainAPrefabName;
+                SynchedServerData.Instance.playerARating.Value = MatchmakingScreenController.Instance.playerRating;
 
                 // Player B
                 SynchedServerData.Instance.playerBPrefabName.Value = connectionPayload.playerHullPrefabName;
@@ -96,8 +97,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 SynchedServerData.Instance.playerBName.Value = connectionPayload.playerName;
                 SynchedServerData.Instance.playerBScore.Value = connectionPayload.playerScore;
                 SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
+                SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
             }
-
             response.Approved = true;
             response.Pending = false;
             response.CreatePlayerObject = true;

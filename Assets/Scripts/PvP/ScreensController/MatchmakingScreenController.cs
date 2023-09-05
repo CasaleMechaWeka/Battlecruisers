@@ -77,6 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public string playerAName;
         public long playerAScore;
         public string captainAPrefabName;
+        public float playerRating;
 
         public static MatchmakingScreenController Instance { get; private set; }
 

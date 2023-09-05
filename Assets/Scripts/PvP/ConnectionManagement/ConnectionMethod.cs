@@ -50,6 +50,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 playerNetworkId = 0,
                 playerCaptainPrefabName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,
                 playerGameMap = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap,
+                playerRating = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore,
                 isDebug = Debug.isDebugBuild
             });
 
