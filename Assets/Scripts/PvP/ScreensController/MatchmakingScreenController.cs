@@ -128,6 +128,37 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             LookingForOpponentsText.text = commonStrings.GetString("LookingForOpponents");
             FoundOpponentText.text = commonStrings.GetString("FoundOpponent");
+
+            switch ((Map)dataProvider.GameModel.GameMap)
+            {
+                case Map.PracticeWreckyards:
+                    vsTitile.text = screensSceneStrings.GetString("Arena01Name");
+                    break;
+                case Map.OzPenitentiary:
+                    vsTitile.text = screensSceneStrings.GetString("Arena02Name");
+                    break;
+                case Map.UACUltimate:
+                    vsTitile.text = screensSceneStrings.GetString("Arena08Name");
+                    break;
+                case Map.RioBattlesport:
+                    vsTitile.text = screensSceneStrings.GetString("Arena07Name");
+                    break;
+                case Map.NuclearDome:
+                    vsTitile.text = screensSceneStrings.GetString("Arena05Name");
+                    break;
+                case Map.MercenaryOne:
+                    vsTitile.text = screensSceneStrings.GetString("Arena09Name");
+                    break;
+                case Map.SanFranciscoFightClub:
+                    vsTitile.text = screensSceneStrings.GetString("Arena03Name");
+                    break;
+                case Map.UACArena:
+                    vsTitile.text = screensSceneStrings.GetString("Arena06Name");
+                    break;
+                case Map.UACBattleNight:
+                    vsTitile.text = screensSceneStrings.GetString("Arena04Name");
+                    break;
+            }
         }
 
         public void SetTraskTalkData(ITrashTalkData trashTalkData, ILocTable commonString, ILocTable storyString)
@@ -183,7 +214,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
             }*/
 
-            switch (SynchedServerData.Instance.map.Value)
+/*            switch (SynchedServerData.Instance.map.Value)
             {
                 case Map.PracticeWreckyards:
                     vsTitile.text = screensSceneStrings.GetString("Arena01Name");
@@ -212,7 +243,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 case Map.UACBattleNight:
                     vsTitile.text = screensSceneStrings.GetString("Arena04Name");
                     break;
-            }
+            }*/
 
             await Task.Delay(100);
             animator.SetBool("Found", true);

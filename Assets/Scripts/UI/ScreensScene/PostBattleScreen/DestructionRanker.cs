@@ -32,7 +32,7 @@ namespace BattleCruisers.PostBattleScreen
             yield return null;
             int rank = CalculateRank(score);
             Assert.IsTrue(rank >= 0 && rank <= StaticPrefabKeys.Ranks.AllRanks.Count - 1);
-            if (rank > 0)
+            if (rank >= 0)
             {
                 destructionRanks[rank].SetActive(true);
             }
