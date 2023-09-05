@@ -213,15 +213,8 @@ namespace BattleCruisers.Scenes
                 _musicPlayer = Substitute.For<IMusicPlayer>();
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
+
             ShowCharlieOnMainMenu();
-
-            CaptainExo cap = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-            string playerName = _dataProvider.GameModel.PlayerName + "#" + cap.captainName;
-
-            if (IsInternetAccessable)
-            {
-                await AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
-            }
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
