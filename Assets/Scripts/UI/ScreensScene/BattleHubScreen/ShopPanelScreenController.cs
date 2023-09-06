@@ -56,16 +56,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
-            // Set default active button color
-            captainsButtonImage.color = new Color32(255, 255, 255, 255);
-
-
-            // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+            HighlightCaptainsNavButton();
             blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
         }
 
-
+        void OnEnable()
+        {
+            HighlightCaptainsNavButton();
+        }
 
         //All the button fucntions for shop screen
         public void GoHome()
@@ -82,18 +80,27 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             InitiaiseCaptains();
 
-            // Set this button to active color
-            captainsButtonImage.color = new Color32(255, 255, 255, 255);
-
-
-            // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+            HighlightCaptainsNavButton();
         }
 
         public void HeckesButton_OnClick()
         {
             InitialiseHeckles();
 
+            HighlightHecklesNavButton();
+        }
+
+        private void HighlightCaptainsNavButton()
+        {
+            // Set this button to active color
+            captainsButtonImage.color = new Color32(255, 255, 255, 255);
+
+            // Set the other button to inactive color
+            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+        }
+
+        private void HighlightHecklesNavButton()
+        {
             // Set this button to active color
             hecklesButtonImage.color = new Color32(255, 255, 255, 255);
 
