@@ -42,31 +42,12 @@ namespace BattleCruisers.Data.Models
                 _hull = value;
             }
         }
-
-        // Captain Logic
-
-        //        [SerializeField]
         private CaptainExoKey _currentCaptain;
         public CaptainExoKey CurrentCaptain
         {
             get => _currentCaptain;
             set => _currentCaptain = value;
         }
-
-        /*        private IList<int> _captainExos;
-                public IList<int> CaptainExos
-                {
-                    get => _captainExos;
-                    set => _captainExos = value;
-                }
-
-                private List<int> _heckles;
-                public List<int> Heckles
-                {
-                    get => _heckles;
-                    set => _heckles = value;
-                }*/
-
         private List<int> _currentHeckles = new List<int> { 0, 1, 2 };
         public List<int> CurrentHeckles
         {

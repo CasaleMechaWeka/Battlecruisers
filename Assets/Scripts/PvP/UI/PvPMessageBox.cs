@@ -7,20 +7,22 @@ using TMPro;
 using BattleCruisers.Data;
 using BattleCruisers.UI.Sound.Players;
 using System;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 
-namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {
-    public class MessageBox : MonoBehaviour
+    public class PvPMessageBox : MonoBehaviour
     {
-        public static MessageBox Instance;
+        public static PvPMessageBox Instance;
         public GameObject panel;
+        public GameObject blockUIPanel;
         public Text label;
-        public CanvasGroupButton okBtn;
+        public PvPCanvasGroupButton okBtn;
         private IDataProvider _dataProvider;
-        private ISingleSoundPlayer _soundPlayer;
+        private IPvPSingleSoundPlayer _soundPlayer;
         private Action _onClick;
 
-        public void Initialize(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer, Action onClick = null)
+        public void Initialize(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer, Action onClick = null)
         {
             _dataProvider = dataProvider;
             _soundPlayer = soundPlayer;
@@ -41,6 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             label.text = message;
             _onClick = onClick;
             panel.SetActive(true);
+            blockUIPanel.SetActive(true);
         }
 
         private void OnClick()
@@ -52,6 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void HideMessage()
         {
             panel.SetActive(false);
+            blockUIPanel.SetActive(false);
         }
     }
 }

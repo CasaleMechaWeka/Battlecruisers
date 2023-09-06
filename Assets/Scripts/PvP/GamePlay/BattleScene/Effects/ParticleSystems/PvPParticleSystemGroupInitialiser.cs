@@ -44,7 +44,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         protected virtual void Awake()
         {
             if (effects_parent == null)
-                effects_parent = transform.Find("Effects").gameObject;
+            {
+                if(transform.Find("Effects") != null)
+                {
+                    effects_parent = transform.Find("Effects").gameObject;
+                }
+            }                
         }
 
         protected override void SetVisible(bool isVisible)

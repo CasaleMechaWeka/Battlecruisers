@@ -39,7 +39,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private void _cruiserDestroyedMonitor_CruiserDestroyed(object sender, PvPCruiserDestroyedEventArgs e)
         {
             _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
-
             _gameEndHandler.HandleCruiserDestroyed(e.WasPlayerVictory, e.WasPlayerVictory ? GetTotalDestructionScore_Left() : GetTotalDestructionScore_Right());
             GameEnded?.Invoke(this, EventArgs.Empty);
         }
