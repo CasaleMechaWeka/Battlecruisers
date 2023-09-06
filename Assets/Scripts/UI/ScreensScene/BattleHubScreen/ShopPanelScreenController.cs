@@ -56,12 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
-            // Set default active button color
-            captainsButtonImage.color = new Color32(255, 255, 255, 255);
-
-
-            // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+            HighlightCaptainsNavButton();
             blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
         }
 
