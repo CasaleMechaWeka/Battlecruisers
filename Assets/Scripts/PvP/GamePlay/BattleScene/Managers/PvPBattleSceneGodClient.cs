@@ -231,23 +231,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            components = GetComponent<PvPBattleSceneGodComponents>();
+
+            _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
+            sceneNavigator = LandingSceneGod.SceneNavigator;
+            battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator, _battleSceneGodTunnel);
+
+            messageBox.gameObject.SetActive(true);
+            messageBox.Initialize();
+            messageBox.HideMessage();
+
+            Assert.IsNotNull(components);
+            components.Initialise(applicationModel.DataProvider.SettingsManager);
+
             if (!NetworkManager.Singleton.IsHost)
             {
                 IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
                 IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
                 prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             }
-
             prefabFactory = NetworkManager.Singleton.IsHost ? PvPBattleSceneGodServer.Instance.prefabFactory : prefabFactory;
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
-
-            components = GetComponent<PvPBattleSceneGodComponents>();
-            _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-
-            Assert.IsNotNull(components);
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
-
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
@@ -289,13 +294,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
 
-            messageBox.gameObject.SetActive(true);
-            messageBox.Initialize(dataProvider, factoryProvider.Sound.UISoundPlayer);
-            messageBox.HideMessage();
-
             IPvPButtonVisibilityFilters buttonVisibilityFilters = pvpBattleHelper.CreateButtonVisibilityFilters(playerCruiser);
-            sceneNavigator = LandingSceneGod.SceneNavigator;
-            battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator, _battleSceneGodTunnel);
             _battleSceneGodTunnel.battleCompletionHandler = battleCompletionHandler;
             PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, SynchedServerData.Instance.playerAName.Value, SynchedServerData.Instance.playerBName.Value);
             leftPanelComponents

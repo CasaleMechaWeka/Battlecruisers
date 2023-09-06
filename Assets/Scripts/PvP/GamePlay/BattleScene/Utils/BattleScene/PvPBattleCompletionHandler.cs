@@ -12,6 +12,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Unity.Services.Leaderboards;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -46,6 +47,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async void CompleteBattle(bool wasVictory, bool retryLevel)
         {
             await Task.Delay(10);
+            if(MatchmakingScreenController.Instance != null)
+            {
+                MatchmakingScreenController.Instance.Destroy();
+            }
             if (_isCompleted)
             {
                 return;
