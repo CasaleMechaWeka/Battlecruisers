@@ -39,6 +39,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void OnClientConnected(ulong clientId)
         {
+            MatchmakingScreenController.Instance.SetFoudVictimString();
             NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
 

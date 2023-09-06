@@ -275,7 +275,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             playerCruiser.StaticInitialise(commonStrings);
             enemyCruiser.StaticInitialise(commonStrings);
-
+            MatchmakingScreenController.Instance.AddProgress(1000); // to fullfill loading bar
             cameraComponents = cameraInitialiser.Initialise(
                 dataProvider.SettingsManager,
                 playerCruiser,

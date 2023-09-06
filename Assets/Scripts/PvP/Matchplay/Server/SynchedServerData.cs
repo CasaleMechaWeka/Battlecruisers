@@ -9,6 +9,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
@@ -194,6 +195,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             if (!IsHost)
             {
                 Load(prefabPath);
+                MatchmakingScreenController.Instance.AddProgress(1);
             }
 
             void Load(string _prefabPath)
@@ -220,6 +222,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             Debug.Log($"Client acknowledged successful prefab load with hash: {prefabHash}");
             DynamicPrefabLoadingUtilities.RecordThatClientHasLoadedAPrefab(prefabHash,
                 rpcParams.Receive.SenderClientId);
+            MatchmakingScreenController.Instance.AddProgress(1);
         }
 
         [ClientRpc]

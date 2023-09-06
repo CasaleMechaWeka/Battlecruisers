@@ -46,6 +46,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Text vsTitile;
         public Text LookingForOpponentsText;
         public Text FoundOpponentText;
+        public Slider LoadingBar;
+        public GameObject LoadingBarParent;
 
         private ILocTable commonStrings;
         private IDataProvider dataProvider;
@@ -100,6 +102,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Instance = this;
             fleeButton.SetActive(false);
             vsAIButton.SetActive(false);
+            LoadingBarParent.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
@@ -163,7 +166,15 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     break;
             }
         }
-
+        public void SetFoudVictimString()
+        {
+            LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
+            LoadingBarParent.SetActive(true);
+        }
+        public void AddProgress(int step)
+        {
+            LoadingBar.value += step;
+        }
         public void SetTraskTalkData(ITrashTalkData trashTalkData, ILocTable commonString, ILocTable storyString)
         {
             _trashTalkData = trashTalkData;
