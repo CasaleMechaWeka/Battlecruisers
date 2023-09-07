@@ -395,6 +395,12 @@ namespace BattleCruisers.Scenes
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
             GoToScreen(homeScreen);
+
+            if (_gameModel.PremiumEdition)
+            {
+                thankYouPlane.SetTrigger("Play");
+                _isPlaying = true;
+            }
         }
 
         public void GoToLevelsScreen()
