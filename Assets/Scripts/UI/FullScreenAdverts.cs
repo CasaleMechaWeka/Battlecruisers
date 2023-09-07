@@ -20,7 +20,6 @@ public class FullScreenAdverts : MonoBehaviour
 
     private ISettingsManager settingsManager; // For fullscreen ads on premium :)
 
-
     // Start is called before the first frame update
     void Start()
     {

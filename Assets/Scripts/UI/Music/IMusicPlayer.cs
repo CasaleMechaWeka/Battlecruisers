@@ -9,5 +9,6 @@
         void PlayCutsceneMusic();
         void PlayCreditsMusic();
         void Stop();
+        void PlayAdsMusic();
     }
 }
