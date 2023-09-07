@@ -329,7 +329,6 @@ namespace BattleCruisers.Data.Serialization
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
                         dataProivder.GameModel.Heckles[index].isOwned = true;
                     }
-
                 }
                 dataProivder.SaveGame();
                 return true;

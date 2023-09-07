@@ -9,20 +9,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private PvPFilterToggler _enabledToggler;
 
-        public PvPCanvasGroupButton overviewButton, playerCruiserButton, aiCruiserButton;
+        public PvPCanvasGroupButton overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton;
 
         public void Initialise(IPvPBroadcastingFilter enabledFilter, IPvPCameraFocuser cameraFocuser, IPvPSingleSoundPlayer singleSoundPlayer)
         {
             base.Initialise();
 
-            PvPHelper.AssertIsNotNull(overviewButton, playerCruiserButton, aiCruiserButton);
+            PvPHelper.AssertIsNotNull(overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton);
             PvPHelper.AssertIsNotNull(enabledFilter, cameraFocuser);
 
             overviewButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnOverview);
-            playerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftPlayerCruiser);
-            aiCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightPlayerCruiser);
+            leftPlayerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftPlayerCruiser);
+            rightPlayerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightPlayerCruiser);
 
-            _enabledToggler = new PvPFilterToggler(enabledFilter, overviewButton, playerCruiserButton, aiCruiserButton);
+            _enabledToggler = new PvPFilterToggler(enabledFilter, overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton);
         }
     }
 }
