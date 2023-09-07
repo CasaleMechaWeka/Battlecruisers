@@ -141,8 +141,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
 
             await Task.Delay(100);
+
+            DateTime utcNow = DateTime.UtcNow;
+            List<int> heckleBaseList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            for (int i = 0; i < heckleBaseList.Count; i++)
+            {
+                heckleBaseList[i] = (19 * heckleBaseList[i] + 10 * utcNow.Day + utcNow.Month) % 279;
+            }
+
             byte ii = 0;
-            foreach (int index in _dataProvider.GameModel.HeckleList)
+            foreach (int index in heckleBaseList)
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
                 heckleItem.GetComponent<HeckleItemController>().StaticInitialise(_soundPlayer, _dataProvider.GameModel.Heckles[index], hecklesContainer, ii);
