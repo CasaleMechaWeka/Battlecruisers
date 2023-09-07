@@ -102,10 +102,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     icamera);
             }
 
-
-
-
-
             defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
