@@ -247,6 +247,7 @@ namespace BattleCruisers.Scenes
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
 #if !THIRD_PARTY_PUBLISHER
+                PlayAdvertisementMusic();
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
@@ -256,6 +257,7 @@ namespace BattleCruisers.Scenes
                 _applicationModel.ShowPostBattleScreen = false;
                 _applicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
+                PlayAdvertisementMusic();
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
                 if (LandingSceneGod.Instance.coinBattleLevelNum == -1)
@@ -268,6 +270,7 @@ namespace BattleCruisers.Scenes
                 _applicationModel.ShowPostBattleScreen = false;
                 //_applicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
+                PlayAdvertisementMusic();
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
                 GotoHubScreen();
@@ -619,6 +622,31 @@ namespace BattleCruisers.Scenes
         public void LoadBattle1v1Mode()
         {
 
+        }
+
+        public void PlayAdvertisementMusic()
+        {
+            if (_applicationModel.DataProvider.GameModel.Settings.ShowAds)
+            {
+                _musicPlayer.PlayAdsMusic();
+            }
+        }
+
+        public void PlayMusicCloseAdsButton()
+        {
+            //Only called via Unity Button event when clicking the close button on a FullScreenAd
+            if (_gameModel.LastBattleResult.WasVictory)
+            {
+                _musicPlayer.PlayVictoryMusic();
+            }
+            else if (!_gameModel.LastBattleResult.WasVictory)
+            {
+                _musicPlayer.PlayDefeatMusic();
+            }
+            else 
+            {
+                _musicPlayer.PlayScreensSceneMusic();
+            }
         }
 
         public CaptainExo GetCaptainExoData(CaptainExoKey key)
