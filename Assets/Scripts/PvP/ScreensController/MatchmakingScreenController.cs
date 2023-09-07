@@ -19,12 +19,20 @@ using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using System;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
     public class MatchmakingScreenController : ScreenController
     {
         private ISceneNavigator _sceneNavigator;
+        private IPrefabFactory _prefabFactory;
+        private IApplicationModel _applicationModel;
+        private IDataProvider _dataProvider;
+        private IGameModel _gameModel;
         private ITrashTalkData _trashTalkData;
         private ILocTable _storyStrings;
         public Animator animator;
@@ -83,6 +91,12 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public string captainAPrefabName;
         public float playerRating;
 
+        private CaptainExo charlie;
+        public GameObject characterOfCharlie;
+        public Transform ContainerCaptain;
+        public GameObject cameraOfCharacter;
+
+
         public static MatchmakingScreenController Instance { get; private set; }
 
 
@@ -125,6 +139,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             DontDestroyOnLoad(gameObject);
 
+            _applicationModel = ApplicationModelProvider.ApplicationModel;
+            _dataProvider = _applicationModel.DataProvider;
+            _gameModel = _dataProvider.GameModel;
+            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
+
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
+            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+
             leftCruiserName.text = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
@@ -134,6 +156,11 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             LookingForOpponentsText.text = commonStrings.GetString("LookingForOpponents");
             FoundOpponentText.text = commonStrings.GetString("FoundOpponent");
+
+            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
+            charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            characterOfCharlie = charlie.gameObject;
 
             switch ((Map)dataProvider.GameModel.GameMap)
             {
