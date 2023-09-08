@@ -220,7 +220,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
             {
-                playerInfoPanelController.gameObject.SetActive(false);
+                //playerInfoPanelController.gameObject.SetActive(false);
                 GoToScreen(arenaSelectPanel);
             }
             else
