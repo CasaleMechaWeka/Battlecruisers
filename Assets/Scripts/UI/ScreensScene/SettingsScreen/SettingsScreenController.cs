@@ -285,7 +285,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void DisplayUserID()
         {
-            if (AuthenticationService.Instance.PlayerId != null)
+            if (AuthenticationService.Instance != null && AuthenticationService.Instance.PlayerId != null)
             {
                 idContainer.SetActive(true);
                 idString.text = "ID: " + AuthenticationService.Instance.PlayerId;
