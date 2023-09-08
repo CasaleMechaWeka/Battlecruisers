@@ -626,16 +626,17 @@ namespace BattleCruisers.Scenes
 
         public void PlayAdvertisementMusic()
         {
-            if (_applicationModel.DataProvider.GameModel.Settings.ShowAds)
-            {
-                _musicPlayer.PlayAdsMusic();
-            }
+            //if (_applicationModel.DataProvider.GameModel.Settings.ShowAds || !_applicationModel.DataProvider.GameModel.PremiumEdition)
+            //{
+            //    _musicPlayer.PlayAdsMusic();
+            //}
+            _musicPlayer.PlayAdsMusic();
         }
 
         public void PlayMusicCloseAdsButton()
         {
             //Only called via Unity Button event when clicking the close button on a FullScreenAd
-            if (_gameModel.HasAttemptedTutorial || _gameModel.FirstNonTutorialBattle)
+            if (_gameModel.HasAttemptedTutorial && _gameModel.FirstNonTutorialBattle)
             {
                 _musicPlayer.PlayVictoryMusic();
             }
