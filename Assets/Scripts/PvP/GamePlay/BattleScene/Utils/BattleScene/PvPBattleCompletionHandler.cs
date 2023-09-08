@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async void CompleteBattle(bool wasVictory, bool retryLevel)
         {
             await Task.Delay(10);
-            if(MatchmakingScreenController.Instance != null)
+            if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.Destroy();
             }
@@ -88,7 +88,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             }
             if (wasVictory)
             {
-                PvPBattleSceneGodClient.Instance.messageBox.ShowMessage("The opponent left match!!!", () => _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true));
+                if (PvPBattleSceneGodClient.Instance.wasOpponentDisconnected)
+                    PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(PvPBattleSceneGodClient.Instance.commonStrings.GetString("EnemyLeft"), () => _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true));
+                else
+                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
             }
             else
                 _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
@@ -126,6 +129,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
             await Task.Delay(10);
+
+            if (MatchmakingScreenController.Instance != null)
+            {
+                MatchmakingScreenController.Instance.Destroy();
+            }
 
             if (_isCompleted)
             {

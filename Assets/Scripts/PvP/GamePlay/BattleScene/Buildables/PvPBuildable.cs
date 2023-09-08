@@ -608,6 +608,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
+            if(IsHost)
+            {
+                if (Faction == PvPFaction.Blues)
+                    PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+                else
+                    PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+            }
         }
 
         protected virtual void OnBuildableCompleted_PvPClient()

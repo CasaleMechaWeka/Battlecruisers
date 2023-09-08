@@ -5,5 +5,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public interface IPvPCruiserDeathCameraFocuser
     {
         void FocusOnLosingCruiser(IPvPCruiser losingCruiser);
+        void FocusOnDisconnectedCruiser(bool isHost);
     }
 }

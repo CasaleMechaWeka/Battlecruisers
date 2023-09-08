@@ -174,28 +174,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditmax", out creditMax);
+            
 
             PopulateScreen();
-/*            // Populate screen:
-            if (PvPBattleSceneGodServer.deadBuildables != null)
-            {
-                // real values:
-                PopulateScreen();
-            }
-            else
-            {
-                // fake values if the screen is being launched for testing purposes:
-                PopulateScreenFake();
-            }*/
 
-            // Start animating:
             StartCoroutine(AnimateScreen());
         }
 
-        /*        private void OnEnable()
-                {
-                    LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-                }*/
 
         // Gets all the GameModel vars.
         // Turns them into local vars for frequently-used values,
@@ -205,12 +190,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             // Get some values from GameModel and its friends:
             allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-            levelTimeInSeconds = PvPBattleSceneGodTunnel._levelTimeInSeconds/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.PlayedTime].GetPlayedTime()*/;
 
-            aircraftVal = PvPBattleSceneGodTunnel._aircraftVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Aircraft].GetTotalDamageInCredits()*/;
-            shipsVal = PvPBattleSceneGodTunnel._shipsVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Ships].GetTotalDamageInCredits()*/;
-            cruiserVal = PvPBattleSceneGodTunnel._cruiserVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Cruiser].GetTotalDamageInCredits()*/;
-            buildingsVal = PvPBattleSceneGodTunnel._buildingsVal/*PvPBattleSceneGodServer.deadBuildables[PvPTargetType.Buildings].GetTotalDamageInCredits()*/;
+
+            if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+            {
+                levelTimeInSeconds = PvPBattleSceneGodTunnel._levelTimeInSeconds;
+                aircraftVal = PvPBattleSceneGodTunnel._aircraftVal;
+                shipsVal = PvPBattleSceneGodTunnel._shipsVal;
+                cruiserVal = PvPBattleSceneGodTunnel._cruiserVal;
+                buildingsVal = PvPBattleSceneGodTunnel._buildingsVal;
+            }
+
+            if (PvPBattleSceneGodTunnel.isDisconnected == 1)
+            {
+                levelTimeInSeconds = PvPBattleSceneGodTunnel._playerALevelTimeInSeconds;
+                aircraftVal = PvPBattleSceneGodTunnel._playerAAircraftVal;
+                shipsVal = PvPBattleSceneGodTunnel._playerAShipsVal;
+                cruiserVal = PvPBattleSceneGodTunnel._playerACruiserVal;
+                buildingsVal = PvPBattleSceneGodTunnel._playerABuildingsVal;
+            }
+            if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+            {
+                levelTimeInSeconds = PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds;
+                aircraftVal = PvPBattleSceneGodTunnel._playerBAircraftVal;
+                shipsVal = PvPBattleSceneGodTunnel._playerBShipsVal;
+                cruiserVal = PvPBattleSceneGodTunnel._playerBCruiserVal;
+                buildingsVal = PvPBattleSceneGodTunnel._playerBBuildingsVal;
+            }
+
 
             // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
             destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
@@ -218,57 +225,161 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             for (int i = 0; i < destructionCards.Length; i++)
             {
                 destructionCards[i].destructionValue.text = FormatNumber(destructionValues[i]);
-                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._totalDestroyed[i];
+                if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+                    destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._totalDestroyed[i];
+                if (PvPBattleSceneGodTunnel.isDisconnected == 1)
+                    destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._playerATotoalDestroyed[i];
+                if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+                    destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._playerBTotoalDestroyed[i];
             }
 
             /*destructionCards[2].image.sprite = PvPBattleSceneGodServer.enemyCruiserSprite;*/
-            switch (PvPBattleSceneGodTunnel._enemyCruiserName)
-            {
-                case "BlackRig":
-                    destructionCards[2].image.sprite = BlackRig;
-                    break;
-                case "Bullshark":
-                    destructionCards[2].image.sprite = Bullshark;
-                    break;
-                case "Eagle":
-                    destructionCards[2].image.sprite = Eagle;
-                    break;
-                case "Hammerhead":
-                    destructionCards[2].image.sprite = Hammerhead;
-                    break;
-                case "HuntressBoss":
-                    destructionCards[2].image.sprite = HuntressBoss;
-                    break;
-                case "Longbow":
-                    destructionCards[2].image.sprite = Longbow;
-                    break;
-                case "ManOfWarBoss":
-                    destructionCards[2].image.sprite = ManOfWarBoss;
-                    break;
-                case "Megalodon":
-                    destructionCards[2].image.sprite = Megalodon;
-                    break;
-                case "Raptor":
-                    destructionCards[2].image.sprite = Raptor;
-                    break;
-                case "Rickshaw":
-                    destructionCards[2].image.sprite = Rickshaw;
-                    break;
-                case "Rockjaw":
-                    destructionCards[2].image.sprite = Rockjaw;
-                    break;
-                case "TasDevil":
-                    destructionCards[2].image.sprite = TasDevil;
-                    break;
-                case "Trident":
-                    destructionCards[2].image.sprite = Trident;
-                    break;
-                case "Yeti":
-                    destructionCards[2].image.sprite = Yeti;
-                    break;
+            if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+                switch (PvPBattleSceneGodTunnel._enemyCruiserName)
+                {
+                    case "BlackRig":
+                        destructionCards[2].image.sprite = BlackRig;
+                        break;
+                    case "Bullshark":
+                        destructionCards[2].image.sprite = Bullshark;
+                        break;
+                    case "Eagle":
+                        destructionCards[2].image.sprite = Eagle;
+                        break;
+                    case "Hammerhead":
+                        destructionCards[2].image.sprite = Hammerhead;
+                        break;
+                    case "HuntressBoss":
+                        destructionCards[2].image.sprite = HuntressBoss;
+                        break;
+                    case "Longbow":
+                        destructionCards[2].image.sprite = Longbow;
+                        break;
+                    case "ManOfWarBoss":
+                        destructionCards[2].image.sprite = ManOfWarBoss;
+                        break;
+                    case "Megalodon":
+                        destructionCards[2].image.sprite = Megalodon;
+                        break;
+                    case "Raptor":
+                        destructionCards[2].image.sprite = Raptor;
+                        break;
+                    case "Rickshaw":
+                        destructionCards[2].image.sprite = Rickshaw;
+                        break;
+                    case "Rockjaw":
+                        destructionCards[2].image.sprite = Rockjaw;
+                        break;
+                    case "TasDevil":
+                        destructionCards[2].image.sprite = TasDevil;
+                        break;
+                    case "Trident":
+                        destructionCards[2].image.sprite = Trident;
+                        break;
+                    case "Yeti":
+                        destructionCards[2].image.sprite = Yeti;
+                        break;
+                }
 
-            }
-            destructionCards[2].description.text = PvPBattleSceneGodTunnel._enemyCruiserName/*PvPBattleSceneGodServer.enemyCruiserName*/;
+            if (PvPBattleSceneGodTunnel.isDisconnected == 1)
+                switch (PvPBattleSceneGodTunnel._playerACruiserName)
+                {
+                    case "BlackRig":
+                        destructionCards[2].image.sprite = BlackRig;
+                        break;
+                    case "Bullshark":
+                        destructionCards[2].image.sprite = Bullshark;
+                        break;
+                    case "Eagle":
+                        destructionCards[2].image.sprite = Eagle;
+                        break;
+                    case "Hammerhead":
+                        destructionCards[2].image.sprite = Hammerhead;
+                        break;
+                    case "HuntressBoss":
+                        destructionCards[2].image.sprite = HuntressBoss;
+                        break;
+                    case "Longbow":
+                        destructionCards[2].image.sprite = Longbow;
+                        break;
+                    case "ManOfWarBoss":
+                        destructionCards[2].image.sprite = ManOfWarBoss;
+                        break;
+                    case "Megalodon":
+                        destructionCards[2].image.sprite = Megalodon;
+                        break;
+                    case "Raptor":
+                        destructionCards[2].image.sprite = Raptor;
+                        break;
+                    case "Rickshaw":
+                        destructionCards[2].image.sprite = Rickshaw;
+                        break;
+                    case "Rockjaw":
+                        destructionCards[2].image.sprite = Rockjaw;
+                        break;
+                    case "TasDevil":
+                        destructionCards[2].image.sprite = TasDevil;
+                        break;
+                    case "Trident":
+                        destructionCards[2].image.sprite = Trident;
+                        break;
+                    case "Yeti":
+                        destructionCards[2].image.sprite = Yeti;
+                        break;
+                }
+            if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+                switch (PvPBattleSceneGodTunnel._playerBCruiserName)
+                {
+                    case "BlackRig":
+                        destructionCards[2].image.sprite = BlackRig;
+                        break;
+                    case "Bullshark":
+                        destructionCards[2].image.sprite = Bullshark;
+                        break;
+                    case "Eagle":
+                        destructionCards[2].image.sprite = Eagle;
+                        break;
+                    case "Hammerhead":
+                        destructionCards[2].image.sprite = Hammerhead;
+                        break;
+                    case "HuntressBoss":
+                        destructionCards[2].image.sprite = HuntressBoss;
+                        break;
+                    case "Longbow":
+                        destructionCards[2].image.sprite = Longbow;
+                        break;
+                    case "ManOfWarBoss":
+                        destructionCards[2].image.sprite = ManOfWarBoss;
+                        break;
+                    case "Megalodon":
+                        destructionCards[2].image.sprite = Megalodon;
+                        break;
+                    case "Raptor":
+                        destructionCards[2].image.sprite = Raptor;
+                        break;
+                    case "Rickshaw":
+                        destructionCards[2].image.sprite = Rickshaw;
+                        break;
+                    case "Rockjaw":
+                        destructionCards[2].image.sprite = Rockjaw;
+                        break;
+                    case "TasDevil":
+                        destructionCards[2].image.sprite = TasDevil;
+                        break;
+                    case "Trident":
+                        destructionCards[2].image.sprite = Trident;
+                        break;
+                    case "Yeti":
+                        destructionCards[2].image.sprite = Yeti;
+                        break;
+                }
+
+            if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+                destructionCards[2].description.text = PvPBattleSceneGodTunnel._enemyCruiserName;
+            if(PvPBattleSceneGodTunnel.isDisconnected == 1)
+                destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerACruiserName;
+            if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+                destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerBCruiserName;
 
             //### Screen Setup ###
 
@@ -396,7 +507,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 levelBar.maxValue = nextLevelXP;
                 levelBar.value = currentXP;
             }
-            
+
             CalculateRewards();
 
             screenTitle.text = "Debug Mode";
@@ -713,9 +824,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 applicationModel.DataProvider.SaveGame();
 
                 //Update Leaderboard
-/*                double score = (double)applicationModel.DataProvider.GameModel.BattleWinScore;
-                const string LeaderboardID = "BC-PvP1v1Leaderboard";
-                await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);*/
+                /*                double score = (double)applicationModel.DataProvider.GameModel.BattleWinScore;
+                                const string LeaderboardID = "BC-PvP1v1Leaderboard";
+                                await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);*/
 
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
                 await applicationModel.DataProvider.SyncCoinsToCloud();

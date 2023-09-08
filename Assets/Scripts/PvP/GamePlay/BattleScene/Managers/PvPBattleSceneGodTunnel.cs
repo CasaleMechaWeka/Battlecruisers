@@ -43,7 +43,93 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static long[] _totalDestroyed;
         public static string _enemyCruiserName;
 
+        /// <summary>
+        ///  need to hold all values here to handle player disconnection
+        /// </summary>
+        /// 
+        public static float _playerALevelTimeInSeconds;
+        public static long _playerAAircraftVal;
+        public static long _playerAShipsVal;
+        public static long _playerACruiserVal;
+        public static long _playerABuildingsVal;
+        public static long[] _playerATotoalDestroyed = new long[4];
+        public static string _playerACruiserName;
 
+        public static float _playerBLevelTimeInSeconds;
+        public static long _playerBAircraftVal;
+        public static long _playerBShipsVal;
+        public static long _playerBCruiserVal;
+        public static long _playerBBuildingsVal;
+        public static long[] _playerBTotoalDestroyed = new long[4];
+        public static string _playerBCruiserName;
+
+        public static int isDisconnected = 0;
+
+        private void Awake()
+        {
+            isDisconnected = 0;
+            _playerALevelTimeInSeconds = 0;
+            _playerAAircraftVal = 0;
+            _playerAShipsVal = 0;
+            _playerACruiserVal = 0;
+            _playerABuildingsVal = 0;
+            _playerATotoalDestroyed = new long[4];
+            _playerACruiserName = "";
+
+            _playerBLevelTimeInSeconds = 0;
+            _playerBAircraftVal = 0;
+            _playerBShipsVal = 0;
+            _playerBCruiserVal = 0;
+            _playerBBuildingsVal = 0;
+            _playerBTotoalDestroyed = new long[4];
+            _playerBCruiserName = "";
+        }
+
+        public static void AddAllBuildablesOfLeftPlayer(PvPTargetType type, float val)
+        {
+            switch (type)
+            {
+                case PvPTargetType.Aircraft:
+                    _playerAAircraftVal += (long)val;
+                    _playerATotoalDestroyed[0]++;
+                    break;
+                case PvPTargetType.Ships:
+                    _playerAShipsVal += (long)val;
+                    _playerATotoalDestroyed[1]++;
+                    break;
+                case PvPTargetType.Cruiser:
+                    _playerACruiserVal += (long)val;
+                    _playerATotoalDestroyed[2]++;
+                    break;
+                case PvPTargetType.Buildings:
+                    _playerABuildingsVal += (long)val;
+                    _playerATotoalDestroyed[3]++;
+                    break;
+            }
+        }
+
+        public static void AddAllBuildablesOfRightPlayer(PvPTargetType type, float val)
+        {
+            switch (type)
+            {
+                case PvPTargetType.Aircraft:
+                    _playerBAircraftVal += (long)val;
+                    _playerBTotoalDestroyed[0]++;
+                    break;
+                case PvPTargetType.Ships:
+                    _playerBShipsVal += (long)val;
+                    _playerBTotoalDestroyed[1]++;
+                    break;
+                case PvPTargetType.Cruiser:
+                    _playerBCruiserVal += (long)val;
+                    _playerBTotoalDestroyed[2]++;
+                    break;
+                case PvPTargetType.Buildings:
+                    _playerBBuildingsVal += (long)val;
+                    _playerBTotoalDestroyed[3]++;
+                    break;
+            }
+        }
 
         public override void OnNetworkSpawn()
         {
@@ -61,7 +147,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (IsServer)
             {
-                if(wasVictory)
+                if (wasVictory)
                 {
                     float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
                     long aircraftVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();
@@ -108,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (IsServer)
             {
-                if(wasPlayerVictory)
+                if (wasPlayerVictory)
                 {
                     float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
                     long aircraftVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();

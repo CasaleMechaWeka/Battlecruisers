@@ -57,7 +57,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
                 _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.None;
             }
-
         }
 
         private static long GetTotalDestructionScore_Left()

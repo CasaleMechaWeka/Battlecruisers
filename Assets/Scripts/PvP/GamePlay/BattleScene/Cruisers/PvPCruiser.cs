@@ -152,6 +152,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
             if (NetworkManager.Singleton.IsServer)
                 _healthTracker.SetMaxHealth();
+
+            if(IsHost)
+            {
+                if (Faction == PvPFaction.Blues)
+                {
+                    PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, (float)maxHealth);
+                    PvPBattleSceneGodTunnel._playerACruiserName = Name;
+                }                    
+                else
+                {
+                    PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(this.TargetType, (float)maxHealth);
+                    PvPBattleSceneGodTunnel._playerBCruiserName = Name;
+                }                    
+            }
         }
 
 
@@ -275,23 +289,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
                     PvPHelper.GetOppositeFaction(Faction));
 
-            /*            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
-                        Assert.IsNotNull(unitReadySignalInitialiser);
-                        _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);*/
-
             _CruiserHasActiveDrones = args.HasActiveDrones;
             _CruiserHasActiveDrones.ValueChanged += CruiserHasActiveDrones_ValueChanged;
-
-            /*            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
-                        Assert.IsNotNull(droneSoundFeedbackInitialiser);
-                        _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);*/
-
-
-
-
-
-
-
 
             if (IsPlayerCruiser)
             {
@@ -310,8 +309,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     Debug.Log(e.Message);
                 }
 
-            }
-
+            }            
         }
 
 
@@ -345,8 +343,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
-
+            
             Assert.IsNotNull(building);
+            
             building.Activate(
                 new PvPBuildingActivationArgs(
                     this,
@@ -356,6 +355,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _buildingDoubleClickHandler));
 
             slot.SetBuilding(building);
+            
 
             building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
@@ -445,10 +445,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     if (Faction == PvPFaction.Blues)
                     {
                         PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
+                        PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += _time.DeltaTime;
                     }
                     if (Faction == PvPFaction.Reds)
                     {
                         PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
+                        PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += _time.DeltaTime;
                     }
                 }
             }

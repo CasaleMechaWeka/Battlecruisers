@@ -40,6 +40,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
+        public void FocusOnDisconnectedCruiser(bool isHost)
+        {
+            if(isHost)
+            {
+                _cameraFocuser.FocusOnRightPlayerCruiserDeath();
+            }
+            else
+            {
+                _cameraFocuser.FocusOnLeftPlayerCruiserDeath();
+            }
+        }
+
         private bool IsNukeCauseOfDeath(IPvPCruiser losingCruiser)
         {
             return losingCruiser.LastDamagedSource is PvPNukeLauncherController;
