@@ -48,7 +48,7 @@ namespace BattleCruisers.Data.Models
             get => _currentCaptain;
             set => _currentCaptain = value;
         }
-        private List<int> _currentHeckles = new List<int> { 0, 1, 2 };
+        private List<int> _currentHeckles = unlockedHeckles();
         public List<int> CurrentHeckles
         {
             get => _currentHeckles;
@@ -59,14 +59,13 @@ namespace BattleCruisers.Data.Models
         private List<string> _ownedExosKeys = new List<string>();
         public IReadOnlyList<string> OwnedExosKeys => _ownedExosKeys;
 
-
-
         public Loadout(
             HullKey hull,
             List<BuildingKey> buildings,
             List<UnitKey> units,
             Dictionary<BuildingCategory, List<BuildingKey>> buildLimt,
-            Dictionary<UnitCategory, List<UnitKey>> unitLimit)
+            Dictionary<UnitCategory, List<UnitKey>> unitLimit,
+            GameModel gameModel = null)
         {
             Hull = hull;
             _buildings = buildings;
@@ -198,6 +197,21 @@ namespace BattleCruisers.Data.Models
             List<UnitKey> unitList = _unit[category];
             unitList.Add(keyToAdd);
             _unit[category] = unitList;
+        }
+
+        private static List<int> unlockedHeckles()
+        {
+            List<int> unlockedHeckles = new List<int>();
+            int numHecklesUnlocked = 3;
+            while (unlockedHeckles.Count < numHecklesUnlocked)
+            {
+                int unlockHeckle = UnityEngine.Random.Range(0, 279);
+                if (!unlockedHeckles.Contains(unlockHeckle))
+                {
+                    unlockedHeckles.Add(unlockHeckle);
+                }
+            }
+            return unlockedHeckles;
         }
 
         public void RemoveBuildItem(BuildingCategory category, BuildingKey keyToRemove)

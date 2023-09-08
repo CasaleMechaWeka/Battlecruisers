@@ -198,12 +198,13 @@ namespace BattleCruisers.Data.Static
         {
             HullKey initialHull = GetInitialHull();
             // TEMP  For final game, don't add ALL the prefabs :D
-            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits(), GetInitialbuildingLimit(), GetInitialUnitLimit());
             //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
+
+            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits(), GetInitialbuildingLimit(), GetInitialUnitLimit());
 
             bool hasAttemptedTutorial = false;
 
-            return new GameModel(
+            GameModel game = new GameModel(
                 hasAttemptedTutorial,
                 0,
                 0,
@@ -212,7 +213,13 @@ namespace BattleCruisers.Data.Static
                 // TEMP  Do not unlock all hulls & buildables at the game start :P
                 unlockedHulls: new List<HullKey>() { initialHull },
                 unlockedBuildings: GetInitialBuildings(),
-                unlockedUnits: GetInitialUnits());
+                unlockedUnits: GetInitialUnits()
+                );
+
+            foreach (int i in playerLoadout.CurrentHeckles)
+                game._heckles[i].isOwned = true;
+
+            return game;
             //unlockedHulls: AllHullKeys(),
             //unlockedBuildings: AllBuildingKeys(),
             //unlockedUnits: AllUnitKeys());

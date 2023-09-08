@@ -63,7 +63,7 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-                                                _saveVersion = 2;
+            _saveVersion = 2;
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -106,7 +106,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // unlocked hulls
-            foreach(var hull in _unlockedHulls)
+            foreach (var hull in _unlockedHulls)
             {
                 HullKey hk = new HullKey(hull);
                 game.AddUnlockedHull(hk);
@@ -156,7 +156,7 @@ namespace BattleCruisers.Data.Models
             // building limits
             // the data structure here is pretty tough to process.
             Dictionary<BuildingCategory, List<BuildingKey>> buildLimits = new Dictionary<BuildingCategory, List<BuildingKey>>();
-            foreach(string buildCat in _buildLimits.Keys)
+            foreach (string buildCat in _buildLimits.Keys)
             {
                 Enum.TryParse(buildCat, out BuildingCategory bc);
 
@@ -194,7 +194,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // loadout construction actually happens finally:
-            game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits);
+            game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits, game);
 
             // current heckles
             if (_currentHeckles != null)
@@ -203,7 +203,7 @@ namespace BattleCruisers.Data.Models
             }
             else
             {
-                game.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
+                game.PlayerLoadout.CurrentHeckles = unlockedHeckles(game);
             }
 
             // current captain
@@ -243,6 +243,22 @@ namespace BattleCruisers.Data.Models
                 }
             }
             return result;
+        }
+
+        private List<int> unlockedHeckles(GameModel game)
+        {
+            List<int> unlockedHeckles = new List<int>();
+            int numHecklesUnlocked = 3;
+            while (unlockedHeckles.Count < numHecklesUnlocked)
+            {
+                int unlockHeckle = UnityEngine.Random.Range(0, 279);
+                if (!unlockedHeckles.Contains(unlockHeckle))
+                {
+                    game._heckles[unlockHeckle].isOwned = true;
+                    unlockedHeckles.Add(unlockHeckle);
+                }
+            }
+            return unlockedHeckles;
         }
 
         private List<string> computeUnlockedHulls(IReadOnlyCollection<PrefabKeys.HullKey> hulls)
@@ -309,7 +325,7 @@ namespace BattleCruisers.Data.Models
         {
             var result = new Dictionary<string, string>();
 
-            foreach(BuildingKey building in loadout.GetBuildings(BuildingCategory.Factory))
+            foreach (BuildingKey building in loadout.GetBuildings(BuildingCategory.Factory))
             {
                 string category = BuildingCategory.Factory.ToString();
                 string prefabName = building.PrefabName;
@@ -387,7 +403,7 @@ namespace BattleCruisers.Data.Models
                 buildLimits.TryGetValue(cat, out buildings);
 
                 Dictionary<string, string> parsedBuildings = new Dictionary<string, string>();
-                foreach(BuildingKey unparsedBuilding in buildings)
+                foreach (BuildingKey unparsedBuilding in buildings)
                 {
                     string localCategory = unparsedBuilding.BuildingCategory.ToString();
                     string prefabName = unparsedBuilding.PrefabName;
