@@ -45,8 +45,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(commonStrings);
         }
-
-
     }
 }
 
