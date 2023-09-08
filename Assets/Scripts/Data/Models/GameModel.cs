@@ -443,7 +443,7 @@ namespace BattleCruisers.Data.Models
             _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
 
             _heckles = new List<HeckleData> {
-                   new HeckleData("Heckle000", owned: true, id: 0), new HeckleData("Heckle001",owned: true,id: 1), new HeckleData("Heckle002",owned : true, id: 2), new HeckleData("Heckle003",id: 3), new HeckleData("Heckle004",id: 4),
+                   new HeckleData("Heckle000", id: 0), new HeckleData("Heckle001",id: 1), new HeckleData("Heckle002", id: 2), new HeckleData("Heckle003",id: 3), new HeckleData("Heckle004",id: 4),
                    new HeckleData("Heckle005",id: 5), new HeckleData("Heckle006",id: 6), new HeckleData("Heckle007",id: 7), new HeckleData("Heckle008",id: 8), new HeckleData("Heckle009",id: 9),
                    new HeckleData("Heckle010",id:10), new HeckleData("Heckle011",id: 11), new HeckleData("Heckle012",id: 12), new HeckleData("Heckle013",id: 13), new HeckleData("Heckle014",id: 14),
                    new HeckleData("Heckle015",id: 15), new HeckleData("Heckle016",id: 16), new HeckleData("Heckle017",id: 17), new HeckleData("Heckle018",id: 18), new HeckleData("Heckle019",id: 19),
