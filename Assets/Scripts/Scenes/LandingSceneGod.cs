@@ -136,7 +136,7 @@ namespace BattleCruisers.Scenes
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             LogToScreen("ApplicationModel set.");
 
-            bool startingState = await CheckForInternetConnection(); 
+            bool startingState = await CheckForInternetConnection();
 
             if (startingState)
                 CurrentInternetConnectivity = ConnectedState;
@@ -165,7 +165,13 @@ namespace BattleCruisers.Scenes
             try
             {
                 var options = new InitializationOptions();
+#if DEV
+                options.SetEnvironmentName("dev");
+                Debug.Log("===> dev environment");
+#else
                 options.SetEnvironmentName("production");
+                Debug.Log("===> production environment");
+#endif
 
                 var profile = GetProfile();
 
