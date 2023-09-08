@@ -7,6 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
 
         private PvPExplosion _explosion;
+        private AudioSource _audioSource;
         public virtual IPvPExplosion Initialise()
         {
             _explosion = new PvPExplosion(
@@ -19,6 +20,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         protected override void Awake()
         {
+            _audioSource = GetComponentInChildren<AudioSource>();
+            if (_audioSource is not null)
+                _audioSource.playOnAwake = false;
             base.Awake();
             _explosion = new PvPExplosion(
                        this,
@@ -51,8 +55,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 IsVisible = isVisible;
             }
             if (isVisible)
+            {
                 _explosion.Play();
+                if (_audioSource is not null)
+                    _audioSource.Play();
+            }
         }
     }
-
 }
