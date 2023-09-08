@@ -105,17 +105,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
 
-            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPUnitKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
+/*            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPUnitKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
 
             if (IsLoaded)
-            {
+            {*/
                 PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
                 buildableWrapper.GetComponent<NetworkObject>().Spawn();
                 buildableWrapper.gameObject.SetActive(true);
                 buildableWrapper.StaticInitialise(_commonStrings);
                 buildableWrapper.Buildable.Initialise(factoryProvider);
                 return buildableWrapper.Buildable;
-            }
+        //    }
 
             return null;
             // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
@@ -139,26 +139,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task<IPvPExplosion> CreateExplosion(PvPExplosionKey explosionKey)
         {
             PvPExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
-            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(explosionKey, explosionPrefab);
+/*            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(explosionKey, explosionPrefab);
             if (IsLoaded)
-            {
+            {*/
                 PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
                 newExplosion.GetComponent<NetworkObject>().Spawn();
                 return newExplosion.Initialise();
-            }
+        //    }
             return null;
         }
 
         public async Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey)
         {
             PvPShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
-            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(shipDeathKey, shipDeathPrefab);
+/*            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(shipDeathKey, shipDeathPrefab);
             if (IsLoaded)
-            {
+            {*/
                 PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
                 newShipDeath.GetComponent<NetworkObject>().Spawn();
                 return newShipDeath.CreateShipDeath();
-            }
+        //    }
             return null;
         }
 
@@ -170,28 +170,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsNotNull(factoryProvider);
 
             TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
-            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(prefabKey, prefab);
+/*            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(prefabKey, prefab);
             if (IsLoaded)
-            {
+            {*/
                 TProjectile projectile = Object.Instantiate(prefab);
                 projectile.GetComponent<NetworkObject>().Spawn();
                 projectile.Initialise(_commonStrings, factoryProvider);
                 return projectile;
-            }
+        //    }
 
             return null;
         }
 
         public async Task<IPvPDroneController> CreateDrone()
         {
-            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone, _prefabCache.Drone);
+/*            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone, _prefabCache.Drone);
             if (IsLoaded)
-            {
+            {*/
                 PvPDroneController newDrone = Object.Instantiate(_prefabCache.Drone);
                 newDrone.GetComponent<NetworkObject>().Spawn();
                 newDrone.StaticInitialise(_commonStrings);
                 return newDrone;
-            }
+        //    }
             return null;
         }
 

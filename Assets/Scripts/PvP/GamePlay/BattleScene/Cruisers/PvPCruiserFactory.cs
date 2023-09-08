@@ -56,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             PvPCruiser playerACruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerACruiser);
 
-            await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerACruiser, playerACruiserPrefab);
+        //    await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerACruiser, playerACruiserPrefab);
 
             // Vector3 pos = new Vector3(-CRUISER_OFFSET_IN_M, playerACruiser.YAdjustmentInM, 0);
             PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerACruiserPrefab, SynchedServerData.Instance.playerAClientNetworkId.Value, -CRUISER_OFFSET_IN_M);
@@ -69,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             PvPCruiser playerBCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
 
-            await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerBCruiser, playerBCruiserPrefab);
+        //    await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerBCruiser, playerBCruiserPrefab);
 
             PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerBCruiserPrefab, SynchedServerData.Instance.playerBClientNetworkId.Value, CRUISER_OFFSET_IN_M);
 

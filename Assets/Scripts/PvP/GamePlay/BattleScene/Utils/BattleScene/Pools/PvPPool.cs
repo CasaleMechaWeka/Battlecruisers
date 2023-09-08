@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools
@@ -30,6 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 var item = await _itemFactory.CreateItem();
                 //_items.Push(_itemFactory.CreateItem());
                 _items.Push(item);
+             //   MatchmakingScreenController.Instance.AddProgress(1);
             }
         }
 

@@ -196,7 +196,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void SetFoudVictimString()
         {
             LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
-            LoadingBarParent.SetActive(true);
+        //    LoadingBarParent.SetActive(true);
         }
         public void AddProgress(int step)
         {

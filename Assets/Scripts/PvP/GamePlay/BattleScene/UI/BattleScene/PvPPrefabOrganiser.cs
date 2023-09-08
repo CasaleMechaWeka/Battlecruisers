@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 foreach (PvPBuildingKey buildingKey in pvp_buildingKeys)
                 {
                     IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
-                    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
+                //    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
                     categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
                 }
             }

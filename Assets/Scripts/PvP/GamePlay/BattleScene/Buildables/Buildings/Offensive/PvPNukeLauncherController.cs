@@ -124,9 +124,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private async void CreateNuke()
         {
             PvPProjectileKey prefabKey = new PvPProjectileKey("PvPNuke");
-            var isLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(prefabKey, nukeMissilePrefab);
+/*            var isLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(prefabKey, nukeMissilePrefab);
             if (isLoaded)
-            {
+            {*/
                 _launchedNuke = Instantiate(nukeMissilePrefab);
                 _launchedNuke.gameObject.GetComponent<NetworkObject>().Spawn();
                 IPvPTargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
@@ -143,7 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 // Make nuke face upwards (rotation is set in Initialise() above)
                 _launchedNuke.transform.eulerAngles = new Vector3(0, 0, 90);
-            }
+        //    }
         }
 
         private void SiloHalf_ReachedDesiredAngle(object sender, EventArgs e)
