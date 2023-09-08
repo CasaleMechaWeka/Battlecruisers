@@ -114,6 +114,7 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
             Helper.AssertIsNotNull(messageHandler);
+            LogToScreen("Asserts complete.");
 
             landingCanvas.SetActive(true);
             loginPanel.SetActive(true);
@@ -130,10 +131,12 @@ namespace BattleCruisers.Scenes
             retryPanel.SetActive(false);
             labelRetry.SetActive(true);
             spinRetry.SetActive(false);
+            LogToScreen("Active objects set.");
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            LogToScreen("ApplicationModel set.");
 
-            bool startingState = await CheckForInternetConnection();
+            bool startingState = await CheckForInternetConnection(); 
 
             if (startingState)
                 CurrentInternetConnectivity = ConnectedState;
@@ -141,7 +144,7 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = DisconnectedState;
 
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
-
+            LogToScreen("StartingState, Internet Connection: " + startingState);
 
             if (Instance == null)
                 Instance = this;
@@ -204,6 +207,7 @@ namespace BattleCruisers.Scenes
             {
                 // do nothing
                 Debug.Log(e.Message);
+                LogToScreen("Consent Check Error: No Internet");
                 // messageHandler.ShowMessage("Please check Internet connection!");
             }
 
@@ -215,10 +219,11 @@ namespace BattleCruisers.Scenes
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             hecklesStrings = await LocTableFactory.Instance.LoadHecklesTableAsync();
             screenSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
+            LogToScreen("Loc Tables loaded.");
 
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-
+            LogToScreen("Hint provider loaded.");
 
             //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
@@ -232,20 +237,30 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            // add event handlers to authentication
-            AuthenticationService.Instance.SignedIn += SignedIn;
-            AuthenticationService.Instance.SignedOut += SignedOut;
-            AuthenticationService.Instance.Expired += Expired;
-            AuthenticationService.Instance.SignInFailed += SignFailed;
+            if (CurrentInternetConnectivity.IsConnected)
+            {
+                // add event handlers to authentication
+                AuthenticationService.Instance.SignedIn += SignedIn;
+                AuthenticationService.Instance.SignedOut += SignedOut;
+                AuthenticationService.Instance.Expired += Expired;
+                AuthenticationService.Instance.SignInFailed += SignFailed;
+                LogToScreen("Auth events registered.");
 
-            _GoogleAuthentication = new GoogleAuthentication();
-            _GoogleAuthentication.InitializePlayGamesLogin();
-            //await AttemptSilentSigningAsync();
+                _GoogleAuthentication = new GoogleAuthentication();
+                _GoogleAuthentication.InitializePlayGamesLogin();
+                //await AttemptSilentSigningAsync();
+                LogToScreen("Google Authentication service created");
 
-            // should be enabled after completion initialization
-            googleBtn.Initialise(soundPlayer, GoogleLogin);
+                // should be enabled after completion initialization
+                googleBtn.Initialise(soundPlayer, GoogleLogin);
+                googleBtn.gameObject.SetActive(true);
+            }
+            else
+            {
+                LogToScreen("No internet.");
+            }
+
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
-            googleBtn.gameObject.SetActive(true);
             guestBtn.gameObject.SetActive(true);
         }
 

@@ -92,9 +92,19 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             SpriteFetcher fetcher = new SpriteFetcher();
             rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
 
+            int nextLevelXP;
+            int currentXP;
             long lDes = dataProvider.GameModel.LifetimeDestructionScore;
-            int nextLevelXP = (int)CalculateLevelXP(rank);
-            int currentXP = (int)CalculateXpToNextLevel((int)lDes);
+            if (lDes > 0)
+            {
+                nextLevelXP = (int)CalculateLevelXP(rank);
+                currentXP = (int)CalculateXpToNextLevel((int)lDes);
+            }
+            else
+            {
+                nextLevelXP = (int)CalculateLevelXP(rank);
+                currentXP = 0;
+            }
             totalDamage.text = FormatNumber(lDes);
             xpBar.setValues(currentXP, nextLevelXP);
             currentXPString.text = FormatNumber(currentXP);

@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Utils;
@@ -87,9 +88,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
         TestSingleton();
     }
 
-    void Start()
+    async void Start()
     {
-        if (storeController == null) { InitializePurchasing(); }
+        bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+        if (IsInternetAccessable && storeController == null) { InitializePurchasing(); }
     }
 
 

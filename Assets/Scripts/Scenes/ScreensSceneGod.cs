@@ -635,7 +635,11 @@ namespace BattleCruisers.Scenes
         public void PlayMusicCloseAdsButton()
         {
             //Only called via Unity Button event when clicking the close button on a FullScreenAd
-            if (_gameModel.LastBattleResult.WasVictory)
+            if (_gameModel.HasAttemptedTutorial || _gameModel.FirstNonTutorialBattle)
+            {
+                _musicPlayer.PlayVictoryMusic();
+            }
+            else if (_gameModel.LastBattleResult.WasVictory)
             {
                 _musicPlayer.PlayVictoryMusic();
             }
