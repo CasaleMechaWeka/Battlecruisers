@@ -110,5 +110,21 @@ namespace BattleCruisers.UI.Loading
             Destroy(gameObject);
             // enabled = false;
         }
+
+        void OnApplicationQuit()
+        {
+            try
+            {
+                applicationModel.DataProvider.SyncCoinsToCloud();
+                applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
+        }
     }
 }
