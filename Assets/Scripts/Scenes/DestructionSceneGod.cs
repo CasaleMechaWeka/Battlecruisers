@@ -255,6 +255,10 @@ namespace BattleCruisers.Scenes
             {
                 CalculateRewards();
             }
+            else if (applicationModel.Mode == GameMode.CoinBattle)
+            {
+                CalculateRewards();
+            }
 
             // Set XP bar current/max values:
             if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
