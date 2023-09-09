@@ -200,6 +200,8 @@ namespace BattleCruisers.Data.Models
             if (_currentHeckles != null)
             {
                 game.PlayerLoadout.CurrentHeckles = _currentHeckles;
+                foreach (int i in _currentHeckles)
+                    game._heckles[i].isOwned = true;
             }
             else
             {
