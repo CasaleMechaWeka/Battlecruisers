@@ -635,11 +635,18 @@ namespace BattleCruisers.Scenes
 
         public void PlayMusicCloseAdsButton()
         {
+            if (_gameModel.LastBattleResult == null)
+            {
+                // If the player has exited the tutorial without progressing to the first level!
+                _musicPlayer.PlayVictoryMusic();
+                return;
+            }
             //Only called via Unity Button event when clicking the close button on a FullScreenAd
             if (_gameModel.HasAttemptedTutorial && _gameModel.FirstNonTutorialBattle)
             {
                 _musicPlayer.PlayVictoryMusic();
             }
+
             else if (_gameModel.LastBattleResult.WasVictory)
             {
                 _musicPlayer.PlayVictoryMusic();
@@ -648,7 +655,7 @@ namespace BattleCruisers.Scenes
             {
                 _musicPlayer.PlayDefeatMusic();
             }
-            else 
+            else
             {
                 _musicPlayer.PlayScreensSceneMusic();
             }
