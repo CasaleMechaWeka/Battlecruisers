@@ -113,7 +113,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public GameObject obj_RightBackgroundPanel;
         public GameObject obj_ToolTipActivator;
 
-
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
