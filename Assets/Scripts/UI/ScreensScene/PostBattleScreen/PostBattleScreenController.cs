@@ -19,6 +19,7 @@ using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.Analytics;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -110,17 +111,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-                try
+                if (UnityServices.State != ServicesInitializationState.Uninitialized)
                 {
-                    AnalyticsService.Instance.CustomData("Battle",
-                                                                        _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
-                                                                                                           logName,
-                                                                                                           _applicationModel.UserWonSkirmish));
-                    AnalyticsService.Instance.Flush();
-                }
-                catch (ConsentCheckException e)
-                {
-                    Debug.Log("Error reason = " + e.Reason.ToString());
+                    try
+                    {
+                        AnalyticsService.Instance.CustomData("Battle",
+                                                                            _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                                                               logName,
+                                                                                                               _applicationModel.UserWonSkirmish));
+                        AnalyticsService.Instance.Flush();
+                    }
+                    catch (ConsentCheckException e)
+                    {
+                        Debug.Log("Error reason = " + e.Reason.ToString());
+                    }
                 }
 
 
@@ -138,17 +142,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-                try
+                if (UnityServices.State != ServicesInitializationState.Uninitialized)
                 {
-                    AnalyticsService.Instance.CustomData("Battle",
-                                                                        _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
-                                                                                                           logName,
-                                                                                                           _applicationModel.UserWonSkirmish));
-                    AnalyticsService.Instance.Flush();
-                }
-                catch (ConsentCheckException e)
-                {
-                    Debug.Log("Error reason = " + e.Reason.ToString());
+                    try
+                    {
+                        AnalyticsService.Instance.CustomData("Battle",
+                                                                            _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                                                               logName,
+                                                                                                               _applicationModel.UserWonSkirmish));
+                        AnalyticsService.Instance.Flush();
+                    }
+                    catch (ConsentCheckException e)
+                    {
+                        Debug.Log("Error reason = " + e.Reason.ToString());
+                    }
                 }
 
 
@@ -166,17 +173,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-                try
+                if (UnityServices.State != ServicesInitializationState.Uninitialized)
                 {
-                    AnalyticsService.Instance.CustomData("Battle",
-                                                                _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
-                                                                                                   logName,
-                                                                                                   _applicationModel.UserWonSkirmish));
-                    AnalyticsService.Instance.Flush();
-                }
-                catch (ConsentCheckException e)
-                {
-                    Debug.Log("Error reason = " + e.Reason.ToString());
+                    try
+                    {
+                        AnalyticsService.Instance.CustomData("Battle",
+                                                                    _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                                                       logName,
+                                                                                                       _applicationModel.UserWonSkirmish));
+                        AnalyticsService.Instance.Flush();
+                    }
+                    catch (ConsentCheckException e)
+                    {
+                        Debug.Log("Error reason = " + e.Reason.ToString());
+                    }
                 }
 
                 // User completed a level
@@ -314,14 +324,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-            try
+            if (UnityServices.State != ServicesInitializationState.Uninitialized)
             {
-                AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
-            }
-            catch(ConsentCheckException ex)
-            {
-                Debug.Log(ex.Message);
+                try
+                {
+                    AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.Flush();
+                }
+                catch (ConsentCheckException ex)
+                {
+                    Debug.Log(ex.Message);
+                }
             }
          
         }
@@ -392,14 +405,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-            try
+            if (UnityServices.State != ServicesInitializationState.Uninitialized)
             {
-                AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
-            }
-            catch(ConsentCheckException ex)
-            {
-                Debug.Log(ex.Message);                   
+                try
+                {
+                    AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.Flush();
+                }
+                catch (ConsentCheckException ex)
+                {
+                    Debug.Log(ex.Message);
+                }
             }
        
         }
