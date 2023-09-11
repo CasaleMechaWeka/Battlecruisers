@@ -10,6 +10,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using TMPro;
 using Unity.Services.Authentication;
+using Unity.Services.Core;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -285,7 +286,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void DisplayUserID()
         {
-            if (AuthenticationService.Instance != null && AuthenticationService.Instance.PlayerId != null)
+            if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null)
             {
                 idContainer.SetActive(true);
                 idString.text = "ID: " + AuthenticationService.Instance.PlayerId;
