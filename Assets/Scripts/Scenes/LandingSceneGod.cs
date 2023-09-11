@@ -243,7 +243,7 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            if (CurrentInternetConnectivity.IsConnected)
+            if (UnityServices.State != ServicesInitializationState.Uninitialized)
             {
                 // add event handlers to authentication
                 AuthenticationService.Instance.SignedIn += SignedIn;
@@ -251,7 +251,10 @@ namespace BattleCruisers.Scenes
                 AuthenticationService.Instance.Expired += Expired;
                 AuthenticationService.Instance.SignInFailed += SignFailed;
                 LogToScreen("Auth events registered.");
+            }
 
+            if (CurrentInternetConnectivity.IsConnected)
+            {
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await AttemptSilentSigningAsync();
