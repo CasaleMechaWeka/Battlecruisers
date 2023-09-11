@@ -197,7 +197,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            Debug.Log("===> show explosion");
             OnPlayExplosionSound(PvPSoundType.Explosions, _impactSound.AudioClip.name, transform.position);
         }
 
