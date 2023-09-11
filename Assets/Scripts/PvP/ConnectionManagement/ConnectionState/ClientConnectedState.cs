@@ -20,8 +20,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 m_lobbyServiceFacade.BeginTracking();                
             }
             MatchmakingScreenController.Instance.SetFoudVictimString();
-            /*            MatchmakingScreenController.Instance.fleeButton.SetActive(false);
-                        MatchmakingScreenController.Instance.vsAIButton.SetActive(false);*/
+            MatchmakingScreenController.Instance.fleeButton.SetActive(false);
+            MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
         }
 
         public override void Exit() { }
