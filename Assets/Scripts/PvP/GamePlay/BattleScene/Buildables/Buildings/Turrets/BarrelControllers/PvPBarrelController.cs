@@ -169,12 +169,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void _updater_Updated(object sender, EventArgs e)
         {
-            _fireIntervalManager.ProcessTimeInterval(_updater.DeltaTime);
-            PvPBarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
-            bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
-            if (!wasFireSuccessful)
+            if(this != null)
             {
-                CeaseFire();
+                _fireIntervalManager.ProcessTimeInterval(_updater.DeltaTime);
+                PvPBarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
+                bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
+                if (!wasFireSuccessful)
+                {
+                    CeaseFire();
+                }
             }
         }
 

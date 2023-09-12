@@ -67,6 +67,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 MuzzleFlashEffectClientRpc();
         }
 
+        public override void CleanUp()
+        {
+            base.CleanUp();
+        }
+
         [ClientRpc]
         void MuzzleFlashEffectClientRpc()
         {
