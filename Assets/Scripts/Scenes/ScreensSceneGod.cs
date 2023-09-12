@@ -257,8 +257,8 @@ namespace BattleCruisers.Scenes
                 _applicationModel.ShowPostBattleScreen = false;
                 _applicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
-                PlayAdvertisementMusic();
-                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+                //PlayAdvertisementMusic();
+                //fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
                 if (LandingSceneGod.Instance.coinBattleLevelNum == -1)
                     GotoHubScreen();
