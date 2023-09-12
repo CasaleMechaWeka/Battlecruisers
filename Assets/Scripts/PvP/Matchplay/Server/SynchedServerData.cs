@@ -39,9 +39,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         public Action OnNetworkSpawned;
 
-
-
-
         public float NetworkSpawnTimeoutSeconds { get; private set; } = 3000;
         int m_SynchronousSpawnAckCount = 0;
         float m_SynchronousSpawnTimeoutTimer;
@@ -53,7 +50,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         }
         void Start()
         {
-            // DynamicPrefabLoadingUtilities.Init(NetworkManager.Singleton);
         }
 
 
@@ -88,10 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             }
         }
 
-
-
         static SynchedServerData sync_ServerData;
-
 
         public void TryPreLoadBuildablePrefab(PvPBuildingCategory category, string prefabName)
         {

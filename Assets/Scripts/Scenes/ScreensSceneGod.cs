@@ -516,7 +516,7 @@ namespace BattleCruisers.Scenes
                 {
                     levelToShowCutscene = levelNum;
                     //GoToScreen(trashScreen, playDefaultMusic: false);
-                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, false);
                 }
                 else
                 {

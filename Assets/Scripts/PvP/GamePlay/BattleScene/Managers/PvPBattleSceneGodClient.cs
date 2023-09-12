@@ -179,7 +179,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         }
 
-        void OnClientDisconnect()
+        void DetectClientDisconnection()
         {
             if (NetworkManager.Singleton != null)
             {
@@ -619,12 +619,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public void OnTunnelBattleCompleted_ValueChanged(/*Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal*/)
         {
-            /*            if (newVal == Tunnel_BattleCompletedState.Completed)
-                        {*/
             windManager?.Stop();
             windManager?.DisposeManagedState();
-            // _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= OnTunnelBattleCompleted_ValueChanged;
-            // }
         }
 
         private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
@@ -663,7 +659,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 LoadAllCaptains();
             }
-            OnClientDisconnect();
+            DetectClientDisconnection();
         }
         IEnumerator iLoadedPvPScene()
         {
@@ -728,8 +724,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 InitialiseAsync();
             }
         }
-
-
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,

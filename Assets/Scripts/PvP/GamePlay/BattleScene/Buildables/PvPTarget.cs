@@ -43,8 +43,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float NotZero = 99999f;
 
         // network variables
-        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = NotZero };
-        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };
+/*        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = NotZero };
+        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };*/
+
+        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> ();
+        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> ();
 
         public Quaternion Rotation
         {
