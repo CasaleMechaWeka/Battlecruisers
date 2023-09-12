@@ -243,15 +243,12 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            if (UnityServices.State != ServicesInitializationState.Uninitialized)
-            {
-                // add event handlers to authentication
-                AuthenticationService.Instance.SignedIn += SignedIn;
-                AuthenticationService.Instance.SignedOut += SignedOut;
-                AuthenticationService.Instance.Expired += Expired;
-                AuthenticationService.Instance.SignInFailed += SignFailed;
-                LogToScreen("Auth events registered.");
-            }
+            // add event handlers to authentication
+            AuthenticationService.Instance.SignedIn += SignedIn;
+            AuthenticationService.Instance.SignedOut += SignedOut;
+            AuthenticationService.Instance.Expired += Expired;
+            AuthenticationService.Instance.SignInFailed += SignFailed;
+            LogToScreen("Auth events registered.");
 
             if (CurrentInternetConnectivity.IsConnected)
             {
