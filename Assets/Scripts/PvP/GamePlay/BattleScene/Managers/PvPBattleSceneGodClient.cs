@@ -647,7 +647,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             new PvPDebouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.Idle));
         }
 
-        private void IdleDronesEnded_ValueChanged(bool oldVal, bool newVale)
+        private void IdleDronesEnded_ValueChanged(bool oldVal, bool newVal)
         {
 
         }
