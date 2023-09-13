@@ -243,12 +243,20 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            // add event handlers to authentication
-            AuthenticationService.Instance.SignedIn += SignedIn;
-            AuthenticationService.Instance.SignedOut += SignedOut;
-            AuthenticationService.Instance.Expired += Expired;
-            AuthenticationService.Instance.SignInFailed += SignFailed;
-            LogToScreen("Auth events registered.");
+            try
+            {
+                // add event handlers to authentication
+                AuthenticationService.Instance.SignedIn += SignedIn;
+                AuthenticationService.Instance.SignedOut += SignedOut;
+                AuthenticationService.Instance.Expired += Expired;
+                AuthenticationService.Instance.SignInFailed += SignFailed;
+                LogToScreen("Auth events registered.");
+            }
+            catch
+            {
+                LogToScreen("Auth events failed the register.");
+                Debug.LogError("Auth events failed the register.");
+            }
 
             if (CurrentInternetConnectivity.IsConnected)
             {
