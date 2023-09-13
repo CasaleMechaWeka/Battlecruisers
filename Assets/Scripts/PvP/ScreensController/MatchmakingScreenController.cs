@@ -198,7 +198,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
             //    LoadingBarParent.SetActive(true);
 
-            /* Iterate through all child objects of ContainerCaptain
+            // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)
             {
                 // Try to get an Animator component from the child object
@@ -220,7 +220,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                         }
                     }
                 }
-            } */
+            }
         }
         public void AddProgress(int step)
         {
