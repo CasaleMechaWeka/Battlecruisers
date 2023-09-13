@@ -245,6 +245,12 @@ namespace BattleCruisers.Scenes
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
 
+            if (LandingSceneGod.Instance.coinBattleLevelNum == -2)
+            {
+                applicationModel.Mode = GameMode.CoinBattle;
+                LandingSceneGod.Instance.coinBattleLevelNum = -1;
+            }
+
             // Campaign specific reward handling; only reward on first completion:
             if (applicationModel.Mode == GameMode.Campaign && applicationModel.DataProvider.GameModel.SelectedLevel == applicationModel.DataProvider.GameModel.NumOfLevelsCompleted + 1)
             {
@@ -252,10 +258,6 @@ namespace BattleCruisers.Scenes
             }
             // Everything else:
             else if (applicationModel.Mode != GameMode.Skirmish && applicationModel.Mode != GameMode.Campaign)
-            {
-                CalculateRewards();
-            }
-            else if (applicationModel.Mode == GameMode.CoinBattle)
             {
                 CalculateRewards();
             }
