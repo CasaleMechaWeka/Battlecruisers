@@ -229,22 +229,6 @@ namespace BattleCruisers.Data.Models
             set => _iaps = value;
         }
 
-        // for populating the shop while offline
-        public List<int> _lastKnownCaptainShop;
-        public List<int> LastKnownCaptainShop
-        {
-            get => _lastKnownCaptainShop;
-            set => _lastKnownCaptainShop = value;
-        }
-
-        // for populating the shop while offline
-        public List<int> _lastKnownHeckleShop;
-        public List<int> LastKnownHeckleShop
-        {
-            get => _lastKnownHeckleShop;
-            set => _lastKnownHeckleShop = value;
-        }
-
         private int _gameMap;
         public int GameMap
         {

@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text blackMarketText;
         private bool InternetConnection;
 
-        public async Task InitialiseAsync(
+        public async Task Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
