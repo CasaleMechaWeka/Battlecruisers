@@ -32,10 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ILocTable commonStrings;
         public Image captainsButtonImage, hecklesButtonImage;
         public Text blackMarketText;
-
         private bool InternetConnection;
-        private List<int> captainsList;
-        private List<int> hecklesList;
 
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
@@ -55,12 +52,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             /*            buyCaptainButton.Initialise(_soundPlayer, PurchaseCaptainExo, this);
                         buyHeckleButton.Initialise(_soundPlayer, PurchaseHeckle, this);*/
             captainsButton.Initialise(_soundPlayer, CaptainsButton_OnClick);
-            hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick); 
+            hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
-            InitializeLists();
 
             InternetConnection = await LandingSceneGod.CheckForInternetConnection();
             if (UnityServices.State != ServicesInitializationState.Uninitialized && InternetConnection)
@@ -73,37 +69,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             else
             {
                 blackMarketButton.gameObject.SetActive(false);
-            }
-        }
-
-        private void InitializeLists()
-        {
-            // Logic with internet:
-            if (UnityServices.State != ServicesInitializationState.Uninitialized && InternetConnection)
-            {
-                DateTime utcNow = DateTime.UtcNow;
-
-                List<int> hecklesList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-                for (int i = 0; i < hecklesList.Count; i++)
-                {
-                    hecklesList[i] = (19 * hecklesList[i] + 10 * utcNow.Day + utcNow.Month) % 279;
-                }
-
-                List<int> captainsList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-                for (int i = 0; i < captainsList.Count; i++)
-                {
-                    captainsList[i] = 1 + ((2 * captainsList[i] + utcNow.Day + utcNow.Month) % 39);
-                }
-                captainsList.Insert(0, 0);
-
-                _dataProvider.GameModel.LastKnownHeckleShop = hecklesList;
-                _dataProvider.GameModel.LastKnownCaptainShop = captainsList;
-            }
-            // Logic without internet:
-            else
-            {
-                hecklesList = _dataProvider.GameModel.LastKnownHeckleShop;
-                captainsList = _dataProvider.GameModel.LastKnownCaptainShop;
             }
         }
 
@@ -166,6 +131,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public async void InitialiseHeckles()
         {
+
             captainsContainer.gameObject.SetActive(false);
             hecklesMessage.gameObject.SetActive(true);
             hecklesContainer.gameObject.SetActive(true);
@@ -188,8 +154,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             await Task.Delay(100);
 
+            DateTime utcNow = DateTime.UtcNow;
+            List<int> heckleBaseList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            for (int i = 0; i < heckleBaseList.Count; i++)
+            {
+                heckleBaseList[i] = (19 * heckleBaseList[i] + 10 * utcNow.Day + utcNow.Month) % 279;
+            }
+
             byte ii = 0;
-            foreach (int index in hecklesList)
+            foreach (int index in heckleBaseList)
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
                 heckleItem.GetComponent<HeckleItemController>().StaticInitialise(_soundPlayer, _dataProvider.GameModel.Heckles[index], hecklesContainer, ii);
@@ -226,6 +199,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public async void InitiaiseCaptains()
         {
+
             captainsContainer.gameObject.SetActive(true);
             hecklesContainer.gameObject.SetActive(false);
             hecklesMessage.gameObject.SetActive(false);
@@ -242,8 +216,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
+            DateTime utcNow = DateTime.UtcNow;
+            List<int> exoBaseList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            for (int i = 0; i < exoBaseList.Count; i++)
+            {
+                exoBaseList[i] = 1 + ((2 * exoBaseList[i] + utcNow.Day + utcNow.Month) % 39);
+            }
+            exoBaseList.Insert(0, 0);
+
             byte ii = 0;
-            foreach (int index in captainsList)
+            foreach (int index in exoBaseList)
             {
                 GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
                 CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[index]), captainCamContainer);

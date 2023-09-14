@@ -179,15 +179,6 @@ namespace BattleCruisers.Scenes
                 hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                 Debug.Log("Offline, can't find out status of PVP Server.");
 
-                // If a user's first load of the game is without internet, the shop should not be displayed.
-                // Once they load with an internet connection, we can sync remote config and populate the shop for the first time.
-                // From here on out, the shop can be displayed.
-                if(_dataProvider.GameModel.LastKnownHeckleShop == null ||
-                   _dataProvider.GameModel.LastKnownCaptainShop == null )
-                {
-                    hubScreen.shopButton.gameObject.SetActive(false);
-                }
-
                 // if not Internet Connection or Sign in, we will use local data.
             }
 
@@ -237,7 +228,7 @@ namespace BattleCruisers.Scenes
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
-            shopPanelScreen.InitialiseAsync(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
+            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
             messageBox.gameObject.SetActive(true);
