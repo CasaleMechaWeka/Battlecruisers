@@ -229,6 +229,13 @@ namespace BattleCruisers.Data.Models
             set => _iaps = value;
         }
 
+        public bool _hasSyncdShop;
+        public bool HasSyncdShop
+        {
+            get => _hasSyncdShop;
+            set => _hasSyncdShop = value;
+        }
+
         private int _gameMap;
         public int GameMap
         {
@@ -553,6 +560,7 @@ namespace BattleCruisers.Data.Models
         }
 
         public GameModel(
+            bool hasSyncdShop,
             bool hasAttemptedTutorial,
             long lifetimeDestructionScore,
             long bestDestructionScore,
@@ -563,6 +571,7 @@ namespace BattleCruisers.Data.Models
             List<UnitKey> unlockedUnits)
             : this()
         {
+            HasSyncdShop = hasSyncdShop;
             HasAttemptedTutorial = hasAttemptedTutorial;
             LifetimeDestructionScore = lifetimeDestructionScore;
             BestDestructionScore = bestDestructionScore;

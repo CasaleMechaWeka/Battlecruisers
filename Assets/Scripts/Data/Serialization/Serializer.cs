@@ -103,8 +103,11 @@ namespace BattleCruisers.Data.Serialization
             Loadout _playerLoadout = (Loadout)plo;
             BattleResult _lastBattleResult = (BattleResult)lbr;
 
+            bool _hasSyncdShop = false;
+
             // GameModel gets constructed from the fields we've pulled out of gameData:
             GameModel compatibleGameModel = new GameModel(
+                _hasSyncdShop,
                 _hasAttemptedTutorial,
                 _lifetimeDestructionScore,
                 _bestDestructionScore,
