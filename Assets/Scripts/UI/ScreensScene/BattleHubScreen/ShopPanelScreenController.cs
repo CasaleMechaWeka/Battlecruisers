@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Unity.Services.Core;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -31,9 +32,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ILocTable commonStrings;
         public Image captainsButtonImage, hecklesButtonImage;
         public Text blackMarketText;
+        private bool InternetConnection;
 
-
-        public void Initialise(
+        public async Task Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
@@ -52,12 +53,23 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         buyHeckleButton.Initialise(_soundPlayer, PurchaseHeckle, this);*/
             captainsButton.Initialise(_soundPlayer, CaptainsButton_OnClick);
             hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
-            blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
-            blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
+
+            InternetConnection = await LandingSceneGod.CheckForInternetConnection();
+            if (UnityServices.State != ServicesInitializationState.Uninitialized && InternetConnection)
+            {
+                // Only make cash shop available if there's an internet connection
+                // Without one, we can't process transactions.
+                blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
+                blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
+            }
+            else
+            {
+                blackMarketButton.gameObject.SetActive(false);
+            }
         }
 
         void OnEnable()

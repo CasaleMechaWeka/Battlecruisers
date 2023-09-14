@@ -213,7 +213,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             //Setting up Captains
             CaptainExo playerCaptain = Instantiate(prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain), playerCaptainContainer);
-            CaptainExo AICaptain = Instantiate(prefabFactory.GetCaptainExo(currentLevel.Captains),AICaptainContainer);
+            CaptainExo AICaptain = Instantiate(prefabFactory.GetCaptainExo(currentLevel.Captains), AICaptainContainer);
             foreach (SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
             {
                 spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
@@ -230,7 +230,7 @@ namespace BattleCruisers.Scenes.BattleScene
             //Setting up Captain Names
             Text playerName = PlayerName.gameObject.GetComponent<Text>();
             playerName.text = dataProvider.GameModel.PlayerName;
-            if(applicationModel.Mode == GameMode.PvP_1VS1)
+            if (applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 //Enemy player name
             }
@@ -239,7 +239,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 Text AIName = EnemyName.gameObject.GetComponent<Text>();
                 AIName.text = commonStrings.GetString(AICaptain.captainName);
             }
-            
+
 
             LeftPanelComponents leftPanelComponents
                 = leftPanelInitialiser.Initialise(
@@ -432,7 +432,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             GameOver = false;
             string logName = "Battle_Begin";
-            LandingSceneGod.Instance.coinBattleLevelNum = -1;
+            if (LandingSceneGod.Instance.coinBattleLevelNum > 0)
+                LandingSceneGod.Instance.coinBattleLevelNum = -2; //Erik - DestructionSceneGod will detect Coin battle mode through this
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -530,7 +531,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void ToggleEnemyGodMode(bool isGodMode)
         {
-            if(isGodMode) 
+            if (isGodMode)
             {
                 aiCruiser.MakeInvincible();
             }

@@ -196,7 +196,31 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void SetFoudVictimString()
         {
             LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
-        //    LoadingBarParent.SetActive(true);
+            //    LoadingBarParent.SetActive(true);
+
+            // Iterate through all child objects of ContainerCaptain
+            foreach (Transform child in ContainerCaptain)
+            {
+                // Try to get an Animator component from the child object
+                Animator animator = child.GetComponent<Animator>();
+
+                // If an Animator exists
+                if (animator != null)
+                {
+                    // Get all animation clips
+                    AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+
+                    // Iterate through all clips and play the one ending with "_Celebrate"
+                    foreach (AnimationClip clip in clips)
+                    {
+                        if (clip.name.EndsWith("_Celebrate"))
+                        {
+                            animator.Play(clip.name);
+                            break; // Exit loop once found and played
+                        }
+                    }
+                }
+            }
         }
         public void AddProgress(int step)
         {

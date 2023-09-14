@@ -229,7 +229,6 @@ namespace BattleCruisers.Data.Models
             set => _iaps = value;
         }
 
-
         private int _gameMap;
         public int GameMap
         {
