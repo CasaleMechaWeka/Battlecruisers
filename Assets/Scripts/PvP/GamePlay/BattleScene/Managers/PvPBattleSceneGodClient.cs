@@ -112,7 +112,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public GameObject obj_LeftBackgroundPanel;
         public GameObject obj_RightBackgroundPanel;
         public GameObject obj_ToolTipActivator;
-
+        private float timeStampForInit;
+        public bool IsBattleCompleted = false;
+        public bool IsConnectedClient = false;   // this is only for Host
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -188,7 +190,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     // the opponent left match
                     isCompletedBattleByFlee = true;
                     wasOpponentDisconnected = true;
-                    
                     if (isStartedPvP)
                     {
                         HandleCruiserDestroyed();
@@ -196,21 +197,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                         PvPBattleSceneGodTunnel.isDisconnected = 1;
                         messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                        IsBattleCompleted = true;
                         components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 10f);
                     }
                     else
                     {
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 1;
+                        IsBattleCompleted = true;
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
-                    }                    
+                    }
                 }
                 if (!isCompletedBattleByFlee && canFlee && NetworkManager.Singleton.IsHost && NetworkManager.Singleton.ConnectedClientsIds.Count != 2)
                 {
                     // the opponent left match
                     isCompletedBattleByFlee = true;
                     wasOpponentDisconnected = true;
-                    
                     if (isStartedPvP)
                     {
                         HandleCruiserDestroyed();
@@ -218,14 +220,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
                         messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                        IsBattleCompleted = true;
                         components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 10f);
                     }
                     else
                     {
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
+                        IsBattleCompleted = true;
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
-                    }                    
+                    }
                 }
             }
         }
@@ -302,22 +306,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
+            timeStampForInit = Time.time;
             if (!NetworkManager.Singleton.IsHost)
             {
                 while (!SynchedServerData.Instance.IsServerInitialized.Value && !m_cancellationToken.Token.IsCancellationRequested)
                 {
-                    await Task.Delay(10);
+                    await Task.Delay(500);
+                    if (Time.time - timeStampForInit > 10f)
+                        break;
                     SynchedServerData.Instance.InitServer();
                 }
             }
         }
 
+
+        public void InitiaizedDoneServer()
+        {
+            if (!NetworkManager.Singleton.IsHost)
+                m_cancellationToken.Cancel();
+        }
         private async void InitialiseAsync()
         {
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             playerCruiser.StaticInitialise(commonStrings);
             enemyCruiser.StaticInitialise(commonStrings);
-            MatchmakingScreenController.Instance.AddProgress(1000); // to fullfill loading bar
+            MatchmakingScreenController.Instance.txt_log.text += " - InitedClient";
+            //    MatchmakingScreenController.Instance.AddProgress(1000); // to fullfill loading bar
             cameraComponents = cameraInitialiser.Initialise(
                 dataProvider.SettingsManager,
                 playerCruiser,
@@ -455,7 +469,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             ApplicationModelProvider.ApplicationModel.Mode = BattleCruisers.Data.GameMode.PvP_1VS1;
 
             // apply economy because here is end of starting PvPbattle.
-
             dataProvider.GameModel.Coins -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
             dataProvider.GameModel.Credits -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcredits;
             dataProvider.SaveGame();
@@ -535,9 +548,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     }
                 }
             }
-
-            /*            captainController.leftCaptain = leftCaptain;
-                        captainController.rightCaptain = rightCaptain;*/
             captainController.Initialize(leftCaptain, rightCaptain);
         }
         private async void CaptainAPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
@@ -651,15 +661,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
 
         }
-
-
         private void Update()
         {
             if (isReadyToShowCaptainExo && (leftCaptain == null || rightCaptain == null))
             {
                 LoadAllCaptains();
             }
-            DetectClientDisconnection();
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsHost)
+            {
+                if (IsConnectedClient)
+                    DetectClientDisconnection();
+                if (NetworkManager.Singleton.ConnectedClientsIds.Count == 2)
+                {
+                    if (!IsConnectedClient)
+                        IsConnectedClient = true;
+                }
+            }
+            else
+            {
+                DetectClientDisconnection();
+            }
         }
         IEnumerator iLoadedPvPScene()
         {
@@ -711,8 +732,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser = _cruiser;
             if (enemyCruiser != null)
             {
+                MatchmakingScreenController.Instance.txt_log.text += " - initedA";
                 InitialiseAsync();
             }
+            MatchmakingScreenController.Instance.txt_log.text += " - addedA";
         }
 
         public void RegisterAsEnemy(PvPCruiser _cruiser)
@@ -722,7 +745,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             if (playerCruiser != null)
             {
                 InitialiseAsync();
+                MatchmakingScreenController.Instance.txt_log.text += " - initedB";
             }
+            MatchmakingScreenController.Instance.txt_log.text += " - addedB";
         }
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(

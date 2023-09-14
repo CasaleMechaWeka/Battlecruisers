@@ -96,7 +96,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Transform ContainerCaptain;
         public GameObject cameraOfCharacter;
 
-
+        public Text txt_log;
         public static MatchmakingScreenController Instance { get; private set; }
 
 

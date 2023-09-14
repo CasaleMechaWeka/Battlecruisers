@@ -133,6 +133,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public void DestroyNetworkObject()
         {
+            NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
+            NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+            NetworkManager.OnServerStarted -= OnServerStarted;
+            NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
+            NetworkManager.OnTransportFailure -= OnTransportFailure;
             Destroy(gameObject);
         }
 
@@ -146,14 +151,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_CurrentState = m_Offline;
             // Here, we keep ForceSamePrefabs disabled. This will allow us to dynamically add network prefabs to Netcode
             // for GameObject after establishing a connection.
-            NetworkManager.NetworkConfig.ForceSamePrefabs = false;
+        //    NetworkManager.NetworkConfig.ForceSamePrefabs = false;
             NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
             NetworkManager.OnServerStarted += OnServerStarted;
             NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
         //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
-            DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
+        //    DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
         }
 
         void OnDestroy()

@@ -36,6 +36,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -140,33 +141,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private IPvPBroadcastingProperty<bool> _CruiserHasActiveDrones;
 
 
-        private void Start()
+        protected virtual void Start()
         {
+            MatchmakingScreenController.Instance.txt_log.text += " - START";
             if (IsClient && IsOwner)
             {
+                MatchmakingScreenController.Instance.txt_log.text += " - cruiserA";
                 PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
             }
             else if (IsClient && !IsOwner)
             {
+                MatchmakingScreenController.Instance.txt_log.text += " - cruiserB";
                 PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
             }
             if (NetworkManager.Singleton.IsServer)
                 _healthTracker.SetMaxHealth();
 
-            if(IsHost)
+            if (IsHost)
             {
                 if (Faction == PvPFaction.Blues)
                 {
                     PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, (float)maxHealth);
                     PvPBattleSceneGodTunnel._playerACruiserVal = 1;
                     PvPBattleSceneGodTunnel._playerACruiserName = Name;
-                }                    
+                }
                 else
                 {
                     PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(this.TargetType, (float)maxHealth);
                     PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
                     PvPBattleSceneGodTunnel._playerBCruiserName = Name;
-                }                    
+                }
             }
         }
 
@@ -432,13 +436,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 RepairManager.Repair(_time.DeltaTime);
             }
-            //causing unnesacary updates
-            /*updateCnt += 1;
-            updateCnt = updateCnt%20;
-            if (IsPlayerCruiser && updateCnt==0)
-            {
-                SlotHighlighter.HighlightAvailableSlotsCurrent();
-            }*/
 
             if (_enemyCruiser != null && _enemyCruiser.IsAlive)
             {
@@ -496,8 +493,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
-
-            // Initialise_Client_PvP();
         }
 
 

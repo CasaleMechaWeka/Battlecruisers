@@ -40,6 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 
         public void DestroyNetworkObject()
         {
+            s_Instance = null;
             Destroy(m_Canvas);
         }
 

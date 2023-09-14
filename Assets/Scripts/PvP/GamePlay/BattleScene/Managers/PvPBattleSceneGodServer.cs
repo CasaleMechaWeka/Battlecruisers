@@ -160,13 +160,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 playerBCruiserUserChosenTargetManager);
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync();
-
         }
         public async Task _Initialise_Rest()
         {
             if (isInitializingServer)
                 return;
             isInitializingServer = true;
+            SynchedServerData.Instance.InitializeDoneServer();
             await factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);

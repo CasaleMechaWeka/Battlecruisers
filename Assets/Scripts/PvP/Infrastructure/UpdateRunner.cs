@@ -65,6 +65,9 @@ namespace BattleCruisers.Network.Multiplay.Infrastructure
 
         public void DestroyNetworkObject()
         {
+            m_PendingHandlers.Clear();
+            m_Subscribers.Clear();
+            m_SubscriberData.Clear();
             Destroy(gameObject);
         }
 

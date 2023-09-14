@@ -31,6 +31,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             unit.RearingStarted += _RearingStarted;
         }
 
+        protected override void Start()
+        {
+            base.Start();
+        }
+
         public override void Update()
         {
             if (started)

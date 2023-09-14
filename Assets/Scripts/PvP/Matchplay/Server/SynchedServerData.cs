@@ -47,6 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public override void OnNetworkSpawn()
         {
             OnNetworkSpawned?.Invoke();
+            IsServerInitialized.Value = false;
         }
         void Start()
         {
@@ -164,6 +165,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             InitialiseRestServerRpc();
         }
 
+        public void InitializeDoneServer()
+        {
+            InitializeDoneServerClientRpc();
+        }
+
         [ServerRpc(RequireOwnership = false)]
         void LoadBuildablePrefabServerRpc(PvPBuildingCategory category, string prefabName, ServerRpcParams rpcParams = default)
         {
@@ -180,6 +186,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 IsServerInitialized.Value = true;
                 PvPBattleSceneGodServer.Instance._Initialise_Rest();
             }            
+        }
+
+        [ClientRpc]
+        private void InitializeDoneServerClientRpc()
+        {
+            PvPBattleSceneGodClient.Instance.InitiaizedDoneServer();
         }
 
         [ClientRpc]

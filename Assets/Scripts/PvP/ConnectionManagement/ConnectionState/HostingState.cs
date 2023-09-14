@@ -43,12 +43,16 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             if (clientId != m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 2)
             {
                 MatchmakingScreenController.Instance.SetFoudVictimString();
+            }
+            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
+            {
                 NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
-            }                
+                //    MatchmakingScreenController.Instance.gameObject.SetActive(false);
+            }
         }
 
         public override void OnClientDisconnect(ulong clientId)
-        {            
+        {
         }
 
         public override void OnUserRequestedShutdown()
@@ -84,37 +88,44 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             var connectionData = request.Payload;
             var clientId = request.ClientNetworkId;
 
-            if (clientId != m_ConnectionManager.NetworkManager.LocalClientId)
+            var payload = System.Text.Encoding.UTF8.GetString(connectionData);
+            var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
+            connectionPayload.playerNetworkId = clientId;
+            var gameReturnStatus = GetConnectStatus(connectionPayload);
+            if (gameReturnStatus == ConnectStatus.Success)
             {
-                var payload = System.Text.Encoding.UTF8.GetString(connectionData);
-                var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
-                connectionPayload.playerNetworkId = clientId;
-                // Player A
-                SynchedServerData.Instance.playerAPrefabName.Value = MatchmakingScreenController.Instance.playerAPrefabName;
-                SynchedServerData.Instance.playerAClientNetworkId.Value = MatchmakingScreenController.Instance.playerAClientNetworkId;
-                SynchedServerData.Instance.playerAName.Value = MatchmakingScreenController.Instance.playerAName;
-                SynchedServerData.Instance.playerAScore.Value = MatchmakingScreenController.Instance.playerAScore;
-                SynchedServerData.Instance.captainAPrefabName.Value = MatchmakingScreenController.Instance.captainAPrefabName;
-                SynchedServerData.Instance.playerARating.Value = MatchmakingScreenController.Instance.playerRating;
-                PvPBattleSceneGodTunnel._playerACruiserName = MatchmakingScreenController.Instance.playerAPrefabName;
-                PvPBattleSceneGodTunnel._playerACruiserVal = 1;
+                if (clientId != m_ConnectionManager.NetworkManager.LocalClientId)
+                {
 
-                // Player B
-                SynchedServerData.Instance.playerBPrefabName.Value = connectionPayload.playerHullPrefabName;
-                SynchedServerData.Instance.playerBClientNetworkId.Value = clientId;
-                SynchedServerData.Instance.playerBName.Value = connectionPayload.playerName;
-                SynchedServerData.Instance.playerBScore.Value = connectionPayload.playerScore;
-                SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
-                SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
-                PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
-                PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
+                    // Player A
+                    SynchedServerData.Instance.playerAPrefabName.Value = MatchmakingScreenController.Instance.playerAPrefabName;
+                    SynchedServerData.Instance.playerAClientNetworkId.Value = MatchmakingScreenController.Instance.playerAClientNetworkId;
+                    SynchedServerData.Instance.playerAName.Value = MatchmakingScreenController.Instance.playerAName;
+                    SynchedServerData.Instance.playerAScore.Value = MatchmakingScreenController.Instance.playerAScore;
+                    SynchedServerData.Instance.captainAPrefabName.Value = MatchmakingScreenController.Instance.captainAPrefabName;
+                    SynchedServerData.Instance.playerARating.Value = MatchmakingScreenController.Instance.playerRating;
+                    PvPBattleSceneGodTunnel._playerACruiserName = MatchmakingScreenController.Instance.playerAPrefabName;
+                    PvPBattleSceneGodTunnel._playerACruiserVal = 1;
 
-                MatchmakingScreenController.Instance.fleeButton.SetActive(false);
-                MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
+                    // Player B
+                    SynchedServerData.Instance.playerBPrefabName.Value = connectionPayload.playerHullPrefabName;
+                    SynchedServerData.Instance.playerBClientNetworkId.Value = clientId;
+                    SynchedServerData.Instance.playerBName.Value = connectionPayload.playerName;
+                    SynchedServerData.Instance.playerBScore.Value = connectionPayload.playerScore;
+                    SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
+                    SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
+                    PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
+                    PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
+
+                    MatchmakingScreenController.Instance.fleeButton.SetActive(false);
+                    MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
+                }
+                response.Approved = true;
+                response.Pending = false;
+                response.CreatePlayerObject = true;
+                return;
             }
-            response.Approved = true;
-            response.Pending = false;
-            response.CreatePlayerObject = true;
+            response.Approved = false;
         }
 
         ConnectStatus GetConnectStatus(ConnectionPayload connectionPayload)
@@ -129,8 +140,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 return ConnectStatus.IncompatibleBuildType;
             }
 
-            return SessionManager<SessionPlayerData>.Instance.IsDuplicateConnection(connectionPayload.playerId) ?
-                ConnectStatus.LoggedInAgain : ConnectStatus.Success;
+            /*return SessionManager<SessionPlayerData>.Instance.IsDuplicateConnection(connectionPayload.playerId) ?
+                ConnectStatus.LoggedInAgain : ConnectStatus.Success;*/
+            return ConnectStatus.Success;
         }
     }
 }

@@ -116,6 +116,9 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
 
         public void DestroyNetworkObject()
         {
+            Application.wantsToQuit -= OnWantToQuit;
+            m_Subscriptions?.Dispose();
+            m_LobbyServiceFacade?.EndTracking();
             Destroy(gameObject);
         }
 

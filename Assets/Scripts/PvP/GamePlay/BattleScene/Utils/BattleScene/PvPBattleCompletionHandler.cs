@@ -69,7 +69,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
             const string LeaderboardID = "BC-PvP1v1Leaderboard";
-            await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+            try
+            {
+                await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError(ex.Message);
+            }            
 
             _isCompleted = true;
 

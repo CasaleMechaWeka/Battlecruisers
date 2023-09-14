@@ -225,7 +225,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         }
                     }
                 }
-                if(!joined)
+                // cross-arena 
+/*                if(!joined)
                 {
                     foreach (Lobby lobby in foundLobbies)
                     {
@@ -258,7 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             }
                         }
                     }
-                }
+                }*/
                 if (!joined)
                 {
                     var lobbyData = new Dictionary<string, DataObject>()

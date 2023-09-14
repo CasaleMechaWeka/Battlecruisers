@@ -39,6 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 
         public void DestroyNetworkObject()
         {
+            m_Subscriptions?.Dispose();
             Destroy(gameObject);
         }
 
