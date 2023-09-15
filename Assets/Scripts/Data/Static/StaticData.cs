@@ -203,8 +203,10 @@ namespace BattleCruisers.Data.Static
             Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits(), GetInitialbuildingLimit(), GetInitialUnitLimit());
 
             bool hasAttemptedTutorial = false;
+            bool HasSyncdShop = false;
 
             GameModel game = new GameModel(
+                HasSyncdShop,
                 hasAttemptedTutorial,
                 0,
                 0,

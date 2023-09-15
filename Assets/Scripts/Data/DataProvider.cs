@@ -160,6 +160,7 @@ namespace BattleCruisers.Data
                     await SyncHecklesCost();
                     await SyncCurrencyFromCloud();
                     await SyncInventoryFromCloud();
+                    GameModel.HasSyncdShop = true;
                     break;
             }
         }

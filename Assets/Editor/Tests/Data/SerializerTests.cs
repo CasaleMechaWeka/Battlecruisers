@@ -37,6 +37,7 @@ namespace BattleCruisers.Tests.Data
 			_serializer = new Serializer(_filePathProvider);
 
 			_originalGameModel = new GameModel(
+				hasSyncdShop: false,
                 hasAttemptedTutorial: true,
 				0,
 				0,

@@ -179,6 +179,18 @@ namespace BattleCruisers.Scenes
                 hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                 Debug.Log("Offline, can't find out status of PVP Server.");
 
+                // Shop should not load until after a first remote config sync
+                if(!_dataProvider.GameModel.HasSyncdShop)
+                {
+                    hubScreen.shopButton.gameObject.SetActive(false);
+                    hubScreen.leaderboardButton.gameObject.SetActive(false);
+                }
+                else
+                { // just in case it ever matters?
+                    hubScreen.shopButton.gameObject.SetActive(true);
+                    hubScreen.leaderboardButton.gameObject.SetActive(true);
+                }
+
                 // if not Internet Connection or Sign in, we will use local data.
             }
 
