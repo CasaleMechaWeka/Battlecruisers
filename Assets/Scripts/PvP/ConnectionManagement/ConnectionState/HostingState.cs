@@ -43,12 +43,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             if (clientId != m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 2)
             {
                 MatchmakingScreenController.Instance.SetFoudVictimString();
+                NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             }
-            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
+/*            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
             {
                 NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
                 //    MatchmakingScreenController.Instance.gameObject.SetActive(false);
-            }
+            }*/
         }
 
         public override void OnClientDisconnect(ulong clientId)
@@ -135,10 +136,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 return ConnectStatus.ServerFull;
             }
 
-            if (connectionPayload.isDebug != Debug.isDebugBuild)
+/*            if (connectionPayload.isDebug != Debug.isDebugBuild)
             {
                 return ConnectStatus.IncompatibleBuildType;
-            }
+            }*/
 
             /*return SessionManager<SessionPlayerData>.Instance.IsDuplicateConnection(connectionPayload.playerId) ?
                 ConnectStatus.LoggedInAgain : ConnectStatus.Success;*/

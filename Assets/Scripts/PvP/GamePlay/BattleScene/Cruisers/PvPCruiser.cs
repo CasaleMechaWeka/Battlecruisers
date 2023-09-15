@@ -143,15 +143,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         protected virtual void Start()
         {
-            MatchmakingScreenController.Instance.txt_log.text += " - START";
             if (IsClient && IsOwner)
             {
-                MatchmakingScreenController.Instance.txt_log.text += " - cruiserA";
                 PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
             }
             else if (IsClient && !IsOwner)
             {
-                MatchmakingScreenController.Instance.txt_log.text += " - cruiserB";
                 PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
             }
             if (NetworkManager.Singleton.IsServer)

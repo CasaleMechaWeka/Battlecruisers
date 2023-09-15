@@ -53,6 +53,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.vsAIButton.SetActive(true);
 
                 await m_ConnectionMethod.SetupClientConnectionAsync();
+                Debug.Log("===> called me here");
                 if (!m_ConnectionManager.NetworkManager.StartClient())
                 {
                     throw new System.Exception("NetworkManager StartClient failed");

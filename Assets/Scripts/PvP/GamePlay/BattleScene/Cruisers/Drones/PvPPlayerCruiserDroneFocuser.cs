@@ -27,7 +27,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPPrioritisedSoundKey ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer, bool isTriggeredByPlayer)
         {
-            Assert.IsNotNull(droneConsumer);
+          //  Assert.IsNotNull(droneConsumer);
+            if (droneConsumer == null)
+                return null;
 
             PvPDroneConsumerState preFocusState = droneConsumer.State;
             _droneManager.ToggleDroneConsumerFocus(droneConsumer);

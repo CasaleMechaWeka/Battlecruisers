@@ -330,8 +330,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             playerCruiser.StaticInitialise(commonStrings);
             enemyCruiser.StaticInitialise(commonStrings);
-            MatchmakingScreenController.Instance.txt_log.text += " - InitedClient";
-            //    MatchmakingScreenController.Instance.AddProgress(1000); // to fullfill loading bar
             cameraComponents = cameraInitialiser.Initialise(
                 dataProvider.SettingsManager,
                 playerCruiser,
@@ -732,10 +730,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser = _cruiser;
             if (enemyCruiser != null)
             {
-                MatchmakingScreenController.Instance.txt_log.text += " - initedA";
                 InitialiseAsync();
             }
-            MatchmakingScreenController.Instance.txt_log.text += " - addedA";
         }
 
         public void RegisterAsEnemy(PvPCruiser _cruiser)
@@ -745,9 +741,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             if (playerCruiser != null)
             {
                 InitialiseAsync();
-                MatchmakingScreenController.Instance.txt_log.text += " - initedB";
             }
-            MatchmakingScreenController.Instance.txt_log.text += " - addedB";
         }
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
