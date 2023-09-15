@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     {
         protected ConnectionManager m_ConnectionManager;
         readonly ProfileManager m_ProfileManager;
-        protected readonly string m_PlayerName;        
+        protected readonly string m_PlayerName;
 
         public abstract Task SetupHostConnectionAsync();
 
@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 playerCaptainPrefabName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,
                 playerGameMap = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap,
                 playerRating = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore,
-                isDebug = Debug.isDebugBuild
+                //               isDebug = Debug.isDebugBuild
             });
 
             var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
@@ -128,12 +128,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
 
             Debug.Log($"Setting Unity Relay client with join code {m_LocalLobby.RelayJoinCode}");
-/*            while(string.IsNullOrEmpty(m_LocalLobby.RelayJoinCode))
-            {
-                var lobby = await m_LobbyServiceFacade.GetLobby(m_LocalLobby.LobbyID);
-                if (lobby == null) { break; }
-                m_LobbyServiceFacade.SetRemoteLobby(lobby);
-            }*/
+            /*            while(string.IsNullOrEmpty(m_LocalLobby.RelayJoinCode))
+                        {
+                            var lobby = await m_LobbyServiceFacade.GetLobby(m_LocalLobby.LobbyID);
+                            if (lobby == null) { break; }
+                            m_LobbyServiceFacade.SetRemoteLobby(lobby);
+                        }*/
 
             // Create client joining allocation from join code
             var joinedAllocation = await RelayService.Instance.JoinAllocationAsync(m_LocalLobby.RelayJoinCode);
