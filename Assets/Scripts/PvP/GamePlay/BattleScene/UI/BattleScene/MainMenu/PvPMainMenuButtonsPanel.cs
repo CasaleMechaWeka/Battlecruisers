@@ -17,9 +17,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(soundPlayer, menuManager);
 
             endGameButton.Initialise(soundPlayer, menuManager.QuitGame);
-            skipTutorialButton.Initialise(soundPlayer, menuManager.QuitGame);
+        //    skipTutorialButton.Initialise(soundPlayer, menuManager.QuitGame);
             resumeButton.Initialise(soundPlayer, menuManager.DismissMenu);
-            retryButton.Initialise(soundPlayer, menuManager.RetryLevel);
+        //    retryButton.Initialise(soundPlayer, menuManager.RetryLevel);
             settingsButton.Initialise(soundPlayer, menuManager.ShowSettings);
 
             /*            if (isTutorial)

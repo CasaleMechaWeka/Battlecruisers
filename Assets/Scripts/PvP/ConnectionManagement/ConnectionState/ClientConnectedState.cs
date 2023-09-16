@@ -17,12 +17,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             if (m_lobbyServiceFacade.CurrentUnityLobby != null)
             {
-                m_lobbyServiceFacade.BeginTracking();
+                //    m_lobbyServiceFacade.BeginTracking();
+                m_lobbyServiceFacade.EndTracking();
             }
             MatchmakingScreenController.Instance.SetFoudVictimString();
-            MatchmakingScreenController.Instance.fleeButton.SetActive(false);
+            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
             MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
-            //    MatchmakingScreenController.Instance.gameObject.SetActive(false);
         }
 
         public override void Exit() { }

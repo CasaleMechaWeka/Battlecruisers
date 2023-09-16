@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             leftCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftPlayerCruiser);
             rightCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightPlayerCruiser);
 
-            _enabledToggler = new PvPFilterToggler(enabledFilter, overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton, leftCaptainButton, rightCaptainButton, heckleButton, mainMenuButton);
+            _enabledToggler = new PvPFilterToggler(enabledFilter, overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton, leftCaptainButton, rightCaptainButton, heckleButton/*, mainMenuButton*/);
         }
     }
 }

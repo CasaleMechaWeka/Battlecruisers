@@ -446,15 +446,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     settings,
                     navigationButtonsPanel);
         }
-
-        private void Awake()
-        {
-
-            if (NetworkManager.Singleton.IsServer)
-            {
-                // Destroy(gameObject);
-            }
-        }
-
     }
 }

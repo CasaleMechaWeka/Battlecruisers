@@ -128,12 +128,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
 
             Debug.Log($"Setting Unity Relay client with join code {m_LocalLobby.RelayJoinCode}");
-            /*            while(string.IsNullOrEmpty(m_LocalLobby.RelayJoinCode))
-                        {
-                            var lobby = await m_LobbyServiceFacade.GetLobby(m_LocalLobby.LobbyID);
-                            if (lobby == null) { break; }
-                            m_LobbyServiceFacade.SetRemoteLobby(lobby);
-                        }*/
 
             // Create client joining allocation from join code
             var joinedAllocation = await RelayService.Instance.JoinAllocationAsync(m_LocalLobby.RelayJoinCode);

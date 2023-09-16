@@ -115,6 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private float timeStampForInit;
         public bool IsBattleCompleted = false;
         public bool IsConnectedClient = false;   // this is only for Host
+        public bool WasLeftMatch = false;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -172,7 +173,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (!NetworkManager.Singleton.IsHost)
             {
-                Invoke("StaticInitialiseAsync", 0.5f);
+                StaticInitialiseAsync();
             }
         }
 
@@ -183,7 +184,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void DetectClientDisconnection()
         {
-            if (NetworkManager.Singleton != null)
+            if (NetworkManager.Singleton != null && !WasLeftMatch)
             {
                 if (!isCompletedBattleByFlee && canFlee && !NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsConnectedClient)
                 {
@@ -306,25 +307,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
-            timeStampForInit = Time.time;
-            if (!NetworkManager.Singleton.IsHost)
-            {
-                while (!SynchedServerData.Instance.IsServerInitialized.Value && !m_cancellationToken.Token.IsCancellationRequested)
-                {
-                    await Task.Delay(500);
-                    if (Time.time - timeStampForInit > 10f)
-                        break;
-                    SynchedServerData.Instance.InitServer();
-                }
-            }
         }
 
 
-        public void InitiaizedDoneServer()
-        {
-            if (!NetworkManager.Singleton.IsHost)
-                m_cancellationToken.Cancel();
-        }
+
         private async void InitialiseAsync()
         {
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
@@ -360,7 +346,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     spriteProvider,
                     buttonVisibilityFilters,
                     new PvPPlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
-                    // pvpBattleHelper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.PrioritisedSoundPlayer,
                     factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor,
@@ -398,7 +383,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new PvPUserTargetTracker(itemDetailsManager.SelectedItem, new PvPUserTargetsColourChanger());
             _buildableButtonColourController = new PvPBuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
-
             PvPManagerArgs args
                 = new PvPManagerArgs(
                     playerCruiser,
@@ -409,8 +393,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     factoryProvider.Sound.UISoundPlayer);
             pvpBattleHelper.InitialiseUIManager(args);
             _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager, rightPanelComponents.HacklePanelController);
-
-
             // Audio
             IPvPLayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
@@ -418,7 +400,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager);
             IPvPCruiserDamageMonitor playerCruiserDamageMonitor = new PvPCruiserDamageMonitor(playerCruiser);
-
             _audioInitialiser
                 = new PvPAudioInitialiser(
                     pvpBattleHelper,
@@ -430,28 +411,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     battleCompletionHandler,
                     playerCruiserDamageMonitor,
                     leftPanelComponents.PopLimitReachedFeedback);
-
             windManager
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
                     cameraComponents.Settings,
                     dataProvider.SettingsManager);
             windManager.Play();
-
             _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
-
             components.HotkeyInitialiser.Initialise(
                     dataProvider.GameModel.Hotkeys,
                     PvPInputBC.Instance,
                     components.UpdaterProvider.SwitchableUpdater,
                     navigationPermitters.HotkeyFilter,
                     cameraComponents.CameraFocuser,
-                    //    rightPanelComponents.SpeedComponents,
                     rightPanelComponents.MainMenuManager,
                     uiManager);
             playerCruiser.Destroyed += PlayerCruiser_Destroyed;
             enemyCruiser.Destroyed += EnemyCruiser_Destroyed;
-
             // Captains
             if (SynchedServerData.Instance != null)
             {
@@ -465,7 +441,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
             ApplicationModelProvider.ApplicationModel.Mode = BattleCruisers.Data.GameMode.PvP_1VS1;
-
             // apply economy because here is end of starting PvPbattle.
             dataProvider.GameModel.Coins -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
             dataProvider.GameModel.Credits -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcredits;

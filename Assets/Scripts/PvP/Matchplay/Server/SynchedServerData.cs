@@ -160,16 +160,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         }
 
-        public void InitServer()
-        {
-            InitialiseRestServerRpc();
-        }
-
-        public void InitializeDoneServer()
-        {
-            InitializeDoneServerClientRpc();
-        }
-
         [ServerRpc(RequireOwnership = false)]
         void LoadBuildablePrefabServerRpc(PvPBuildingCategory category, string prefabName, ServerRpcParams rpcParams = default)
         {
@@ -178,21 +168,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             TrySpawnCruiserDynamicSynchronously(buildingKey, iPrefab);
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        void InitialiseRestServerRpc()
-        {
-            if (!IsServerInitialized.Value)
-            {
-                IsServerInitialized.Value = true;
-                PvPBattleSceneGodServer.Instance._Initialise_Rest();
-            }            
-        }
 
-        [ClientRpc]
-        private void InitializeDoneServerClientRpc()
-        {
-            PvPBattleSceneGodClient.Instance.InitiaizedDoneServer();
-        }
+
+
 
         [ClientRpc]
         void LoadAddressableClientRpc(string prefabPath, ClientRpcParams rpcParams = default)

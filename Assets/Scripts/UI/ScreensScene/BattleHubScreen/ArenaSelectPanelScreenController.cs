@@ -46,6 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public CanvasGroupButton battleButton;
         public ButtonController navRightButton;
         public ButtonController navLeftButton;
+        public GameObject loadingSpinner;
         private IScreensSceneGod _screenSceneGod;
         private ISingleSoundPlayer _singleSoundPlayer;
         private IPrefabFactory _prefabFactory;
@@ -61,6 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             IDataProvider dataProvider,
             INextLevelHelper nextLevelHelper)
         {
+            loadingSpinner.SetActive(false);
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(battleButton, navRightButton, navLeftButton);
 
@@ -78,7 +80,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             navLeftButton.Initialise(soundPlayer, _previousSetCommand);
 
             DOTween.Init();
-
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
         }
 
@@ -168,6 +169,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 if (_dataProvider.GameModel.Coins >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins
                     && _dataProvider.GameModel.Credits >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
                 {
+                    loadingSpinner.SetActive(true);
+                    battleButton.gameObject.SetActive(false);                    
                     _dataProvider.GameModel.GameMap = IndexCurrentArena;
                     _screenSceneGod.LoadPvPBattleScene();
                 }

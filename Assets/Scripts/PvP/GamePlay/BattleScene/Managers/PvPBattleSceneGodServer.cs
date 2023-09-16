@@ -104,10 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
             }
         }
-        private async void Start()
-        {
-            await Initialise();
-        }
+
 
         void OnNetworkSpawn()
         {
@@ -116,6 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 enabled = false;
                 return;
             }
+            Initialise();
         }
         void OnNetworkDespawn()
         {
@@ -160,13 +158,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 playerBCruiserUserChosenTargetManager);
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync();
+            await Task.Delay(1000);
+            await _Initialise_Rest();
         }
         public async Task _Initialise_Rest()
         {
             if (isInitializingServer)
                 return;
             isInitializingServer = true;
-            SynchedServerData.Instance.InitializeDoneServer();
             await factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
@@ -182,8 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiserSprite = playerBCruiser.Sprite;
             playerBCruiserName = playerBCruiser.Name;
 
-            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
-
+            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
             droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
             droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
             droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;

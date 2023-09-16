@@ -44,12 +44,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 MatchmakingScreenController.Instance.SetFoudVictimString();
                 NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+                m_LobbyServiceFacade.EndTracking();
             }
-/*            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
-            {
-                NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
-                //    MatchmakingScreenController.Instance.gameObject.SetActive(false);
-            }*/
         }
 
         public override void OnClientDisconnect(ulong clientId)
@@ -88,7 +84,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             var connectionData = request.Payload;
             var clientId = request.ClientNetworkId;
-
             var payload = System.Text.Encoding.UTF8.GetString(connectionData);
             var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
             connectionPayload.playerNetworkId = clientId;
@@ -118,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
                     PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
 
-                    MatchmakingScreenController.Instance.fleeButton.SetActive(false);
+                    MatchmakingScreenController.Instance.fleeButton.SetActive(true);
                     MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
                 }
                 response.Approved = true;
@@ -136,10 +131,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 return ConnectStatus.ServerFull;
             }
 
-/*            if (connectionPayload.isDebug != Debug.isDebugBuild)
-            {
-                return ConnectStatus.IncompatibleBuildType;
-            }*/
+            /*            if (connectionPayload.isDebug != Debug.isDebugBuild)
+                        {
+                            return ConnectStatus.IncompatibleBuildType;
+                        }*/
 
             /*return SessionManager<SessionPlayerData>.Instance.IsDuplicateConnection(connectionPayload.playerId) ?
                 ConnectStatus.LoggedInAgain : ConnectStatus.Success;*/

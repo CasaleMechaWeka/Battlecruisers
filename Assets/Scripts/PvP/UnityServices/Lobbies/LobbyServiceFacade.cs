@@ -100,11 +100,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 m_JoinedLobbyContentHeartbeat.BeginTracking();
             }
         }
-
-        private async void CanceledMatchmaking()
-        {
-            await EndTracking();
-        }
         public Task EndTracking()
         {
             var task = Task.CompletedTask;
@@ -309,7 +304,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             try
             {
                 return await m_LobbyApiInterface.QueryAllLobbies(null, null);
-
             }
             catch (LobbyServiceException e)
             {
@@ -498,8 +492,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return;
             }
-            if (this == null)
-                return;
             if (CurrentUnityLobby == null)
                 return;
             var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();

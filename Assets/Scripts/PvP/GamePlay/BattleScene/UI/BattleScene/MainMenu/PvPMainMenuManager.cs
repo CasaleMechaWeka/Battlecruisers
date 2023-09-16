@@ -61,6 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void QuitGame()
         {
             // Need to resume game to get music back
+            PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);

@@ -175,18 +175,22 @@ namespace BattleCruisers.Scenes
                     {
                         /*{LocalProfileTool.LocalProfileSuffix}*/
                         options.SetProfile($"{profile}");
+                        LogToScreen($"{profile}");
                     }
                     catch (Exception e)
                     {
                         Debug.Log(e.ToString());
                     }
                 }
+                else
+                {
+                    LogToScreen("not setted profile");
+                }
 
                 if (CurrentInternetConnectivity.IsConnected)
                 {
                     await UnityServices.InitializeAsync(options);
                 }
-
 #if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
                 {
@@ -196,12 +200,10 @@ namespace BattleCruisers.Scenes
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
 #endif
-
                 if (InternetConnectivity.Value)
                 {
                     List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
                 }
-
             }
             catch (ConsentCheckException e)
             {
@@ -213,7 +215,6 @@ namespace BattleCruisers.Scenes
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             MusicPlayer = CreateMusicPlayer(dataProvider);
-
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -269,7 +270,7 @@ namespace BattleCruisers.Scenes
             }
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
-            guestBtn.gameObject.SetActive(true);
+            guestBtn.gameObject.SetActive(true);            
         }
 
         void SetInteractable(bool interactable)
