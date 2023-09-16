@@ -608,7 +608,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
-            if(IsHost)
+            if (IsHost)
             {
                 if (Faction == PvPFaction.Blues)
                     PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, numOfDronesRequired * buildTimeInS);
@@ -695,12 +695,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (Faction == PvPFaction.Reds)
             {
-                int val = (int)(buildTimeInS * numOfDronesRequired);
+                int val = (int)_cumulativeBuildProgressInDroneS;
                 PvPBattleSceneGodServer.AddDeadBuildable_Left(TargetType, val);
             }
             else
             {
-                int val = (int)(buildTimeInS * numOfDronesRequired);
+                int val = (int)_cumulativeBuildProgressInDroneS;
                 PvPBattleSceneGodServer.AddDeadBuildable_Right(TargetType, val);
             }
         }

@@ -485,7 +485,8 @@ namespace BattleCruisers.Buildables
 
             if (Faction == Faction.Reds)
             {
-                BattleSceneGod.AddDeadBuildable(TargetType, (int)(buildTimeInS * numOfDronesRequired));
+                Debug.Log((int)_cumulativeBuildProgressInDroneS);
+                BattleSceneGod.AddDeadBuildable(TargetType, (int)_cumulativeBuildProgressInDroneS);
                 //BattleSceneGod.ShowDeadBuildableStats();
             }
         }
