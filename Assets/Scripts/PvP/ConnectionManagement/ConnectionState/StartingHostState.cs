@@ -88,8 +88,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 await m_ConnectionMethod.SetupHostConnectionAsync();
                 Debug.Log($"Created relay allocation with join code {m_LocalLobby.RelayJoinCode}");
-                if (this == null)
-                    return;
                 // NGO's StartHost launches everything
                 if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
@@ -98,8 +96,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             catch (Exception e)
             {
-                if (this == null)
-                    return;
                 Debug.LogException(e);
                 StartHostFailed();
             }
