@@ -226,40 +226,40 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     }
                 }
                 // cross-arena 
-                /*                if(!joined)
+                if (!joined)
+                {
+                    foreach (Lobby lobby in foundLobbies)
+                    {
+                        string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
+                        if (string.IsNullOrEmpty(RelayJoinCode))
+                            continue;
+                        else
+                        {
+                            for (int i = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap; i >= 0; i--)
+                            {
+                                string _wantMap = ConvertToScene((Map)i);
+                                if (lobby.Data["GameMap"].Value == _wantMap)
                                 {
-                                    foreach (Lobby lobby in foundLobbies)
-                                    {
-                                        string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
-                                        if (string.IsNullOrEmpty(RelayJoinCode))
-                                            continue;
-                                        else
-                                        {
-                                            for(int i = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap; i >= 0; i--)
-                                            {
-                                                string _wantMap = ConvertToScene((Map)i);
-                                                if (lobby.Data["GameMap"].Value == _wantMap)
-                                                {
-                                                    var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+                                    var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
 
-                                                    if (lobbyJoinAttemp.Success)
-                                                    {
-                                                        m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
-                                                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-                                                        {
-                                                            Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                                            m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                                                            joined = true;
-                                                            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i;
-                                                            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
-                                                        }
-                                                    }
-                                                    break;
-                                                }
-                                            }
+                                    if (lobbyJoinAttemp.Success)
+                                    {
+                                        m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                                        {
+                                            Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i;
+                                            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
+                                            m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                            joined = true;
                                         }
                                     }
-                                }*/
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
                 if (!joined)
                 {
                     var lobbyData = new Dictionary<string, DataObject>()
