@@ -1,5 +1,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
@@ -17,7 +18,6 @@ public class FullScreenAdverts : MonoBehaviour
 {
     public DefaultAdvertController defaultAd;
     public Button closeButton;
-
     private ISettingsManager settingsManager; // For fullscreen ads on premium :)
 
     // Start is called before the first frame update
@@ -57,6 +57,7 @@ public class FullScreenAdverts : MonoBehaviour
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
+            LandingSceneGod.MusicPlayer.PlayAdsMusic();
         }
         else
         {
@@ -69,6 +70,7 @@ public class FullScreenAdverts : MonoBehaviour
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
+            LandingSceneGod.MusicPlayer.PlayAdsMusic();
         }
         else
         {
