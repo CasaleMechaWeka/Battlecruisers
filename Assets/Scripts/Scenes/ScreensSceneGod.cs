@@ -180,7 +180,7 @@ namespace BattleCruisers.Scenes
                 Debug.Log("Offline, can't find out status of PVP Server.");
 
                 // Shop should not load until after a first remote config sync
-                if(!_dataProvider.GameModel.HasSyncdShop)
+                if (!_dataProvider.GameModel.HasSyncdShop)
                 {
                     hubScreen.shopButton.gameObject.SetActive(false);
                     hubScreen.leaderboardButton.gameObject.SetActive(false);
@@ -259,7 +259,6 @@ namespace BattleCruisers.Scenes
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
 #if !THIRD_PARTY_PUBLISHER
-                PlayAdvertisementMusic();
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
@@ -282,7 +281,6 @@ namespace BattleCruisers.Scenes
                 _applicationModel.ShowPostBattleScreen = false;
                 //_applicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
-                PlayAdvertisementMusic();
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
                 GotoHubScreen();
