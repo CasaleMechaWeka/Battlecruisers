@@ -433,6 +433,7 @@ namespace BattleCruisers.Scenes
             cameraOfCaptains.SetActive(false);
             homeScreenArt.SetActive(false);
             environmentArt.SetActive(false);
+            _musicPlayer.PlayScreensSceneMusic();
             GoToScreen(hubScreen);
         }
 
