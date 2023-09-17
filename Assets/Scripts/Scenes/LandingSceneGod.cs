@@ -175,17 +175,11 @@ namespace BattleCruisers.Scenes
                     {
                         /*{LocalProfileTool.LocalProfileSuffix}*/
                         options.SetProfile($"{profile}");
-                        LogToScreen($"{profile}");
-                        Debug.Log($"===> profile ---> {profile}");
                     }
                     catch (Exception e)
                     {
                         Debug.Log(e.ToString());
                     }
-                }
-                else
-                {
-                    LogToScreen("not setted profile");
                 }
 
                 if (CurrentInternetConnectivity.IsConnected)

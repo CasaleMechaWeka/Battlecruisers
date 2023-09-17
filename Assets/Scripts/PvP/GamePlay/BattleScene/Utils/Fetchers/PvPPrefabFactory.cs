@@ -130,7 +130,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x)
         {
             PvPCruiser cruiser = Object.Instantiate(cruiserPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
-            cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId);            
+            cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId);  
             cruiser.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
             cruiser.StaticInitialise(_commonStrings);
             return cruiser;
