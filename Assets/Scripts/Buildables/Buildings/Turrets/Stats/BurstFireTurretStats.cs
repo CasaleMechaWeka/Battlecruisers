@@ -35,9 +35,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             }
         }
 
-        public override float DurationInS 
-        { 
-            get 
+        public override float DurationInS
+        {
+            get
             {
                 return QueryIndex == 0 ? LongDurationInS : _shortDurationInS;
             }
@@ -45,9 +45,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         private float LongDurationInS => 1 / FireRatePerS;
 
-        public override bool IsInBurst 
-        { 
-            get 
+        public override bool IsInBurst
+        {
+            get
             {
                 return QueryIndex != 0;
             }
@@ -56,24 +56,24 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         private float _meanFireRatePerS;
         public override float MeanFireRatePerS => _meanFireRatePerS;
 
-		public override void Initialise()
-		{
-			base.Initialise();
+        public override void Initialise()
+        {
+            base.Initialise();
 
-			Assert.IsTrue(burstSize >= MIN_BURST_SIZE);
-			Assert.IsTrue(burstFireRatePerS > 0);
+            Assert.IsTrue(burstSize >= MIN_BURST_SIZE);
+            Assert.IsTrue(burstFireRatePerS > 0);
 
-			_shortDurationInS = 1 / burstFireRatePerS;
+            _shortDurationInS = 1 / burstFireRatePerS;
 
-            float cycleTime = (1 / FireRatePerS) + burstSize * (1 / burstFireRatePerS);
+            float cycleTime = (1 / FireRatePerS) + (burstSize - 1) * (1 / burstFireRatePerS);
             _meanFireRatePerS = burstSize / cycleTime;
 
             QueryIndex = 0;
-		}
+        }
 
         public override void MoveToNextDuration()
         {
             QueryIndex++;
-		}
-	}
+        }
+    }
 }

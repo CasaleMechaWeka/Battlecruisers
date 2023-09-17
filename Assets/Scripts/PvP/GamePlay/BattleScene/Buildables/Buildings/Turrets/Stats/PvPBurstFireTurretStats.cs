@@ -65,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _shortDurationInS = 1 / burstFireRatePerS;
 
-            float cycleTime = (1 / FireRatePerS) + burstSize * (1 / burstFireRatePerS);
+            float cycleTime = (1 / FireRatePerS) + (burstSize - 1) * (1 / burstFireRatePerS);
             _meanFireRatePerS = burstSize / cycleTime;
 
             QueryIndex = 0;
