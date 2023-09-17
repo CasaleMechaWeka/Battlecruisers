@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         private ICameraTarget FindCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
         {
-            float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser);
+            float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser) + 0.75f;
             Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
             return new CameraTarget(targetPosition, targetOrthographicSize);
         }

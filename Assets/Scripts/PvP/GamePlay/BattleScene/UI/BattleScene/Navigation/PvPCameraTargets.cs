@@ -85,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         private IPvPCameraTarget FindCruiserTarget(IPvPCamera camera, IPvPCameraCalculator cameraCalculator, IPvPCruiser cruiser)
         {
-            float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser);
+            float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser) + 0.75f;
             Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
             return new PvPCameraTarget(targetPosition, targetOrthographicSize);
         }
