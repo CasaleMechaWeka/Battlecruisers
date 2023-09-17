@@ -159,7 +159,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
             charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
-            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            charlie.gameObject.transform.localScale = Vector3.one * 0.4f;
             characterOfCharlie = charlie.gameObject;
 
             switch ((Map)dataProvider.GameModel.GameMap)
@@ -196,31 +196,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void SetFoudVictimString()
         {
             LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
-            //    LoadingBarParent.SetActive(true);
-
-/*            // Iterate through all child objects of ContainerCaptain
-            foreach (Transform child in ContainerCaptain)
-            {
-                // Try to get an Animator component from the child object
-                Animator animator = child.GetComponent<Animator>();
-
-                // If an Animator exists
-                if (animator != null)
-                {
-                    // Get all animation clips
-                    AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-
-                    // Iterate through all clips and play the one ending with "_Celebrate"
-                    foreach (AnimationClip clip in clips)
-                    {
-                        if (clip.name.EndsWith("_Celebrate"))
-                        {
-                            animator.Play(clip.name);
-                            break; // Exit loop once found and played
-                        }
-                    }
-                }
-            }*/
         }
         public void AddProgress(int step)
         {
@@ -303,18 +278,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 }
             }
             return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
-        }
-        IEnumerator iTrashTalk()
-        {
-            yield return new WaitForSeconds(2f);
-            trashTalkBubbles.gameObject.SetActive(true);
-            trashTalkBubbles.Initialise(_trashTalkData, _commonStrings, _storyStrings);
-        }
-
-        public void NotFound()
-        {
-            PopupPanel popupPanel = PopupManager.ShowPopupPanel("Matchmaking Error", "You did not find online competitor." +
-                " Please check Internet connection!", true, FailedMatchmaking);
         }
 
         public void FailedMatchmaking()
