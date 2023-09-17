@@ -115,6 +115,7 @@ namespace BattleCruisers.UI.Loading
         {
             try
             {
+                applicationModel.DataProvider.SaveGame();
                 applicationModel.DataProvider.SyncCoinsToCloud();
                 applicationModel.DataProvider.SyncCreditsToCloud();
 

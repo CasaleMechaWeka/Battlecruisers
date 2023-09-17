@@ -731,6 +731,7 @@ namespace BattleCruisers.Scenes
             Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
             try
             {
+                applicationModel.DataProvider.SaveGame();
                 applicationModel.DataProvider.SyncCoinsToCloud();
                 applicationModel.DataProvider.SyncCreditsToCloud();
 

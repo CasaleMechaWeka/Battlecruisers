@@ -540,5 +540,24 @@ namespace BattleCruisers.Scenes.BattleScene
                 aiCruiser.MakeDamagable();
             }
         }
+
+        void OnApplicationQuit()
+        {
+            applicationModel.DataProvider.SaveGame();
+            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            try
+            {
+                applicationModel.DataProvider.SaveGame();
+                applicationModel.DataProvider.SyncCoinsToCloud();
+                applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
+        }
     }
 }

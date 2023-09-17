@@ -721,6 +721,7 @@ namespace BattleCruisers.Scenes
         {
             try
             {
+                _applicationModel.DataProvider.SaveGame();
                 _applicationModel.DataProvider.SyncCoinsToCloud();
                 _applicationModel.DataProvider.SyncCreditsToCloud();
 

@@ -174,7 +174,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
             applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditmax", out creditMax);
-            
+
 
             PopulateScreen();
 
@@ -376,7 +376,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             if (PvPBattleSceneGodTunnel.isDisconnected == 0)
                 destructionCards[2].description.text = PvPBattleSceneGodTunnel._enemyCruiserName;
-            if(PvPBattleSceneGodTunnel.isDisconnected == 1)
+            if (PvPBattleSceneGodTunnel.isDisconnected == 1)
                 destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerACruiserName;
             if (PvPBattleSceneGodTunnel.isDisconnected == 2)
                 destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerBCruiserName;
@@ -887,6 +887,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             else
             {
                 return "Owwww";
+            }
+        }
+
+        void OnApplicationQuit()
+        {
+            applicationModel.DataProvider.SaveGame();
+            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            try
+            {
+                applicationModel.DataProvider.SaveGame();
+                applicationModel.DataProvider.SyncCoinsToCloud();
+                applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
             }
         }
     }
