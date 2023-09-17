@@ -176,6 +176,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                     if (_dataProvider.GameModel.Heckles[index].IsOwned)
                     {
+                        hecklesContainer.hecklePrice.text = "0";
                         hecklesContainer.btnBuy.SetActive(false);
                         hecklesContainer.ownFeedback.SetActive(true);
                     }
