@@ -47,8 +47,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override IPvPDamageCapability FindDamageCapabilities()
         {
             // Damage per s
-            float cycleLength = _laserTurretStats.DurationInS + 1 / _laserTurretStats.FireRatePerS;
-            float cycleDamage = _laserTurretStats.DurationInS * _laserTurretStats.DamagePerS;
+            float cycleLength = _laserTurretStats.laserDurationInS + 1 / _laserTurretStats.FireRatePerS;
+            float cycleDamage = _laserTurretStats.laserDurationInS * _laserTurretStats.DamagePerS;
             float damagePerS = cycleDamage / cycleLength;
 
             return new PvPDamageCapability(damagePerS, pvpTurretStats.AttackCapabilities);
