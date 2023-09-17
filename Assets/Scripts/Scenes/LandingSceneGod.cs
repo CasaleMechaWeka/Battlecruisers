@@ -176,6 +176,7 @@ namespace BattleCruisers.Scenes
                         /*{LocalProfileTool.LocalProfileSuffix}*/
                         options.SetProfile($"{profile}");
                         LogToScreen($"{profile}");
+                        Debug.Log($"===> profile ---> {profile}");
                     }
                     catch (Exception e)
                     {
@@ -290,9 +291,7 @@ namespace BattleCruisers.Scenes
                     return profileId;
                 }
             }
-
 #if UNITY_EDITOR
-
             // When running in the Editor make a unique ID from the Application.dataPath.
             // This will work for cloning projects manually, or with Virtual Projects.
             // Since only a single instance of the Editor can be open for a specific
@@ -301,16 +300,14 @@ namespace BattleCruisers.Scenes
                 .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
             Array.Resize(ref hashedBytes, 16);
             return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
-#else
-            return "";
+#elif PLATFORM_ANDROID
+            return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
 #endif
         }
 
         public async void GoogleLogin()
         {
-            Debug.Log("===> trying to login with Google");
             LogToScreen("Trying to login with Google");
-
             if (!AuthenticationService.Instance.IsSignedIn)
             {
                 SetInteractable(false);

@@ -43,8 +43,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             if (clientId != m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 2)
             {
                 MatchmakingScreenController.Instance.SetFoudVictimString();
+                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+                MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
+            }
+            if (clientId == m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
+            {
                 NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
-                m_LobbyServiceFacade.EndTracking();
             }
         }
 
@@ -112,9 +116,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
                     PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
                     PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
-
-                    MatchmakingScreenController.Instance.fleeButton.SetActive(true);
-                    MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
                 }
                 response.Approved = true;
                 response.Pending = false;

@@ -113,11 +113,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 enabled = false;
                 return;
             }
-            Initialise();
+            NetworkManager.Singleton.SceneManager.OnSceneEvent += OnSceneEvent;
+            // Initialise();
         }
         void OnNetworkDespawn()
         {
+            NetworkManager.Singleton.SceneManager.OnSceneEvent -= OnSceneEvent;
+        }
 
+        void OnSceneEvent(SceneEvent sceneEvent)
+        {
+            switch (sceneEvent.SceneEventType)
+            {
+                case SceneEventType.Load:
+
+                    break;
+                case SceneEventType.LoadEventCompleted:
+
+                    break;
+                case SceneEventType.Synchronize:
+
+                    break;
+                case SceneEventType.SynchronizeComplete:
+                    if (NetworkManager.Singleton.IsServer)
+                    {
+                        Initialise();
+                    }
+                    break;
+            }
         }
         void OnDestroy()
         {

@@ -23,6 +23,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -197,7 +198,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
             //    LoadingBarParent.SetActive(true);
 
-            // Iterate through all child objects of ContainerCaptain
+/*            // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)
             {
                 // Try to get an Animator component from the child object
@@ -219,7 +220,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                         }
                     }
                 }
-            }
+            }*/
         }
         public void AddProgress(int step)
         {
@@ -234,6 +235,11 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void OnFlee()
         {
+            if(PvPBattleSceneGodClient.Instance != null)
+            {
+                PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
+                PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
+            }
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
         }
@@ -242,10 +248,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             ApplicationModelProvider.ApplicationModel.Mode = Data.GameMode.CoinBattle;
             SaveCoinBattleSettings();
-
             int maxLevel = dataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
             int levelIndex = UnityEngine.Random.Range(1, maxLevel);
             LandingSceneGod.Instance.coinBattleLevelNum = levelIndex;
+            if (PvPBattleSceneGodClient.Instance != null)
+            {
+                PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
+                PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
+            }
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
         }
@@ -330,7 +340,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             _sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
-            Destroy(gameObject);
+            Invoke("Destroy", 0.5f);
         }
 
         public void Destroy()
