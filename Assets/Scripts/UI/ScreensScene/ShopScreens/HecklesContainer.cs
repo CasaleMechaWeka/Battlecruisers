@@ -7,6 +7,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.Economy;
 using UnityEngine;
@@ -44,10 +45,11 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+            if (_dataProvider.GameModel.Coins >= currentHeckleData.HeckleCost)
             {
-                if (_dataProvider.GameModel.Coins >= currentHeckleData.HeckleCost)
+                if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
+                    // Online purchasing
                     try
                     {
                         bool result = await _dataProvider.PurchaseHeckle(currentHeckleData.Index);
@@ -73,7 +75,6 @@ namespace BattleCruisers.UI.ScreensScene
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
                         }
-
                     }
                     catch
                     {
@@ -84,15 +85,45 @@ namespace BattleCruisers.UI.ScreensScene
                 }
                 else
                 {
+                    // Offline purchasing
+                    try
+                    {
+                        currentItem._clickedFeedback.SetActive(true);
+                        currentItem._ownedItemMark.SetActive(true);
+                        btnBuy.SetActive(false);
+                        ownFeedback.SetActive(true);
+                        ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
+                        _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
+                        _dataProvider.SaveGame();
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+
+                        // Subtract from local economy:
+                        _dataProvider.GameModel.Coins -= currentHeckleData.HeckleCost;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+
+                        // Keep track of transaction for later:
+                        _dataProvider.GameModel.CoinsChange -= currentHeckleData.HeckleCost;
+                        HeckleData heckle = _dataProvider.GameModel.Heckles[currentHeckleData.Index];
+                        if (_dataProvider.GameModel.OutstandingHeckleTransactions == null)
+                        {
+                            _dataProvider.GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
+                        }
+                        _dataProvider.GameModel.OutstandingHeckleTransactions.Add(heckle);
+                    }
+                    catch
+                    {
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                    }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                    MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
-                    return;
                 }
             }
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("NoInternetConnection"));
+                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                return;
             }
         }
 
