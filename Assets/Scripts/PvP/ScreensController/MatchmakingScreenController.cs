@@ -193,7 +193,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     break;
             }
         }
-        public void SetFoudVictimString()
+        public void SetFoundVictimString()
         {
             LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
         }
