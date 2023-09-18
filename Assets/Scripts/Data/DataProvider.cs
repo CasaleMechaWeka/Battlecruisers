@@ -408,7 +408,7 @@ namespace BattleCruisers.Data
                 // handle any winnings from offline pve games:
                 GameModel.Credits += GameModel.CreditsChange;
                 GameModel.CreditsChange = 0;
-                await SyncCoinsToCloud();
+                await SyncCreditsToCloud();
             }
 
             SaveGame();
