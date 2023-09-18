@@ -352,6 +352,7 @@ namespace BattleCruisers.Data
             Debug.Log("Processing offline transactions.");
             int runningCoinTotal = (int)GameModel.Coins;  // SyncCurrencyFromCloud means these start from what the cloud provides.
             int coinLocalTotal = (int)GameModel.Coins + GameModel.CoinsChange;
+            int creditLocalTotal = (int)GameModel.Credits + GameModel.CreditsChange;
             //int runningCreditTotal
             //int creditLocalTotal
 
@@ -361,7 +362,7 @@ namespace BattleCruisers.Data
             // Coin transactions
             if (coinLocalTotal >= 0)
             {
-                Debug.Log("Offline transactions do not conflict.");
+                Debug.Log("Offline coin transactions do not conflict.");
                 // Surplus
                 // All coin transactions can resolve.
                 // These methods handle buying everything on the Outstanding Transactions lists:
@@ -369,9 +370,12 @@ namespace BattleCruisers.Data
                 {
                     await ProcessOfflineCaptains();
                     await ProcessOfflineHeckles();
-                    SaveGame();
-                    await CloudSave();
                 }
+
+                // handle any winnings from offline pve games:
+                GameModel.Coins += GameModel.CoinsChange;
+                GameModel.CoinsChange = 0;
+                await SyncCoinsToCloud();
             }
             else
             {
@@ -390,8 +394,23 @@ namespace BattleCruisers.Data
                     runningCoinTotal = await ProcessOfflineHecklesConflicts(runningCoinTotal);
                    
                 }
-                GameModel.CoinsChange = 0; //runningCoinTotal;
+
+                // handle any remainder:
+                GameModel.Coins += runningCoinTotal;
+                GameModel.CoinsChange = 0;
             }
+
+            // Credit transactions
+            if (creditLocalTotal >= 0)
+            {
+                Debug.Log("Offline credits transactions do not conflict.");
+
+                // handle any winnings from offline pve games:
+                GameModel.Credits += GameModel.CreditsChange;
+                GameModel.CreditsChange = 0;
+                await SyncCoinsToCloud();
+            }
+
             SaveGame();
             await CloudSave();
         }

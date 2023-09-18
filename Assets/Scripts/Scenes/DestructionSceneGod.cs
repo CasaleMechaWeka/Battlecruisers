@@ -672,6 +672,7 @@ namespace BattleCruisers.Scenes
                 }
                 else
                 {
+                    // Can't sync, save for later:
                     applicationModel.DataProvider.GameModel.CoinsChange += coinsToAward;
                     applicationModel.DataProvider.GameModel.CreditsChange += (int)creditsToAward;
                 }
