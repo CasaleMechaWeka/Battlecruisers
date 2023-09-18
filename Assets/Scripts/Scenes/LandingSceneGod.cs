@@ -114,7 +114,7 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
             Helper.AssertIsNotNull(messageHandler);
-            LogToScreen("Asserts complete.");
+            LogToScreen("Starting Battlecruisers"); // SCREEN START
 
             landingCanvas.SetActive(true);
             loginPanel.SetActive(true);
@@ -131,10 +131,8 @@ namespace BattleCruisers.Scenes
             retryPanel.SetActive(false);
             labelRetry.SetActive(true);
             spinRetry.SetActive(false);
-            LogToScreen("Active objects set.");
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            LogToScreen("ApplicationModel set.");
 
             bool startingState = await CheckForInternetConnection();
 
@@ -144,7 +142,6 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = DisconnectedState;
 
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
-            LogToScreen("StartingState, Internet Connection: " + startingState);
 
             if (Instance == null)
                 Instance = this;
@@ -204,7 +201,6 @@ namespace BattleCruisers.Scenes
             {
                 // do nothing
                 Debug.Log(e.Message);
-                LogToScreen("Consent Check Error: No Internet");
                 // messageHandler.ShowMessage("Please check Internet connection!");
             }
 
@@ -215,11 +211,9 @@ namespace BattleCruisers.Scenes
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             hecklesStrings = await LocTableFactory.Instance.LoadHecklesTableAsync();
             screenSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
-            LogToScreen("Loc Tables loaded.");
 
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-            LogToScreen("Hint provider loaded.");
 
             //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
@@ -232,6 +226,7 @@ namespace BattleCruisers.Scenes
                     break;
                 }
             }
+            LogToScreen("All assets loaded"); // ALL ASSETS LOADED
 
             try
             {
@@ -240,12 +235,11 @@ namespace BattleCruisers.Scenes
                 AuthenticationService.Instance.SignedOut += SignedOut;
                 AuthenticationService.Instance.Expired += Expired;
                 AuthenticationService.Instance.SignInFailed += SignFailed;
-                LogToScreen("Auth events registered.");
             }
             catch
             {
-                LogToScreen("Auth events failed the register.");
-                Debug.LogError("Auth events failed the register.");
+                LogToScreen("Auth events failed the register"); // ONLINE SERVICES UNAVAILABLE
+                Debug.LogError("Auth events failed the register");
             }
 
             if (CurrentInternetConnectivity.IsConnected)
@@ -253,15 +247,16 @@ namespace BattleCruisers.Scenes
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await AttemptSilentSigningAsync();
-                LogToScreen("Google Authentication service created");
 
                 // should be enabled after completion initialization
                 googleBtn.Initialise(soundPlayer, GoogleLogin);
                 googleBtn.gameObject.SetActive(true);
+
+                LogToScreen(""); // INTERNET
             }
             else
             {
-                LogToScreen("No internet.");
+                LogToScreen("No internet, continue offline"); // NO INTERNET
             }
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
@@ -301,23 +296,21 @@ namespace BattleCruisers.Scenes
 
         public async void GoogleLogin()
         {
-            LogToScreen("Trying to login with Google");
+            LogToScreen("Attempting login with Google"); // ON GOOGLE BUTTON PRESS
             if (!AuthenticationService.Instance.IsSignedIn)
             {
                 SetInteractable(false);
                 spinGoogle.SetActive(true);
                 labelGoogle.SetActive(false);
                 loginType = LoginType.Google;
-                LogToScreen("Login Type: Google");
 
                 try
                 {
-                    LogToScreen("awaiting Google Authentication");
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
                 }
                 catch (Exception ex)
                 {
-                    LogToScreen(ex.Message);
+                    LogToScreen("Error while trying to log in with Google"); // IF GOOGLE AUTH FAILS FOR ANY REASON
                     Debug.Log(ex.Message);
                 }
             }
@@ -332,7 +325,6 @@ namespace BattleCruisers.Scenes
             }
             catch (Exception ex)
             {
-                LogToScreen(ex.Message);
                 Debug.Log(ex.Message);
             }
         }
@@ -370,7 +362,6 @@ namespace BattleCruisers.Scenes
 
         private void SignFailed(RequestFailedException exception)
         {
-            LogToScreen(exception.Message);
             SetInteractable(true);
             spinGuest.SetActive(false);
             spinGoogle.SetActive(false);
