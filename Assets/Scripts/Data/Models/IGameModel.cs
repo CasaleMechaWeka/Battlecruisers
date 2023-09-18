@@ -26,6 +26,8 @@ namespace BattleCruisers.Data.Models
         List<CaptainData> Captains { get; set; }
         List<HeckleData> Heckles { get; set; }
         List<IAPData> IAPs { get; set; }
+        List<HeckleData> OutstandingHeckleTransactions { get; set; }
+        List<CaptainData> OutstandingCaptainTransactions { get; set; }
         bool HasSyncdShop { get; set; }
         int NumOfLevelsCompleted { get; }
         long LifetimeDestructionScore { get; set; }

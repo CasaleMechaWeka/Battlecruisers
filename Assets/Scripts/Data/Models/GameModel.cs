@@ -154,20 +154,6 @@ namespace BattleCruisers.Data.Models
             set => _coins = value;
         }
 
-        private int _creditsChange;
-        public int CreditsChange
-        {
-            get => _creditsChange;
-            set => _creditsChange = value;
-        }
-
-        private int _coinsChange;
-        public int CoinsChange
-        {
-            get => _coinsChange;
-            set => _coinsChange = value;
-        }
-
         private int _totalVoyages;
         public int TotalVoyages
         {
@@ -227,6 +213,34 @@ namespace BattleCruisers.Data.Models
         {
             get => _iaps;
             set => _iaps = value;
+        }
+
+        public List<HeckleData> _outstandingHeckleTransactions;
+        public List<HeckleData> OutstandingHeckleTransactions
+        {
+            get => _outstandingHeckleTransactions;
+            set => _outstandingHeckleTransactions = value;
+        }
+
+        public List<CaptainData> _outstandingCaptainTransactions;
+        public List<CaptainData> OutstandingCaptainTransactions
+        {
+            get => _outstandingCaptainTransactions;
+            set => _outstandingCaptainTransactions = value;
+        }
+
+        private int _creditsChange;
+        public int CreditsChange
+        {
+            get => _creditsChange;
+            set => _creditsChange = value;
+        }
+
+        private int _coinsChange;
+        public int CoinsChange
+        {
+            get => _coinsChange;
+            set => _coinsChange = value;
         }
 
         public bool _hasSyncdShop;

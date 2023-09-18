@@ -45,9 +45,10 @@ namespace BattleCruisers.Data
         Task<bool> RefreshPVPServerStatus();
         Task SyncCaptainsCost();
         Task SyncHecklesCost();
-
+        Task ProcessOfflineTransactions();
         Task<bool> PurchaseCaptain(int index);
         Task<bool> PurchaseHeckle(int index);
+
 /*        Task<bool> PurchaseIAP(string purchaseId);*/
 
         /*        Task RefreshEconomyConfiguration();

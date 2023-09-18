@@ -19,6 +19,7 @@ using UnityEngine;
 using BattleCruisers.Scenes;
 using Unity.Services.Authentication;
 using BattleCruisers.Utils.UGS.Samples;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 namespace BattleCruisers.Data
 {
@@ -338,6 +339,188 @@ namespace BattleCruisers.Data
             }
 
             return itemsAndAmountsSpec;
+        }
+
+        // Any shop items bought while offline need to be accounted for and either merged with cloud economy or discarded
+        public async Task ProcessOfflineTransactions()
+        {
+            await SyncCurrencyFromCloud();
+            // these two lines are duplicated from GetConfigValues():
+            var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
+            virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
+
+            Debug.Log("Processing offline transactions.");
+            int runningCoinTotal = (int)GameModel.Coins;  // SyncCurrencyFromCloud means these start from what the cloud provides.
+            int coinLocalTotal = (int)GameModel.Coins + GameModel.CoinsChange;
+            //int runningCreditTotal
+            //int creditLocalTotal
+
+            // Surplus: If a LocalTotal is positive, local and cloud economy can coexist. We can just process everything without issue.
+            // Deficit: If a LocalTotal is negative then some local spending is incompatible with the cloud economy, and needs to be discarded.
+
+            // Coin transactions
+            if (coinLocalTotal >= 0)
+            {
+                Debug.Log("Offline transactions do not conflict.");
+                // Surplus
+                // All coin transactions can resolve.
+                // These methods handle buying everything on the Outstanding Transactions lists:
+                if (GameModel.OutstandingCaptainTransactions != null && GameModel.OutstandingCaptainTransactions.Count > 0)
+                {
+                    await ProcessOfflineCaptains();
+                    await ProcessOfflineHeckles();
+                    SaveGame();
+                    await CloudSave();
+                }
+            }
+            else
+            {
+                // Deficit
+                // Needs to be handled
+                // Captains first
+                Debug.Log("Offline transaction conflict!");
+                if (GameModel.OutstandingCaptainTransactions != null && GameModel.OutstandingCaptainTransactions.Count > 0)
+                {
+                    runningCoinTotal = await ProcessOfflineCaptainsConflicts(runningCoinTotal);
+                }
+
+                // Heckles second
+                if (GameModel.OutstandingHeckleTransactions != null && GameModel.OutstandingHeckleTransactions.Count > 0)
+                {
+                    runningCoinTotal = await ProcessOfflineHecklesConflicts(runningCoinTotal);
+                   
+                }
+                GameModel.CoinsChange = 0; //runningCoinTotal;
+            }
+            SaveGame();
+            await CloudSave();
+        }
+
+        // Officially buys all the Captains that were bought offline:
+        private async Task ProcessOfflineCaptains()
+        {
+            List<CaptainData> RetryCaptains = new List<CaptainData>();
+
+            // Captains
+            foreach (CaptainData txn in GameModel.OutstandingCaptainTransactions)
+            {
+                Debug.Log("Purchasing Captain " + txn.index);
+                bool result = await PurchaseCaptain(txn.index);
+                if (result)
+                {
+                    GameModel.Captains[txn.index].isOwned = true;
+                    GameModel.CoinsChange += txn.captainCost;
+                }
+                else
+                {
+                    Debug.LogWarning("FAILED: Purchasing Captain " + txn.index + ", will retry next time the game is run.");
+                    RetryCaptains.Add(txn);
+                }
+            }
+            await SyncCurrencyFromCloud();
+            // If any failed, they'll be preserved for next connection:
+            if (RetryCaptains != null) { GameModel.OutstandingCaptainTransactions = RetryCaptains; }
+            else { GameModel.OutstandingCaptainTransactions = new List<CaptainData>(); }
+        }
+
+        // Officially buys Captains based on what was bought offline, but only as many as the cloud economy allows:
+        private async Task<int> ProcessOfflineCaptainsConflicts(int runningCoinTotal)
+        {
+            List<int> GoodCaptains = new List<int>();
+
+            foreach (CaptainData txn in GameModel.OutstandingCaptainTransactions)
+            {
+                if (runningCoinTotal - txn.captainCost >= 0)
+                {
+                    runningCoinTotal -= txn.captainCost;
+                    GoodCaptains.Add(txn.index);
+                }
+                else
+                {
+                    Debug.Log("Reverting purchase of Captain " + txn.index);
+                    GameModel.Captains[txn.index].isOwned = false;
+                }
+            }
+            GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
+
+            if (GoodCaptains != null && GoodCaptains.Count > 0)
+            {
+                foreach (int cpt in GoodCaptains)
+                {
+                    Debug.Log("Purchasing Captain " + cpt);
+                    bool result = await PurchaseCaptain(cpt);
+                    if (result)
+                    {
+                        await SyncCurrencyFromCloud();
+                        GameModel.Captains[cpt].isOwned = true;
+                    }
+                }
+            }
+
+            return runningCoinTotal;
+        }
+
+        // Officially buys all the Heckles that were bought offline:
+        private async Task ProcessOfflineHeckles()
+        {
+            List<HeckleData> RetryHeckles = new List<HeckleData>();
+
+            foreach (HeckleData txn in GameModel.OutstandingHeckleTransactions)
+            {
+                Debug.Log("Purchasing Heckle " + txn.index);
+                bool result = await PurchaseHeckle(txn.index);
+                if (result)
+                {
+
+                    GameModel.Heckles[txn.index].isOwned = true;
+                    GameModel.CoinsChange += txn.heckleCost;
+                }
+                else
+                {
+                    Debug.LogWarning("FAILED: Purchasing Heckle " + txn.index + ", will retry next time the game is run.");
+                    RetryHeckles.Add(txn);
+                }
+            }
+            await SyncCurrencyFromCloud();
+            // If any failed, they'll be preserved for next connection:
+            if (RetryHeckles != null) { GameModel.OutstandingHeckleTransactions = RetryHeckles; }
+            else { GameModel.OutstandingHeckleTransactions = new List<HeckleData>(); }
+        }
+
+        // Officially buys Heckles based on what was bought offline, but only as many as the cloud economy allows:
+        private async Task<int> ProcessOfflineHecklesConflicts(int runningCoinTotal)
+        {
+            List<int> GoodHeckles = new List<int>();
+
+            foreach (HeckleData txn in GameModel.OutstandingHeckleTransactions)
+            {
+                if (runningCoinTotal - txn.heckleCost >= 0)
+                {
+                    runningCoinTotal -= txn.heckleCost;
+                    GoodHeckles.Add(txn.index);
+                }
+                else
+                {
+                    Debug.Log("Reverting purchase of Heckle " + txn.index);
+                    GameModel.Heckles[txn.index].isOwned = false;
+                }
+            }
+            GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
+
+            if (GoodHeckles != null && GoodHeckles.Count > 0)
+            {
+                foreach (int hkl in GoodHeckles)
+                {
+                    Debug.Log("Purchasing Heckle " + hkl);
+                    bool result = await PurchaseHeckle(hkl);
+                    if (result)
+                    {
+                        await SyncCurrencyFromCloud();
+                        GameModel.Heckles[hkl].isOwned = true;
+                    }
+                }
+            }
+            return runningCoinTotal;
         }
     }
 

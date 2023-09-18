@@ -142,6 +142,16 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     await _dataProvider.LoadBCData();
+                    // local transactions syncing:
+                    if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
+                        _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
+                        _dataProvider.GameModel.OutstandingHeckleTransactions != null &&
+                        _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0)
+                    {
+                        Debug.Log("Processing offline shop purchases.");
+                        await _dataProvider.ProcessOfflineTransactions();
+                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                    }
                     // set pvp status in Battle Hub
                     serverStatus = await _dataProvider.RefreshPVPServerStatus();
                     if (serverStatus)

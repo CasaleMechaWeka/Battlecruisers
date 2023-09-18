@@ -59,10 +59,11 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+            if (_dataProvider.GameModel.Coins >= currentCaptainData.CaptainCost)
             {
-                if (_dataProvider.GameModel.Coins >= currentCaptainData.CaptainCost)
+                if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
+                    // Online purchasing
                     try
                     {
                         bool result = await _dataProvider.PurchaseCaptain(currentCaptainData.Index);
@@ -97,15 +98,45 @@ namespace BattleCruisers.UI.ScreensScene
                 }
                 else
                 {
+                    // Offline purchasing
+                    try
+                    {
+                        currentItem._clickedFeedback.SetActive(true);
+                        currentItem._ownedItemMark.SetActive(true);
+                        btnBuy.SetActive(false);
+                        ownFeedback.SetActive(true);
+                        ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
+                        _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
+                        _dataProvider.SaveGame();
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+
+                        // Subtract from local economy:
+                        _dataProvider.GameModel.Coins -= currentCaptainData.CaptainCost;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+
+                        // Keep track of transaction for later:
+                        _dataProvider.GameModel.CoinsChange -= currentCaptainData.CaptainCost;
+                        CaptainData captain = _dataProvider.GameModel.Captains[currentCaptainData.Index];
+                        if (_dataProvider.GameModel.OutstandingCaptainTransactions == null)
+                        {
+                            _dataProvider.GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
+                        }
+                        _dataProvider.GameModel.OutstandingCaptainTransactions.Add(captain);
+                    }
+                    catch
+                    {
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                    }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                    MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
-                    return;
                 }
             }
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("NoInternetConnection"));
+                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                return;
             }
         }
 
