@@ -15,6 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private IPvPSpriteProvider _spriteProvider;
         private IPvPBuildingClickHandler _clickHandler;
+        private bool _flipClickAndDragIcon;
 
         public void Initialise(
             IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings,
@@ -23,13 +24,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPBuildableSorter<IPvPBuilding> buildingSorter,
             IPvPSpriteProvider spriteProvider,
             IPvPSingleSoundPlayer soundPlayer,
-            IPvPBuildingClickHandler clickHandler)
+            IPvPBuildingClickHandler clickHandler,
+            bool flipClickAndDragIcon)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
             PvPHelper.AssertIsNotNull(spriteProvider, clickHandler);
 
             _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
+            _flipClickAndDragIcon = flipClickAndDragIcon;
 
             base.Initialise(buildings, uiManager, buttonVisibilityFilters, buildingSorter, soundPlayer);
         }
@@ -41,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPBuilding>> buildables)
         {
-            menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _spriteProvider, _clickHandler);
+            menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _spriteProvider, _clickHandler, _flipClickAndDragIcon);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPSingleSoundPlayer _soundPlayer;
         private IPvPSpriteProvider _spriteProvider;
         private IPvPBuildingClickHandler _clickHandler;
+        private bool _flipClickAndDragIcon;
 
         public PvPBuildingCategoryButton buildingCategoryButton;
 
@@ -25,7 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPBuilding>> buildings,
             IPvPSpriteProvider spriteProvider,
-            IPvPBuildingClickHandler clickHandler)
+            IPvPBuildingClickHandler clickHandler,
+            bool flipClickAndDragIcon)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
             PvPHelper.AssertIsNotNull(soundPlayer, buildingCategoryButton, spriteProvider, clickHandler);
@@ -33,6 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _soundPlayer = soundPlayer;
             _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
+            _flipClickAndDragIcon = flipClickAndDragIcon;
 
             base.Initialise(uiManager, buttonVisibilityFilters, buildings);
             buildingCategoryButton.IsActiveFeedbackVisible = false;
@@ -40,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         protected override void InitialiseBuildableButton(PvPBuildingButtonController button, IPvPBuildableWrapper<IPvPBuilding> buildableWrapper)
         {
-            button.Initialise(_soundPlayer, buildableWrapper, _clickHandler, _shouldBeEnabledFilter);
+            button.Initialise(_soundPlayer, buildableWrapper, _clickHandler, _shouldBeEnabledFilter, _flipClickAndDragIcon);
         }
 
         public override void OnPresenting(object activationParameter)

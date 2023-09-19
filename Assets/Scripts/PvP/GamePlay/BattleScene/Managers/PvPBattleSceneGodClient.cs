@@ -369,7 +369,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     factoryProvider.Sound.PrioritisedSoundPlayer,
                     factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor,
-                    dataProvider.StaticData);
+                    dataProvider.StaticData,
+                    SynchedServerData.Instance.GetTeam() == Team.RIGHT);
             time = PvPTimeBC.Instance;
             IPvPPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
             _debouncer = new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
