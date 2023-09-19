@@ -314,7 +314,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         private int CalculateRank(long score)
         {
-
             for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
                 long x = 2500 + 2500 * i * i;
