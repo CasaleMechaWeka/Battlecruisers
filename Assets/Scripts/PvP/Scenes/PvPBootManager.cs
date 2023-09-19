@@ -180,10 +180,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 field: QueryFilter.FieldOptions.S1, // S1 = "GameMap"
                 op: QueryFilter.OpOptions.EQ,
                 value: wantMap),*/
-            new QueryFilter(
+/*            new QueryFilter(
                 field: QueryFilter.FieldOptions.N1, // N1 = "Score :  Battle Win"
                 op: QueryFilter.OpOptions.GE,
-                value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),
+                value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),*/
             };
 
             List<QueryOrder> mOrders = new List<QueryOrder>
