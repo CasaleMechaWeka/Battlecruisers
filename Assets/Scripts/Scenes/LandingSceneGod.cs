@@ -162,13 +162,7 @@ namespace BattleCruisers.Scenes
             try
             {
                 var options = new InitializationOptions();
-
-#if DEV_ENV
-                options.SetEnvironmentName("dev");
-#else
                 options.SetEnvironmentName("production");
-#endif
-
                 var profile = GetProfile();
 
                 if (profile.Length > 0)
