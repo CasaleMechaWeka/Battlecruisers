@@ -252,7 +252,7 @@ namespace BattleCruisers.Scenes
                 googleBtn.Initialise(soundPlayer, GoogleLogin);
                 googleBtn.gameObject.SetActive(true);
 
-                LogToScreen("Welcome"); // INTERNET
+                LogToScreen(""); // INTERNET
             }
             else
             {
