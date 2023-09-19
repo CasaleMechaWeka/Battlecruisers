@@ -19,6 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public event EventHandler Activated;
         public event EventHandler Deactivated;
 
+        public GameObject drone;
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -27,17 +28,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Assert.IsNotNull(_animation);
             //    gameObject.SetActive(false);
         }
-
-
-
-
         public void Activate(PvPDroneActivationArgs activationArgs)
         {
-            gameObject.SetActive(true);
-            SynchedServerData.Instance.ActivateNetworkObject(GetComponent<NetworkObject>().NetworkObjectId);
+            drone.SetActive(true);
+            OnVisibleDroneClientRpc(true);
+            // SynchedServerData.Instance.ActivateNetworkObject(GetComponent<NetworkObject>().NetworkObjectId);
             gameObject.transform.position = activationArgs.Position;
+            GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
             // clientRpc
-            OnChangedPositionClientRpc(activationArgs.Position);
+            //    OnChangedPositionClientRpc(activationArgs.Position);
             Faction = activationArgs.Faction;
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);
@@ -50,10 +49,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
         }
 
+        private void Start()
+        {
+            drone.SetActive(false);
+        }
         public void Deactivate()
         {
-            gameObject.SetActive(false);
-            SynchedServerData.Instance.DeactivateNetworkObject(GetComponent<NetworkObject>().NetworkObjectId);
+            drone.SetActive(false);
+            OnVisibleDroneClientRpc(false);
+            //    SynchedServerData.Instance.DeactivateNetworkObject(GetComponent<NetworkObject>().NetworkObjectId);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
@@ -63,14 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             {
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
             }
-
         }
-
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
-
         public override void OnNetworkDespawn()
         {
             if (IsClient)
@@ -82,6 +79,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             if (!IsHost)
                 gameObject.transform.position = pos;
+        }
+
+        [ClientRpc]
+        private void OnVisibleDroneClientRpc(bool isVisible)
+        {
+            if (!IsHost)
+                drone.SetActive(isVisible);
         }
 
     }

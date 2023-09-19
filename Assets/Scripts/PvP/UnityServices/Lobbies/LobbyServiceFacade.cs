@@ -122,7 +122,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                         task = LeaveLobbyAsync(lobbyId);
                     }
                 }
-
                 m_LocalUser.ResetState();
                 m_LocalLobby?.Reset(m_LocalUser);
             }

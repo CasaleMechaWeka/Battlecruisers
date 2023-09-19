@@ -24,6 +24,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
+using Unity.Netcode;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -137,8 +138,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("Trident", Trident);
             sprites.Add("Yeti", Yeti);
 
-            DontDestroyOnLoad(gameObject);
-
+            DontDestroyOnLoad(gameObject);            
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
@@ -193,10 +193,32 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     break;
             }
         }
+
+        bool isProcessing = false;
+        public bool isLoaded = false;
+        async void Update()
+        {
+            if(!isProcessing && !isLoaded)
+            {
+                isProcessing = true;
+                await iLoadingAssets();
+            }
+        }
+
+        async Task iLoadingAssets()
+        {
+            await Task.Delay(10);
+            if (isLoaded)
+                return;
+            NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
+            LoadingBar.value = objs.Length;
+            isProcessing = false;
+        }
+        
         public void SetFoundVictimString()
         {
             LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
-
+            LoadingBarParent.SetActive(true);
             // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)
             {

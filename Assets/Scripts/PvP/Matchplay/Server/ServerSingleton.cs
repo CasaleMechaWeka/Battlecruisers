@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                 }
                 if (s_ServerSingleton == null)
                 {
-                    Debug.LogError("No ServerSingleton in scene, did you run this from the bootstrap scene?");
+                    Debug.Log("No ServerSingleton in scene, did you run this from the bootstrap scene?");
                     return null;
                 }
                 return s_ServerSingleton;

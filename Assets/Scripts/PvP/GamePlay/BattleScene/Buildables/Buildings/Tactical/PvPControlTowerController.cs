@@ -82,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
         {
             base.CallRpc_ToggleDroneConsumerFocusCommandExecute();
-            if (IsClient)
+            if (!IsHost)
                 OnToggleDroneConsumerFocusCommandExecuteServerRpc();
         }
 

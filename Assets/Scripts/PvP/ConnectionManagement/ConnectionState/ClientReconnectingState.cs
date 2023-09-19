@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnected);
 
         }
-        
+
         public override void OnClientDisconnect(ulong _)
         {
             var disconnectReason = m_ConnectionManager.NetworkManager.DisconnectReason;
@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 else
                 {
                     var connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
-                    m_ConnectStatusPublisher.Publish(connectStatus);
+                    //    m_ConnectStatusPublisher.Publish(connectStatus);
                     switch (connectStatus)
                     {
                         case ConnectStatus.UserRequestedDisconnect:
@@ -72,12 +72,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 if (string.IsNullOrEmpty(disconnectReason))
                 {
-                    m_ConnectStatusPublisher.Publish(ConnectStatus.GenericDisconnect);
+                    //    m_ConnectStatusPublisher.Publish(ConnectStatus.GenericDisconnect);
                 }
                 else
                 {
                     var connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
-                    m_ConnectStatusPublisher.Publish(connectStatus);
+                    //    m_ConnectStatusPublisher.Publish(connectStatus);
                 }
                 m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
             }

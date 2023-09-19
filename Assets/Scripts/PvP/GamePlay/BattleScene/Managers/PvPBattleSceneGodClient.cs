@@ -85,8 +85,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         ISceneNavigator sceneNavigator;
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
-        private CancellationTokenSource m_cancellationToken;
-
         public IPvPUIManager uiManager;
         public ILocTable commonStrings;
         public Dictionary<string, AudioClip> projectileImpactSounds = new Dictionary<string, AudioClip>();
@@ -129,7 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 if (s_pvpBattleSceneGodClient == null)
                 {
-                    Debug.LogError("No ServerSingleton in scene, did you run this from the bootstrap scene?");
+                    Debug.Log("No ServerSingleton in scene, did you run this from the bootstrap scene?");
                     return null;
                 }
                 return s_pvpBattleSceneGodClient;
@@ -162,43 +160,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void Awake()
         {
             s_pvpBattleSceneGodClient = this;
-            m_cancellationToken = new CancellationTokenSource();
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
                 m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
             }
         }
-        void OnNetworkSpawn()
+
+        async void OnNetworkSpawn()
         {
-            if (!NetworkManager.Singleton.IsHost)
-            {
-                StaticInitialiseAsync();
-            }
+            await StaticInitialiseAsync_Client();
         }
         void OnNetworkDespawn()
         {
 
         }
 
-        void OnSceneEvent(SceneEvent sceneEvent)
-        {
-            switch (sceneEvent.SceneEventType)
-            {
-                case SceneEventType.Load:
-
-                    break;
-                case SceneEventType.LoadEventCompleted:
-
-                    break;
-                case SceneEventType.Synchronize:
-
-                    break;
-                case SceneEventType.SynchronizeComplete:
-
-                    break;
-            }
-        }
         void DetectClientDisconnection()
         {
             if (NetworkManager.Singleton != null && !WasLeftMatch)
@@ -283,15 +260,41 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
         }
-
-
-        public async Task StaticInitialiseAsync()
+        public async Task StaticInitialiseAsync_Host()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
-
             PvPPrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
+            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
+            IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            components = GetComponent<PvPBattleSceneGodComponents>();
 
+            _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
+            sceneNavigator = LandingSceneGod.SceneNavigator;
+            battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator, _battleSceneGodTunnel);
+
+            messageBox.gameObject.SetActive(true);
+            messageBox.Initialize();
+            messageBox.HideMessage();
+
+            Assert.IsNotNull(components);
+            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            prefabFactory = PvPBattleSceneGodServer.Instance.prefabFactory;
+            IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
+            navigationPermitters = new PvPNavigationPermitters();
+            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
+            uiManager = pvpBattleHelper.CreateUIManager();
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider.Initialise(uiManager);
+            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
+            captainController = GetComponent<PvPCaptainExoHUDController>();
+        }
+        private async Task StaticInitialiseAsync_Client()
+        {
+            applicationModel = ApplicationModelProvider.ApplicationModel;
+            dataProvider = applicationModel.DataProvider;
+            PvPPrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
@@ -308,13 +311,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
 
-            if (!NetworkManager.Singleton.IsHost)
-            {
-                IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
-                IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-                prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
-            }
-            prefabFactory = NetworkManager.Singleton.IsHost ? PvPBattleSceneGodServer.Instance.prefabFactory : prefabFactory;
+            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
+            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
+            prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
+
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
 
@@ -325,12 +325,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
         }
-
-
-
         private async void InitialiseAsync()
         {
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
+            MatchmakingScreenController.Instance.isLoaded = true;
+            await Task.Delay(10);
+            MatchmakingScreenController.Instance.AddProgress(1000);
             playerCruiser.StaticInitialise(commonStrings);
             enemyCruiser.StaticInitialise(commonStrings);
             cameraComponents = cameraInitialiser.Initialise(
@@ -342,7 +342,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 factoryProvider.Sound.UISoundPlayer,
                 SynchedServerData.Instance.GetTeam()
             );
-
             IPvPCruiserHelper helper = CreatePlayerHelper(uiManager, cameraComponents.CameraFocuser);
             playerCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);
             enemyCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);

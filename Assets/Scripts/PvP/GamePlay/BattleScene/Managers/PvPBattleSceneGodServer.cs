@@ -32,6 +32,7 @@ using Unity.Services.Analytics;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -75,7 +76,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPDroneManagerMonitor droneManagerMonitorB;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-
         public static PvPBattleSceneGodServer Instance
         {
             get
@@ -86,14 +86,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 if (s_pvpBattleSceneGodServer == null)
                 {
-                    Debug.LogError("No ServerSingleton in scene, did you run this from the bootstrap scene?");
+                    Debug.Log("No ServerSingleton in scene, did you run this from the bootstrap scene?");
                     return null;
                 }
                 return s_pvpBattleSceneGodServer;
             }
         }
-
-
 
         static PvPBattleSceneGodServer s_pvpBattleSceneGodServer;
         void Awake()
@@ -108,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void OnNetworkSpawn()
         {
-            if (!NetworkManager.Singleton.IsServer)
+            if (!NetworkManager.Singleton.IsHost)
             {
                 enabled = false;
                 return;
@@ -121,7 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             NetworkManager.Singleton.SceneManager.OnSceneEvent -= OnSceneEvent;
         }
 
-        void OnSceneEvent(SceneEvent sceneEvent)
+        async void OnSceneEvent(SceneEvent sceneEvent)
         {
             switch (sceneEvent.SceneEventType)
             {
@@ -135,13 +133,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
                     break;
                 case SceneEventType.SynchronizeComplete:
-                    if (NetworkManager.Singleton.IsServer)
+                    if (NetworkManager.Singleton.IsHost)
                     {
-                        Initialise();
+                        await Initialise();
                     }
                     break;
             }
         }
+
+
         void OnDestroy()
         {
             if (m_NetcodeHooks)
@@ -152,6 +152,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async Task Initialise()
         {
+            if (isInitializingServer)
+                return;
+            isInitializingServer = true;
             await _Initialise();
         }
         private async Task _Initialise()
@@ -180,21 +183,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPUserChosenTargetHelper playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
-            await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync();
-            await Task.Delay(1000);
+            await factoryProvider.Initialise();
+            await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             await _Initialise_Rest();
         }
         public async Task _Initialise_Rest()
         {
-            if (isInitializingServer)
-                return;
-            isInitializingServer = true;
-            await factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+            await Task.Delay(500);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            await Task.Delay(500);
             playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
-
-
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager/*, playerBCruiseruserChosenTargetHelper*/);
 

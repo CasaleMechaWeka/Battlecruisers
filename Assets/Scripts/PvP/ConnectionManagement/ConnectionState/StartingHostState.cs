@@ -48,13 +48,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             if (m_ConnectionManager == null)
                 return;
-            m_ConnectStatusPublisher.Publish(ConnectStatus.StartHostFailed);
+            //    m_ConnectStatusPublisher.Publish(ConnectStatus.StartHostFailed);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
         }
 
         public override void OnServerStarted()
         {
-            m_ConnectStatusPublisher.Publish(ConnectStatus.Success);
+            //    m_ConnectStatusPublisher.Publish(ConnectStatus.Success);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Hosting);
         }
 

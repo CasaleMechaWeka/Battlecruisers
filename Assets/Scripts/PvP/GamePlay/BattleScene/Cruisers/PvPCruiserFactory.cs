@@ -55,11 +55,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public async Task<PvPCruiser> CreatePlayerACruiser(Team team)
         {
             PvPCruiser playerACruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerACruiser);
-
-        //    await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerACruiser, playerACruiserPrefab);
-
-            // Vector3 pos = new Vector3(-CRUISER_OFFSET_IN_M, playerACruiser.YAdjustmentInM, 0);
             PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerACruiserPrefab, SynchedServerData.Instance.playerAClientNetworkId.Value, -CRUISER_OFFSET_IN_M);
+
+            //   PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(_helper.PlayerACruiser.PrefabName, SynchedServerData.Instance.playerAClientNetworkId.Value, -CRUISER_OFFSET_IN_M);
             playerACruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerACruiser.YAdjustmentInM, 0);
 
             return playerACruiser;
@@ -68,11 +66,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public async Task<PvPCruiser> CreatePlayerBCruiser(Team team)
         {
             PvPCruiser playerBCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
-
-        //    await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerBCruiser, playerBCruiserPrefab);
-
             PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerBCruiserPrefab, SynchedServerData.Instance.playerBClientNetworkId.Value, CRUISER_OFFSET_IN_M);
-
+            // PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(_helper.PlayerBCruiser.PrefabName, SynchedServerData.Instance.playerBClientNetworkId.Value, CRUISER_OFFSET_IN_M);
             playerBCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, playerBCruiser.YAdjustmentInM, 0);
             Quaternion rotation = playerBCruiser.Rotation;
             rotation.eulerAngles = new Vector3(0, 180, 0);
@@ -83,9 +78,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
-         // IPvPCameraFocuser cameraFocuser,
+            // IPvPCameraFocuser cameraFocuser,
             IPvPRankedTargetTracker userChosenTargetTracker
-         // IPvPUserChosenTargetHelper userChosenTargetHelper
+            // IPvPUserChosenTargetHelper userChosenTargetHelper
             )
         {
             PvPHelper.AssertIsNotNull(playerACruiser, playerBCruiser,/* cameraFocuser,*/ userChosenTargetTracker);
@@ -123,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
 
-           IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
+            IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
             PvPFaction faction = PvPFaction.Reds;
             PvPDirection facingDirection = PvPDirection.Left;
             PvPFogStrength fogStrength = PvPFogStrength.Strong;
@@ -174,7 +169,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _factoryProvider.UpdaterProvider,
                     faction);
 
-            IPvPDroneManager droneManager = new PvPDroneManager();            
+            IPvPDroneManager droneManager = new PvPDroneManager();
             IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.PrioritisedSoundPlayer*/);
             IPvPDroneConsumerProvider droneConsumerProvider = new PvPDroneConsumerProvider(droneManager);
             PvPFogOfWarManager fogOfWarManager = new PvPFogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor);
@@ -221,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private IPvPCruiserHelper CreatePlayerBHelper( IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser )
+        private IPvPCruiserHelper CreatePlayerBHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
         {
             // if (_applicationModel.IsTutorial)
             // {
@@ -245,7 +240,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
-        private IPvPCruiserHelper CreatePlayerHelper( IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser )
+        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
         {
             // if (_applicationModel.IsTutorial)
             // {

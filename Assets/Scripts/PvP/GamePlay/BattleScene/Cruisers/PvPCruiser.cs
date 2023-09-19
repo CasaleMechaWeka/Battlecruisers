@@ -312,7 +312,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     Debug.Log(e.Message);
                 }
 
-            }            
+            }
         }
 
 
@@ -346,9 +346,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
-            
+
             Assert.IsNotNull(building);
-            
+
             building.Activate(
                 new PvPBuildingActivationArgs(
                     this,
@@ -358,7 +358,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _buildingDoubleClickHandler));
 
             slot.SetBuilding(building);
-            
+
 
             building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
@@ -539,7 +539,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void OnHealthGoneClientRpc()
         {
-            if(!IsHost)
+            if (!IsHost)
             {
                 PvPBattleSceneGodClient.Instance.components.backgroundClickableEmitter.enabled = false;
             }

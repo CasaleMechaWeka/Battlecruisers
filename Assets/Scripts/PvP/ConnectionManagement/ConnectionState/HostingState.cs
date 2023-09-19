@@ -45,6 +45,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.SetFoundVictimString();
                 MatchmakingScreenController.Instance.fleeButton.SetActive(true);
                 MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
+                m_LobbyServiceFacade.EndTracking();
             }
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
             {

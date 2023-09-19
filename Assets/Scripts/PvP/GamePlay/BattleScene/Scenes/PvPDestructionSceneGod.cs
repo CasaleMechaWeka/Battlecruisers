@@ -892,7 +892,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         void OnApplicationQuit()
         {
-            applicationModel.DataProvider.SaveGame();
+            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
             Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
             try
             {
