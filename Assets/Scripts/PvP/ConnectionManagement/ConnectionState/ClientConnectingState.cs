@@ -49,8 +49,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             try
             {
-                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
-                MatchmakingScreenController.Instance.vsAIButton.SetActive(true);
+                /*               MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+                               MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
 
                 await m_ConnectionMethod.SetupClientConnectionAsync();
                 if (!m_ConnectionManager.NetworkManager.StartClient())
@@ -60,8 +60,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             catch (Exception e)
             {
-                Debug.LogError("Error connecting client, see following exception");
-                Debug.LogException(e);
+                Debug.Log("Error ---> connecting client, see following exception");
+                Debug.Log(e.Message);
                 StartingClientFailedAsync();
                 throw;
             }

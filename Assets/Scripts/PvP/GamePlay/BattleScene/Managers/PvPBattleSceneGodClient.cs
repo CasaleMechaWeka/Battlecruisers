@@ -327,6 +327,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async void InitialiseAsync()
         {
+            if (!NetworkManager.Singleton.IsHost)
+            {
+                PvPBattleSceneGodTunnel._playerACruiserName = SynchedServerData.Instance.playerAPrefabName.Value;
+            }
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             MatchmakingScreenController.Instance.isLoaded = true;
             await Task.Delay(10);

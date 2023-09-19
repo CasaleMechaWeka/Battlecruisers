@@ -29,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 m_LobbyServiceFacade.BeginTracking();
             }
-            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
-            MatchmakingScreenController.Instance.vsAIButton.SetActive(true);
+/*            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+            MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
         }
 
         public override void Exit()

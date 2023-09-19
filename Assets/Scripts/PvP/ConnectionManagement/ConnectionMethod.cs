@@ -147,12 +147,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             Debug.Log("Setting up Unity Relay host");
 
             SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
-
-
             // Create relay allocation
             Allocation hostAllocation = await RelayService.Instance.CreateAllocationAsync(m_ConnectionManager.MaxConnectedPlayers, region: null);
             var joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
-
             Debug.Log($"server: connection data: {hostAllocation.ConnectionData[0]} {hostAllocation.ConnectionData[1]}, " +
                 $"allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
 

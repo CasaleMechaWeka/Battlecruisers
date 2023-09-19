@@ -37,7 +37,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 _healthTracker.SetHealth(0 + unit.Health);
                 //Debug.Log(unit.Health);
             }
-            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
+            base.Update();
+/*            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
             {
                 if (IsServer)
                 {
@@ -50,7 +51,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                         PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);                       
                     }
                 }
-            }
+
+                if (Faction == PvPFaction.Blues)
+                {
+                    PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += _time.DeltaTime;
+                }
+                if (Faction == PvPFaction.Reds)
+                {
+                    PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += _time.DeltaTime;
+                }
+            }*/
         }
 
         public override void StaticInitialise(ILocTable commonStrings)

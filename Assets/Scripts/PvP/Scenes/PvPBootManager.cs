@@ -176,10 +176,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 field: QueryFilter.FieldOptions.AvailableSlots,
                 op: QueryFilter.OpOptions.EQ,
                 value: "1"),
-            new QueryFilter(
+/*            new QueryFilter(
                 field: QueryFilter.FieldOptions.S1, // S1 = "GameMap"
                 op: QueryFilter.OpOptions.EQ,
-                value: wantMap),
+                value: wantMap),*/
             new QueryFilter(
                 field: QueryFilter.FieldOptions.N1, // N1 = "Score :  Battle Win"
                 op: QueryFilter.OpOptions.GE,

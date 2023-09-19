@@ -169,16 +169,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
                 }
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitQuery.PutOnCooldown();
                 }
                 else if (e.Reason != LobbyExceptionReason.LobbyNotFound && !m_LocalUser.IsHost) // If Lobby is not found and if we are not the host, it has already been deleted. No need to publish the error here.
                 {
                     PublishError(e);
-                }
+                }*/
             }
         }
 
@@ -201,16 +201,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 else
                     return (false, lobby);
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitHost.PutOnCooldown();
                 }
                 else
                 {
                     PublishError(e);
-                }
+                }*/
             }
 
             return (false, null);
@@ -244,16 +244,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     return (true, lobby);
                 }
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitJoin.PutOnCooldown();
                 }
                 else
                 {
                     PublishError(e);
-                }
+                }*/
             }
 
             return (false, null);
@@ -275,13 +275,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
                 return (true, lobby);
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
                 // Debug.Log(e);
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitQuickJoin.PutOnCooldown();
-                }
+                }*/
                 // else
                 // {
                 //     PublishError(e);
@@ -302,18 +302,18 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             try
             {
-                return await m_LobbyApiInterface.QueryAllLobbies(null, null);
+                return await m_LobbyApiInterface.QueryAllLobbies(mFilters, mOrders);
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitQuery.PutOnCooldown();
                 }
                 else
                 {
                     PublishError(e);
-                }
+                }*/
             }
             return null;
         }
@@ -335,16 +335,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 var response = await m_LobbyApiInterface.QueryAllLobbies(null, null);
                 m_LobbyListFetchedPub.Publish(new LobbyListFetchedMessage(LocalLobby.CreateLocalLobbies(response)));
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitQuery.PutOnCooldown();
                 }
                 else
                 {
                     PublishError(e);
-                }
+                }*/
             }
         }
 
@@ -354,13 +354,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return await m_LobbyApiInterface.ReconnectToLobby(lobbyId);
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
                 // If Lobby is not found and if we are not the host, it has already been deleted. No need to publish the error here.
-                if (e.Reason != LobbyExceptionReason.LobbyNotFound && !m_LocalUser.IsHost)
+ /*               if (e.Reason != LobbyExceptionReason.LobbyNotFound && !m_LocalUser.IsHost)
                 {
                     PublishError(e);
-                }
+                }*/
             }
 
             return null;
@@ -378,13 +378,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     return;
                 await m_LobbyApiInterface.RemovePlayerFromLobby(uasId, lobbyId);
             }
-            catch (LobbyServiceException e)
+            catch /*(LobbyServiceException e)*/
             {
                 // If Lobby is not found and if we are not the host, it has already been deleted. No need to publish the error here.
-                if (e.Reason != LobbyExceptionReason.LobbyNotFound && !m_LocalUser.IsHost)
+    /*            if (e.Reason != LobbyExceptionReason.LobbyNotFound && !m_LocalUser.IsHost)
                 {
                     PublishError(e);
-                }
+                }*/
             }
 
         }
@@ -397,14 +397,14 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {
                     await m_LobbyApiInterface.RemovePlayerFromLobby(uasId, lobbyId);
                 }
-                catch (LobbyServiceException e)
+                catch /*(LobbyServiceException e)*/
                 {
-                    PublishError(e);
+                   // PublishError(e);
                 }
             }
             else
             {
-                Debug.LogError("Only the host can remove other players from the lobby.");
+                Debug.Log("Only the host can remove other players from the lobby.");
             }
         }
 
@@ -418,14 +418,14 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                         return;
                     await m_LobbyApiInterface.DeleteLobby(lobbyId);
                 }
-                catch (LobbyServiceException e)
+                catch /*(LobbyServiceException e)*/
                 {
-                    PublishError(e);
+                  //  PublishError(e);
                 }
             }
             else
             {
-                Debug.LogError("Only the host can delete a lobby.");
+                Debug.Log("Only the host can delete a lobby.");
             }
         }
 
@@ -467,16 +467,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 await m_LobbyApiInterface.UpdatePlayer(CurrentUnityLobby.Id, AuthenticationService.Instance.PlayerId, new Dictionary<string, PlayerDataObject>(), allocationId, connectionInfo);
             }
-            catch (LobbyServiceException e)
+            catch
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitQuery.PutOnCooldown();
                 }
                 else
                 {
                     PublishError(e);
-                }
+                }*/
 
                 //todo - retry logic? SDK is supposed to handle this eventually
             }
@@ -519,16 +519,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     CurrentUnityLobby = result;
                 }
             }
-            catch (LobbyServiceException e)
+            catch/* (LobbyServiceException e)*/
             {
-                if (e.Reason == LobbyExceptionReason.RateLimited)
+/*                if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitQuery.PutOnCooldown();
                 }
                 else
                 {
                     PublishError(e);
-                }
+                }*/
             }
         }
 

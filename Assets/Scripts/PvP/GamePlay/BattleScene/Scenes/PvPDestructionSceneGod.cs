@@ -75,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private long prevAllTimeVal;
 
         // Time value to interpolate with:
-        private float levelTimeInSeconds;
+        private float levelTimeInSeconds = 1f;
 
         // Level and XP tracking:
         [SerializeField]
@@ -741,7 +741,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             long score = 0;
             if (damage > 0)
             {
-                score = (damage * 1000) / ((long)Mathf.Pow(time, 2.0f) / scoreDivider);
+                long divider = ((long)Mathf.Pow(time, 2.0f) / scoreDivider);
+                if (divider < 1)
+                    divider = 1;
+                score = (damage * 1000) / divider;
             }
             return score;
         }

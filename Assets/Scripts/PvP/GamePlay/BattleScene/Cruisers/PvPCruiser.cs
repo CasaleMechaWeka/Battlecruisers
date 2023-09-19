@@ -154,20 +154,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (NetworkManager.Singleton.IsServer)
                 _healthTracker.SetMaxHealth();
 
-            if (IsHost)
+            if (Faction == PvPFaction.Blues)
             {
-                if (Faction == PvPFaction.Blues)
-                {
-                    PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, (float)maxHealth);
-                    PvPBattleSceneGodTunnel._playerACruiserVal = 1;
-                    PvPBattleSceneGodTunnel._playerACruiserName = Name;
-                }
-                else
-                {
-                    PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(this.TargetType, (float)maxHealth);
-                    PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
-                    PvPBattleSceneGodTunnel._playerBCruiserName = Name;
-                }
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, (float)maxHealth);
+                PvPBattleSceneGodTunnel._playerACruiserVal = 1;
+                PvPBattleSceneGodTunnel._playerACruiserName = Name;
+            }
+            else
+            {
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(this.TargetType, (float)maxHealth);
+                PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
+                PvPBattleSceneGodTunnel._playerBCruiserName = Name;
             }
         }
 
@@ -433,22 +430,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 RepairManager.Repair(_time.DeltaTime);
             }
-
             if (_enemyCruiser != null && _enemyCruiser.IsAlive)
             {
                 if (IsServer)
                 {
                     if (Faction == PvPFaction.Blues)
                     {
-                        PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);
-                        PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += _time.DeltaTime;
+                        PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, Time.deltaTime);
                     }
                     if (Faction == PvPFaction.Reds)
                     {
-                        PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);
-                        PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += _time.DeltaTime;
+                        PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, Time.deltaTime);
                     }
                 }
+            }
+            if (Faction == PvPFaction.Blues)
+            {
+                PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += Time.deltaTime;
+            }
+            if (Faction == PvPFaction.Reds)
+            {
+                PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += Time.deltaTime;
             }
         }
 

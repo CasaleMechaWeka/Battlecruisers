@@ -115,8 +115,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         async void Start()
         {
             Instance = this;
-            fleeButton.SetActive(false);
-            vsAIButton.SetActive(false);
+/*            fleeButton.SetActive(false);
+            vsAIButton.SetActive(false);*/
             LoadingBarParent.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();

@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private void Awake()
         {
             isDisconnected = 0;
-            _playerALevelTimeInSeconds = 0;
+            _playerALevelTimeInSeconds = 1;
             _playerAAircraftVal = 0;
             _playerAShipsVal = 0;
             _playerACruiserVal = 0;
@@ -76,7 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _playerATotoalDestroyed = new long[4];
             _playerACruiserName = "";
 
-            _playerBLevelTimeInSeconds = 0;
+            _playerBLevelTimeInSeconds = 1;
             _playerBAircraftVal = 0;
             _playerBShipsVal = 0;
             _playerBCruiserVal = 0;

@@ -4,6 +4,8 @@ using UnityEngine;
 using VContainer;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -23,6 +25,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             MatchmakingScreenController.Instance.SetFoundVictimString();
             MatchmakingScreenController.Instance.fleeButton.SetActive(true);
             MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
+
+            PvPBattleSceneGodTunnel._playerACruiserVal = 1;
+            PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
+            PvPBattleSceneGodTunnel._playerBCruiserName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
         }
 
         public override void Exit() { }

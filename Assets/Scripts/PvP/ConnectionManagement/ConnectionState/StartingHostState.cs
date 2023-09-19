@@ -86,6 +86,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             try
             {
+/*                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+                MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
                 await m_ConnectionMethod.SetupHostConnectionAsync();
                 Debug.Log($"Created relay allocation with join code {m_LocalLobby.RelayJoinCode}");
                 // NGO's StartHost launches everything
@@ -96,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Debug.Log(e.Message);
                 StartHostFailed();
             }
         }
