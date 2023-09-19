@@ -70,7 +70,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                     if (appModel.Mode == GameMode.CoinBattle)
                     {
                         postBattleScreen.victoryNoLootMessage.gameObject.SetActive(true);
-                        postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+                        postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
                         musicPlayer.PlayVictoryMusic();
                     }
                     else

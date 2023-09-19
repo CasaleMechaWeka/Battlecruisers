@@ -33,7 +33,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             IPvPSingleSoundPlayer uiSoundPlayer,
-            IPvPPopulationLimitMonitor populationLimitMonitor)
+            IPvPPopulationLimitMonitor populationLimitMonitor,
+            bool flipClickAndDragIcon)
         {
             PvPHelper.AssertIsNotNull(
                 uiManager,
@@ -45,7 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
                 uiSoundPlayer,
-                populationLimitMonitor);
+                populationLimitMonitor,
+                flipClickAndDragIcon);
             PvPHelper.AssertIsNotNull(buildingButtonSelectedSound, selectorOpeningSound);
 
             // Selector panel
@@ -70,7 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     uiSoundPlayer,
                     playerCruiserFocusHelper,
                     new PvPAudioClipWrapper(buildingButtonSelectedSound));
-            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, uiSoundPlayer, buildingClickHandler);
+            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, uiSoundPlayer, buildingClickHandler, flipClickAndDragIcon);
 
             // Unit menus
             IPvPUnitClickHandler unitClickHandler

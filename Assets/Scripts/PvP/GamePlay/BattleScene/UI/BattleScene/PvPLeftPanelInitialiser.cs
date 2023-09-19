@@ -105,7 +105,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             IPvPSingleSoundPlayer uiSoundPlayer,
             IPvPPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData)
+            IStaticData staticData,
+            bool flipClickAndDragIcon)
         {
             PvPHelper.AssertIsNotNull(
                 playerCruiser,
@@ -134,7 +135,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     eventSoundPlayer,
                     uiSoundPlayer,
                     populationLimitMonitor,
-                    staticData);
+                    staticData,
+                    flipClickAndDragIcon);
 
             makeLeftBackgroundPanelFit();
 
@@ -162,7 +164,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             IPvPSingleSoundPlayer uiSoundPlayer,
             IPvPPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData)
+            IStaticData staticData,
+            bool flipClickAndDragIcon)
         {
             IPvPBuildingGroupFactory buildingGroupFactory = new PvPBuildingGroupFactory();
             IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
@@ -185,7 +188,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
                     uiSoundPlayer,
-                    populationLimitMonitor);
+                    populationLimitMonitor,
+                    flipClickAndDragIcon);
         }
 
         //Scales the LeftBackgroundPanel to a smaller size if the aspect ratio is 13.0/8 or lower

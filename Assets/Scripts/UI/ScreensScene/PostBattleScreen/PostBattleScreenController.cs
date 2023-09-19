@@ -167,6 +167,37 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         screensSceneStrings,
                         soundPlayer);
             }
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                string logName = "Battle_End";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+                if (UnityServices.State != ServicesInitializationState.Uninitialized)
+                {
+                    try
+                    {
+                        AnalyticsService.Instance.CustomData("Battle",
+                                                                            _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                                                               logName,
+                                                                                                               _applicationModel.UserWonSkirmish));
+                        AnalyticsService.Instance.Flush();
+                    }
+                    catch (ConsentCheckException e)
+                    {
+                        Debug.Log("Error reason = " + e.Reason.ToString());
+                    }
+                }
+
+
+                postBattleState
+                    = new PostSkirmishState(
+                        this,
+                        _applicationModel,
+                        musicPlayer,
+                        screensSceneStrings,
+                        soundPlayer);
+            }
             else
             {
                 string logName = "Battle_End";

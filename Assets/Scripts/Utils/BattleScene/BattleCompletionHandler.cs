@@ -50,6 +50,11 @@ namespace BattleCruisers.Utils.BattleScene
                 case GameMode.Skirmish:
                     _applicationModel.UserWonSkirmish = wasVictory;
                     break;
+
+                // Coin Battle uses the same post-game as Skirmish right now (return to menu, no next, etc):
+                case GameMode.CoinBattle:
+                    _applicationModel.UserWonSkirmish = wasVictory;
+                    break;
             }
 
             
@@ -96,6 +101,11 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
 
                 case GameMode.Skirmish:
+                    _applicationModel.UserWonSkirmish = wasVictory;
+                    break;
+
+                // Coin Battle uses the same post-game as Skirmish right now (return to menu, no next, etc):
+                case GameMode.CoinBattle:
                     _applicationModel.UserWonSkirmish = wasVictory;
                     break;
             }
