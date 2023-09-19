@@ -654,18 +654,27 @@ namespace BattleCruisers.Scenes
                 applicationModel.DataProvider.SaveGame();
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
 
-                try
-                {/*
-                    await applicationModel.DataProvider.SyncCoinsToCloud();
-                    await applicationModel.DataProvider.SyncCreditsToCloud();
 
-                    // Save changes:
-                    await applicationModel.DataProvider.CloudSave();
-                    */
-                }
-                catch (Exception ex)
+                if(await LandingSceneGod.CheckForInternetConnection())
                 {
-                    Debug.Log(ex);
+                    try
+                    {
+                        await applicationModel.DataProvider.SyncCoinsToCloud();
+                        await applicationModel.DataProvider.SyncCreditsToCloud();
+
+                        // Save changes:
+                        await applicationModel.DataProvider.CloudSave();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log(ex);
+                    }
+                }
+                else
+                {
+                    // Can't sync, save for later:
+                    applicationModel.DataProvider.GameModel.CoinsChange += coinsToAward;
+                    applicationModel.DataProvider.GameModel.CreditsChange += (int)creditsToAward;
                 }
             }
 

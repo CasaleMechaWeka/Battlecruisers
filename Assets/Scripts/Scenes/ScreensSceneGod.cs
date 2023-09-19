@@ -146,9 +146,11 @@ namespace BattleCruisers.Scenes
                     if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
                         _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
                         _dataProvider.GameModel.OutstandingHeckleTransactions != null &&
-                        _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0)
+                        _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
+                        _dataProvider.GameModel.CoinsChange > 0 ||
+                        _dataProvider.GameModel.CreditsChange > 0)
                     {
-                        Debug.Log("Processing offline shop purchases.");
+                        Debug.Log("Processing offline shop purchases and currency changes.");
                         await _dataProvider.ProcessOfflineTransactions();
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                     }
