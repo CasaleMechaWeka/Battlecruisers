@@ -170,9 +170,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 foreach (SpriteRenderer renderer in InGameRenderers)
                 {
+                    if (renderer == null)
+                        return;
                     renderer.color = value;
                 }
-
+                if (_buildableProgress == null)
+                    return;
                 _buildableProgress.FillableImage.color = value;
                 _buildableProgress.OutlineImage.color = value;
             }
@@ -608,13 +611,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
-            if (IsHost)
-            {
-                if (Faction == PvPFaction.Blues)
-                    PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, numOfDronesRequired * buildTimeInS);
-                else
-                    PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, numOfDronesRequired * buildTimeInS);
-            }
+
+            if (Faction == PvPFaction.Blues)
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+            else
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, numOfDronesRequired * buildTimeInS);
         }
 
         protected virtual void OnBuildableCompleted_PvPClient()
@@ -626,6 +627,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
             ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
+
+            if (Faction == PvPFaction.Blues)
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+            else
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, numOfDronesRequired * buildTimeInS);
         }
 
         protected virtual void PlayBuildableConstructionCompletedSound()
