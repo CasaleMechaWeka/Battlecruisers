@@ -24,6 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public LeaderboradPanel TopPlayer;
         public GameObject leaderboardPanelPrefab;
         public Transform leaderboardPanelParent;
+        public GameObject noData;
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -32,6 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
+            noData.SetActive(false);
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
                 try
@@ -44,8 +46,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         if (!ReferenceEquals(obj, leaderboardPanelParent))
                             Destroy(obj.gameObject);
                     }
+
+                    if(score.Results.Count == 0)
+                        noData.SetActive(true);
+                    int i = 0;
                     foreach (var entry in score.Results)
                     {
+                        if (i >= 20)
+                            break;
                         if (entry != null)
                         {
                             IList<string> list = entry.PlayerName.Split("#").ToList<string>();
@@ -59,6 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                                 GameObject panel = Instantiate(leaderboardPanelPrefab, leaderboardPanelParent) as GameObject;
                                 panel.GetComponent<LeaderboradPanel>().Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
                             }
+                            i++;
                         }
                     }
                 }

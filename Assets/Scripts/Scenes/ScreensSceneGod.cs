@@ -353,6 +353,35 @@ namespace BattleCruisers.Scenes
             if (Instance == null)
                 Instance = this;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
+
+            bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) == 0 ?  false : true;
+            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+            if(!isPlayed)
+            {
+                try
+                {
+                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
+                    PlayerPrefs.SetInt("SETNAME", 1);
+                }
+                catch
+                {
+                    PlayerPrefs.SetInt("SETNAME", 0);
+                }
+            }
+
+            if (!isSetPlayerName)
+            {
+                try
+                {
+                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
+                    PlayerPrefs.SetInt("SETNAME", 1);
+                }
+                catch
+                {
+                    PlayerPrefs.SetInt("SETNAME", 0);
+                }
+            }
+            PlayerPrefs.GetInt("PLAYED", 1);
         }
 
         public async void DestroyAllNetworkObjects()

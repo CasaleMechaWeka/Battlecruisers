@@ -13,6 +13,7 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using Unity.Services.Leaderboards;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using Unity.Services.Authentication;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -69,14 +70,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
             const string LeaderboardID = "BC-PvP1v1Leaderboard";
-            try
+            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+            if (isSetPlayerName)
             {
-                await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                try
+                {
+                    await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                }
+                catch
+                {
+
+                }
             }
-            catch(Exception ex)
-            {
-                Debug.LogError(ex.Message);
-            }            
 
             _isCompleted = true;
 
@@ -161,7 +166,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
             const string LeaderboardID = "BC-PvP1v1Leaderboard";
-            await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+
+            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+            if (isSetPlayerName)
+            {
+                try
+                {
+                    await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                }
+                catch
+                {
+                }
+            }
 
             _isCompleted = true;
             BattleCompleted?.Invoke(this, EventArgs.Empty);
