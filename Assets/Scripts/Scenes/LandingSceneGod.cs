@@ -162,7 +162,12 @@ namespace BattleCruisers.Scenes
             try
             {
                 var options = new InitializationOptions();
+
+#if DEV_ENV
+                options.SetEnvironmentName("dev");
+#else
                 options.SetEnvironmentName("production");
+#endif
 
                 var profile = GetProfile();
 
@@ -260,7 +265,7 @@ namespace BattleCruisers.Scenes
             }
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
-            guestBtn.gameObject.SetActive(true);            
+            guestBtn.gameObject.SetActive(true);
         }
 
         void SetInteractable(bool interactable)
