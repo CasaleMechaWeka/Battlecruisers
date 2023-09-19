@@ -78,10 +78,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     try
                     {
                         oldPlayerName = _dataProvider.GameModel.PlayerName;
-                        _dataProvider.GameModel.PlayerName = inputField.text;
+                        string temp = inputField.text;
+                        temp.Replace("#", "");
+                        _dataProvider.GameModel.PlayerName = temp;
                         _dataProvider.SaveGame();
                         await _dataProvider.CloudSave();
-                        string name = inputField.text + "#" + captain.captainName;
+                        string name = temp + "#" + captain.captainName;
                         Debug.Log(name);
                         await AuthenticationService.Instance.UpdatePlayerNameAsync(name);
                         PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
