@@ -32,6 +32,8 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Effects.Smoke;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -613,9 +615,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             RepairCommand.EmitCanExecuteChanged();
 
             if (Faction == PvPFaction.Blues)
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
             else
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
         }
 
         protected virtual void OnBuildableCompleted_PvPClient()
@@ -629,9 +631,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
 
             if (Faction == PvPFaction.Blues)
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
             else
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
         }
 
         protected virtual void PlayBuildableConstructionCompletedSound()

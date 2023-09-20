@@ -156,13 +156,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             if (Faction == PvPFaction.Blues)
             {
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, (float)maxHealth);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * (float)maxHealth);
                 PvPBattleSceneGodTunnel._playerACruiserVal = 1;
                 PvPBattleSceneGodTunnel._playerACruiserName = Name;
             }
             else
             {
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(this.TargetType, (float)maxHealth);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(this.TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * (float)maxHealth);
                 PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
                 PvPBattleSceneGodTunnel._playerBCruiserName = Name;
             }

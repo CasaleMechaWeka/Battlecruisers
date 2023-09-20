@@ -14,6 +14,8 @@ using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.PostBattleScreen;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -61,10 +63,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static long _playerBCruiserVal;
         public static long _playerBBuildingsVal;
         public static long[] _playerBTotoalDestroyed = new long[4];
-        public static string _playerBCruiserName;
+        public static string _playerBCruiserName;        
 
         public static int isDisconnected = 0;
-
+        public static float difficultyDestructionScoreMultiplier = 1.0f;
         private void Awake()
         {
             isDisconnected = 0;
@@ -83,6 +85,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _playerBBuildingsVal = 0;
             _playerBTotoalDestroyed = new long[4];
             _playerBCruiserName = "";
+
+            
+            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
+            {
+                difficultyDestructionScoreMultiplier = 1.0f;
+            }
+            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
+            {
+                difficultyDestructionScoreMultiplier = 1.5f;
+            }
+            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
+            {
+                difficultyDestructionScoreMultiplier = 2.0f;
+            }
         }
 
         public static void AddAllBuildablesOfLeftPlayer(PvPTargetType type, float val)
