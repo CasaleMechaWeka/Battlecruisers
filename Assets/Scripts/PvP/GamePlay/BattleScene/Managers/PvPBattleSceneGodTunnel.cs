@@ -63,14 +63,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static long _playerBCruiserVal;
         public static long _playerBBuildingsVal;
         public static long[] _playerBTotoalDestroyed = new long[4];
-        public static string _playerBCruiserName;        
+        public static string _playerBCruiserName;
 
         public static int isDisconnected = 0;
         public static float difficultyDestructionScoreMultiplier = 1.0f;
         public static Dictionary<string, long> cruiser_scores = new Dictionary<string, long>() {
             { "BlackRig", 5800},
             { "Bullshark", 4000},
-            { "Eagle", 2800},
+            { "Eagle", 2400},
             { "Hammerhead", 3900},
             { "HuntressBoss", 150000},
             { "Longbow", 5000},
@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             { "Megalodon", 5000},
             { "Raptor", 1500},
             { "Rickshaw", 1800},
-            { "Rockjaw", 3900},
+            { "Rockjaw", 3600},
             { "TasDevil", 6800},
             { "Trident", 3500},
             { "Yeti", 10000},
@@ -102,7 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _playerBTotoalDestroyed = new long[4];
             _playerBCruiserName = "";
 
-            
+
             if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
             {
                 difficultyDestructionScoreMultiplier = 1.0f;
