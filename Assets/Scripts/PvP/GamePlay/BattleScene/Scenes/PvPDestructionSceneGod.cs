@@ -759,30 +759,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private int CalculateCoins(long score)
         {
-            // 5 coins
-            if (score >= coin5Threshold)
+            if (levelTimeInSeconds > 60)
             {
-                return 5;
-            }
-            // 4 coins
-            if (score >= coin4Threshold)
-            {
-                return 4;
-            }
-            // 3 coins
-            if (score >= coin3Threshold)
-            {
-                return 3;
-            }
-            // 2 coins
-            else if (score >= coin2Threshold)
-            {
-                return 2;
-            }
-            // 1 coin
-            else if (score >= coin1Threshold)
-            {
-                return 1;
+                // 5 coins
+                if (score >= coin5Threshold)
+                {
+                    return 5;
+                }
+                // 4 coins
+                if (score >= coin4Threshold)
+                {
+                    return 4;
+                }
+                // 3 coins
+                if (score >= coin3Threshold)
+                {
+                    return 3;
+                }
+                // 2 coins
+                else if (score >= coin2Threshold)
+                {
+                    return 2;
+                }
+                // 1 coin
+                else if (score >= coin1Threshold)
+                {
+                    return 1;
+                }
             }
 
             return 0;
@@ -790,7 +793,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private long CalculateCredits()
         {
-            long creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
+            long creditsAward = 0;
+            if (levelTimeInSeconds > 60)
+                creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
             if (creditsAward > creditMax)
             {
                 return (long)creditMax;
