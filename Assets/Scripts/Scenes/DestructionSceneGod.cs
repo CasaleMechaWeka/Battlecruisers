@@ -534,7 +534,10 @@ namespace BattleCruisers.Scenes
             long score = 0;
             if (damage > 0)
             {
-                score = (damage * 1000) / ((long)Mathf.Pow(time, 2.0f) / scoreDivider);
+                long divider = ((long)Mathf.Pow(time, 2.0f) / scoreDivider);
+                if (divider < 1)
+                    divider = 1;
+                score = (damage * 1000) / divider;
             }
             return score;
         }
