@@ -741,7 +741,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             long score = 0;
 
             // time under one minute gets penalized to prevent disconnection abuse:
-            long convertedtime = (long)(time * 250));
+            long convertedtime = (long)(time * 250);
             if (time < 60)
             {
                 convertedtime = (long)(60 * 250);
