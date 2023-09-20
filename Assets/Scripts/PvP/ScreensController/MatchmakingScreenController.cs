@@ -224,9 +224,10 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             {
                 // Try to get an Animator component from the child object
                 Animator animator = child.GetComponentInChildren<Animator>();
-
-                // If an Animator exists
                 if (animator != null)
+                    animator.SetTrigger("happy");
+                // If an Animator exists
+/*                if (animator != null)
                 {
                     // Get all animation clips
                     AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
@@ -240,7 +241,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                             break; // Exit loop once found and played
                         }
                     }
-                }
+                }*/
             }
 
         }
