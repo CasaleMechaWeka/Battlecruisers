@@ -759,56 +759,80 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private int CalculateCoins(long score)
         {
+            int result = 0;
+            Arena arena = applicationModel.DataProvider.GameModel.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+
             if (levelTimeInSeconds > 60)
             {
+                // Arena earnings:
+                result += arena.prizecoins;
+
+                // Regular rewards:
+
                 // 5 coins
                 if (score >= coin5Threshold)
                 {
-                    return 5;
+                    return result + 5;
                 }
                 // 4 coins
                 if (score >= coin4Threshold)
                 {
-                    return 4;
+                    return result + 4;
                 }
                 // 3 coins
                 if (score >= coin3Threshold)
                 {
-                    return 3;
+                    return result + 3;
                 }
                 // 2 coins
                 else if (score >= coin2Threshold)
                 {
-                    return 2;
+                    return result + 2;
                 }
                 // 1 coin
                 else if (score >= coin1Threshold)
                 {
-                    return 1;
+                    return result + 1;
                 }
             }
+            else
+            {
+                // Arena refund
+                result += arena.costcoins;
+            }
 
-            return 0;
+            return result;
         }
 
         private long CalculateCredits()
         {
             long creditsAward = 0;
+            Arena arena = applicationModel.DataProvider.GameModel.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+
             if (levelTimeInSeconds > 60)
-                creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
-            if (creditsAward > creditMax)
             {
-                return (long)creditMax;
+                // Regular rewards:
+                creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
+                if (creditsAward > creditMax)
+                {
+                    creditsAward = creditMax;
+                }
+
+                // Arena earnings:
+                creditsAward += arena.prizecredits;
             }
+            else
+            {
+                // Arena refund
+                creditsAward += arena.costcredits;
+            }
+
             return creditsAward;
         }
 
         private int CalculateNukes()
         {
             // Nuke Calculation Goes Here?
-
-
-
             return 0;
         }
 
