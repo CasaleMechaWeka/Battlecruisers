@@ -739,9 +739,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             // feels weird to make this a method but I don't like doing it directly in the animation methods:
             long score = 0;
+
+            // time under two minutes gets penalized to prevent disconnection abuse:
+            long convertedtime = (long)Mathf.Pow(time, 2.0f);
+            if (time < 120)
+            {
+                time = 120;
+            }
+
             if (damage > 0)
             {
-                long divider = ((long)Mathf.Pow(time, 2.0f) / scoreDivider);
+                long divider = convertedtime / scoreDivider;
                 if (divider < 1)
                     divider = 1;
                 score = (damage * 1000) / divider;
