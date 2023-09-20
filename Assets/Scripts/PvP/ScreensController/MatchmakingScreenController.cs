@@ -223,7 +223,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             foreach (Transform child in ContainerCaptain)
             {
                 // Try to get an Animator component from the child object
-                Animator animator = child.GetComponent<Animator>();
+                Animator animator = child.GetComponentInChildren<Animator>();
 
                 // If an Animator exists
                 if (animator != null)
