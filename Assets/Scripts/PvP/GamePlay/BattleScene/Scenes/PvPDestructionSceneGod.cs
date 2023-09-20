@@ -744,7 +744,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             long convertedtime = (long)Mathf.Pow(time, 2.0f);
             if (time < 60)
             {
-                convertedtime = 60;
+                convertedtime = (long)Mathf.Pow(60, 2.0f);
             }
 
             if (damage > 0)
