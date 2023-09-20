@@ -64,6 +64,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
                     IAPManager.instance.storeController.InitiatePurchase(IAPManager.extralarge_coin_pack);
                     break;
             }
+            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
         }
         else
         {
