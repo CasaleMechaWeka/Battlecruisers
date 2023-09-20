@@ -187,12 +187,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (_lastBattleResult == null)
             {
                 playerInfoPanelController.gameObject.SetActive(false);
+                _applicationModel.Mode = GameMode.Campaign;
                 _screensSceneGod.GoToTrashScreen(1);
             }
             else
             {
                 Assert.IsNotNull(_lastBattleResult);
                 playerInfoPanelController.gameObject.SetActive(false);
+                _applicationModel.Mode = GameMode.Campaign;
                 int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
                 _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
             }
@@ -201,6 +203,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoToLevelsScreen()
         {
             playerInfoPanelController.gameObject.SetActive(false);
+            _applicationModel.Mode = GameMode.Campaign;
             _screensSceneGod.GoToLevelsScreen();
         }
 
@@ -213,6 +216,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoToSkirmishScreen()
         {
             playerInfoPanelController.gameObject.SetActive(false);
+            _applicationModel.Mode = GameMode.Skirmish;
             _screensSceneGod.GoToSkirmishScreen();
         }
 
@@ -225,6 +229,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             else
             {
+                _applicationModel.Mode = GameMode.CoinBattle;
                 coinBattleController.BattleButtonClicked();
             }
         }
