@@ -740,7 +740,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // feels weird to make this a method but I don't like doing it directly in the animation methods:
             long score = 0;
 
-            // time under two minutes gets penalized to prevent disconnection abuse:
+            // time under one minute gets penalized to prevent disconnection abuse:
             long convertedtime = (long)Mathf.Pow(time, 2.0f);
             if (time < 60)
             {
