@@ -742,9 +742,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             // time under two minutes gets penalized to prevent disconnection abuse:
             long convertedtime = (long)Mathf.Pow(time, 2.0f);
-            if (time < 120)
+            if (time < 60)
             {
-                time = 120;
+                time = 60;
             }
 
             if (damage > 0)
