@@ -176,6 +176,8 @@ namespace BattleCruisers.Scenes
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                         Debug.Log("PVP Server Unavailable.");
                     }
+                    await _applicationModel.DataProvider.SyncCurrencyFromCloud();
+
                 }
                 catch (Exception ex)
                 {
@@ -354,9 +356,9 @@ namespace BattleCruisers.Scenes
                 Instance = this;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
 
-            bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) == 0 ?  false : true;
+            bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) == 0 ? false : true;
             bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
-            if(!isPlayed)
+            if (!isPlayed)
             {
                 try
                 {
