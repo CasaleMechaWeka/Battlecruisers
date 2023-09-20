@@ -534,7 +534,7 @@ namespace BattleCruisers.Scenes
             long score = 0;
             if (damage > 0)
             {
-                long divider = ((long)Mathf.Pow(time, 2.0f) / scoreDivider);
+                long divider = ((long)(time * 250) / scoreDivider);
                 if (divider < 1)
                     divider = 1;
                 score = (damage * 1000) / divider;
@@ -658,7 +658,7 @@ namespace BattleCruisers.Scenes
                 //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
 
 
-                if(await LandingSceneGod.CheckForInternetConnection())
+                if (await LandingSceneGod.CheckForInternetConnection())
                 {
                     try
                     {
