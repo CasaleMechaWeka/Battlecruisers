@@ -67,13 +67,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public static int isDisconnected = 0;
         public static float difficultyDestructionScoreMultiplier = 1.0f;
+        public static Dictionary<string, long> cruiser_scores = new Dictionary<string, long>() {
+            { "BlackRig", 5800},
+            { "Bullshark", 4000},
+            { "Eagle", 2800},
+            { "Hammerhead", 3900},
+            { "HuntressBoss", 150000},
+            { "Longbow", 5000},
+            { "ManOfWarBoss", 10000},
+            { "Megalodon", 5000},
+            { "Raptor", 1500},
+            { "Rickshaw", 1800},
+            { "Rockjaw", 3900},
+            { "TasDevil", 6800},
+            { "Trident", 3500},
+            { "Yeti", 10000},
+        };
         private void Awake()
         {
             isDisconnected = 0;
             _playerALevelTimeInSeconds = 1;
             _playerAAircraftVal = 0;
             _playerAShipsVal = 0;
-            _playerACruiserVal = 0;
+            _playerACruiserVal = 3500;
             _playerABuildingsVal = 0;
             _playerATotoalDestroyed = new long[4];
             _playerACruiserName = "";
@@ -81,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _playerBLevelTimeInSeconds = 1;
             _playerBAircraftVal = 0;
             _playerBShipsVal = 0;
-            _playerBCruiserVal = 0;
+            _playerBCruiserVal = 3500;
             _playerBBuildingsVal = 0;
             _playerBTotoalDestroyed = new long[4];
             _playerBCruiserName = "";

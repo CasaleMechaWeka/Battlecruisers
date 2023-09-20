@@ -26,8 +26,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             MatchmakingScreenController.Instance.fleeButton.SetActive(true);
             MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
 
-            PvPBattleSceneGodTunnel._playerACruiserVal = 1;
-            PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
+            PvPBattleSceneGodTunnel._playerACruiserVal = 3500;  // in case of worse state
+            PvPBattleSceneGodTunnel._playerBCruiserVal = 3500;
             PvPBattleSceneGodTunnel._playerBCruiserName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
         }
 

@@ -106,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.captainAPrefabName.Value = MatchmakingScreenController.Instance.captainAPrefabName;
                     SynchedServerData.Instance.playerARating.Value = MatchmakingScreenController.Instance.playerRating;
                     PvPBattleSceneGodTunnel._playerACruiserName = MatchmakingScreenController.Instance.playerAPrefabName;
-                    PvPBattleSceneGodTunnel._playerACruiserVal = 1;
+                    PvPBattleSceneGodTunnel._playerACruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[MatchmakingScreenController.Instance.playerAPrefabName];
 
                     // Player B
                     SynchedServerData.Instance.playerBPrefabName.Value = connectionPayload.playerHullPrefabName;
@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
                     SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
                     PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
-                    PvPBattleSceneGodTunnel._playerBCruiserVal = 1;
+                    PvPBattleSceneGodTunnel._playerBCruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[connectionPayload.playerHullPrefabName]; 
                 }
                 response.Approved = true;
                 response.Pending = false;
