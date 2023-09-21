@@ -252,7 +252,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 // bones.SetActive(false);
                 SetVisibleBones(false);
-                OnSetVisibleBoneClientRpc(false);
                 base.OnDestroyedEvent();
             }
         }
