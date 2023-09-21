@@ -13,6 +13,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPDroneController : PvPPrefab, IPvPDroneController
     {
         public Animation _animation;
+        public ParticleSystem _animatedDrone;
+        public ParticleSystem _droneSpark;
 
         public PvPFaction Faction { get; private set; }
 
@@ -38,10 +40,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             // clientRpc
             //    OnChangedPositionClientRpc(activationArgs.Position);
             Faction = activationArgs.Faction;
+            OnSetFactionClientRpc(activationArgs.Faction);
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);
             state.normalizedTime = PvPRandomGenerator.Instance.Value;
             _animation.Play();
+
+            _animatedDrone.Play();
+            _droneSpark.Play();
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
@@ -85,8 +91,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         private void OnVisibleDroneClientRpc(bool isVisible)
         {
             if (!IsHost)
+            {
                 drone.SetActive(isVisible);
+                if(isVisible)
+                {
+                    AnimationState state = _animation["BuilderDrone"];
+                    Assert.IsNotNull(state);
+                    state.normalizedTime = PvPRandomGenerator.Instance.Value;
+                    _animation.Play();
+                    _animatedDrone.Play();
+                    _droneSpark.Play();
+                }
+            }                
         }
-
+        [ClientRpc]
+        private void OnSetFactionClientRpc(PvPFaction faction)
+        {
+            if (!IsHost)
+                Faction = faction;
+        }
     }
 }
