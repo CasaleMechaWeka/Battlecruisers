@@ -65,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         // ITarget
         public override PvPTargetType TargetType => PvPTargetType.Cruiser;
-        public override Color Color { set { _renderer.color = value; } }
+        public override Color Color { set { if (_renderer != null) _renderer.color = value; } }
         public override Vector2 Size => _collider.bounds.size;
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
 
