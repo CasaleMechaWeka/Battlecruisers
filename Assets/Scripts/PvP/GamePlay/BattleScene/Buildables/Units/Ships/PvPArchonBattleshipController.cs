@@ -74,6 +74,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnShipCompleted()
         {
             SetVisibleBones(true);
+            if (IsHost)
+                OnSetVisibleBoneClientRpc(true);
             // Delay normal setup (movement, turrets) until the unfurl animation has completed
         }
 
@@ -81,8 +83,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         SpriteRenderer[] renders;
         private void Awake()
         {
-            renders = bones.GetComponentsInChildren<SpriteRenderer>();
 
+        }
+        private void Start()
+        {
+            renders = bones.GetComponentsInChildren<SpriteRenderer>();
             SetVisibleBones(false);
         }
 
@@ -155,6 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.Deactivate();
             // bones.SetActive(false);
             SetVisibleBones(false);
+            OnSetVisibleBoneClientRpc(false);
         }
 
         //------------------------------------ methods for sync, written by Sava ------------------------------//
@@ -246,6 +252,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 // bones.SetActive(false);
                 SetVisibleBones(false);
+                OnSetVisibleBoneClientRpc(false);
                 base.OnDestroyedEvent();
             }
         }
@@ -334,5 +341,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 BuildableState = state;
         }
+
+        [ClientRpc]
+        private void OnSetVisibleBoneClientRpc(bool isVisible)
+        {
+            if (!IsHost)
+                SetVisibleBones(isVisible);
+        }
+
     }
 }
