@@ -103,10 +103,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             float halfCameraWidth = cameraWidth / 2;
 
             float minValidX = _settings.CameraVisibleXRange.Min + halfCameraWidth;
-            Assert.IsTrue(minValidX <= 0);
+            //    Assert.IsTrue(minValidX <= 0);
+            if (minValidX > 0)
+                minValidX = 0;
 
             float maxValidX = _settings.CameraVisibleXRange.Max - halfCameraWidth;
-            Assert.IsTrue(maxValidX >= 0);
+            //    Assert.IsTrue(maxValidX >= 0);
+            if (maxValidX < 0)
+                maxValidX = 0;
 
             return new PvPRange<float>(minValidX, maxValidX);
         }
