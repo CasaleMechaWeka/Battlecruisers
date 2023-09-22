@@ -71,11 +71,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public virtual IPvPLevel GetPvPLevel()
         {
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR*/
             return _appModel.DataProvider.GetPvPLevel((Map)_appModel.DataProvider.GameModel.GameMap);
-#else
+/*#else
             return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
-#endif
+#endif*/
             // return _appModel.DataProvider.GetPvPLevel();
         }
 
