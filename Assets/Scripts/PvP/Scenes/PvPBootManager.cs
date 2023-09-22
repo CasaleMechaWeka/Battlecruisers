@@ -248,7 +248,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                         if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                         {
                                             Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i;
+                                            //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
                                             ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
                                             m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                             joined = true;
