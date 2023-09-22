@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             { "ManOfWarBoss", 10000},
             { "Megalodon", 5000},
             { "Raptor", 1500},
-            { "Rickshaw", 1800},
+            { "Rickshaw", 1500},
             { "Rockjaw", 3600},
             { "TasDevil", 6800},
             { "Trident", 3500},
