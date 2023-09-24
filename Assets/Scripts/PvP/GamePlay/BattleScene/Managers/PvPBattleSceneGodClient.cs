@@ -614,6 +614,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public void HandleClientDisconnected()
         {
+            canFlee = false;
             obj_RedSeaGlow.SetActive(false);
             obj_HealthBarPanel.SetActive(false);
             obj_LeftBackgroundPanel.SetActive(false);
