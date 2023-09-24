@@ -15,5 +15,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Drone stations and Ultralisks
         ObservableCollection<IPvPBoostProvider> DroneBuildingsProviders { get; }
         ObservableCollection<IPvPBoostProvider> AllBuildingsProviders { get; }
+        ObservableCollection<IPvPBoostProvider> TacticalUltrasProviders { get; }
     }
 }

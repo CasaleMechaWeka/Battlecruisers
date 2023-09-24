@@ -21,6 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalUltrasProviders);
         }
 
         protected override void OnBuildableCompleted()
@@ -38,7 +39,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
                     && !aircraftController.IsDestroyed)
                 {
                     aircraftController.Kamikaze(EnemyCruiser);
-				}
+                }
             }
         }
     }
