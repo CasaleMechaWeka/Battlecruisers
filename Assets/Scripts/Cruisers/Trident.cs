@@ -11,6 +11,7 @@ namespace BattleCruisers.Cruisers
     public class Trident : Cruiser
     {
         public float tacticalsBuildRateBoost;
+        public float tacticalUltrasBuildRateBoost;
 
         public override void Initialise(ICruiserArgs args)
         {
@@ -23,9 +24,10 @@ namespace BattleCruisers.Cruisers
             base.Initialise(args);
             Assert.IsTrue(tacticalsBuildRateBoost > 0);
 
-            IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
-            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders.Add(boostProvider);
-            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalUltrasProviders.Add(boostProvider);
+            IBoostProvider tacticalsBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders.Add(tacticalsBoostProvider);
+            IBoostProvider tacticalUltrasBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalUltrasProviders.Add(tacticalUltrasBoostProvider);
         }
     }
 }

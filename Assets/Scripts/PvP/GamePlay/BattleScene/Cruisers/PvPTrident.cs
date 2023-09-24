@@ -12,6 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPTrident : PvPCruiser
     {
         public float tacticalsBuildRateBoost;
+        public float tacticalUltrasBuildRateBoost;
 
         public override void Initialise(IPvPCruiserArgs args)
         {
@@ -19,9 +20,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             Assert.IsTrue(tacticalsBuildRateBoost > 0);
 
-            IPvPBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
-            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders.Add(boostProvider);
-            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalUltrasProviders.Add(boostProvider);
+            IPvPBoostProvider tacticalsBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders.Add(tacticalsBoostProvider);
+            IPvPBoostProvider tacticalUltrasBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalUltrasProviders.Add(tacticalUltrasBoostProvider);
         }
 
         protected override void Start()
