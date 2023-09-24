@@ -55,6 +55,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public ILocTable screensSceneTable;
 
+        private bool isTransitioning = false;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -90,6 +92,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void NextSetCommandExecute()
         {
+            if (isTransitioning)
+                return;
+            isTransitioning = true;
+
             int cur_idx = IndexCurrentArena;
             IndexCurrentArena++;
             if (IndexCurrentArena > StaticData.NUM_OF_PvPLEVELS)
@@ -107,6 +113,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void PreviousSetCommandExecute()
         {
+            if (isTransitioning)
+                return;
+            isTransitioning = true;
+
             int cur_idx = IndexCurrentArena;
             IndexCurrentArena--;
             if (IndexCurrentArena < 0)
@@ -159,7 +169,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             costCreditsText.text = _dataProvider.GameModel.Arenas[index + 1].costcredits.ToString();
             prizeCoinsText.text = _dataProvider.GameModel.Arenas[index + 1].prizecoins.ToString();
             prizeCreditsText.text = _dataProvider.GameModel.Arenas[index + 1].prizecredits.ToString();
-
+            isTransitioning = false;
         }
 
         private void StartBattle()
@@ -170,7 +180,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     && _dataProvider.GameModel.Credits >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
                 {
                     loadingSpinner.SetActive(true);
-                    battleButton.gameObject.SetActive(false);                    
+                    battleButton.gameObject.SetActive(false);
                     _dataProvider.GameModel.GameMap = IndexCurrentArena;
                     _screenSceneGod.LoadPvPBattleScene();
                 }
