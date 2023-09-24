@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -41,23 +40,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             Assert.IsNotNull(activeFeedback);
 
             _userChosenTargetHelper = userChosenTargetHelper;
-            _buttonVisibilityFilter = buttonVisibilityFilter;
-
-            _userChosenTargetHelper.UserChosenTargetChanged += (sender, e) => UpdateActiveFeedback();
-        }
-
-
-        public void Initialise(
-            IPvPSingleSoundPlayer soundPlayer,
-            // IPvPUserChosenTargetHelper userChosenTargetHelper,
-            IPvPFilter<IPvPTarget> buttonVisibilityFilter)
-        {
-            base.Initialise(soundPlayer);
-
-            // PvPHelper.AssertIsNotNull(userChosenTargetHelper, buttonVisibilityFilter);
-            Assert.IsNotNull(activeFeedback);
-
-            // _userChosenTargetHelper = userChosenTargetHelper;
             _buttonVisibilityFilter = buttonVisibilityFilter;
 
             _userChosenTargetHelper.UserChosenTargetChanged += (sender, e) => UpdateActiveFeedback();

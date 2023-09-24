@@ -54,8 +54,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
         private IPvPBattleSceneHelper pvpBattleHelper;
-        private IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager;
-        private IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager;
+        public IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager;
+        public IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager;
 
         public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables_left;
         public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables_right;
@@ -64,6 +64,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public static Sprite playerBCruiserSprite;
         public static string playerBCruiserName;
+
+        public IPvPUserChosenTargetHelper playerBCruiseruserChosenTargetHelper;
+        public IPvPUserChosenTargetHelper playerACruiseruserChosenTargetHelper;
 
         private bool isInitializingServer = false;
 
@@ -176,12 +179,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
+
             playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
-            IPvPUserChosenTargetHelper playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
+            playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerACruiserUserChosenTargetManager);
+
             playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
-            IPvPUserChosenTargetHelper playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
+            playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
+
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             await factoryProvider.Initialise();
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
@@ -194,8 +200,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             await Task.Delay(500);
             playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
-            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
-            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager/*, playerBCruiseruserChosenTargetHelper*/);
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
 
             enemyCruiserSprite = playerACruiser.Sprite;
             enemyCruiserName = playerACruiser.Name;

@@ -492,14 +492,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
         }
-
-
 
         public override void OnNetworkDespawn()
         {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
             base.OnNetworkDespawn();
-
         }
 
         protected override void OnDamagedEventCalled(ulong objectId)

@@ -46,12 +46,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         public PvPCruiserSpecificFactories(
-    IPvPFactoryProvider factoryProvider,
-    IPvPCruiser parentCruiser,
-    IPvPCruiser enemyCruiser,
-    IPvPRankedTargetTracker userChosenTargetTracker,
-    IPvPUpdaterProvider updaterProvider,
-    PvPFaction faction)
+            IPvPFactoryProvider factoryProvider,
+            IPvPCruiser parentCruiser,
+            IPvPCruiser enemyCruiser,
+            IPvPRankedTargetTracker userChosenTargetTracker,
+            IPvPUpdaterProvider updaterProvider,
+            PvPFaction faction)
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
