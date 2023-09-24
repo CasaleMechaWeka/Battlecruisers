@@ -12,7 +12,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override IPvPSoundKey FiringSound => PvPSoundKeys.PvPFiring.Artillery;
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.Artillery;
 
-
+        protected override void AddBuildRateBoostProviders(
+            IPvPGlobalBoostProviders globalBoostProviders,
+            IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
+        {
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
+        }
 
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
