@@ -13,6 +13,7 @@ namespace BattleCruisers.Cruisers
     {
         public float defensivesFireRateBoost;
         public float defensivesBuildRateBoost;
+        public float shieldBuildRateBoost;
 
         public override void Initialise(ICruiserArgs args)
         {
@@ -27,12 +28,16 @@ namespace BattleCruisers.Cruisers
 
             Assert.IsTrue(defensivesFireRateBoost > 0);
             Assert.IsTrue(defensivesBuildRateBoost > 0);
+            Assert.IsTrue(shieldBuildRateBoost > 0);
 
             IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(defensivesFireRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.Add(fireRateBoostProvider);
 
             IBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(defensivesBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DefensivesProviders.Add(buildRateBoostProvider);
+
+            IBoostProvider shieldBuildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(shieldBuildRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders.Add(shieldBuildRateBoostProvider);
         }
     }
 }

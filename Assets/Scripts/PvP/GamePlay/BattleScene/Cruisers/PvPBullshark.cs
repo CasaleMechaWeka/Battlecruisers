@@ -12,6 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         public float defensivesFireRateBoost;
         public float defensivesBuildRateBoost;
+        public float shieldBuildRateBoost;
 
         public override void Initialise(IPvPCruiserArgs args)
         {
@@ -19,12 +20,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             Assert.IsTrue(defensivesFireRateBoost > 0);
             Assert.IsTrue(defensivesBuildRateBoost > 0);
+            Assert.IsTrue(shieldBuildRateBoost > 0);
 
             IPvPBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(defensivesFireRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.Add(fireRateBoostProvider);
 
             IPvPBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(defensivesBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DefensivesProviders.Add(buildRateBoostProvider);
+
+            IPvPBoostProvider shieldBuildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(shieldBuildRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders.Add(shieldBuildRateBoostProvider);
         }
 
         protected override void Start()
