@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 
         public override IPvPState Start()
         {
-         //   var isStart = _task.Start();
+            //   var isStart = _task.Start();
             if (_task.Start())
             {
                 return new PvPInProgressState(_task, _eventEmitter);
