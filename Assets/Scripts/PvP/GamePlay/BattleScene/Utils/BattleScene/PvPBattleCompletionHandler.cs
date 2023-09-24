@@ -47,14 +47,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public async void CompleteBattle(bool wasVictory, bool retryLevel)
         {
+            if (_isCompleted)
+            {
+                return;
+            }
+            _isCompleted = true;
             await Task.Delay(10);
             if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.Destroy();
-            }
-            if (_isCompleted)
-            {
-                return;
             }
             var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
             if (team == Cruisers.Team.LEFT)
@@ -82,8 +83,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
                 }
             }
-
-            _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
@@ -140,16 +139,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public async void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
+            if (_isCompleted)
+            {
+                return;
+            }
+            _isCompleted = true;
             await Task.Delay(10);
 
             if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.Destroy();
-            }
-
-            if (_isCompleted)
-            {
-                return;
             }
 
             var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
@@ -179,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 }
             }
 
-            _isCompleted = true;
+   
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
 

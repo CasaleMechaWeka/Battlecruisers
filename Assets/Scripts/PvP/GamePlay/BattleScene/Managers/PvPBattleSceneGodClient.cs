@@ -712,13 +712,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             yield return new WaitForSeconds(5f); // to show matchmaking animation 
             sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
-            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-                cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();
-            else
+            if(SynchedServerData.Instance != null)
             {
-                cameraComponents.CameraFocuser.FocusOnRightPlayerCruiser();
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                    cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();
+                else
+                {
+                    cameraComponents.CameraFocuser.FocusOnRightPlayerCruiser();
+                }
+                components.UpdaterProvider.SwitchableUpdater.Enabled = true;
             }
-            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
         }
 
         public void RegisterAsPlayer(PvPCruiser _cruiser)
