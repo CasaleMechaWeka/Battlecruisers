@@ -1,3 +1,5 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -7,6 +9,8 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -123,6 +127,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override bool IsBuildingImmune()
         {
             return isImmune;
+        }
+
+        protected override void AddBuildRateBoostProviders(
+    IPvPGlobalBoostProviders globalBoostProviders,
+    IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
+        {
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);
         }
     }
 }

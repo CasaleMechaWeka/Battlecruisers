@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Buildables.Pools;
+﻿using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
@@ -7,11 +9,13 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings
 {
     public abstract class Building : Buildable<BuildingActivationArgs>, IBuilding
-	{
+    {
         private BoxCollider2D _collider;
 
         private IDoubleClickHandler<IBuilding> _doubleClickHandler;
@@ -99,6 +103,14 @@ namespace BattleCruisers.Buildables.Buildings
         public override bool IsBuildingImmune()
         {
             return isImmune;
+        }
+
+        protected override void AddBuildRateBoostProviders(
+    IGlobalBoostProviders globalBoostProviders,
+    IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+        {
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);
         }
     }
 }
