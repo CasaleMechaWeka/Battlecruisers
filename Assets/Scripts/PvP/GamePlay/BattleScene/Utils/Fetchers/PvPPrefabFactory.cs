@@ -19,13 +19,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Thre
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Threading.Tasks;
-using BattleCruisers.Buildables;
-using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Projectiles;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
-using static BattleCruisers.Data.Static.StaticPrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
@@ -111,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             }
             else
             {
-                await Task.Delay(10);
+                await Task.Delay(100);
                 buildableWrapper.GetComponent<NetworkObject>().Spawn();
             }
 
@@ -166,7 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 newShipDeath.GetComponent<NetworkObject>().Spawn();
             else
             {
-                await Task.Delay(10);
+                await Task.Delay(100);
                 newShipDeath.GetComponent<NetworkObject>().Spawn();
             }
             return newShipDeath.CreateShipDeath();
@@ -186,7 +180,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             }
             else
             {
-                await Task.Delay(10);
+                await Task.Delay(100);
                 projectile.GetComponent<NetworkObject>().Spawn();
             }
             projectile.Initialise(_commonStrings, factoryProvider);
@@ -200,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 newDrone.GetComponent<NetworkObject>().Spawn();
             else
             {
-                await Task.Delay(10);
+                await Task.Delay(100);
                 newDrone.GetComponent<NetworkObject>().Spawn();
             }
             newDrone.StaticInitialise(_commonStrings);
