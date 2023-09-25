@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables
         public virtual Vector2 DroneAreaPosition => Position;
         public Vector2 Position
         {
-            get { return transform.position; }
+            get { return transform != null ? transform.position : Vector3.zero; }
             set { transform.position = value; }
         }
 
