@@ -28,7 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         {
             Assert.IsNotNull(soundKey);
             IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
-            PlaySound(sound, position);
+            if (sound != null)
+                PlaySound(sound, position);
         }
 
         public void PlaySound(IPvPAudioClipWrapper sound, Vector2 position)

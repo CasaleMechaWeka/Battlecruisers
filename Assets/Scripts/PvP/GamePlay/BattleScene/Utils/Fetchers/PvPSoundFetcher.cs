@@ -16,16 +16,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task<IPvPAudioClipWrapper> GetSoundAsync(IPvPSoundKey soundKey)
         {
             string soundPath = CreateSoundPath(soundKey);
-            
+
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
             try
             {
                 var validateAddress = Addressables.LoadResourceLocationsAsync(soundPath);
                 await validateAddress.Task;
                 if (validateAddress.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
-                {         
+                {
                     if (validateAddress.Result.Count > 0)
-                    {             
+                    {
                         handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
                         await handle.Task;
 
@@ -42,7 +42,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 Debug.Log(ex.Message + " === " + soundPath);
             }
-            return new PvPAudioClipWrapper(handle.Result, handle);
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+                return new PvPAudioClipWrapper(handle.Result, handle);
+            else return null;
         }
 
         private string CreateSoundPath(IPvPSoundKey soundKey)
