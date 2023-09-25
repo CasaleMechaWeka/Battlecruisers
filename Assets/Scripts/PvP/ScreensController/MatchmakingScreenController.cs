@@ -106,7 +106,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             JOIN_LOBBY,
             CREATING_LOBBY,
             CONNECTING,
-            LOADING_ASSETS
+            LOADING_ASSETS,
+            LOOKING_VICTIM
         }
         public MMStatus status = MMStatus.FINDING_LOBBY;
         public override void OnPresenting(object activationParameter)
@@ -228,19 +229,22 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             switch (status)
             {
                 case MMStatus.FINDING_LOBBY:
-
+                    LookingForOpponentsText.text = commonStrings.GetString("FindingLobby");
                     break;
                 case MMStatus.JOIN_LOBBY:
-
+                    LookingForOpponentsText.text = commonStrings.GetString("JoiningLobby");
                     break;
                 case MMStatus.CONNECTING:
-
+                    LookingForOpponentsText.text = commonStrings.GetString("Connecting");
                     break;
                 case MMStatus.CREATING_LOBBY:
-
+                    LookingForOpponentsText.text = commonStrings.GetString("CreatingLobby");
                     break;
                 case MMStatus.LOADING_ASSETS:
                     LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
+                    break;
+                case MMStatus.LOOKING_VICTIM:
+                    LookingForOpponentsText.text = commonStrings.GetString("LookingVictim");
                     break;
             }
         }

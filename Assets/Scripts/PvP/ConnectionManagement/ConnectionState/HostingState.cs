@@ -28,6 +28,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
                 m_LobbyServiceFacade.BeginTracking();
+                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.LOOKING_VICTIM);
             }
 /*            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
             MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
@@ -132,14 +133,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 return ConnectStatus.ServerFull;
             }
-
-            /*            if (connectionPayload.isDebug != Debug.isDebugBuild)
-                        {
-                            return ConnectStatus.IncompatibleBuildType;
-                        }*/
-
-            /*return SessionManager<SessionPlayerData>.Instance.IsDuplicateConnection(connectionPayload.playerId) ?
-                ConnectStatus.LoggedInAgain : ConnectStatus.Success;*/
             return ConnectStatus.Success;
         }
     }
