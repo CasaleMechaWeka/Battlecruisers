@@ -475,6 +475,7 @@ namespace BattleCruisers.Scenes
             homeScreenArt.SetActive(false);
             environmentArt.SetActive(false);
             _musicPlayer.PlayScreensSceneMusic();
+            fullScreenads.CloseAdvert();
             GoToScreen(hubScreen);
         }
 
@@ -486,6 +487,7 @@ namespace BattleCruisers.Scenes
             characterOfCharlie.SetActive(false);
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(true);
+            fullScreenads.CloseAdvert();
             GoToScreen(shopPanelScreen);
             shopPanelScreen.InitiaiseCaptains();
         }
@@ -498,6 +500,7 @@ namespace BattleCruisers.Scenes
             characterOfCharlie.SetActive(false);
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(true);
+            fullScreenads.CloseAdvert();
             GoToScreen(blackMarketScreen);
             blackMarketScreen.InitialiseIAPs();
             AdvertisingBanner.startAdvert();
@@ -545,6 +548,7 @@ namespace BattleCruisers.Scenes
             characterOfCharlie.SetActive(false);
             cameraOfCharacter.SetActive(false);
             cameraOfCaptains.SetActive(false);
+            fullScreenads.CloseAdvert();
             GoToScreen(loadoutScreen);
         }
 
