@@ -21,7 +21,7 @@ namespace BattleCruisers.Effects.Smoke
                     BurstsCount = 0,
                     EdgeRadius = 0.001f,
                     NoiseStrength = 0.01f,
-                    StartSize = 0.05f
+                    StartSize = 0.1f
                 };
                 Normal = new SmokeStatistics()
                 {
@@ -32,7 +32,7 @@ namespace BattleCruisers.Effects.Smoke
                     BurstsCount = 4,
                     EdgeRadius = 0.1f,
                     NoiseStrength = 0.05f,
-                    StartSize = 0.1f
+                    StartSize = 0.25f
                 };
 
                 Strong = new SmokeStatistics()
@@ -44,7 +44,7 @@ namespace BattleCruisers.Effects.Smoke
                     BurstsCount = 8,
                     EdgeRadius = 0.2f,
                     NoiseStrength = 0.1f,
-                    StartSize = 0.3f
+                    StartSize = 0.75f
                 };
             }
         }
