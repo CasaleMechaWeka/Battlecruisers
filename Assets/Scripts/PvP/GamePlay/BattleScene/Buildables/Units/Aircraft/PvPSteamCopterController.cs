@@ -113,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 SetupTargetDetection();
 
-                _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.BigCannon);
+                _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.PneumaticSlug);
 
                 List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
                 foreach (Sprite sprite in allSprites)
