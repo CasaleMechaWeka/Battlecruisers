@@ -355,7 +355,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void OnPointerClickServerRpc(string slotName, ServerRpcParams serverRpcParams = default)
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
-            if (NetworkManager.ConnectedClientsIds.Contains(clientId))
+            if (NetworkManager.ConnectedClientsIds.Contains(clientId) && IsFree)
             {
                 _parentCruiser.ConstructSelectedBuilding(_parentCruiser.GetSlotWrapperController()._slotsByName[slotName]);
             }
