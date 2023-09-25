@@ -100,7 +100,15 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public static MatchmakingScreenController Instance { get; private set; }
 
-
+        public enum MMStatus
+        {
+            FINDING_LOBBY,
+            JOIN_LOBBY,
+            CREATING_LOBBY,
+            CONNECTING,
+            LOADING_ASSETS
+        }
+        public MMStatus status = MMStatus.FINDING_LOBBY;
         public override void OnPresenting(object activationParameter)
         {
 
@@ -115,8 +123,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         async void Start()
         {
             Instance = this;
-/*            fleeButton.SetActive(false);
-            vsAIButton.SetActive(false);*/
+            /*            fleeButton.SetActive(false);
+                        vsAIButton.SetActive(false);*/
             LoadingBarParent.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -138,7 +146,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("Trident", Trident);
             sprites.Add("Yeti", Yeti);
 
-            DontDestroyOnLoad(gameObject);            
+            DontDestroyOnLoad(gameObject);
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
@@ -198,7 +206,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public bool isLoaded = false;
         async void Update()
         {
-            if(!isProcessing && !isLoaded)
+            if (!isProcessing && !isLoaded)
             {
                 isProcessing = true;
                 await iLoadingAssets();
@@ -214,10 +222,33 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LoadingBar.value = objs.Length;
             isProcessing = false;
         }
-        
+
+        public void SetMMString(MMStatus status)
+        {
+            switch (status)
+            {
+                case MMStatus.FINDING_LOBBY:
+
+                    break;
+                case MMStatus.JOIN_LOBBY:
+
+                    break;
+                case MMStatus.CONNECTING:
+
+                    break;
+                case MMStatus.CREATING_LOBBY:
+
+                    break;
+                case MMStatus.LOADING_ASSETS:
+                    LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
+                    break;
+            }
+        }
+
         public void SetFoundVictimString()
         {
-            LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
+            // LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
+            SetMMString(MMStatus.LOADING_ASSETS);
             LoadingBarParent.SetActive(true);
             // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)
@@ -227,21 +258,21 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 if (animator != null)
                     animator.SetTrigger("happy");
                 // If an Animator exists
-/*                if (animator != null)
-                {
-                    // Get all animation clips
-                    AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+                /*                if (animator != null)
+                                {
+                                    // Get all animation clips
+                                    AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
 
-                    // Iterate through all clips and play the one ending with "_Celebrate"
-                    foreach (AnimationClip clip in clips)
-                    {
-                        if (clip.name.EndsWith("_Celebrate"))
-                        {
-                            animator.Play(clip.name);
-                            break; // Exit loop once found and played
-                        }
-                    }
-                }*/
+                                    // Iterate through all clips and play the one ending with "_Celebrate"
+                                    foreach (AnimationClip clip in clips)
+                                    {
+                                        if (clip.name.EndsWith("_Celebrate"))
+                                        {
+                                            animator.Play(clip.name);
+                                            break; // Exit loop once found and played
+                                        }
+                                    }
+                                }*/
             }
 
         }
@@ -258,7 +289,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void OnFlee()
         {
-            if(PvPBattleSceneGodClient.Instance != null)
+            if (PvPBattleSceneGodClient.Instance != null)
             {
                 PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
                 PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
