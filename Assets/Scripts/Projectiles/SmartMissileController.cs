@@ -29,10 +29,10 @@ namespace BattleCruisers.Projectiles
     /// Once a target has been detected turns off target detection.
     /// </summary>
     public class SmartMissileController :
-        ProjectileWithTrail<SmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>, 
+        ProjectileWithTrail<SmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>,
         ITargetProvider,
         ITargetConsumer
-	{
+    {
         private ITransform _transform;
         private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;
@@ -49,7 +49,9 @@ namespace BattleCruisers.Projectiles
         protected override float TrailLifetimeInS => 3;
 
         private ITarget _target;
-        public  ITarget Target
+
+        private SmartMissileActivationArgs<ISmartProjectileStats> _activationArgs;
+        public ITarget Target
         {
             get => _target;
             set
@@ -96,6 +98,7 @@ namespace BattleCruisers.Projectiles
         public override void Activate(SmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
+            _activationArgs = activationArgs;
 
             Target = activationArgs.EnempCruiser;
 
@@ -153,6 +156,13 @@ namespace BattleCruisers.Projectiles
             _deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
         }
 
+        private void Retarget()
+        {
+            Target = _activationArgs.EnempCruiser;
+
+            SetupTargetProcessor(_activationArgs);
+        }
+
         private void ConditionalDestroy()
         {
             if (gameObject.activeSelf)
@@ -161,19 +171,20 @@ namespace BattleCruisers.Projectiles
             }
         }
 
-		protected override void DestroyProjectile()
-		{
+        protected override void DestroyProjectile()
+        {
             missile.enabled = false;
             _rocketTarget.GameObject.SetActive(false);
             _target.Destroyed -= _target_Destroyed;
             CleanUpTargetProcessor();
-			base.DestroyProjectile();
-		}
+            base.DestroyProjectile();
+        }
 
         private void _target_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= _target_Destroyed;
-            ReleaseMissile();
+            Retarget();
+            //ReleaseMissile();
         }
 
         private void CleanUpTargetProcessor()
