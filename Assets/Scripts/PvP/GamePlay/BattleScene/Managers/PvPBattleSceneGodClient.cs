@@ -468,6 +468,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 dataProvider.GameModel.Coins -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
                 dataProvider.GameModel.Credits -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcredits;
                 dataProvider.SaveGame();
+                PvPBattleSceneGodTunnel.isCost = true;
                 await dataProvider.SyncCoinsToCloud();
                 await dataProvider.SyncCreditsToCloud();
             }

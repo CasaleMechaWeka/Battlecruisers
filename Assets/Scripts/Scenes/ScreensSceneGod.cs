@@ -42,6 +42,7 @@ using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine.UI;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 
 namespace BattleCruisers.Scenes
 {
@@ -384,6 +385,7 @@ namespace BattleCruisers.Scenes
                 }
             }
             PlayerPrefs.GetInt("PLAYED", 1);
+            PvPBattleSceneGodTunnel.isCost = false;
         }
 
         public async void DestroyAllNetworkObjects()

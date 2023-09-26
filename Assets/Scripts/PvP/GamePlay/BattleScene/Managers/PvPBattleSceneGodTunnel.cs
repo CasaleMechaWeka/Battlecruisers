@@ -66,6 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static string _playerBCruiserName;
 
         public static int isDisconnected = 0;
+        public static bool isCost = false;
         public static float difficultyDestructionScoreMultiplier = 1.0f;
         public static Dictionary<string, long> cruiser_scores = new Dictionary<string, long>() {
             { "BlackRig", 5800},
@@ -89,18 +90,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _playerALevelTimeInSeconds = 1;
             _playerAAircraftVal = 0;
             _playerAShipsVal = 0;
-            _playerACruiserVal = 3500;
+            //    _playerACruiserVal = 3500;
             _playerABuildingsVal = 0;
             _playerATotoalDestroyed = new long[4];
-            _playerACruiserName = "";
+            //    _playerACruiserName = "";
 
             _playerBLevelTimeInSeconds = 1;
             _playerBAircraftVal = 0;
             _playerBShipsVal = 0;
-            _playerBCruiserVal = 3500;
+            //    _playerBCruiserVal = 3500;
             _playerBBuildingsVal = 0;
             _playerBTotoalDestroyed = new long[4];
-            _playerBCruiserName = "";
+            //    _playerBCruiserName = "";
 
 
             if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
