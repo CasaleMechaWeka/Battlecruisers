@@ -463,11 +463,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             StartCoroutine(iLoadedPvPScene());
             ApplicationModelProvider.ApplicationModel.Mode = BattleCruisers.Data.GameMode.PvP_1VS1;
             // apply economy because here is end of starting PvPbattle.
-            dataProvider.GameModel.Coins -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
-            dataProvider.GameModel.Credits -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcredits;
-            dataProvider.SaveGame();
-            await dataProvider.SyncCoinsToCloud();
-            await dataProvider.SyncCreditsToCloud();
+            if (!WasLeftMatch && !wasOpponentDisconnected)
+            {
+                dataProvider.GameModel.Coins -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
+                dataProvider.GameModel.Credits -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcredits;
+                dataProvider.SaveGame();
+                await dataProvider.SyncCoinsToCloud();
+                await dataProvider.SyncCreditsToCloud();
+            }
             isStartedPvP = true;
         }
 
@@ -712,7 +715,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             yield return new WaitForSeconds(5f); // to show matchmaking animation 
             sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
-            if(SynchedServerData.Instance != null)
+            if (SynchedServerData.Instance != null)
             {
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                     cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();

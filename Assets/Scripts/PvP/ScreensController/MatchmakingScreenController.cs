@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
@@ -19,7 +18,6 @@ using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using System;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
@@ -124,8 +122,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         async void Start()
         {
             Instance = this;
-            /*            fleeButton.SetActive(false);
-                        vsAIButton.SetActive(false);*/
             LoadingBarParent.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -251,7 +247,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void SetFoundVictimString()
         {
-            // LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
             SetMMString(MMStatus.LOADING_ASSETS);
             LoadingBarParent.SetActive(true);
             // Iterate through all child objects of ContainerCaptain
@@ -261,24 +256,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Animator animator = child.GetComponentInChildren<Animator>();
                 if (animator != null)
                     animator.SetTrigger("happy");
-                // If an Animator exists
-                /*                if (animator != null)
-                                {
-                                    // Get all animation clips
-                                    AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-
-                                    // Iterate through all clips and play the one ending with "_Celebrate"
-                                    foreach (AnimationClip clip in clips)
-                                    {
-                                        if (clip.name.EndsWith("_Celebrate"))
-                                        {
-                                            animator.Play(clip.name);
-                                            break; // Exit loop once found and played
-                                        }
-                                    }
-                                }*/
             }
-
         }
         public void AddProgress(int step)
         {
