@@ -42,9 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 Debug.Log(ex.Message + " === " + soundPath);
             }
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-                return new PvPAudioClipWrapper(handle.Result, handle);
-            else return null;
+            return new PvPAudioClipWrapper(handle.Result, handle);
         }
 
         private string CreateSoundPath(IPvPSoundKey soundKey)
