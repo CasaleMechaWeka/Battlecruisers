@@ -189,7 +189,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 playerBCruiserUserChosenTargetManager);
 
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
-            await Task.Delay(500);
+            await Task.Delay(1000);
             await factoryProvider.Initialise();
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             await _Initialise_Rest();
