@@ -67,7 +67,15 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                            if(hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
+                            {
+                                // For heckles with 10 or less characters!
+                                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
+                            }
+                            else 
+                            {
+                                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                            }
                             ScreensSceneGod.Instance.loadoutScreen.AddHeckle(currentHeckleData);
                         }
                         else
@@ -96,7 +104,15 @@ namespace BattleCruisers.UI.ScreensScene
                         _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                        if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
+                        {
+                            // For heckles with 10 or less characters!
+                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
+                        }
+                        else
+                        {
+                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                        }
 
                         // Subtract from local economy:
                         _dataProvider.GameModel.Coins -= currentHeckleData.HeckleCost;
