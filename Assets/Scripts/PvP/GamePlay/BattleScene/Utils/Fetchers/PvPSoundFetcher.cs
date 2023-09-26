@@ -42,6 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 Debug.Log(ex.Message + " === " + soundPath);
             }
+            Debug.Log("===> sound path ---> " + soundPath);
             return new PvPAudioClipWrapper(handle.Result, handle);
         }
 
