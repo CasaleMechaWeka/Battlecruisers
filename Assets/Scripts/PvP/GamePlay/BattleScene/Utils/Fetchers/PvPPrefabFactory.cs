@@ -142,14 +142,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             Debug.Log("===> explosion key name ---> " + explosionKey.PrefabPath);
             PvPExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
-            PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
+            PvPExplosionController newExplosion;
             while (true)
             {
+                newExplosion = Object.Instantiate(explosionPrefab);
                 if (newExplosion != null && newExplosion.GetComponent<NetworkObject>() != null)
                     break;
-                newExplosion = Object.Instantiate(explosionPrefab);
-                await Task.Delay(500);
-            }            
+                await Task.Delay(100);
+            }
             newExplosion.GetComponent<NetworkObject>().Spawn();
             return newExplosion.Initialise();
         }
@@ -157,13 +157,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey)
         {
             PvPShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
-            PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
-            while(true)
+            PvPShipDeathInitialiser newShipDeath;
+            while (true)
             {
+                newShipDeath = Object.Instantiate(shipDeathPrefab);
                 if (newShipDeath != null && newShipDeath.GetComponent<NetworkObject>() != null)
                     break;
-                newShipDeath = Object.Instantiate(shipDeathPrefab);
-                await Task.Delay(500);
+                await Task.Delay(100);
             }
             newShipDeath.GetComponent<NetworkObject>().Spawn();
             return newShipDeath.CreateShipDeath();
@@ -176,13 +176,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             Assert.IsNotNull(factoryProvider);
             TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
-            TProjectile projectile = Object.Instantiate(prefab);
-            while(true)
+            TProjectile projectile;
+            while (true)
             {
+                projectile = Object.Instantiate(prefab);
                 if (projectile != null && projectile.GetComponent<NetworkObject>() != null)
                     break;
-                projectile = Object.Instantiate(prefab);
-                await Task.Delay(500);
+                await Task.Delay(100);
             }
             projectile.GetComponent<NetworkObject>().Spawn();
             projectile.Initialise(_commonStrings, factoryProvider);
@@ -191,13 +191,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public async Task<IPvPDroneController> CreateDrone()
         {
-            PvPDroneController newDrone = Object.Instantiate(_prefabCache.Drone);
-            while(true)
+            PvPDroneController newDrone;
+            while (true)
             {
+                newDrone = Object.Instantiate(_prefabCache.Drone);
                 if (newDrone != null && newDrone.GetComponent<NetworkObject>() != null)
                     break;
-                newDrone = Object.Instantiate(_prefabCache.Drone);
-                await Task.Delay(500);
+                await Task.Delay(100);
             }
             newDrone.GetComponent<NetworkObject>().Spawn();
             newDrone.StaticInitialise(_commonStrings);
