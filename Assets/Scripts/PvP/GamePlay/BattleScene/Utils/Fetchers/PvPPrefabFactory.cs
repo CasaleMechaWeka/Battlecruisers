@@ -149,6 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 newExplosion = Object.Instantiate(explosionPrefab);
                 await Task.Delay(500);
             }
+            Debug.Log("===> explosion key name ---> " + explosionKey.PrefabPath);
             newExplosion.GetComponent<NetworkObject>().Spawn();
             return newExplosion.Initialise();
         }
