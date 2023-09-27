@@ -98,6 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPFactoryProvider factoryProvider) where TBuildable : class, IPvPUnit
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
+            Debug.Log("===> unit buildable name ---> " + buildableWrapperPrefab.Buildable.PrefabName);
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.GetComponent<NetworkObject>().Spawn();
             buildableWrapper.gameObject.SetActive(true);
