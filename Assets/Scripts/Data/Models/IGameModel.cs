@@ -19,7 +19,6 @@ namespace BattleCruisers.Data.Models
         int GameMap { get; set; }
         float BattleWinScore { get; set; }
         string QueueName { get; set; }
-        string PVPVersion { get; set; }
         List<Arena> Arenas { get; set; }
         Dictionary<string, int> GameConfigs { get; set; }
         List<int> CaptainExoList { get; set; }

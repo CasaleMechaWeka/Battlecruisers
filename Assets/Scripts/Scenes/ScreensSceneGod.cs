@@ -184,16 +184,12 @@ namespace BattleCruisers.Scenes
                     }
                     else
                     {
-                        Debug.Log("PvP version mismatch, an update will be required to play online.");
-
-                        // set status panel values
+                        // set status panel values, prompt update
                         hubScreen.serverStatusPanel.SetActive(false);
                         hubScreen.offlinePlayOnly.SetActive(true);
                         hubScreen.battle1vAI.SetActive(true);
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
-                        Debug.Log("Offline, can't find out status of PVP Server.");
-
-                        // prompt update
+                        Debug.Log("PvP version mismatch, an update will be required to play online.");
                     }
 
                     await _applicationModel.DataProvider.SyncCurrencyFromCloud();
