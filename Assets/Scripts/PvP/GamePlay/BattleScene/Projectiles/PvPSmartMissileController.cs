@@ -45,6 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPTargetProcessor _targetProcessor;
         //---> CODE BY ANUJ
         private PvPRocketTarget _rocketTarget;
+        private PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> _activationArgs;
         //<---
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 0.5f;
@@ -103,6 +104,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             base.Activate(activationArgs);
 
+            _activationArgs = activationArgs;
+
             Target = activationArgs.EnempCruiser;
 
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
@@ -150,6 +153,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _targetProcessor.AddTargetConsumer(this);
         }
 
+        private void Retarget()
+        {
+            Target = _activationArgs.EnempCruiser;
+
+            SetupTargetProcessor(_activationArgs);
+        }
+
         private void ReleaseMissile()
         {
             Logging.LogMethod(Tags.SMART_MISSILE);
@@ -184,7 +194,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void _target_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= _target_Destroyed;
-            ReleaseMissile();
+            Retarget();
+            //ReleaseMissile();
         }
 
         private void CleanUpTargetProcessor()
