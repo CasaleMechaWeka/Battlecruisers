@@ -180,6 +180,10 @@ namespace BattleCruisers.Data
 
         void GetConfigValues()
         {
+            var gameVersion = RemoteConfigService.Instance.appConfig.GetJson("CURRENT_VERSION");
+            if (_gameModel.PVPVersion != gameVersion)
+                _gameModel.PVPVersion = gameVersion;
+
             var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
             GameConfig gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigsJson);
             _gameModel.GameConfigs = gameConfig.gameconfigs;
