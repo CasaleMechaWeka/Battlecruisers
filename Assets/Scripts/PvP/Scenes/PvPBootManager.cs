@@ -272,16 +272,29 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
                     };
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
-                    if (lobbyCreationAttemp.Success)
+                    while (true)
                     {
-                        m_LocalUser.IsHost = true;
-                        m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
-                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                        if (lobbyCreationAttemp.Success)
                         {
-                            Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                            m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                            m_LocalUser.IsHost = true;
+                            m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
+                            if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                            {
+                                Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+                                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                break;
+                            }
+                            else
+                            {
+                                lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                            }
                         }
+                        else
+                        {
+                            lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                        }
+                        await Task.Delay(100);
                     }
                 }
             }
@@ -294,16 +307,29 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 };
                 MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
-                if (lobbyCreationAttemp.Success)
+                while (true)
                 {
-                    m_LocalUser.IsHost = true;
-                    m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
-                    if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                    if (lobbyCreationAttemp.Success)
                     {
-                        Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                        MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                        m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                        m_LocalUser.IsHost = true;
+                        m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
+                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                        {
+                            Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                            m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                            break;
+                        }
+                        else
+                        {
+                            lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                        }
                     }
+                    else
+                    {
+                        lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                    }
+                    await Task.Delay(100);
                 }
             }
         }
