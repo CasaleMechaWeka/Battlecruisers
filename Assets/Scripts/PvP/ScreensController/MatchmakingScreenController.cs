@@ -238,13 +238,17 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     break;
                 case MMStatus.LOADING_ASSETS:
                     LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
-                    if (GameObject.Find("ConnectionManager") != null)
-                        GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LeaveLobby();
                     break;
                 case MMStatus.LOOKING_VICTIM:
                     LookingForOpponentsText.text = commonStrings.GetString("LookingVictim");
                     break;
             }
+        }
+
+        public void LeaveLobby()
+        {
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LeaveLobby();
         }
 
         public void SetFoundVictimString()
@@ -326,6 +330,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
             await Task.Delay(100);
             animator.SetBool("Found", true);
+            LeaveLobby();
         }
 
         private int CalculateRank(long score)
