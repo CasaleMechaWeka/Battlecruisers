@@ -140,6 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public async Task<IPvPExplosion> CreateExplosion(PvPExplosionKey explosionKey)
         {
+            Debug.Log("===> explosion key name ---> " + explosionKey.PrefabPath);
             PvPExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
             PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             while (true)
@@ -148,8 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     break;
                 newExplosion = Object.Instantiate(explosionPrefab);
                 await Task.Delay(500);
-            }
-            Debug.Log("===> explosion key name ---> " + explosionKey.PrefabPath);
+            }            
             newExplosion.GetComponent<NetworkObject>().Spawn();
             return newExplosion.Initialise();
         }
