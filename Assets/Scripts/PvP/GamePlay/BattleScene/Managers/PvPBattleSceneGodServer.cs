@@ -138,8 +138,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 case SceneEventType.SynchronizeComplete:
                     if (NetworkManager.Singleton.IsHost)
                     {
-                        await Task.Delay(1000);
-                        await Initialise();
+                        if (this != null)
+                            await Initialise();
                     }
                     break;
             }

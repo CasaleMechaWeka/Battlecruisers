@@ -238,6 +238,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     break;
                 case MMStatus.LOADING_ASSETS:
                     LookingForOpponentsText.text = commonStrings.GetString("LoadingAssets");
+                    if (GameObject.Find("ConnectionManager") != null)
+                        GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LeaveLobby();
                     break;
                 case MMStatus.LOOKING_VICTIM:
                     LookingForOpponentsText.text = commonStrings.GetString("LookingVictim");

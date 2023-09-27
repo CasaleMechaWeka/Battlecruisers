@@ -34,6 +34,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
         }
 
+        public override void LeaveLobby()
+        {
+            base.LeaveLobby();
+            m_LobbyServiceFacade.EndTracking();
+        }
+
         public override void Exit()
         {
             SessionManager<SessionPlayerData>.Instance.OnServerEnded();
@@ -46,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.SetFoundVictimString();
                 MatchmakingScreenController.Instance.fleeButton.SetActive(true);
                 MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
-                m_LobbyServiceFacade.EndTracking();
+             //   m_LobbyServiceFacade.EndTracking();
             }
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
             {

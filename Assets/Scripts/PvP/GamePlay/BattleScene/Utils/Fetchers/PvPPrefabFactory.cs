@@ -142,10 +142,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
             PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
-            if (newExplosion == null)
-                Debug.Log("===> new explosion is null");
-            else if (newExplosion.GetComponent<NetworkObject>() == null)
-                Debug.Log("===> NetworkObject is null");
             newExplosion.GetComponent<NetworkObject>().Spawn();
             return newExplosion.Initialise();
         }

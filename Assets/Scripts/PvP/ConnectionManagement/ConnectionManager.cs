@@ -75,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     public class ConnectionManager : MonoBehaviour, INetworkObject
     {
         ConnectionState m_CurrentState;
-
+        
         [Inject]
         NetworkManager m_NetworkManager;
         [Inject]
@@ -99,8 +99,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         const string k_DefaultIP = "127.0.0.1";
         const int k_DefaultPort = 7777;
-        public bool IsConnecting = false;
-
+        public bool IsConnecting = false;        
         internal readonly OfflineState m_Offline = new OfflineState();
         internal readonly ClientConnectingState m_ClientConnecting = new ClientConnectingState();
         internal readonly ClientConnectedState m_ClientConnected = new ClientConnectedState();
@@ -160,7 +159,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
         //    DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
         }
-
+        public void LeaveLobby()
+        {
+            m_CurrentState.LeaveLobby();
+        }
         void OnDestroy()
         {
             NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;

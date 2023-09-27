@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             if (m_lobbyServiceFacade.CurrentUnityLobby != null)
             {
                 //    m_lobbyServiceFacade.BeginTracking();
-                m_lobbyServiceFacade.EndTracking();
+                // m_lobbyServiceFacade.EndTracking();
             }
             MatchmakingScreenController.Instance.SetFoundVictimString();
             MatchmakingScreenController.Instance.fleeButton.SetActive(true);
@@ -36,7 +36,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
 
         }
-
+        public override void LeaveLobby()
+        {
+            base.LeaveLobby();
+            m_lobbyServiceFacade.EndTracking();
+        }
         public override void OnUserRequestedShutdown()
         {
             //    m_ConnectStatusPublisher.Publish(ConnectStatus.UserRequestedDisconnect);

@@ -33,7 +33,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
-
 #pragma warning disable 4014
             m_LobbyServiceFacade.EndTracking();
 #pragma warning restore 4014
