@@ -178,7 +178,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        void GetConfigValues()
+        public void GetConfigValues()
         {
             var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
             GameConfig gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigsJson);

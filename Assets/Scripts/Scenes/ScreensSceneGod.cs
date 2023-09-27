@@ -157,7 +157,7 @@ namespace BattleCruisers.Scenes
                     }
 
                     // version check
-                    if (Application.version == _dataProvider.GetPVPVersion)
+                    if (Application.version == _dataProvider.GetPVPVersion())
                     {
                         // set pvp status in Battle Hub
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
