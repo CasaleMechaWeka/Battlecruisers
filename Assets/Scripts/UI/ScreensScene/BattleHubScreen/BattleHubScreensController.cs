@@ -44,6 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public GameObject serverStatusPanel;
         public GameObject offlinePlayOnly;
+        public GameObject updateForPVP;
         public GameObject battle1vAI;
         public Text offlineOnlyText;
         public Text continueTitle;
@@ -222,15 +223,28 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
-            if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
+
+            if (Application.version != _dataProvider.GetPVPVersion())
             {
-                //playerInfoPanelController.gameObject.SetActive(false);
-                GoToScreen(arenaSelectPanel);
+                #if !UNITY_EDITOR
+
+                // prompt update
+                Application.OpenURL("market://details?id=" + Application.productName);
+
+                #endif
             }
             else
             {
-                _applicationModel.Mode = GameMode.CoinBattle;
-                coinBattleController.BattleButtonClicked();
+                if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
+                {
+                    //playerInfoPanelController.gameObject.SetActive(false);
+                    GoToScreen(arenaSelectPanel);
+                }
+                else
+                {
+                    _applicationModel.Mode = GameMode.CoinBattle;
+                    coinBattleController.BattleButtonClicked();
+                }
             }
         }
 

@@ -156,11 +156,23 @@ namespace BattleCruisers.Scenes
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                     }
 
-                    #if !UNITY_EDITOR
                     // version check
-                    if (Application.version == _dataProvider.GetPVPVersion())
+                    if (Application.version != _dataProvider.GetPVPVersion())
                     {
-                    #endif
+                        #if !UNITY_EDITOR
+
+                        // set status panel values, prompt update
+                        hubScreen.serverStatusPanel.SetActive(false);
+                        hubScreen.offlinePlayOnly.SetActive(false);
+                        hubScreen.battle1vAI.SetActive(false);
+                        hubScreen.updateForPVP.SetActive(true);
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
+                        Debug.Log("PvP version mismatch, an update will be required to play online.");
+
+                        #endif
+                    }
+                    else
+                    {
                         // set pvp status in Battle Hub
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
                         if (serverStatus)
@@ -170,6 +182,7 @@ namespace BattleCruisers.Scenes
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
                             hubScreen.battle1vAI.SetActive(false);
+                            hubScreen.updateForPVP.SetActive(false);
                             hubScreen.offlinePlayOnly.SetActive(false);
                             Debug.Log("PVP Server Available.");
                         }
@@ -179,24 +192,13 @@ namespace BattleCruisers.Scenes
                             hubScreen.serverStatusPanel.SetActive(true);
                             hubScreen.battle1vAI.SetActive(true);
                             hubScreen.offlinePlayOnly.SetActive(false);
+                            hubScreen.updateForPVP.SetActive(false);
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             Debug.Log("PVP Server Unavailable.");
                         }
-                    #if !UNITY_EDITOR
                     }
-                    else
-                    {
-                        // set status panel values, prompt update
-                        hubScreen.serverStatusPanel.SetActive(false);
-                        hubScreen.offlinePlayOnly.SetActive(true);
-                        hubScreen.battle1vAI.SetActive(true);
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
-                        Debug.Log("PvP version mismatch, an update will be required to play online.");
-                    }
-                    #endif
                     await _applicationModel.DataProvider.SyncCurrencyFromCloud();
-
                 }
                 catch (Exception ex)
                 {
@@ -209,6 +211,7 @@ namespace BattleCruisers.Scenes
                 hubScreen.serverStatusPanel.SetActive(false);
                 hubScreen.offlinePlayOnly.SetActive(true);
                 hubScreen.battle1vAI.SetActive(true);
+                hubScreen.updateForPVP.SetActive(false);
                 hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                 Debug.Log("Offline, can't find out status of PVP Server.");
 
