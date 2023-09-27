@@ -264,14 +264,6 @@ namespace BattleCruisers.Data.Models
             set => _queueName = value;
         }
 
-        // version required for multiplayer
-        private string _pvpVersion;
-        public string PVPVersion
-        {
-            get => _pvpVersion;
-            set => _pvpVersion = value;
-        }
-
         private string _playerName;
         public String PlayerName
         {

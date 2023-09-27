@@ -22,7 +22,7 @@ namespace BattleCruisers.Data
         public VirtualShopConfig virtualShopConfig { get; set; }
  /*       public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
-
+        public string GetPVPVersion { get; }
         ILevel GetLevel(int levelNum);
         IPvPLevel GetPvPLevel(Map map);
         void SaveGame();

@@ -155,28 +155,47 @@ namespace BattleCruisers.Scenes
                         await _dataProvider.ProcessOfflineTransactions();
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                     }
-                    // set pvp status in Battle Hub
-                    serverStatus = await _dataProvider.RefreshPVPServerStatus();
-                    if (serverStatus)
+
+                    // version check
+                    if (Application.version == _dataProvider.GetPVPVersion)
                     {
-                        // server available
-                        hubScreen.serverStatusPanel.SetActive(false);
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
-                        hubScreen.battle1vAI.SetActive(false);
-                        hubScreen.offlinePlayOnly.SetActive(false);
-                        Debug.Log("PVP Server Available.");
+                        // set pvp status in Battle Hub
+                        serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                        if (serverStatus)
+                        {
+                            // server available
+                            hubScreen.serverStatusPanel.SetActive(false);
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
+                            hubScreen.battle1vAI.SetActive(false);
+                            hubScreen.offlinePlayOnly.SetActive(false);
+                            Debug.Log("PVP Server Available.");
+                        }
+                        else
+                        {
+                            // server NOT available
+                            hubScreen.serverStatusPanel.SetActive(true);
+                            hubScreen.battle1vAI.SetActive(true);
+                            hubScreen.offlinePlayOnly.SetActive(false);
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
+                            hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
+                            Debug.Log("PVP Server Unavailable.");
+                        }
                     }
                     else
                     {
-                        // server NOT available
-                        hubScreen.serverStatusPanel.SetActive(true);
+                        Debug.Log("PvP version mismatch, an update will be required to play online.");
+
+                        // set status panel values
+                        hubScreen.serverStatusPanel.SetActive(false);
+                        hubScreen.offlinePlayOnly.SetActive(true);
                         hubScreen.battle1vAI.SetActive(true);
-                        hubScreen.offlinePlayOnly.SetActive(false);
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
-                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
-                        Debug.Log("PVP Server Unavailable.");
+                        hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
+                        Debug.Log("Offline, can't find out status of PVP Server.");
+
+                        // prompt update
                     }
+
                     await _applicationModel.DataProvider.SyncCurrencyFromCloud();
 
                 }
