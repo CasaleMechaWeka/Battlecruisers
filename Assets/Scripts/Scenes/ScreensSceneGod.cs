@@ -156,10 +156,10 @@ namespace BattleCruisers.Scenes
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                     }
 
+                    #if !UNITY_EDITOR
                     // version check
                     if (Application.version != _dataProvider.GetPVPVersion())
                     {
-                        #if !UNITY_EDITOR
 
                         // set status panel values, prompt update
                         hubScreen.serverStatusPanel.SetActive(false);
@@ -169,10 +169,10 @@ namespace BattleCruisers.Scenes
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                         Debug.Log("PvP version mismatch, an update will be required to play online.");
 
-                        #endif
                     }
                     else
                     {
+                    #endif
                         // set pvp status in Battle Hub
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
                         if (serverStatus)
@@ -197,7 +197,9 @@ namespace BattleCruisers.Scenes
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             Debug.Log("PVP Server Unavailable.");
                         }
+                    #if !UNITY_EDITOR
                     }
+                    #endif
                     await _applicationModel.DataProvider.SyncCurrencyFromCloud();
                 }
                 catch (Exception ex)
