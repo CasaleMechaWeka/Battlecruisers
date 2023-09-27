@@ -138,6 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 case SceneEventType.SynchronizeComplete:
                     if (NetworkManager.Singleton.IsHost)
                     {
+                        await Task.Delay(1000);
                         await Initialise();
                     }
                     break;
@@ -189,7 +190,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 playerBCruiserUserChosenTargetManager);
 
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
-            await Task.Delay(1000);
             await factoryProvider.Initialise();
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             await _Initialise_Rest();
