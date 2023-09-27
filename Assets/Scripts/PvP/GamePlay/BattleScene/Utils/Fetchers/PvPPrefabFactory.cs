@@ -99,16 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
-            if (buildableWrapper != null && buildableWrapper.GetComponent<NetworkObject>() != null)
-            {
-                buildableWrapper.GetComponent<NetworkObject>().Spawn();
-            }
-            else
-            {
-                await Task.Delay(100);
-                buildableWrapper.GetComponent<NetworkObject>().Spawn();
-            }
-
+            buildableWrapper.GetComponent<NetworkObject>().Spawn();
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.StaticInitialise(_commonStrings);
             buildableWrapper.Buildable.Initialise(factoryProvider);
