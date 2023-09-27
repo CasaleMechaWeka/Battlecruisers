@@ -207,8 +207,8 @@ namespace BattleCruisers.Data
 
         public string GetPVPVersion()
         {
-            var gameVersion = RemoteConfigService.Instance.appConfig.GetJson("CURRENT_VERSION");
-            return gameVersion.ToString();
+            var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
+            return version;
         }
 
         public async Task<bool> RefreshPVPServerStatus()
