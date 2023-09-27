@@ -155,7 +155,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                                                                     // named contorlBuildingPlacementFeedback
                                                                     // which will be passed a bool (true or false) and active??
         {
-            controlBuildingPlacementFeedbackClientRpc(active);
+        //    controlBuildingPlacementFeedbackClientRpc(active);
             _renderer.gameObject.SetActive(active);
             _buildingPlacementFeedback.gameObject.SetActive(active);
             Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
@@ -177,7 +177,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (_renderer.gameObject.activeSelf && _buildingPlacementBeacon != null)
             {
                 _buildingPlacementBeacon.gameObject.SetActive(active);
-
             }
         }
         public NetworkVariable<ulong> pvp_Building_NetworkObjectID = new NetworkVariable<ulong>();
@@ -308,7 +307,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     //  _parentCruiser.ConstructSelectedBuilding(this);
                     _outline = _parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab);
                     SetSlotBuildingOutline(_outline);
-
+                    controlBuildingPlacementFeedback(true);
                     IPvPAudioClipWrapper _placementSound = new PvPAudioClipWrapper(_outline.placementSound);
                     _parentCruiser.FactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
 
