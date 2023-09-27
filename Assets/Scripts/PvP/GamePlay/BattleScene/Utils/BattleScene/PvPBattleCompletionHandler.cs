@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
-        private bool _isCompleted;
+        public static bool _isCompleted = false;
 
         public event EventHandler BattleCompleted;
         private Team team;

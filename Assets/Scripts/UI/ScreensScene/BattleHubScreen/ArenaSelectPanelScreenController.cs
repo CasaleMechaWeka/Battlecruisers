@@ -18,6 +18,7 @@ using BattleCruisers.UI.Commands;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -184,6 +185,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     battleButton.gameObject.SetActive(false);
                     _dataProvider.GameModel.GameMap = IndexCurrentArena;
                     PvPBattleSceneGodTunnel.isCost = false;
+                    PvPBattleCompletionHandler._isCompleted = false;
                     _screenSceneGod.LoadPvPBattleScene();
                 }
                 else
