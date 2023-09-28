@@ -43,6 +43,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
+using System.Threading;
 
 namespace BattleCruisers.Scenes
 {
@@ -111,7 +112,7 @@ namespace BattleCruisers.Scenes
         public static ScreensSceneGod Instance;
         private CaptainExo charlie;
         public bool serverStatus;
-
+        public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
         async void Start()
         {
 
@@ -143,6 +144,10 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     await _dataProvider.LoadBCData();
+                    while(!m_cancellationToken.Token.IsCancellationRequested)
+                    {
+                        await Task.Delay(10);
+                    }
                     // local transactions syncing:
                     if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
                         _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||

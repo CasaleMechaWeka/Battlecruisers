@@ -162,6 +162,7 @@ namespace BattleCruisers.Data
                     await SyncCurrencyFromCloud();
                     await SyncInventoryFromCloud();
                     GameModel.HasSyncdShop = true;
+                    ScreensSceneGod.Instance.m_cancellationToken.Cancel();
                     break;
             }
         }
