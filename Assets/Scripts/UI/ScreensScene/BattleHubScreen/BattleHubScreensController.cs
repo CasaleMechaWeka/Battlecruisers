@@ -221,10 +221,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _screensSceneGod.GoToSkirmishScreen();
         }
 
-        public void GotoPvPMode()
+        public async void GotoPvPMode()
         {
-            if (Application.version != _dataProvider.GetPVPVersion() &&
-                _dataProvider.GetPVPVersion() != "EDITOR")
+            string ver = await _dataProvider.GetPVPVersion();
+            if (Application.version != ver &&
+                ver != "EDITOR")
             {
                 // prompt update
                 Debug.Log("Opening: market://details?id=" + Application.identifier);

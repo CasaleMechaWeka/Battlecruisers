@@ -157,8 +157,9 @@ namespace BattleCruisers.Scenes
                     }
 
                     // version check
-                    if (Application.version != _dataProvider.GetPVPVersion() &&
-                        _dataProvider.GetPVPVersion() != "EDITOR")
+                    string ver = await _dataProvider.GetPVPVersion();
+                    if (Application.version != ver &&
+                        ver != "EDITOR")
                     {
 
                         // set status panel values, prompt update

@@ -205,13 +205,13 @@ namespace BattleCruisers.Data
             SaveGame();
         }
 
-        public string GetPVPVersion()
+        public async Task<string> GetPVPVersion()
         {
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
 
-            #if UNITY_EDITOR
-            version = "EDITOR";
-            #endif
+            //#if UNITY_EDITOR
+            //version = "EDITOR";
+            //#endif
 
             return version;
         }
