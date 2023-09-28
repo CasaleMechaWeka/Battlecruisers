@@ -207,6 +207,7 @@ namespace BattleCruisers.Data
 
         public async Task<string> GetPVPVersion()
         {
+            await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
 
             //#if UNITY_EDITOR
