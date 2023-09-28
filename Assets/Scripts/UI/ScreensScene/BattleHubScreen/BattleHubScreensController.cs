@@ -223,15 +223,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
-            #if !UNITY_EDITOR
-            if (Application.version != _dataProvider.GetPVPVersion())
+            if (Application.version != _dataProvider.GetPVPVersion() &&
+                _dataProvider.GetPVPVersion() != "EDITOR")
             {
                 // prompt update
+                Debug.Log("Opening: market://details?id=" + Application.productName);
                 Application.OpenURL("market://details?id=" + Application.productName);
             }
             else
             {
-            #endif
                 if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
                 {
                     //playerInfoPanelController.gameObject.SetActive(false);
@@ -242,9 +242,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     _applicationModel.Mode = GameMode.CoinBattle;
                     coinBattleController.BattleButtonClicked();
                 }
-            #if !UNITY_EDITOR
             }
-            #endif
         }
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
