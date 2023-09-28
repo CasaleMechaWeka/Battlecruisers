@@ -211,9 +211,9 @@ namespace BattleCruisers.Data
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
 
-            //#if UNITY_EDITOR
-            //version = "EDITOR";
-            //#endif
+            #if UNITY_EDITOR
+            version = "EDITOR";
+            #endif
 
             return version;
         }
