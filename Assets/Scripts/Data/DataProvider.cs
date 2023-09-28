@@ -39,7 +39,7 @@ namespace BattleCruisers.Data
         public IGameModel GameModel => _gameModel;
         public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
-   /*     public PvPConfig pvpConfig { get; set; }*/
+        /*     public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
         public DataProvider(IStaticData staticData, ISerializer serializer)
         {
@@ -190,17 +190,17 @@ namespace BattleCruisers.Data
             var pvpConfigJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_CONFIG");
             PvPConfig pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
             List<Arena> rcArenas = new List<Arena>();
-            for(int i = 0; i < pvpConfig.arenas.Count; i ++)
+            for (int i = 0; i < pvpConfig.arenas.Count; i++)
             {
                 rcArenas.Add(pvpConfig.arenas[i]);
             }
-            if(rcArenas != null && rcArenas.Count > 0)
+            if (rcArenas != null && rcArenas.Count > 0)
             {
                 _gameModel.Arenas = rcArenas;
             }
-            
+
             var pvpQueueName = RemoteConfigService.Instance.appConfig.GetString("PvP_QUEUE");
-            if(_gameModel.QueueName != pvpQueueName)
+            if (_gameModel.QueueName != pvpQueueName)
                 _gameModel.QueueName = pvpQueueName;
             SaveGame();
         }
@@ -209,9 +209,9 @@ namespace BattleCruisers.Data
         {
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             version = "EDITOR";
-            #endif
+#endif
 
             return version;
         }
@@ -295,13 +295,13 @@ namespace BattleCruisers.Data
         }
 
 
-/*        public async Task<bool> PurchaseIAP(string purchaseId)
-        {
-            try 
-            { 
-                var result =  await EconomyManager.
-            }
-        }*/
+        /*        public async Task<bool> PurchaseIAP(string purchaseId)
+                {
+                    try 
+                    { 
+                        var result =  await EconomyManager.
+                    }
+                }*/
         public async Task<bool> PurchaseCaptain(int index)
         {
             Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
@@ -402,7 +402,7 @@ namespace BattleCruisers.Data
                 if (GameModel.OutstandingHeckleTransactions != null && GameModel.OutstandingHeckleTransactions.Count > 0)
                 {
                     runningCoinTotal = await ProcessOfflineHecklesConflicts(runningCoinTotal);
-                   
+
                 }
 
                 // handle any remainder:
