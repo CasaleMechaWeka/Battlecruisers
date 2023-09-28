@@ -38,9 +38,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.LogMethod(Tags.BOOST);
 
-            Assert.IsFalse(_boostProviders.Contains(boostProvider));
-            _boostProviders.Add(boostProvider);
-            UpdateCumulativeBoost();
+            // Assert.IsFalse(_boostProviders.Contains(boostProvider));
+            if(!_boostProviders.Contains(boostProvider))
+            {
+                _boostProviders.Add(boostProvider);
+                UpdateCumulativeBoost();
+            }
         }
 
         public void RemoveBoostProvider(IPvPBoostProvider boostProvider)
