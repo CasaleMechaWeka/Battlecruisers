@@ -483,8 +483,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private async void Start()
         {
-            if (NetworkManager.Singleton.IsConnectedClient)  // I am not sure, PvPBootScene.unity is being loaded twice
-                return;
+/*            if (NetworkManager.Singleton.IsConnectedClient)  // I am not sure, PvPBootScene.unity is being loaded twice
+                return;*/
             Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 

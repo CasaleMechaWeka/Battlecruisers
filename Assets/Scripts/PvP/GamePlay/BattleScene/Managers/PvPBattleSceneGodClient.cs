@@ -159,7 +159,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void Awake()
         {
-            s_pvpBattleSceneGodClient = this;            
+            s_pvpBattleSceneGodClient = this;
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -200,6 +200,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 1;
                         IsBattleCompleted = true;
+                    //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                     }
                 }
@@ -223,11 +224,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
                         IsBattleCompleted = true;
+                    //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                     }
                 }
             }
         }
+
+
 
         public async void DestroyAllNetworkObjects()
         {

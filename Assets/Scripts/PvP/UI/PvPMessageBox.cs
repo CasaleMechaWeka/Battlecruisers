@@ -32,6 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
         public void ShowMessage(string message, Action onClick = null)
         {
             label.text = message;
+            okBtn.onClick.RemoveAllListeners();
             _onClick = onClick;
             okBtn.onClick.AddListener(() => _onClick?.Invoke());
             panel.SetActive(true);

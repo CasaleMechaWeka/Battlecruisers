@@ -100,14 +100,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (wasVictory)
             {
                 if (PvPBattleSceneGodClient.Instance.wasOpponentDisconnected)
-                    PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(PvPBattleSceneGodClient.Instance.commonStrings.GetString("EnemyLeft"), () => _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true));
+                    PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(PvPBattleSceneGodClient.Instance.commonStrings.GetString("EnemyLeft"), () => GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE));
+                //_sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 else
-                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                    //  _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                    GoToScene(PvPSceneNames.SCREENS_SCENE);
             }
             else
-                _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                //   _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                GoToScene(PvPSceneNames.SCREENS_SCENE);
         }
 
+        bool isTriggtered = false;
+        private void GoToScene(string sceneName)
+        {
+            if (isTriggtered)
+                return;
+            isTriggtered = false;
+            _sceneNavigator.GoToScene(sceneName, true);
+        }
 
         private float Probability(float rating1, float rating2)
         {
@@ -178,7 +189,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 }
             }
 
-   
+
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
 
