@@ -139,14 +139,20 @@ namespace BattleCruisers.Scenes
             // Interacting with Cloud
 
             bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+            float timeStamper = Time.time;
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
                 try
                 {
                     await _dataProvider.LoadBCData();
-                    while(!m_cancellationToken.Token.IsCancellationRequested)
+                    while (!m_cancellationToken.IsCancellationRequested)
                     {
                         await Task.Delay(10);
+                        if (Time.time - timeStamper > 5f)// for escape safty 
+                        {
+                            m_cancellationToken.Cancel();
+                            break;
+                        }
                     }
                     // local transactions syncing:
                     if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
