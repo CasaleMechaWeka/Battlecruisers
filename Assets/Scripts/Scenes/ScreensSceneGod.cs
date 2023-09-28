@@ -156,9 +156,9 @@ namespace BattleCruisers.Scenes
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                     }
 
-                    #if !UNITY_EDITOR
                     // version check
-                    if (Application.version != _dataProvider.GetPVPVersion())
+                    if (Application.version != _dataProvider.GetPVPVersion() &&
+                        _dataProvider.GetPVPVersion() != "EDITOR")
                     {
 
                         // set status panel values, prompt update
@@ -172,7 +172,6 @@ namespace BattleCruisers.Scenes
                     }
                     else
                     {
-                    #endif
                         // set pvp status in Battle Hub
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
                         if (serverStatus)
@@ -197,9 +196,7 @@ namespace BattleCruisers.Scenes
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             Debug.Log("PVP Server Unavailable.");
                         }
-                    #if !UNITY_EDITOR
                     }
-                    #endif
                     await _applicationModel.DataProvider.SyncCurrencyFromCloud();
                 }
                 catch (Exception ex)

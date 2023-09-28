@@ -208,6 +208,11 @@ namespace BattleCruisers.Data
         public string GetPVPVersion()
         {
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
+
+            #if UNITY_EDITOR
+            version = "EDITOR";
+            #endif
+
             return version;
         }
 
