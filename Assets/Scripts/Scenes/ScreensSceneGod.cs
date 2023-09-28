@@ -115,6 +115,8 @@ namespace BattleCruisers.Scenes
         public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
         async void Start()
         {
+            if (Instance == null)
+                Instance = this;
 
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
@@ -148,9 +150,8 @@ namespace BattleCruisers.Scenes
                     while (!m_cancellationToken.IsCancellationRequested)
                     {
                         await Task.Delay(10);
-                        if (Time.time - timeStamper > 5f)// for escape safty 
+                        if (Time.time - timeStamper > 15f)// for escape safty 
                         {
-                            m_cancellationToken.Cancel();
                             break;
                         }
                     }
@@ -385,8 +386,7 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
-            if (Instance == null)
-                Instance = this;
+
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
 
             bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) == 0 ? false : true;
