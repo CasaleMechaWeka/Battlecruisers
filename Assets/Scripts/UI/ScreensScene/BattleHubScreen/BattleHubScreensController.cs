@@ -227,8 +227,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 _dataProvider.GetPVPVersion() != "EDITOR")
             {
                 // prompt update
-                Debug.Log("Opening: market://details?id=" + "com.Bluebottle.Battlecruisers");
-                Application.OpenURL("market://details?id=" + "com.Bluebottle.Battlecruisers");
+                Debug.Log("Opening: market://details?id=" + Application.identifier);
+                Application.OpenURL("market://details?id=" + Application.identifier);
             }
             else
             {
