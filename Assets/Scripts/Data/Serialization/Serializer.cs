@@ -78,6 +78,8 @@ namespace BattleCruisers.Data.Serialization
             var bds = gameData.GetType().GetProperty("BestDestructionScore").GetValue(gameData);
             var plo = gameData.GetType().GetProperty("PlayerLoadout").GetValue(gameData);
             var lbr = gameData.GetType().GetProperty("LastBattleResult").GetValue(gameData);
+            var pre = gameData.GetType().GetProperty("PremiumEdition").GetValue(gameData);
+
             List<HullKey> _unlockedHulls = new List<HullKey>();
             foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
             {
@@ -102,6 +104,7 @@ namespace BattleCruisers.Data.Serialization
             long _bestDestructionScore = (long)bds;
             Loadout _playerLoadout = (Loadout)plo;
             BattleResult _lastBattleResult = (BattleResult)lbr;
+            bool _premiumState = (bool)pre;
 
             bool _hasSyncdShop = false;
 
@@ -117,6 +120,8 @@ namespace BattleCruisers.Data.Serialization
                 _unlockedBuildings,
                 _unlockedUnits
                 );
+
+            compatibleGameModel.PremiumEdition = _premiumState;
 
             // ##############################################
             //                  New Fields
