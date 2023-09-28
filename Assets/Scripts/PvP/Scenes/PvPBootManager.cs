@@ -43,6 +43,7 @@ using Random = UnityEngine.Random;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using Unity.Netcode;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -237,29 +238,77 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             continue;
                         else
                         {
-                            for (int i = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap; i >= 0; i--)
+                            int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
+                            if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcredits)
                             {
-                                string _wantMap = ConvertToScene((Map)i);
-                                if (lobby.Data["GameMap"].Value == _wantMap)
+                                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
+                                var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+                                if (lobbyJoinAttemp.Success)
                                 {
-                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
-                                    var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
-                                    if (lobbyJoinAttemp.Success)
+                                    m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                                    if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                     {
-                                        m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
-                                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-                                        {
-                                            Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                            //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
-                                            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
-                                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                                            m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                                            joined = true;
-                                        }
+                                        Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                        //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
+                                        ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
+                                        MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                        m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                        joined = true;
                                     }
-                                    break;
                                 }
+                                break;
                             }
+                            /*                                // Top-down
+                                                            for (int i = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap; i >= 0; i--)
+                                                        {
+                                                            string _wantMap = ConvertToScene((Map)i);
+                                                            if (lobby.Data["GameMap"].Value == _wantMap)
+                                                            {
+                                                                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
+                                                                var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+                                                                if (lobbyJoinAttemp.Success)
+                                                                {
+                                                                    m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                                                                    if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                                                                    {
+                                                                        Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                                                        //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
+                                                                        ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
+                                                                        MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                                                        m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                                                        joined = true;
+                                                                    }
+                                                                }
+                                                                break;
+                                                            }
+                                                        }*/
+                            /*                            // Down-top
+                                                        for (int i = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap; i <= 8; i++)
+                                                        {
+                                                            string _wantMap = ConvertToScene((Map)i);
+                                                            if (lobby.Data["GameMap"].Value == _wantMap)
+                                                            {
+                                                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[i + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[i + 1].costcredits)
+                                                                {
+                                                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
+                                                                    var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+                                                                    if (lobbyJoinAttemp.Success)
+                                                                    {
+                                                                        m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                                                                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                                                                        {
+                                                                            Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                                                            //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
+                                                                            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
+                                                                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                                                            m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                                                            joined = true;
+                                                                        }
+                                                                    }
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }*/
                         }
                     }
                 }
@@ -346,6 +395,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     return "SanFranciscoFightClub";
                 case Map.UACBattleNight:
                     return "UACBattleNight";
+                case Map.NuclearDome:
+                    return "NuclearDome";
                 case Map.UACArena:
                     return "UACArena";
                 case Map.RioBattlesport:
@@ -356,6 +407,32 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     return "MercenaryOne";
                 default:
                     return "PvPBattleScene";
+            }
+        }
+        int ConvertToMap(string map)
+        {
+            switch (map)
+            {
+                case "PracticeWreckyards":
+                    return 0;
+                case "OzPenitentiary":
+                    return 1;
+                case "SanFranciscoFightClub":
+                    return 2;
+                case "UACBattleNight":
+                    return 3;
+                case "NuclearDome":
+                    return 4;
+                case "UACArena":
+                    return 5;
+                case "RioBattlesport":
+                    return 6;
+                case "UACUltimate":
+                    return 7;
+                case "MercenaryOne":
+                    return 8;
+                default:
+                    return 0;
             }
         }
         IEnumerator iStartPvP()
