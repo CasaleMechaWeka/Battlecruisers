@@ -344,6 +344,16 @@ namespace BattleCruisers.Scenes
                     catch (Exception ex)
                     {
                         Debug.Log(ex.Message);
+
+                        // This only happens if UGS fails (boooooo)
+                        LogToScreen("Unity Game Services could not be reached"); // IF UNITY GAME SERVICES FAILS FOR ANY REASON
+
+                        // play without Internet
+                        loginType = LoginType.NoInternet;
+                        loginPanel.SetActive(false);
+                        spinGuest.SetActive(false);
+                        labelGuest.SetActive(true);
+                        GoToScene(SceneNames.SCREENS_SCENE, true);
                     }
                 }
             }
