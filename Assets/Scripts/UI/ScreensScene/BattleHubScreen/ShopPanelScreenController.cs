@@ -173,6 +173,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                     heckleItem.GetComponent<HeckleItemController>().OnClicked();
                     hecklesContainer.hecklePrice.text = _dataProvider.GameModel.Heckles[index].heckleCost.ToString();
+                    hecklesContainer.currentHeckleData = _dataProvider.GameModel.Heckles[index];
+                    hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(_dataProvider.GameModel.Heckles[index].StringKeyBase);
 
                     if (_dataProvider.GameModel.Heckles[index].IsOwned)
                     {
