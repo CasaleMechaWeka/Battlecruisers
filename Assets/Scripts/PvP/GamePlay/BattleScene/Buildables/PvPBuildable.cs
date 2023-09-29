@@ -259,10 +259,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _damageCapabilities = new List<IPvPDamageCapability>();
             this.DamageCapabilities = new ReadOnlyCollection<IPvPDamageCapability>(_damageCapabilities);
-
             _smokeInitialiser = GetComponentInChildren<PvPSmokeInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeInitialiser);
-
             Assert.IsNotNull(deathSound);
             _deathSound = new PvPAudioClipWrapper(deathSound);
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;

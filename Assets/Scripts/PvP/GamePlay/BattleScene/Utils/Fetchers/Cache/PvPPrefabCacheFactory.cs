@@ -107,7 +107,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
             IPvPPrefabContainer<TPrefab> prefabContainer = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
-
             prefabContainer.Prefab.StaticInitialise(_commonStrings);
             keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
