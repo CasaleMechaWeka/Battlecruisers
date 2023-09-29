@@ -170,6 +170,8 @@ namespace BattleCruisers.Scenes
 
                     // version check
                     string ver = await _dataProvider.GetPVPVersion();
+                    Debug.Log("Application Version: " + Application.version);
+                    Debug.Log("DataProvider Version: " + ver);
                     if (Application.version != ver &&
                         ver != "EDITOR")
                     {
