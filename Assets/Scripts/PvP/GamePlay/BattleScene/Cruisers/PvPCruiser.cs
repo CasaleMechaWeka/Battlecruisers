@@ -615,7 +615,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_PlayDroneFeedbackSoundClientRpc()
         {
             PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
-            Assert.IsNotNull(droneSoundFeedbackInitialiser);
+            if (droneSoundFeedbackInitialiser == null)
+                return;
             AudioSource audioSource = droneSoundFeedbackInitialiser.gameObject.GetComponentInChildren<AudioSource>();
             IPvPAudioSource _audioSource = new PvPEffectVolumeAudioSource(
                         new PvPAudioSourceBC(audioSource),

@@ -43,15 +43,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float NotZero = 99999f;
 
         // network variables
-/*        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = NotZero };
-        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };*/
+        /*        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = NotZero };
+                public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };*/
 
-        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> ();
-        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> ();
+        public NetworkVariable<float> pvp_Health = new NetworkVariable<float>();
+        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool>();
 
         public Quaternion Rotation
         {
-            get { return transform.rotation; }
+            get { return (this != null && transform != null) ? transform.rotation : Quaternion.identity; }
             set
             {
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual Vector2 DroneAreaPosition => Position;
         public Vector2 Position
         {
-            get { return transform != null ? transform.position : Vector3.zero; }
+            get { return (this != null && transform != null) ? transform.position : Vector3.zero; }
             set
             {
                 transform.position = value;
