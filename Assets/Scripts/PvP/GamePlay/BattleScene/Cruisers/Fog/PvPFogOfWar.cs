@@ -19,10 +19,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Helper.AssertIsNotNull(weakFog, strongFog);
             IsVisible = false;
             currentStrength = fogStrength;
-/*            weakFog.SetActive(currentStrength == PvPFogStrength.Weak);
-            strongFog.SetActive(currentStrength == PvPFogStrength.Strong);*/
+            /*            weakFog.SetActive(currentStrength == PvPFogStrength.Weak);
+                        strongFog.SetActive(currentStrength == PvPFogStrength.Strong);*/
         }
-
+        private void Start()
+        {
+            SetFogs();
+        }
+        private void SetFogs()
+        {
+            if (weakFog == null)
+                weakFog = GameObject.Find("FrogOfWar-FRIENDLY");
+            if (strongFog == null)
+                strongFog = GameObject.Find("FrogOfWar-ENEMY");
+        }
         protected override void CallRpc_SetPosition(Vector3 position)
         {
             SetPositionClientRpc(position);
@@ -51,19 +61,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         protected override void SetVisible(bool isVisible)
         {
-            if(!isVisible)
+            SetFogs();
+            if (!isVisible)
             {
                 weakFog.SetActive(false);
                 strongFog.SetActive(false);
             }
             else
             {
-                if(IsHost && IsOwner)
+                if (IsHost && IsOwner)
                 {
                     weakFog.SetActive(true);
                     strongFog.SetActive(false);
                 }
-                if(IsHost && !IsOwner)
+                if (IsHost && !IsOwner)
                 {
                     weakFog.SetActive(false);
                     strongFog.SetActive(true);
