@@ -22,9 +22,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         private Queue<Vector2> _flightPoints;
         private Vector2 _currentTargetPoint;
 
-        private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 0.25f;
-        private const float MIN_SMOOTH_TIME_IN_S = 1;
-        private const float MAX_SMOOTH_TIME_IN_S = 10;
+        private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 2;
+        private const float MIN_SMOOTH_TIME_IN_S = 0;
+        private const float MAX_SMOOTH_TIME_IN_S = 9;
 
         public PvPRocketMovementController(
             Rigidbody2D rigidBody,
