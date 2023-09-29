@@ -32,7 +32,7 @@ namespace BattleCruisers.Effects.Smoke
                     BurstsCount = 4,
                     EdgeRadius = 0.1f,
                     NoiseStrength = 0.05f,
-                    StartSize = 0.25f
+                    StartSize = 0.2f
                 };
 
                 Strong = new SmokeStatistics()
@@ -44,7 +44,7 @@ namespace BattleCruisers.Effects.Smoke
                     BurstsCount = 8,
                     EdgeRadius = 0.2f,
                     NoiseStrength = 0.1f,
-                    StartSize = 0.75f
+                    StartSize = 0.25f
                 };
             }
         }
@@ -59,29 +59,29 @@ namespace BattleCruisers.Effects.Smoke
             {
                 Weak = new SmokeStatistics()
                 {
-                    StartLifetime = new Range<float>(2.5f, 3.5f),
-                    StartSpeed = 0.25f,
-                    StartSize = 0.005f,
-                    NoiseStrength = 0.005f,
-                    VelocityOverLifetimeY = 0.3f
+                    StartLifetime = new Range<float>(2.5f, 3f),
+                    StartSpeed = 0.05f,
+                    StartSize = 0.05f,
+                    NoiseStrength = 0.01f,
+                    VelocityOverLifetimeY = 0.8f
                 };
 
                 Normal = new SmokeStatistics()
                 {
-                    StartLifetime = new Range<float>(2.5f, 3.5f),
-                    StartSpeed = 0.5f,
-                    StartSize = 0.02f,
+                    StartLifetime = new Range<float>(3.5f, 4.5f),
+                    StartSpeed = 0.1f,
+                    StartSize = 0.1f,
                     NoiseStrength = 0.02f,
-                    VelocityOverLifetimeY = 0.5f
+                    VelocityOverLifetimeY = 1f
                 };
 
                 Strong = new SmokeStatistics()
                 {
-                    StartLifetime = new Range<float>(3.5f, 5),
-                    StartSpeed = 1,
-                    StartSize = 0.05f,
+                    StartLifetime = new Range<float>(4f, 5f),
+                    StartSpeed = 0.02f,
+                    StartSize = 0.15f,
                     NoiseStrength = 0.03f,
-                    VelocityOverLifetimeY = 1
+                    VelocityOverLifetimeY = 1.2f
                 };
             }
         }
