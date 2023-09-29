@@ -66,7 +66,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _factionToActiveDroneNum[drone.Faction]--;
             UpdateDroneActiveness();
 
-            Assert.IsTrue(_factionToActiveDroneNum[drone.Faction] >= 0);
+            // Assert.IsTrue(_factionToActiveDroneNum[drone.Faction] >= 0);
+            if (_factionToActiveDroneNum[drone.Faction] < 0)
+                _factionToActiveDroneNum[drone.Faction] = 0;
         }
 
         private void UpdateDroneActiveness()

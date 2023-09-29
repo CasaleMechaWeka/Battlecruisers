@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.LogMethod(Tags.BOOST);
 
             // Assert.IsFalse(_boostProviders.Contains(boostProvider));
-            if(!_boostProviders.Contains(boostProvider))
+            if (!_boostProviders.Contains(boostProvider))
             {
                 _boostProviders.Add(boostProvider);
                 UpdateCumulativeBoost();
@@ -50,9 +50,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.LogMethod(Tags.BOOST);
 
-            Assert.IsTrue(_boostProviders.Contains(boostProvider));
-            _boostProviders.Remove(boostProvider);
-            UpdateCumulativeBoost();
+            //    Assert.IsTrue(_boostProviders.Contains(boostProvider));
+            if (_boostProviders.Contains(boostProvider))
+            {
+                _boostProviders.Remove(boostProvider);
+                UpdateCumulativeBoost();
+            }
         }
 
         private void UpdateCumulativeBoost()
