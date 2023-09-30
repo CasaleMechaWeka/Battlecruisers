@@ -206,7 +206,7 @@ namespace BattleCruisers.Scenes
                             // server NOT available
                             hubScreen.serverStatusPanel.SetActive(true);
                             hubScreen.battle1vAI.SetActive(true);
-                            hubScreen.offlinePlayOnly.SetActive(false);
+                            hubScreen.offlinePlayOnly.SetActive(true);
                             hubScreen.updateForPVP.SetActive(false);
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
