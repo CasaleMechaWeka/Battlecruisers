@@ -41,6 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             label.text = message;
             _onClick = onClick;
             panel.SetActive(true);
+            Invoke("HideMessage", 3f);
         }
 
         private void OnClick()

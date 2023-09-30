@@ -113,6 +113,7 @@ namespace BattleCruisers.Scenes
         private CaptainExo charlie;
         public bool serverStatus;
         public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
+        public string ver; // App version from Cloud;
         async void Start()
         {
             if (Instance == null)
@@ -169,7 +170,7 @@ namespace BattleCruisers.Scenes
                     }
 
                     // version check
-                    string ver = await _dataProvider.GetPVPVersion();
+                    ver = await _dataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + Application.version);
                     Debug.Log("DataProvider Version: " + ver);
                     if (Application.version != ver &&
