@@ -258,57 +258,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 }
                                 break;
                             }
-                            /*                                // Top-down
-                                                            for (int i = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap; i >= 0; i--)
-                                                        {
-                                                            string _wantMap = ConvertToScene((Map)i);
-                                                            if (lobby.Data["GameMap"].Value == _wantMap)
-                                                            {
-                                                                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
-                                                                var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
-                                                                if (lobbyJoinAttemp.Success)
-                                                                {
-                                                                    m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
-                                                                    if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-                                                                    {
-                                                                        Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                                                        //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
-                                                                        ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
-                                                                        MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                                                                        m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                                                                        joined = true;
-                                                                    }
-                                                                }
-                                                                break;
-                                                            }
-                                                        }*/
-                            /*                            // Down-top
-                                                        for (int i = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap; i <= 8; i++)
-                                                        {
-                                                            string _wantMap = ConvertToScene((Map)i);
-                                                            if (lobby.Data["GameMap"].Value == _wantMap)
-                                                            {
-                                                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[i + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[i + 1].costcredits)
-                                                                {
-                                                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
-                                                                    var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
-                                                                    if (lobbyJoinAttemp.Success)
-                                                                    {
-                                                                        m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
-                                                                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-                                                                        {
-                                                                            Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                                                            //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
-                                                                            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
-                                                                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                                                                            m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                                                                            joined = true;
-                                                                        }
-                                                                    }
-                                                                    break;
-                                                                }
-                                                            }
-                                                        }*/
+
                         }
                     }
                 }
@@ -483,8 +433,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private async void Start()
         {
-/*            if (NetworkManager.Singleton.IsConnectedClient)  // I am not sure, PvPBootScene.unity is being loaded twice
-                return;*/
+            /*            if (NetworkManager.Singleton.IsConnectedClient)  // I am not sure, PvPBootScene.unity is being loaded twice
+                            return;*/
             Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
