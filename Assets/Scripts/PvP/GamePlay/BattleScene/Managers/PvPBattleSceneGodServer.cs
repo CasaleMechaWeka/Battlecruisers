@@ -229,6 +229,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
 
             string logName = "Battle_Begin";
+            /*
 #if LOG_ANALYTICS
                         Debug.Log("Analytics: " + logName);
 #endif
@@ -241,6 +242,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 Debug.Log(ex.Message);
             }
+            */
         }
 
 

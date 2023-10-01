@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             IPauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             IBattleCompletionHandler battleCompletionHandler)
-            : base (navigationPermitterManager, pauseGameManager)
+            : base(navigationPermitterManager, pauseGameManager)
         {
             Helper.AssertIsNotNull(modalMenu, battleCompletionHandler);
 
@@ -50,6 +50,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);
             string logName = "Battle_Quit";
+            /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -64,7 +65,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             {
                 Debug.Log(ex.Message);
             }
-       
+       */
         }
 
         public void RetryLevel()
@@ -77,17 +78,17 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-           IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             try
             {
                 AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
             }
             catch (Exception ex)
-            { 
+            {
                 Debug.Log(ex.Message);
             }
-            
+
         }
 
         public void ShowSettings()

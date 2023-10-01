@@ -292,7 +292,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _CruiserHasActiveDrones = args.HasActiveDrones;
             _CruiserHasActiveDrones.ValueChanged += CruiserHasActiveDrones_ValueChanged;
 
-            if (IsPlayerCruiser)
+            /*if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
 #if LOG_ANALYTICS
@@ -309,7 +309,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     Debug.Log(e.Message);
                 }
 
+
             }
+            */
         }
 
 
@@ -371,7 +373,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             slot.controlBuildingPlacementFeedback(true);
 
-            if (IsPlayerCruiser)
+            /* if (IsPlayerCruiser)
             {
                 string logName = building.PrefabName.ToUpper().Replace("(CLONE)", "");
 #if LOG_ANALYTICS
@@ -388,6 +390,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     Debug.Log(ex.Message);
                 }
             }
+            */
 
             return building;
         }

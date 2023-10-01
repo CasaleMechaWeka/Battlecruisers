@@ -108,6 +108,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 || _applicationModel.IsTutorial)
             {
                 string logName = "Battle_End";
+                /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -126,6 +127,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         Debug.Log("Error reason = " + e.Reason.ToString());
                     }
                 }
+                */
 
 
                 postBattleState
@@ -139,6 +141,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             else if (_applicationModel.Mode == GameMode.Skirmish)
             {
                 string logName = "Battle_End";
+                /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -157,6 +160,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         Debug.Log("Error reason = " + e.Reason.ToString());
                     }
                 }
+                */
 
 
                 postBattleState
@@ -170,6 +174,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 string logName = "Battle_End";
+                /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -188,6 +193,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         Debug.Log("Error reason = " + e.Reason.ToString());
                     }
                 }
+                */
 
 
                 postBattleState
@@ -201,6 +207,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             else
             {
                 string logName = "Battle_End";
+                /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -219,6 +226,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         Debug.Log("Error reason = " + e.Reason.ToString());
                     }
                 }
+                */
 
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
@@ -352,6 +360,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             _screensSceneGod.GoStraightToTrashScreen(BattleResult.LevelNum);
             string logName = "Battle_Retry_Level";
+            /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -367,7 +376,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     Debug.Log(ex.Message);
                 }
             }
-         
+            */
+
         }
 
         public void GoToLoadoutScreen()
@@ -433,6 +443,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _applicationModel.Mode = GameMode.Skirmish;
             _screensSceneGod.LoadBattleScene();
             string logName = "Battle_Retry_Skirmish";
+            /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -448,7 +459,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     Debug.Log(ex.Message);
                 }
             }
-       
+            */
+
         }
 
         public void StartLevel1()

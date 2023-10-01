@@ -66,6 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);
             string logName = "Battle_Quit";
+            /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -80,6 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 Debug.Log(ex.Message);
             }
+            */
 
         }
 
@@ -90,6 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: true);
             Dismissed?.Invoke(this, EventArgs.Empty);
             string logName = "Battle_Retry_InGame";
+            /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -103,6 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 Debug.Log(ex.Message);
             }
+            */
 
         }
 

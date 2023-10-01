@@ -420,6 +420,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
             GameOver = false;
             string logName = "Battle_Begin";
+            /*
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -432,6 +433,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             {
                 Debug.Log(ex.Message);
             }
+            */
 
         }
 
