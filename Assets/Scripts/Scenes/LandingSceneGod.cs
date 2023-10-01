@@ -242,6 +242,7 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
+                #if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await AttemptSilentSigningAsync();
@@ -251,6 +252,7 @@ namespace BattleCruisers.Scenes
                 googleBtn.gameObject.SetActive(true);
 
                 LogToScreen(""); // INTERNET
+                #endif
             }
             else
             {

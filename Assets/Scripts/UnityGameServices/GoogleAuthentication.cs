@@ -1,3 +1,4 @@
+#if PLATFORM_ANDROID
 using System;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
@@ -152,3 +153,4 @@ namespace BattleCruisers.Utils.Network
         }
     }
 }
+#endif
