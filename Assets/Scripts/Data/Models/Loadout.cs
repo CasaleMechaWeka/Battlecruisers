@@ -229,22 +229,7 @@ namespace BattleCruisers.Data.Models
             Assert.IsTrue(removedSuccessfully);
             _unit[category] = unitList;
         }
-        /*        public void AddCaptain(int key)
-                {
-                    _captainExos.Add(key);
-                }
-                public void RemoveCaptain(int key)
-                {
-                    _captainExos.Remove(key);
-                }
-                public void AddHeckle(int index)
-                {
-                    _heckles.Add(index);
-                }
-                public void RemoveHeckle(int index)
-                {
-                    _heckles.Remove(index);
-                }*/
+
         public List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory)
         {
             List<BuildingKey> builds = _builds[buildingCategory].ToList();

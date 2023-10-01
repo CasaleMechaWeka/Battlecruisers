@@ -277,6 +277,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void OnFlee()
         {
+            fleeButton.SetActive(false);
             if (PvPBattleSceneGodClient.Instance != null)
             {
                 PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
@@ -288,6 +289,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void VsAI()
         {
+            vsAIButton.SetActive(false);
             ApplicationModelProvider.ApplicationModel.Mode = Data.GameMode.CoinBattle;
             SaveCoinBattleSettings();
             int maxLevel = dataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?

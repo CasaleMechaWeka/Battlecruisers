@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ILocTable screensSceneTable;
 
         private bool isTransitioning = false;
-
+        private bool isClickedBattleButton = false;
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -85,6 +85,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             DOTween.Init();
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
+            isClickedBattleButton = false;
+            isTransitioning = false;
         }
 
         public void OnEnable()
@@ -176,24 +178,33 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void StartBattle()
         {
-            if (AuthenticationService.Instance.IsSignedIn)
+            if(!isClickedBattleButton)
             {
-                if (_dataProvider.GameModel.Coins >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins
-                    && _dataProvider.GameModel.Credits >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
+                isClickedBattleButton = true;
+                loadingSpinner.SetActive(true);
+                battleButton.gameObject.SetActive(false);
+                if (AuthenticationService.Instance.IsSignedIn)
                 {
-                    loadingSpinner.SetActive(true);
-                    battleButton.gameObject.SetActive(false);
-                    _dataProvider.GameModel.GameMap = IndexCurrentArena;
-                    PvPBattleSceneGodTunnel.isCost = false;
-                    PvPBattleCompletionHandler._isCompleted = false;
-                    _screenSceneGod.LoadPvPBattleScene();
-                }
-                else
-                {
-                    if (_dataProvider.GameModel.Coins < _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins)
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
-                    if (_dataProvider.GameModel.Credits < _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCredits"));
+                    if (_dataProvider.GameModel.Coins >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins
+                        && _dataProvider.GameModel.Credits >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
+                    {
+/*                        loadingSpinner.SetActive(true);
+                        battleButton.gameObject.SetActive(false);*/
+                        _dataProvider.GameModel.GameMap = IndexCurrentArena;
+                        PvPBattleSceneGodTunnel.isCost = false;
+                        PvPBattleCompletionHandler._isCompleted = false;
+                        _screenSceneGod.LoadPvPBattleScene();
+                    }
+                    else
+                    {
+                        if (_dataProvider.GameModel.Coins < _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins)
+                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                        if (_dataProvider.GameModel.Credits < _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
+                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCredits"));
+                        loadingSpinner.SetActive(false);
+                        battleButton.gameObject.SetActive(true);
+                        isClickedBattleButton = false;
+                    }
                 }
             }
         }
