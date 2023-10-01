@@ -470,13 +470,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _CruiserHasActiveDrones.ValueChanged -= CruiserHasActiveDrones_ValueChanged;
             if (Faction == PvPFaction.Reds)
             {
-                //Debug.Log(maxHealth);
-
                 PvPBattleSceneGodServer.AddDeadBuildable_Left(TargetType, (int)(maxHealth));
-
-
-                //Debug.Log(maxHealth);
-                //BattleSceneGod.ShowDeadBuildableStats();
             }
             else
             {

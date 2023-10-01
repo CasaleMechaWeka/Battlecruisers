@@ -664,6 +664,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
 
         }
+
         private void Update()
         {
             if (isReadyToShowCaptainExo && (leftCaptain == null || rightCaptain == null))

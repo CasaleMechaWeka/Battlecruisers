@@ -155,7 +155,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
             _isCompleted = true;
-            await Task.Delay(10);
+            await Task.Delay(1000);
 
             if (MatchmakingScreenController.Instance != null)
             {
@@ -188,11 +188,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 {
                 }
             }
-
-
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
-
 
             //--->CODE CHANGED BY ANUJ
             //_applicationModel.ShowPostBattleScreen = true;
@@ -209,20 +206,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
-                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                    {
-                        NetworkManager.Singleton.Shutdown(true);
-                        DestroyAllNetworkObjects();
-                    }
+                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
+                                        {
+                                            NetworkManager.Singleton.Shutdown(true);
+                                            DestroyAllNetworkObjects();
+                                        }*/
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
                 else
                 {
-                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                    {
-                        NetworkManager.Singleton.Shutdown(true);
-                        DestroyAllNetworkObjects();
-                    }
+                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
+                                        {
+                                            NetworkManager.Singleton.Shutdown(true);
+                                            DestroyAllNetworkObjects();
+                                        }*/
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 }
             }
@@ -230,11 +231,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (team == Cruisers.Team.LEFT)
                 {
-                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                    {
-                        NetworkManager.Singleton.Shutdown(true);
-                        DestroyAllNetworkObjects();
-                    }
+                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
+                                        {
+                                            NetworkManager.Singleton.Shutdown(true);
+                                            DestroyAllNetworkObjects();
+                                        }*/
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 }
                 else
@@ -245,11 +248,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
-                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                    {
-                        NetworkManager.Singleton.Shutdown(true);
-                        DestroyAllNetworkObjects();
-                    }
+                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
+                                        {
+                                            NetworkManager.Singleton.Shutdown(true);
+                                            DestroyAllNetworkObjects();
+                                        }*/
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
             }

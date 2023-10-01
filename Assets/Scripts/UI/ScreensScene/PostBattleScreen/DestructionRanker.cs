@@ -23,13 +23,12 @@ namespace BattleCruisers.PostBattleScreen
         public GameObject[] destructionRanks;
         public void DisplayRank(long score)
         {
-            StartCoroutine(iDisplayRank(score));
+            iDisplayRank(score);
         }
-        IEnumerator iDisplayRank(long score)
+        void iDisplayRank(long score)
         {
             foreach (GameObject o in destructionRanks)
                 o.SetActive(false);
-            yield return null;
             int rank = CalculateRank(score);
             Assert.IsTrue(rank >= 0 && rank <= StaticPrefabKeys.Ranks.AllRanks.Count - 1);
             if (rank >= 0)

@@ -36,7 +36,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
-
     [RequireComponent(typeof(NetcodeHooks))]
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
@@ -288,10 +287,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 difficultyDestructionScoreMultiplier = 2.0f;
             }
-
             GameOver = false;
-
-
         }
         public static void AddDeadBuildable_Left(PvPTargetType type, int value)
         {

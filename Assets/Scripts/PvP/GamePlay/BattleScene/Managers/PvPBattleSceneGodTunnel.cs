@@ -190,7 +190,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     long[] totalDestroyed = new long[4];
                     for (int i = 0; i < 4; i++)
                     {
-
                         totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_left[(PvPTargetType)i].GetTotalDestroyed();
                     }
                     string enemyCruiserName = PvPBattleSceneGodServer.enemyCruiserName;
@@ -206,7 +205,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     long[] totalDestroyed = new long[4];
                     for (int i = 0; i < 4; i++)
                     {
-
                         totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(PvPTargetType)i].GetTotalDestroyed();
                     }
                     string enemyCruiserName = PvPBattleSceneGodServer.enemyCruiserName;
@@ -238,7 +236,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     long[] totalDestroyed = new long[4];
                     for (int i = 0; i < 4; i++)
                     {
-
                         totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_left[(PvPTargetType)i].GetTotalDestroyed();
                     }
                     CompleteBattleClientRpc(wasPlayerVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
@@ -254,7 +251,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     long[] totalDestroyed = new long[4];
                     for (int i = 0; i < 4; i++)
                     {
-
                         totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(PvPTargetType)i].GetTotalDestroyed();
                     }
                     CompleteBattleClientRpc(wasPlayerVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
