@@ -37,6 +37,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Prop
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -485,7 +486,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             return isPvPCruiser;
         }
-
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
@@ -498,7 +498,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (IsClient)
                 PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
             base.OnNetworkDespawn();
+
+            if (Faction == PvPFaction.Blues)
+            {
+                Image fillableImage = GameObject.Find("HUDCanvas/HealthBarPanel/PlayerLeftCruiserHealth/Foreground")?.GetComponent<Image>();
+                if (fillableImage != null)
+                {
+                    fillableImage.fillAmount = 0f;
+                }
+            }
+            else
+            {
+                Image fillableImage = GameObject.Find("HUDCanvas/HealthBarPanel/PlayerRightCruiserHealth/Foreground")?.GetComponent<Image>();
+                if (fillableImage != null)
+                    fillableImage.fillAmount = 0f;
+            }
         }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
+
 
         protected override void OnDamagedEventCalled(ulong objectId)
         {
