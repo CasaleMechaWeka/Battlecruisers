@@ -142,7 +142,6 @@ namespace BattleCruisers.Scenes
             // Interacting with Cloud
 
             bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
-            hubScreen.IsInternetAccessable = IsInternetAccessable;
             float timeStamper = Time.time;
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
@@ -172,7 +171,6 @@ namespace BattleCruisers.Scenes
 
                     // version check
                     ver = await _dataProvider.GetPVPVersion();
-                    hubScreen.currentVer = ver;
                     Debug.Log("Application Version: " + Application.version);
                     Debug.Log("DataProvider Version: " + ver);
                     if (Application.version != ver &&
@@ -190,7 +188,6 @@ namespace BattleCruisers.Scenes
                     {
                         // set pvp status in Battle Hub
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
-                        hubScreen.serverStatus = serverStatus;
                         if (serverStatus)
                         {
                             // server available
