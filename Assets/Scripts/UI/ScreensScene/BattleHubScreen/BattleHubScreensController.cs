@@ -227,13 +227,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
-/*            string ver = string.Empty;
-            if (currentVer != string.Empty)
-                ver = currentVer;
-            else ver = ScreensSceneGod.Instance.ver;*/
+            /*            string ver = string.Empty;
+                        if (currentVer != string.Empty)
+                            ver = currentVer;
+                        else ver = ScreensSceneGod.Instance.ver;*/
 
-            if (Application.version != ScreensSceneGod.Instance.ver &&
-                ScreensSceneGod.Instance.ver != "EDITOR")
+            if (Application.version != ScreensSceneGod.Instance.requiredVer &&
+                ScreensSceneGod.Instance.requiredVer != "EDITOR")
             {
                 // prompt update
                 Debug.Log("Opening: market://details?id=" + Application.identifier);

@@ -114,7 +114,7 @@ namespace BattleCruisers.Scenes
         private CaptainExo charlie;
         public bool serverStatus;
         public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
-        public string requiredVersion; // App version from Cloud;
+        public string requiredVer; // App version from Cloud;
         async void Start()
         {
             if (Instance == null)
@@ -170,13 +170,13 @@ namespace BattleCruisers.Scenes
                     }
 
                     // version check
-                    requiredVersion = await _dataProvider.GetPVPVersion();
+                    requiredVer = await _dataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + Application.version);
-                    Debug.Log("DataProvider Version: " + requiredVersion);
+                    Debug.Log("DataProvider Version: " + requiredVer);
                     string currentVersion = Application.version;
 
-                    if (requiredVersion != "EDITOR" && VersionToInt(Application.version) < VersionToInt(requiredVersion))
-                        if (PlayerSettings.Android.bundleVersionCode < int.Parse(requiredVersion))
+                    if (requiredVer != "EDITOR" && VersionToInt(Application.version) < VersionToInt(requiredVer))
+                        if (PlayerSettings.Android.bundleVersionCode < int.Parse(requiredVer))
                         {
                             // set status panel values, prompt update
                             hubScreen.serverStatusPanel.SetActive(false);
