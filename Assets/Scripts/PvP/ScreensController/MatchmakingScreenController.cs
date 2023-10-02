@@ -338,7 +338,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             else
             {
-                rightCaptain.texture = hostTexture;
+                leftCaptain.texture = hostTexture;
+                rightCaptain.texture = clientTexture;
             }
             await Task.Delay(100);
             animator.SetBool("Found", true);
