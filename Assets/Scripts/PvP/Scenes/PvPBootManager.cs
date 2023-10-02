@@ -189,7 +189,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             List<QueryOrder> mOrders = new List<QueryOrder>
         {
-            new QueryOrder(false, QueryOrder.FieldOptions.Created),
+                // Order by oldest lobbies first
+            new QueryOrder(true, QueryOrder.FieldOptions.Created),
             new QueryOrder(false, QueryOrder.FieldOptions.N1),
         };
 
