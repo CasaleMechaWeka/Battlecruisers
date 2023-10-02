@@ -318,7 +318,7 @@ namespace BattleCruisers.Scenes
             else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.ShowPostBattleScreen = false;
-                _applicationModel.Mode = GameMode.Campaign;
+                //_applicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
                 //PlayAdvertisementMusic();
                 //fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
@@ -466,6 +466,7 @@ namespace BattleCruisers.Scenes
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
             await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
             //--->CODE CHANGED BY ANUJ
+            Debug.Log("GameMode: " + _applicationModel.Mode);
             if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 GoToScreen(hubScreen);
