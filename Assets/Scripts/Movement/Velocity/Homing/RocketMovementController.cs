@@ -15,51 +15,51 @@ namespace BattleCruisers.Movement.Velocity.Homing
     /// 3. Once above target drops down to hit target
     /// </summary>
     public class RocketMovementController : HomingMovementController
-	{
-		private readonly float _cruisingAltitudeInM;
-		private readonly float _cruisingAltitidueMarginInM;
+    {
+        private readonly float _cruisingAltitudeInM;
+        private readonly float _cruisingAltitidueMarginInM;
 
-		private Queue<Vector2> _flightPoints;
-		private Vector2 _currentTargetPoint;
+        private Queue<Vector2> _flightPoints;
+        private Vector2 _currentTargetPoint;
 
-		private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 2;
+        private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = .25f;
         private const float MIN_SMOOTH_TIME_IN_S = 0;
         private const float MAX_SMOOTH_TIME_IN_S = 9;
 
-		public RocketMovementController(
-            Rigidbody2D rigidBody, 
-            IVelocityProvider maxVelocityProvider, 
-            ITargetProvider targetProvider, 
-            float cruisingAltitudeInM, 
+        public RocketMovementController(
+            Rigidbody2D rigidBody,
+            IVelocityProvider maxVelocityProvider,
+            ITargetProvider targetProvider,
+            float cruisingAltitudeInM,
             IFlightPointsProvider flightPointsProvider)
-            : base(rigidBody, maxVelocityProvider, targetProvider) 
-		{ 
-			Assert.IsTrue(cruisingAltitudeInM > rigidBody.position.y);
+            : base(rigidBody, maxVelocityProvider, targetProvider)
+        {
+            Assert.IsTrue(cruisingAltitudeInM > rigidBody.position.y);
 
-			_cruisingAltitudeInM = cruisingAltitudeInM;
-			_cruisingAltitidueMarginInM = _cruisingAltitudeInM * CRUISING_ALTITUDE_MARGIN_PROPORTION;
+            _cruisingAltitudeInM = cruisingAltitudeInM;
+            _cruisingAltitidueMarginInM = _cruisingAltitudeInM * CRUISING_ALTITUDE_MARGIN_PROPORTION;
 
-			ITarget target = _targetProvider.Target;
-			Assert.IsNotNull(target);
-			
-			_flightPoints = flightPointsProvider.FindFlightPoints(_rigidBody.position, target.Position, cruisingAltitudeInM);
-			
-			_currentTargetPoint = _flightPoints.Dequeue();
-		}
+            ITarget target = _targetProvider.Target;
+            Assert.IsNotNull(target);
 
-		protected override Vector2 FindTargetPosition()
-		{
-			Assert.IsNotNull(_flightPoints, "FindTargetPosition() called before OnTargetSet() :(");
+            _flightPoints = flightPointsProvider.FindFlightPoints(_rigidBody.position, target.Position, cruisingAltitudeInM);
 
-			float distanceFromCurrentTargetPoint = Vector2.Distance(_rigidBody.position, _currentTargetPoint);
-			if (distanceFromCurrentTargetPoint <= _cruisingAltitidueMarginInM
-				&& _flightPoints.Count != 0)
-			{
-				_currentTargetPoint = _flightPoints.Dequeue();
-			}
+            _currentTargetPoint = _flightPoints.Dequeue();
+        }
 
-			return _currentTargetPoint;
-		}
+        protected override Vector2 FindTargetPosition()
+        {
+            Assert.IsNotNull(_flightPoints, "FindTargetPosition() called before OnTargetSet() :(");
+
+            float distanceFromCurrentTargetPoint = Vector2.Distance(_rigidBody.position, _currentTargetPoint);
+            if (distanceFromCurrentTargetPoint <= _cruisingAltitidueMarginInM
+                && _flightPoints.Count != 0)
+            {
+                _currentTargetPoint = _flightPoints.Dequeue();
+            }
+
+            return _currentTargetPoint;
+        }
 
         protected override float FindVelocitySmoothTime()
         {

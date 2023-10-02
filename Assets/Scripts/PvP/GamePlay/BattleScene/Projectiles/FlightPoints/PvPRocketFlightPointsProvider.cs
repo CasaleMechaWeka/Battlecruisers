@@ -33,11 +33,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (sourcePosition.x < targetPosition.x)
             {
-                return new Vector2(sourcePosition.x + cruisingPointsXOffset, cruisingAltitudeInM);
+                return new Vector2(sourcePosition.x + cruisingPointsXOffset, cruisingAltitudeInM * .65f);
             }
             else
             {
-                return new Vector2(sourcePosition.x - cruisingPointsXOffset, cruisingAltitudeInM);
+                return new Vector2(sourcePosition.x - cruisingPointsXOffset, cruisingAltitudeInM * .65f);
             }
         }
 
