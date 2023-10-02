@@ -200,7 +200,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 1;
                         IsBattleCompleted = true;
-                    //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                        //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                     }
                 }
@@ -224,7 +224,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
                         IsBattleCompleted = true;
-                    //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                        //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                     }
                 }
@@ -460,7 +460,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 SynchedServerData.Instance.captainBPrefabName.OnValueChanged += CaptainBPrefabNameChanged;
             }
             isReadyToShowCaptainExo = true;
-            LoadAllCaptains();
+            await Task.Delay(1000);
+            await LoadAllCaptains();
             // pvp
             PvPHeckleMessageManager.Instance.Initialise(dataProvider, factoryProvider.Sound.UISoundPlayer);
             MatchmakingScreenController.Instance.FoundCompetitor();
@@ -479,7 +480,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             isStartedPvP = true;
         }
 
-        private async void LoadAllCaptains()
+        private async Task LoadAllCaptains()
         {
             if (SynchedServerData.Instance == null)
                 return;
