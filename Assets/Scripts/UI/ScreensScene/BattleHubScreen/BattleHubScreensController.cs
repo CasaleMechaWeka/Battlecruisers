@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text continueSubtitle;
         public Text levelsTitle;
         public Text skirmishTitle;
-        private string currentVer = string.Empty;
+        public string currentVer = string.Empty;
         private bool isCheckAvailability = false;
         public bool serverStatus = false;
         public bool IsInternetAccessable;
@@ -314,13 +314,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public void GotoPvPMode()
         {
-            string ver = string.Empty;
+/*            string ver = string.Empty;
             if (currentVer != string.Empty)
                 ver = currentVer;
-            else ver = ScreensSceneGod.Instance.ver;
+            else ver = ScreensSceneGod.Instance.ver;*/
 
-            if (Application.version != ver &&
-                ver != "EDITOR")
+            if (Application.version != currentVer &&
+                currentVer != "EDITOR")
             {
                 // prompt update
                 Debug.Log("Opening: market://details?id=" + Application.identifier);

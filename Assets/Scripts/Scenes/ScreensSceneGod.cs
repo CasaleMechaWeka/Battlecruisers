@@ -172,6 +172,7 @@ namespace BattleCruisers.Scenes
 
                     // version check
                     ver = await _dataProvider.GetPVPVersion();
+                    hubScreen.currentVer = ver;
                     Debug.Log("Application Version: " + Application.version);
                     Debug.Log("DataProvider Version: " + ver);
                     if (Application.version != ver &&
