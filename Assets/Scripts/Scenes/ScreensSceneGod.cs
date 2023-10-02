@@ -142,6 +142,7 @@ namespace BattleCruisers.Scenes
             // Interacting with Cloud
 
             bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+            hubScreen.IsInternetAccessable = IsInternetAccessable;
             float timeStamper = Time.time;
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
@@ -176,7 +177,6 @@ namespace BattleCruisers.Scenes
                     if (Application.version != ver &&
                         ver != "EDITOR")
                     {
-
                         // set status panel values, prompt update
                         hubScreen.serverStatusPanel.SetActive(false);
                         hubScreen.offlinePlayOnly.SetActive(false);
@@ -184,12 +184,12 @@ namespace BattleCruisers.Scenes
                         hubScreen.updateForPVP.SetActive(true);
                         hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
                         Debug.Log("PvP version mismatch, an update will be required to play online.");
-
                     }
                     else
                     {
                         // set pvp status in Battle Hub
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                        hubScreen.serverStatus = serverStatus;
                         if (serverStatus)
                         {
                             // server available

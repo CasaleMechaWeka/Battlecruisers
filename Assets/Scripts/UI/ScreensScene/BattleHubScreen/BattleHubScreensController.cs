@@ -12,6 +12,8 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using Unity.Services.Authentication;
+using UnityEngine.Localization.Components;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -51,7 +53,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text continueSubtitle;
         public Text levelsTitle;
         public Text skirmishTitle;
-
+        private string currentVer = string.Empty;
+        private bool isCheckAvailability = false;
+        public bool serverStatus = false;
+        public bool IsInternetAccessable;
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -221,9 +226,99 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _screensSceneGod.GoToSkirmishScreen();
         }
 
+
+        private void Update()
+        {
+            if (!isCheckAvailability)
+            {
+                isCheckAvailability = true;
+                iCheck();
+            }
+        }
+        async void iCheck()
+        {
+            try
+            {
+                IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+                if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
+                {
+                    currentVer = await _dataProvider.GetPVPVersion();
+                    Debug.Log("Application Version: " + Application.version);
+                    Debug.Log("DataProvider Version: " + currentVer);
+                    if (Application.version != currentVer &&
+                        currentVer != "EDITOR")
+                    {
+                        // set status panel values, prompt update
+                        serverStatusPanel.SetActive(false);
+                        offlinePlayOnly.SetActive(false);
+                        battle1vAI.SetActive(false);
+                        updateForPVP.SetActive(true);
+                        titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
+                        Debug.Log("PvP version mismatch, an update will be required to play online.");
+                    }
+                    else
+                    {
+                        // set pvp status in Battle Hub
+                        serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                        if (serverStatus)
+                        {
+                            // server available
+                            serverStatusPanel.SetActive(false);
+                            titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
+                            titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
+                            battle1vAI.SetActive(false);
+                            updateForPVP.SetActive(false);
+                            offlinePlayOnly.SetActive(false);
+                            Debug.Log("PVP Server Available.");
+                        }
+                        else
+                        {
+                            // server NOT available
+                            serverStatusPanel.SetActive(true);
+                            battle1vAI.SetActive(true);
+                            offlinePlayOnly.SetActive(false);
+                            updateForPVP.SetActive(false);
+                            titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
+                            titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
+                            Debug.Log("PVP Server Unavailable.");
+                        }
+                    }
+                }
+                else
+                {
+                    // turn off server status panel anyway, there is no server to be maintained:
+                    serverStatusPanel.SetActive(false);
+                    offlinePlayOnly.SetActive(true);
+                    battle1vAI.SetActive(true);
+                    updateForPVP.SetActive(false);
+                    titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
+                    Debug.Log("Offline, can't find out status of PVP Server.");
+                    // Shop should not load until after a first remote config sync
+                    if (!_dataProvider.GameModel.HasSyncdShop)
+                    {
+                        shopButton.gameObject.SetActive(false);
+                        leaderboardButton.gameObject.SetActive(false);
+                    }
+                    else
+                    { // just in case it ever matters?
+                        shopButton.gameObject.SetActive(true);
+                        leaderboardButton.gameObject.SetActive(true);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
+            isCheckAvailability = false;
+        }
         public void GotoPvPMode()
         {
-            string ver = ScreensSceneGod.Instance.ver;
+            string ver = string.Empty;
+            if (currentVer != string.Empty)
+                ver = currentVer;
+            else ver = ScreensSceneGod.Instance.ver;
+
             if (Application.version != ver &&
                 ver != "EDITOR")
             {
@@ -233,7 +328,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             else
             {
-                if (ScreensSceneGod.Instance.serverStatus && AuthenticationService.Instance.IsSignedIn)
+                if (IsInternetAccessable && serverStatus && AuthenticationService.Instance.IsSignedIn)
                 {
                     //playerInfoPanelController.gameObject.SetActive(false);
                     GoToScreen(arenaSelectPanel);
