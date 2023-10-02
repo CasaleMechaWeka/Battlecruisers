@@ -12,6 +12,8 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using Unity.Services.Authentication;
+using UnityEngine.Localization.Components;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -51,7 +53,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text continueSubtitle;
         public Text levelsTitle;
         public Text skirmishTitle;
-
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -221,11 +222,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _screensSceneGod.GoToSkirmishScreen();
         }
 
+
+
+
         public void GotoPvPMode()
         {
-            string ver = ScreensSceneGod.Instance.ver;
-            if (Application.version != ver &&
-                ver != "EDITOR")
+            /*            string ver = string.Empty;
+                        if (currentVer != string.Empty)
+                            ver = currentVer;
+                        else ver = ScreensSceneGod.Instance.ver;*/
+
+            if (Application.version != ScreensSceneGod.Instance.requiredVer &&
+                ScreensSceneGod.Instance.requiredVer != "EDITOR")
             {
                 // prompt update
                 Debug.Log("Opening: market://details?id=" + Application.identifier);

@@ -22,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 {
                     _damagable.pvp_Health.OnValueChanged -= _damagable_HealthChanged;
                     _healthDialImage.IsVisible = false;         
-                  
                 }
 
                 _damagable = value;
@@ -57,7 +56,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _healthDialImage = healthDialImage;
             _visibilityFilter = visibilityFilter;
-
             _healthDialImage.IsVisible = false;
         }
 

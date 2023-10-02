@@ -54,11 +54,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             get { return (this != null && transform != null) ? transform.rotation : Quaternion.identity; }
             set
             {
-
                 transform.rotation = value;
                 if (IsServer)
                     CallRpc_SetRotation(value);
-
             }
         }
         public virtual Vector2 DroneAreaPosition => Position;

@@ -95,6 +95,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public GameObject characterOfCharlie;
         public Transform ContainerCaptain;
         public GameObject cameraOfCharacter;
+        public RawImage leftCaptain, rightCaptain;
+        public RenderTexture hostTexture, clientTexture;
 
         public static MatchmakingScreenController Instance { get; private set; }
 
@@ -330,6 +332,15 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
             rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
             rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
+            if(SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
+            {
+                rightCaptain.texture = clientTexture;
+            }
+            else
+            {
+                leftCaptain.texture = hostTexture;
+                rightCaptain.texture = clientTexture;
+            }
             await Task.Delay(100);
             animator.SetBool("Found", true);
             LeaveLobby();

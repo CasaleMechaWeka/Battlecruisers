@@ -19,6 +19,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using System.Collections;
+using System.Runtime.ConstrainedExecution;
+using UnityEngine.Localization.Components;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -94,6 +97,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             UpdateValueStrings(IndexCurrentArena);
         }
 
+        
         private void NextSetCommandExecute()
         {
             if (isTransitioning)
@@ -178,7 +182,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void StartBattle()
         {
-            if(!isClickedBattleButton)
+            if (!isClickedBattleButton)
             {
                 isClickedBattleButton = true;
                 loadingSpinner.SetActive(true);
@@ -188,8 +192,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (_dataProvider.GameModel.Coins >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins
                         && _dataProvider.GameModel.Credits >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
                     {
-/*                        loadingSpinner.SetActive(true);
-                        battleButton.gameObject.SetActive(false);*/
+                        /*                        loadingSpinner.SetActive(true);
+                                                battleButton.gameObject.SetActive(false);*/
                         _dataProvider.GameModel.GameMap = IndexCurrentArena;
                         PvPBattleSceneGodTunnel.isCost = false;
                         PvPBattleCompletionHandler._isCompleted = false;
