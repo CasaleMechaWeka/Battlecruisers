@@ -60,7 +60,7 @@ namespace BattleCruisers.Scenes
         public GameObject loginPanel, retryPanel;
 
         public GameObject logos;
-        public CanvasGroupButton googleBtn, guestBtn;
+        public CanvasGroupButton appleBtn, googleBtn, guestBtn;
         public GameObject spinGoogle, spinGuest;
         public GameObject labelGoogle, labelGuest;
 
@@ -91,6 +91,7 @@ namespace BattleCruisers.Scenes
         }
 
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
+        public static IAppleAuthentication _AppleAuthentication { get; set; }
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
         public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
@@ -253,6 +254,12 @@ namespace BattleCruisers.Scenes
 
                 LogToScreen(""); // INTERNET
                 #endif
+                #if PLATFORM_IOS
+                _AppleAuthentication = new AppleAuthentication();
+                _AppleAuthentication.Initialize();
+                appleBtn.Initialise(soundPlayer, AppleLogin);
+                appleBtn.gameObject.SetActive(true);
+                #endif
             }
             else
             {
@@ -266,6 +273,7 @@ namespace BattleCruisers.Scenes
         void SetInteractable(bool interactable)
         {
             googleBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
+            appleBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
             guestBtn.GetComponent<CanvasGroupButton>().enabled = interactable;
         }
 
@@ -294,6 +302,7 @@ namespace BattleCruisers.Scenes
 #endif
         }
 
+        // Google login by button:
         public async void GoogleLogin()
         {
             LogToScreen("Attempting login with Google"); // ON GOOGLE BUTTON PRESS
@@ -316,7 +325,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        // Attempt signin without user input:
+        // Attempt Google signin without user input:
         private async Task AttemptSilentSigningAsync()
         {
             try
@@ -329,6 +338,13 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        // Apple login by button:
+        private async void AppleLogin()
+        {
+
+        }
+
+        // Guest login by button:
         public async void AnonymousLogin()
         {
             if (InternetConnectivity.Value)
