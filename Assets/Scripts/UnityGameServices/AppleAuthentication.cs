@@ -6,7 +6,7 @@ using AppleAuth.Enums;
 using AppleAuth.Interfaces;
 using AppleAuth.Native;
 
-public class AppleAuthentication : MonoBehaviour
+public class AppleAuthentication : IAppleAuthentication
 {
 
 }
