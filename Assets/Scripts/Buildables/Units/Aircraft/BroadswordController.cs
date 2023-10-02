@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Data.Static;
@@ -19,6 +21,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.U2D;
@@ -32,7 +35,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
-		private bool _isAtCruisingHeight;
+        private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
         public List<Sprite> allSprites = new List<Sprite>();
         public ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper;
@@ -41,12 +44,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public float enemyHoverRangeInM, enemyFollowRangeInM;
 
-		private ITarget _target;
-		public ITarget Target
-		{
-			get { return _target; }
-			set
-			{
+        private ITarget _target;
+        public ITarget Target
+        {
+            get { return _target; }
+            set
+            {
                 Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  {_target?.ToString()} > {value?.ToString()}");
 
                 _target = value;
@@ -54,8 +57,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 _inRangeMovementController.Target = _target;
 
                 UpdateMovementController();
-			}
-		}
+            }
+        }
 
         // Expose barrel wrappers to editor
         [SerializeField]
@@ -88,12 +91,20 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     providerToWrap: this,
                     multiplier: WITHIN_RANGE_VELOCITY_MULTIPLIER);
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
-		}
+        }
 
         public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
             _isAtCruisingHeight = false;
+        }
+
+        protected override void AddBuildRateBoostProviders(
+    IGlobalBoostProviders globalBoostProviders,
+    IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+        {
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
         protected override async void OnBuildableCompleted()
@@ -183,10 +194,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
 
         private void OnFirstPatrolPointReached()
-		{
-			_isAtCruisingHeight = true;
+        {
+            _isAtCruisingHeight = true;
             UpdateMovementController();
-		}
+        }
 
         private void UpdateMovementController()
         {
@@ -196,7 +207,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IMovementController ChooseMovementController()
         {
             if (_isAtCruisingHeight && Target != null)
-			{
+            {
                 if (_inRangeTargetTracker.ContainsTarget(Target))
                 {
                     Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  In range movement controller");
@@ -207,7 +218,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  Outside of range movement controller");
                     return _outsideRangeMovementController;
                 }
-			}
+            }
             else
             {
                 return PatrollingMovementController;

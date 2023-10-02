@@ -1,3 +1,5 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
@@ -19,6 +21,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.U2D;
@@ -101,6 +104,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     providerToWrap: this,
                     multiplier: WITHIN_RANGE_VELOCITY_MULTIPLIER);
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
+        }
+
+        protected override void AddBuildRateBoostProviders(
+            IPvPGlobalBoostProviders globalBoostProviders,
+            IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
+        {
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
