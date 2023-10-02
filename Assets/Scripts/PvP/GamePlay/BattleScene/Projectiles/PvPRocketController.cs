@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using System.Collections;
+using System.Data.SqlTypes;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -59,6 +60,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     flightPointsProvider);
 
             _rocketTarget.GameObject.SetActive(true);
+            isVisible = true;
+            timeStamp = Time.time;
             SetRocketTargetVisibleClientRpc(true);
             _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
         }
@@ -68,6 +71,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.OnImpactCleanUp();
             _rocketTarget.GameObject.SetActive(false);
             SetRocketTargetVisibleClientRpc(false);
+
+            isVisible = false;
+            timeStamp = Time.time;
         }
 
         // Sava added these fields and methods
@@ -76,6 +82,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private PvPSoundType _type;
         private string _name;
         private Vector3 _pos;
+        private bool isVisible = false;
+        private float timeStamp = 0f;
 
         public override void OnNetworkSpawn()
         {
@@ -109,6 +117,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(_type, _name), _pos);
         }
 
+
+        private void Update()
+        {
+            if (isVisible)
+            {
+                if (Time.time - timeStamp > 15f)
+                    _rocketTarget.GameObject.SetActive(false);
+            }
+        }
         // should be called by client
 
         private void Awake()
@@ -164,7 +181,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         private void SetRocketTargetVisibleClientRpc(bool visible)
         {
-            _rocketTarget.gameObject.SetActive(visible);
+            if (!IsHost)
+            {
+                _rocketTarget.gameObject.SetActive(visible);
+                if (visible)
+                {
+                    isVisible = true;
+                    timeStamp = Time.time;
+                }
+                else
+                {
+                    isVisible = false;
+                    timeStamp = Time.time;
+                }
+            }
         }
 
 
