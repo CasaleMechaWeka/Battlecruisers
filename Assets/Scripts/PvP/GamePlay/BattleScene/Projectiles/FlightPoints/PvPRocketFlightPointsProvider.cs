@@ -6,8 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public class PvPRocketFlightPointsProvider : IPvPFlightPointsProvider
     {
-        private const float ROCKET_CRUISING_POINTS_OFFSET_PROPORTION = 0.25f;
+        private const float ROCKET_CRUISING_POINTS_OFFSET_PROPORTION = 0.25f; //ascend point at 25% of distance to target; descend point at 75%
         private const float ROCKET_MIN_HORIZONTAL_DISTANCE_IN_M = 10;
+        private const float descendPointRelativeAltitude = .65f;
 
         /// <summary>
         /// Determine rocket ascent and descent points, and set current target point as the ascent point.
@@ -33,11 +34,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (sourcePosition.x < targetPosition.x)
             {
-                return new Vector2(sourcePosition.x + cruisingPointsXOffset, cruisingAltitudeInM * .65f);
+                return new Vector2(sourcePosition.x + cruisingPointsXOffset, cruisingAltitudeInM);
             }
             else
             {
-                return new Vector2(sourcePosition.x - cruisingPointsXOffset, cruisingAltitudeInM * .65f);
+                return new Vector2(sourcePosition.x - cruisingPointsXOffset, cruisingAltitudeInM);
             }
         }
 
@@ -45,11 +46,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (sourcePosition.x < targetPosition.x)
             {
-                return new Vector2(targetPosition.x - cruisingPointsXOffset, cruisingAltitudeInM);
+                return new Vector2(targetPosition.x - cruisingPointsXOffset, cruisingAltitudeInM * descendPointRelativeAltitude);
             }
             else
             {
-                return new Vector2(targetPosition.x + cruisingPointsXOffset, cruisingAltitudeInM);
+                return new Vector2(targetPosition.x + cruisingPointsXOffset, cruisingAltitudeInM * descendPointRelativeAltitude);
             }
         }
 

@@ -6,8 +6,10 @@ namespace BattleCruisers.Projectiles.FlightPoints
 {
     public class RocketFlightPointsProvider : IFlightPointsProvider
     {
-        private const float ROCKET_CRUISING_POINTS_OFFSET_PROPORTION = 0.25f;
+        private const float ROCKET_CRUISING_POINTS_OFFSET_PROPORTION = 0.25f; //ascend point at 25% of distance to target; descend point at 75%
         private const float ROCKET_MIN_HORIZONTAL_DISTANCE_IN_M = 10;
+        private const float descendPointRelativeAltitude = .65f;
+
 
         /// <summary>
         /// Determine rocket ascent and descent points, and set current target point as the ascent point.
@@ -45,11 +47,11 @@ namespace BattleCruisers.Projectiles.FlightPoints
         {
             if (sourcePosition.x < targetPosition.x)
             {
-                return new Vector2(targetPosition.x - cruisingPointsXOffset, cruisingAltitudeInM * .65f);
+                return new Vector2(targetPosition.x - cruisingPointsXOffset, cruisingAltitudeInM * descendPointRelativeAltitude);
             }
             else
             {
-                return new Vector2(targetPosition.x + cruisingPointsXOffset, cruisingAltitudeInM * .65f);
+                return new Vector2(targetPosition.x + cruisingPointsXOffset, cruisingAltitudeInM * descendPointRelativeAltitude);
             }
         }
 
