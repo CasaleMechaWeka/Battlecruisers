@@ -351,7 +351,7 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    //await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+                    _AppleAuthentication.LoginToApple();
                 }
                 catch (Exception ex)
                 {
