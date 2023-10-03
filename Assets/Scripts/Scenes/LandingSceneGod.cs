@@ -61,8 +61,8 @@ namespace BattleCruisers.Scenes
 
         public GameObject logos;
         public CanvasGroupButton appleBtn, googleBtn, guestBtn;
-        public GameObject spinGoogle, spinGuest;
-        public GameObject labelGoogle, labelGuest;
+        public GameObject spinApple, spinGoogle, spinGuest;
+        public GameObject labelApple, labelGoogle, labelGuest;
 
         public GameObject quitBtn, retryBtn;
         public GameObject spinRetry;
@@ -341,7 +341,25 @@ namespace BattleCruisers.Scenes
         // Apple login by button:
         private async void AppleLogin()
         {
+            LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                SetInteractable(false);
+                spinApple.SetActive(true);
+                labelApple.SetActive(false);
+                loginType = LoginType.Apple;
 
+                try
+                {
+                    //await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+                }
+                catch (Exception ex)
+                {
+                    LogToScreen(ex.Message);
+                    LogToScreen("Error while trying to log in with Apple"); // IF APPLE AUTH FAILS FOR ANY REASON
+                    Debug.Log(ex.Message);
+                }
+            }
         }
 
         // Guest login by button:
