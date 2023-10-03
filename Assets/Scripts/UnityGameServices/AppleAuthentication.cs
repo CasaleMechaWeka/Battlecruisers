@@ -1,10 +1,13 @@
 #if PLATFORM_IOS
 using System.Text;
 using UnityEngine;
+using Unity.Services.Authentication;
 using AppleAuth;
 using AppleAuth.Enums;
 using AppleAuth.Interfaces;
 using AppleAuth.Native;
+using System.Threading.Tasks;
+using Unity.Services.Core;
 
 namespace BattleCruisers.Utils.Network
 {
@@ -68,6 +71,9 @@ namespace BattleCruisers.Utils.Network
             );
         }
 
+        //If the user has previously authorized the app to login with Apple, this will open a
+        //native dialog to re-confirm the login, and obtain an Apple User ID.
+        //If the credentials were never given, or they were revoked, the Quick login will fail.
         public void QuickLoginWithApple()
         {
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
@@ -87,6 +93,28 @@ namespace BattleCruisers.Utils.Network
                 // Quick login failed. The user has never used Sign in With Apple on your app.
                 Debug.Log("Sign-in with Apple error. Message: " + error);
             });
+        }
+
+        // Sign in a returning player or create new player
+        public async Task SignInWithAppleAsync(string idToken)
+        {
+            try
+            {
+                await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
+                Debug.Log("SignIn is successful.");
+            }
+            catch (AuthenticationException ex)
+            {
+                // Compare error code to AuthenticationErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Compare error code to CommonErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+            }
         }
     }
 }
