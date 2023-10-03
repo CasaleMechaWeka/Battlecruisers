@@ -67,6 +67,27 @@ namespace BattleCruisers.Utils.Network
                 }
             );
         }
+
+        public void QuickLoginWithApple()
+        {
+            var quickLoginArgs = new AppleAuthQuickLoginArgs();
+            m_AppleAuthManager.QuickLogin(
+            quickLoginArgs,
+            credential =>
+            {
+                // Received a valid credential!
+                // Try casting to IAppleIDCredential or IPasswordCredential
+                // Previous Apple sign in credential
+                var appleIdCredential = credential as IAppleIDCredential;
+                // Saved Keychain credential (read about Keychain Items)
+                var passwordCredential = credential as IPasswordCredential;
+            },
+            error =>
+            {
+                // Quick login failed. The user has never used Sign in With Apple on your app.
+                Debug.Log("Sign-in with Apple error. Message: " + error);
+            });
+        }
     }
 }
 #endif

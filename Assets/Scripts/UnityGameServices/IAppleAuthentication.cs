@@ -7,6 +7,6 @@ namespace BattleCruisers.Utils.Network
         void Initialize();
         void Update();
         void LoginToApple();
-
+        void QuickLoginWithApple();
     }
 }
