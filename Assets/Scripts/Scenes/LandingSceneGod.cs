@@ -127,12 +127,15 @@ namespace BattleCruisers.Scenes
             loginPanel.SetActive(true);
 
             spinGuest.SetActive(false);
+            spinApple.SetActive(false);
             spinGoogle.SetActive(false);
 
             labelGoogle.SetActive(true);
+            labelApple.SetActive(true);
             labelGuest.SetActive(true);
 
             googleBtn.gameObject.SetActive(false);
+            appleBtn.gameObject.SetActive(false);
             guestBtn.gameObject.SetActive(false);
 
             retryPanel.SetActive(false);
@@ -273,7 +276,7 @@ namespace BattleCruisers.Scenes
                 if (PlayerPrefs.HasKey(AppleUserIdKey))
                 {
                     var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
-                    this.CheckCredentialStatusForUserId(storedAppleUserId);
+                    CheckCredentialStatusForUserId(storedAppleUserId);
                 }
                 // If we do not have an stored Apple User Id, attempt a quick login
                 else
@@ -352,7 +355,7 @@ namespace BattleCruisers.Scenes
         }
 
         // Attempt Google signin without user input:
-        private async Task AttemptSilentSigningAsync()
+        private async Task GoogleAttemptSilentSigningAsync()
         {
             try
             {
@@ -382,7 +385,7 @@ namespace BattleCruisers.Scenes
                 catch (Exception ex)
                 {
                     LogToScreen(ex.Message);
-                    LogToScreen("Error while trying to log in with Apple"); // IF APPLE AUTH FAILS FOR ANY REASON
+                    //LogToScreen("Error while trying to log in with Apple"); // IF APPLE AUTH FAILS FOR ANY REASON
                     Debug.Log(ex.Message);
                     spinApple.SetActive(false);
                     labelApple.SetActive(true);
@@ -393,27 +396,40 @@ namespace BattleCruisers.Scenes
         // Attempt Apple signin without user input:
         private void AppleAttemptQuickLogin()
         {
+            SetInteractable(false);
+            spinApple.SetActive(true);
+            labelApple.SetActive(false);
+
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
 
             // Quick login should succeed if the credential was authorized before and not revoked
-            _AppleAuthentication.QuickLoginApple(
-                quickLoginArgs,
-                credential =>
-                {
-                // If it's an Apple credential, save the user ID, for later logins
-                var appleIdCredential = credential as IAppleIDCredential;
-                    if (appleIdCredential != null)
+            try
+            {
+                _AppleAuthentication.QuickLoginApple(
+                    quickLoginArgs,
+                    credential =>
                     {
-                        PlayerPrefs.SetString(AppleUserIdKey, credential.User);
-                    }
-                },
-                error =>
-                {
-                // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
-                var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                    Debug.LogWarning("Quick Login Failed " + authorizationErrorCode.ToString() + " " + error.ToString());
-                    // TODO: Set up Landing Screen for login
-                });
+                    // If it's an Apple credential, save the user ID, for later logins
+                    var appleIdCredential = credential as IAppleIDCredential;
+                        if (appleIdCredential != null)
+                        {
+                            PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                        }
+                    },
+                    error =>
+                    {
+                    // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
+                    var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                        Debug.LogWarning("Quick Login Failed " + authorizationErrorCode.ToString() + " " + error.ToString());
+                    });
+            }
+            catch (Exception ex)
+            {
+                LogToScreen(ex.Message);
+                SetInteractable(true);
+                spinApple.SetActive(false);
+                labelApple.SetActive(true);
+            }
         }
 
         // Guest login by button:

@@ -117,7 +117,7 @@ namespace BattleCruisers.Utils.Network
         //If the credentials were never given, or they were revoked, the Quick login will fail.
         public void QuickLoginApple(AppleAuthQuickLoginArgs quickLoginArgs,Action<ICredential> successCallback,Action<IAppleError> errorCallback)
         {
-            #if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
+#if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
             var nonce = quickLoginArgs.Nonce;
             var state = quickLoginArgs.State;
             var requestId = CallbackHandler.AddMessageCallback(
@@ -134,7 +134,9 @@ namespace BattleCruisers.Utils.Network
                 });
 
             PInvoke.AppleAuth_QuickLogin(requestId, nonce, state);
-            #endif
+#else
+            throw new Exception("AppleAuthManager is not supported in this platform");
+#endif
         }
 
         // Sign in a returning player or create new player
