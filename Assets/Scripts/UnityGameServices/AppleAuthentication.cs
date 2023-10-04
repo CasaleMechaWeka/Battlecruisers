@@ -96,6 +96,7 @@ namespace BattleCruisers.Utils.Network
                             0,
                             appleIDCredential.IdentityToken.Length);
                         Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
+                        SignInWithAppleAsync(Token);
                         Token = idToken;
                     }
                     else
