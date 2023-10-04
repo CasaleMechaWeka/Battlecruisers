@@ -8,6 +8,7 @@ using AppleAuth.Interfaces;
 using AppleAuth.Native;
 using System.Threading.Tasks;
 using Unity.Services.Core;
+using System;
 
 namespace BattleCruisers.Utils.Network
 {
@@ -31,7 +32,47 @@ namespace BattleCruisers.Utils.Network
             }
         }
 
-        public void LoginToApple()
+        public void GetCredentialState(
+            string userId,
+            Action<CredentialState> successCallback,
+            Action<IAppleError> errorCallback)
+        {
+#if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
+            var requestId = CallbackHandler.AddMessageCallback(
+                true,
+                payload =>
+                {
+                    var response = this._payloadDeserializer.DeserializeCredentialStateResponse(payload);
+                    if (response.Error != null)
+                        errorCallback(response.Error);
+                    else
+                        successCallback(response.CredentialState);
+                });
+            
+            PInvoke.AppleAuth_GetCredentialState(requestId, userId);
+#else
+            throw new Exception("AppleAuthManager is not supported in this platform");
+#endif
+        }
+
+        public void SetCredentialsRevokedCallback(Action<string> credentialsRevokedCallback)
+        {
+#if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
+            if (this._credentialsRevokedCallback != null)
+            {
+                CallbackHandler.NativeCredentialsRevoked -= this._credentialsRevokedCallback;
+                this._credentialsRevokedCallback = null;
+            }
+
+            if (credentialsRevokedCallback != null)
+            {
+                CallbackHandler.NativeCredentialsRevoked += credentialsRevokedCallback;
+                this._credentialsRevokedCallback = credentialsRevokedCallback;
+            }
+#endif
+        }
+
+        public void LoginApple()
         {
             // Initialize the Apple Auth Manager
             if (m_AppleAuthManager == null)
@@ -74,7 +115,7 @@ namespace BattleCruisers.Utils.Network
         //If the user has previously authorized the app to login with Apple, this will open a
         //native dialog to re-confirm the login, and obtain an Apple User ID.
         //If the credentials were never given, or they were revoked, the Quick login will fail.
-        public void QuickLoginWithApple()
+        public void QuickLoginApple()
         {
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             m_AppleAuthManager.QuickLogin(
@@ -93,6 +134,28 @@ namespace BattleCruisers.Utils.Network
                 // Quick login failed. The user has never used Sign in With Apple on your app.
                 Debug.Log("Sign-in with Apple error. Message: " + error);
             });
+        }
+
+        public void QuickLogin(AppleAuthQuickLoginArgs quickLoginArgs,Action<ICredential> successCallback,Action<IAppleError> errorCallback)
+        {
+            #if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
+            var nonce = quickLoginArgs.Nonce;
+            var state = quickLoginArgs.State;
+            var requestId = CallbackHandler.AddMessageCallback(
+                true,
+                payload =>
+                {
+                    var response = this._payloadDeserializer.DeserializeLoginWithAppleIdResponse(payload);
+                    if (response.Error != null)
+                        errorCallback(response.Error);
+                    else if (response.PasswordCredential != null)
+                        successCallback(response.PasswordCredential);
+                    else
+                        successCallback(response.AppleIDCredential);
+                });
+
+            PInvoke.AppleAuth_QuickLogin(requestId, nonce, state);
+            #endif
         }
 
         // Sign in a returning player or create new player

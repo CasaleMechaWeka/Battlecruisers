@@ -1,5 +1,8 @@
+using AppleAuth;
+using AppleAuth.Enums;
+using AppleAuth.Interfaces;
+using System;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace BattleCruisers.Utils.Network
 {
@@ -9,8 +12,10 @@ namespace BattleCruisers.Utils.Network
         string Error { get; }
         void Initialize();
         void Update();
-        void LoginToApple();
-        void QuickLoginWithApple();
+        void LoginApple();
+        void QuickLoginApple(AppleAuthQuickLoginArgs quickLoginArgs, Action<ICredential> successCallback, Action<IAppleError> errorCallback);
         Task SignInWithAppleAsync(string idToken);
+        void GetCredentialState(string userId, Action<CredentialState> successCallback, Action<IAppleError> errorCallback);
+        void SetCredentialsRevokedCallback(Action<string> credentialsRevokedCallback);
     }
 }

@@ -26,9 +26,13 @@ using System.Net;
 using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
 using System.IO;
+using UnityEngine.UI;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-using UnityEngine.UI;
+using AppleAuth;
+using AppleAuth.Enums;
+using AppleAuth.Extensions;
+using AppleAuth.Interfaces;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
@@ -92,6 +96,8 @@ namespace BattleCruisers.Scenes
 
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
         public static IAppleAuthentication _AppleAuthentication { get; set; }
+        private const string AppleUserIdKey = "AppleUserId";
+
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
         public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
@@ -243,7 +249,7 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
-                #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await AttemptSilentSigningAsync();
@@ -253,13 +259,35 @@ namespace BattleCruisers.Scenes
                 googleBtn.gameObject.SetActive(true);
 
                 LogToScreen(""); // INTERNET
-                #endif
-                #if PLATFORM_IOS
+#endif
+
+#if PLATFORM_IOS
                 _AppleAuthentication = new AppleAuthentication();
                 _AppleAuthentication.Initialize();
+
+
                 appleBtn.Initialise(soundPlayer, AppleLogin);
                 appleBtn.gameObject.SetActive(true);
-                #endif
+
+                // If at any point we receive a credentials revoked notification, we delete the stored User ID, and go back to login
+                _AppleAuthentication.SetCredentialsRevokedCallback(result =>
+                {
+                    Debug.Log("Received revoked callback " + result);
+                    PlayerPrefs.DeleteKey(AppleUserIdKey);
+                });
+
+                // If we have an Apple User Id available, get the credential status for it
+                if (PlayerPrefs.HasKey(AppleUserIdKey))
+                {
+                    var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
+                    this.CheckCredentialStatusForUserId(storedAppleUserId);
+                }
+                // If we do not have an stored Apple User Id, attempt a quick login
+                else
+                {
+                    AppleAttemptQuickLogin();
+                }
+#endif
             }
             else
             {
@@ -351,7 +379,7 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    _AppleAuthentication.LoginToApple();
+                    _AppleAuthentication.LoginApple();
                 }
                 catch (Exception ex)
                 {
@@ -360,6 +388,32 @@ namespace BattleCruisers.Scenes
                     Debug.Log(ex.Message);
                 }
             }
+        }
+
+        // Attempt Apple signin without user input:
+        private void AppleAttemptQuickLogin()
+        {
+            var quickLoginArgs = new AppleAuthQuickLoginArgs();
+
+            // Quick login should succeed if the credential was authorized before and not revoked
+            _AppleAuthentication.QuickLoginApple(
+                quickLoginArgs,
+                credential =>
+                {
+                // If it's an Apple credential, save the user ID, for later logins
+                var appleIdCredential = credential as IAppleIDCredential;
+                    if (appleIdCredential != null)
+                    {
+                        PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                    }
+                },
+                error =>
+                {
+                // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
+                var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                    Debug.LogWarning("Quick Login Failed " + authorizationErrorCode.ToString() + " " + error.ToString());
+                    // TODO: Set up Landing Screen for login
+                });
         }
 
         // Guest login by button:
@@ -599,6 +653,37 @@ namespace BattleCruisers.Scenes
             {
                 return false;
             }
+        }
+
+        private void CheckCredentialStatusForUserId(string appleUserId)
+        {
+            // If there is an apple ID available, we should check the credential state
+            _AppleAuthentication.GetCredentialState(
+            appleUserId,
+            state =>
+            {
+                switch (state)
+                {
+                // If it's authorized, login with that user id
+                case CredentialState.Authorized:
+                    // TODO: Pass through signin, straight to Start screen
+                    return;
+
+                // If it was revoked, or not found, we need a new sign in with apple attempt
+                // Discard previous apple user id
+                case CredentialState.Revoked:
+                case CredentialState.NotFound:
+                    // TODO: Set up Landing Screen for login
+                    PlayerPrefs.DeleteKey(AppleUserIdKey);
+                    return;
+                }
+            },
+            error =>
+            {
+                var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
+                // TODO: Set up Landing Screen for login
+            });
         }
 
         public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
