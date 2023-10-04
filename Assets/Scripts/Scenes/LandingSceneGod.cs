@@ -259,9 +259,8 @@ namespace BattleCruisers.Scenes
                 googleBtn.gameObject.SetActive(true);
 
                 LogToScreen(""); // INTERNET
-#endif
 
-#if PLATFORM_IOS
+#elif PLATFORM_IOS
                 _AppleAuthentication = new AppleAuthentication();
                 _AppleAuthentication.Initialize();
                 // If at any point we receive a credentials revoked notification, we delete the stored User ID
@@ -323,6 +322,8 @@ namespace BattleCruisers.Scenes
             return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
 #elif PLATFORM_ANDROID
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
+#elif PLATFORM_IOS
+            return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
 #endif
         }
 
@@ -382,6 +383,8 @@ namespace BattleCruisers.Scenes
                     LogToScreen(ex.Message);
                     LogToScreen("Error while trying to log in with Apple"); // IF APPLE AUTH FAILS FOR ANY REASON
                     Debug.Log(ex.Message);
+                    spinApple.SetActive(false);
+                    labelApple.SetActive(true);
                 }
             }
         }
@@ -458,8 +461,10 @@ namespace BattleCruisers.Scenes
         {
             SetInteractable(true);
             spinGuest.SetActive(false);
+            spinApple.SetActive(false);
             spinGoogle.SetActive(false);
             labelGoogle.SetActive(true);
+            labelApple.SetActive(true);
             labelGuest.SetActive(true);
             loginType = LoginType.None;
         }
@@ -469,8 +474,10 @@ namespace BattleCruisers.Scenes
             SetInteractable(true);
             loginPanel.SetActive(false);
             spinGuest.SetActive(false);
+            spinApple.SetActive(false);
             spinGoogle.SetActive(false);
             labelGoogle.SetActive(true);
+            labelApple.SetActive(true);
             labelGuest.SetActive(true);
             GoToScene(SceneNames.SCREENS_SCENE, true);
             Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
@@ -619,6 +626,8 @@ namespace BattleCruisers.Scenes
                 AnonymousLogin();
             if (loginType == LoginType.Google)
                 GoogleLogin();
+            if (loginType == LoginType.Apple)
+                AppleLogin();
         }
 
         public void OnQuit()
@@ -651,6 +660,8 @@ namespace BattleCruisers.Scenes
             }
         }
 
+#if PLATFORM_IOS
+        // Apple-specific ID check
         private void CheckCredentialStatusForUserId(string appleUserId)
         {
             // If there is an apple ID available, we should check the credential state
@@ -681,6 +692,7 @@ namespace BattleCruisers.Scenes
                 // TODO: Set up Landing Screen for login
             });
         }
+#endif
 
         public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
