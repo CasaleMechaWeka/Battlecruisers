@@ -6,9 +6,9 @@ using BattleCruisers.Utils.Fetchers;
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
 
-
-public class IAPManager : MonoBehaviour, IStoreListener
+public class IAPManager : MonoBehaviour, IDetailedStoreListener
 {
     public static IAPManager instance;
 
@@ -87,11 +87,10 @@ public class IAPManager : MonoBehaviour, IStoreListener
         TestSingleton();
     }
 
-    async void Start()
+    void Start()
     {
         if (storeController == null) { InitializePurchasing(); }
     }
-
 
     private void TestSingleton()
     {
@@ -135,9 +134,9 @@ public class IAPManager : MonoBehaviour, IStoreListener
             Debug.Log("RestorePurchases started ...");
 
             var apple = _StoreExtensionProvider.GetExtension<IAppleExtensions>();
-            apple.RestoreTransactions((result) =>
+            apple.RestoreTransactions((bool success, string error) =>
             {
-                Debug.Log("RestorePurchases continuing: " + result + ". If no further messages, no purchases available to restore.");
+                Debug.Log("RestorePurchases continuing: " + success + ". If no further messages, no purchases available to restore.");
             });
         }
         else
@@ -167,5 +166,9 @@ public class IAPManager : MonoBehaviour, IStoreListener
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+    }
+    public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
+    {
+
     }
 }

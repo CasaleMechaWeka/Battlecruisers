@@ -311,6 +311,7 @@ namespace BattleCruisers.Scenes
                     return profileId;
                 }
             }
+
 #if UNITY_EDITOR
             // When running in the Editor make a unique ID from the Application.dataPath.
             // This will work for cloning projects manually, or with Virtual Projects.
