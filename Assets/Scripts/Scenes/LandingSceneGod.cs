@@ -264,18 +264,12 @@ namespace BattleCruisers.Scenes
 #if PLATFORM_IOS
                 _AppleAuthentication = new AppleAuthentication();
                 _AppleAuthentication.Initialize();
-
-
-                appleBtn.Initialise(soundPlayer, AppleLogin);
-                appleBtn.gameObject.SetActive(true);
-
-                // If at any point we receive a credentials revoked notification, we delete the stored User ID, and go back to login
+                // If at any point we receive a credentials revoked notification, we delete the stored User ID
                 _AppleAuthentication.SetCredentialsRevokedCallback(result =>
                 {
                     Debug.Log("Received revoked callback " + result);
                     PlayerPrefs.DeleteKey(AppleUserIdKey);
                 });
-
                 // If we have an Apple User Id available, get the credential status for it
                 if (PlayerPrefs.HasKey(AppleUserIdKey))
                 {
@@ -287,6 +281,8 @@ namespace BattleCruisers.Scenes
                 {
                     AppleAttemptQuickLogin();
                 }
+                appleBtn.Initialise(soundPlayer, AppleLogin);
+                appleBtn.gameObject.SetActive(true);
 #endif
             }
             else
