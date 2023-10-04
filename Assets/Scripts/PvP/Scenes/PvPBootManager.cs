@@ -1,49 +1,28 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
-using System;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using UnityEngine;
-using NSubstitute;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
-using BattleCruisers.UI.ScreensScene;
-using BattleCruisers.Data.Models;
-using BattleCruisers.UI.Music;
-using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Static;
-using UnityEngine.Assertions;
 using VContainer;
 using BattleCruisers.Network.Multiplay.UnityServices.Auth;
-using Unity.Services.Core;
-using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using BattleCruisers.Network.Multiplay.Utils;
 using Unity.Services.Authentication;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
-using Unity.Multiplayer.Samples.Utilities;
 using BattleCruisers.Network.Multiplay.Gameplay.GameState;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using VContainer.Unity;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-using Random = UnityEngine.Random;
-using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
-using BattleCruisers.Network.Multiplay.Gameplay.UI;
-using Unity.Netcode;
-using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using System.Diagnostics;
+using System.Net;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -74,16 +53,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         const string k_DefaultIP = "127.0.0.1";
 
 
-        private IPrefabFactory _prefabFactory;
-        private ScreenController _currentScreen;
-        private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
-        private IGameModel _gameModel;
-        private ISceneNavigator _sceneNavigator;
-        private IMusicPlayer _musicPlayer;
-        private ISingleSoundPlayer _soundPlayer;
-
-
         public TrashTalkDataList trashDataList;
         [SerializeField]
         private AudioSource _uiAudioSource;
@@ -106,12 +75,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             m_ConnectStatusSubscriber.Subscribe(OnConnectStatusMessage);
         }
 
-
         void OnConnectStatusMessage(ConnectStatus connectStatus)
         {
 
         }
-
 
         private void JoinWithIP(string ip, string port)
         {
@@ -121,7 +88,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 portNum = k_DefaultPort;
             }
             ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-
 
 #if UNITY_EDITOR
             if (ParrelSync.ClonesManager.IsClone())
@@ -164,6 +130,16 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 return;
             }
+/*
+            Stopwatch watch = new Stopwatch(); //using system.diagnostics
+            watch.Start();
+            WebClient web = new WebClient();
+            byte[] bytes = web.DownloadData("https://www.google.com");
+            watch.Stop();
+            double sec = watch.Elapsed.TotalSeconds;
+            double speed = bytes.Count() / sec;
+            UnityEngine.Debug.Log("===> Measuring Speed ---> " + speed);*/
+
             string wantMap = ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap);
 
             m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
@@ -200,7 +176,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.FINDING_LOBBY);
             if (foundLobbies.Any())
             {
-                Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
+                UnityEngine.Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
                 bool joined = false;
                 foreach (Lobby lobby in foundLobbies)
                 {
@@ -219,7 +195,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
                                 if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                 {
-                                    Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                    UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                                     MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                     m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                     joined = true;
@@ -249,7 +225,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
                                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                     {
-                                        Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                        UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                                         //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
                                         ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
                                         MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
@@ -280,7 +256,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
                             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                             {
-                                Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+                                UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
                                 MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                 m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                 break;
@@ -315,7 +291,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
                         if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                         {
-                            Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+                            UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
                             MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                             m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                             break;
@@ -424,7 +400,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             await m_AuthServiceFacade.SwitchProfileAndReSignInAsync(m_ProfileManager.Profile);
 
-            Debug.Log($"Signed in. Unity Player ID {AuthenticationService.Instance.PlayerId}");
+            UnityEngine.Debug.Log($"Signed in. Unity Player ID {AuthenticationService.Instance.PlayerId}");
 
             // Updating LocalUser and LocalLobby
             m_LocalLobby.RemoveUser(m_LocalUser);
