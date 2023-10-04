@@ -115,28 +115,7 @@ namespace BattleCruisers.Utils.Network
         //If the user has previously authorized the app to login with Apple, this will open a
         //native dialog to re-confirm the login, and obtain an Apple User ID.
         //If the credentials were never given, or they were revoked, the Quick login will fail.
-        public void QuickLoginApple()
-        {
-            var quickLoginArgs = new AppleAuthQuickLoginArgs();
-            m_AppleAuthManager.QuickLogin(
-            quickLoginArgs,
-            credential =>
-            {
-                // Received a valid credential!
-                // Try casting to IAppleIDCredential or IPasswordCredential
-                // Previous Apple sign in credential
-                var appleIdCredential = credential as IAppleIDCredential;
-                // Saved Keychain credential (read about Keychain Items)
-                var passwordCredential = credential as IPasswordCredential;
-            },
-            error =>
-            {
-                // Quick login failed. The user has never used Sign in With Apple on your app.
-                Debug.Log("Sign-in with Apple error. Message: " + error);
-            });
-        }
-
-        public void QuickLogin(AppleAuthQuickLoginArgs quickLoginArgs,Action<ICredential> successCallback,Action<IAppleError> errorCallback)
+        public void QuickLoginApple(AppleAuthQuickLoginArgs quickLoginArgs,Action<ICredential> successCallback,Action<IAppleError> errorCallback)
         {
             #if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
             var nonce = quickLoginArgs.Nonce;
