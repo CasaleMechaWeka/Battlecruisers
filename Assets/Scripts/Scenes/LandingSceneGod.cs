@@ -389,6 +389,7 @@ namespace BattleCruisers.Scenes
                     Debug.Log(ex.Message);
                     spinApple.SetActive(false);
                     labelApple.SetActive(true);
+                    SetInteractable(true);
                 }
             }
         }

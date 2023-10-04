@@ -135,7 +135,7 @@ namespace BattleCruisers.Utils.Network
 
             PInvoke.AppleAuth_QuickLogin(requestId, nonce, state);
 #else
-            throw new Exception("AppleAuthManager is not supported in this platform");
+            throw new Exception("AppleAuthManager is not supported on this platform");
 #endif
         }
 
