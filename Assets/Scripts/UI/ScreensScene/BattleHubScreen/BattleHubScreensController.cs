@@ -14,6 +14,7 @@ using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using Unity.Services.Authentication;
 using UnityEngine.Localization.Components;
 using System;
+using System.Linq;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -222,18 +223,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _screensSceneGod.GoToSkirmishScreen();
         }
 
-
-
-
         public void GotoPvPMode()
         {
-            /*            string ver = string.Empty;
-                        if (currentVer != string.Empty)
-                            ver = currentVer;
-                        else ver = ScreensSceneGod.Instance.ver;*/
-
-            if (Application.version != ScreensSceneGod.Instance.requiredVer &&
-                ScreensSceneGod.Instance.requiredVer != "EDITOR")
+            if (ScreensSceneGod.Instance.requiredVer != "EDITOR" && VersionToInt(Application.version) < VersionToInt(ScreensSceneGod.Instance.requiredVer))
             {
                 // prompt update
                 Debug.Log("Opening: market://details?id=" + Application.identifier);
@@ -284,6 +276,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             base.OnPresenting(activationParameter);
             OpenBattleHub();
             battleHubButton.OnPointerClick(null);
+        }
+
+        int VersionToInt(string version)
+        {
+            int seperatorCount = version.Count(c => c == '.');
+
+            for (int i = 0; i < seperatorCount; i++)
+                version = version.Remove(version.IndexOf('.'), 1);
+
+            return int.Parse(version);
         }
     }
 }
