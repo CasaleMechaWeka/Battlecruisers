@@ -199,9 +199,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                     m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                     joined = true;
+                                    break;
                                 }
                             }
-                            break;
+                         //   break;
                         }
                     }
                 }
@@ -231,9 +232,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                         MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                         m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                         joined = true;
+                                        break;
                                     }
                                 }
-                                break;
+                            //    break;
                             }
 
                         }

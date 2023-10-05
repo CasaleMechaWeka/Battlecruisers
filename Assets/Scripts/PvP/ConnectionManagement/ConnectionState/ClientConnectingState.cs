@@ -49,9 +49,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             try
             {
-                /*               MatchmakingScreenController.Instance.fleeButton.SetActive(true);
-                               MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
-
                 await m_ConnectionMethod.SetupClientConnectionAsync();
                 if (!m_ConnectionManager.NetworkManager.StartClient())
                 {
