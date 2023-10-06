@@ -1,7 +1,3 @@
-#if ((UNITY_IOS || UNITY_TVOS || UNITY_STANDALONE_OSX) && !UNITY_EDITOR)
-#define APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
-#endif
-
 #if PLATFORM_IOS
 using System.Text;
 using UnityEngine;
@@ -42,39 +38,12 @@ namespace BattleCruisers.Utils.Network
             Action<CredentialState> successCallback,
             Action<IAppleError> errorCallback)
         {
-#if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
-            var requestId = CallbackHandler.AddMessageCallback(
-                true,
-                payload =>
-                {
-                    var response = this._payloadDeserializer.DeserializeCredentialStateResponse(payload);
-                    if (response.Error != null)
-                        errorCallback(response.Error);
-                    else
-                        successCallback(response.CredentialState);
-                });
-            
-            PInvoke.AppleAuth_GetCredentialState(requestId, userId);
-#else
-            throw new Exception("AppleAuthManager is not supported in this platform");
-#endif
+            m_AppleAuthManager.GetCredentialState(userId, successCallback, errorCallback);
         }
 
         public void SetCredentialsRevokedCallback(Action<string> credentialsRevokedCallback)
         {
-#if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
-            if (this._credentialsRevokedCallback != null)
-            {
-                CallbackHandler.NativeCredentialsRevoked -= this._credentialsRevokedCallback;
-                this._credentialsRevokedCallback = null;
-            }
-
-            if (credentialsRevokedCallback != null)
-            {
-                CallbackHandler.NativeCredentialsRevoked += credentialsRevokedCallback;
-                this._credentialsRevokedCallback = credentialsRevokedCallback;
-            }
-#endif
+            m_AppleAuthManager.SetCredentialsRevokedCallback(credentialsRevokedCallback);
         }
 
         public void LoginApple()
@@ -123,26 +92,7 @@ namespace BattleCruisers.Utils.Network
         //If the credentials were never given, or they were revoked, the Quick login will fail.
         public void QuickLoginApple(AppleAuthQuickLoginArgs quickLoginArgs,Action<ICredential> successCallback,Action<IAppleError> errorCallback)
         {
-#if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
-            var nonce = quickLoginArgs.Nonce;
-            var state = quickLoginArgs.State;
-            var requestId = CallbackHandler.AddMessageCallback(
-                true,
-                payload =>
-                {
-                    var response = this._payloadDeserializer.DeserializeLoginWithAppleIdResponse(payload);
-                    if (response.Error != null)
-                        errorCallback(response.Error);
-                    else if (response.PasswordCredential != null)
-                        successCallback(response.PasswordCredential);
-                    else
-                        successCallback(response.AppleIDCredential);
-                });
-
-            PInvoke.AppleAuth_QuickLogin(requestId, nonce, state);
-#else
-            throw new Exception("AppleAuthManager is not supported on this platform");
-#endif
+            m_AppleAuthManager.QuickLogin(quickLoginArgs, successCallback, errorCallback);
         }
 
         // Sign in a returning player or create new player
