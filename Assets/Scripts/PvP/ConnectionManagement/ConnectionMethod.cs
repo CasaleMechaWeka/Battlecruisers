@@ -12,6 +12,8 @@ using Unity.Services.Relay;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Data;
+using Unity.Services.Qos;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -153,6 +155,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             Debug.Log($"server: connection data: {hostAllocation.ConnectionData[0]} {hostAllocation.ConnectionData[1]}, " +
                 $"allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
 
+            var regions = new List<string>();
+            regions.Add(hostAllocation.Region);
+            var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+
+            float packetLoss = qosResultsForRegion[0].PacketLossPercent;
+            int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
+
+            Debug.Log("===> packetLoss ---> " + packetLoss);
+            Debug.Log("===> latency ---> " + averageLatency);
             m_LocalLobby.RelayJoinCode = joinCode;
             //next line enable lobby and relay services integration
             await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
