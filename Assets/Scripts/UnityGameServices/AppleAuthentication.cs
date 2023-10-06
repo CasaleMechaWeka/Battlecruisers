@@ -1,3 +1,7 @@
+#if ((UNITY_IOS || UNITY_TVOS || UNITY_STANDALONE_OSX) && !UNITY_EDITOR)
+#define APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
+#endif
+
 #if PLATFORM_IOS
 using System.Text;
 using UnityEngine;
@@ -9,6 +13,7 @@ using AppleAuth.Native;
 using System.Threading.Tasks;
 using Unity.Services.Core;
 using System;
+using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Utils.Network
 {
