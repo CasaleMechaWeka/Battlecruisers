@@ -218,7 +218,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (isLoaded)
                 return;
             NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
-            LoadingBar.value = objs.Length;
+            LoadingBar.value += Mathf.Abs(objs.Length - LoadingBar.value);
             isProcessing = false;
         }
 
@@ -252,7 +252,11 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LeaveLobby();
         }
-
+        public void UpdateIsReady()
+        {
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().UpdateIsReady();
+        }
         public void SetFoundVictimString()
         {
             SetMMString(MMStatus.LOADING_ASSETS);
@@ -332,7 +336,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
             rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
             rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
-            if(SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
+            if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
             {
                 rightCaptain.texture = clientTexture;
             }

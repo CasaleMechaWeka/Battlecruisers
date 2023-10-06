@@ -181,9 +181,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 foreach (Lobby lobby in foundLobbies)
                 {
                     string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
-                    if (string.IsNullOrEmpty(RelayJoinCode))
+                    string IsReady = lobby.Data.ContainsKey("IsReady") ? lobby.Data["IsReady"].Value : "0";
+                    if (string.IsNullOrEmpty(RelayJoinCode) || IsReady == "0")
                         continue;
-                    else
+                    if(!string.IsNullOrEmpty(RelayJoinCode) && IsReady == "1")
                     {
                         if (lobby.Data["GameMap"].Value == wantMap)
                         {
@@ -212,9 +213,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     foreach (Lobby lobby in foundLobbies)
                     {
                         string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
-                        if (string.IsNullOrEmpty(RelayJoinCode))
+                        string IsReady = lobby.Data.ContainsKey("IsReady") ? lobby.Data["IsReady"].Value : "0";
+                        if (string.IsNullOrEmpty(RelayJoinCode) || IsReady == "0")
                             continue;
-                        else
+                        if(!string.IsNullOrEmpty(RelayJoinCode) &&  IsReady == "1")
                         {
                             int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
                             if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcredits)

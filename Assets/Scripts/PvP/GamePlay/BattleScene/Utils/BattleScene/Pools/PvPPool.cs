@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             for (int i = 0; i < capacityToAdd; ++i)
             {
                 var item = await _itemFactory.CreateItem();
-                await Task.Delay(100);
+            //    await Task.Delay(100);
                 _items.Push(item);                
             }
         }

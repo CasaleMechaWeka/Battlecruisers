@@ -9,6 +9,7 @@ using VContainer;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -17,6 +18,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         LobbyServiceFacade m_LobbyServiceFacade;
         [Inject]
+        LocalLobby m_LocalLobby;
+        [Inject]
         IPublisher<ConnectionEventMessage> m_ConnectionEventPublisher;
 
         // used in ApprovalCheck. This is intended as a bit of light protection against DOS attacks that rely on sending silly big buffers of garbage.
@@ -24,14 +27,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
-            //            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
                 m_LobbyServiceFacade.BeginTracking();
                 MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.LOOKING_VICTIM);
             }
-/*            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
-            MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
         }
 
         public override void LeaveLobby()
@@ -39,6 +39,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             base.LeaveLobby();
             m_LobbyServiceFacade.EndTracking();
         }
+        public override async void UpdateIsReady()
+        {
+            base.UpdateIsReady();
+            m_LocalLobby.IsReady = "1";
+            await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
+        }
+
 
         public override void Exit()
         {
@@ -52,7 +59,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.SetFoundVictimString();
                 MatchmakingScreenController.Instance.fleeButton.SetActive(true);
                 MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
-             //   m_LobbyServiceFacade.EndTracking();
             }
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
             {
@@ -123,8 +129,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
                     SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
                     PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
-                    PvPBattleSceneGodTunnel._playerBCruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[connectionPayload.playerHullPrefabName]; 
+                    PvPBattleSceneGodTunnel._playerBCruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[connectionPayload.playerHullPrefabName];
                 }
+
                 response.Approved = true;
                 response.Pending = false;
                 response.CreatePlayerObject = true;

@@ -154,7 +154,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 $"allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
 
             m_LocalLobby.RelayJoinCode = joinCode;
-
             //next line enable lobby and relay services integration
             await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
             await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(hostAllocation.AllocationIdBytes.ToString(), joinCode);

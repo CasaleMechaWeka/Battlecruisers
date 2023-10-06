@@ -47,6 +47,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             public int MaxPlayerCount { get; set; }
             public string MatchIP { get; set; }
             public string MatchPort { get; set; }
+            public string IsReady { get; set; }
 
             public LobbyData(LobbyData existing)
             {
@@ -58,6 +59,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 MaxPlayerCount = existing.MaxPlayerCount;
                 MatchIP = existing.MatchIP;
                 MatchPort = existing.MatchPort;
+                IsReady = existing.IsReady;
             }
 
             public LobbyData(string lobbyCode)
@@ -70,6 +72,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 MaxPlayerCount = -1;
                 MatchIP = null;
                 MatchPort = null;
+                IsReady = "0";
             }
         }
 
@@ -147,6 +150,15 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             set
             {
                 m_Data.RelayJoinCode = value;
+                OnChanged();
+            }
+        }
+        public string IsReady
+        {
+            get => m_Data.IsReady;
+            set
+            {
+                m_Data.IsReady = value;
                 OnChanged();
             }
         }
@@ -241,7 +253,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     }
                 }
             }
-
             OnChanged();
         }
 
@@ -249,8 +260,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             new Dictionary<string, DataObject>()
             {
                 {"RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Public,  RelayJoinCode)},
-/*                {"MatchIP", new DataObject(DataObject.VisibilityOptions.Member, MatchIP)},
-                {"MatchPort", new DataObject(DataObject.VisibilityOptions.Member, MatchPort)}*/
+                {"IsReady", new DataObject(DataObject.VisibilityOptions.Public, IsReady) }
             };
 
         public void ApplyRemoteData(Lobby lobby)
@@ -265,14 +275,12 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             if (lobby.Data != null)
             {
                 info.RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null; // By providing RelayCode through the lobby data with Member visibility, we ensure a client is connected to the lobby before they could attempt a relay connection, preventing timing issues between them.
-                /*                info.MatchIP = lobby.Data.ContainsKey("MatchIP") ? lobby.Data["MatchIP"].Value : null;
-                                info.MatchPort = lobby.Data.ContainsKey("MatchPort") ? lobby.Data["MatchPort"].Value : null;*/
+                info.IsReady = lobby.Data.ContainsKey("IsReady") ? lobby.Data["IsReady"].Value : null;
             }
             else
             {
                 info.RelayJoinCode = null;
-                /*                info.MatchIP = null;
-                                info.MatchPort = null;*/
+                info.IsReady = null;
             }
 
             var lobbyUsers = new Dictionary<string, LocalLobbyUser>();

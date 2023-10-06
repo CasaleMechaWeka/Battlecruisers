@@ -33,17 +33,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
-
-            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
-            Assert.IsNotNull(_rocketTarget);
+/*            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
+            Assert.IsNotNull(_rocketTarget);*/
         }
 
         public override void Activate(PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
-
             Target = activationArgs.Target;
-
             IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             IPvPTargetProvider targetProvider = this;
             IPvPFlightPointsProvider flightPointsProvider
@@ -134,6 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             // rocket
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
             Assert.IsNotNull(_rocketTarget);
+            _rocketTarget.gameObject.SetActive(false);
         }
 
         protected override void HideEffectsOfClient()

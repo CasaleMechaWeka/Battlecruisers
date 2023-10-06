@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Hosting);
         }
 
-        public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+        public override async void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
             var connectionData = request.Payload;
             var clientId = request.ClientNetworkId;
