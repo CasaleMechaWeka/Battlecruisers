@@ -105,7 +105,7 @@ namespace BattleCruisers.Scenes
         private INetworkState ConnectedState = new InternetConnectivity(true);
         private INetworkState DisconnectedState = new InternetConnectivity(false);
 
-        private void LogToScreen(string log)
+        public void LogToScreen(string log)
         {
             if (displayOnscreenLogs)
             {
@@ -281,7 +281,7 @@ namespace BattleCruisers.Scenes
                 // If we do not have an stored Apple User Id, attempt a quick login
                 else
                 {
-                    AppleAttemptQuickLogin();
+                    //AppleAttemptQuickLogin();
                 }
                 appleBtn.Initialise(soundPlayer, AppleLogin);
                 appleBtn.gameObject.SetActive(true);
