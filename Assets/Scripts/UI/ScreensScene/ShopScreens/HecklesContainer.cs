@@ -70,24 +70,24 @@ namespace BattleCruisers.UI.ScreensScene
                             if(hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                             {
                                 // For heckles with 10 or less characters!
-                                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
                             }
                             else 
                             {
-                                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                             }
                             ScreensSceneGod.Instance.loadoutScreen.AddHeckle(currentHeckleData);
                         }
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
                         }
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -107,11 +107,11 @@ namespace BattleCruisers.UI.ScreensScene
                         if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                         {
                             // For heckles with 10 or less characters!
-                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
                         }
                         else
                         {
-                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                         }
 
                         // Subtract from local economy:
@@ -130,7 +130,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -138,7 +138,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
                 return;
             }
         }

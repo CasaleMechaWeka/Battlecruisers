@@ -164,8 +164,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             Debug.Log("===> packetLoss ---> " + packetLoss);
             Debug.Log("===> latency ---> " + averageLatency);
-            m_LocalLobby.RelayJoinCode = joinCode;
 
+            if(averageLatency > ConnectionManager.LatencyLimit / 2)
+            {
+                throw new Exception("Latency");
+            }
+
+            m_LocalLobby.RelayJoinCode = joinCode;
+            m_LocalLobby.Region = hostAllocation.Region;
+            m_LocalLobby.Latency = averageLatency.ToString();
             //next line enable lobby and relay services integration
             await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
             await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(hostAllocation.AllocationIdBytes.ToString(), joinCode);

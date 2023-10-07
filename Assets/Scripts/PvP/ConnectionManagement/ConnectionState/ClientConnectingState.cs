@@ -5,6 +5,7 @@ using VContainer;
 using System;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -59,6 +60,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 Debug.Log("Error ---> connecting client, see following exception");
                 Debug.Log(e.Message);
+                switch (e.Message)
+                {
+                    case "Latency":
+                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but your network seems to be not good enough for 1v1 Showdown.");
+                        break;
+                    default:
+                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but detected unknown network error, try again later.");
+                        break;
+                }
                 StartingClientFailedAsync();
                 throw;
             }

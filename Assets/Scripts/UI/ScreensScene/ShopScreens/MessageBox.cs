@@ -12,7 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class MessageBox : MonoBehaviour
     {
-        public static MessageBox Instance;
         public GameObject panel;
         public Text label;
         public CanvasGroupButton okBtn;
@@ -26,14 +25,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _soundPlayer = soundPlayer;
             _onClick = onClick;
             okBtn.Initialise(_soundPlayer, OnClick);
-            if (Instance == null)
-                Instance = this;
         }
 
         private void Awake()
         {
-            if (Instance == null)
-                Instance = this;
         }
 
         public void ShowMessage(string message, Action onClick = null)

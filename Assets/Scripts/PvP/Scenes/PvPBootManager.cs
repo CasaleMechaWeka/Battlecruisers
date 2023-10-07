@@ -23,6 +23,7 @@ using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using System.Diagnostics;
 using System.Net;
+using Unity.Services.Qos;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -159,6 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 // Order by oldest lobbies first
             new QueryOrder(true, QueryOrder.FieldOptions.Created),
             new QueryOrder(false, QueryOrder.FieldOptions.N1),
+            new QueryOrder(false, QueryOrder.FieldOptions.N2),
         };
 
             QueryResponse response = await m_LobbyServiceFacade.QueryLobbyListAsync(mFilters, mOrders);
@@ -172,10 +174,23 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 foreach (Lobby lobby in foundLobbies)
                 {
                     string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
-                    if (string.IsNullOrEmpty(RelayJoinCode))
+                    string Region = lobby.Data.ContainsKey("Region") ? lobby.Data["Region"].Value : null;
+                    string HostLatency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
+                    if (string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
                         continue;
-                    else
+                    else if (!string.IsNullOrEmpty(RelayJoinCode) && !string.IsNullOrEmpty(Region) && !string.IsNullOrEmpty(HostLatency))
                     {
+                        var regions = new List<string>();
+                        regions.Add(Region);
+                        var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+                        int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                        int iHostLatency = 0;
+                        int.TryParse(HostLatency, out iHostLatency);
+                        if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
+                        {
+                            continue;
+                        }
+
                         if (lobby.Data["GameMap"].Value == wantMap)
                         {
                             MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
@@ -202,10 +217,23 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     foreach (Lobby lobby in foundLobbies)
                     {
                         string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
-                        if (string.IsNullOrEmpty(RelayJoinCode))
+                        string Region = lobby.Data.ContainsKey("Region") ? lobby.Data["Region"].Value : null;
+                        string HostLatency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
+                        if (string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
                             continue;
                         else
                         {
+                            var regions = new List<string>();
+                            regions.Add(Region);
+                            var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+                            int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                            int iHostLatency = 0;
+                            int.TryParse(HostLatency, out iHostLatency);
+                            if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
+                            {
+                                continue;
+                            }
+
                             int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
                             if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcredits)
                             {

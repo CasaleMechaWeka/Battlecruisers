@@ -155,7 +155,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 // as client, check if host is still in lobby
                 if (m_LocalUser.IsHost)
                 {
-                    if(m_LocalLobby.PlayerCount == 2)
+                    if (m_LocalLobby.PlayerCount == 2)
                     {
                         var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
                         var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock: true);
@@ -520,7 +520,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             try
             {
-                var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock: false);
+                var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock : false);
 
                 if (result != null)
                 {
