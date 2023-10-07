@@ -38,8 +38,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.Initialise(commonStrings, factoryProvider);
 
             //---> CODE BY ANUJ
-/*            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
-            Assert.IsNotNull(_rocketTarget);*/
+            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
             //<---
 
             Assert.IsNotNull(missile);
@@ -147,10 +147,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void Awake()
         {
             InitialiseTril();
-            missile.enabled = false;
-            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
-            Assert.IsNotNull(_rocketTarget);
-            _rocketTarget.gameObject.SetActive(false);
         }
 
         protected override void HideEffectsOfClient()
@@ -199,7 +195,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void SetMissileVisibleClientRpc(bool visible)
         {
             missile.enabled = visible;
-            _rocketTarget.gameObject.SetActive(visible);
         }
 
         [ClientRpc]

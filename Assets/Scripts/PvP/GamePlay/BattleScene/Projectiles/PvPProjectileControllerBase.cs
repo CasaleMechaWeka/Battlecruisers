@@ -95,7 +95,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _isActiveAndAlive = false;
             OnSetPosition_Visible(Position, false);
-        //    gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         // should be called by client

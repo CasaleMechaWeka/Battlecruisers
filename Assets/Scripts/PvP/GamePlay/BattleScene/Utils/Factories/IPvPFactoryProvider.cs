@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IPvPMovementControllerFactory MovementControllerFactory { get; }
         IPvPPoolProviders PoolProviders { get; }
-        IPvPPrefabFactory PrefabFactory { get; set; }
+        IPvPPrefabFactory PrefabFactory { get; }
         IPvPSoundFactoryProvider Sound { get; }
         IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         IPvPSpriteChooserFactory SpriteChooserFactory { get; }

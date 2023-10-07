@@ -74,7 +74,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _trail = GetComponentInChildren<IPvPProjectileTrail>();
             Assert.IsNotNull(_trail);
             _trail.Initialise();
-            _trail.HideEffects();
         }
 
         protected override void DestroyProjectile()

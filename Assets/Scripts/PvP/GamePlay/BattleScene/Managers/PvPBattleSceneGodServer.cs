@@ -33,7 +33,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine.UI;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -107,14 +106,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
 
-        async void OnNetworkSpawn()
+        void OnNetworkSpawn()
         {
             if (!NetworkManager.Singleton.IsHost)
             {
                 enabled = false;
                 return;
             }
-            await Initialise();
             NetworkManager.Singleton.SceneManager.OnSceneEvent += OnSceneEvent;
             // Initialise();
         }
@@ -140,7 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     if (NetworkManager.Singleton.IsHost)
                     {
                         if (this != null)
-                            await _Initialise_Rest();
+                            await Initialise();
                     }
                     break;
             }
@@ -166,6 +164,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
+
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
@@ -189,10 +188,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 
-            factoryProvider = new PvPFactoryProvider(components, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            await factoryProvider.Initialise();
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
-            await factoryProvider.Initialise(prefabFactory);
-            MatchmakingScreenController.Instance.UpdateIsReady();
+            await _Initialise_Rest();
         }
         public async Task _Initialise_Rest()
         {
@@ -229,8 +228,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
 
-            /* string logName = "Battle_Begin";
-           
+            string logName = "Battle_Begin";
+            /*
 #if LOG_ANALYTICS
                         Debug.Log("Analytics: " + logName);
 #endif

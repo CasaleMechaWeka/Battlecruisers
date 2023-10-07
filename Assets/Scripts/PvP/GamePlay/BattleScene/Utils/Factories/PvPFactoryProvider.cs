@@ -17,8 +17,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Thre
 using UnityEngine.Assertions;
 using System.Collections;
 using System.Threading.Tasks;
-using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.UI.BattleScene.Manager;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -33,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPDroneMonitor DroneMonitor { get; private set; }
         public IPvPFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IPvPMovementControllerFactory MovementControllerFactory { get; }
-        public IPvPPrefabFactory PrefabFactory { get; set; }
+        public IPvPPrefabFactory PrefabFactory { get; }
         public IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         public IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         public IPvPTargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
@@ -48,15 +46,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
-            /*            IPvPPrefabFactory prefabFactory,*/
+            IPvPPrefabFactory prefabFactory,
             IPvPSpriteProvider spriteProvider,
             ISettingsManager settingsManager
             )
         {
-            PvPHelper.AssertIsNotNull(components, /*prefabFactory,*/ spriteProvider, settingsManager);
+            PvPHelper.AssertIsNotNull(components, prefabFactory, spriteProvider, settingsManager);
 
             _components = components;
-            /*     PrefabFactory = prefabFactory;*/
+            PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new PvPTargetFactoriesProvider();
             TargetPositionPredictorFactory = new PvPTargetPositionPredictorFactory();
@@ -71,13 +69,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DeferrerProvider = new PvPDeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
+
             Turrets = new PvPTurretFactoryProvider();
         }
         // Not in constructor because of circular dependency
-        public async Task Initialise( /* IPvPUIManager uiManager */ IPvPPrefabFactory prefabFactory)
+        public async Task Initialise( /* IPvPUIManager uiManager */)
         {
-            PvPHelper.AssertIsNotNull(prefabFactory);
-            PrefabFactory = prefabFactory;
             IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
             DroneMonitor = new PvPDroneMonitor(droneFactory);
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
@@ -86,10 +83,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             await poolProviders.SetInitialCapacities();
         }
 
-        public void Initialise(IPvPUIManager uiManager, IPvPPrefabFactory prefabFactory)
+        public void Initialise(IPvPUIManager uiManager)
         {
-            PvPHelper.AssertIsNotNull(uiManager, prefabFactory);
-            PrefabFactory = prefabFactory;
+            Assert.IsNotNull(uiManager);
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
         }
 
