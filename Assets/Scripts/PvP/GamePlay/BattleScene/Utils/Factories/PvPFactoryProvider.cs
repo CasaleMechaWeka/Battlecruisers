@@ -44,6 +44,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPPoolProviders PoolProviders { get; private set; }
         public IPvPSoundFactoryProvider Sound { get; private set; }
 
+
+        private PvPPoolProviders poolProviders;
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
             IPvPPrefabFactory prefabFactory,
@@ -78,9 +80,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
             DroneMonitor = new PvPDroneMonitor(droneFactory);
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
-            PvPPoolProviders poolProviders = new PvPPoolProviders(this, droneFactory);
+            poolProviders = new PvPPoolProviders(this, droneFactory);
             PoolProviders = poolProviders;
             await poolProviders.SetInitialCapacities();
+        }
+
+        public async Task Initialise_Rest()
+        {
+            await poolProviders.SetInitialCapacities_Rest();
         }
 
         public void Initialise(IPvPUIManager uiManager)

@@ -130,15 +130,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 return;
             }
-/*
-            Stopwatch watch = new Stopwatch(); //using system.diagnostics
-            watch.Start();
-            WebClient web = new WebClient();
-            byte[] bytes = web.DownloadData("https://www.google.com");
-            watch.Stop();
-            double sec = watch.Elapsed.TotalSeconds;
-            double speed = bytes.Count() / sec;
-            UnityEngine.Debug.Log("===> Measuring Speed ---> " + speed);*/
 
             string wantMap = ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap);
 
@@ -202,7 +193,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     break;
                                 }
                             }
-                         //   break;
                         }
                     }
                 }
@@ -227,7 +217,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                     {
                                         UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                        //ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap = i; <--- I think this sets the client's GameMap to the host's. -Martin
                                         ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
                                         MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                         m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
@@ -235,9 +224,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                         break;
                                     }
                                 }
-                            //    break;
                             }
-
                         }
                     }
                 }

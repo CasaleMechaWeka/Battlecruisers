@@ -227,22 +227,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
             _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+            await factoryProvider.Initialise_Rest();
+            Debug.Log("====> All initialized");
+            /*            string logName = "Battle_Begin";
 
-            string logName = "Battle_Begin";
-            /*
-#if LOG_ANALYTICS
-                        Debug.Log("Analytics: " + logName);
-#endif
-            try
-            {
-                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.Message);
-            }
-            */
+            #if LOG_ANALYTICS
+                                    Debug.Log("Analytics: " + logName);
+            #endif
+                        try
+                        {
+                            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                            AnalyticsService.Instance.Flush();
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Log(ex.Message);
+                        }
+                        */
         }
 
 

@@ -152,9 +152,20 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     return;
                 CurrentUnityLobby = lobby;
                 m_LocalLobby.ApplyRemoteData(lobby);
-
                 // as client, check if host is still in lobby
-                if (!m_LocalUser.IsHost)
+                if (m_LocalUser.IsHost)
+                {
+                    if(m_LocalLobby.PlayerCount == 2)
+                    {
+                        var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
+                        var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock: true);
+                        if (result != null)
+                        {
+                            CurrentUnityLobby = result;
+                        }
+                    }
+                }
+                else
                 {
                     foreach (var lobbyUser in m_LocalLobby.LobbyUsers)
                     {
@@ -163,10 +174,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                             return;
                         }
                     }
-                    //        m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
-                    // m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
                     await EndTracking();
-                    // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
                 }
             }
             catch /*(LobbyServiceException e)*/
