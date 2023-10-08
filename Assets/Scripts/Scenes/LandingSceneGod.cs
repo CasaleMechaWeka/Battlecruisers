@@ -267,7 +267,7 @@ namespace BattleCruisers.Scenes
                 _AppleAuthentication = new AppleAuthentication();
                 _AppleAuthentication.Initialize();
                 // If at any point we receive a credentials revoked notification, we delete the stored User ID
-                _AppleAuthentication.SetCredentialsRevokedCallback(result =>
+                _AppleAuthentication.m_AppleAuthManager.SetCredentialsRevokedCallback(result =>
                 {
                     Debug.Log("Received revoked callback " + result);
                     PlayerPrefs.DeleteKey(AppleUserIdKey);
@@ -683,7 +683,7 @@ namespace BattleCruisers.Scenes
         private void CheckCredentialStatusForUserId(string appleUserId)
         {
             // If there is an apple ID available, we should check the credential state
-            _AppleAuthentication.GetCredentialState(
+            _AppleAuthentication.m_AppleAuthManager.GetCredentialState(
             appleUserId,
             state =>
             {

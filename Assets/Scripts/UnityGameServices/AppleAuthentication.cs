@@ -9,13 +9,12 @@ using AppleAuth.Native;
 using System.Threading.Tasks;
 using Unity.Services.Core;
 using System;
-using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Utils.Network
 {
     public class AppleAuthentication : IAppleAuthentication
     {
-        IAppleAuthManager m_AppleAuthManager;
+        public IAppleAuthManager m_AppleAuthManager { get; private set; }
         public string Token { get; private set; }
         public string Error { get; private set; }
 
@@ -35,20 +34,7 @@ namespace BattleCruisers.Utils.Network
             }
         }
 
-        public void GetCredentialState(
-            string userId,
-            Action<CredentialState> successCallback,
-            Action<IAppleError> errorCallback)
-        {
-            m_AppleAuthManager.GetCredentialState(userId, successCallback, errorCallback);
-        }
-
-        public void SetCredentialsRevokedCallback(Action<string> credentialsRevokedCallback)
-        {
-            m_AppleAuthManager.SetCredentialsRevokedCallback(credentialsRevokedCallback);
-        }
-
-        public void LoginApple()
+        public async Task LoginApple()
         {
             // Initialize the Apple Auth Manager
             if (m_AppleAuthManager == null)
@@ -76,7 +62,6 @@ namespace BattleCruisers.Utils.Network
                             0,
                             appleIDCredential.IdentityToken.Length);
                         Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
-                        SignInWithAppleAsync(Token);
                         Token = idToken;
                     }
                     else
@@ -91,6 +76,12 @@ namespace BattleCruisers.Utils.Network
                     Error = "Retrieving Apple Id Token failed.";
                 }
             );
+
+            if(Token != null)
+            {
+                Debug.LogError("####### Attempting SignInWithAppleAsync(Token)");
+                await SignInWithAppleAsync(Token);
+            }
             Debug.LogError("####### LoginWithAppleId failed for reasons unknown.");
         }
 

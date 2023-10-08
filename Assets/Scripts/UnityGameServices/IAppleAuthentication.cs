@@ -8,14 +8,13 @@ namespace BattleCruisers.Utils.Network
 {
     public interface IAppleAuthentication
     {
+        public IAppleAuthManager m_AppleAuthManager { get; }
         string Token { get; }
         string Error { get; }
         void Initialize();
         void Update();
-        void LoginApple();
         void QuickLoginApple(AppleAuthQuickLoginArgs quickLoginArgs, Action<ICredential> successCallback, Action<IAppleError> errorCallback);
         Task SignInWithAppleAsync(string idToken);
-        void GetCredentialState(string userId, Action<CredentialState> successCallback, Action<IAppleError> errorCallback);
-        void SetCredentialsRevokedCallback(Action<string> credentialsRevokedCallback);
+        Task LoginApple();
     }
 }
