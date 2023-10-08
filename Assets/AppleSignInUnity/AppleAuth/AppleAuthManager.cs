@@ -97,9 +97,15 @@ namespace AppleAuth
                 {
                     var response = this._payloadDeserializer.DeserializeLoginWithAppleIdResponse(payload);
                     if (response.Error != null)
+                    {
                         errorCallback(response.Error);
+                        Debug.LogError("####### Error: "+ response.Error);
+                    }
                     else
+                    {
                         successCallback(response.AppleIDCredential);
+                        Debug.Log("####### LoginWithAppleId Callback: Success");
+                    }
                 });
             
             PInvoke.AppleAuth_LoginWithAppleId(requestId, (int)loginOptions, nonce, state);

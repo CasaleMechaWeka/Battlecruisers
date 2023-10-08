@@ -54,20 +54,59 @@ namespace BattleCruisers.Utils.Network
                 loginArgs,
                 credential =>
                 {
-                    var appleIDCredential = credential as IAppleIDCredential;
-                    if (appleIDCredential != null)
+
+                    // Unity Docs Version:
+                    //var appleIDCredential = credential as IAppleIDCredential;
+                    //if (appleIDCredential != null)
+                    //{
+                    //    var idToken = Encoding.UTF8.GetString(
+                    //        appleIDCredential.IdentityToken,
+                    //        0,
+                    //        appleIDCredential.IdentityToken.Length);
+                    //    Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
+                    //    Token = idToken;
+                    //}
+                    //else
+                    //{
+                    //    Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
+                    //    Error = "Retrieving Apple Id Token failed.";
+                    //}
+
+                    // Plugin Docs Version:
+
+                    // Obtained credential, cast it to IAppleIDCredential
+                    var appleIdCredential = credential as IAppleIDCredential;
+                    if (appleIdCredential != null)
                     {
-                        var idToken = Encoding.UTF8.GetString(
-                            appleIDCredential.IdentityToken,
-                            0,
-                            appleIDCredential.IdentityToken.Length);
-                        Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
-                        Token = idToken;
-                    }
-                    else
-                    {
-                        Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
-                        Error = "Retrieving Apple Id Token failed.";
+                        // Apple User ID
+                        // You should save the user ID somewhere in the device
+                        var userId = appleIdCredential.User;
+                        string AppleUserIdKey = "AppleUserId";
+                        PlayerPrefs.SetString(AppleUserIdKey, userId);
+                        Debug.Log("####### userId: " + userId.ToString());
+
+                        // Email (Received ONLY in the first login)
+                        var email = appleIdCredential.Email;
+                        Debug.Log("####### Email: " + email.ToString());
+
+                        // Full name (Received ONLY in the first login)
+                        var fullName = appleIdCredential.FullName;
+                        Debug.Log("####### FullName: " + fullName.ToString());
+
+                        // Identity token
+                        var identityToken = Encoding.UTF8.GetString(
+                        appleIdCredential.IdentityToken,
+                        0,
+                        appleIdCredential.IdentityToken.Length);
+                        Token = identityToken;
+                        Debug.Log("####### IdentityToken: " + identityToken.ToString());
+
+                        // Authorization code
+                        var authorizationCode = Encoding.UTF8.GetString(
+                        appleIdCredential.AuthorizationCode,
+                        0,
+                        appleIdCredential.AuthorizationCode.Length);
+                        Debug.Log("####### AuthorizationCode: " + authorizationCode.ToString());
                     }
                 },
                 error =>
