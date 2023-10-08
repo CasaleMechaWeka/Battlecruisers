@@ -37,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
             okBtn.onClick.AddListener(() => _onClick?.Invoke());
             panel.SetActive(true);
             blockUIPanel.SetActive(true);
+            Invoke("HideMessage", 3f);
         }
         public void HideMessage()
         {

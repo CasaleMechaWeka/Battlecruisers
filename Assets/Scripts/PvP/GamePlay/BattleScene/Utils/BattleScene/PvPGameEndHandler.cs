@@ -89,15 +89,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             ClearProjectiles();
             //<---
             _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
-/*            _ai_LeftPlayer.DisposeManagedState();
-            _ai_RightPlayer.DisposeManagedState();*/
+            /*            _ai_LeftPlayer.DisposeManagedState();
+                        _ai_RightPlayer.DisposeManagedState();*/
             victoryCruiser.MakeInvincible();
 
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-      
-            _battleSceneGodTunnel.HandleCruiserDestroyed();            
-            _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
+
+            _battleSceneGodTunnel.HandleCruiserDestroyed();
+            _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false);
+            //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
 
         public void HandleCruiserDestroyed(bool wasPlayerVictory, long destructionScore)
@@ -114,17 +115,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //---> Code by ANUJ
             ClearProjectiles();
             //<---
-/*            if (_ai_LeftPlayer != null)
-                _ai_LeftPlayer.DisposeManagedState();
-            if (_ai_RightPlayer != null)
-                _ai_RightPlayer?.DisposeManagedState();*/
+            /*            if (_ai_LeftPlayer != null)
+                            _ai_LeftPlayer.DisposeManagedState();
+                        if (_ai_RightPlayer != null)
+                            _ai_RightPlayer?.DisposeManagedState();*/
             victoryCruiser.MakeInvincible();
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-            
-            _battleSceneGodTunnel.HandleCruiserDestroyed();            
-            _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
-            _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S);
+            _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S / 2);
+            _battleSceneGodTunnel.HandleCruiserDestroyed();
+            _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore);
+            //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
         }
 
         public void RegisterAIOfLeftPlayer(IPvPArtificialIntelligence ai_LeftPlayer)

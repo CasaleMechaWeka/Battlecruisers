@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         LocalLobby m_LocalLobby;
 
         public int MaxConnectedPlayers = 2;
-        public const int LatencyLimit = 150;    // 150ms
+        public const int LatencyLimit = 150;    // 150ms for production, 300ms for test
  
         const string k_DefaultIP = "127.0.0.1";
         const int k_DefaultPort = 7777;
@@ -107,8 +107,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         internal readonly ClientReconnectingState m_ClientReconnecting = new ClientReconnectingState();
         internal readonly StartingHostState m_StartingHost = new StartingHostState();
         internal readonly HostingState m_Hosting = new HostingState();
-
-
 
         public ClientGameManager Manager
         {

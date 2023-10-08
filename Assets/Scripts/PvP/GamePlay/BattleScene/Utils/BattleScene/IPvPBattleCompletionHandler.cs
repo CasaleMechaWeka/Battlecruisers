@@ -5,7 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public interface IPvPBattleCompletionHandler
     {
         event EventHandler BattleCompleted;
-
+        float registeredTime { get; set; }
         void CompleteBattle(bool wasVictory, bool retryLevel);
         void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore);
     }

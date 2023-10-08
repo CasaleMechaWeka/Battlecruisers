@@ -336,8 +336,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 PvPBattleSceneGodTunnel._playerACruiserName = SynchedServerData.Instance.playerAPrefabName.Value;
             }
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
+            battleCompletionHandler.registeredTime = Time.time;
             MatchmakingScreenController.Instance.isLoaded = true;
-            await Task.Delay(10);
             MatchmakingScreenController.Instance.AddProgress(1000);
             playerCruiser.StaticInitialise(commonStrings);
             enemyCruiser.StaticInitialise(commonStrings);
@@ -478,6 +478,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 await dataProvider.SyncCreditsToCloud();
             }
             isStartedPvP = true;
+
+            if (NetworkManager.Singleton.IsHost)
+                PvPBattleSceneGodServer.Instance.Initialise_Rest();
         }
 
         private async Task LoadAllCaptains()

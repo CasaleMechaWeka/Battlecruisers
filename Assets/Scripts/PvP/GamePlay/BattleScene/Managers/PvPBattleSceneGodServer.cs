@@ -223,12 +223,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPTime time = PvPTimeBC.Instance;
             _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
             _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
-
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
-
             _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
-            await factoryProvider.Initialise_Rest();
-            Debug.Log("====> All initialized");
             /*            string logName = "Battle_Begin";
 
             #if LOG_ANALYTICS
@@ -246,6 +242,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         */
         }
 
+        public async void Initialise_Rest()
+        {
+            await factoryProvider.Initialise_Rest();
+            Debug.Log("====> All initialized");
+        }
 
         private void RegisteredAllBuildalbesToServer()
         {
