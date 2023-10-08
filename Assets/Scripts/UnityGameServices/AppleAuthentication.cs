@@ -22,7 +22,9 @@ namespace BattleCruisers.Utils.Network
         public void Initialize()
         {
             var deserializer = new PayloadDeserializer();
+            Debug.LogError("####### deserializer assignment failed.");
             m_AppleAuthManager = new AppleAuthManager(deserializer);
+            Debug.LogError("####### m_AppleAuthManager assignment failed.");
         }
 
         public void Update()
@@ -51,11 +53,15 @@ namespace BattleCruisers.Utils.Network
             // Initialize the Apple Auth Manager
             if (m_AppleAuthManager == null)
             {
+                Debug.LogError("####### m_AppleAuthManager == null");
                 Initialize();
+                Debug.LogError("####### m_AppleAuthManager failed to Initialize");
             }
+            Debug.LogError("####### m_AppleAuthManager not null");
 
             // Set the login arguments
             var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName);
+            Debug.LogError("####### loginArgs did not assign correctly.");
 
             // Perform the login
             m_AppleAuthManager.LoginWithAppleId(
@@ -85,6 +91,7 @@ namespace BattleCruisers.Utils.Network
                     Error = "Retrieving Apple Id Token failed.";
                 }
             );
+            Debug.LogError("####### LoginWithAppleId failed for reasons unknown.");
         }
 
         //If the user has previously authorized the app to login with Apple, this will open a
