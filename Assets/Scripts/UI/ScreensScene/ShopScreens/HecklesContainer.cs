@@ -8,6 +8,7 @@ using BattleCruisers.Utils.Localisation;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using Unity.Services.Economy;
 using UnityEngine;
@@ -67,16 +68,34 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            if(hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
+                            if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                             {
                                 // For heckles with 10 or less characters!
                                 ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
                             }
-                            else 
+                            else
                             {
                                 ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                             }
                             ScreensSceneGod.Instance.loadoutScreen.AddHeckle(currentHeckleData);
+
+                            string logName = currentHeckleData.StringKeyBase;
+#if LOG_ANALYTICS
+                Debug.Log("Analytics: " + logName);
+#endif
+                            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                            Dictionary<string, object> transactionDetails = new Dictionary<string, object>() { { "heckleIndex", currentHeckleData.Index } };
+                            try
+                            {
+                                AnalyticsService.Instance.CustomData("Shop_Heckle_Bought", transactionDetails);
+                                AnalyticsService.Instance.Flush();
+                            }
+                            catch (ConsentCheckException ex)
+                            {
+                                Debug.Log(ex.Message);
+                            }
+
+
                         }
                         else
                         {

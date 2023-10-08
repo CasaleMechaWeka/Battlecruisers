@@ -5,10 +5,12 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
+using NSubstitute.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
@@ -95,6 +97,22 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
+
+                    string logName = currentCaptainData.NameStringKeyBase;
+#if LOG_ANALYTICS
+                Debug.Log("Analytics: " + logName);
+#endif
+                    IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                    Dictionary<string, object> transactionDetails = new Dictionary<string, object>() { { "exoIndex", currentCaptainData.Index } };
+                    try
+                    {
+                        AnalyticsService.Instance.CustomData("Shop_Exo_Bought", transactionDetails);
+                        AnalyticsService.Instance.Flush();
+                    }
+                    catch (ConsentCheckException ex)
+                    {
+                        Debug.Log(ex.Message);
+                    }
                 }
                 else
                 {
