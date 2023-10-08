@@ -21,9 +21,9 @@ namespace BattleCruisers.Utils.Network
         public void Initialize()
         {
             var deserializer = new PayloadDeserializer();
-            Debug.LogError("####### deserializer assignment failed.");
+            Debug.LogError("####### deserializer assignment succeeded.");
             m_AppleAuthManager = new AppleAuthManager(deserializer);
-            Debug.LogError("####### m_AppleAuthManager assignment failed.");
+            Debug.LogError("####### m_AppleAuthManager assignment succeeded.");
         }
 
         public void Update()
@@ -47,7 +47,7 @@ namespace BattleCruisers.Utils.Network
 
             // Set the login arguments
             var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName);
-            Debug.LogError("####### loginArgs did not assign correctly.");
+            Debug.LogError("####### loginArgs assigned.");
 
             // Perform the login
             m_AppleAuthManager.LoginWithAppleId(
