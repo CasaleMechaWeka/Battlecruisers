@@ -380,7 +380,7 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    _AppleAuthentication.LoginApple();
+                    await _AppleAuthentication.LoginApple();
                 }
                 catch (Exception ex)
                 {
