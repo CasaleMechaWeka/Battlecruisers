@@ -89,8 +89,11 @@ namespace AppleAuth
         {
 #if APPLE_AUTH_MANAGER_NATIVE_IMPLEMENTATION_AVAILABLE
             var loginOptions = loginArgs.Options;
+            UnityEngine.Debug.Log("####### loginOptions: " + loginOptions.ToString());
             var nonce = loginArgs.Nonce;
+            UnityEngine.Debug.Log("####### nonce: " + nonce.ToString());
             var state = loginArgs.State;
+            UnityEngine.Debug.Log("####### state: " + state.ToString());
             var requestId = CallbackHandler.AddMessageCallback(
                 true,
                 payload =>
@@ -99,12 +102,12 @@ namespace AppleAuth
                     if (response.Error != null)
                     {
                         errorCallback(response.Error);
-                        Debug.LogError("####### Error: "+ response.Error);
+                        UnityEngine.Debug.LogError("####### Error: "+ response.Error);
                     }
                     else
                     {
                         successCallback(response.AppleIDCredential);
-                        Debug.Log("####### LoginWithAppleId Callback: Success");
+                        UnityEngine.Debug.Log("####### LoginWithAppleId Callback: Success");
                     }
                 });
             
