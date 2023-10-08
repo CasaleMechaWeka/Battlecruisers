@@ -23,6 +23,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Scenes;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -280,6 +281,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void OnFlee()
         {
             fleeButton.SetActive(false);
+            if (PvPBootManager.Instance != null)
+                PvPBootManager.Instance.m_CancellationToken.Cancel();
             if (PvPBattleSceneGodClient.Instance != null)
             {
                 PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
@@ -332,7 +335,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             rightPlayerRankeImage.sprite = spriteWrapperB.Sprite;
             rightPlayerRankeName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
             rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
-            if(SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
+            if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
             {
                 rightCaptain.texture = clientTexture;
             }

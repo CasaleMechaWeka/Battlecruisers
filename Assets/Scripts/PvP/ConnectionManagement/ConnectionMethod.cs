@@ -162,13 +162,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             float packetLoss = qosResultsForRegion[0].PacketLossPercent;
             int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
 
-            Debug.Log("===> packetLoss ---> " + packetLoss);
-            Debug.Log("===> latency ---> " + averageLatency);
+            Debug.Log("===>host packetLoss ---> " + packetLoss);
+            Debug.Log("===>host latency ---> " + averageLatency);
 
-            if(averageLatency > ConnectionManager.LatencyLimit / 2)
+/*            if(averageLatency > ConnectionManager.LatencyLimit / 2)
             {
                 throw new Exception("Latency");
-            }
+            }*/
 
             m_LocalLobby.RelayJoinCode = joinCode;
             m_LocalLobby.Region = hostAllocation.Region;

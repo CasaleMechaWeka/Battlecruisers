@@ -24,6 +24,7 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using System.Diagnostics;
 using System.Net;
 using Unity.Services.Qos;
+using System.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -49,7 +50,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
 
         public int defaultLevel;
-
+        public static PvPBootManager Instance;
+        public CancellationTokenSource m_CancellationToken = new CancellationTokenSource();
         const int k_DefaultPort = 7777;
         const string k_DefaultIP = "127.0.0.1";
 
@@ -163,57 +165,17 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             new QueryOrder(false, QueryOrder.FieldOptions.N2),
         };
 
-            QueryResponse response = await m_LobbyServiceFacade.QueryLobbyListAsync(mFilters, mOrders);
-
-            List<Lobby> foundLobbies = response.Results;
-            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.FINDING_LOBBY);
-            if (foundLobbies.Any())
+            while (true && !m_CancellationToken.IsCancellationRequested)
             {
-                UnityEngine.Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
-                bool joined = false;
-                foreach (Lobby lobby in foundLobbies)
+                UnityEngine.Debug.Log("===> Started Finding Lobbies");
+                QueryResponse response = await m_LobbyServiceFacade.QueryLobbyListAsync(mFilters, mOrders);
+                List<Lobby> foundLobbies = response.Results;
+                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.FINDING_LOBBY);
+                bool isFound = false;
+                if (foundLobbies.Any())
                 {
-                    string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
-                    string Region = lobby.Data.ContainsKey("Region") ? lobby.Data["Region"].Value : null;
-                    string HostLatency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
-                    if (string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
-                        continue;
-                    else if (!string.IsNullOrEmpty(RelayJoinCode) && !string.IsNullOrEmpty(Region) && !string.IsNullOrEmpty(HostLatency))
-                    {
-                        var regions = new List<string>();
-                        regions.Add(Region);
-                        var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
-                        int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
-                        int iHostLatency = 0;
-                        int.TryParse(HostLatency, out iHostLatency);
-                        if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
-                        {
-                            continue;
-                        }
-
-                        if (lobby.Data["GameMap"].Value == wantMap)
-                        {
-                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
-                            var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
-
-                            if (lobbyJoinAttemp.Success)
-                            {
-                                m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
-                                if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-                                {
-                                    UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                                    m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                                    joined = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                // cross-arena 
-                if (!joined)
-                {
+                    UnityEngine.Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
+                    bool joined = false;
                     foreach (Lobby lobby in foundLobbies)
                     {
                         string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
@@ -221,49 +183,139 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         string HostLatency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
                         if (string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
                             continue;
-                        else
+                        else if (!string.IsNullOrEmpty(RelayJoinCode) && !string.IsNullOrEmpty(Region) && !string.IsNullOrEmpty(HostLatency))
                         {
-                            var regions = new List<string>();
-                            regions.Add(Region);
-                            var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
-                            int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
-                            int iHostLatency = 0;
-                            int.TryParse(HostLatency, out iHostLatency);
-                            if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
+                            if (lobby.Data["GameMap"].Value == wantMap)
                             {
-                                continue;
-                            }
-
-                            int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
-                            if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcredits)
-                            {
+                                var regions = new List<string>();
+                                regions.Add(Region);
+                                var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+                                int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                                int iHostLatency = 0;
+                                int.TryParse(HostLatency, out iHostLatency);
+                                if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
+                                {
+                                    continue;
+                                }
+                                UnityEngine.Debug.Log("===>joined latency ---> " + (iHostLatency + ClientLatency));
                                 MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
                                 var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+
                                 if (lobbyJoinAttemp.Success)
                                 {
                                     m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
                                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                     {
                                         UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                        ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
                                         MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                         m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                         joined = true;
+                                        isFound = true;
                                         break;
                                     }
                                 }
                             }
                         }
                     }
+                    // cross-arena 
+                    if (!joined)
+                    {
+                        foreach (Lobby lobby in foundLobbies)
+                        {
+                            string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
+                            string Region = lobby.Data.ContainsKey("Region") ? lobby.Data["Region"].Value : null;
+                            string HostLatency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
+                            if (string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
+                                continue;
+                            else
+                            {
+                                int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
+                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcredits)
+                                {
+                                    var regions = new List<string>();
+                                    regions.Add(Region);
+                                    var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+                                    int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                                    int iHostLatency = 0;
+                                    int.TryParse(HostLatency, out iHostLatency);
+                                    if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
+                                    {
+                                        continue;
+                                    }
+                                    UnityEngine.Debug.Log("===>joined latency ---> " + (iHostLatency + ClientLatency));
+                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
+                                    var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
+                                    if (lobbyJoinAttemp.Success)
+                                    {
+                                        m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                                        {
+                                            UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
+                                            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
+                                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                            m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                            joined = true;
+                                            isFound = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (!joined)
+                    {
+                        var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
+                        int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
+                        if (averageLatency > ConnectionManager.LatencyLimit / 2)
+                            continue;
+                        MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
+                        var lobbyData = new Dictionary<string, DataObject>()
+                        {
+                            ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
+                            ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
+                        };
+                        var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                        while (true)
+                        {
+                            if (lobbyCreationAttemp.Success)
+                            {
+                                m_LocalUser.IsHost = true;
+                                m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
+                                if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                                {
+                                    UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                    m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                    isFound = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                                }
+                            }
+                            else
+                            {
+                                lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
+                            }
+                            await Task.Delay(100);
+                        }
+                    }
                 }
-                if (!joined)
+                else
                 {
-                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
+                    var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
+                    int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
+                    if (averageLatency > ConnectionManager.LatencyLimit / 2)
+                        continue;
+
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
                         ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
                         ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
                     };
+                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                     while (true)
                     {
@@ -276,6 +328,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
                                 MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                 m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                isFound = true;
                                 break;
                             }
                             else
@@ -290,40 +343,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         await Task.Delay(100);
                     }
                 }
-            }
-            else
-            {
-                var lobbyData = new Dictionary<string, DataObject>()
-                {
-                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
-                    ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
-                };
-                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
-                var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
-                while (true)
-                {
-                    if (lobbyCreationAttemp.Success)
-                    {
-                        m_LocalUser.IsHost = true;
-                        m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
-                        if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-                        {
-                            UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                            m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                            break;
-                        }
-                        else
-                        {
-                            lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
-                        }
-                    }
-                    else
-                    {
-                        lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
-                    }
-                    await Task.Delay(100);
-                }
+                if (isFound)
+                    break;
+                await Task.Delay(100);
             }
         }
 
@@ -429,6 +451,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             /*            if (NetworkManager.Singleton.IsConnectedClient)  // I am not sure, PvPBootScene.unity is being loaded twice
                             return;*/
+            if (Instance == null)
+                Instance = this;
             Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
