@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity
 {
+
     /// <summary>
     /// Tries to reach a target velocity.  Movement can be changed by specifying
     /// different target velocities.
@@ -67,3 +68,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         }
     }
 }
+
+

@@ -15,10 +15,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEditor;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using Unity.Netcode.Components;
-using System.Collections;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -130,11 +128,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
 
-            if (needToTeleport)
-                GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
             OnSetPosition_Visible(Position, true);
+            OnActiveClient(activationArgs.InitialVelocityInMPerS, activationArgs.ProjectileStats.GravityScale, _isActiveAndAlive);
 
-            OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale, _isActiveAndAlive);
+            if (needToTeleport && GetComponent<NetworkTransform>() != null)
+                GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
+
         }
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
         {

@@ -237,17 +237,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        /*        private void LateUpdate()
-                {
-                    if (IsClient)
-                    {
-
-                        Position = PvP_Position.Value;
-                        Rotation = PvP_Rotation.Value;
-                        Debug.Log("aaa");
-                    }
-                }*/
-
         protected virtual void OnTakeDamage() { }
 
         protected void RepairCommandExecute(float repairAmount)

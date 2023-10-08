@@ -34,12 +34,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
-
             _deferrer = factoryProvider.DeferrerProvider.Deferrer;
-
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
-
             _trail = GetComponentInChildren<IPvPProjectileTrail>();
             Assert.IsNotNull(_trail);
             _trail.Initialise();
@@ -52,8 +49,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _trail.ShowAllEffects();
             ShowAllEffectsOfClient();
         }
-
-
 
         protected virtual void ShowAllEffectsOfClient()
         {
@@ -79,7 +74,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override void DestroyProjectile()
         {
             // Logging.LogMethod(Tags.SHELLS);
-
             ShowExplosion();
             OnImpactCleanUp();
             InvokeDestroyed();
@@ -104,7 +98,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void OnTrailsDoneCleanup()
         {
             // Logging.LogMethod(Tags.SHELLS);
-
             OnSetPosition_Visible(Position, false);
             gameObject.SetActive(false);
             InvokeDeactivated();

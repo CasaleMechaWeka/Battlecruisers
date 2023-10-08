@@ -105,11 +105,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         private void OnActiveClientRpc(Vector2 velocity, float gravityScale, bool isAlive)
         {
-            _rigidBody.velocity = velocity;
-            _rigidBody.gravityScale = gravityScale;
-            _isActiveAndAlive = isAlive;
-            if (velocity == Vector2.zero && gravityScale == 0f)
-                base.OnImpactCleanUp();
+            if(!IsHost)
+            {
+                _rigidBody.velocity = velocity;
+                _rigidBody.gravityScale = gravityScale;
+                _isActiveAndAlive = isAlive;
+                if (velocity == Vector2.zero && gravityScale == 0f)
+                    base.OnImpactCleanUp();
+            }
         }
 
         [ClientRpc]
