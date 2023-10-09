@@ -8,11 +8,6 @@ namespace BattleCruisers.Utils.Network
 {
     public interface IAppleAuthentication
     {
-        public IAppleAuthManager m_AppleAuthManager { get; }
-        string Token { get; }
-        string Error { get; }
-        void Initialize();
-        Task SignInWithAppleAsync(string idToken);
-        Task LoginApple();
+        string Token { get; set;}
     }
 }

@@ -91,9 +91,7 @@ namespace AppleAuth
             var loginOptions = loginArgs.Options;
             UnityEngine.Debug.Log("####### loginOptions: " + loginOptions.ToString());
             var nonce = loginArgs.Nonce;
-            UnityEngine.Debug.Log("####### nonce: " + nonce.ToString());
             var state = loginArgs.State;
-            UnityEngine.Debug.Log("####### state: " + state.ToString());
             var requestId = CallbackHandler.AddMessageCallback(
                 true,
                 payload =>

@@ -27,12 +27,19 @@ using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
 using System.IO;
 using UnityEngine.UI;
+
+#if PLATFORM_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
+
+#if PLATFORM_IOS
 using AppleAuth;
 using AppleAuth.Enums;
 using AppleAuth.Extensions;
 using AppleAuth.Interfaces;
+using AppleAuth.Native;
+#endif
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
@@ -95,8 +102,8 @@ namespace BattleCruisers.Scenes
         }
 
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
-        public static IAppleAuthentication _AppleAuthentication { get; set; }
         public IAppleAuthManager _AppleAuthManager;
+        public IAppleAuthentication _AppleAuthentication { get; set; }
         private const string AppleUserIdKey = "AppleUserId";
 
 
@@ -265,11 +272,14 @@ namespace BattleCruisers.Scenes
                 LogToScreen(""); // INTERNET
 
 #elif PLATFORM_IOS
-                _AppleAuthentication = new AppleAuthentication();
-                _AppleAuthentication.Initialize();
-                _AppleAuthManager = _AppleAuthentication.m_AppleAuthManager;
+                InitializeAppleAuth();
+                if(_AppleAuthentication == null)
+                {
+                    _AppleAuthentication = new AppleAuthentication();
+                }
+
                 // If at any point we receive a credentials revoked notification, we delete the stored User ID
-                _AppleAuthentication.m_AppleAuthManager.SetCredentialsRevokedCallback(result =>
+                _AppleAuthManager.SetCredentialsRevokedCallback(result =>
                 {
                     Debug.Log("Received revoked callback " + result);
                     PlayerPrefs.DeleteKey(AppleUserIdKey);
@@ -283,7 +293,7 @@ namespace BattleCruisers.Scenes
                 // If we do not have an stored Apple User Id, attempt a quick login
                 else
                 {
-                    //AppleAttemptQuickLogin();
+                    //Attempt Apple Quick Login
                 }
                 appleBtn.Initialise(soundPlayer, AppleLogin);
                 appleBtn.gameObject.SetActive(true);
@@ -296,6 +306,13 @@ namespace BattleCruisers.Scenes
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
+        }
+
+        private void InitializeAppleAuth()
+        {
+            var deserializer = new PayloadDeserializer();
+            _AppleAuthManager = new AppleAuthManager(deserializer);
+            Debug.Log("####### Apple Auth Initialized.");
         }
 
         void SetInteractable(bool interactable)
@@ -346,7 +363,9 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
+                    #if PLATFORM_ANDROID
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+                    #endif
                 }
                 catch (Exception ex)
                 {
@@ -361,7 +380,9 @@ namespace BattleCruisers.Scenes
         {
             try
             {
+                #if PLATFORM_ANDROID
                 await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
+                #endif
             }
             catch (Exception ex)
             {
@@ -382,7 +403,54 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    await _AppleAuthentication.LoginApple();
+                    // Initialize the Apple Auth Manager
+                    if (_AppleAuthManager == null)
+                    {
+                        InitializeAppleAuth();
+                    }
+
+                    // Set the login arguments
+                    var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName);
+                    Debug.LogError("####### loginArgs assigned.");
+
+                    // Perform the login
+                    _AppleAuthManager.LoginWithAppleId(
+                        loginArgs,
+                        credential =>
+                        {
+                            var appleIDCredential = credential as IAppleIDCredential;
+                            Debug.Log("####### User Credential: " + appleIDCredential.ToString());
+                            if (appleIDCredential != null)
+                            {
+                                Debug.Log("####### IdentityToken Bytes: " + appleIDCredential.IdentityToken.ToString());
+                                Debug.Log("####### IdentityToken Length: " + appleIDCredential.IdentityToken.Length.ToString());
+
+                                var idToken = Encoding.UTF8.GetString(
+                                    appleIDCredential.IdentityToken,
+                                    0,
+                                    appleIDCredential.IdentityToken.Length);
+                                Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
+                                _AppleAuthentication.Token = idToken;
+                            }
+                            else
+                            {
+                                Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
+                                //Error = "Retrieving Apple Id Token failed.";
+                            }
+                        },
+                        error =>
+                        {
+                            Debug.Log("Sign-in with Apple error. Message: " + error);
+                            //Error = "Retrieving Apple Id Token failed.";
+                        }
+                    );
+
+                    if (_AppleAuthentication.Token != null)
+                    {
+                        Debug.LogError("####### Attempting SignInWithAppleAsync(Token)");
+                        await SignInWithAppleAsync(_AppleAuthentication.Token);
+                    }
+                    Debug.LogError("####### LoginWithAppleId failed for reasons unknown.");
                 }
                 catch (Exception ex)
                 {
@@ -408,7 +476,7 @@ namespace BattleCruisers.Scenes
             // Quick login should succeed if the credential was authorized before and not revoked
             try
             {
-                _AppleAuthentication.m_AppleAuthManager.QuickLogin(
+                _AppleAuthManager.QuickLogin(
                     quickLoginArgs,
                     credential =>
                     {
@@ -432,6 +500,28 @@ namespace BattleCruisers.Scenes
                 SetInteractable(true);
                 spinApple.SetActive(false);
                 labelApple.SetActive(true);
+            }
+        }
+
+        // Sign in a returning player or create new player
+        private async Task SignInWithAppleAsync(string idToken)
+        {
+            try
+            {
+                await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
+                Debug.Log("SignIn is successful.");
+            }
+            catch (AuthenticationException ex)
+            {
+                // Compare error code to AuthenticationErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Compare error code to CommonErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
             }
         }
 
@@ -627,12 +717,6 @@ namespace BattleCruisers.Scenes
             {
                 _AppleAuthManager.Update();
             }
-            else
-            {
-                _AppleAuthentication.Initialize();
-                _AppleAuthManager = _AppleAuthentication.m_AppleAuthManager;
-                Debug.Log("####### AppleAuthManager was null, but now it's been initialized. This should only happen once!");
-            }
 #endif
         }
 
@@ -701,7 +785,7 @@ namespace BattleCruisers.Scenes
         private void CheckCredentialStatusForUserId(string appleUserId)
         {
             // If there is an apple ID available, we should check the credential state
-            _AppleAuthentication.m_AppleAuthManager.GetCredentialState(
+            _AppleAuthManager.GetCredentialState(
             appleUserId,
             state =>
             {
