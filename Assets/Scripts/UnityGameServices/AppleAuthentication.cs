@@ -58,6 +58,9 @@ namespace BattleCruisers.Utils.Network
                     Debug.Log("####### User Credential: " + appleIDCredential.ToString());
                     if (appleIDCredential != null)
                     {
+                        Debug.Log("####### IdentityToken Bytes: " + appleIDCredential.IdentityToken.ToString());
+                        Debug.Log("####### IdentityToken Length: " + appleIDCredential.IdentityToken.Length.ToString());
+
                         var idToken = Encoding.UTF8.GetString(
                             appleIDCredential.IdentityToken,
                             0,
