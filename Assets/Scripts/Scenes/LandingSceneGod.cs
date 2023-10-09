@@ -462,8 +462,10 @@ namespace BattleCruisers.Scenes
             SetInteractable(false);
             spinApple.SetActive(true);
             labelApple.SetActive(false);
+            Debug.Log("####### Button State Set.");
 
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
+            Debug.Log("####### LoginArgs Set.");
 
             // Quick login should succeed if the credential was authorized before and not revoked
             try
@@ -476,6 +478,7 @@ namespace BattleCruisers.Scenes
                     var appleIdCredential = credential as IAppleIDCredential;
                         if (appleIdCredential != null)
                         {
+                            Debug.Log("####### appleIdCredential is not null.");
                             PlayerPrefs.SetString(AppleUserIdKey, credential.User);
                         }
                     },
@@ -483,7 +486,7 @@ namespace BattleCruisers.Scenes
                     {
                     // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
                     var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                        Debug.LogWarning("Quick Login Failed " + authorizationErrorCode.ToString() + " " + error.ToString());
+                        Debug.LogWarning("####### Quick Login Failed " + authorizationErrorCode.ToString() + " " + error.ToString());
                     });
             }
             catch (Exception ex)
