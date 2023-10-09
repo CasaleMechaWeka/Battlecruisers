@@ -406,7 +406,7 @@ namespace BattleCruisers.Scenes
             // Quick login should succeed if the credential was authorized before and not revoked
             try
             {
-                _AppleAuthentication.QuickLoginApple(
+                _AppleAuthentication.m_AppleAuthManager.QuickLogin(
                     quickLoginArgs,
                     credential =>
                     {

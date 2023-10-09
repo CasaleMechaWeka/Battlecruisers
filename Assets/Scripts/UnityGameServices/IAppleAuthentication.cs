@@ -13,7 +13,6 @@ namespace BattleCruisers.Utils.Network
         string Error { get; }
         void Initialize();
         void Update();
-        void QuickLoginApple(AppleAuthQuickLoginArgs quickLoginArgs, Action<ICredential> successCallback, Action<IAppleError> errorCallback);
         Task SignInWithAppleAsync(string idToken);
         Task LoginApple();
     }

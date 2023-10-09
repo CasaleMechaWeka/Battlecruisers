@@ -34,6 +34,8 @@ namespace BattleCruisers.Utils.Network
             }
         }
 
+
+
         public async Task LoginApple()
         {
             // Initialize the Apple Auth Manager
@@ -87,14 +89,6 @@ namespace BattleCruisers.Utils.Network
                 await SignInWithAppleAsync(Token);
             }
             Debug.LogError("####### LoginWithAppleId failed for reasons unknown.");
-        }
-
-        //If the user has previously authorized the app to login with Apple, this will open a
-        //native dialog to re-confirm the login, and obtain an Apple User ID.
-        //If the credentials were never given, or they were revoked, the Quick login will fail.
-        public void QuickLoginApple(AppleAuthQuickLoginArgs quickLoginArgs,Action<ICredential> successCallback,Action<IAppleError> errorCallback)
-        {
-            m_AppleAuthManager.QuickLogin(quickLoginArgs, successCallback, errorCallback);
         }
 
         // Sign in a returning player or create new player
