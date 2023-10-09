@@ -12,7 +12,6 @@ namespace BattleCruisers.Utils.Network
         string Token { get; }
         string Error { get; }
         void Initialize();
-        void Update();
         Task SignInWithAppleAsync(string idToken);
         Task LoginApple();
     }

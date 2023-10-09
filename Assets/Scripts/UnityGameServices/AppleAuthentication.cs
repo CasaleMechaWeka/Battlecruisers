@@ -26,16 +26,6 @@ namespace BattleCruisers.Utils.Network
             Debug.LogError("####### m_AppleAuthManager assignment succeeded.");
         }
 
-        public void Update()
-        {
-            if (m_AppleAuthManager != null)
-            {
-                m_AppleAuthManager.Update();
-            }
-        }
-
-
-
         public async Task LoginApple()
         {
             // Initialize the Apple Auth Manager

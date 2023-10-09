@@ -618,6 +618,14 @@ namespace BattleCruisers.Scenes
         //    }
         //}
 
+        public void Update()
+        {
+            if (_AppleAuthentication.m_AppleAuthManager != null)
+            {
+                _AppleAuthentication.m_AppleAuthManager.Update();
+            }
+        }
+
         bool isUpdatingInternetConnectivity = false;
         async void iUpdateInternetConnectivity()
         {
