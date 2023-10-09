@@ -422,15 +422,13 @@ namespace BattleCruisers.Scenes
                             Debug.Log("####### User Credential: " + appleIDCredential.ToString());
                             if (appleIDCredential != null)
                             {
-                                Debug.Log("####### IdentityToken Bytes: " + appleIDCredential.IdentityToken.ToString());
-                                Debug.Log("####### IdentityToken Length: " + appleIDCredential.IdentityToken.Length.ToString());
-
                                 var idToken = Encoding.UTF8.GetString(
                                     appleIDCredential.IdentityToken,
                                     0,
                                     appleIDCredential.IdentityToken.Length);
                                 Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
                                 _AppleAuthentication.Token = idToken;
+                                SignInWithAppleAsync(idToken);
                             }
                             else
                             {
@@ -444,13 +442,6 @@ namespace BattleCruisers.Scenes
                             //Error = "Retrieving Apple Id Token failed.";
                         }
                     );
-
-                    if (_AppleAuthentication.Token != null)
-                    {
-                        Debug.LogError("####### Attempting SignInWithAppleAsync(Token)");
-                        await SignInWithAppleAsync(_AppleAuthentication.Token);
-                    }
-                    Debug.LogError("####### LoginWithAppleId failed for reasons unknown.");
                 }
                 catch (Exception ex)
                 {
