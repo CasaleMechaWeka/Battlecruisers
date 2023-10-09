@@ -113,6 +113,8 @@ namespace AppleAuth
             
             PInvoke.AppleAuth_LoginWithAppleId(requestId, (int)loginOptions, nonce, state);
 #else
+
+            UnityEngine.Debug.Log("####### AppleAuthManager is not supported in this platform");
             throw new Exception("AppleAuthManager is not supported in this platform");
 #endif
         }
