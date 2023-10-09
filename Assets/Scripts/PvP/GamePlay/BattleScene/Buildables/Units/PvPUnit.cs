@@ -107,8 +107,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void FixedUpdate()
         {
-            if (!IsHost)
-                return;
+/*            if (!IsHost)
+                return;*/
             if (!IsDestroyed)
             {
                 OnFixedUpdate();

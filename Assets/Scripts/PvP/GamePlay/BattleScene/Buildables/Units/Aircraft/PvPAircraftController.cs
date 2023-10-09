@@ -187,18 +187,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
             ActiveMovementController.AdjustVelocity();
             //compare sprite number choses to sprite name
-            var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
-            // _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
-            _spriteRenderer.sprite = spriteOfAircraft.Item1.Sprite;
-            if (pvp_IndexOfSprite.Value != spriteOfAircraft.Item2)
-                pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;
+            if(_spriteChooser != null)
+            {
+                var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
+                // _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
+                _spriteRenderer.sprite = spriteOfAircraft.Item1.Sprite;
+                /*            if (pvp_IndexOfSprite.Value != spriteOfAircraft.Item2)
+                                pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;*/
+            }
         }
 
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (IsClient && _spriteChooser != null) // _spritechooser will be null until client activated
-                _spriteRenderer.sprite = _spriteChooser.ChooseSprite(pvp_IndexOfSprite.Value).Sprite;
+/*            if (IsClient && _spriteChooser != null) // _spritechooser will be null until client activated
+                _spriteRenderer.sprite = _spriteChooser.ChooseSprite(pvp_IndexOfSprite.Value).Sprite;*/
         }
         public void Kamikaze(IPvPTarget kamikazeTarget)
         {

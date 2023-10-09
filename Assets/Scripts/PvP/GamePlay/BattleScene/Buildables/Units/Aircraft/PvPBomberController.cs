@@ -164,7 +164,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-
             if (_isAtCruisingHeight
                 && !IsInKamikazeMode
                 && Target != null && IsServer)

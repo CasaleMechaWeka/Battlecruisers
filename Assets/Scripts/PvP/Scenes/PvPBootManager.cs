@@ -191,6 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 regions.Add(Region);
                                 var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
                                 int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                                UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
                                 int iHostLatency = 0;
                                 int.TryParse(HostLatency, out iHostLatency);
                                 if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
@@ -236,6 +237,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     regions.Add(Region);
                                     var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
                                     int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                                    UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
                                     int iHostLatency = 0;
                                     int.TryParse(HostLatency, out iHostLatency);
                                     if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)

@@ -85,8 +85,47 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             else
                 ShowAllEffectsOfClientRpc();
         }
+
+        protected override void OnActiveClient_PositionVisible(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            OnActiveClient_PositionVisibleClientRpc(velocity, gravityScale, isAlive, position, visible);
+        }
+        private void iSetActive_Rigidbody()
+        {
+            gameObject.SetActive(true);
+            _rigidBody.velocity = temp_velocity;
+            _rigidBody.gravityScale = temp_gravityScale;
+            _isActiveAndAlive = temp_isAlive;
+
+            if (_rigidBody.velocity != Vector2.zero)
+            {
+                transform.right = _rigidBody.velocity;
+            }
+            /*                if (velocity == Vector2.zero && gravityScale == 0f)
+                                base.OnImpactCleanUp();*/
+        }
         //----------------------------- Rpcs -----------------------------
 
+        Vector3 temp_velocity;
+        float temp_gravityScale;
+        bool temp_isAlive;
+        [ClientRpc]
+        private void OnActiveClient_PositionVisibleClientRpc(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            if (!IsHost)
+            {
+                transform.position = position;
+                if (!visible)
+                    gameObject.SetActive(false);
+                else
+                {
+                    temp_velocity = velocity;
+                    temp_gravityScale = gravityScale;
+                    temp_isAlive = isAlive;
+                    Invoke("iSetActive_Rigidbody", timeToActiveTrail);
+                }
+            }
+        }
         [ClientRpc]
         private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
         {
