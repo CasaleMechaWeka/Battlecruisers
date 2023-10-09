@@ -13,6 +13,9 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -53,6 +56,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             Target = activationArgs.Target;
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
+
+            if (Target.GameObject.GetComponent<PvPBuilding>() != null)
+            {
+                ulong objectId = (ulong)Target.GameObject.GetComponent<PvPBuilding>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
+                OnAddMoveControllerToClientRpc(objectId, activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            }
+            else if (Target.GameObject.GetComponent<PvPUnit>() != null)
+            {
+                ulong objectId = (ulong)Target.GameObject.GetComponent<PvPBuilding>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
+                OnAddMoveControllerToClientRpc(objectId, activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            }
 
             IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             IPvPTargetProvider targetProvider = this;
@@ -118,6 +132,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (IsClient)
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+            if (!IsHost)
+                _factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
         }
         public override void OnNetworkDespawn()
         {
@@ -129,6 +145,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override void OnSetPosition_Visible(Vector3 position, bool visible)
         {
             OnSetPosition_VisibleClientRpc(position, visible);
+        }
+
+        protected override void OnActiveClient_PositionVisible(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            OnActiveClient_PositionVisibleClientRpc(velocity, gravityScale, isAlive, position, visible);
         }
 
         // PlayExplosionSound
@@ -147,6 +168,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void Awake()
         {
             InitialiseTril();
+
+            _rigidBody = GetComponent<Rigidbody2D>();
+            _isActiveAndAlive = false;
         }
 
         protected override void HideEffectsOfClient()
@@ -164,8 +188,68 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             else
                 base.ShowAllEffectsOfClient();
         }
+        private void iSetActive_Rigidbody()
+        {
+            gameObject.SetActive(true);
+            _rigidBody.velocity = temp_velocity;
+            _rigidBody.gravityScale = temp_gravityScale;
+            _isActiveAndAlive = temp_isAlive;
+
+            if (_rigidBody.velocity != Vector2.zero)
+            {
+                transform.right = _rigidBody.velocity;
+            }
+            /*                if (velocity == Vector2.zero && gravityScale == 0f)
+                                base.OnImpactCleanUp();*/
+        }
 
         //----------------------------- Rpcs -----------------------------
+
+        [ClientRpc]
+        private void OnAddMoveControllerToClientRpc(ulong objectID, float MaxVelocityInMPerS)
+        {
+            if (!IsHost)
+            {
+                NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectID);
+                if (obj != null)
+                {
+                    IPvPTarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                    Target = target;
+                    IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);
+                    IPvPTargetProvider targetProvider = this;
+
+                    MovementController
+                        = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
+                            _rigidBody,
+                            maxVelocityProvider,
+                            targetProvider,
+                            _factoryProvider.TargetPositionPredictorFactory);
+
+                    _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+                }
+            }
+        }
+
+        Vector3 temp_velocity;
+        float temp_gravityScale;
+        bool temp_isAlive;
+        [ClientRpc]
+        private void OnActiveClient_PositionVisibleClientRpc(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            if (!IsHost)
+            {
+                transform.position = position;
+                if (!visible)
+                    gameObject.SetActive(false);
+                else
+                {
+                    temp_velocity = velocity;
+                    temp_gravityScale = gravityScale;
+                    temp_isAlive = isAlive;
+                    Invoke("iSetActive_Rigidbody", timeToActiveTrail);
+                }
+            }
+        }
 
         [ClientRpc]
         private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
