@@ -13,6 +13,7 @@ using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using System.Collections;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
 {
@@ -40,6 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             get { return _facingDirection; }
             set
             {
+                Debug.Log("===> FFF");
                 _facingDirection = value;
                 OnDirectionChange();
             }
@@ -89,6 +91,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Activate_PvPClient()
         {
+            // Disable gravity
+            rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            rigidBody.gravityScale = 0;
             base.Activate_PvPClient();
         }
 
@@ -111,8 +116,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return;*/
             if (!IsDestroyed)
             {
-                OnFixedUpdate();
+                if(!isUpdating)
+                {
+                    isUpdating = true;
+                    StartCoroutine(iOnFixedUpdte());
+                }
+            //    OnFixedUpdate();
             }
+        }
+        bool isUpdating = false;
+        IEnumerator iOnFixedUpdte()
+        {
+            yield return null;
+            OnFixedUpdate();
+            isUpdating = false;
         }
 
         protected virtual void OnFixedUpdate() { }
@@ -124,6 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnDirectionChange()
         {
+            Debug.Log("===> GGG");
             int yRotation = FindYRotation(FacingDirection);
             Quaternion rotation = gameObject.transform.rotation;
             rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, yRotation, rotation.eulerAngles.z);

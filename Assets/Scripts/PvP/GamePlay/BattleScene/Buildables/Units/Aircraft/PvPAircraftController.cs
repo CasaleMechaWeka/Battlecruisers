@@ -152,6 +152,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             _aircraftTrail.Clear();
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
+            PatrollingMovementController
+                = _movementControllerFactory.CreatePatrollingMovementController(
+                        rigidBody,
+                        maxVelocityProvider: _movementControllerFactory.CreatePatrollingVelocityProvider(this),
+                        patrolPoints: GetPatrolPoints(),
+                        positionEqualityMarginInM: PositionEqualityMarginInM);
+
+            ActiveMovementController = DummyMovementController;
+            ActiveMovementController.Velocity = Vector2.zero;
+            _kamikazeController.gameObject.SetActive(false);
             base.Activate_PvPClient();
         }
 
@@ -161,6 +171,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
             _aircraftTrailObj.SetActive(true);
+        }
+        protected override void OnBuildableCompleted_PvPClient()
+        {
+            base.OnBuildableCompleted_PvPClient();
+            ActiveMovementController = PatrollingMovementController;
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -175,6 +190,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void _movementController_DirectionChanged(object sender, PvPXDirectionChangeEventArgs e)
         {
+            Debug.Log("===> EEE");
             FacingDirection = e.NewDirection;
         }
 
@@ -182,27 +198,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnFixedUpdate();
 
-            // Logging.Verbose(Tags.AIRCRAFT, $"{GetInstanceID()}  Adjusting velocity");
-
             Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
             ActiveMovementController.AdjustVelocity();
             //compare sprite number choses to sprite name
-            if(_spriteChooser != null)
+            if (_spriteChooser != null)
             {
                 var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
-                // _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
                 _spriteRenderer.sprite = spriteOfAircraft.Item1.Sprite;
-                /*            if (pvp_IndexOfSprite.Value != spriteOfAircraft.Item2)
-                                pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;*/
             }
         }
 
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-/*            if (IsClient && _spriteChooser != null) // _spritechooser will be null until client activated
-                _spriteRenderer.sprite = _spriteChooser.ChooseSprite(pvp_IndexOfSprite.Value).Sprite;*/
-        }
         public void Kamikaze(IPvPTarget kamikazeTarget)
         {
             Assert.AreEqual(PvPUnitCategory.Aircraft, Category, "Only aircraft should kamikaze");

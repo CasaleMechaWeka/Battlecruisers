@@ -15,6 +15,9 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -38,7 +41,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             set
             {
                 _target = value;
-
+                if (_target != null)
+                {
+                    if (_target.GameObject.GetComponent<PvPBuilding>() != null)
+                    {
+                        ulong objectId = (ulong)Target.GameObject.GetComponent<PvPBuilding>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
+                        OnSetTargetClientRpc(objectId);
+                    }
+                    else if (_target.GameObject.GetComponent<PvPUnit>() != null)
+                    {
+                        ulong objectId = (ulong)Target.GameObject.GetComponent<PvPUnit>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
+                        OnSetTargetClientRpc(objectId);
+                    }
+                }
+                else
+                {
+                    OnSetTargetClientRpc(ulong.MaxValue);
+                }
                 if (_target == null)
                 {
                     ActiveMovementController = PatrollingMovementController;
@@ -110,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
 
-            OnActivatePvPClientRpc();
+            OnActivatePvPClientRpc(ParentCruiser.Position, EnemyCruiser.Position, FacingDirection, _isAtCruisingHeight);
         }
 
         public override void Activate_PvPClient()
@@ -166,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnFixedUpdate();
             if (_isAtCruisingHeight
                 && !IsInKamikazeMode
-                && Target != null && IsServer)
+                && Target != null/* && IsServer*/)
             {
                 TryBombTarget();
             }
@@ -201,8 +220,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 && IsOnTarget(transform.position, Target.Position, rigidBody.velocity.x))
             {
                 // Logging.Log(Tags.AIRCRAFT, "About to drop bomb");
-
-                _bombSpawner.SpawnShell(rigidBody.velocity.x);
+                if (IsHost)
+                    _bombSpawner.SpawnShell(rigidBody.velocity.x);
                 _haveDroppedBombOnRun = true;
             }
         }
@@ -337,7 +356,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // set Position of PvPBuildable
         protected override void CallRpc_SetPosition(Vector3 pos)
         {
-            //  OnSetPositionClientRpc(pos);
+            OnSetPositionClientRpc(pos);
         }
 
         // Set Rotation of PvPBuildable
@@ -375,6 +394,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         //-------------------------------------- RPCs -------------------------------------------------//
 
         [ClientRpc]
+        private void OnSetTargetClientRpc(ulong objectId)
+        {
+            if (!IsHost)
+            {
+                if (objectId == ulong.MaxValue)
+                {
+                    _target = null;
+                }
+                else
+                {
+                    NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
+                    if (obj != null)
+                    {
+                        IPvPTarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                        if (target == null)
+                        {
+                            target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPTarget>();
+                        }
+                        _target = target;
+                    }
+                }
+            }
+        }
+        [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
         {
             if (!IsHost)
@@ -409,10 +452,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnActivatePvPClientRpc()
+        private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, PvPDirection facingDirection, bool isAtCruiserHeight)
         {
             if (!IsHost)
+            {
+                _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, PvPRandomGenerator.Instance);
+                FacingDirection = facingDirection;
+                _isAtCruisingHeight = isAtCruiserHeight;
                 Activate_PvPClient();
+            }
         }
 
         [ClientRpc]
