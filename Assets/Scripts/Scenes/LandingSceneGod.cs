@@ -620,10 +620,12 @@ namespace BattleCruisers.Scenes
 
         public void Update()
         {
+#if PLATFORM_IOS
             if (_AppleAuthentication.m_AppleAuthManager != null)
             {
                 _AppleAuthentication.m_AppleAuthManager.Update();
             }
+#endif
         }
 
         bool isUpdatingInternetConnectivity = false;
