@@ -299,7 +299,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             {
                                 lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                             }
-                            await Task.Delay(100);
+                            await Task.Delay(1000);
                         }
                     }
                 }
@@ -340,12 +340,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         {
                             lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                         }
-                        await Task.Delay(100);
+                        await Task.Delay(1000);
                     }
                 }
                 if (isFound)
                     break;
-                await Task.Delay(100);
+                await Task.Delay(1000);
             }
         }
 
