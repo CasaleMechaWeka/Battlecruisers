@@ -465,6 +465,12 @@ namespace BattleCruisers.Scenes
             // Quick login should succeed if the credential was authorized before and not revoked
             try
             {
+                // Initialize the Apple Auth Manager
+                if (_AppleAuthManager == null)
+                {
+                    InitializeAppleAuth();
+                }
+
                 _AppleAuthManager.QuickLogin(
                     quickLoginArgs,
                     credential =>
@@ -486,6 +492,7 @@ namespace BattleCruisers.Scenes
             }
             catch (Exception ex)
             {
+                Debug.Log("####### Apple Quick Login failed.");
                 LogToScreen(ex.Message);
             }
         }
