@@ -459,11 +459,6 @@ namespace BattleCruisers.Scenes
         // Attempt Apple signin without user input:
         private void AppleQuickLogin()
         {
-            SetInteractable(false);
-            spinApple.SetActive(true);
-            labelApple.SetActive(false);
-            Debug.Log("####### Button State Set.");
-
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
 
@@ -492,9 +487,6 @@ namespace BattleCruisers.Scenes
             catch (Exception ex)
             {
                 LogToScreen(ex.Message);
-                SetInteractable(true);
-                spinApple.SetActive(false);
-                labelApple.SetActive(true);
             }
         }
 
