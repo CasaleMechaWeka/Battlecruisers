@@ -294,6 +294,7 @@ namespace BattleCruisers.Scenes
                 else
                 {
                     //Attempt Apple Quick Login
+                    AppleQuickLogin();
                 }
                 appleBtn.Initialise(soundPlayer, AppleLogin);
                 appleBtn.gameObject.SetActive(true);
@@ -456,7 +457,7 @@ namespace BattleCruisers.Scenes
         }
 
         // Attempt Apple signin without user input:
-        private void AppleAttemptQuickLogin()
+        private void AppleQuickLogin()
         {
             SetInteractable(false);
             spinApple.SetActive(true);
