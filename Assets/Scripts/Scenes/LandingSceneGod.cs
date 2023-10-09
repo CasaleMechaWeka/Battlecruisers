@@ -96,6 +96,7 @@ namespace BattleCruisers.Scenes
 
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
         public static IAppleAuthentication _AppleAuthentication { get; set; }
+        public IAppleAuthManager _AppleAuthManager;
         private const string AppleUserIdKey = "AppleUserId";
 
 
@@ -266,6 +267,7 @@ namespace BattleCruisers.Scenes
 #elif PLATFORM_IOS
                 _AppleAuthentication = new AppleAuthentication();
                 _AppleAuthentication.Initialize();
+                _AppleAuthManager = _AppleAuthentication.m_AppleAuthManager;
                 // If at any point we receive a credentials revoked notification, we delete the stored User ID
                 _AppleAuthentication.m_AppleAuthManager.SetCredentialsRevokedCallback(result =>
                 {
@@ -621,9 +623,9 @@ namespace BattleCruisers.Scenes
         public void Update()
         {
 #if PLATFORM_IOS
-            if (_AppleAuthentication.m_AppleAuthManager != null)
+            if (_AppleAuthManager != null)
             {
-                _AppleAuthentication.m_AppleAuthManager.Update();
+                _AppleAuthManager.Update();
             }
 #endif
         }
