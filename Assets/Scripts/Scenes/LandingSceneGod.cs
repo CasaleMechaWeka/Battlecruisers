@@ -627,6 +627,12 @@ namespace BattleCruisers.Scenes
             {
                 _AppleAuthManager.Update();
             }
+            else
+            {
+                _AppleAuthentication.Initialize();
+                _AppleAuthManager = _AppleAuthentication.m_AppleAuthManager;
+                Debug.Log("####### AppleAuthManager was null, but now it's been initialized. This should only happen once!");
+            }
 #endif
         }
 
