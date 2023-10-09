@@ -55,6 +55,7 @@ namespace BattleCruisers.Utils.Network
                 credential =>
                 {
                     var appleIDCredential = credential as IAppleIDCredential;
+                    Debug.Log("####### User Credential: " + appleIDCredential.ToString());
                     if (appleIDCredential != null)
                     {
                         var idToken = Encoding.UTF8.GetString(
