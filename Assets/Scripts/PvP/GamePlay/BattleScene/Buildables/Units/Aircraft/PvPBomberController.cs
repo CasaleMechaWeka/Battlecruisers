@@ -81,7 +81,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
@@ -117,19 +116,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
-            base.Activate(activationArgs);
 
+            OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
+            base.Activate(activationArgs);
             _haveDroppedBombOnRun = false;
             _isAtCruisingHeight = false;
-
             PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
             IPvPTargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
-
             _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
-
-            OnActivatePvPClientRpc(ParentCruiser.Position, EnemyCruiser.Position, FacingDirection, _isAtCruisingHeight);
         }
 
         public override void Activate_PvPClient()
@@ -145,7 +141,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
                 _targetProcessor.AddTargetConsumer(this);
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
-
                 OnBuildableCompletedClientRpc();
             }
             else
@@ -153,7 +148,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted_PvPClient();
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
             }
-
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
@@ -255,6 +249,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 newTargetVelocity *= -1;
             }
             _bomberMovementControler.TargetVelocity = newTargetVelocity;
+
         }
 
         /// <summary>

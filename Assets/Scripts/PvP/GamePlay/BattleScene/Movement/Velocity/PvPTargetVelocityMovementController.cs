@@ -34,12 +34,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public override void AdjustVelocity()
         {
-            Debug.Log("===> XXX");
             Vector2 desiredVelocity = FindDesiredVelocity();
 
             if (Vector2.Distance(_rigidBody.velocity, desiredVelocity) <= VELOCITY_EQUALITY_MARGIN)
             {
-                Debug.Log("===> YYY");
                 _rigidBody.velocity = desiredVelocity;
             }
             else
@@ -57,7 +55,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
                         _time.DeltaTime);
 
                 Logging.Verbose(Tags.MOVEMENT, $"Velocity: {oldVelocity} > {Velocity}");
-                Debug.Log("===> AAA");
                 HandleDirectionChange(oldVelocity, Velocity);
             }
         }

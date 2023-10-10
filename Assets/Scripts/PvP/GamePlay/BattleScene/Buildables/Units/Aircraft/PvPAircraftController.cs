@@ -77,7 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
 
                 _activeMovementController = value;
-
                 ActiveMovementController.DirectionChanged += _movementController_DirectionChanged;
                 ActiveMovementController.Activate();
             }
@@ -104,7 +103,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise( /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
         {
             base.Initialise( /* uiManager, */ factoryProvider);
-
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _fuzziedMaxVelocityInMPerS = PvPRandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, PvPChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
@@ -176,6 +174,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted_PvPClient();
             ActiveMovementController = PatrollingMovementController;
+            pvp_IndexOfSprite.OnValueChanged += OnSpriteChanged;
+        }
+        private void OnSpriteChanged(int oldSprite, int newSprite)
+        {
+            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(newSprite).Sprite;
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -190,7 +193,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void _movementController_DirectionChanged(object sender, PvPXDirectionChangeEventArgs e)
         {
-            Debug.Log("===> EEE");
             FacingDirection = e.NewDirection;
         }
 
@@ -198,13 +200,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnFixedUpdate();
 
-            Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
+            //        Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
+            if (ActiveMovementController == null)
+            {
+                Debug.Log("OnInitialised() should always be called before OnFixedUpdate()");
+                return;
+            }
             ActiveMovementController.AdjustVelocity();
             //compare sprite number choses to sprite name
             if (_spriteChooser != null)
             {
                 var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
                 _spriteRenderer.sprite = spriteOfAircraft.Item1.Sprite;
+                pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;
             }
         }
 
@@ -278,6 +286,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _aircraftTrail.Clear();
         }
 
+        protected override void OnDestroyedEvent()
+        {
+            base.OnDestroyedEvent();
+        }
+
         protected override bool ShouldShowDeathEffects()
         {
             return
@@ -299,7 +312,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             // Make aircraft spin a bit for coolness
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
-
         }
 
         private void OnKamikaze()

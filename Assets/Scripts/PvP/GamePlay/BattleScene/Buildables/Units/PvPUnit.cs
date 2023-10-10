@@ -41,7 +41,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             get { return _facingDirection; }
             set
             {
-                Debug.Log("===> FFF");
                 _facingDirection = value;
                 OnDirectionChange();
             }
@@ -112,16 +111,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void FixedUpdate()
         {
-/*            if (!IsHost)
-                return;*/
+            if (!IsHost)
+                return;
             if (!IsDestroyed)
             {
-                if(!isUpdating)
+                if (!isUpdating)
                 {
                     isUpdating = true;
                     StartCoroutine(iOnFixedUpdte());
                 }
-            //    OnFixedUpdate();
             }
         }
         bool isUpdating = false;
@@ -141,7 +139,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnDirectionChange()
         {
-            Debug.Log("===> GGG");
             int yRotation = FindYRotation(FacingDirection);
             Quaternion rotation = gameObject.transform.rotation;
             rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, yRotation, rotation.eulerAngles.z);
@@ -180,6 +177,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnDestroyedEvent();
             if (IsClient)
                 _coreEngineAudioSource.Stop();
+            if (!IsHost)
+            {
+                if (ShouldShowDeathEffects())
+                {
+                    ShowDeathEffects();
+                }
+            }
         }
 
         protected override void InternalDestroy()
