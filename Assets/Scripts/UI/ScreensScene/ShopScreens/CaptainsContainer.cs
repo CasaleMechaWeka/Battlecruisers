@@ -5,10 +5,12 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
+using NSubstitute.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
@@ -81,20 +83,36 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
                         }
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
                         }
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
+
+                    string logName = currentCaptainData.NameStringKeyBase;
+#if LOG_ANALYTICS
+                Debug.Log("Analytics: " + logName);
+#endif
+                    IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                    Dictionary<string, object> transactionDetails = new Dictionary<string, object>() { { "exoIndex", currentCaptainData.Index } };
+                    try
+                    {
+                        AnalyticsService.Instance.CustomData("Shop_Exo_Bought", transactionDetails);
+                        AnalyticsService.Instance.Flush();
+                    }
+                    catch (ConsentCheckException ex)
+                    {
+                        Debug.Log(ex.Message);
+                    }
                 }
                 else
                 {
@@ -109,7 +127,7 @@ namespace BattleCruisers.UI.ScreensScene
                         _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
 
                         // Subtract from local economy:
                         _dataProvider.GameModel.Coins -= currentCaptainData.CaptainCost;
@@ -127,7 +145,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        MessageBox.Instance.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -135,7 +153,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                MessageBox.Instance.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
                 return;
             }
         }

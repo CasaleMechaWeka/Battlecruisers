@@ -223,28 +223,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPTime time = PvPTimeBC.Instance;
             _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
             _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
-
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
-
             _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+            /*            string logName = "Battle_Begin";
 
-            string logName = "Battle_Begin";
-            /*
-#if LOG_ANALYTICS
-                        Debug.Log("Analytics: " + logName);
-#endif
-            try
-            {
-                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.Message);
-            }
-            */
+            #if LOG_ANALYTICS
+                                    Debug.Log("Analytics: " + logName);
+            #endif
+                        try
+                        {
+                            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                            AnalyticsService.Instance.Flush();
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Log(ex.Message);
+                        }
+                        */
         }
 
+        public async void Initialise_Rest()
+        {
+            await factoryProvider.Initialise_Rest();
+            Debug.Log("====> All initialized");
+        }
 
         private void RegisteredAllBuildalbesToServer()
         {

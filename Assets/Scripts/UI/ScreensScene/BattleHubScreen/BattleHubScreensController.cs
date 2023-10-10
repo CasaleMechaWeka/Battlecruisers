@@ -223,9 +223,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _screensSceneGod.GoToSkirmishScreen();
         }
 
-
-
-
         public void GotoPvPMode()
         {
             if (ScreensSceneGod.Instance.requiredVer != "EDITOR" && VersionToInt(Application.version) < VersionToInt(ScreensSceneGod.Instance.requiredVer))

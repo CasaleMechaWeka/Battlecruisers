@@ -29,8 +29,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         protected void HandleDirectionChange(Vector2 oldVelocity, Vector2 currentVelocity)
         {
+            Debug.Log("===> BBB");
             if (DirectionChanged != null)
             {
+                Debug.Log("===> CCC");
                 PvPDirection? newDirection = null;
 
                 if (oldVelocity.x >= 0 && currentVelocity.x < 0)
@@ -44,6 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
                 if (newDirection != null)
                 {
+                    Debug.Log("===> DDD");
                     DirectionChanged.Invoke(this, new PvPXDirectionChangeEventArgs((PvPDirection)newDirection));
                 }
             }

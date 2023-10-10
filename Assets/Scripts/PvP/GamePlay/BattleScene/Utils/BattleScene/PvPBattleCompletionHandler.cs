@@ -28,7 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private Team team;
         private float playerARating;
         private float playerBRating;
-
+        public float registeredTime { get; set; }
+        private const int POST_GAME_WAIT_TIME_IN_S = 10 * 1000;
         public PvPBattleCompletionHandler(
             IApplicationModel applicationModel,
             ISceneNavigator sceneNavigator,
@@ -43,6 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             team = SynchedServerData.Instance.GetTeam();
             playerARating = SynchedServerData.Instance.playerARating.Value;
             playerBRating = SynchedServerData.Instance.playerBRating.Value;
+            registeredTime = -1;
         }
 
         public async void CompleteBattle(bool wasVictory, bool retryLevel)
@@ -52,35 +54,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
             _isCompleted = true;
-            await Task.Delay(10);
             if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.Destroy();
             }
-            var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
-            if (team == Cruisers.Team.LEFT)
+            if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
-                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
-                _applicationModel.DataProvider.SaveGame();
-            }
-            else
-            {
-                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
-                _applicationModel.DataProvider.SaveGame();
-            }
-
-            double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
-            const string LeaderboardID = "BC-PvP1v1Leaderboard";
-            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
-            if (isSetPlayerName)
-            {
-                try
+                var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
+                if (team == Cruisers.Team.LEFT)
                 {
-                    await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
+                    _applicationModel.DataProvider.SaveGame();
                 }
-                catch
+                else
                 {
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
+                    _applicationModel.DataProvider.SaveGame();
+                }
 
+                double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
+                const string LeaderboardID = "BC-PvP1v1Leaderboard";
+                bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+                if (isSetPlayerName)
+                {
+                    try
+                    {
+                        await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
 
@@ -92,6 +96,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //_applicationModel.ShowPostBattleScreen = true;
             //<---
             PvPTimeBC.Instance.TimeScale = 1;
+            if (wasVictory)
+            {
+                PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(PvPBattleSceneGodClient.Instance.commonStrings.GetString("EnemyLeft"), () => PvPBattleSceneGodClient.Instance.messageBox.HideMessage());
+                await Task.Delay(POST_GAME_WAIT_TIME_IN_S);
+            }
             if (NetworkManager.Singleton.IsConnectedClient)
             {
                 NetworkManager.Singleton.Shutdown(true);
@@ -100,14 +109,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (wasVictory)
             {
                 if (PvPBattleSceneGodClient.Instance.wasOpponentDisconnected)
-                    PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(PvPBattleSceneGodClient.Instance.commonStrings.GetString("EnemyLeft"), () => GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE));
-                //_sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
+                {
+                    GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE);
+                }
                 else
-                    //  _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                     GoToScene(PvPSceneNames.SCREENS_SCENE);
             }
             else
-                //   _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
                 GoToScene(PvPSceneNames.SCREENS_SCENE);
         }
 
@@ -155,39 +163,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
             _isCompleted = true;
-            await Task.Delay(1000);
-
             if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.Destroy();
             }
-
-            var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
-            if (team == Cruisers.Team.LEFT)
+            if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
-                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
-                _applicationModel.DataProvider.SaveGame();
-            }
-            else
-            {
-                _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
-                _applicationModel.DataProvider.SaveGame();
-            }
-
-            double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
-            const string LeaderboardID = "BC-PvP1v1Leaderboard";
-
-            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
-            if (isSetPlayerName)
-            {
-                try
+                var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
+                if (team == Cruisers.Team.LEFT)
                 {
-                    await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
+                    _applicationModel.DataProvider.SaveGame();
                 }
-                catch
+                else
                 {
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
+                    _applicationModel.DataProvider.SaveGame();
+                }
+                double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
+                const string LeaderboardID = "BC-PvP1v1Leaderboard";
+                bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+                if (isSetPlayerName)
+                {
+                    try
+                    {
+                        await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
+
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
 
@@ -195,7 +202,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //_applicationModel.ShowPostBattleScreen = true;
             //<---
             PvPTimeBC.Instance.TimeScale = 1;
-
+            await Task.Delay(POST_GAME_WAIT_TIME_IN_S);
             if (wasVictory)
             {
                 if (team == Cruisers.Team.LEFT)
@@ -206,22 +213,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
-                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                                        {
-                                            NetworkManager.Singleton.Shutdown(true);
-                                            DestroyAllNetworkObjects();
-                                        }*/
                     NetworkManager.Singleton.Shutdown(true);
                     DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
                 else
                 {
-                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                                        {
-                                            NetworkManager.Singleton.Shutdown(true);
-                                            DestroyAllNetworkObjects();
-                                        }*/
                     NetworkManager.Singleton.Shutdown(true);
                     DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
@@ -231,11 +228,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (team == Cruisers.Team.LEFT)
                 {
-                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                                        {
-                                            NetworkManager.Singleton.Shutdown(true);
-                                            DestroyAllNetworkObjects();
-                                        }*/
                     NetworkManager.Singleton.Shutdown(true);
                     DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
@@ -248,11 +240,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                     }
                     _applicationModel.DataProvider.SaveGame();
-                    /*                    if (!NetworkManager.Singleton.IsHost && NetworkManager.Singleton.IsConnectedClient)
-                                        {
-                                            NetworkManager.Singleton.Shutdown(true);
-                                            DestroyAllNetworkObjects();
-                                        }*/
                     NetworkManager.Singleton.Shutdown(true);
                     DestroyAllNetworkObjects();
                     _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);

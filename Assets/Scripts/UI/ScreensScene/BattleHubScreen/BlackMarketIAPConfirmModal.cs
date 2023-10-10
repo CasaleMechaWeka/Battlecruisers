@@ -70,11 +70,11 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
         {
             if(await LandingSceneGod.CheckForInternetConnection())
             {
-                MessageBox.Instance.ShowMessage("You have no Internet Connection!");
+                ScreensSceneGod.Instance.messageBox.ShowMessage("You have no Internet Connection!");
             }
             else if(AuthenticationService.Instance.IsSignedIn)
             {
-                MessageBox.Instance.ShowMessage("You are not signed in.");
+                ScreensSceneGod.Instance.messageBox.ShowMessage("You are not signed in.");
             }
         }
     }

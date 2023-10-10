@@ -15,10 +15,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEditor;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using Unity.Netcode.Components;
-using System.Collections;
+using BattleCruisers.Movement.Velocity;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -91,8 +90,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             IPvPExplosionPoolChooser explosionPoolChooser = GetComponent<IPvPExplosionPoolChooser>();
             Assert.IsNotNull(explosionPoolChooser);
             _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
-
-
             _isActiveAndAlive = false;
             OnSetPosition_Visible(Position, false);
             gameObject.SetActive(false);
@@ -130,11 +127,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
 
-            if (needToTeleport)
-                GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
-            OnSetPosition_Visible(Position, true);
+            /*            OnSetPosition_Visible(Position, true);
+                        OnActiveClient(activationArgs.InitialVelocityInMPerS, activationArgs.ProjectileStats.GravityScale, _isActiveAndAlive);*/
 
-            OnActiveClient(_rigidBody.velocity, _rigidBody.gravityScale, _isActiveAndAlive);
+            OnActiveClient_PositionVisible(activationArgs.InitialVelocityInMPerS, activationArgs.ProjectileStats.GravityScale, _isActiveAndAlive, Position, true);
+            if (needToTeleport && GetComponent<NetworkTransform>() != null)
+                GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
         }
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
         {
@@ -154,9 +152,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 return;
             }
-
             if (_targetToDamage != null)
             {
+                MovementController = null;
                 DestroyProjectile();
                 _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
                 _isActiveAndAlive = false;
@@ -203,7 +201,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void AdjustGameObjectDirection()
         {
             Logging.Verbose(Tags.SHELLS, $"_rigidBody.velocity: {_rigidBody.velocity}");
-
             if (_rigidBody.velocity != Vector2.zero)
             {
                 transform.right = _rigidBody.velocity;
@@ -242,6 +239,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void OnActiveClient(Vector3 velocity, float gravityScale, bool isAlive)
         {
+        }
+
+        protected virtual void OnActiveClient_PositionVisible(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+
         }
 
         protected virtual void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)

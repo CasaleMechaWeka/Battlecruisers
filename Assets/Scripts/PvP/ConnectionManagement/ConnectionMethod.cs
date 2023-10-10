@@ -12,6 +12,8 @@ using Unity.Services.Relay;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Data;
+using Unity.Services.Qos;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -149,12 +151,19 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
             // Create relay allocation
             Allocation hostAllocation = await RelayService.Instance.CreateAllocationAsync(m_ConnectionManager.MaxConnectedPlayers, region: null);
+
             var joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
             Debug.Log($"server: connection data: {hostAllocation.ConnectionData[0]} {hostAllocation.ConnectionData[1]}, " +
                 $"allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
 
+            var regions = new List<string>();
+            regions.Add(hostAllocation.Region);
+            var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+            int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
+            Debug.Log("===>host latency ---> " + averageLatency);
             m_LocalLobby.RelayJoinCode = joinCode;
-
+            m_LocalLobby.Region = hostAllocation.Region;
+            m_LocalLobby.Latency = averageLatency.ToString();
             //next line enable lobby and relay services integration
             await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
             await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(hostAllocation.AllocationIdBytes.ToString(), joinCode);

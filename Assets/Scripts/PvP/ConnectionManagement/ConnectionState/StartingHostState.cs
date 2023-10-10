@@ -8,6 +8,7 @@ using Unity.Netcode;
 using UnityEngine.Android;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -86,8 +87,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             try
             {
-/*                MatchmakingScreenController.Instance.fleeButton.SetActive(true);
-                MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
                 await m_ConnectionMethod.SetupHostConnectionAsync();
                 Debug.Log($"Created relay allocation with join code {m_LocalLobby.RelayJoinCode}");
                 // NGO's StartHost launches everything
@@ -98,7 +97,18 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             catch (Exception e)
             {
+                Debug.Log("Error ---> connecting client, see following exception");
                 Debug.Log(e.Message);
+                LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but detected unknown network error, try again later.");
+/*                switch (e.Message)
+                {
+                    case "Latency":
+                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but your network seems to be not good enough for 1v1 Showdown.");
+                        break;
+                    default:
+                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but detected unknown network error, try again later.");
+                        break;
+                }*/
                 StartHostFailed();
             }
         }

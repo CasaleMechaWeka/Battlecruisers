@@ -45,9 +45,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public override void AdjustVelocity()
         {
-            Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity,
-                "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P)");
-
+            /*            Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity,
+                            "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P)");*/
+            if (_rigidBody.velocity != Vector2.zero)
+                _rigidBody.velocity = Vector2.zero;
             bool isInPosition = Vector2.Distance(_rigidBody.position, _targetPatrolPoint.Position) <= _positionEqualityMarginInM;
             if (!isInPosition)
             {

@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             get
             {
                 return
-                    Repairable != null &&
+                    Repairable != null && SynchedServerData.Instance != null &&
                       (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? Repairable.Faction == PvPFaction.Blues : Repairable.Faction == PvPFaction.Reds) &&
                       Repairable.RepairCommand.CanExecute;
             }

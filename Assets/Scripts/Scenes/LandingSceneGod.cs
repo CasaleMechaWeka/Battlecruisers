@@ -40,6 +40,9 @@ using AppleAuth.Extensions;
 using AppleAuth.Interfaces;
 using AppleAuth.Native;
 #endif
+using UnityEngine.UI;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using System.Media;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
@@ -113,6 +116,7 @@ namespace BattleCruisers.Scenes
         private INetworkState ConnectedState = new InternetConnectivity(true);
         private INetworkState DisconnectedState = new InternetConnectivity(false);
 
+        public MessageBox messagebox;
         public void LogToScreen(string log)
         {
             if (displayOnscreenLogs)
@@ -123,8 +127,10 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
+            if (Instance == null)
+                Instance = this;
             LogToScreen(Application.platform.ToString());
-
+            messagebox.HideMessage();
             Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
             Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
@@ -158,11 +164,7 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = ConnectedState;
             else
                 CurrentInternetConnectivity = DisconnectedState;
-
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
-
-            if (Instance == null)
-                Instance = this;
 
             ISoundFetcher soundFetcher = new SoundFetcher();
             AudioSource platformAudioSource = GetComponent<AudioSource>();
@@ -181,6 +183,7 @@ namespace BattleCruisers.Scenes
             {
                 var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
+                //    options.SetEnvironmentName("dev");
                 var profile = GetProfile();
                 if (profile.Length > 0)
                 {
@@ -221,6 +224,7 @@ namespace BattleCruisers.Scenes
             }
 
             IDataProvider dataProvider = applicationModel.DataProvider;
+            messagebox.Initialize(dataProvider, soundPlayer);
             MusicPlayer = CreateMusicPlayer(dataProvider);
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
@@ -307,6 +311,7 @@ namespace BattleCruisers.Scenes
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
+
         }
 
         private void InitializeAppleAuth()

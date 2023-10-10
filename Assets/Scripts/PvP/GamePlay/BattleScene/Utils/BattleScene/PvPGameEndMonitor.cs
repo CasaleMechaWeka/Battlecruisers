@@ -50,11 +50,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= _battleCompletionHandler_BattleCompleted;
                 _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
-
                 _gameEndHandler.HandleGameEnd();
-
                 GameEnded?.Invoke(this, EventArgs.Empty);
-
                 _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.None;
             }
         }
