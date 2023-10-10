@@ -41,23 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             set
             {
                 _target = value;
-                if (_target != null)
-                {
-                    if (_target.GameObject.GetComponent<PvPBuilding>() != null)
-                    {
-                        ulong objectId = (ulong)Target.GameObject.GetComponent<PvPBuilding>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
-                        OnSetTargetClientRpc(objectId);
-                    }
-                    else if (_target.GameObject.GetComponent<PvPUnit>() != null)
-                    {
-                        ulong objectId = (ulong)Target.GameObject.GetComponent<PvPUnit>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
-                        OnSetTargetClientRpc(objectId);
-                    }
-                }
-                else
-                {
-                    OnSetTargetClientRpc(ulong.MaxValue);
-                }
+
                 if (_target == null)
                 {
                     ActiveMovementController = PatrollingMovementController;
