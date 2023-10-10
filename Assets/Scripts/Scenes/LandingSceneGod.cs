@@ -104,10 +104,14 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        #if PLATFORM_ANDROID
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
+        #endif
+        #if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
         public IAppleAuthentication _AppleAuthentication { get; set; }
         private const string AppleUserIdKey = "AppleUserId";
+        #endif
 
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
@@ -316,9 +320,11 @@ namespace BattleCruisers.Scenes
 
         private void InitializeAppleAuth()
         {
+            #if PLATFORM_IOS
             var deserializer = new PayloadDeserializer();
             _AppleAuthManager = new AppleAuthManager(deserializer);
             Debug.Log("####### Apple Auth Initialized.");
+            #endif
         }
 
         void SetInteractable(bool interactable)
@@ -369,9 +375,9 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
-                    #endif
+#endif
                 }
                 catch (Exception ex)
                 {
@@ -386,9 +392,9 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
                 await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
-                #endif
+#endif
             }
             catch (Exception ex)
             {
@@ -399,6 +405,7 @@ namespace BattleCruisers.Scenes
         // Apple login by button:
         private async void AppleLogin()
         {
+            #if PLATFORM_IOS
             LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
             if (!AuthenticationService.Instance.IsSignedIn)
             {
@@ -459,11 +466,13 @@ namespace BattleCruisers.Scenes
                     SetInteractable(true);
                 }
             }
+            #endif
         }
 
         // Attempt Apple signin without user input:
         private void AppleQuickLogin()
         {
+            #if PLATFORM_IOS
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
 
@@ -500,11 +509,13 @@ namespace BattleCruisers.Scenes
                 Debug.Log("####### Apple Quick Login failed.");
                 LogToScreen(ex.Message);
             }
+            #endif
         }
 
         // Sign in a returning player or create new player
         private async Task SignInWithAppleAsync(string idToken)
         {
+            #if PLATFORM_IOS
             try
             {
                 await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
@@ -522,6 +533,7 @@ namespace BattleCruisers.Scenes
                 // Notify the player with the proper error message
                 Debug.LogError("####### Error: " + ex.Message);
             }
+            #endif
         }
 
         // Guest login by button:
