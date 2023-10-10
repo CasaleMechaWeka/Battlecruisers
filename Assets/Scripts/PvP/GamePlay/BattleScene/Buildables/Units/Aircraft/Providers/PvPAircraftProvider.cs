@@ -112,6 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 // Only let bombers fuzz downwards, so:
                 // 1. They will always be in range of AA guns
                 // 2. The don't cover the tutorial explanation text :)
+
                 cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM, onlyDownwards: true);
             }
 

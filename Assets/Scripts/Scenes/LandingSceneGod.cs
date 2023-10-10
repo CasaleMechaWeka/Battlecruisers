@@ -182,8 +182,8 @@ namespace BattleCruisers.Scenes
             try
             {
                 var options = new InitializationOptions();
-                options.SetEnvironmentName("production");
-                //    options.SetEnvironmentName("dev");
+                //   options.SetEnvironmentName("production");
+                options.SetEnvironmentName("dev");
                 var profile = GetProfile();
                 if (profile.Length > 0)
                 {

@@ -17,7 +17,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using Unity.Netcode.Components;
-using BattleCruisers.Movement.Velocity;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -163,9 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 MovementController.AdjustVelocity();
             }
-
             AdjustGameObjectDirection();
-
             PositionChanged?.Invoke(this, EventArgs.Empty);
         }
 

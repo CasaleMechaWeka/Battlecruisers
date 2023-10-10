@@ -43,10 +43,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             OnActiveClientRpc(velocity, gravityScale, isAlive);
         }
 
+        protected override void OnActiveClient_PositionVisible(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            OnActiveClient_PositionVisibleClientRpc(velocity, gravityScale, isAlive, position, visible);
+        }
+
+        [ClientRpc]
+        private void OnActiveClient_PositionVisibleClientRpc(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            if (!IsHost)
+            {
+                transform.position = position;
+                gameObject.SetActive(visible);
+                _rigidBody.velocity = velocity;
+                _rigidBody.gravityScale = gravityScale;
+                _isActiveAndAlive = isAlive;
+            }
+        }
+
         [ClientRpc]
         private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
         {
-            if(!IsHost)
+            if (!IsHost)
             {
                 transform.position = position;
                 gameObject.SetActive(visible);
@@ -56,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         [ClientRpc]
         private void OnActiveClientRpc(Vector3 velocity, float gravityScale, bool isAlive)
         {
-            if(!IsHost)
+            if (!IsHost)
             {
                 _rigidBody.velocity = velocity;
                 _rigidBody.gravityScale = gravityScale;
