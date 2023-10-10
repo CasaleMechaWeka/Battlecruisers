@@ -99,16 +99,17 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 Debug.Log("Error ---> connecting client, see following exception");
                 Debug.Log(e.Message);
-                LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but detected unknown network error, try again later.");
-/*                switch (e.Message)
-                {
-                    case "Latency":
-                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but your network seems to be not good enough for 1v1 Showdown.");
-                        break;
-                    default:
-                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but detected unknown network error, try again later.");
-                        break;
-                }*/
+                LandingSceneGod.Instance.messagebox.ShowMessage(LandingSceneGod.Instance.commonStrings.GetString("NetworkError"));
+
+                /*                switch (e.Message)
+                                {
+                                    case "Latency":
+                                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but your network seems to be not good enough for 1v1 Showdown.");
+                                        break;
+                                    default:
+                                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but detected unknown network error, try again later.");
+                                        break;
+                                }*/
                 StartHostFailed();
             }
         }
