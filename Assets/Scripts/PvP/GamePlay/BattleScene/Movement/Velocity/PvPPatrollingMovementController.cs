@@ -94,7 +94,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             {
                 _patrolPoints.Remove(reachedPatrolPoint);
             }
-            Debug.Log("===> reachedPatrolPoint ---> " + reachedPatrolPoint.Position);
             reachedPatrolPoint.ActionOnReached.Invoke();
         }
 
