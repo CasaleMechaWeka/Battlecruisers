@@ -138,11 +138,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             ActiveMovementController = DummyMovementController;
             ActiveMovementController.Velocity = Vector2.zero;
-
-            _aircraftTrail.Clear();
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
             _onSeabed = false;
-
             _kamikazeController.gameObject.SetActive(false);
         }
 
