@@ -45,19 +45,19 @@ namespace BattleCruisers.UI.ScreensScene
             switch (e.CoinsPack)
             {
                 case IAPManager.small_coin_pack:
-                    _dataProvider.GameModel.Coins += 100;
+                    _dataProvider.GameModel.Coins += 275;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack100Purchased"));
                     break;
                 case IAPManager.medium_coin_pack:
-                    _dataProvider.GameModel.Coins += 500;
+                    _dataProvider.GameModel.Coins += 900;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack500Purchased"));
                     break;
                 case IAPManager.large_coin_pack:
-                    _dataProvider.GameModel.Coins += 1000;
+                    _dataProvider.GameModel.Coins += 3750;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack1000Purchased"));
                     break;
                 case IAPManager.extralarge_coin_pack:
-                    _dataProvider.GameModel.Coins += 5000;
+                    _dataProvider.GameModel.Coins += 20000;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack5000Purchased"));
                     break;
             }
