@@ -177,7 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _uiManager = uiManager;
             _helper = helper;
             SlotAccessor = _slotWrapperController.Initialise(this);
-
+            SlotHighlighter = new PvPSlotHighlighter(SlotAccessor, new PvPFreeSlotFilter(), BuildingMonitor);
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 
@@ -406,7 +406,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             else
             {
                 // Unhighlight the one slot that has just been taken
-                slotHighlighter.HighlightAvailableSlots(buildingStarted.SlotSpecification);
+                if (IsOwner)
+                    slotHighlighter.HighlightAvailableSlots(buildingStarted.SlotSpecification);
             }
         }
 

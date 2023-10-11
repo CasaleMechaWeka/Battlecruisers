@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -31,6 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         //------------------------------------ methods for sync, written by Sava ------------------------------//
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
+            OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction);
             base.Activate(activationArgs);
             OnActivatePvPClientRpc();
         }
@@ -115,6 +118,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
+
+        [ClientRpc]
+        private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, PvPDirection facingDirection)
+        {
+            if (!IsHost)
+            {
+                _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, PvPRandomGenerator.Instance);
+                FacingDirection = facingDirection;
+                Activate_PvPClient();
+            }
+        }
 
         [ClientRpc]
         private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
