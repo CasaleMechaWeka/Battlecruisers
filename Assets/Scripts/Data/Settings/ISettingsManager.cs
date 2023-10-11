@@ -34,7 +34,8 @@ namespace BattleCruisers.Data.Settings
         string Language { get; set; }
         Vector2 Resolution { get; set; }
         bool ShowAds { get; set; }
-
+        bool TurboMode { get; set; }
+        bool RichMode { get; set; }
         void Save();
     }
 }
