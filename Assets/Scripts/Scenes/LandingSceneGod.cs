@@ -238,47 +238,48 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
-                #if PLATFORM_ANDROID
-                _GoogleAuthentication = new GoogleAuthentication();
-                _GoogleAuthentication.InitializePlayGamesLogin();
-                //await AttemptSilentSigningAsync();
-                ShowSignInScreen(soundPlayer);
+            #if PLATFORM_ANDROID
+            _GoogleAuthentication = new GoogleAuthentication();
+            _GoogleAuthentication.InitializePlayGamesLogin();
+            //await AttemptSilentSigningAsync();
+            ShowSignInScreen(soundPlayer);
 
-                // should be enabled after completion initialization
+            // should be enabled after completion initialization
+            LogToScreen(""); // INTERNET
 
-                LogToScreen(""); // INTERNET
+            #elif PLATFORM_IOS
+            InitializeAppleAuth();
+            if (_AppleAuthentication == null)
+            {
+                _AppleAuthentication = new AppleAuthentication();
+            }
 
-                #elif PLATFORM_IOS
-                InitializeAppleAuth();
-                if(_AppleAuthentication == null)
-                {
-                    _AppleAuthentication = new AppleAuthentication();
-                }
+            // If at any point we receive a credentials revoked notification, we delete the stored User ID
+            _AppleAuthManager.SetCredentialsRevokedCallback(result =>
+            {
+                Debug.Log("Received revoked callback " + result);
+                PlayerPrefs.DeleteKey(AppleUserIdKey);
+            });
 
-                // If at any point we receive a credentials revoked notification, we delete the stored User ID
-                _AppleAuthManager.SetCredentialsRevokedCallback(result =>
-                {
-                    Debug.Log("Received revoked callback " + result);
-                    PlayerPrefs.DeleteKey(AppleUserIdKey);
-                });
-                // If we have an Apple User Id available, get the credential status for it
-                if (PlayerPrefs.HasKey(AppleUserIdKey))
-                {
-                    var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
-                    CheckCredentialStatusForUserId(storedAppleUserId, soundPlayer);
-                }
-                // If we do not have an stored Apple User Id, attempt a quick login
-                else
-                {
-                    //Attempt Apple Quick Login
-                    AppleQuickLogin(soundPlayer);
-                }
-                #endif
+            // If we have an Apple User Id available, get the credential status for it
+            if (PlayerPrefs.HasKey(AppleUserIdKey))
+            {
+                var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
+                //CheckCredentialStatusForUserId(storedAppleUserId, soundPlayer);
+            }
+            // If we do not have an stored Apple User Id, attempt a quick login
+            else
+            {
+                //Attempt Apple Quick Login
+                AppleQuickLogin(soundPlayer);
+            }
+            #endif
             }
             else
             {
                 LogToScreen("No internet, continue offline"); // NO INTERNET
             }
+            ShowSignInScreen(soundPlayer);
         }
 
         private void ShowSignInScreen(ISingleSoundPlayer soundPlayer)
@@ -507,7 +508,7 @@ namespace BattleCruisers.Scenes
                         if (appleIdCredential != null)
                         {
                             PlayerPrefs.SetString(AppleUserIdKey, credential.User);
-                            HandleAppleSignIn(appleIdCredential);
+                            HandleAppleSignIn(appleIdCredential, soundPlayer);
                         }
                     },
                     error =>
@@ -526,7 +527,7 @@ namespace BattleCruisers.Scenes
         }
 
         // Used by QuickLogin to process the AppleIDCredential
-        private async void HandleAppleSignIn(IAppleIDCredential credential)
+        private async void HandleAppleSignIn(IAppleIDCredential credential, ISingleSoundPlayer soundPlayer)
         {
             try
             {
@@ -536,6 +537,7 @@ namespace BattleCruisers.Scenes
             catch (Exception ex)
             {
                 Debug.LogError("Error while processing Apple Sign-in: " + ex.Message);
+                ShowSignInScreen(soundPlayer);
             }
         }
 
