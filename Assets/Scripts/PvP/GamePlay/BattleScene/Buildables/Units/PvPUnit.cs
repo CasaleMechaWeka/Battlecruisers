@@ -177,12 +177,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnDestroyedEvent();
             if (IsClient)
                 _coreEngineAudioSource.Stop();
-            if (!IsHost)
+            if (ShouldShowDeathEffects())
             {
-                if (ShouldShowDeathEffects())
-                {
-                    ShowDeathEffects();
-                }
+                ShowDeathEffects();
             }
         }
 

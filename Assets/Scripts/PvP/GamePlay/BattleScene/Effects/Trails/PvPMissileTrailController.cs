@@ -17,6 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             glow.enabled = true;
             missileFlare.enabled = true;
+            trail.enabled = true;   
             trail.Clear();
         }
 
@@ -24,6 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             glow.enabled = false;
             missileFlare.enabled = false;
+            trail.enabled = false;
         }
 
         public void SetVisibleTrail(bool isVisible)
