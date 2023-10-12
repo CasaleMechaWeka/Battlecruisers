@@ -43,7 +43,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
             Assert.IsNotNull(_rocketTarget);
             //<---
-
             Assert.IsNotNull(missile);
         }
 
@@ -94,9 +93,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             // Let missile keep current velocity
             MovementController = _dummyMovementController;
-
             // Destroy missile eventually (in case it does not hit a matching target)
             _deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
+            OnTargetDestroyedClientRpc();
         }
 
         private void ConditionalDestroy()
@@ -113,7 +112,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             //---> CODE BY ANUJ
             _rocketTarget.GameObject.SetActive(false);
             //<---
-            SetMissileVisibleClientRpc(false);
+            if (IsHost)
+                SetMissileVisibleClientRpc(false);
             Target.Destroyed -= Target_Destroyed;
             base.DestroyProjectile();
         }
@@ -167,7 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void Awake()
         {
             InitialiseTril();
-
+            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
             _rigidBody = GetComponent<Rigidbody2D>();
             _isActiveAndAlive = false;
         }
@@ -205,6 +206,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         //----------------------------- Rpcs -----------------------------
 
         [ClientRpc]
+        private void OnTargetDestroyedClientRpc()
+        {
+            MovementController = _dummyMovementController;
+        //    _factoryProvider.DeferrerProvider.Deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
+        }
+        [ClientRpc]
         private void OnAddMoveControllerToClientRpc(ulong objectID, float MaxVelocityInMPerS)
         {
             if (!IsHost)
@@ -213,11 +220,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 if (obj != null)
                 {
                     IPvPTarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
-                    if(target == null)
+                    if (target == null)
                     {
                         target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPTarget>();
                     }
-                    if(target == null)
+                    if (target == null)
                     {
                         target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<IPvPTarget>();
                     }
@@ -286,6 +293,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void SetMissileVisibleClientRpc(bool visible)
         {
             missile.enabled = visible;
+            _rocketTarget.GameObject.SetActive(visible);
+            if (!visible)
+                base.HideEffectsOfClient(); 
+            //    Target.Destroyed -= Target_Destroyed;
         }
 
         [ClientRpc]

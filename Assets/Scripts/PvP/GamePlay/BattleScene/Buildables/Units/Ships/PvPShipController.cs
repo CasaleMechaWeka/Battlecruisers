@@ -220,8 +220,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void ShowDeathEffects()
         {
-            _deathPool.GetItem(Position, Faction);
-            Deactivate();
+            if(IsHost)
+            {
+                _deathPool.GetItem(Position, Faction);
+                Deactivate();
+            }
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()
