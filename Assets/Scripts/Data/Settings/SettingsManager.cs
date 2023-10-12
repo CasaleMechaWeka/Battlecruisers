@@ -86,6 +86,18 @@ namespace BattleCruisers.Data.Settings
             set => _settings.ShowAds = value;
         }
 
+        public bool TurboMode
+        {
+            get => _settings.TurboMode;
+            set => _settings.TurboMode = value;
+        }
+
+        public bool RichMode
+        {
+            get => _settings.RichMode;
+            set => _settings.RichMode = value;
+        }
+
         public bool VSync
         {
             get => _settings.VSync;

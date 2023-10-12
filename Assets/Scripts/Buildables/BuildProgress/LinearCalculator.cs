@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
@@ -10,11 +12,25 @@ namespace BattleCruisers.Buildables.BuildProgress
     public class LinearCalculator : IBuildProgressCalculator
     {
         private readonly float _buildMultiplier;
+        private ISettingsManager settingsManager;
 
         public LinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.DEFAULT)
         {
             Logging.Log(Tags.BUILD_PROGRESS, $"build speed multiplier: {buildSpeedMultiplier}");
-            _buildMultiplier = buildSpeedMultiplier;
+            //_buildMultiplier = buildSpeedMultiplier;
+
+            // TURBO MODE FOR PREMIUM (ONLY FOR PVE!!!)
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            settingsManager = applicationModel.DataProvider.SettingsManager;
+
+            if(settingsManager.TurboMode)
+            {
+                _buildMultiplier = 10;
+            }
+            else
+            {
+                _buildMultiplier = buildSpeedMultiplier;
+            }
         }
 
         public float CalculateBuildProgressInDroneS(IBuildable buildableUnderConstruction, float deltaTime)

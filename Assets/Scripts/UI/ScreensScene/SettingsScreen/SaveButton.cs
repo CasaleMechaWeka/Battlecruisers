@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ResolutionDropdown _resolutionDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
-        private IBroadcastingProperty<bool> _showInGameHints, _showToolTips, _altDroneSounds, _showAds, _fullScreen, _VSync;
+        private IBroadcastingProperty<bool> _showInGameHints, _showToolTips, _altDroneSounds, _showAds, _fullScreen, _VSync, _turboMode, _richMode;
         private IHotkeysPanel _hotkeysPanel;
 
         private CanvasGroup _canvasGroup;
@@ -43,6 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<bool> showToolTips,
             IBroadcastingProperty<bool> altDroneSounds,
             IBroadcastingProperty<bool> showAds,
+            IBroadcastingProperty<bool> turboMode,
+            IBroadcastingProperty<bool> richMode,
             IBroadcastingProperty<bool> fullScreen,
             IBroadcastingProperty<bool> VSync,
             IHotkeysPanel hotkeysPanel)
@@ -71,6 +73,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _showToolTips = showToolTips;
             _altDroneSounds = altDroneSounds;
             _showAds = showAds;
+            _turboMode = turboMode;
+            _richMode = richMode;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -92,6 +96,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _VSync.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _altDroneSounds.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showAds.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _turboMode.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _richMode.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _hotkeysPanel.IsDirty.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _settingsManager.Save();
             UpdateEnabledStatus();
@@ -122,6 +128,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.ShowToolTips = _showToolTips.Value;
             _settingsManager.AltDroneSounds = _altDroneSounds.Value;
             _settingsManager.ShowAds = _showAds.Value;
+            _settingsManager.TurboMode = _turboMode.Value;
+            _settingsManager.RichMode = _richMode.Value;
             _settingsManager.FullScreen = _fullScreen.Value;
             _settingsManager.VSync = _VSync.Value;
             _settingsManager.Save();
@@ -154,7 +162,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _showInGameHints.Value != _settingsManager.ShowInGameHints
                 || _showToolTips.Value != _settingsManager.ShowToolTips
                 || _altDroneSounds.Value != _settingsManager.AltDroneSounds
-                 || _showAds.Value != _settingsManager.ShowAds
+                || _showAds.Value != _settingsManager.ShowAds
+                || _turboMode.Value != _settingsManager.TurboMode
+                || _richMode.Value != _settingsManager.RichMode
                 || _VSync.Value != _settingsManager.VSync
                 || _fullScreen.Value != _settingsManager.FullScreen
                 || _hotkeysPanel.IsDirty.Value;

@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public ResolutionDropdown resolutionDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
-        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle;
+        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle, turboToggle, richToggle;
         public SaveButton saveButton;
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
@@ -99,6 +99,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             fullScreenToggle.Initialise(_settingsManager.FullScreen);
             VSyncToggle.Initialise(_settingsManager.VSync);
             adsToggle.Initialise(_settingsManager.ShowAds);
+            turboToggle.Initialise(_settingsManager.TurboMode);
+            richToggle.Initialise(_settingsManager.RichMode);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -122,7 +124,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     showInGameHintsToggle.IsChecked,  
                     showToolTipsToggle.IsChecked,     
                     altDroneSoundsToggle.IsChecked,   
-                    adsToggle.IsChecked,              
+                    adsToggle.IsChecked,
+                    turboToggle.IsChecked,
+                    richToggle.IsChecked,
                     fullScreenToggle.IsChecked,       
                     VSyncToggle.IsChecked,            
                     hotkeysPanel);                    
@@ -221,7 +225,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             premiumPanel.Hide();
             premiumButton.IsSelected = false;
 
-
             gameSettingsPanel.Show();
             gameSettingsButton.IsSelected = true;
         }
@@ -243,7 +246,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             hotkeysPanel.Show();
             hotkeysButton.IsSelected = true;
             resetHotkeysButton.IsVisible = true;
-
         }
 
         public void ShowAudioSettings()
@@ -261,13 +263,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             audioButton.IsSelected = true;
             audioPanel.Show();
-
-
         }
 
         public void ShowLanguageSettings()
         {
-
             hotkeysPanel.Hide();
             hotkeysButton.IsSelected = false;
             resetHotkeysButton.IsVisible = false;
@@ -281,7 +280,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             languageButton.IsSelected = true;
             videoPanel.Show();
-
         }
 
         private void DisplayUserID()
@@ -295,7 +293,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             {
                 idContainer.SetActive(false);
             }
-
         }
 
         public override void OnDismissing()
@@ -320,6 +317,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             resolutionDropdown.ResetToDefaults(_settingsManager.Resolution);
             altDroneSoundsToggle.ResetToDefaults(_settingsManager.AltDroneSounds);
             adsToggle.ResetToDefaults(_settingsManager.ShowAds);
+            turboToggle.ResetToDefaults(_settingsManager.TurboMode);
+            richToggle.ResetToDefaults(_settingsManager.RichMode);
         }
     }
 }

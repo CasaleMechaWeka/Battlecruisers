@@ -189,6 +189,22 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private bool _turboMode;
+        public bool TurboMode
+        {
+            get => _turboMode;
+            set => _turboMode = value;
+        }
+
+        [SerializeField]
+        private bool _richMode;
+        public bool RichMode
+        {
+            get => _richMode;
+            set => _richMode = value;
+        }
+
+        [SerializeField]
         private bool _VSync;
         public bool VSync
         {
@@ -253,6 +269,8 @@ namespace BattleCruisers.Data.Models
             ShowInGameHints = true;
             ShowToolTips = true;
             ShowAds = false;
+            TurboMode = false;
+            RichMode = false;
 
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
             InitialiseGraphicsSettings();

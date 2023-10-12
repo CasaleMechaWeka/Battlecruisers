@@ -100,7 +100,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
-
             OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
             base.Activate(activationArgs);
             _haveDroppedBombOnRun = false;

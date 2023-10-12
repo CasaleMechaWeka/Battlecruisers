@@ -22,6 +22,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.U2D;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -98,10 +99,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
+            OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
             base.Activate(activationArgs);
             _isAtCruisingHeight = false;
-
-            OnActivatePvPClientRpc();
         }
 
         protected override async void OnBuildableCompleted()
@@ -110,11 +110,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
             {
                 base.OnBuildableCompleted();
-
                 SetupTargetDetection();
-
                 _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.PneumaticSlug);
-
                 List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
                 foreach (Sprite sprite in allSprites)
                 {
@@ -122,13 +119,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
                 //create Sprite Chooser
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
-
                 OnBuildableCompletedClientRpc();
             }
             else
             {
                 OnBuildableCompleted_PvPClient();
-
                 List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
                 foreach (Sprite sprite in allSprites)
                 {
@@ -381,10 +376,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnActivatePvPClientRpc()
+        private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, PvPDirection facingDirection, bool isAtCruiserHeight)
         {
             if (!IsHost)
+            {
+                _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, PvPRandomGenerator.Instance);
+                FacingDirection = facingDirection;
+                _isAtCruisingHeight = isAtCruiserHeight;
                 Activate_PvPClient();
+            }
         }
 
         [ClientRpc]

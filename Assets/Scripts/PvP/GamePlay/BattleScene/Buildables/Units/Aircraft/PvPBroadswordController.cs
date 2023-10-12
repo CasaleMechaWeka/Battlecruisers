@@ -26,6 +26,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.U2D;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -116,10 +117,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
+            OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
             base.Activate(activationArgs);
             _isAtCruisingHeight = false;
-
-            OnActivatePvPClientRpc();
         }
 
         protected override async void OnBuildableCompleted()
@@ -210,18 +210,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
         {
             IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
-
             IList<IPvPPatrolPoint> patrolPoints = new List<IPvPPatrolPoint>(1)
             {
-
                 new PvPPatrolPoint(patrolPositions[1], removeOnceReached: true)
             };
-
             for (int i = 2; i < patrolPositions.Count; ++i)
             {
                 patrolPoints.Add(new PvPPatrolPoint(patrolPositions[i]));
             }
-
             return patrolPoints;
         }
 
@@ -417,10 +413,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnActivatePvPClientRpc()
+        private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, PvPDirection facingDirection, bool isAtCruiserHeight)
         {
             if (!IsHost)
+            {
+                _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, PvPRandomGenerator.Instance);
+                FacingDirection = facingDirection;
+                _isAtCruisingHeight = isAtCruiserHeight;
                 Activate_PvPClient();
+            }
         }
 
         [ClientRpc]

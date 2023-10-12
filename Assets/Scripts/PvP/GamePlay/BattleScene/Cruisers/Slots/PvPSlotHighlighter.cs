@@ -76,7 +76,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     wasAnySlotHighlighted = true;
                 }
             }
-
             return wasAnySlotHighlighted;
         }
 
