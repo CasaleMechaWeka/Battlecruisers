@@ -10,6 +10,7 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
@@ -49,6 +50,7 @@ namespace BattleCruisers.Cruisers
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
+        private ISettingsManager settingsManager;
 
         public string stringKeyBase;
         public int numOfDrones;
@@ -135,16 +137,12 @@ namespace BattleCruisers.Cruisers
             Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
             Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
 
-
-
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
             PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
             UnitTargets = new UnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
-
-
         }
 
         public async virtual void Initialise(ICruiserArgs args)
@@ -212,6 +210,13 @@ namespace BattleCruisers.Cruisers
 
             }
 
+            // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            settingsManager = applicationModel.DataProvider.SettingsManager;
+            if (settingsManager.RichMode)
+            {
+                DroneManager.NumOfDrones = numOfDrones * 4; 
+            }
         }
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
