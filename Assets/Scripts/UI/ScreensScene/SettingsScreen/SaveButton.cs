@@ -43,10 +43,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<bool> showToolTips,
             IBroadcastingProperty<bool> altDroneSounds,
             IBroadcastingProperty<bool> showAds,
-            IBroadcastingProperty<bool> fullScreen,
-            IBroadcastingProperty<bool> VSync,
             IBroadcastingProperty<bool> turboMode,
             IBroadcastingProperty<bool> richMode,
+            IBroadcastingProperty<bool> fullScreen,
+            IBroadcastingProperty<bool> VSync,
             IHotkeysPanel hotkeysPanel)
         {
             base.Initialise(soundPlayer, parent: parent);
