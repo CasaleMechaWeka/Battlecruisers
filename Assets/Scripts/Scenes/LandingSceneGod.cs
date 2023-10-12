@@ -104,14 +104,14 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
-        #endif
-        #if PLATFORM_IOS
+#endif
+#if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
         public IAppleAuthentication _AppleAuthentication { get; set; }
         private const string AppleUserIdKey = "AppleUserId";
-        #endif
+#endif
 
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
@@ -121,6 +121,8 @@ namespace BattleCruisers.Scenes
         private INetworkState DisconnectedState = new InternetConnectivity(false);
 
         public MessageBox messagebox;
+
+        public List<GameObject> disableOnSceneTransition;
         public void LogToScreen(string log)
         {
             if (displayOnscreenLogs)
@@ -320,11 +322,11 @@ namespace BattleCruisers.Scenes
 
         private void InitializeAppleAuth()
         {
-            #if PLATFORM_IOS
+#if PLATFORM_IOS
             var deserializer = new PayloadDeserializer();
             _AppleAuthManager = new AppleAuthManager(deserializer);
             Debug.Log("####### Apple Auth Initialized.");
-            #endif
+#endif
         }
 
         void SetInteractable(bool interactable)
@@ -405,7 +407,7 @@ namespace BattleCruisers.Scenes
         // Apple login by button:
         private async void AppleLogin()
         {
-            #if PLATFORM_IOS
+#if PLATFORM_IOS
             LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
             if (!AuthenticationService.Instance.IsSignedIn)
             {
@@ -466,13 +468,13 @@ namespace BattleCruisers.Scenes
                     SetInteractable(true);
                 }
             }
-            #endif
+#endif
         }
 
         // Attempt Apple signin without user input:
         private void AppleQuickLogin()
         {
-            #if PLATFORM_IOS
+#if PLATFORM_IOS
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
 
@@ -509,13 +511,13 @@ namespace BattleCruisers.Scenes
                 Debug.Log("####### Apple Quick Login failed.");
                 LogToScreen(ex.Message);
             }
-            #endif
+#endif
         }
 
         // Sign in a returning player or create new player
         private async Task SignInWithAppleAsync(string idToken)
         {
-            #if PLATFORM_IOS
+#if PLATFORM_IOS
             try
             {
                 await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
@@ -533,7 +535,7 @@ namespace BattleCruisers.Scenes
                 // Notify the player with the proper error message
                 Debug.LogError("####### Error: " + ex.Message);
             }
-            #endif
+#endif
         }
 
         // Guest login by button:
@@ -563,6 +565,8 @@ namespace BattleCruisers.Scenes
                         loginPanel.SetActive(false);
                         spinGuest.SetActive(false);
                         labelGuest.SetActive(true);
+                        foreach (GameObject i in disableOnSceneTransition)
+                            i.SetActive(false);
                         GoToScene(SceneNames.SCREENS_SCENE, true);
                     }
                 }
@@ -574,6 +578,8 @@ namespace BattleCruisers.Scenes
                 loginPanel.SetActive(false);
                 spinGuest.SetActive(false);
                 labelGuest.SetActive(true);
+                foreach (GameObject i in disableOnSceneTransition)
+                    i.SetActive(false);
                 GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
@@ -600,6 +606,8 @@ namespace BattleCruisers.Scenes
             labelGoogle.SetActive(true);
             labelApple.SetActive(true);
             labelGuest.SetActive(true);
+            foreach (GameObject i in disableOnSceneTransition)
+                i.SetActive(false);
             GoToScene(SceneNames.SCREENS_SCENE, true);
             Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
         }

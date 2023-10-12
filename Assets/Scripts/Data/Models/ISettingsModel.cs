@@ -10,7 +10,9 @@ namespace BattleCruisers.Data.Models
         bool ShowInGameHints { get; set; }
         bool ShowToolTips { get; set; }
         bool AltDroneSounds { get; set; }
-        public bool ShowAds { get; set; } 
+        public bool ShowAds { get; set; }
+        public bool TurboMode { get; set; }
+        public bool RichMode { get; set; }
         bool VSync { get; set; }
         bool FullScreen { get; set; }
         int ZoomSpeedLevel { get; set; }
