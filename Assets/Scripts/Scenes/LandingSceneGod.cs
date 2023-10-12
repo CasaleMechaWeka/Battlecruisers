@@ -104,14 +104,14 @@ namespace BattleCruisers.Scenes
             }
         }
 
-#if PLATFORM_ANDROID
+        #if PLATFORM_ANDROID
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
-#endif
-#if PLATFORM_IOS
+        #endif
+        #if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
         public IAppleAuthentication _AppleAuthentication { get; set; }
         private const string AppleUserIdKey = "AppleUserId";
-#endif
+        #endif
 
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
@@ -142,25 +142,6 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
             Helper.AssertIsNotNull(messageHandler);
             LogToScreen("Starting Battlecruisers"); // SCREEN START
-
-            landingCanvas.SetActive(true);
-            loginPanel.SetActive(true);
-
-            spinGuest.SetActive(false);
-            spinApple.SetActive(false);
-            spinGoogle.SetActive(false);
-
-            labelGoogle.SetActive(true);
-            labelApple.SetActive(true);
-            labelGuest.SetActive(true);
-
-            googleBtn.gameObject.SetActive(false);
-            appleBtn.gameObject.SetActive(false);
-            guestBtn.gameObject.SetActive(false);
-
-            retryPanel.SetActive(false);
-            labelRetry.SetActive(true);
-            spinRetry.SetActive(false);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
@@ -208,7 +189,7 @@ namespace BattleCruisers.Scenes
                 {
                     await UnityServices.InitializeAsync(options);
                 }
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
                 {
                     // When using a ParrelSync clone, switch to a different authentication profile to force the clone
@@ -216,7 +197,7 @@ namespace BattleCruisers.Scenes
                     string customArgument = ParrelSync.ClonesManager.GetArgument();
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
-#endif
+                #endif
                 if (InternetConnectivity.Value)
                 {
                     List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
@@ -241,19 +222,6 @@ namespace BattleCruisers.Scenes
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 
-            //below is code to localise the logo
-            string locName = LocalizationSettings.SelectedLocale.name;
-            Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
-            foreach (Transform t in ts)
-            {
-                if (t.gameObject.name == locName)
-                {
-                    t.gameObject.SetActive(true);
-                    break;
-                }
-            }
-            LogToScreen("All assets loaded"); // ALL ASSETS LOADED
-
             try
             {
                 // add event handlers to authentication
@@ -270,18 +238,17 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
-#if PLATFORM_ANDROID
+                #if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await AttemptSilentSigningAsync();
+                ShowSignInScreen(soundPlayer);
 
                 // should be enabled after completion initialization
-                googleBtn.Initialise(soundPlayer, GoogleLogin);
-                googleBtn.gameObject.SetActive(true);
 
                 LogToScreen(""); // INTERNET
 
-#elif PLATFORM_IOS
+                #elif PLATFORM_IOS
                 InitializeAppleAuth();
                 if(_AppleAuthentication == null)
                 {
@@ -298,35 +265,79 @@ namespace BattleCruisers.Scenes
                 if (PlayerPrefs.HasKey(AppleUserIdKey))
                 {
                     var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
-                    CheckCredentialStatusForUserId(storedAppleUserId);
+                    CheckCredentialStatusForUserId(storedAppleUserId, soundPlayer);
                 }
                 // If we do not have an stored Apple User Id, attempt a quick login
                 else
                 {
                     //Attempt Apple Quick Login
-                    AppleQuickLogin();
+                    AppleQuickLogin(soundPlayer);
                 }
-                appleBtn.Initialise(soundPlayer, AppleLogin);
-                appleBtn.gameObject.SetActive(true);
-#endif
+                #endif
             }
             else
             {
                 LogToScreen("No internet, continue offline"); // NO INTERNET
             }
+        }
+
+        private void ShowSignInScreen(ISingleSoundPlayer soundPlayer)
+        {
+            landingCanvas.SetActive(true);
+            loginPanel.SetActive(true);
+
+            spinGuest.SetActive(false);
+            spinApple.SetActive(false);
+            spinGoogle.SetActive(false);
+
+            labelGoogle.SetActive(true);
+            labelApple.SetActive(true);
+            labelGuest.SetActive(true);
+
+            googleBtn.gameObject.SetActive(false);
+            appleBtn.gameObject.SetActive(false);
+            guestBtn.gameObject.SetActive(false);
+
+            retryPanel.SetActive(false);
+            labelRetry.SetActive(true);
+            spinRetry.SetActive(false);
+
+            //below is code to localise the logo
+            string locName = LocalizationSettings.SelectedLocale.name;
+            Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
+            foreach (Transform t in ts)
+            {
+                if (t.gameObject.name == locName)
+                {
+                    t.gameObject.SetActive(true);
+                    break;
+                }
+            }
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
 
+            if (CurrentInternetConnectivity.IsConnected)
+            {
+                #if PLATFORM_IOS
+                appleBtn.Initialise(soundPlayer, AppleLogin);
+                appleBtn.gameObject.SetActive(true);
+                #elif PLATFORM_ANDROID
+                googleBtn.Initialise(soundPlayer, GoogleLogin);
+                googleBtn.gameObject.SetActive(true);
+                #endif
+            }
+
+            LogToScreen("All assets loaded"); // ALL ASSETS LOADED
         }
 
         private void InitializeAppleAuth()
         {
-#if PLATFORM_IOS
+            #if PLATFORM_IOS
             var deserializer = new PayloadDeserializer();
             _AppleAuthManager = new AppleAuthManager(deserializer);
-            Debug.Log("####### Apple Auth Initialized.");
-#endif
+            Debug.Log("Apple Auth Initialized.");
+            #endif
         }
 
         void SetInteractable(bool interactable)
@@ -348,7 +359,7 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             // When running in the Editor make a unique ID from the Application.dataPath.
             // This will work for cloning projects manually, or with Virtual Projects.
             // Since only a single instance of the Editor can be open for a specific
@@ -357,11 +368,11 @@ namespace BattleCruisers.Scenes
                 .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
             Array.Resize(ref hashedBytes, 16);
             return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
-#elif PLATFORM_ANDROID
+            #elif PLATFORM_ANDROID
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
-#elif PLATFORM_IOS
+            #elif PLATFORM_IOS
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
-#endif
+            #endif
         }
 
         // Google login by button:
@@ -377,9 +388,9 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-#if PLATFORM_ANDROID
+                    #if PLATFORM_ANDROID
                     await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
-#endif
+                    #endif
                 }
                 catch (Exception ex)
                 {
@@ -394,9 +405,9 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-#if PLATFORM_ANDROID
+                #if PLATFORM_ANDROID
                 await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
-#endif
+                #endif
             }
             catch (Exception ex)
             {
@@ -407,7 +418,7 @@ namespace BattleCruisers.Scenes
         // Apple login by button:
         private async void AppleLogin()
         {
-#if PLATFORM_IOS
+            #if PLATFORM_IOS
             LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
             if (!AuthenticationService.Instance.IsSignedIn)
             {
@@ -468,13 +479,13 @@ namespace BattleCruisers.Scenes
                     SetInteractable(true);
                 }
             }
-#endif
+            #endif
         }
 
         // Attempt Apple signin without user input:
-        private void AppleQuickLogin()
+        private void AppleQuickLogin(ISingleSoundPlayer soundPlayer)
         {
-#if PLATFORM_IOS
+            #if PLATFORM_IOS
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
 
@@ -495,29 +506,44 @@ namespace BattleCruisers.Scenes
                     var appleIdCredential = credential as IAppleIDCredential;
                         if (appleIdCredential != null)
                         {
-                            Debug.Log("####### appleIdCredential is not null.");
                             PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                            HandleAppleSignIn(appleIdCredential);
                         }
                     },
                     error =>
                     {
                     // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
                     var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                        Debug.LogWarning("####### Quick Login Failed " + authorizationErrorCode.ToString() + " " + error.ToString());
+                    ShowSignInScreen(soundPlayer);
                     });
             }
             catch (Exception ex)
             {
-                Debug.Log("####### Apple Quick Login failed.");
-                LogToScreen(ex.Message);
+                Debug.Log("Apple Quick Login failed, Error: " + ex.Message);
+                ShowSignInScreen(soundPlayer);
             }
-#endif
+            #endif
         }
+
+        // Used by QuickLogin to process the AppleIDCredential
+        private async void HandleAppleSignIn(IAppleIDCredential credential)
+        {
+            try
+            {
+                var idToken = Encoding.UTF8.GetString(credential.IdentityToken);
+                await SignInWithAppleAsync(idToken);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while processing Apple Sign-in: " + ex.Message);
+            }
+        }
+
 
         // Sign in a returning player or create new player
         private async Task SignInWithAppleAsync(string idToken)
         {
-#if PLATFORM_IOS
+            #if PLATFORM_IOS
             try
             {
                 await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
@@ -535,7 +561,7 @@ namespace BattleCruisers.Scenes
                 // Notify the player with the proper error message
                 Debug.LogError("####### Error: " + ex.Message);
             }
-#endif
+            #endif
         }
 
         // Guest login by button:
@@ -731,12 +757,12 @@ namespace BattleCruisers.Scenes
 
         public void Update()
         {
-#if PLATFORM_IOS
+            #if PLATFORM_IOS
             if (_AppleAuthManager != null)
             {
                 _AppleAuthManager.Update();
             }
-#endif
+            #endif
         }
 
         bool isUpdatingInternetConnectivity = false;
@@ -799,9 +825,9 @@ namespace BattleCruisers.Scenes
             }
         }
 
-#if PLATFORM_IOS
+        #if PLATFORM_IOS
         // Apple-specific ID check
-        private void CheckCredentialStatusForUserId(string appleUserId)
+        private void CheckCredentialStatusForUserId(string appleUserId, ISingleSoundPlayer soundPlayer)
         {
             // If there is an apple ID available, we should check the credential state
             _AppleAuthManager.GetCredentialState(
@@ -812,15 +838,14 @@ namespace BattleCruisers.Scenes
                 {
                 // If it's authorized, login with that user id
                 case CredentialState.Authorized:
-                    // TODO: Pass through signin, straight to Start screen
+                    SignInWithAppleAsync(AppleUserIdKey);
                     return;
-
                 // If it was revoked, or not found, we need a new sign in with apple attempt
                 // Discard previous apple user id
                 case CredentialState.Revoked:
                 case CredentialState.NotFound:
-                    // TODO: Set up Landing Screen for login
                     PlayerPrefs.DeleteKey(AppleUserIdKey);
+                    ShowSignInScreen(soundPlayer);
                     return;
                 }
             },
@@ -828,10 +853,9 @@ namespace BattleCruisers.Scenes
             {
                 var authorizationErrorCode = error.GetAuthorizationErrorCode();
                 Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
-                // TODO: Set up Landing Screen for login
             });
         }
-#endif
+        #endif
 
         public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
