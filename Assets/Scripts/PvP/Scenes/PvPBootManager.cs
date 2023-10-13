@@ -311,6 +311,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
                     if (averageLatency > ConnectionManager.LatencyLimit / 2)
                         continue;
+                    UnityEngine.Debug.Log("===> BattleWinscore ---> " + ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore);
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
                         ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
@@ -346,7 +347,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 }
                 if (isFound)
                     break;
-                UnityEngine.Debug.Log("===> KKK");
                 await Task.Delay(1000);
             }
         }
