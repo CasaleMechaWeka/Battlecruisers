@@ -438,7 +438,7 @@ namespace BattleCruisers.Scenes
                     }
 
                     // Set the login arguments
-                    var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName);
+                    var loginArgs = new AppleAuthLoginArgs(LoginOptions.None);
                     Debug.Log("####### loginArgs assigned.");
                     LogToScreen("loginArgs assigned."); //Remove for prod
 
