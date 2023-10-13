@@ -309,46 +309,36 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 {
                     var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
                     int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
-                    UnityEngine.Debug.Log("===> AAA");
                     if (averageLatency > ConnectionManager.LatencyLimit / 2)
                         continue;
-                    UnityEngine.Debug.Log("===> BBB");
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
                         ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
                         ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString(), DataObject.IndexOptions.N1),
                     };
-                    UnityEngine.Debug.Log("===> CCC");
                     MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
-                    UnityEngine.Debug.Log("===> DDD");
                     while (true)
                     {
                         if (lobbyCreationAttemp.Success)
                         {
                             m_LocalUser.IsHost = true;
                             m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
-                            UnityEngine.Debug.Log("===> EEE");
                             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                             {
-                                UnityEngine.Debug.Log("===> FFF");
                                 UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
                                 MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
-                                UnityEngine.Debug.Log("===> GGG");
                                 m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
-                                UnityEngine.Debug.Log("===> HHH");
                                 isFound = true;
                                 break;
                             }
                             else
                             {
-                                UnityEngine.Debug.Log("===> III");
                                 lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                             }
                         }
                         else
                         {
-                            UnityEngine.Debug.Log("===> JJJ");
                             lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                         }
                         await Task.Delay(1000);

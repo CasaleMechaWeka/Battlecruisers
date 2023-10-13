@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -49,12 +50,11 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createOptions);
             }
-            catch
+            catch (Exception e)
             {
+                UnityEngine.Debug.Log(e.Message);
                 return null;
             }
-
-
         }
 
         public async Task DeleteLobby(string lobbyId)
