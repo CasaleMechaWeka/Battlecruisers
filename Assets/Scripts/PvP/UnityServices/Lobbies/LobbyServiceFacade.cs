@@ -203,16 +203,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             try
             {
-                Debug.Log("===> AAA");
                 var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, hostUserData, lobbyData);
                 if (lobby != null)
                 {
-                    Debug.Log("===> BBB");
                     return (true, lobby);
                 }
                 else
                 {
-                    Debug.Log("===> CCC");
                     return (false, lobby);
                 }
             }
@@ -226,10 +223,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                                 {
                                     PublishError(e);
                                 }*/
-                Debug.Log("===> DDD");
                 Debug.Log(e.Message);
             }
-            Debug.Log("===> EEE");
             return (false, null);
         }
 
