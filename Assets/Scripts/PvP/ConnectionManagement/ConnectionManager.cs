@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.Client;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
-using BattleCruisers.Network.Multiplay.Utils;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
