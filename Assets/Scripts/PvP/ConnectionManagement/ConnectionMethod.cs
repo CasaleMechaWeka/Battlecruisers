@@ -149,6 +149,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             Debug.Log("Setting up Unity Relay host");
 
             SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
+
+
             // Create relay allocation
             Allocation hostAllocation = await RelayService.Instance.CreateAllocationAsync(m_ConnectionManager.MaxConnectedPlayers, region: null);
 
@@ -161,6 +163,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
             int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
             Debug.Log("===>host latency ---> " + averageLatency);
+
             m_LocalLobby.RelayJoinCode = joinCode;
             m_LocalLobby.Region = hostAllocation.Region;
             m_LocalLobby.Latency = averageLatency.ToString();
