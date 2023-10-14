@@ -471,14 +471,16 @@ namespace BattleCruisers.Scenes
                         error =>
                         {
                             Debug.Log("Sign-in with Apple error. Message: " + error.ToString());
-                            LogToScreen(error.ToString());
-                            //Error = "Retrieving Apple Id Token failed.";
+                            LogToScreen("Login Error: " + error.ToString());
+                            spinApple.SetActive(false);
+                            labelApple.SetActive(true);
+                            SetInteractable(true);
                         }
                     );
                 }
                 catch (Exception ex)
                 {
-                    LogToScreen(ex.Message);
+                    LogToScreen("Exception: " + ex.Message);
                     //LogToScreen("Error while trying to log in with Apple"); // IF APPLE AUTH FAILS FOR ANY REASON
                     Debug.Log(ex.Message);
                     spinApple.SetActive(false);
