@@ -205,11 +205,15 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, hostUserData, lobbyData);
                 if (lobby != null)
+                {
                     return (true, lobby);
+                }
                 else
+                {
                     return (false, lobby);
+                }
             }
-            catch /*(LobbyServiceException e)*/
+            catch(Exception e) /*(LobbyServiceException e)*/
             {
                 /*                if (e.Reason == LobbyExceptionReason.RateLimited)
                                 {
@@ -219,8 +223,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                                 {
                                     PublishError(e);
                                 }*/
+                Debug.Log(e.Message);
             }
-
             return (false, null);
         }
 

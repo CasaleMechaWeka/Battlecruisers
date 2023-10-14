@@ -116,8 +116,8 @@ namespace BattleCruisers.UI.ScreensScene
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             ISpriteWrapper spWrapper = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + args.iapData.IAPIconName + ".png");
             iapIcon.sprite = spWrapper.Sprite;
-            iapName.text = commonStrings.GetString(args.iapData.IAPNameKeyBase);
-            iapDescription.text = commonStrings.GetString(args.iapData.IAPDescriptionKeyBase);
+            iapName.text = screenSceneStrings.GetString(args.iapData.IAPNameKeyBase);
+            iapDescription.text = screenSceneStrings.GetString(args.iapData.IAPDescriptionKeyBase);
             DisplayPrice();
         }
 

@@ -19,8 +19,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Helper.AssertIsNotNull(weakFog, strongFog);
             IsVisible = false;
             currentStrength = fogStrength;
-            /*            weakFog.SetActive(currentStrength == PvPFogStrength.Weak);
-                        strongFog.SetActive(currentStrength == PvPFogStrength.Strong);*/
         }
         private void Start()
         {
@@ -64,33 +62,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             SetFogs();
             if (!isVisible)
             {
-                weakFog.SetActive(false);
-                strongFog.SetActive(false);
+                weakFog?.SetActive(false);
+                strongFog?.SetActive(false);
             }
             else
             {
                 if (IsHost && IsOwner)
                 {
-                    weakFog.SetActive(true);
-                    strongFog.SetActive(false);
+                    weakFog?.SetActive(true);
+                    strongFog?.SetActive(false);
                 }
                 if (IsHost && !IsOwner)
                 {
-                    weakFog.SetActive(false);
-                    strongFog.SetActive(true);
+                    weakFog?.SetActive(false);
+                    strongFog?.SetActive(true);
                 }
                 if (!IsHost && !IsOwner)
                 {
-                    weakFog.SetActive(false);
-                    strongFog.SetActive(true);
+                    weakFog?.SetActive(false);
+                    strongFog?.SetActive(true);
                 }
                 if (!IsHost && IsOwner)
                 {
-                    weakFog.SetActive(true);
-                    strongFog.SetActive(false);
+                    weakFog?.SetActive(true);
+                    strongFog?.SetActive(false);
                 }
             }
         }
-
     }
 }
