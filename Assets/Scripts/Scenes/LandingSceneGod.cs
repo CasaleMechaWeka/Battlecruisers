@@ -464,14 +464,16 @@ namespace BattleCruisers.Scenes
                             else
                             {
                                 Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
-                                LogToScreen("Sign-in with Apple error."); //Remove for prod
-                                //Error = "Retrieving Apple Id Token failed.";
+                                LogToScreen("Retrieving Apple Id Token failed."); //Remove for prod
+                                spinApple.SetActive(false);
+                                labelApple.SetActive(true);
+                                SetInteractable(true);
                             }
                         },
                         error =>
                         {
                             Debug.Log("Sign-in with Apple error. Message: " + error.ToString());
-                            LogToScreen("Login Error: " + error.ToString());
+                            LogToScreen("Login Unsuccessful: " + error.ToString());
                             spinApple.SetActive(false);
                             labelApple.SetActive(true);
                             SetInteractable(true);
@@ -480,7 +482,7 @@ namespace BattleCruisers.Scenes
                 }
                 catch (Exception ex)
                 {
-                    LogToScreen("Exception: " + ex.Message);
+                    LogToScreen("Login Exception: " + ex.Message);
                     //LogToScreen("Error while trying to log in with Apple"); // IF APPLE AUTH FAILS FOR ANY REASON
                     Debug.Log(ex.Message);
                     spinApple.SetActive(false);
