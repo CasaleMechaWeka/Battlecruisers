@@ -423,7 +423,6 @@ namespace BattleCruisers.Scenes
             LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
             if (!AuthenticationService.Instance.IsSignedIn)
             {
-                LogToScreen("AuthService not signed in"); //Remove for prod
                 SetInteractable(false);
                 spinApple.SetActive(true);
                 labelApple.SetActive(false);
@@ -440,7 +439,6 @@ namespace BattleCruisers.Scenes
                     // Set the login arguments
                     var loginArgs = new AppleAuthLoginArgs(LoginOptions.None);
                     Debug.Log("####### loginArgs assigned.");
-                    LogToScreen("loginArgs assigned."); //Remove for prod
 
                     // Perform the login
                     _AppleAuthManager.LoginWithAppleId(
@@ -449,7 +447,6 @@ namespace BattleCruisers.Scenes
                         {
                             var appleIDCredential = credential as IAppleIDCredential;
                             Debug.Log("####### User Credential: " + appleIDCredential.ToString());
-                            LogToScreen("Credential: " + appleIDCredential.ToString()); //Remove for prod
                             if (appleIDCredential != null)
                             {
                                 var idToken = Encoding.UTF8.GetString(
@@ -457,14 +454,14 @@ namespace BattleCruisers.Scenes
                                     0,
                                     appleIDCredential.IdentityToken.Length);
                                 Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
-                                LogToScreen("Sign-in success."); //Remove for prod
+                                LogToScreen("Sign-in success."); //Localise for prod
                                 _AppleAuthentication.Token = idToken;
                                 SignInWithAppleAsync(idToken);
                             }
                             else
                             {
                                 Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
-                                LogToScreen("Retrieving Apple Id Token failed."); //Remove for prod
+                                LogToScreen("Retrieving Apple Id Token failed."); //Localise for prod
                                 spinApple.SetActive(false);
                                 labelApple.SetActive(true);
                                 SetInteractable(true);
@@ -473,7 +470,7 @@ namespace BattleCruisers.Scenes
                         error =>
                         {
                             Debug.Log("Sign-in with Apple error. Message: " + error.ToString());
-                            LogToScreen("Login Unsuccessful: " + error.ToString());
+                            LogToScreen("Login Unsuccessful: " + error.ToString()); //Localise for prod
                             spinApple.SetActive(false);
                             labelApple.SetActive(true);
                             SetInteractable(true);
@@ -482,8 +479,7 @@ namespace BattleCruisers.Scenes
                 }
                 catch (Exception ex)
                 {
-                    LogToScreen("Login Exception: " + ex.Message);
-                    //LogToScreen("Error while trying to log in with Apple"); // IF APPLE AUTH FAILS FOR ANY REASON
+                    LogToScreen("Login Exception: " + ex.Message); //Localise for prod
                     Debug.Log(ex.Message);
                     spinApple.SetActive(false);
                     labelApple.SetActive(true);
@@ -499,7 +495,6 @@ namespace BattleCruisers.Scenes
             #if PLATFORM_IOS
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
-            LogToScreen("Quick LoginArgs Set."); //Remove for prod
 
             // Quick login should succeed if the credential was authorized before and not revoked
             try
@@ -516,7 +511,6 @@ namespace BattleCruisers.Scenes
                     {
                     // If it's an Apple credential, save the user ID, for later logins
                     var appleIdCredential = credential as IAppleIDCredential;
-                        LogToScreen("Quick credential: " + appleIdCredential.ToString()); //Remove for prod
                         if (appleIdCredential != null)
                         {
                             PlayerPrefs.SetString(AppleUserIdKey, credential.User);
@@ -548,7 +542,6 @@ namespace BattleCruisers.Scenes
             }
             catch (Exception ex)
             {
-                LogToScreen("Error while processing Quick Sign-in: " + ex.Message); //Remove for prod
                 Debug.LogError("Error while processing Apple Sign-in: " + ex.Message);
                 ShowSignInScreen(soundPlayer);
             }
@@ -562,21 +555,18 @@ namespace BattleCruisers.Scenes
             try
             {
                 await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
-                LogToScreen("Sign-in was successful."); //Remove for prod
                 Debug.Log("Sign-in was successful.");
             }
             catch (AuthenticationException ex)
             {
                 // Compare error code to AuthenticationErrorCodes
                 // Notify the player with the proper error message
-                LogToScreen("Async Error: " + ex.Message); //Remove for prod
                 Debug.LogError("####### Error: " + ex.Message);
             }
             catch (RequestFailedException ex)
             {
                 // Compare error code to CommonErrorCodes
                 // Notify the player with the proper error message
-                LogToScreen("Request Error: " + ex.Message); //Remove for prod
                 Debug.LogError("####### Error: " + ex.Message);
             }
             #endif
@@ -856,14 +846,12 @@ namespace BattleCruisers.Scenes
                 {
                 // If it's authorized, login with that user id
                 case CredentialState.Authorized:
-                        LogToScreen("Cred authorized"); //Remove for prod
                         SignInWithAppleAsync(AppleUserIdKey);
                     return;
                 // If it was revoked, or not found, we need a new sign in with apple attempt
                 // Discard previous apple user id
                 case CredentialState.Revoked:
                 case CredentialState.NotFound:
-                        LogToScreen("Cred not found or revoked."); //Remove for prod
                         PlayerPrefs.DeleteKey(AppleUserIdKey);
                     ShowSignInScreen(soundPlayer);
                     return;
@@ -871,7 +859,6 @@ namespace BattleCruisers.Scenes
             },
             error =>
             {
-                LogToScreen("Cred Error: " + error.ToString()); //Remove for prod
                 var authorizationErrorCode = error.GetAuthorizationErrorCode();
                 Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
             });
