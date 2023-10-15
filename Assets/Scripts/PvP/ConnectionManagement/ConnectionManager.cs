@@ -95,7 +95,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         LocalLobby m_LocalLobby;
 
         public int MaxConnectedPlayers = 2;
-        public const int LatencyLimit = 200;
+        public const int LatencyLimit = 2000;
 
         const string k_DefaultIP = "127.0.0.1";
         const int k_DefaultPort = 7777;
