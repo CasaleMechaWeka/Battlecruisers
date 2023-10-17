@@ -416,10 +416,10 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        #if PLATFORM_IOS
         // Apple login by button:
         private async void AppleLogin()
         {
-            #if PLATFORM_IOS
             LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
             if (!AuthenticationService.Instance.IsSignedIn)
             {
@@ -486,13 +486,11 @@ namespace BattleCruisers.Scenes
                     SetInteractable(true);
                 }
             }
-            #endif
         }
 
         // Attempt Apple signin without user input:
         private void AppleQuickLogin(ISingleSoundPlayer soundPlayer)
         {
-            #if PLATFORM_IOS
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
 
@@ -529,7 +527,6 @@ namespace BattleCruisers.Scenes
                 Debug.Log("Apple Quick Login failed, Error: " + ex.Message);
                 ShowSignInScreen(soundPlayer);
             }
-            #endif
         }
 
         // Used by QuickLogin to process the AppleIDCredential
@@ -548,10 +545,10 @@ namespace BattleCruisers.Scenes
         }
 
 
+
         // Sign in a returning player or create new player
         private async Task SignInWithAppleAsync(string idToken)
         {
-            #if PLATFORM_IOS
             try
             {
                 await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
@@ -569,8 +566,8 @@ namespace BattleCruisers.Scenes
                 // Notify the player with the proper error message
                 Debug.LogError("####### Error: " + ex.Message);
             }
-            #endif
         }
+        #endif
 
         // Guest login by button:
         public async void AnonymousLogin()
@@ -765,12 +762,12 @@ namespace BattleCruisers.Scenes
 
         public void Update()
         {
-            #if PLATFORM_IOS
+#if PLATFORM_IOS
             if (_AppleAuthManager != null)
             {
                 _AppleAuthManager.Update();
             }
-            #endif
+#endif
         }
 
         bool isUpdatingInternetConnectivity = false;
@@ -799,8 +796,10 @@ namespace BattleCruisers.Scenes
                 AnonymousLogin();
             if (loginType == LoginType.Google)
                 GoogleLogin();
+            #if PLATFORM_IOS
             if (loginType == LoginType.Apple)
                 AppleLogin();
+            #endif
         }
 
         public void OnQuit()
@@ -833,7 +832,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        #if PLATFORM_IOS
+#if PLATFORM_IOS
         // Apple-specific ID check
         private void CheckCredentialStatusForUserId(string appleUserId, ISingleSoundPlayer soundPlayer)
         {
@@ -863,7 +862,7 @@ namespace BattleCruisers.Scenes
                 Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
             });
         }
-        #endif
+#endif
 
         public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
