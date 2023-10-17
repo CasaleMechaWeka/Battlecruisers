@@ -8,6 +8,8 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -37,6 +39,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public GameObject idContainer;
         public TextMeshProUGUI idString;
+        public CanvasGroupButton idButton;
+        public GameObject idHighlight;
+        public AnimationClip idAnim;
 
         //public GameObject premiumTab;
 
@@ -50,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable);
 
@@ -144,6 +149,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
+            idButton.Initialise(soundPlayer, CopyID, this);
             DisplayUserID();
 
             // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
@@ -293,6 +299,19 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             {
                 idContainer.SetActive(false);
             }
+        }
+
+        public void CopyID()
+        {
+            UniClipboard.SetText(AuthenticationService.Instance.PlayerId);
+            StartCoroutine(AnimateCopy());
+        }
+
+        IEnumerator AnimateCopy()
+        {
+            idHighlight.SetActive(true);
+            yield return new WaitForSeconds(idAnim.length);
+            idHighlight.SetActive(false);
         }
 
         public override void OnDismissing()

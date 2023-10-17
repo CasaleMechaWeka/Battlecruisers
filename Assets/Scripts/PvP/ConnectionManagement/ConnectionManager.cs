@@ -64,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public string playerCaptainPrefabName;
         public int playerGameMap;
         public float playerRating;
-//        public bool isDebug;
+        //        public bool isDebug;
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     public class ConnectionManager : MonoBehaviour, INetworkObject
     {
         ConnectionState m_CurrentState;
-        
+
         [Inject]
         NetworkManager m_NetworkManager;
         [Inject]
@@ -95,11 +95,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         LocalLobby m_LocalLobby;
 
         public int MaxConnectedPlayers = 2;
-        public const int LatencyLimit = 200;    
- 
+#if UNITY_EDITOR
+        public const int LatencyLimit = 2000;
+#else
+        public const int LatencyLimit = 200;
+#endif
+
         const string k_DefaultIP = "127.0.0.1";
         const int k_DefaultPort = 7777;
-        public bool IsConnecting = false;        
+        public bool IsConnecting = false;
         internal readonly OfflineState m_Offline = new OfflineState();
         internal readonly ClientConnectingState m_ClientConnecting = new ClientConnectingState();
         internal readonly ClientConnectedState m_ClientConnected = new ClientConnectedState();
@@ -148,14 +152,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_CurrentState = m_Offline;
             // Here, we keep ForceSamePrefabs disabled. This will allow us to dynamically add network prefabs to Netcode
             // for GameObject after establishing a connection.
-        //    NetworkManager.NetworkConfig.ForceSamePrefabs = false;
+            //    NetworkManager.NetworkConfig.ForceSamePrefabs = false;
             NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
             NetworkManager.OnServerStarted += OnServerStarted;
             NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
-        //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
-        //    DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
+            //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
+            //    DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
         }
         public void LeaveLobby()
         {
@@ -171,7 +175,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
         internal void ChangeState(ConnectionState nextState)
-        {          
+        {
 
             if (m_CurrentState != null)
             {

@@ -158,7 +158,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             List<int> heckleBaseList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             for (int i = 0; i < heckleBaseList.Count; i++)
             {
-                heckleBaseList[i] = (19 * heckleBaseList[i] + 10 * utcNow.Day + utcNow.Month) % 279;
+                heckleBaseList[i] = (19 * heckleBaseList[i] + 10 * utcNow.Day + utcNow.Month) % 280;
             }
 
             byte ii = 0;
@@ -221,7 +221,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             List<int> exoBaseList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             for (int i = 0; i < exoBaseList.Count; i++)
             {
-                exoBaseList[i] = 1 + ((2 * exoBaseList[i] + utcNow.Day + utcNow.Month) % 39);
+                exoBaseList[i] = 1 + ((2 * exoBaseList[i] + utcNow.Day + utcNow.Month) % 40);
             }
             exoBaseList.Insert(0, 0);
 
