@@ -8,6 +8,8 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -36,8 +38,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public bool showGameSettingsFirst = true;
 
         public GameObject idContainer;
-        public CanvasGroupButton idButton;
         public TextMeshProUGUI idString;
+        public CanvasGroupButton idButton;
+        public GameObject idHighlight;
+        public AnimationClip idAnim;
 
         //public GameObject premiumTab;
 
@@ -300,6 +304,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void CopyID()
         {
             UniClipboard.SetText(AuthenticationService.Instance.PlayerId);
+            StartCoroutine(AnimateCopy());
+        }
+
+        IEnumerator AnimateCopy()
+        {
+            idHighlight.SetActive(true);
+            yield return new WaitForSeconds(idAnim.length);
+            idHighlight.SetActive(false);
         }
 
         public override void OnDismissing()
