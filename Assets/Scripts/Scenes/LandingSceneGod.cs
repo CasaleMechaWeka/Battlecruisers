@@ -109,7 +109,6 @@ namespace BattleCruisers.Scenes
         #endif
         #if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
-        public IAppleAuthentication _AppleAuthentication { get; set; }
         private const string AppleUserIdKey = "AppleUserId";
         #endif
 
@@ -249,10 +248,6 @@ namespace BattleCruisers.Scenes
 
                 #elif PLATFORM_IOS
                 InitializeAppleAuth();
-                if (_AppleAuthentication == null)
-                {
-                    _AppleAuthentication = new AppleAuthentication();
-                }
 
                 // If at any point we receive a credentials revoked notification, we delete the stored User ID
                 _AppleAuthManager.SetCredentialsRevokedCallback(result =>
@@ -265,7 +260,7 @@ namespace BattleCruisers.Scenes
                 if (PlayerPrefs.HasKey(AppleUserIdKey))
                 {
                     var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
-                    //CheckCredentialStatusForUserId(storedAppleUserId, soundPlayer);
+                    CheckCredentialStatusForUserId(storedAppleUserId, soundPlayer);
                 }
                 // If we do not have an stored Apple User Id, attempt a quick login
                 else
@@ -455,7 +450,7 @@ namespace BattleCruisers.Scenes
                                     appleIDCredential.IdentityToken.Length);
                                 Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
                                 LogToScreen("Sign-in success."); //Localise for prod
-                                _AppleAuthentication.Token = idToken;
+                                PlayerPrefs.SetString(AppleUserIdKey, credential.User);
                                 SignInWithAppleAsync(idToken);
                             }
                             else
