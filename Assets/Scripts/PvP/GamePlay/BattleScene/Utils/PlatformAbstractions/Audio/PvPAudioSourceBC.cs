@@ -17,7 +17,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             set
             {
                 _audioClip = value;
-                _audioSource.clip = value?.AudioClip;
+                if (_audioSource != null)
+                    _audioSource.clip = value?.AudioClip;
             }
         }
 

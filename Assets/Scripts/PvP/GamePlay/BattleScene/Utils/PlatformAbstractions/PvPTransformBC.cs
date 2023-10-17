@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public Vector3 Position
         {
-            get { return PlatformObject.position; }
+            get { return PlatformObject != null ? PlatformObject.position : Vector3.zero; }
             set { PlatformObject.position = value; }
         }
 
