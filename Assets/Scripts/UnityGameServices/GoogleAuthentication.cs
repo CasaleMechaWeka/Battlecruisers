@@ -19,8 +19,6 @@ namespace BattleCruisers.Utils.Network
 
     public class GoogleAuthentication : IGoogleAuthentication
     {
-        public string Token;
-        public string Error;
         public void InitializePlayGamesLogin()
         {
             var config = new PlayGamesClientConfiguration.Builder()
@@ -36,9 +34,10 @@ namespace BattleCruisers.Utils.Network
         }
 
         //Fetch the Token / Auth code
-        public async Task Authenticate(SignInInteractivity interactivity)
+        public async Task<bool> Authenticate(SignInInteractivity interactivity)
         {
             string c = "";
+            bool state = false;
             //The compiler doesn't like it if "interactivity" isn't passed into Authenticate().
             //This diverges from tutorials and documentation!
             PlayGamesPlatform.Instance.Authenticate(interactivity, (success) =>
@@ -49,14 +48,15 @@ namespace BattleCruisers.Utils.Network
                     c = ((PlayGamesLocalUser)Social.localUser).GetIdToken();
                     Debug.Log("Authorization code: " + c);
                     SignInWithGoogleAsync(c);
-                    Token = c;
+                    state = true;
                 }
                 else
                 {
-                    Error = "Failed to retrieve Google play games authorization code";
-                    Debug.Log("Login Unsuccessful");
+                    Debug.Log("Failed to retrieve Google play games authorization code");
+                    state = false;
                 }
             });
+            return state;
         }
 
         public void LoginGoogle()

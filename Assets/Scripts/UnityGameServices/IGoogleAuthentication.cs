@@ -11,7 +11,7 @@ namespace BattleCruisers.Utils.Network
     public interface IGoogleAuthentication
     {
         void InitializePlayGamesLogin();
-        Task Authenticate(SignInInteractivity interactivity);
+        Task<bool> Authenticate(SignInInteractivity interactivity);
         void LoginGoogle();
         Task SignInWithGoogleAsync(string idToken);
         Task SignInWithGooglePlayGamesAsync(string authCode);

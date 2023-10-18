@@ -240,11 +240,7 @@ namespace BattleCruisers.Scenes
                 #if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
-                //await AttemptSilentSigningAsync();
-                ShowSignInScreen(soundPlayer);
-
-                // should be enabled after completion initialization
-                LogToScreen(""); // INTERNET
+                await GoogleAttemptSilentSigningAsync(soundPlayer);
 
                 #elif PLATFORM_IOS
                 InitializeAppleAuth();
@@ -268,13 +264,18 @@ namespace BattleCruisers.Scenes
                     //Attempt Apple Quick Login
                     AppleQuickLogin(soundPlayer);
                 }
+                #else
+                ShowSignInScreen(soundPlayer);
                 #endif
             }
             else
             {
                 LogToScreen("No internet, continue offline"); // NO INTERNET
             }
-            ShowSignInScreen(soundPlayer);
+
+            //ShowSignInScreen(soundPlayer);
+            // should be enabled after completion initialization
+            LogToScreen(""); // INTERNET
         }
 
         private void ShowSignInScreen(ISingleSoundPlayer soundPlayer)
@@ -371,6 +372,7 @@ namespace BattleCruisers.Scenes
             #endif
         }
 
+        #if PLATFORM_ANDROID
         // Google login by button:
         public async void GoogleLogin()
         {
@@ -384,32 +386,45 @@ namespace BattleCruisers.Scenes
 
                 try
                 {
-                    #if PLATFORM_ANDROID
-                    await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
-                    #endif
+                    bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+                    if(state != true)
+                    {
+                        spinGoogle.SetActive(false);
+                        labelGoogle.SetActive(true);
+                        SetInteractable(true);
+                    }
                 }
                 catch (Exception ex)
                 {
                     LogToScreen("Error while trying to log in with Google"); // IF GOOGLE AUTH FAILS FOR ANY REASON
                     Debug.Log(ex.Message);
+                    spinGoogle.SetActive(false);
+                    labelGoogle.SetActive(true);
+                    SetInteractable(true);
                 }
             }
         }
 
         // Attempt Google signin without user input:
-        private async Task GoogleAttemptSilentSigningAsync()
+        private async Task GoogleAttemptSilentSigningAsync(ISingleSoundPlayer soundPlayer)
         {
             try
-            {
-                #if PLATFORM_ANDROID
-                await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
-                #endif
+            {              
+                bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
+                if(state != true)
+                {
+                    ShowSignInScreen(soundPlayer);
+                    Debug.Log("Google silent signin unsuccessful.");
+                }
             }
             catch (Exception ex)
             {
+                // if it fails, show the landing buttons:
+                ShowSignInScreen(soundPlayer);
                 Debug.Log(ex.Message);
             }
         }
+        #endif
 
         #if PLATFORM_IOS
         // Apple login by button:
@@ -561,6 +576,36 @@ namespace BattleCruisers.Scenes
                 // Notify the player with the proper error message
                 Debug.LogError("####### Error: " + ex.Message);
             }
+        }
+
+        // Apple-specific ID check
+        private void CheckCredentialStatusForUserId(string appleUserId, ISingleSoundPlayer soundPlayer)
+        {
+            // If there is an apple ID available, we should check the credential state
+            _AppleAuthManager.GetCredentialState(
+            appleUserId,
+            state =>
+            {
+                switch (state)
+                {
+                // If it's authorized, login with that user id
+                case CredentialState.Authorized:
+                        SignInWithAppleAsync(AppleUserIdKey);
+                    return;
+                // If it was revoked, or not found, we need a new sign in with apple attempt
+                // Discard previous apple user id
+                case CredentialState.Revoked:
+                case CredentialState.NotFound:
+                        PlayerPrefs.DeleteKey(AppleUserIdKey);
+                    ShowSignInScreen(soundPlayer);
+                    return;
+                }
+            },
+            error =>
+            {
+                var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
+            });
         }
         #endif
 
@@ -757,12 +802,12 @@ namespace BattleCruisers.Scenes
 
         public void Update()
         {
-#if PLATFORM_IOS
+            #if PLATFORM_IOS
             if (_AppleAuthManager != null)
             {
                 _AppleAuthManager.Update();
             }
-#endif
+            #endif
         }
 
         bool isUpdatingInternetConnectivity = false;
@@ -827,37 +872,9 @@ namespace BattleCruisers.Scenes
             }
         }
 
-#if PLATFORM_IOS
-        // Apple-specific ID check
-        private void CheckCredentialStatusForUserId(string appleUserId, ISingleSoundPlayer soundPlayer)
-        {
-            // If there is an apple ID available, we should check the credential state
-            _AppleAuthManager.GetCredentialState(
-            appleUserId,
-            state =>
-            {
-                switch (state)
-                {
-                // If it's authorized, login with that user id
-                case CredentialState.Authorized:
-                        SignInWithAppleAsync(AppleUserIdKey);
-                    return;
-                // If it was revoked, or not found, we need a new sign in with apple attempt
-                // Discard previous apple user id
-                case CredentialState.Revoked:
-                case CredentialState.NotFound:
-                        PlayerPrefs.DeleteKey(AppleUserIdKey);
-                    ShowSignInScreen(soundPlayer);
-                    return;
-                }
-            },
-            error =>
-            {
-                var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
-            });
-        }
-#endif
+        #if PLATFORM_IOS
+
+        #endif
 
         public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
