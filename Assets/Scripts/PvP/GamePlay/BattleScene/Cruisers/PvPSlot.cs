@@ -95,9 +95,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             get { return _renderer.gameObject.activeSelf; }
             set
             {
-                _renderer.gameObject.SetActive(value);
-/*                if (IsHost)
-                    pvp_IsVisibleRenderer.Value = value;*/
+                if (_renderer != null)
+                    _renderer.gameObject.SetActive(value);
+                /*                if (IsHost)
+                                    pvp_IsVisibleRenderer.Value = value;*/
             }
         }
 
@@ -110,28 +111,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             if (IsServer)
             {
-                    pvp_IsFree.Value = true;
-/*                pvp_IsVisibleRenderer.Value = pvp_b_InitialValue;*/
+                pvp_IsFree.Value = true;
+                /*                pvp_IsVisibleRenderer.Value = pvp_b_InitialValue;*/
             }
             else
             {
                 Initialise_Client();
-/*                if (pvp_IsVisibleRenderer.Value != pvp_b_InitialValue)
-                {
-                    Debug.Log($"NetworkVariable was {pvp_IsVisibleRenderer.Value} upon being spawned" + $" when it should have been {pvp_b_InitialValue}");
-                }
-                else
-                {
-                    Debug.Log($"NetworkVariable is {pvp_IsVisibleRenderer.Value} when spawned.");
-                    IsVisibleRederer = pvp_IsVisibleRenderer.Value;
-                }
-                pvp_IsVisibleRenderer.OnValueChanged += OnPvPIsVisibleRendererValueChanged;*/
+                /*                if (pvp_IsVisibleRenderer.Value != pvp_b_InitialValue)
+                                {
+                                    Debug.Log($"NetworkVariable was {pvp_IsVisibleRenderer.Value} upon being spawned" + $" when it should have been {pvp_b_InitialValue}");
+                                }
+                                else
+                                {
+                                    Debug.Log($"NetworkVariable is {pvp_IsVisibleRenderer.Value} when spawned.");
+                                    IsVisibleRederer = pvp_IsVisibleRenderer.Value;
+                                }
+                                pvp_IsVisibleRenderer.OnValueChanged += OnPvPIsVisibleRendererValueChanged;*/
             }
         }
 
         public override void OnNetworkDespawn()
         {
-        //    pvp_IsVisibleRenderer.OnValueChanged -= OnPvPIsVisibleRendererValueChanged;
+            //    pvp_IsVisibleRenderer.OnValueChanged -= OnPvPIsVisibleRendererValueChanged;
         }
 
 

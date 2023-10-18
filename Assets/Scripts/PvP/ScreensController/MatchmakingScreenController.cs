@@ -24,6 +24,7 @@ using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
+using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -111,6 +112,24 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LOOKING_VICTIM
         }
         public MMStatus status = MMStatus.FINDING_LOBBY;
+        public enum ConnectionQuality
+        {
+            DEAD,
+            LOW,
+            MID,
+            HIGH
+        }
+        private ConnectionQuality connection_Quality;
+        public ConnectionQuality Connection_Quality
+        {
+            set
+            {
+                connection_qualities[(int)connection_Quality].SetActive(false);
+                connection_Quality = value;
+                connection_qualities[(int)connection_Quality].SetActive(true);
+            }
+        }
+        public GameObject[] connection_qualities;
         public override void OnPresenting(object activationParameter)
         {
 
@@ -125,6 +144,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         async void Start()
         {
             Instance = this;
+            Connection_Quality = ConnectionQuality.HIGH;
             LoadingBarParent.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();

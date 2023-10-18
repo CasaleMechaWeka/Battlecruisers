@@ -191,6 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 regions.Add(Region);
                                 var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
                                 int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                                CheckLatency(ClientLatency);
                                 UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
                                 int iHostLatency = 0;
                                 int.TryParse(HostLatency, out iHostLatency);
@@ -237,6 +238,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     regions.Add(Region);
                                     var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
                                     int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
+                                    CheckLatency(ClientLatency);
                                     UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
                                     int iHostLatency = 0;
                                     int.TryParse(HostLatency, out iHostLatency);
@@ -269,6 +271,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     {
                         var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
                         int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
+                        CheckLatency(averageLatency);
                         if (averageLatency > ConnectionManager.LatencyLimit / 2)
                             continue;
                         MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
@@ -309,6 +312,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 {
                     var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
                     int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
+                    CheckLatency(averageLatency);
                     if (averageLatency > ConnectionManager.LatencyLimit / 2)
                         continue;
                     
@@ -349,6 +353,28 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     break;
                 await Task.Delay(1000);
             }
+        }
+
+        void CheckLatency(int latency)
+        {
+            if (latency < 50)
+            {
+                MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.HIGH;
+                return;
+            }
+                
+            if(latency < 100)
+            {
+                MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.MID;
+                return;
+            }
+
+            if (latency < 150)
+            {
+                MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.LOW;
+                return;
+            }
+            MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.DEAD;
         }
 
         string ConvertToScene(Map map)

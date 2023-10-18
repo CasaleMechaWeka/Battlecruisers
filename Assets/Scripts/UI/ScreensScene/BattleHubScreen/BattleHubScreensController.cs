@@ -284,8 +284,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             for (int i = 0; i < seperatorCount; i++)
                 version = version.Remove(version.IndexOf('.'), 1);
-
-            return int.Parse(version);
+            int version_num;
+            bool result = int.TryParse(version, out version_num);
+            if (result)
+                return version_num;
+            else return 0;
         }
     }
 }
