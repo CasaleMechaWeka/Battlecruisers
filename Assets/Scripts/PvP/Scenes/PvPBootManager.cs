@@ -164,7 +164,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             new QueryOrder(false, QueryOrder.FieldOptions.N1),
             new QueryOrder(false, QueryOrder.FieldOptions.N2),
         };
-
+            string joinedCode = PlayerPrefs.GetString("JOINCODE", " ");
             while (true && !m_CancellationToken.IsCancellationRequested)
             {
                 UnityEngine.Debug.Log("===> Started Finding Lobbies");
@@ -181,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
                         string Region = lobby.Data.ContainsKey("Region") ? lobby.Data["Region"].Value : null;
                         string HostLatency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
-                        if (string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
+                        if (RelayJoinCode == joinedCode || string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
                             continue;
                         else if (!string.IsNullOrEmpty(RelayJoinCode) && !string.IsNullOrEmpty(Region) && !string.IsNullOrEmpty(HostLatency))
                         {
@@ -210,6 +210,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     {
                                         UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                                         MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                        PlayerPrefs.SetString("JOINCODE", RelayJoinCode);
                                         m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                         joined = true;
                                         isFound = true;
@@ -227,7 +228,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             string RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
                             string Region = lobby.Data.ContainsKey("Region") ? lobby.Data["Region"].Value : null;
                             string HostLatency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
-                            if (string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
+                            if (RelayJoinCode == joinedCode || string.IsNullOrEmpty(RelayJoinCode) || string.IsNullOrEmpty(Region) || string.IsNullOrEmpty(HostLatency))
                                 continue;
                             else
                             {
@@ -257,6 +258,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                             UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                                             ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
                                             MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
+                                            PlayerPrefs.SetString("JOINCODE", RelayJoinCode);
                                             m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                             joined = true;
                                             isFound = true;
