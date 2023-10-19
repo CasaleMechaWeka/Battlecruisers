@@ -117,6 +117,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public override void Cancel()
         {
+            LandingSceneGod.Instance.coinBattleLevelNum = -1;
             if (enemyModel != null)
                 Destroy(enemyModel);
             if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle || _appModel.Mode == GameMode.CoinBattle)
