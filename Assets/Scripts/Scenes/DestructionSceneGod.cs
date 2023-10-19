@@ -37,6 +37,7 @@ namespace BattleCruisers.Scenes
         private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
+        public CanvasGroupButton skipButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
         private ISingleSoundPlayer _soundPlayer;
@@ -97,7 +98,10 @@ namespace BattleCruisers.Scenes
         private AnimationClip levelUpModalAnim;
         private float modalPeriod; // length of levelUpModalAnim
 
-        private float timeStep; // used as the basis for all WaitForSeconds() returns 
+        private float timeStep; // used as the basis for all WaitForSeconds() returns
+        private float stepPeriod;
+        [SerializeField]
+        private int steps;
 
         // values to control scores and rewards:
         private int scoreDivider;
@@ -151,28 +155,40 @@ namespace BattleCruisers.Scenes
                             applicationModel.DataProvider.SettingsManager, 1));
 
                 nextButton.Initialise(_soundPlayer, Done);
+                skipButton.Initialise(_soundPlayer, SkipAnim);
                 _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
 
             }
-
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditdivider", out creditDivider);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditmax", out creditMax);
 
             // Populate screen:
             if (BattleSceneGod.deadBuildables != null)
             {
                 // real values:
+                
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditdivider", out creditDivider);
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
+                applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditmax", out creditMax);
+
                 PopulateScreen();
             }
             else
             {
                 // fake values if the screen is being launched for testing purposes:
+                
+                scoreDivider = 10;
+                creditDivider = 100;
+                coin1Threshold = 1000;
+                coin2Threshold = 2000;
+                coin3Threshold = 3000;
+                coin4Threshold = 4000;
+                coin5Threshold = 5000;
+                creditMax = 1250;
+
                 PopulateScreenFake();
             }
 
@@ -278,6 +294,8 @@ namespace BattleCruisers.Scenes
             // so we can give the player all their points and coins now.
             // That way if there's a crash or anything before the animation completes, they still get credit.
             UpdateGameModelVals();
+
+            skipButton.gameObject.SetActive(true);
         }
 
         // Duplicate of PopulateScreen(), but with fake numbers.
@@ -351,8 +369,6 @@ namespace BattleCruisers.Scenes
 
             // Enable a card, interpolate its total into the Damage Total, add XP to bar, repeat
             long damageRunningTotal = 0;
-            int steps = 30;
-            float stepPeriod = timeStep / steps;
 
             for (int i = 0; i < destructionCards.Length; i++)
             {
@@ -361,7 +377,7 @@ namespace BattleCruisers.Scenes
 
                 // Interpolate the Damage Caused value, from the current running total to that + the card's damage value
                 // by the specified number of steps. Steps are divided over time:
-                yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10));
+                yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], steps));
                 damageRunningTotal += destructionValues[i];
                 //yield return new WaitForSeconds(timeStep); // wait for destruction card reveal anim to finish before proceeding
 
@@ -443,8 +459,10 @@ namespace BattleCruisers.Scenes
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
+            skipButton.gameObject.SetActive(false);
+
             // Award any rewards:
-            if (applicationModel.Mode != GameMode.Skirmish)
+            if (applicationModel != null && applicationModel.Mode != GameMode.Skirmish)
             {
                 if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
                 {
@@ -454,6 +472,23 @@ namespace BattleCruisers.Scenes
 
             // Interpolate Lifetime Damage (same deal as regular damage)
             yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
+        }
+
+        private void SkipAnim()
+        {
+            skipButton.gameObject.SetActive(false);
+
+            timeStep = 0.0f;
+            stepPeriod = 0.0f;
+            steps = 1;
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                GameObject card = destructionCards[i].gameObject;
+                Animator anim = card.GetComponent<Animator>();
+                card.SetActive(true);
+                anim.Play("DestructionCard", 0, 1);
+            }
         }
 
         IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
