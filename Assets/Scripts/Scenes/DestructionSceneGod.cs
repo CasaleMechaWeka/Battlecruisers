@@ -453,11 +453,11 @@ namespace BattleCruisers.Scenes
             }
 
             // Interpolate time counter:
-            yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
+            yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, Mathf.Min(1, steps * 2)));
 
             // Interpolate game score:
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
-            yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
+            yield return StartCoroutine(InterpolateScore(0, levelScore, steps));
 
             skipButton.gameObject.SetActive(false);
 
@@ -471,7 +471,7 @@ namespace BattleCruisers.Scenes
             }
 
             // Interpolate Lifetime Damage (same deal as regular damage)
-            yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
+            yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, Mathf.Min(1, steps / 3)));
         }
 
         private void SkipAnim()
@@ -494,7 +494,7 @@ namespace BattleCruisers.Scenes
         IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
         {
             long interpStep = (endVal - startVal) / steps;
-            float stepPeriod = (timeStep) / steps;
+            float stepPeriod = timeStep / steps;
 
             for (int i = 1; i <= steps; i++)
             {
@@ -507,7 +507,7 @@ namespace BattleCruisers.Scenes
         IEnumerator InterpolateLifetimeDamageValue(long startVal, long endVal, int steps)
         {
             long interpStep = (endVal - startVal) / steps;
-            float stepPeriod = (timeStep) / steps;
+            float stepPeriod = timeStep / steps;
 
             for (int i = 1; i <= steps; i++)
             {
@@ -545,7 +545,7 @@ namespace BattleCruisers.Scenes
         IEnumerator InterpolateScore(long startVal, long endVal, int steps)
         {
             long interpStep = (endVal - startVal) / steps;
-            float stepPeriod = (timeStep) / steps;
+            float stepPeriod = timeStep / steps;
 
             for (int i = 1; i <= steps; i++)
             {
