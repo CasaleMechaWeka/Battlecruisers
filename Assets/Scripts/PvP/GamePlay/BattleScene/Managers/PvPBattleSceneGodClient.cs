@@ -468,6 +468,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             StartCoroutine(iLoadedPvPScene());
             ApplicationModelProvider.ApplicationModel.Mode = BattleCruisers.Data.GameMode.PvP_1VS1;
             // apply economy because here is end of starting PvPbattle.
+            Invoke("ApplyEconomy", 60f);
+            isStartedPvP = true;
+            if (NetworkManager.Singleton.IsHost)
+                PvPBattleSceneGodServer.Instance.Initialise_Rest();
+        }
+
+        private async void ApplyEconomy()
+        {
             if (!WasLeftMatch && !wasOpponentDisconnected)
             {
                 dataProvider.GameModel.Coins -= dataProvider.GameModel.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
@@ -477,10 +485,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 await dataProvider.SyncCoinsToCloud();
                 await dataProvider.SyncCreditsToCloud();
             }
-            isStartedPvP = true;
-
-            if (NetworkManager.Singleton.IsHost)
-                PvPBattleSceneGodServer.Instance.Initialise_Rest();
         }
 
         private async Task LoadAllCaptains()
