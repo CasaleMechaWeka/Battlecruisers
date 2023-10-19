@@ -601,15 +601,58 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
 
+
         private void PlayerCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
             cameraComponents.CruiserDeathCameraFocuser.FocusOnLosingCruiser(playerCruiser);
+            HandleCruiserDestroyed();
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            {
+                GetComponent<PvPBattleSceneGodTunnel>().battleCompletionHandler?.CompleteBattle(false, false, SynchedServerData.Instance.left_destructionScore.Value);
+            }
+            else
+            {
+                GetComponent<PvPBattleSceneGodTunnel>().battleCompletionHandler?.CompleteBattle(true, false, SynchedServerData.Instance.right_destructionScore.Value);
+            }
             playerCruiser.Destroyed -= PlayerCruiser_Destroyed;
         }
 
         private void EnemyCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
             cameraComponents.CruiserDeathCameraFocuser.FocusOnLosingCruiser(enemyCruiser);
+            HandleCruiserDestroyed();
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            {
+                PvPBattleSceneGodTunnel._levelTimeInSeconds = SynchedServerData.Instance.left_levelTimeInSeconds.Value;
+                PvPBattleSceneGodTunnel._aircraftVal = SynchedServerData.Instance.left_aircraftVal.Value;
+                PvPBattleSceneGodTunnel._shipsVal = SynchedServerData.Instance.left_shipsVal.Value;
+                PvPBattleSceneGodTunnel._cruiserVal = SynchedServerData.Instance.left_cruiserVal.Value;
+                PvPBattleSceneGodTunnel._buildingsVal = SynchedServerData.Instance.left_buildingsVal.Value;
+                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.Name;
+                PvPBattleSceneGodTunnel._totalDestroyed = new long[4]
+                {   SynchedServerData.Instance.left_totalDestroyed1.Value,
+                    SynchedServerData.Instance.left_totalDestroyed2.Value,
+                    SynchedServerData.Instance.left_totalDestroyed3.Value,
+                    SynchedServerData.Instance.left_totalDestroyed4.Value,
+                };
+                GetComponent<PvPBattleSceneGodTunnel>().battleCompletionHandler?.CompleteBattle(true, false, SynchedServerData.Instance.left_destructionScore.Value);
+            }
+            else
+            {
+                PvPBattleSceneGodTunnel._levelTimeInSeconds = SynchedServerData.Instance.right_levelTimeInSeconds.Value;
+                PvPBattleSceneGodTunnel._aircraftVal = SynchedServerData.Instance.right_aircraftVal.Value;
+                PvPBattleSceneGodTunnel._shipsVal = SynchedServerData.Instance.right_shipsVal.Value;
+                PvPBattleSceneGodTunnel._cruiserVal = SynchedServerData.Instance.right_cruiserVal.Value;
+                PvPBattleSceneGodTunnel._buildingsVal = SynchedServerData.Instance.right_buildingsVal.Value;
+                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.Name;
+                PvPBattleSceneGodTunnel._totalDestroyed = new long[4]
+                {       SynchedServerData.Instance.right_totalDestroyed1.Value,
+                        SynchedServerData.Instance.right_totalDestroyed2.Value,
+                        SynchedServerData.Instance.right_totalDestroyed3.Value,
+                        SynchedServerData.Instance.right_totalDestroyed4.Value,
+                };
+                GetComponent<PvPBattleSceneGodTunnel>().battleCompletionHandler?.CompleteBattle(false, false, SynchedServerData.Instance.right_destructionScore.Value);
+            }
             enemyCruiser.Destroyed -= EnemyCruiser_Destroyed;
         }
 

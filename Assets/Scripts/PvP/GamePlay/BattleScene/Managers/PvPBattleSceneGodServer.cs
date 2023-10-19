@@ -301,6 +301,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     return;
                 }
                 deadBuildables_left[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                SynchedServerData.Instance.CalculateScoresOfLeftPlayer();
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == PvPTargetType.Cruiser)
                 {
@@ -327,6 +328,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     return;
                 }
                 deadBuildables_right[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                SynchedServerData.Instance.CalculateScoresOfRightPlayer();
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == PvPTargetType.Cruiser)
                 {

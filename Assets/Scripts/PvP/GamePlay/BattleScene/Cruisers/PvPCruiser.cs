@@ -138,6 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_IdleDronesStarted = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool>();
+        public NetworkVariable<byte> pvp_IsVictory = new NetworkVariable<byte>();
 
         private IPvPBroadcastingProperty<bool> _CruiserHasActiveDrones;
 
@@ -468,7 +469,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
 
         }
-
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
@@ -530,6 +530,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 base.OnDamagedEventCalled(objectId);
         }
 
+        protected override void InternalDestroy()
+        {
+           
+        }
+
         protected override void OnDestroyedEvent()
         {
             if (Faction == PvPFaction.Blues)
@@ -541,6 +546,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 PvPCaptainExoHUDController.Instance.DoLeftHappy();
                 PvPCaptainExoHUDController.Instance.DoRightAngry();
+            }
+
+            SpriteRenderer[] visuals = GameObject.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
+            foreach (SpriteRenderer visual in visuals)
+            {
+                visual.enabled = false;
+            }
+
+            Collider2D[] colliders = GameObject.GetComponentsInChildren<Collider2D>(includeInactive: true);
+            foreach (Collider2D collider in colliders)
+            {
+                collider.enabled = false;
             }
 
             if (IsServer)
