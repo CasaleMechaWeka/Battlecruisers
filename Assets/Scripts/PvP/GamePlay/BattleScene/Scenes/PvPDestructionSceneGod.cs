@@ -25,6 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
+        public CanvasGroupButton skipButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
         private ISingleSoundPlayer _soundPlayer;
@@ -86,6 +87,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private float modalPeriod; // length of levelUpModalAnim
 
         private float timeStep; // used as the basis for all WaitForSeconds() returns 
+        private float stepPeriod;
+        [SerializeField]
+        private int steps;
 
         // values to control scores and rewards:
         private int scoreDivider;
@@ -155,6 +159,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                             applicationModel.DataProvider.SettingsManager, 1));
 
                 nextButton.Initialise(_soundPlayer, Done);
+                skipButton.Initialise(_soundPlayer, SkipAnim);
                 _sceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
 
             }
@@ -428,6 +433,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // so we can give the player all their points and coins now.
             // That way if there's a crash or anything before the animation completes, they still get credit.
             UpdateGameModelVals();
+
+            skipButton.gameObject.SetActive(true);
         }
 
         // Duplicate of PopulateScreen(), but with fake numbers.
@@ -513,8 +520,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             // Enable a card, interpolate its total into the Damage Total, add XP to bar, repeat
             long damageRunningTotal = 0;
-            int steps = 30;
-            float stepPeriod = timeStep / steps;
 
             for (int i = 0; i < destructionCards.Length; i++)
             {
@@ -523,7 +528,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
                 // Interpolate the Damage Caused value, from the current running total to that + the card's damage value
                 // by the specified number of steps. Steps are divided over time:
-                yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10));
+                yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], steps));
                 damageRunningTotal += destructionValues[i];
                 //yield return new WaitForSeconds(timeStep); // wait for destruction card reveal anim to finish before proceeding
 
@@ -605,6 +610,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
+            skipButton.gameObject.SetActive(false);
+
             // Award any rewards:
             if (applicationModel.Mode != GameMode.Skirmish)
             {
@@ -618,6 +625,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             // Interpolate Lifetime Damage (same deal as regular damage)
             yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
+        }
+
+        private void SkipAnim()
+        {
+            skipButton.gameObject.SetActive(false);
+
+            timeStep = 0.0f;
+            stepPeriod = 0.0f;
+            steps = 1;
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                GameObject card = destructionCards[i].gameObject;
+                Animator anim = card.GetComponent<Animator>();
+                card.SetActive(true);
+                anim.Play("DestructionCard", 0, 1);
+            }
         }
 
         IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
