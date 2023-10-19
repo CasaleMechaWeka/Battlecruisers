@@ -834,9 +834,10 @@ namespace BattleCruisers.Scenes
         {
             if (loginType == LoginType.Anonymous)
                 AnonymousLogin();
+            #if PLATFORM_ANDROID
             if (loginType == LoginType.Google)
                 GoogleLogin();
-            #if PLATFORM_IOS
+            #elif PLATFORM_IOS
             if (loginType == LoginType.Apple)
                 AppleLogin();
             #endif
