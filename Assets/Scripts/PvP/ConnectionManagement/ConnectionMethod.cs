@@ -164,6 +164,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
             Debug.Log("===>host latency ---> " + averageLatency);
 
+            if (averageLatency > ConnectionManager.LatencyLimit / 2)
+                throw new Exception();
+
             m_LocalLobby.RelayJoinCode = joinCode;
             m_LocalLobby.Region = hostAllocation.Region;
             m_LocalLobby.Latency = averageLatency.ToString();
