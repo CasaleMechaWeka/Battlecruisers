@@ -604,7 +604,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             // Interpolate time counter:
-            yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, Mathf.Min(1, steps * 2)));
+            yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, (int)Mathf.Clamp(steps * 2, 1, Mathf.Infinity)));
 
             // Interpolate game score:
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
@@ -624,7 +624,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // TODO: level rating (maybe?)
 
             // Interpolate Lifetime Damage (same deal as regular damage)
-            yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, Mathf.Min(1, steps / 3)));
+            yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, (int)Mathf.Clamp(steps / 3, 1, Mathf.Infinity)));
         }
 
         private void SkipAnim()
