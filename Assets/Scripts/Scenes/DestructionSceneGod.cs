@@ -506,7 +506,7 @@ namespace BattleCruisers.Scenes
 
         IEnumerator InterpolateLifetimeDamageValue(long startVal, long endVal, int steps)
         {
-            long interpStep = (endVal - startVal) / steps;
+            long interpStep = (long)MathF.Min(1, (endVal - startVal)) / (long)MathF.Min(1, steps);
             float stepPeriod = timeStep / steps;
 
             for (int i = 1; i <= steps; i++)
