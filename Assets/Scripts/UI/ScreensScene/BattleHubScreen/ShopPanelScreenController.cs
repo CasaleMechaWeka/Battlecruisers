@@ -33,6 +33,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Image captainsButtonImage, hecklesButtonImage;
         public Text blackMarketText;
         private bool InternetConnection;
+        private Color32 navButtonActive = new Color32(255, 255, 255, 255);
+        private Color32 navButtonInactive = new Color32(194, 59, 33, 255);
 
         public async Task Initialise(
             IScreensSceneGod screensSceneGod,
@@ -104,20 +106,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void HighlightCaptainsNavButton()
         {
-            // Set this button to active color
-            captainsButtonImage.color = new Color32(255, 255, 255, 255);
-
-            // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+            captainsButtonImage.color = navButtonActive;
+            hecklesButtonImage.color = navButtonInactive;
         }
 
         private void HighlightHecklesNavButton()
         {
-            // Set this button to active color
-            hecklesButtonImage.color = new Color32(255, 255, 255, 255);
-
-            // Set the other button to inactive color
-            captainsButtonImage.color = new Color32(194, 59, 33, 255);
+            hecklesButtonImage.color = navButtonActive;
+            captainsButtonImage.color = navButtonInactive;
         }
 
         private void RemoveAllCaptainsFromRenderCamera()
