@@ -95,7 +95,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 secretLevelsHint.SetActive(false);
             else
                 secretLevelsHint.SetActive(true);
-            Debug.Log("NumOfLevelsUnlocked:" + numOfLevelsUnlocked);
 
         }
 
