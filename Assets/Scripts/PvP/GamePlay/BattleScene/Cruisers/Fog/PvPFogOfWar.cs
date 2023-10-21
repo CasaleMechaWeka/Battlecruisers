@@ -13,12 +13,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         public GameObject weakFog, strongFog;
         private PvPFogStrength currentStrength;
-
+        private bool IsAIBotMode = false;
         public void Initialise(PvPFogStrength fogStrength)
         {
             Helper.AssertIsNotNull(weakFog, strongFog);
             IsVisible = false;
             currentStrength = fogStrength;
+        }
+        public void SetAIBotMode()
+        {
+            IsAIBotMode = true;
         }
         private void Start()
         {
@@ -67,25 +71,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
             else
             {
-                if (IsHost && IsOwner)
-                {
-                    weakFog?.SetActive(true);
-                    strongFog?.SetActive(false);
-                }
-                if (IsHost && !IsOwner)
+                if(IsAIBotMode)
                 {
                     weakFog?.SetActive(false);
                     strongFog?.SetActive(true);
                 }
-                if (!IsHost && !IsOwner)
+                else
                 {
-                    weakFog?.SetActive(false);
-                    strongFog?.SetActive(true);
-                }
-                if (!IsHost && IsOwner)
-                {
-                    weakFog?.SetActive(true);
-                    strongFog?.SetActive(false);
+                    if (IsHost && IsOwner)
+                    {
+                        weakFog?.SetActive(true);
+                        strongFog?.SetActive(false);
+                    }
+                    if (IsHost && !IsOwner)
+                    {
+                        weakFog?.SetActive(false);
+                        strongFog?.SetActive(true);
+                    }
+                    if (!IsHost && !IsOwner)
+                    {
+                        weakFog?.SetActive(false);
+                        strongFog?.SetActive(true);
+                    }
+                    if (!IsHost && IsOwner)
+                    {
+                        weakFog?.SetActive(true);
+                        strongFog?.SetActive(false);
+                    }
                 }
             }
         }

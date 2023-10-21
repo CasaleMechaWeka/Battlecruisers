@@ -119,7 +119,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             cruiser.StaticInitialise(_commonStrings);
             return cruiser;
         }
-
+        public PvPCruiser CreateAIBotCruiser(PvPCruiser cruiserPrefab, float x)
+        {
+            PvPCruiser cruiser = Object.Instantiate(cruiserPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
+            cruiser.GetComponent<NetworkObject>().Spawn();
+            cruiser.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
+            cruiser.StaticInitialise(_commonStrings);
+            cruiser.SetAIBotMode();
+            return cruiser;
+        }
         public PvPCruiser CreateCruiser(string prefabName, ulong ClientNetworkId, float x)
         {
             PvPCruiser cruiser = GameObject.Instantiate(Resources.Load<PvPCruiser>("Hulls/" + prefabName), new Vector3(x, 0f, 0f), Quaternion.identity);

@@ -170,7 +170,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 UnityEngine.Debug.Log("===> Started Finding Lobbies");
                 QueryResponse response = await m_LobbyServiceFacade.QueryLobbyListAsync(mFilters, mOrders);
                 List<Lobby> foundLobbies = response.Results;
-                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.FINDING_LOBBY);
+                MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.FINDING_LOBBY);
                 bool isFound = false;
                 if (foundLobbies.Any())
                 {
@@ -200,7 +200,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     continue;
                                 }
                                 UnityEngine.Debug.Log("===>joined latency ---> " + (iHostLatency + ClientLatency));
-                                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
+                                MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
                                 var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
 
                                 if (lobbyJoinAttemp.Success)
@@ -209,7 +209,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                     {
                                         UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                        MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                         PlayerPrefs.SetString("JOINCODE", RelayJoinCode);
                                         m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                         joined = true;
@@ -248,7 +247,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                         continue;
                                     }
                                     UnityEngine.Debug.Log("===>joined latency ---> " + (iHostLatency + ClientLatency));
-                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
+                                    MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.JOIN_LOBBY);
                                     var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: lobby.Id, null);
                                     if (lobbyJoinAttemp.Success)
                                     {
@@ -257,7 +256,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                         {
                                             UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                                             ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
-                                            MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                             PlayerPrefs.SetString("JOINCODE", RelayJoinCode);
                                             m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                             joined = true;
@@ -276,7 +274,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         CheckLatency(averageLatency);
                         if (averageLatency > ConnectionManager.LatencyLimit / 2)
                             continue;
-                        MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
+                        MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                         var lobbyData = new Dictionary<string, DataObject>()
                         {
                             ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
@@ -292,7 +290,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                 {
                                     UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                     m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                     isFound = true;
                                     break;
@@ -323,7 +320,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
                         ["Score"] = new DataObject(DataObject.VisibilityOptions.Public,Mathf.FloorToInt(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore).ToString(), DataObject.IndexOptions.N1),
                     };
-                    MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
+                    MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                     while (true)
                     {
@@ -334,7 +331,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                             {
                                 UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.CONNECTING);
                                 m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
                                 isFound = true;
                                 break;

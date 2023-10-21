@@ -39,6 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         void MakeInvincible();
         void AdjustStatsByDifficulty(Difficulty AIDifficulty);
         bool IsPvPCruiser();
+        bool IsAIBot();
         PvPSlotWrapperController GetSlotWrapperController();
     }
 }

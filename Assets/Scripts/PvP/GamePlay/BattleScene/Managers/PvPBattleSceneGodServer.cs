@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPDroneManagerMonitor droneManagerMonitorA;
         private PvPDroneManagerMonitor droneManagerMonitorB;
 #pragma warning restore CS0414  // Variable is assigned but never used
-
+        private bool IsAIBotMode = false;
         public static PvPBattleSceneGodServer Instance
         {
             get
@@ -247,6 +247,73 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Debug.Log("====> All initialized");
         }
 
+        public async Task RunPvP_AIMode()
+        {
+            IsAIBotMode = true;
+            applicationModel = ApplicationModelProvider.ApplicationModel;
+            dataProvider = applicationModel.DataProvider;
+
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
+            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
+            IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
+            prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
+            IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
+
+            components = GetComponent<PvPBattleSceneGodComponents>();
+            _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
+            GetComponent<PvPBattleSceneGodClient>().SetAIBotMode();
+            Assert.IsNotNull(components);
+            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
+            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
+
+            playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
+                playerACruiserUserChosenTargetManager);
+
+            playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
+                playerBCruiserUserChosenTargetManager);
+
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            await factoryProvider.Initialise();
+            await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
+
+            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+            await Task.Delay(500);
+            playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            await Task.Delay(500);
+            playerBCruiser = await cruiserFactory.CreateAIBotCruiser(Team.RIGHT);
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
+
+            enemyCruiserSprite = playerACruiser.Sprite;
+            enemyCruiserName = playerACruiser.Name;
+
+            playerBCruiserSprite = playerBCruiser.Sprite;
+            playerBCruiserName = playerBCruiser.Name;
+
+            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
+            droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
+            droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
+
+            droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
+            droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
+            droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
+
+            IPvPTime time = PvPTimeBC.Instance;
+            _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
+            _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
+            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+            //    _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+            RegisteredAllBuildalbesToServer();
+        }
+
         private void RegisteredAllBuildalbesToServer()
         {
             _gameEndMonitor
@@ -346,14 +413,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         public void RegisterAIOfLeftPlayer()
         {
-            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, 1 /* current level num*/);
+            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, UnityEngine.Random.Range(0, 40));
             //     IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 current level num);
             _gameEndMonitor.RegisterAIOfLeftPlayer(ai_LeftPlayer);
         }
 
         public void RegisterAIOfRightPlayer()
         {
-            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 /*current level num*/);
+            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, UnityEngine.Random.Range(5, 40));
             _gameEndMonitor.RegisterAIOfRightPlayer(ai_RightPlayer);
         }
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)

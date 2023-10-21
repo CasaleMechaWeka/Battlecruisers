@@ -25,6 +25,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
 using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController;
+using BattleCruisers.Network.Multiplay.UnityServices;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -130,6 +131,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
         }
         public GameObject[] connection_qualities;
+        private RateLimitCooldown m_TimeLimitLookingVictim;
         public override void OnPresenting(object activationParameter)
         {
 
@@ -220,6 +222,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     vsTitile.text = screensSceneStrings.GetString("Arena04Name");
                     break;
             }
+
+            m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
         }
 
         bool isProcessing = false;
@@ -230,6 +234,16 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             {
                 isProcessing = true;
                 await iLoadingAssets();
+            }
+
+            if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
+            {
+                SetFoundVictimString();
+                if (GameObject.Find("ConnectionManager") != null)
+                    GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LockLobby();
+                if(GameObject.Find("PvPBattleSceneGod") != null)
+                    GameObject.Find("PvPBattleSceneGod").GetComponent<PvPBattleSceneGodServer>().RunPvP_AIMode();
+                m_TimeLimitLookingVictim.PutOnCooldown(9999f);
             }
         }
 
@@ -243,9 +257,22 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             isProcessing = false;
         }
 
-        public void SetMMString(MMStatus status)
+        public void SetMMStatus(MMStatus _status)
         {
-            switch (status)
+            status = _status;
+            SetMMString(status);
+
+            switch(status)
+            {
+                case MMStatus.LOOKING_VICTIM:
+                    m_TimeLimitLookingVictim.PutOnCooldown();
+                    break;
+            }
+        }
+
+        private void SetMMString(MMStatus _status)
+        {
+            switch (_status)
             {
                 case MMStatus.FINDING_LOBBY:
                     LookingForOpponentsText.text = commonStrings.GetString("FindingLobby");
@@ -276,7 +303,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void SetFoundVictimString()
         {
-            SetMMString(MMStatus.LOADING_ASSETS);
+            SetMMStatus(MMStatus.LOADING_ASSETS);
             LoadingBarParent.SetActive(true);
             // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)

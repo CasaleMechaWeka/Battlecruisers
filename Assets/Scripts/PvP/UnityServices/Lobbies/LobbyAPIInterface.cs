@@ -148,6 +148,12 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             return await LobbyService.Instance.UpdateLobbyAsync(lobbyId, updateOptions);
         }
 
+        public async Task<Lobby> UpdateLobbyWithPrivate(string lobbyId, Dictionary<string, DataObject> data, bool isPrivate)
+        {
+            UpdateLobbyOptions updateOptions = new UpdateLobbyOptions { Data = data, IsPrivate = isPrivate };
+            return await LobbyService.Instance.UpdateLobbyAsync(lobbyId, updateOptions);
+        }
+
         public async Task<Lobby> UpdatePlayer(string lobbyId, string playerId, Dictionary<string, PlayerDataObject> data, string allocationId, string connectionInfo)
         {
             UpdatePlayerOptions updateOptions = new UpdatePlayerOptions

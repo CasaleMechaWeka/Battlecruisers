@@ -24,6 +24,11 @@ namespace BattleCruisers.Network.Multiplay.UnityServices
         {
             m_CooldownFinishedTime = Time.unscaledTime + m_CooldownTimeLength;
         }
+
+        public void PutOnCooldown(float _m_CooldownTimeLength)
+        {
+            m_CooldownFinishedTime = Time.unscaledTime + _m_CooldownTimeLength;
+        }
     }
 
 }

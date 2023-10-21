@@ -24,20 +24,21 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
-            //            NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
                 m_LobbyServiceFacade.BeginTracking();
-                MatchmakingScreenController.Instance.SetMMString(MatchmakingScreenController.MMStatus.LOOKING_VICTIM);
+                MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.LOOKING_VICTIM);
             }
-/*            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
-            MatchmakingScreenController.Instance.vsAIButton.SetActive(true);*/
         }
 
         public override void LeaveLobby()
         {
-            base.LeaveLobby();
             m_LobbyServiceFacade.EndTracking();
+        }
+
+        public override void LockLobby()
+        {
+            m_LobbyServiceFacade.LockLobby();
         }
 
         public override void Exit()
@@ -52,7 +53,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.SetFoundVictimString();
                 MatchmakingScreenController.Instance.fleeButton.SetActive(true);
                 MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
-             //   m_LobbyServiceFacade.EndTracking();
             }
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
             {

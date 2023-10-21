@@ -100,6 +100,19 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 m_JoinedLobbyContentHeartbeat.BeginTracking();
             }
         }
+
+        public async void LockLobby()
+        {
+            if(CurrentUnityLobby != null)
+            {
+                var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
+                var result = await m_LobbyApiInterface.UpdateLobbyWithPrivate(CurrentUnityLobby.Id, dataCurr, isPrivate: true);
+                if (result != null)
+                {
+                    CurrentUnityLobby = result;
+                }
+            }
+        }
         public Task EndTracking()
         {
             var task = Task.CompletedTask;
@@ -158,7 +171,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     if (m_LocalLobby.PlayerCount == 2)
                     {
                         var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
-                        var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock: true);
+                        var result = await m_LobbyApiInterface.UpdateLobbyWithPrivate(CurrentUnityLobby.Id, dataCurr, isPrivate: true);
                         if (result != null)
                         {
                             CurrentUnityLobby = result;

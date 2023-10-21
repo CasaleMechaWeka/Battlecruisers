@@ -165,6 +165,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             m_CurrentState.LeaveLobby();
         }
+
+        public void LockLobby()
+        {
+            m_CurrentState.LockLobby();
+        }
         void OnDestroy()
         {
             NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;

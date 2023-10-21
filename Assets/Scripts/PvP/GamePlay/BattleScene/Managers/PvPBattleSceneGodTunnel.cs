@@ -276,10 +276,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 AddUnlockedBuildingRightPlayerServerRpc(category, prefabName);
         }
 
+        public void AddUnlockedBuilding_RightPlayer(BuildingKey key)
+        {
+            _unlockedBuildings_RightPlayer.Add(key);
+        }
+
         public void AddUnlockedUnit_RightPlayer(UnitCategory category, string prefabName)
         {
             if (IsClient)
                 AddUnlockedUnitRightPlayerServerRpc(category, prefabName);
+        }
+
+        public void AddUnlockedUnit_RightPlayer(UnitKey key)
+        {
+            _unlockedUnits_RightPlayer.Add(key);
         }
 
         public IList<PvPBuildingKey> GetUnlockedBuildings_LeftPlayer(PvPBuildingCategory pvpBuildingCategory)
@@ -374,6 +384,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public void RegisteredAllBuildableRightPlayer()
         {
             RegisterUnlockedBuildablesRightPlayerServerRpc();
+        }
+
+        public void RegisteredAllBuildableAIPlayer()
+        {
+            RegisterUnlockedBuildablesAIPlayerServerRpc();
         }
 
         private UnitCategory convertPvPUnitCategory2PvEUnitCategory(PvPUnitCategory category)
@@ -499,6 +514,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IsRegisteredBuildablesRightPlayer = true;
             if (IsRegisteredBuildablesLeftPlayer)
                 RegisteredAllUnlockedBuildables?.Invoke();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void RegisterUnlockedBuildablesAIPlayerServerRpc()
+        {
+            RegisteredAllUnlockedBuildables?.Invoke();
         }
 
         [ClientRpc]

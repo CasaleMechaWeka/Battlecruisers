@@ -10,6 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         Task<PvPCruiser> CreatePlayerACruiser(Team team);
         Task<PvPCruiser> CreatePlayerBCruiser(Team team);
+        Task<PvPCruiser> CreateAIBotCruiser(Team team);
 
         void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,

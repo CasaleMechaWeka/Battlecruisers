@@ -21,6 +21,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
+using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -32,8 +33,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         protected readonly IPvPBackgroundStatsProvider _backgroundStatsProvider;
         private readonly IPvPPrefabFetcher _prefabFetcher;
         private readonly ILocTable _storyStrings;
-        public virtual IPvPPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
-        public virtual IPvPPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
+        public virtual IPvPPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerAPrefabName.Value) ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
+        public virtual IPvPPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerBPrefabName.Value) ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
+        public virtual IPvPPrefabKey AIBotCruiser => new PvPHullKey(PvPHullNames[UnityEngine.Random.Range(0, PvPHullNames.Length)]);
         public abstract IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public abstract IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
         public abstract IPvPSlotFilter CreateHighlightableSlotFilter();
@@ -50,6 +52,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IPvPDeferrer deferrer);
         public abstract IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
 
+
+        private string[] PvPHullNames = 
+            {
+            "PvPBlackRig",
+            "PvPBullshark",
+            "PvPEagle",
+            "PvPHammerhead",
+            "PvPLongbow",
+            "PvPMegalodon",
+            "PvPRaptor",
+            "PvPRickshaw",
+            "PvPRockjaw",
+            "PvPTasDevil",
+            "PvPTrident",
+            "PvPYeti"
+        };
 
         protected PvPBattleSceneHelper(
             IApplicationModel appModel,

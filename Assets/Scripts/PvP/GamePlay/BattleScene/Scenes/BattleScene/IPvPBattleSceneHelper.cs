@@ -27,6 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     {
         IPvPPrefabKey PlayerACruiser { get; }
         IPvPPrefabKey PlayerBCruiser { get; }
+        IPvPPrefabKey AIBotCruiser { get; }
         IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
         ILoadout GetPlayerLoadout();

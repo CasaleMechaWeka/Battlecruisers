@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _battleSceneGodTunnel = battleSceneGodTunnel;
             team = SynchedServerData.Instance.GetTeam();
             playerARating = SynchedServerData.Instance.playerARating.Value;
-            playerBRating = SynchedServerData.Instance.playerBRating.Value;
+            playerBRating = PvPBattleSceneGodClient.Instance.IsAIBot() ? UnityEngine.Random.Range(playerARating, playerARating + 100) :  SynchedServerData.Instance.playerBRating.Value;
             registeredTime = -1;
         }
 

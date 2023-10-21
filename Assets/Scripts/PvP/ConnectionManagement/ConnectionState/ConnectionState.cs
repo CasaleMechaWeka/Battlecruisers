@@ -32,6 +32,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public virtual void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response) { }
         public virtual void OnTransportFailure() { }
         public virtual void LeaveLobby() { }
+        public virtual void LockLobby() { }
     }
 }
 

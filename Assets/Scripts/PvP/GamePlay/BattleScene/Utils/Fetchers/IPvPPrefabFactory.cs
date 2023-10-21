@@ -30,6 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey);
         PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x);
+        PvPCruiser CreateAIBotCruiser(PvPCruiser cruiserPrefab, float x);
         PvPCruiser CreateCruiser(string prefabName, ulong ClientNetworkId, float x);
         PvPPrefab GetPrefab(string prefabPath);
 

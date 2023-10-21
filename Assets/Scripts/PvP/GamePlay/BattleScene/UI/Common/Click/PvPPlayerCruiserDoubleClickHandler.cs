@@ -14,35 +14,42 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
             // Toggle repair drone consumer focus
 
-            if(SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            if(playerCruiser.IsAIBot())
             {
-                if(playerCruiser.Faction == PvPFaction.Blues)
+                PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerCruiser);
+            }
+            else
+            {
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                 {
-                    if (playerCruiser.RepairCommand.CanExecute)
+                    if (playerCruiser.Faction == PvPFaction.Blues)
                     {
-                        IPvPDroneConsumer repairDroneConsumer = playerCruiser.RepairManager.GetDroneConsumer(playerCruiser);
-                        playerCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+                        if (playerCruiser.RepairCommand.CanExecute)
+                        {
+                            IPvPDroneConsumer repairDroneConsumer = playerCruiser.RepairManager.GetDroneConsumer(playerCruiser);
+                            playerCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+                        }
+                    }
+                    else
+                    {
+                        PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerCruiser);
                     }
                 }
                 else
                 {
-                    PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerCruiser);
-                }
-            }
-            else
-            {
-                if (playerCruiser.Faction == PvPFaction.Blues)
-                {
-                    PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerCruiser);
-                }
-                else
-                {
-                    if (playerCruiser.RepairCommand.CanExecute)
+                    if (playerCruiser.Faction == PvPFaction.Blues)
                     {
-                        playerCruiser.clickedRepairButton?.Invoke();
-/*                        IPvPDroneConsumer repairDroneConsumer = playerCruiser.RepairManager.GetDroneConsumer(playerCruiser);
-                        playerCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);*/
+                        PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerCruiser);
+                    }
+                    else
+                    {
+                        if (playerCruiser.RepairCommand.CanExecute)
+                        {
+                            playerCruiser.clickedRepairButton?.Invoke();
+                            /*                        IPvPDroneConsumer repairDroneConsumer = playerCruiser.RepairManager.GetDroneConsumer(playerCruiser);
+                                                    playerCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);*/
 
+                        }
                     }
                 }
             }

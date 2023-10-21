@@ -32,6 +32,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
+            MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CONNECTING);
             StartHost();
         }
 
@@ -49,13 +50,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             if (m_ConnectionManager == null)
                 return;
-            //    m_ConnectStatusPublisher.Publish(ConnectStatus.StartHostFailed);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
         }
 
         public override void OnServerStarted()
         {
-            //    m_ConnectStatusPublisher.Publish(ConnectStatus.Success);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Hosting);
         }
 
@@ -100,16 +99,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 Debug.Log("Error ---> connecting client, see following exception");
                 Debug.Log(e.Message);
                 LandingSceneGod.Instance.messagebox.ShowMessage(LandingSceneGod.Instance.commonStrings.GetString("NetworkError"));
-
-                /*                switch (e.Message)
-                                {
-                                    case "Latency":
-                                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but your network seems to be not good enough for 1v1 Showdown.");
-                                        break;
-                                    default:
-                                        LandingSceneGod.Instance.messagebox.ShowMessage("Sorry, but detected unknown network error, try again later.");
-                                        break;
-                                }*/
                 StartHostFailed();
             }
         }

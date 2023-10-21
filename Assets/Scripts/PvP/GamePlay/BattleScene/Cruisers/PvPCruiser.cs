@@ -38,6 +38,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.A
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using UnityEngine.UI;
+using BattleCruisers.Cruisers.Slots;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -141,17 +142,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<byte> pvp_IsVictory = new NetworkVariable<byte>();
 
         private IPvPBroadcastingProperty<bool> _CruiserHasActiveDrones;
-
+        private bool IsAIBotMode = false;
 
         protected virtual void Start()
         {
-            if (IsClient && IsOwner)
-            {
-                PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
-            }
-            else if (IsClient && !IsOwner)
+            if (IsAIBotMode)
             {
                 PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
+            }
+            else
+            {
+                if (IsClient && IsOwner)
+                {
+                    PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
+                }
+                else if (IsClient && !IsOwner)
+                {
+                    PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
+                }
             }
             if (NetworkManager.Singleton.IsServer)
                 _healthTracker.SetMaxHealth();
@@ -236,6 +244,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 _cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
         }
 
+        public void SetAIBotMode()
+        {
+            IsAIBotMode = true;
+            _fog.SetAIBotMode();
+        }
+
+        public bool IsAIBot()
+        {
+            return IsAIBotMode;
+        }
 
         protected override void CallRpc_ClickedRepairButton()
         {
@@ -325,8 +343,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             _uiManager.ShowCruiserDetails(this);
-            _helper.FocusCameraOnCruiser(IsOwner, SynchedServerData.Instance.GetTeam());
-
+            if (!IsAIBotMode)
+                _helper.FocusCameraOnCruiser(IsOwner, SynchedServerData.Instance.GetTeam());
             FactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
             Clicked?.Invoke(this, EventArgs.Empty);
         }
@@ -532,7 +550,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         protected override void InternalDestroy()
         {
-           
+
         }
 
         protected override void OnDestroyedEvent()
@@ -547,7 +565,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 PvPCaptainExoHUDController.Instance.DoLeftHappy();
                 PvPCaptainExoHUDController.Instance.DoRightAngry();
             }
-
+            SlotHighlighter.UnhighlightSlots();
             SpriteRenderer[] visuals = GameObject.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
             foreach (SpriteRenderer visual in visuals)
             {

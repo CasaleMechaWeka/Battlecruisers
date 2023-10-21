@@ -75,6 +75,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return playerBCruiser;
         }
 
+        public async Task<PvPCruiser> CreateAIBotCruiser(Team team)
+        {
+            PvPCruiser aiBotCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.AIBotCruiser);
+            PvPCruiser aiBotCruiser = _factoryProvider.PrefabFactory.CreateAIBotCruiser(aiBotCruiserPrefab, CRUISER_OFFSET_IN_M);
+            aiBotCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiBotCruiser.YAdjustmentInM, 0);
+            Quaternion rotation = aiBotCruiser.Rotation;
+            rotation.eulerAngles = new Vector3(0, 180, 0);
+            aiBotCruiser.Rotation = rotation;
+            return aiBotCruiser;
+        }
+
         public void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
