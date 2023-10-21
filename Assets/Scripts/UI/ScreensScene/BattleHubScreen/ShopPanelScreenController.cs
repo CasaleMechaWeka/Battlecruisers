@@ -33,6 +33,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Image captainsButtonImage, hecklesButtonImage;
         public Text blackMarketText;
         private bool InternetConnection;
+        private Color32 navButtonActive = new Color32(255, 255, 255, 255);
+        private Color32 navButtonInactive = new Color32(194, 59, 33, 255);
 
         public async Task Initialise(
             IScreensSceneGod screensSceneGod,
@@ -104,20 +106,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void HighlightCaptainsNavButton()
         {
-            // Set this button to active color
-            captainsButtonImage.color = new Color32(255, 255, 255, 255);
-
-            // Set the other button to inactive color
-            hecklesButtonImage.color = new Color32(194, 59, 33, 255);
+            captainsButtonImage.color = navButtonActive;
+            hecklesButtonImage.color = navButtonInactive;
         }
 
         private void HighlightHecklesNavButton()
         {
-            // Set this button to active color
-            hecklesButtonImage.color = new Color32(255, 255, 255, 255);
-
-            // Set the other button to inactive color
-            captainsButtonImage.color = new Color32(194, 59, 33, 255);
+            hecklesButtonImage.color = navButtonActive;
+            captainsButtonImage.color = navButtonInactive;
         }
 
         private void RemoveAllCaptainsFromRenderCamera()
@@ -154,12 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             await Task.Delay(100);
 
-            DateTime utcNow = DateTime.UtcNow;
-            List<int> heckleBaseList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-            for (int i = 0; i < heckleBaseList.Count; i++)
-            {
-                heckleBaseList[i] = (19 * heckleBaseList[i] + 10 * utcNow.Day + utcNow.Month) % 280;
-            }
+            List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Heckles.Count - 1, 10);
 
             byte ii = 0;
             foreach (int index in heckleBaseList)
@@ -217,12 +208,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-            DateTime utcNow = DateTime.UtcNow;
-            List<int> exoBaseList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-            for (int i = 0; i < exoBaseList.Count; i++)
-            {
-                exoBaseList[i] = 1 + ((2 * exoBaseList[i] + utcNow.Day + utcNow.Month) % 40);
-            }
+            List<int> exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
             exoBaseList.Insert(0, 0);
 
             byte ii = 0;
@@ -260,6 +246,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
                 ii++;
             }
+        }
+
+        List<int> GeneratePseudoRandomList(int elements, int maxValue, int dailyShift, int startValue = 0)
+        {
+            DateTime utcNow = DateTime.UtcNow;
+            List<int> randomList = new List<int>();
+            for (int i = startValue; i < elements + startValue; i++)
+                randomList.Add((startValue + maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue));
+
+            return randomList;
         }
     }
 }
