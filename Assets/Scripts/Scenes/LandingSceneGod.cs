@@ -104,13 +104,13 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
-        #endif
-        #if PLATFORM_IOS
+#endif
+#if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
         private const string AppleUserIdKey = "AppleUserId";
-        #endif
+#endif
 
 
         private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
@@ -188,7 +188,7 @@ namespace BattleCruisers.Scenes
                 {
                     await UnityServices.InitializeAsync(options);
                 }
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
                 {
                     // When using a ParrelSync clone, switch to a different authentication profile to force the clone
@@ -196,7 +196,7 @@ namespace BattleCruisers.Scenes
                     string customArgument = ParrelSync.ClonesManager.GetArgument();
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
-                #endif
+#endif
                 if (InternetConnectivity.Value)
                 {
                     List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
@@ -237,12 +237,12 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
-                #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 await GoogleAttemptSilentSigningAsync(soundPlayer);
 
-                #elif PLATFORM_IOS
+#elif PLATFORM_IOS
                 InitializeAppleAuth();
 
                 // If at any point we receive a credentials revoked notification, we delete the stored User ID
@@ -264,18 +264,18 @@ namespace BattleCruisers.Scenes
                     //Attempt Apple Quick Login
                     AppleQuickLogin(soundPlayer);
                 }
-                #else
+#else
                 ShowSignInScreen(soundPlayer);
-                #endif
+#endif
             }
             else
             {
+                ShowSignInScreen(soundPlayer);
                 LogToScreen("No internet, continue offline"); // NO INTERNET
             }
 
             //ShowSignInScreen(soundPlayer);
             // should be enabled after completion initialization
-            LogToScreen(""); // INTERNET
         }
 
         private void ShowSignInScreen(ISingleSoundPlayer soundPlayer)
@@ -316,13 +316,13 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
-                #if PLATFORM_IOS
+#if PLATFORM_IOS
                 appleBtn.Initialise(soundPlayer, AppleLogin);
                 appleBtn.gameObject.SetActive(true);
-                #elif PLATFORM_ANDROID
+#elif PLATFORM_ANDROID
                 googleBtn.Initialise(soundPlayer, GoogleLogin);
                 googleBtn.gameObject.SetActive(true);
-                #endif
+#endif
             }
 
             LogToScreen("All assets loaded"); // ALL ASSETS LOADED
@@ -330,11 +330,11 @@ namespace BattleCruisers.Scenes
 
         private void InitializeAppleAuth()
         {
-            #if PLATFORM_IOS
+#if PLATFORM_IOS
             var deserializer = new PayloadDeserializer();
             _AppleAuthManager = new AppleAuthManager(deserializer);
             Debug.Log("Apple Auth Initialized.");
-            #endif
+#endif
         }
 
         void SetInteractable(bool interactable)
@@ -356,7 +356,7 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             // When running in the Editor make a unique ID from the Application.dataPath.
             // This will work for cloning projects manually, or with Virtual Projects.
             // Since only a single instance of the Editor can be open for a specific
@@ -365,14 +365,14 @@ namespace BattleCruisers.Scenes
                 .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
             Array.Resize(ref hashedBytes, 16);
             return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
-            #elif PLATFORM_ANDROID
+#elif PLATFORM_ANDROID
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
-            #elif PLATFORM_IOS
+#elif PLATFORM_IOS
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
-            #endif
+#endif
         }
 
-        #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
         // Google login by button:
         public async void GoogleLogin()
         {
@@ -387,7 +387,7 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
-                    if(state != true)
+                    if (state != true)
                     {
                         spinGoogle.SetActive(false);
                         labelGoogle.SetActive(true);
@@ -409,9 +409,9 @@ namespace BattleCruisers.Scenes
         private async Task GoogleAttemptSilentSigningAsync(ISingleSoundPlayer soundPlayer)
         {
             try
-            {              
+            {
                 bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
-                if(state != true)
+                if (state != true)
                 {
                     ShowSignInScreen(soundPlayer);
                     Debug.Log("Google silent signin unsuccessful.");
@@ -424,9 +424,9 @@ namespace BattleCruisers.Scenes
                 Debug.Log(ex.Message);
             }
         }
-        #endif
+#endif
 
-        #if PLATFORM_IOS
+#if PLATFORM_IOS
         // Apple login by button:
         private async void AppleLogin()
         {
@@ -607,7 +607,7 @@ namespace BattleCruisers.Scenes
                 Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
             });
         }
-        #endif
+#endif
 
         // Guest login by button:
         public async void AnonymousLogin()
@@ -802,12 +802,12 @@ namespace BattleCruisers.Scenes
 
         public void Update()
         {
-            #if PLATFORM_IOS
+#if PLATFORM_IOS
             if (_AppleAuthManager != null)
             {
                 _AppleAuthManager.Update();
             }
-            #endif
+#endif
         }
 
         bool isUpdatingInternetConnectivity = false;
@@ -834,13 +834,13 @@ namespace BattleCruisers.Scenes
         {
             if (loginType == LoginType.Anonymous)
                 AnonymousLogin();
-            #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
             if (loginType == LoginType.Google)
                 GoogleLogin();
-            #elif PLATFORM_IOS
+#elif PLATFORM_IOS
             if (loginType == LoginType.Apple)
                 AppleLogin();
-            #endif
+#endif
         }
 
         public void OnQuit()
@@ -873,9 +873,9 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        #if PLATFORM_IOS
+#if PLATFORM_IOS
 
-        #endif
+#endif
 
         public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
