@@ -150,7 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             await Task.Delay(100);
 
-            List<int> heckleBaseList = GeneratePseudoRandomList(15, 279, 10);
+            List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Heckles.Count - 1, 10);
 
             byte ii = 0;
             foreach (int index in heckleBaseList)
@@ -208,7 +208,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-            List<int> exoBaseList = GeneratePseudoRandomList(14, 39, 1, 1);
+            List<int> exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
             exoBaseList.Insert(0, 0);
 
             byte ii = 0;
@@ -253,7 +253,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             DateTime utcNow = DateTime.UtcNow;
             List<int> randomList = new List<int>();
             for (int i = startValue; i < elements + startValue; i++)
-                randomList.Add((maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue));
+                randomList.Add((startValue + maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue));
 
             return randomList;
         }
