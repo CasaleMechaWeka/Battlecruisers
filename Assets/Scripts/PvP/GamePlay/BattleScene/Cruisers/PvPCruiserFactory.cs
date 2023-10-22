@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public async Task<PvPCruiser> CreateAIBotCruiser(Team team)
         {
-            PvPCruiser aiBotCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.AIBotCruiser);
+            PvPCruiser aiBotCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
             PvPCruiser aiBotCruiser = _factoryProvider.PrefabFactory.CreateAIBotCruiser(aiBotCruiserPrefab, CRUISER_OFFSET_IN_M);
             aiBotCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiBotCruiser.YAdjustmentInM, 0);
             Quaternion rotation = aiBotCruiser.Rotation;

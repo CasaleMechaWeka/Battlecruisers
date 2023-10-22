@@ -53,20 +53,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
 
 
-        private string[] PvPHullNames = 
+        public string[] PvPHullNames => new string[] 
             {
-            "PvPBlackRig",
-            "PvPBullshark",
-            "PvPEagle",
-            "PvPHammerhead",
-            "PvPLongbow",
-            "PvPMegalodon",
-            "PvPRaptor",
-            "PvPRickshaw",
-            "PvPRockjaw",
-            "PvPTasDevil",
-            "PvPTrident",
-            "PvPYeti"
+            "BlackRig",
+            "Bullshark",
+            "Eagle",
+            "Hammerhead",
+            "Longbow",
+            "Megalodon",
+            "Raptor",
+            "Rickshaw",
+            "Rockjaw",
+            "TasDevil",
+            "Trident",
+            "Yeti"
         };
 
         protected PvPBattleSceneHelper(

@@ -33,6 +33,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine.UI;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -78,6 +80,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPDroneManagerMonitor droneManagerMonitorB;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private bool IsAIBotMode = false;
+        public NameGenerationData nameGenerator;
         public static PvPBattleSceneGodServer Instance
         {
             get
@@ -253,6 +256,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
 
+
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
@@ -268,6 +272,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
+            // AIBot
+            SynchedServerData.Instance.playerBPrefabName.Value = pvpBattleHelper.PvPHullNames[UnityEngine.Random.Range(0, pvpBattleHelper.PvPHullNames.Length)]; ;
+            SynchedServerData.Instance.captainBPrefabName.Value = "CaptainExo0" + UnityEngine.Random.Range(0, 41).ToString("00");
+            SynchedServerData.Instance.playerBName.Value = nameGenerator.GenerateName();
+            SynchedServerData.Instance.playerBScore.Value = dataProvider.GameModel.LifetimeDestructionScore;
+            SynchedServerData.Instance.playerBRating.Value = UnityEngine.Random.Range(dataProvider.GameModel.BattleWinScore, dataProvider.GameModel.BattleWinScore + 100f);
+
+            SynchedServerData.Instance.playerAPrefabName.Value = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
+            SynchedServerData.Instance.playerAName.Value = dataProvider.GameModel.PlayerName;
+            SynchedServerData.Instance.playerAScore.Value = dataProvider.GameModel.LifetimeDestructionScore;
+            SynchedServerData.Instance.playerARating.Value = dataProvider.GameModel.BattleWinScore;
 
             playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
