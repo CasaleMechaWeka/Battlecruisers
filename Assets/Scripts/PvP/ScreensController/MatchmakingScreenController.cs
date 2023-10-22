@@ -223,7 +223,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     break;
             }
 
-            m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
+        //    m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
         }
 
         bool isProcessing = false;
@@ -235,8 +235,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 isProcessing = true;
                 await iLoadingAssets();
             }
-
-            if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
+/*            if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
             {
                 SetFoundVictimString();
                 if (GameObject.Find("ConnectionManager") != null)
@@ -244,7 +243,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 if(GameObject.Find("PvPBattleSceneGod") != null)
                     GameObject.Find("PvPBattleSceneGod").GetComponent<PvPBattleSceneGodServer>().RunPvP_AIMode();
                 m_TimeLimitLookingVictim.PutOnCooldown(9999f);
-            }
+            }*/
         }
 
         async Task iLoadingAssets()
@@ -262,12 +261,12 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             status = _status;
             SetMMString(status);
 
-            switch(status)
+/*            switch(status)
             {
                 case MMStatus.LOOKING_VICTIM:
                     m_TimeLimitLookingVictim.PutOnCooldown();
                     break;
-            }
+            }*/
         }
 
         private void SetMMString(MMStatus _status)

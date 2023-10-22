@@ -196,8 +196,8 @@ namespace BattleCruisers.Scenes
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetTable("Common");
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleOnline");
                             hubScreen.battle1vAI.SetActive(false);
-                            hubScreen.updateForPVP.SetActive(false);
                             hubScreen.offlinePlayOnly.SetActive(false);
+                            hubScreen.updateForPVP.SetActive(false);
                             Debug.Log("PVP Server Available.");
                         }
                         else
