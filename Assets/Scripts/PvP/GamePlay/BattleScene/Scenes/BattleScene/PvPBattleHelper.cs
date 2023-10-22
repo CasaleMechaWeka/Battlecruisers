@@ -103,7 +103,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         protected virtual Difficulty FindDifficulty()
         {
-            return (Difficulty)UnityEngine.Random.Range(1, 4);
+            return Difficulty.Harder;
         }
 
         public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IPvPDroneManager droneManager)

@@ -59,9 +59,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 MatchmakingScreenController.Instance.Destroy();
             }
 
-            Debug.Log("===> playerARating ---> " + playerARating);
-            Debug.Log("===> playerBRating ---> " + playerBRating);
-
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
                 var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
@@ -167,19 +164,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
             _isCompleted = true;
-            Debug.Log("===> playerARating ---> " + playerARating);
-            Debug.Log("===> playerBRating ---> " + playerBRating);
             if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.Destroy();
             }
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
-                Debug.Log("===> AAA ---> ");
                 var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
                 if (team == Cruisers.Team.LEFT)
                 {
-                    Debug.Log("===> BBB ---> ");
                     _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
                     _applicationModel.DataProvider.SaveGame();
                 }
@@ -196,7 +189,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 {
                     try
                     {
-                        Debug.Log("===> CCC ---> ");
                         await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
                     }
                     catch

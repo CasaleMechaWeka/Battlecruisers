@@ -435,7 +435,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public void RegisterAIOfRightPlayer()
         {
-            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, UnityEngine.Random.Range(5, 40));
+            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, UnityEngine.Random.Range(20, 40));
             _gameEndMonitor.RegisterAIOfRightPlayer(ai_RightPlayer);
         }
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)
