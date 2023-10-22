@@ -16,9 +16,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     {
         public PvPHeckleMessage leftMessage, rightMessage;
         public static PvPHeckleMessageManager Instance;
-
-
-
+        private int botHecklesCount = 3;
+        public void ShowAIBotHeckle()
+        {
+            if(botHecklesCount > 0)
+            {
+                botHecklesCount--;
+                rightMessage.Show(UnityEngine.Random.Range(0, 280));
+            }
+        }
         public void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer, leftMessage, rightMessage);
