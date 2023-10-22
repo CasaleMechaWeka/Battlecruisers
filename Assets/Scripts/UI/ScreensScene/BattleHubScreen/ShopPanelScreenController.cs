@@ -253,7 +253,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             DateTime utcNow = DateTime.UtcNow;
             List<int> randomList = new List<int>();
             for (int i = startValue; i < elements + startValue; i++)
-                randomList.Add((startValue + maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue));
+                randomList.Add((startValue + (maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue - startValue)));
 
             return randomList;
         }
