@@ -52,6 +52,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -747,53 +748,63 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         IEnumerator iLoadedPvPScene()
         {
             // Register all unlocked buildables to server
-            if(IsAIBotMode)
+            if (IsAIBotMode)
             {
-                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                /*                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                                {
+                                    _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey);
+                                    yield return null;
+                                }
+                                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                                {
+                                    _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey);
+                                    yield return null;
+                                }*/
+                foreach (BuildingKey buildingKey in StaticPrefabKeys.Buildings.AllKeys)
                 {
                     _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey);
                     yield return null;
                 }
-                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                foreach (UnitKey unitKey in StaticPrefabKeys.Units.AllKeys)
                 {
                     _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey);
                     yield return null;
                 }
                 PvPBattleSceneGodServer.Instance.RegisterAIOfRightPlayer();
-        //        _battleSceneGodTunnel.RegisteredAllBuildableAIPlayer();
-            
+                //        _battleSceneGodTunnel.RegisteredAllBuildableAIPlayer();
+
             }
-/*            else
-            {
-                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-                {
-                    foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
-                    {
-                        _battleSceneGodTunnel.AddUnlockedBuilding_LeftPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
-                        yield return null;
-                    }
-                    foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
-                    {
-                        _battleSceneGodTunnel.AddUnlockedUnit_LeftPlayer(unitKey.UnitCategory, unitKey.PrefabName);
-                        yield return null;
-                    }
-                    _battleSceneGodTunnel.RegisteredAllBuildableLeftPlayer();
-                }
-                else
-                {
-                    foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
-                    {
-                        _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
-                        yield return null;
-                    }
-                    foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
-                    {
-                        _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey.UnitCategory, unitKey.PrefabName);
-                        yield return null;
-                    }
-                    _battleSceneGodTunnel.RegisteredAllBuildableRightPlayer();
-                }
-            }*/
+            /*            else
+                        {
+                            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                            {
+                                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                                {
+                                    _battleSceneGodTunnel.AddUnlockedBuilding_LeftPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
+                                    yield return null;
+                                }
+                                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                                {
+                                    _battleSceneGodTunnel.AddUnlockedUnit_LeftPlayer(unitKey.UnitCategory, unitKey.PrefabName);
+                                    yield return null;
+                                }
+                                _battleSceneGodTunnel.RegisteredAllBuildableLeftPlayer();
+                            }
+                            else
+                            {
+                                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                                {
+                                    _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
+                                    yield return null;
+                                }
+                                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                                {
+                                    _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey.UnitCategory, unitKey.PrefabName);
+                                    yield return null;
+                                }
+                                _battleSceneGodTunnel.RegisteredAllBuildableRightPlayer();
+                            }
+                        }*/
             yield return new WaitForSeconds(5f); // to show matchmaking animation 
             sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
             if (SynchedServerData.Instance != null)
