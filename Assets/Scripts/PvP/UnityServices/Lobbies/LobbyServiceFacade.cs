@@ -170,12 +170,12 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {
                     if (m_LocalLobby.PlayerCount == 2)
                     {
-                        var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
+/*                        var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
                         var result = await m_LobbyApiInterface.UpdateLobbyWithPrivate(CurrentUnityLobby.Id, dataCurr, isPrivate: true);
                         if (result != null)
                         {
                             CurrentUnityLobby = result;
-                        }
+                        }*/
                     }
                 }
                 else

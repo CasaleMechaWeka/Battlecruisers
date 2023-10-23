@@ -227,7 +227,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
             _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
-            _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+        //    _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+            RegisteredAllBuildalbesToServer();
             /*            string logName = "Battle_Begin";
             #if LOG_ANALYTICS
                                     Debug.Log("Analytics: " + logName);
@@ -384,7 +385,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 deadBuildables_left[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
                 SynchedServerData.Instance.CalculateScoresOfLeftPlayer();
-                //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == PvPTargetType.Cruiser)
                 {
                     GameOver = true;

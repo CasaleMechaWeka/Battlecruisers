@@ -748,18 +748,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         IEnumerator iLoadedPvPScene()
         {
             // Register all unlocked buildables to server
-            if (IsAIBotMode)
+/*            if (IsAIBotMode)
             {
-                /*                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
-                                {
-                                    _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey);
-                                    yield return null;
-                                }
-                                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
-                                {
-                                    _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey);
-                                    yield return null;
-                                }*/
+                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                {
+                    _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey);
+                    yield return null;
+                }
+                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                {
+                    _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey);
+                    yield return null;
+                }
                 foreach (BuildingKey buildingKey in StaticPrefabKeys.Buildings.AllKeys)
                 {
                     _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey);
@@ -771,10 +771,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     yield return null;
                 }
                 PvPBattleSceneGodServer.Instance.RegisterAIOfRightPlayer();
-                //        _battleSceneGodTunnel.RegisteredAllBuildableAIPlayer();
-
-            }
-            /*            else
+            }           else
                         {
                             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                             {

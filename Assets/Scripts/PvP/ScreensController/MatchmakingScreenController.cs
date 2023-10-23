@@ -294,10 +294,10 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
         }
 
-        public void LeaveLobby()
+        public void LockLobby()
         {
             if (GameObject.Find("ConnectionManager") != null)
-                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LeaveLobby();
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LockLobby();
         }
 
         public void SetFoundVictimString()
@@ -312,6 +312,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 if (animator != null)
                     animator.SetTrigger("happy");
             }
+            LockLobby();
         }
         public void AddProgress(int step)
         {
@@ -392,7 +393,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             await Task.Delay(100);
             animator.SetBool("Found", true);
-            LeaveLobby();
         }
 
         private int CalculateRank(long score)
