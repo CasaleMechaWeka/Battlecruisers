@@ -438,7 +438,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public virtual void Activate_PvPClient()
         {
-
+            BuildableState = PvPBuildableState.NotStarted;
+            _cumulativeBuildProgressInDroneS = 0;
         }
 
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
@@ -555,7 +556,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _healthTracker.AddHealth(buildProgressIncrement * MaxHealth);
 
                     BuildableProgress?.Invoke(this, new PvPBuildProgressEventArgs(this));
-                    OnBuildableProgressEvent();
+                //    OnBuildableProgressEvent();
                     if (_cumulativeBuildProgressInDroneS >= _buildTimeInDroneSeconds)
                     {
                         OnBuildableCompleted();
@@ -563,12 +564,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
                 OnUpdate();
             }
-
             if (IsClient)
             {
                 _buildableProgress.FillableImage.fillAmount = BuildProgress;
+                BuildableProgress?.Invoke(this, new PvPBuildProgressEventArgs(this));
             }
-
         }
 
         protected virtual void OnBuildableProgressEvent()
@@ -762,16 +762,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoLeftHappy(); else PvPCaptainExoHUDController.Instance.DoLeftTaunt();
                         PvPCaptainExoHUDController.Instance.DoRightAngry();
-/*                        if (UnityEngine.Random.Range(0, 5) == 1)
-                            PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
+                        /*                        if (UnityEngine.Random.Range(0, 5) == 1)
+                                                    PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
                         return;
                     }
                     if (TargetType == PvPTargetType.Buildings)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoLeftHappy(); else PvPCaptainExoHUDController.Instance.DoLeftTaunt();
                         PvPCaptainExoHUDController.Instance.DoRightAngry();
-/*                        if (UnityEngine.Random.Range(0, 5) == 1)
-                            PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
+                        /*                        if (UnityEngine.Random.Range(0, 5) == 1)
+                                                    PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
                         return;
                     }
                 }
@@ -781,16 +781,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoRightHappy(); else PvPCaptainExoHUDController.Instance.DoRightTaunt();
 
-/*                        if (UnityEngine.Random.Range(0, 3) == 1)
-                            PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
+                        /*                        if (UnityEngine.Random.Range(0, 3) == 1)
+                                                    PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
                         PvPCaptainExoHUDController.Instance.DoLeftAngry();
                         return;
                     }
                     if (TargetType == PvPTargetType.Buildings)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoRightHappy(); else PvPCaptainExoHUDController.Instance.DoRightTaunt();
-/*                        if (UnityEngine.Random.Range(0, 3) == 1)
-                            PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
+                        /*                        if (UnityEngine.Random.Range(0, 3) == 1)
+                                                    PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
                         PvPCaptainExoHUDController.Instance.DoLeftAngry();
                         return;
                     }

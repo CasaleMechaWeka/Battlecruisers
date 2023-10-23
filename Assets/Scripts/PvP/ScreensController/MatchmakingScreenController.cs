@@ -300,6 +300,12 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LockLobby();
         }
 
+        public void LeaveLobby()
+        {
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LeaveLobby();
+        }
+
         public void SetFoundVictimString()
         {
             SetMMStatus(MMStatus.LOADING_ASSETS);
@@ -393,6 +399,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             await Task.Delay(100);
             animator.SetBool("Found", true);
+            LeaveLobby();
         }
 
         private int CalculateRank(long score)
