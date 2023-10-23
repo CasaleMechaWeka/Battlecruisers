@@ -117,7 +117,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     GoToScene(PvPSceneNames.SCREENS_SCENE);
             }
             else
-                GoToScene(PvPSceneNames.SCREENS_SCENE);
+                GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE); // losers still get some rewards
         }
 
         bool isTriggtered = false;
