@@ -19,18 +19,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     public class ShopPanelScreenController : ScreenController
     {
         public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton;
-        public CanvasGroupButton captainsButton, hecklesButton;
-        public Transform captainItemContainer, heckleItemContainer;
-        public GameObject captainItemPrefab, heckleItemPrefab;
+        public CanvasGroupButton captainsButton, hecklesButton, bodykitButton, variantsButton;
+        public Transform captainItemContainer, heckleItemContainer, bodykitItemContainer, variantsItemContainer;
+        public GameObject captainItemPrefab, heckleItemPrefab, bodykitItemPrefab, variantItemPrefab;
         public CaptainsContainer captainsContainer;
         public HecklesContainer hecklesContainer;
+        public BodykitsContainer bodykitsContainer;
+        public VariantsContainer variantsContainer;
         public GameObject hecklesMessage;
         private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         public Transform captainCamContainer;
         private ILocTable commonStrings;
-        public Image captainsButtonImage, hecklesButtonImage;
+        public Image captainsButtonImage, hecklesButtonImage, bodyKitButtonImage, variantButtonImage;
         public Text blackMarketText;
         private bool InternetConnection;
         private Color32 navButtonActive = new Color32(255, 255, 255, 255);
@@ -44,8 +46,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
-            Helper.AssertIsNotNull(backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, captainsContainer);
-            Helper.AssertIsNotNull(captainsButton, hecklesButton);
+            Helper.AssertIsNotNull(backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, captainsContainer, bodykitsContainer, variantsContainer);
+            Helper.AssertIsNotNull(captainsButton, hecklesButton, bodykitButton, variantsButton);
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
@@ -55,8 +57,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         buyHeckleButton.Initialise(_soundPlayer, PurchaseHeckle, this);*/
             captainsButton.Initialise(_soundPlayer, CaptainsButton_OnClick);
             hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
+            bodykitButton.Initialise(_soundPlayer, BodykitButton_OnClick);
+            variantsButton.Initialise(_soundPlayer, VariantsButton_OnClick);
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
+            bodykitsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
 
@@ -93,27 +98,54 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void CaptainsButton_OnClick()
         {
             InitiaiseCaptains();
-
             HighlightCaptainsNavButton();
         }
 
         public void HeckesButton_OnClick()
         {
             InitialiseHeckles();
-
             HighlightHecklesNavButton();
         }
 
+        public void BodykitButton_OnClick()
+        {
+            InitialiseBodykits();
+            HightlightBodykitsNavButton();
+        }
+        public void VariantsButton_OnClick()
+        {
+            InitialiseVariants();
+            HightlightVariantsNavButton();
+        }
+
+        private void HightlightVariantsNavButton()
+        {
+            captainsButtonImage.color = navButtonInactive;
+            hecklesButtonImage.color = navButtonInactive;
+            bodyKitButtonImage.color = navButtonInactive;
+            variantButtonImage.color = navButtonActive;
+        }
+        private void HightlightBodykitsNavButton()
+        {
+            captainsButtonImage.color = navButtonInactive;
+            hecklesButtonImage.color = navButtonInactive;
+            bodyKitButtonImage.color = navButtonActive;
+            variantButtonImage.color = navButtonInactive;
+        }
         private void HighlightCaptainsNavButton()
         {
             captainsButtonImage.color = navButtonActive;
             hecklesButtonImage.color = navButtonInactive;
+            bodyKitButtonImage.color = navButtonInactive;
+            variantButtonImage.color = navButtonInactive;
         }
 
         private void HighlightHecklesNavButton()
         {
-            hecklesButtonImage.color = navButtonActive;
             captainsButtonImage.color = navButtonInactive;
+            hecklesButtonImage.color = navButtonActive;
+            bodyKitButtonImage.color = navButtonInactive;
+            variantButtonImage.color = navButtonInactive;
         }
 
         private void RemoveAllCaptainsFromRenderCamera()
@@ -124,6 +156,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     DestroyImmediate(obj);
             }
             captainsContainer.visualOfCaptains.Clear();
+        }
+        public async void InitialiseVariants()
+        {
+
+        }
+        public async void InitialiseBodykits()
+        {
+
         }
         public async void InitialiseHeckles()
         {
