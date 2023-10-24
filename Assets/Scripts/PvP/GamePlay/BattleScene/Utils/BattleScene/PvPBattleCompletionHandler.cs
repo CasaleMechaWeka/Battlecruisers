@@ -108,8 +108,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 NetworkManager.Singleton.Shutdown(true);
                 DestroyAllNetworkObjects();
             }
-            
-            GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE); // losers still get some rewards
+
+            if (wasVictory) //WasVictory means LEFT player, !WasVictory means RIGHT player.
+            {
+                if (PvPBattleSceneGodClient.Instance.wasOpponentDisconnected)
+                {
+                    GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE);
+                }
+                else
+                    GoToScene(PvPSceneNames.SCREENS_SCENE);
+            }
+            else
+                GoToScene(PvPSceneNames.SCREENS_SCENE);
         }
 
         bool isTriggtered = false;
