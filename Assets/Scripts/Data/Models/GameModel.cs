@@ -208,6 +208,13 @@ namespace BattleCruisers.Data.Models
             set => _captains = value;
         }
 
+        public List<BodykitData> _bodykits;
+        public List<BodykitData> Bodykits
+        {
+            get => _bodykits;
+            set => _bodykits = value;
+        }
+
         public List<IAPData> _iaps;
         public List<IAPData> IAPs
         {
@@ -533,6 +540,21 @@ namespace BattleCruisers.Data.Models
                     new CaptainData(nameBase:"CaptainExo030",descriptionBase: "CaptainDescription030",id: 30),new CaptainData(nameBase:"CaptainExo031",descriptionBase: "CaptainDescription031",id: 31),new CaptainData(nameBase:"CaptainExo032",descriptionBase: "CaptainDescription032",id: 32),new CaptainData(nameBase : "CaptainExo033",descriptionBase: "CaptainDescription033",id: 33),new CaptainData(nameBase : "CaptainExo034",descriptionBase: "CaptainDescription034",id: 34),
                     new CaptainData(nameBase:"CaptainExo035",descriptionBase: "CaptainDescription035",id: 35),new CaptainData(nameBase:"CaptainExo036",descriptionBase: "CaptainDescription036",id: 36),new CaptainData(nameBase:"CaptainExo037",descriptionBase: "CaptainDescription037",id: 37),new CaptainData(nameBase : "CaptainExo038",descriptionBase: "CaptainDescription038",id: 38),new CaptainData(nameBase : "CaptainExo039",descriptionBase: "CaptainDescription039",id: 39),new CaptainData(nameBase : "CaptainExo040",descriptionBase: "CaptainDescription040",id: 40)
                 };
+
+            _bodykits = new List<BodykitData> { 
+                    new BodykitData(nameBase: "Bodykit000", descriptionBase : "BodykitDescription000", cost: 0, owned : false, id: 0),
+                    new BodykitData(nameBase: "Bodykit001", descriptionBase : "BodykitDescription001", cost: 0, owned : false, id: 1),
+                    new BodykitData(nameBase: "Bodykit002", descriptionBase : "BodykitDescription002", cost: 0, owned : false, id: 2),
+                    new BodykitData(nameBase: "Bodykit003", descriptionBase : "BodykitDescription003", cost: 0, owned : false, id: 3),
+                    new BodykitData(nameBase: "Bodykit004", descriptionBase : "BodykitDescription004", cost: 0, owned : false, id: 4),
+                    new BodykitData(nameBase: "Bodykit005", descriptionBase : "BodykitDescription005", cost: 0, owned : false, id: 5),
+                    new BodykitData(nameBase: "Bodykit006", descriptionBase : "BodykitDescription006", cost: 0, owned : false, id: 6),
+                    new BodykitData(nameBase: "Bodykit007", descriptionBase : "BodykitDescription007", cost: 0, owned : false, id: 7),
+                    new BodykitData(nameBase: "Bodykit008", descriptionBase : "BodykitDescription008", cost: 0, owned : false, id: 8),
+                    new BodykitData(nameBase: "Bodykit009", descriptionBase : "BodykitDescription009", cost: 0, owned : false, id: 9),
+                    new BodykitData(nameBase: "Bodykit010", descriptionBase : "BodykitDescription010", cost: 0, owned : false, id: 10),
+                    new BodykitData(nameBase: "Bodykit011", descriptionBase : "BodykitDescription011", cost: 0, owned : false, id: 11),
+            };
 
             _iaps = new List<IAPData> {
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins100Name", iapDescriptionKeybase: "Coins100Description", iapIconName: "Coins100Pack", 0.99f, 100),

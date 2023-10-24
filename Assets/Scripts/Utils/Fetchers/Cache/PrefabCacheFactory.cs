@@ -68,6 +68,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IDictionary<IPrefabKey, CaptainExo> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.CaptainExos.AllKeys /*getSelectedCaptaionExo()*/, keyToCaptains));
 
+            IDictionary<IPrefabKey, Bodykit> keyToBodykits = new ConcurrentDictionary<IPrefabKey, Bodykit>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.BodyKits.AllKeys, keyToBodykits));
+
             Container<DroneController> droneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));
 
@@ -86,6 +89,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<ExplosionController>(keyToExplosion),
                     new MultiCache<ShipDeathInitialiser>(keyToDeath),
                     new MultiCache<CaptainExo>(keyToCaptains),
+                    new MultiCache<Bodykit>(keyToBodykits),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
                     droneContainer.Value,
                     audioSourceContainer.Value);

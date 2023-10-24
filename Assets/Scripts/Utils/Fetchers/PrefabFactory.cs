@@ -137,5 +137,10 @@ namespace BattleCruisers.Utils.Fetchers
         {
             return _prefabCache.GetCaptainExo(key);
         }
+
+        public Bodykit GetBodykit(IPrefabKey key)
+        {
+            return _prefabCache.GetBodykit(key);
+        }
     }
 }

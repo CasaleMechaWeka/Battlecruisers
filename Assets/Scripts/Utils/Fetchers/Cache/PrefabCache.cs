@@ -22,6 +22,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly IMultiCache<ExplosionController> _explosions;
         private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
         private readonly IMultiCache<CaptainExo> _captains;
+        private readonly IMultiCache<Bodykit> _bodykits;
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
         public DroneController Drone { get; }
@@ -34,11 +35,12 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IMultiCache<ExplosionController> explosions, 
             IMultiCache<ShipDeathInitialiser> shipDeaths,
             IMultiCache<CaptainExo> captains,
+            IMultiCache <Bodykit> bodykits,
             IUntypedMultiCache<Projectile> projectiles, 
             DroneController drone,
             AudioSourceInitialiser audioSource)
         {
-            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource, captains);
+            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource, captains, bodykits);
 
             _buildings = buildings;
             _units = units;
@@ -47,6 +49,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             _shipDeaths = shipDeaths;
             _captains = captains;
             _projectiles = projectiles;
+            _bodykits = bodykits;
             Drone = drone;
             AudioSource = audioSource;
         }
@@ -84,6 +87,11 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         public CaptainExo GetCaptainExo(IPrefabKey key)
         {
             return _captains.GetPrefab(key);
+        }
+
+        public Bodykit GetBodykit(IPrefabKey key)
+        {
+            return _bodykits.GetPrefab(key);
         }
     }
 }

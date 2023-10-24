@@ -159,18 +159,68 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public async void InitialiseVariants()
         {
-
+            captainsContainer.gameObject.SetActive(false);
+            hecklesContainer.gameObject.SetActive(false);
+            bodykitsContainer.gameObject.SetActive(false);
+            variantsContainer.gameObject.SetActive(true);
         }
         public async void InitialiseBodykits()
         {
+            captainsContainer.gameObject.SetActive(false);
+            hecklesContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(false);
+            bodykitsContainer.gameObject.SetActive(true);
+            variantsContainer.gameObject.SetActive(false);
 
+            BodykitItemController[] items = bodykitItemContainer.gameObject.GetComponentsInChildren<BodykitItemController>();
+            foreach (BodykitItemController item in items)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+            bodykitsContainer.btnBuy.SetActive(false);
+            bodykitsContainer.ownFeedback.SetActive(false);
+
+            await Task.Delay(100);
+            List<int> bodykitList = GeneratePseudoRandomList(8, _dataProvider.GameModel.Bodykits.Count - 1, 1, 1);
+
+            byte ii = 0;
+            foreach (int index in bodykitList)
+            {
+                GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer) as GameObject;
+                Bodykit bodykit = Instantiate(_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]));
+                bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
+                if(ii == 0)
+                {
+                    bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
+                    bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
+                    if(index == 0)
+                    {
+                        bodykitsContainer.bodykitPrice.text = "0";
+                    }
+                    bodykitsContainer.bodykitName.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].nameStringKeyBase);
+                    bodykitsContainer.bodykitDescription.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].descriptionKeyBase);
+                    if (_dataProvider.GameModel.Bodykits[index].isOwned)
+                    {
+                        bodykitsContainer.btnBuy.SetActive(false);
+                        bodykitsContainer.ownFeedback.SetActive(true);
+                    }
+                    else
+                    {
+                        bodykitsContainer.btnBuy.SetActive(true);
+                        bodykitsContainer.ownFeedback.SetActive(false);
+                    }
+                }
+                ii++;
+            }
         }
         public async void InitialiseHeckles()
         {
-
             captainsContainer.gameObject.SetActive(false);
-            hecklesMessage.gameObject.SetActive(true);
             hecklesContainer.gameObject.SetActive(true);
+            bodykitsContainer.gameObject.SetActive(false);
+            variantsContainer.gameObject.SetActive(false);
+
+            hecklesMessage.gameObject.SetActive(true);
             // remove all old children to refresh
             HeckleItemController[] items = heckleItemContainer.gameObject.GetComponentsInChildren<HeckleItemController>();
             foreach (HeckleItemController item in items)
@@ -231,8 +281,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public async void InitiaiseCaptains()
         {
-
             captainsContainer.gameObject.SetActive(true);
+            hecklesContainer.gameObject.SetActive(false);
+            bodykitsContainer.gameObject.SetActive(false);
+            variantsContainer.gameObject.SetActive(false);
+
             hecklesContainer.gameObject.SetActive(false);
             hecklesMessage.gameObject.SetActive(false);
             // remove all old children to refersh
@@ -294,7 +347,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             List<int> randomList = new List<int>();
             for (int i = startValue; i < elements + startValue; i++)
                 randomList.Add((startValue + (maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue - startValue)));
-
             return randomList;
         }
     }

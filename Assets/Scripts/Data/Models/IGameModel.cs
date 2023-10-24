@@ -25,6 +25,7 @@ namespace BattleCruisers.Data.Models
         List<int> HeckleList { get; set; }
         List<CaptainData> Captains { get; set; }
         List<HeckleData> Heckles { get; set; }
+        List<BodykitData> Bodykits { get; set; }
         List<IAPData> IAPs { get; set; }
         List<HeckleData> OutstandingHeckleTransactions { get; set; }
         List<CaptainData> OutstandingCaptainTransactions { get; set; }

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System.Collections.Generic;
 
@@ -552,6 +553,32 @@ namespace BattleCruisers.Data.Static
             }
         }
 
+        public static class BodyKits
+        {
+            public static BodykitKey Bodykit000 { get; } = new BodykitKey("Bodykit000");
+            public static BodykitKey Bodykit001 { get; } = new BodykitKey("Bodykit001");
+            public static BodykitKey Bodykit002 { get; } = new BodykitKey("Bodykit002");
+            public static BodykitKey Bodykit003 { get; } = new BodykitKey("Bodykit003");
+            public static BodykitKey Bodykit004 { get; } = new BodykitKey("Bodykit004");
+            public static BodykitKey Bodykit005 { get; } = new BodykitKey("Bodykit005");
+            public static BodykitKey Bodykit006 { get; } = new BodykitKey("Bodykit006");
+            public static BodykitKey Bodykit007 { get; } = new BodykitKey("Bodykit007");
+            public static BodykitKey Bodykit008 { get; } = new BodykitKey("Bodykit008");
+            public static BodykitKey Bodykit009 { get; } = new BodykitKey("Bodykit009");
+            public static BodykitKey Bodykit010 { get; } = new BodykitKey("Bodykit010");
+            public static BodykitKey Bodykit011 { get; } = new BodykitKey("Bodykit011");
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        Bodykit000, Bodykit001, Bodykit002, Bodykit003, Bodykit004, Bodykit005, Bodykit006, Bodykit007, Bodykit008,
+                        Bodykit009, Bodykit010, Bodykit011
+                    };
+                }
+            }
+        }
         public static class Effects
         {
             public static EffectKey BuilderDrone { get; } = new EffectKey("BuilderDrone");
