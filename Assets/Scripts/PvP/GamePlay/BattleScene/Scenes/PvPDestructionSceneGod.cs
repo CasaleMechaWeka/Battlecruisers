@@ -672,7 +672,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         IEnumerator InterpolateTimeValue(float startVal, float endVal, int steps)
         {
-            float interpStep = (long)MathF.Min(1, (endVal - startVal)) / (long)MathF.Min(1, steps);
+            float interpStep = (endVal - startVal) / steps;
             float stepPeriod = (timeStep * 2.0f) / steps; // timestamps look a bit nicer if they interp a bit slower
 
             for (int i = 1; i <= steps; i++)

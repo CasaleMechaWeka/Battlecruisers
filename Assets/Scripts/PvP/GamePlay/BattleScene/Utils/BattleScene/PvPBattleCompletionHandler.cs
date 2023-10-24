@@ -109,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 DestroyAllNetworkObjects();
             }
 
-            if (wasVictory) //WasVictory means LEFT player, !WasVictory means RIGHT player.
+            if (wasVictory) //wasVictory means LEFT player, !wasVictory means RIGHT player.
             {
                 if (PvPBattleSceneGodClient.Instance.wasOpponentDisconnected)
                 {
