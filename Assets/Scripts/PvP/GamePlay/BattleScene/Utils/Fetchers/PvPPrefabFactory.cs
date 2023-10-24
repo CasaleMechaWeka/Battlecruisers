@@ -80,10 +80,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
-            buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
-            buildableWrapper.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
             buildableWrapper.StaticInitialise(_commonStrings);
             buildableWrapper.Buildable.Initialise(factoryProvider);
+            buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
+            buildableWrapper.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
             return buildableWrapper.Buildable;
         }
         public PvPBuildableOutlineController CreateOutline(PvPBuildableOutlineController outlinePrefab)
@@ -100,9 +100,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
-            buildableWrapper.GetComponent<NetworkObject>().Spawn();
             buildableWrapper.StaticInitialise(_commonStrings);
             buildableWrapper.Buildable.Initialise(factoryProvider);
+            buildableWrapper.GetComponent<NetworkObject>().Spawn();
             return buildableWrapper.Buildable;
         }
 
@@ -114,9 +114,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x)
         {
             PvPCruiser cruiser = Object.Instantiate(cruiserPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
+            cruiser.StaticInitialise(_commonStrings);
             cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId, true);
             cruiser.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
-            cruiser.StaticInitialise(_commonStrings);
             return cruiser;
         }
         public PvPCruiser CreateAIBotCruiser(PvPCruiser cruiserPrefab, float x)
@@ -131,9 +131,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPCruiser CreateCruiser(string prefabName, ulong ClientNetworkId, float x)
         {
             PvPCruiser cruiser = GameObject.Instantiate(Resources.Load<PvPCruiser>("Hulls/" + prefabName), new Vector3(x, 0f, 0f), Quaternion.identity);
+            cruiser.StaticInitialise(_commonStrings);
             cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId, true);
             cruiser.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
-            cruiser.StaticInitialise(_commonStrings);
             return cruiser;
         }
 
@@ -161,16 +161,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsNotNull(factoryProvider);
             TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
             TProjectile projectile = Object.Instantiate(prefab);
-            projectile.GetComponent<NetworkObject>().Spawn();
             projectile.Initialise(_commonStrings, factoryProvider);
+            projectile.GetComponent<NetworkObject>().Spawn();
             return projectile;
         }
 
         public async Task<IPvPDroneController> CreateDrone()
         {
             PvPDroneController newDrone = Object.Instantiate(_prefabCache.Drone);
-            newDrone.GetComponent<NetworkObject>().Spawn();
             newDrone.StaticInitialise(_commonStrings);
+            newDrone.GetComponent<NetworkObject>().Spawn();
             return newDrone;
         }
 
