@@ -54,8 +54,10 @@ namespace BattleCruisers.UI.ScreensScene
 
         private async void OnEnable()
         {
-            captainName.text = firstNameString;
-            captainDescription.text = firstDescrtiptionString;
+            if (firstNameString != null)
+                captainName.text = firstNameString;
+            if (firstNameString != firstDescrtiptionString)
+                captainDescription.text = firstDescrtiptionString;
         }
 
         private async void Purchase()

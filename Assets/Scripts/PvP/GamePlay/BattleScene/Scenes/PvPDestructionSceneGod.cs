@@ -782,7 +782,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             if (levelTimeInSeconds > 60)
             {
                 // Arena earnings:
-                result += arena.prizecoins;
+                if (cruiserVal > 0) // winner only
+                {
+                    result += arena.prizecoins;
+                }
 
                 // Regular rewards:
 
@@ -839,7 +842,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 }
 
                 // Arena earnings:
-                creditsAward += arena.prizecredits;
+                if (cruiserVal > 0) // winner only
+                {
+                    creditsAward += arena.prizecredits;
+                }
             }
             else
             {
