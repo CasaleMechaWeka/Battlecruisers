@@ -47,6 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             registeredTime = -1;
         }
 
+        // For disconnection
         public async void CompleteBattle(bool wasVictory, bool retryLevel)
         {
             if (_isCompleted)
@@ -107,17 +108,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 NetworkManager.Singleton.Shutdown(true);
                 DestroyAllNetworkObjects();
             }
-            if (wasVictory)
-            {
-                if (PvPBattleSceneGodClient.Instance.wasOpponentDisconnected)
-                {
-                    GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE);
-                }
-                else
-                    GoToScene(PvPSceneNames.SCREENS_SCENE);
-            }
-            else
-                GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE); // losers still get some rewards
+            
+            GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE); // losers still get some rewards
         }
 
         bool isTriggtered = false;
@@ -157,6 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return (Ra, Rb);
         }
 
+        // For match normally completed
         public async void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
             if (_isCompleted)
@@ -223,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 {
                     NetworkManager.Singleton.Shutdown(true);
                     DestroyAllNetworkObjects();
-                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                    _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
             }
             else
@@ -232,7 +225,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 {
                     NetworkManager.Singleton.Shutdown(true);
                     DestroyAllNetworkObjects();
-                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                    _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
                 }
                 else
                 {
