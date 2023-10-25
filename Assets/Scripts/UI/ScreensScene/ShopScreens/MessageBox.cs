@@ -7,6 +7,8 @@ using TMPro;
 using BattleCruisers.Data;
 using BattleCruisers.UI.Sound.Players;
 using System;
+using Unity.Tutorials.Core.Editor;
+using BattleCruisers.Scenes;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -14,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         public GameObject panel;
         public Text label;
+        public Text closeButton;
         public CanvasGroupButton okBtn;
         private IDataProvider _dataProvider;
         private ISingleSoundPlayer _soundPlayer;
@@ -25,14 +28,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _soundPlayer = soundPlayer;
             _onClick = onClick;
             okBtn.Initialise(_soundPlayer, OnClick);
+            panel.GetComponentInChildren<CanvasGroupButton>().Initialise(_soundPlayer, HideMessage);
         }
 
         private void Awake()
         {
         }
 
-        public void ShowMessage(string message, Action onClick = null)
+        public void ShowMessage(string message, Action onClick = null, string closeButtonText = "")
         {
+            if (closeButtonText.IsNullOrEmpty())
+                closeButton.text = LandingSceneGod.Instance.screenSceneStrings.GetString("UI/OkButton");
+            else
+                closeButton.text = closeButtonText;
+
             label.text = message;
             _onClick = onClick;
             panel.SetActive(true);

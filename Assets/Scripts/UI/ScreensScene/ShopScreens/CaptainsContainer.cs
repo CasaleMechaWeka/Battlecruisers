@@ -155,7 +155,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
                 return;
             }
         }
@@ -188,7 +188,13 @@ namespace BattleCruisers.UI.ScreensScene
         {
             captainDataChanged -= CaptainDataChanged;
         }
+        public void GotoBlackMarket()
+        {
+            GetComponentInParent<ShopPanelScreenController>().GotoBlackMarket();
+        }
     }
+
+
 
     public class CaptainDataEventArgs : EventArgs
     {

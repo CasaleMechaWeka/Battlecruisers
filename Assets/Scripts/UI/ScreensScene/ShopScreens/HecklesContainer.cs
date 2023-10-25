@@ -13,6 +13,12 @@ using Unity.Services.Authentication;
 using Unity.Services.Economy;
 using UnityEngine;
 using UnityEngine.UI;
+using BattleCruisers.Data.Helpers;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
+using System.Threading.Tasks;
+using Unity.Services.Core;
 
 namespace BattleCruisers.UI.ScreensScene
 {
@@ -157,7 +163,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
                 return;
             }
         }
@@ -188,6 +194,11 @@ namespace BattleCruisers.UI.ScreensScene
         private void OnDestroy()
         {
             heckleDataChanged -= HeckleDataChanged;
+        }
+
+        public void GotoBlackMarket()
+        {
+            GetComponentInParent<ShopPanelScreenController>().GotoBlackMarket();
         }
 
     }
