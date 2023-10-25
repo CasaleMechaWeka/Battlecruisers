@@ -187,16 +187,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             foreach (int index in bodykitList)
             {
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer) as GameObject;
-                Bodykit bodykit = Instantiate(_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]));
-                bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
+                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
+                bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, ii);
                 if(ii == 0)
                 {
                     bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
                     bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
-                    if(index == 0)
-                    {
-                        bodykitsContainer.bodykitPrice.text = "0";
-                    }
+                    bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
+                    bodykitsContainer.bodykitPrice.text = _dataProvider.GameModel.Bodykits[index].bodykitCost.ToString();
                     bodykitsContainer.bodykitName.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].nameStringKeyBase);
                     bodykitsContainer.bodykitDescription.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].descriptionKeyBase);
                     if (_dataProvider.GameModel.Bodykits[index].isOwned)

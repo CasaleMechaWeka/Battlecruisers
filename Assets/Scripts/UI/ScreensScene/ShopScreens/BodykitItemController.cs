@@ -48,7 +48,6 @@ public class BodykitItemController : MonoBehaviour
         if(!_clickedFeedback.activeSelf)
         {
             _clickedFeedback.SetActive(true);
-            _bodykitContainer.visualOfBodykits[_index].SetActive(true);
             _bodykitContainer.bodykitDataChanged.Invoke(this, new BodykitDataEventArgs
             {
                 bodykitData = _bodykitData,

@@ -23,7 +23,6 @@ namespace BattleCruisers.UI.ScreensScene
         private ILocTable commonStrings;
         public BodykitItemController currentItem;
         private IBodykitData currentBodykitData;
-        public List<GameObject> visualOfBodykits = new List<GameObject>();
         public GameObject btnBuy, ownFeedback;
         private string firstNameString;
         private string firstDescriptionString;
@@ -85,6 +84,9 @@ namespace BattleCruisers.UI.ScreensScene
             }
 
             bodykitPrice.text = e.bodykitData.BodykitCost.ToString();
+            bodykitImage.sprite = e.bodykitImage;
+            bodykitName.text = commonStrings.GetString(e.bodykitData.NameStringKeyBase);
+            bodykitDescription.text = commonStrings.GetString(e.bodykitData.DescriptionKeyBase);
         }
         private void OnDestroy()
         {

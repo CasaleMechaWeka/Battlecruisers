@@ -542,18 +542,18 @@ namespace BattleCruisers.Data.Models
                 };
 
             _bodykits = new List<BodykitData> { 
-                    new BodykitData(nameBase: "Bodykit000", descriptionBase : "BodykitDescription000", cost: 0, owned : false, id: 0),
-                    new BodykitData(nameBase: "Bodykit001", descriptionBase : "BodykitDescription001", cost: 0, owned : false, id: 1),
-                    new BodykitData(nameBase: "Bodykit002", descriptionBase : "BodykitDescription002", cost: 0, owned : false, id: 2),
-                    new BodykitData(nameBase: "Bodykit003", descriptionBase : "BodykitDescription003", cost: 0, owned : false, id: 3),
-                    new BodykitData(nameBase: "Bodykit004", descriptionBase : "BodykitDescription004", cost: 0, owned : false, id: 4),
-                    new BodykitData(nameBase: "Bodykit005", descriptionBase : "BodykitDescription005", cost: 0, owned : false, id: 5),
-                    new BodykitData(nameBase: "Bodykit006", descriptionBase : "BodykitDescription006", cost: 0, owned : false, id: 6),
-                    new BodykitData(nameBase: "Bodykit007", descriptionBase : "BodykitDescription007", cost: 0, owned : false, id: 7),
-                    new BodykitData(nameBase: "Bodykit008", descriptionBase : "BodykitDescription008", cost: 0, owned : false, id: 8),
-                    new BodykitData(nameBase: "Bodykit009", descriptionBase : "BodykitDescription009", cost: 0, owned : false, id: 9),
-                    new BodykitData(nameBase: "Bodykit010", descriptionBase : "BodykitDescription010", cost: 0, owned : false, id: 10),
-                    new BodykitData(nameBase: "Bodykit011", descriptionBase : "BodykitDescription011", cost: 0, owned : false, id: 11),
+                    new BodykitData(nameBase: "Bodykit000", descriptionBase : "BodykitDescription000", cost: 120, owned : false, id: 0),
+                    new BodykitData(nameBase: "Bodykit001", descriptionBase : "BodykitDescription001", cost: 30, owned : false, id: 1),
+                    new BodykitData(nameBase: "Bodykit002", descriptionBase : "BodykitDescription002", cost: 300, owned : false, id: 2),
+                    new BodykitData(nameBase: "Bodykit003", descriptionBase : "BodykitDescription003", cost: 250, owned : false, id: 3),
+                    new BodykitData(nameBase: "Bodykit004", descriptionBase : "BodykitDescription004", cost: 280, owned : false, id: 4),
+                    new BodykitData(nameBase: "Bodykit005", descriptionBase : "BodykitDescription005", cost: 5000, owned : true, id: 5),
+                    new BodykitData(nameBase: "Bodykit006", descriptionBase : "BodykitDescription006", cost: 200, owned : false, id: 6),
+                    new BodykitData(nameBase: "Bodykit007", descriptionBase : "BodykitDescription007", cost: 400, owned : false, id: 7),
+                    new BodykitData(nameBase: "Bodykit008", descriptionBase : "BodykitDescription008", cost: 800, owned : true, id: 8),
+                    new BodykitData(nameBase: "Bodykit009", descriptionBase : "BodykitDescription009", cost: 590, owned : false, id: 9),
+                    new BodykitData(nameBase: "Bodykit010", descriptionBase : "BodykitDescription010", cost: 300, owned : true, id: 10),
+                    new BodykitData(nameBase: "Bodykit011", descriptionBase : "BodykitDescription011", cost: 10000, owned : false, id: 11),
             };
 
             _iaps = new List<IAPData> {
