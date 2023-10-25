@@ -6,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Threading.Tasks;
 using Unity.Services.Economy.Model;
+using JetBrains.Annotations;
 
 namespace BattleCruisers.Data
 {
@@ -48,6 +49,7 @@ namespace BattleCruisers.Data
         Task ProcessOfflineTransactions();
         Task<bool> PurchaseCaptain(int index);
         Task<bool> PurchaseHeckle(int index);
+        Task<bool> PurchaseBodykit(int index);
 
 /*        Task<bool> PurchaseIAP(string purchaseId);*/
 

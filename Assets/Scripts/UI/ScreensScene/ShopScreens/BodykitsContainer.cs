@@ -1,5 +1,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
@@ -51,7 +52,36 @@ namespace BattleCruisers.UI.ScreensScene
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
                     // online purchase
-
+                    try
+                    {
+                        bool result = await _dataProvider.PurchaseBodykit(currentBodykitData.Index);
+                        if(result)
+                        {
+                            await _dataProvider.SyncCurrencyFromCloud();
+                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                            currentItem._clickedFeedback.SetActive(true);
+                            currentItem._ownedItemMark.SetActive(true);
+                            btnBuy.SetActive(false);
+                            ownFeedback.SetActive(true);
+                            ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
+                            _dataProvider.GameModel.Bodykits[currentBodykitData.Index].isOwned = true;
+                            _dataProvider.SaveGame();
+                            await _dataProvider.CloudSave();
+                            ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("BodykitPurchased") + " " + commonStrings.GetString(currentBodykitData.NameStringKeyBase));
+                        }
+                        else
+                        {
+                            ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        }
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                    }
+                    catch
+                    {
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                    }
                 }
                 else
                 {

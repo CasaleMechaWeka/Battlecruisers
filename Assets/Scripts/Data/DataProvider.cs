@@ -348,6 +348,23 @@ namespace BattleCruisers.Data
                 return false;
             }
         }
+        public async Task<bool> PurchaseBodykit(int index)
+        {
+            Assert.IsTrue(index > 0); // 0 is trident for premium
+            try
+            {
+                string purchaseId = virtualShopConfig.categories[3].items[index-1].id;  // category 3 is bodykit
+                var result = await EconomyManager.MakeVirtualPurchaseAsync(purchaseId);
+                if (result == null)
+                    return false;
+                await EconomyManager.RefreshCurrencyBalances();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)
         {
