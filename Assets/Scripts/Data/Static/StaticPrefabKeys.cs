@@ -567,6 +567,54 @@ namespace BattleCruisers.Data.Static
             public static BodykitKey Bodykit009 { get; } = new BodykitKey("Bodykit009");
             public static BodykitKey Bodykit010 { get; } = new BodykitKey("Bodykit010");
             public static BodykitKey Bodykit011 { get; } = new BodykitKey("Bodykit011");
+            public static BodykitKey Bodykit012 { get; } = new BodykitKey("Bodykit012");
+            public static BodykitKey Bodykit013 { get; } = new BodykitKey("Bodykit013");
+            public static BodykitKey Bodykit014 { get; } = new BodykitKey("Bodykit014");
+            public static BodykitKey Bodykit015 { get; } = new BodykitKey("Bodykit015");
+            public static BodykitKey Bodykit016 { get; } = new BodykitKey("Bodykit016");
+            public static BodykitKey Bodykit017 { get; } = new BodykitKey("Bodykit017");
+            public static BodykitKey Bodykit018 { get; } = new BodykitKey("Bodykit018");
+            public static BodykitKey Bodykit019 { get; } = new BodykitKey("Bodykit019");
+            public static BodykitKey Bodykit020 { get; } = new BodykitKey("Bodykit020");
+            public static BodykitKey Bodykit021 { get; } = new BodykitKey("Bodykit021");
+            public static BodykitKey Bodykit022 { get; } = new BodykitKey("Bodykit022");
+            public static BodykitKey Bodykit023 { get; } = new BodykitKey("Bodykit023");
+            public static BodykitKey Bodykit024 { get; } = new BodykitKey("Bodykit024");
+            public static BodykitKey Bodykit025 { get; } = new BodykitKey("Bodykit025");
+            public static BodykitKey Bodykit026 { get; } = new BodykitKey("Bodykit026");
+            public static BodykitKey Bodykit027 { get; } = new BodykitKey("Bodykit027");
+            public static BodykitKey Bodykit028 { get; } = new BodykitKey("Bodykit028");
+            public static BodykitKey Bodykit029 { get; } = new BodykitKey("Bodykit029");
+            public static BodykitKey Bodykit030 { get; } = new BodykitKey("Bodykit030");
+            public static BodykitKey Bodykit031 { get; } = new BodykitKey("Bodykit031");
+            public static BodykitKey Bodykit032 { get; } = new BodykitKey("Bodykit032");
+            public static BodykitKey Bodykit033 { get; } = new BodykitKey("Bodykit033");
+            public static BodykitKey Bodykit034 { get; } = new BodykitKey("Bodykit034");
+            public static BodykitKey Bodykit035 { get; } = new BodykitKey("Bodykit035");
+            public static BodykitKey Bodykit036 { get; } = new BodykitKey("Bodykit036");
+            public static BodykitKey Bodykit037 { get; } = new BodykitKey("Bodykit037");
+            public static BodykitKey Bodykit038 { get; } = new BodykitKey("Bodykit038");
+            public static BodykitKey Bodykit039 { get; } = new BodykitKey("Bodykit039");
+            public static BodykitKey Bodykit040 { get; } = new BodykitKey("Bodykit040");
+            public static BodykitKey Bodykit041 { get; } = new BodykitKey("Bodykit041");
+            public static BodykitKey Bodykit042 { get; } = new BodykitKey("Bodykit042");
+            public static BodykitKey Bodykit043 { get; } = new BodykitKey("Bodykit043");
+            public static BodykitKey Bodykit044 { get; } = new BodykitKey("Bodykit044");
+            public static BodykitKey Bodykit045 { get; } = new BodykitKey("Bodykit045");
+            public static BodykitKey Bodykit046 { get; } = new BodykitKey("Bodykit046");
+            public static BodykitKey Bodykit047 { get; } = new BodykitKey("Bodykit047");
+            public static BodykitKey Bodykit048 { get; } = new BodykitKey("Bodykit048");
+            public static BodykitKey Bodykit049 { get; } = new BodykitKey("Bodykit049");
+            public static BodykitKey Bodykit050 { get; } = new BodykitKey("Bodykit050");
+            public static BodykitKey Bodykit051 { get; } = new BodykitKey("Bodykit051");
+            public static BodykitKey Bodykit052 { get; } = new BodykitKey("Bodykit052");
+            public static BodykitKey Bodykit053 { get; } = new BodykitKey("Bodykit053");
+            public static BodykitKey Bodykit054 { get; } = new BodykitKey("Bodykit054");
+            public static BodykitKey Bodykit055 { get; } = new BodykitKey("Bodykit055");
+            public static BodykitKey Bodykit056 { get; } = new BodykitKey("Bodykit056");
+            public static BodykitKey Bodykit057 { get; } = new BodykitKey("Bodykit057");
+            public static BodykitKey Bodykit058 { get; } = new BodykitKey("Bodykit058");
+            public static BodykitKey Bodykit059 { get; } = new BodykitKey("Bodykit059");
             public static IList<IPrefabKey> AllKeys
             {
                 get
@@ -574,7 +622,12 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         Bodykit000, Bodykit001, Bodykit002, Bodykit003, Bodykit004, Bodykit005, Bodykit006, Bodykit007, Bodykit008,
-                        Bodykit009, Bodykit010, Bodykit011
+                        Bodykit009, Bodykit010, Bodykit011, Bodykit012, Bodykit013, Bodykit014, Bodykit015, Bodykit016, Bodykit017,
+                        Bodykit018, Bodykit019, Bodykit020, Bodykit021, Bodykit022, Bodykit023, Bodykit024, Bodykit025, Bodykit026, Bodykit027,
+                        Bodykit028, Bodykit029, Bodykit030, Bodykit031, Bodykit032, Bodykit033, Bodykit034, Bodykit035, Bodykit036,
+                        Bodykit037, Bodykit038, Bodykit039, Bodykit040, Bodykit041, Bodykit042, Bodykit043, Bodykit044, Bodykit045, Bodykit046,
+                        Bodykit047, Bodykit048, Bodykit049, Bodykit050, Bodykit051, Bodykit052, Bodykit053, Bodykit054, Bodykit055, Bodykit056,
+                        Bodykit057, Bodykit058, Bodykit059
                     };
                 }
             }
