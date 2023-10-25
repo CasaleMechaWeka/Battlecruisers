@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene
                     try
                     {
                         bool result = await _dataProvider.PurchaseBodykit(currentBodykitData.Index);
-                        if(result)
+                        if (result)
                         {
                             await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
                 return;
             }
         }
@@ -121,6 +121,11 @@ namespace BattleCruisers.UI.ScreensScene
         private void OnDestroy()
         {
             bodykitDataChanged -= BodykitDataChanged;
+        }
+
+        public void GotoBlackMarket()
+        {
+            GetComponentInParent<ShopPanelScreenController>().GotoBlackMarket();
         }
     }
 

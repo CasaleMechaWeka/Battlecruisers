@@ -189,7 +189,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer) as GameObject;
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
                 bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, ii);
-                if(ii == 0)
+                if (ii == 0)
                 {
                     bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
                     bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
@@ -339,7 +339,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
         }
 
-        List<int> GeneratePseudoRandomList(int elements, int maxValue, int dailyShift, int startValue = 0)
+        List<int> GeneratePseudoRandomList(int elements, int maxValue, int dailyShift, int startValue = 0)  //elements = number of elements in output list
         {
             DateTime utcNow = DateTime.UtcNow;
             List<int> randomList = new List<int>();
