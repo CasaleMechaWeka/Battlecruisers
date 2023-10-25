@@ -157,8 +157,8 @@ namespace BattleCruisers.Data
                 case ConfigOrigin.Remote:
                     Debug.Log("===> config.Remote");
                     GetConfigValues();
-                    await SyncCaptainsCost();
-                    await SyncHecklesCost();
+                    await SyncItemsCost();
+            //        await SyncHecklesCost();
                     await SyncCurrencyFromCloud();
                     await SyncInventoryFromCloud();
                     GameModel.HasSyncdShop = true;
@@ -224,7 +224,7 @@ namespace BattleCruisers.Data
             return pvpServerAvailable;
         }
 
-        public async Task SyncCaptainsCost()
+        public async Task SyncItemsCost()
         {
             if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
             {
@@ -252,6 +252,15 @@ namespace BattleCruisers.Data
                                 {
                                     if (cost.id == "COIN")
                                         _gameModel.Heckles[index].heckleCost = cost.amount;
+                                }
+                            }
+                            if(reward.id.Contains("BODYKIT"))
+                            {
+                                int index = StaticPrefabKeys.BodykitItems[reward.id];
+                                foreach(ItemAndAmountSpec cost in costs)
+                                {
+                                    if(cost.id == "COIN")
+                                        _gameModel.Bodykits[index].bodykitCost = cost.amount;
                                 }
                             }
                         }

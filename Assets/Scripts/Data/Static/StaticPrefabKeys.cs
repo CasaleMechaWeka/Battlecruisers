@@ -490,6 +490,17 @@ namespace BattleCruisers.Data.Static
             { "HECKLE278", 278},
             { "HECKLE279", 279},
         };
+
+        public static Dictionary<string, int> BodykitItems = new Dictionary<string, int>
+        {
+            { "BODYKIT000", 0},{ "BODYKIT001", 1},{ "BODYKIT002", 2},{ "BODYKIT003", 3},{ "BODYKIT004", 4},
+            { "BODYKIT005", 5},{ "BODYKIT006", 6},{ "BODYKIT007", 7},{ "BODYKIT008", 8},{ "BODYKIT009", 9},
+            { "BODYKIT010", 10},{ "BODYKIT011", 11},{ "BODYKIT012", 12},{ "BODYKIT013", 13},{ "BODYKIT014", 14},
+            { "BODYKIT015", 15},{ "BODYKIT016", 16},{ "BODYKIT017", 17},{ "BODYKIT018", 18},{ "BODYKIT019", 19},
+            { "BODYKIT020", 20},{ "BODYKIT021", 21},{ "BODYKIT022", 22},{ "BODYKIT023", 23},{ "BODYKIT024", 24},
+            { "BODYKIT025", 25},{ "BODYKIT026", 26},{ "BODYKIT027", 27},{ "BODYKIT028", 28},{ "BODYKIT029", 29},
+            { "BODYKIT030", 30},{ "BODYKIT031", 31},{ "BODYKIT032", 32},{ "BODYKIT033", 33},{ "BODYKIT034", 34},{ "BODYKIT035", 35}
+        };
         public static class CaptainExos
         {
             // Captains
@@ -591,30 +602,7 @@ namespace BattleCruisers.Data.Static
             public static BodykitKey Bodykit033 { get; } = new BodykitKey("Bodykit033");
             public static BodykitKey Bodykit034 { get; } = new BodykitKey("Bodykit034");
             public static BodykitKey Bodykit035 { get; } = new BodykitKey("Bodykit035");
-            public static BodykitKey Bodykit036 { get; } = new BodykitKey("Bodykit036");
-            public static BodykitKey Bodykit037 { get; } = new BodykitKey("Bodykit037");
-            public static BodykitKey Bodykit038 { get; } = new BodykitKey("Bodykit038");
-            public static BodykitKey Bodykit039 { get; } = new BodykitKey("Bodykit039");
-            public static BodykitKey Bodykit040 { get; } = new BodykitKey("Bodykit040");
-            public static BodykitKey Bodykit041 { get; } = new BodykitKey("Bodykit041");
-            public static BodykitKey Bodykit042 { get; } = new BodykitKey("Bodykit042");
-            public static BodykitKey Bodykit043 { get; } = new BodykitKey("Bodykit043");
-            public static BodykitKey Bodykit044 { get; } = new BodykitKey("Bodykit044");
-            public static BodykitKey Bodykit045 { get; } = new BodykitKey("Bodykit045");
-            public static BodykitKey Bodykit046 { get; } = new BodykitKey("Bodykit046");
-            public static BodykitKey Bodykit047 { get; } = new BodykitKey("Bodykit047");
-            public static BodykitKey Bodykit048 { get; } = new BodykitKey("Bodykit048");
-            public static BodykitKey Bodykit049 { get; } = new BodykitKey("Bodykit049");
-            public static BodykitKey Bodykit050 { get; } = new BodykitKey("Bodykit050");
-            public static BodykitKey Bodykit051 { get; } = new BodykitKey("Bodykit051");
-            public static BodykitKey Bodykit052 { get; } = new BodykitKey("Bodykit052");
-            public static BodykitKey Bodykit053 { get; } = new BodykitKey("Bodykit053");
-            public static BodykitKey Bodykit054 { get; } = new BodykitKey("Bodykit054");
-            public static BodykitKey Bodykit055 { get; } = new BodykitKey("Bodykit055");
-            public static BodykitKey Bodykit056 { get; } = new BodykitKey("Bodykit056");
-            public static BodykitKey Bodykit057 { get; } = new BodykitKey("Bodykit057");
-            public static BodykitKey Bodykit058 { get; } = new BodykitKey("Bodykit058");
-            public static BodykitKey Bodykit059 { get; } = new BodykitKey("Bodykit059");
+      
             public static IList<IPrefabKey> AllKeys
             {
                 get
@@ -624,10 +612,7 @@ namespace BattleCruisers.Data.Static
                         Bodykit000, Bodykit001, Bodykit002, Bodykit003, Bodykit004, Bodykit005, Bodykit006, Bodykit007, Bodykit008,
                         Bodykit009, Bodykit010, Bodykit011, Bodykit012, Bodykit013, Bodykit014, Bodykit015, Bodykit016, Bodykit017,
                         Bodykit018, Bodykit019, Bodykit020, Bodykit021, Bodykit022, Bodykit023, Bodykit024, Bodykit025, Bodykit026, Bodykit027,
-                        Bodykit028, Bodykit029, Bodykit030, Bodykit031, Bodykit032, Bodykit033, Bodykit034, Bodykit035, Bodykit036,
-                        Bodykit037, Bodykit038, Bodykit039, Bodykit040, Bodykit041, Bodykit042, Bodykit043, Bodykit044, Bodykit045, Bodykit046,
-                        Bodykit047, Bodykit048, Bodykit049, Bodykit050, Bodykit051, Bodykit052, Bodykit053, Bodykit054, Bodykit055, Bodykit056,
-                        Bodykit057, Bodykit058, Bodykit059
+                        Bodykit028, Bodykit029, Bodykit030, Bodykit031, Bodykit032, Bodykit033, Bodykit034, Bodykit035
                     };
                 }
             }
