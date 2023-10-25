@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -49,6 +50,22 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 			gameObject.SetActive(true);
 		}
+
+        public virtual void ShowItemDetails()
+        {
+            _statsController.ShowStats(_item);
+            itemName.text = _item.Name;
+            itemDescription.text = _item.Description;
+            itemImage.sprite = _item.Sprite;
+        }
+
+        public virtual void SetHullType(HullType hullType)
+        {
+            if(GetComponent<BodykitDetailController>() != null)
+            {
+                GetComponent<BodykitDetailController>().hullType = hullType;
+            }
+        }
 
         public void Hide()
         {

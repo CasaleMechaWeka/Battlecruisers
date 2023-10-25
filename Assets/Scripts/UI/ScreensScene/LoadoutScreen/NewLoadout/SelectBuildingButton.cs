@@ -154,7 +154,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 {
                     UpdateSelectText(false);
                 }
-
             }
         }
 

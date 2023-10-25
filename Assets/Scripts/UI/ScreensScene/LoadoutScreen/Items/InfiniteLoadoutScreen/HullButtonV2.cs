@@ -8,6 +8,11 @@ using System;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -23,7 +28,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public GameObject clickedFeedBack;
         public Button toggleHullButton;
         public SelectCruiserButton selectCruiserButton;
-
+        private const char SEPARATOR = '_';
+        private string lootType;
+        private string lootName;
+        private IDataProvider _dataProvider;
+        private IPrefabFactory _prefabFactory;
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
@@ -37,6 +46,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             Helper.AssertIsNotNull(hullKey, cruiserPrefab, selectedHull);
 
+            string keyNameStr = hullKeyName.ToString();
+
+            string[] strAsArray = keyNameStr.Split(SEPARATOR);
+            Assert.AreEqual(2, strAsArray.Length);
+
+            lootType = strAsArray[0];
+            lootName = strAsArray[1];
+
             _hullKey = hullKey;
             _cruiserPrefab = cruiserPrefab;
             _selectedHull = selectedHull;
@@ -44,11 +61,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             _selectedHull.ValueChanged += _selectedHull_ValueChanged;
             _unitName.text = (cruiserPrefab.Name).ToString();
-
             UpdateSelectedFeedback();
-
             toggleHullButton.onClick.AddListener(OnSelectionButtonClicked);
-
         }
 
         private void _selectedHull_ValueChanged(object sender, EventArgs e)
@@ -70,12 +84,44 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Hulls)
             {
                 _itemDetailsManager.ShowDetails(_cruiserPrefab);
+                _itemDetailsManager.ShowDetails(GetHullType(_hullKey));
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
             {
                 //_itemDetailsManager.CompareWithSelectedItem(_cruiserPrefab);
                 //_comparingFamiltyTracker.SetComparingFamily(null);
+            }
+        }
+
+        private HullType GetHullType(HullKey hullKey)
+        {
+            switch (hullKey.PrefabName)
+            {
+                case "Trident":
+                    return HullType.Trident;
+                case "BlackRig":
+                    return HullType.BlackRig;
+                case "Bullshark":
+                    return HullType.Bullshark;
+                case "Eagle":
+                    return HullType.Eagle;
+                case "Hammerhead":
+                    return HullType.Hammerhead;
+                case "Longbow":
+                    return HullType.Longbow;
+                case "Megalodon":
+                    return HullType.Megalodon;
+                case "Raptor":
+                    return HullType.Raptor;
+                case "Rickshaw":
+                    return HullType.Rickshaw;
+                case "Rockjaw":
+                    return HullType.Rockjaw;
+                case "TasDevil":
+                    return HullType.TasDevil;
+                default:
+                    return HullType.Yeti;
             }
         }
 

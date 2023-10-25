@@ -3,15 +3,18 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using System.CodeDom;
 using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
@@ -36,6 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public LimitDisplayer limitDisplayer;
 
         public HeckleDetailsController _heckleDetails;
+        public BodykitDetailController _bodykitDetails;
 
         // Heckles
         public CanvasGroupButton heckleButton;
@@ -170,8 +174,40 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ICruiser playerCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
             _itemDetailsManager.ShowDetails(playerCruiser);
+            _itemDetailsManager.ShowDetails(GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull));
             _comparingFamilyTracker.SetComparingFamily(ItemFamily.Hulls);
             _comparingFamilyTracker.SetComparingFamily(null);
+        }
+
+        private HullType GetHullType(HullKey hullKey)
+        {
+            switch (hullKey.PrefabName)
+            {
+                case "Trident":
+                    return HullType.Trident;
+                case "BlackRig":
+                    return HullType.BlackRig;
+                case "Bullshark":
+                    return HullType.Bullshark;
+                case "Eagle":
+                    return HullType.Eagle;
+                case "Hammerhead":
+                    return HullType.Hammerhead;
+                case "Longbow":
+                    return HullType.Longbow;
+                case "Megalodon":
+                    return HullType.Megalodon;
+                case "Raptor":
+                    return HullType.Raptor;
+                case "Rickshaw":
+                    return HullType.Rickshaw;
+                case "Rockjaw":
+                    return HullType.Rockjaw;
+                case "TasDevil":
+                    return HullType.TasDevil;
+                default:
+                    return HullType.Yeti;
+            }
         }
 
         public override void Cancel()

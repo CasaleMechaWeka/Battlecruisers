@@ -55,6 +55,13 @@ namespace BattleCruisers.Data.Models
             set => _currentHeckles = value;
         }
 
+        private int _selectedBodykit;     // index of prefabs
+        public int SelectedBodykit
+        {
+            get => _selectedBodykit;
+            set => _selectedBodykit = value;
+        }
+
         [SerializeField]
         private List<string> _ownedExosKeys = new List<string>();
         public IReadOnlyList<string> OwnedExosKeys => _ownedExosKeys;
@@ -72,7 +79,8 @@ namespace BattleCruisers.Data.Models
             _units = units;
             _builds = buildLimt;
             _unit = unitLimit;
-            _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain        
+            _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain
+            _selectedBodykit = -1;                                                      
         }
 
         public bool Is_buildsNull()
