@@ -49,6 +49,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                             leftNavButton.gameObject.SetActive(false);
                             rightNavButton.gameObject.SetActive(true);
                             _index = -1;
+                            ShowOriginCruiser();
                         }
                         else
                         {
