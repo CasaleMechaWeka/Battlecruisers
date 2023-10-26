@@ -32,10 +32,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         Debug.Log("===> bodykit count ---> " + _unlockedBodykits[_hullType].Count);
                         if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) == 0)
                         {
-                            leftNavButton.gameObject.SetActive(false);
+                            leftNavButton.gameObject.SetActive(true);
                             rightNavButton.gameObject.SetActive(true);
                             _index = 0;
                             ShowBodyKitDetail(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
+                            return;
                         }
                         else if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) == _unlockedBodykits[_hullType].Count - 1)
                         {
@@ -43,6 +44,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                             rightNavButton.gameObject.SetActive(false);
                             _index = _unlockedBodykits[_hullType].Count - 1;
                             ShowBodyKitDetail(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
+                            return;
                         }
                         else if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) < 0)
                         {
@@ -50,6 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                             rightNavButton.gameObject.SetActive(true);
                             _index = -1;
                             ShowOriginCruiser();
+                            return;
                         }
                         else
                         {
@@ -57,6 +60,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                             rightNavButton.gameObject.SetActive(true);
                             _index = _unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
                             ShowBodyKitDetail(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
+                            return;
                         }
                     }
                     else
