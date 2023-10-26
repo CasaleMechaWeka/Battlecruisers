@@ -200,6 +200,9 @@ namespace BattleCruisers.Cruisers
                 {
                     Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
                     GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                    // should update Name and Description for Bodykit
+                    Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
+                    Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
                 }
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);

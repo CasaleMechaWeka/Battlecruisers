@@ -189,6 +189,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (bodykit != null)
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                // should update Name and Description for Bodykit
+                Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[index].NameStringKeyBase);
+                Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[index].DescriptionKeyBase);
             }
         }
 
