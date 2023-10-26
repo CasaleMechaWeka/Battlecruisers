@@ -17,6 +17,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Thre
 using UnityEngine.Assertions;
 using System.Collections;
 using System.Threading.Tasks;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {

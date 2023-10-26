@@ -76,6 +76,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.playerAScore = connectionPayload.playerScore;
                 MatchmakingScreenController.Instance.captainAPrefabName = connectionPayload.playerCaptainPrefabName;
                 MatchmakingScreenController.Instance.playerRating = connectionPayload.playerRating;
+                MatchmakingScreenController.Instance.playerABodykit = connectionPayload.playerBodykit;
             }
             response.Approved = true;
             response.Pending = false;

@@ -174,6 +174,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
+
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
 
             components = GetComponent<PvPBattleSceneGodComponents>();

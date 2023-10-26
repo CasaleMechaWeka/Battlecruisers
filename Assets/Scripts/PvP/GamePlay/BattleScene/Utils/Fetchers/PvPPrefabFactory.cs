@@ -21,6 +21,12 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data.Models.PrefabKeys;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System;
+using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -184,6 +190,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPPrefab GetPrefab(string prefabPath)
         {
             return _prefabCache.GetPrefab(prefabPath);
+        }
+
+        public async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
+        {
+            string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
+            await handle.Task;
+            if (handle.Status != AsyncOperationStatus.Succeeded
+    || handle.Result == null)
+            {
+                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
+            }
+            return handle.Result.GetComponent<Bodykit>();
         }
     }
 }

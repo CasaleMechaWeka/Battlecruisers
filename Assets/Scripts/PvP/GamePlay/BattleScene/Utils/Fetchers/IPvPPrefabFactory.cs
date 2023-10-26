@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
@@ -14,6 +15,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
@@ -33,6 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         PvPCruiser CreateAIBotCruiser(PvPCruiser cruiserPrefab, float x);
         PvPCruiser CreateCruiser(string prefabName, ulong ClientNetworkId, float x);
         PvPPrefab GetPrefab(string prefabPath);
+        Task<Bodykit> GetBodykit(IPrefabKey prefabKey);
 
         Task<IPvPExplosion> CreateExplosion(PvPExplosionKey explosionKey);
         Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey);

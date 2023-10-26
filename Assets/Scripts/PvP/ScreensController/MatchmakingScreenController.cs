@@ -93,6 +93,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public long playerAScore;
         public string captainAPrefabName;
         public float playerRating;
+        public int playerABodykit;
 
         private CaptainExo charlie;
         public GameObject characterOfCharlie;

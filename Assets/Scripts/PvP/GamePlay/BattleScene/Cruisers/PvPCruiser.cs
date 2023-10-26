@@ -39,6 +39,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableO
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using UnityEngine.UI;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -176,8 +178,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 PvPBattleSceneGodTunnel._playerBCruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[stringKeyBase];
                 PvPBattleSceneGodTunnel._playerBCruiserName = Name;
             }
+
+
         }
 
+
+        private async Task LoadBodykit(int index)
+        {
+            Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
+            if (bodykit != null)
+            {
+                GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+            }
+        }
 
         public async void Initialise_Client_PvP(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
         {
@@ -200,6 +213,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
                 Assert.IsNotNull(unitReadySignalInitialiser);
                 _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
+            }
+            // apply bodykit here
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            {
+                int id_bodykit = IsOwner ? SynchedServerData.Instance.playerABodykit.Value : SynchedServerData.Instance.playerBBodykit.Value; 
+                if (id_bodykit != -1)
+                {
+                    await LoadBodykit(id_bodykit);
+                }
+            }
+            else
+            {
+                int id_bodykit = IsOwner ? SynchedServerData.Instance.playerBBodykit.Value : SynchedServerData.Instance.playerABodykit.Value;
+                if (id_bodykit != -1)
+                {
+                    await LoadBodykit(id_bodykit);
+                }
             }
         }
 
@@ -311,7 +341,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _CruiserHasActiveDrones = args.HasActiveDrones;
             _CruiserHasActiveDrones.ValueChanged += CruiserHasActiveDrones_ValueChanged;
-
             /*if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
