@@ -8,6 +8,8 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Properties;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +18,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class BodykitDetailController : MonoBehaviour
     {
+        IBroadcastingProperty<HullKey> _selectedHull;
         private HullType _selectedHullType => GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull);
         private HullType _hullType;
         public HullType hullType
@@ -32,8 +35,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         Debug.Log("===> bodykit count ---> " + _unlockedBodykits[_hullType].Count);
                         if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) == 0)
                         {
-                            leftNavButton.gameObject.SetActive(true);
-                            rightNavButton.gameObject.SetActive(true);
+                            if(_unlockedBodykits[_hullType].Count == 1)
+                            {
+                                leftNavButton.gameObject.SetActive(true);
+                                rightNavButton.gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                leftNavButton.gameObject.SetActive(true);
+                                rightNavButton.gameObject.SetActive(true);
+                            }
                             _index = 0;
                             ShowBodyKitDetail(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
                             return;
@@ -99,6 +110,24 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             CollectUnlockedBodykits();
         }
 
+        public void RegisterSelectedHull(IBroadcastingProperty<HullKey> selectedHull)
+        {
+            _selectedHull = selectedHull;
+            _selectedHull.ValueChanged += OnSelectedNewHullType;
+        }
+
+        private void OnSelectedNewHullType(object sender, EventArgs e)
+        {
+            if(_index == -1)
+            {
+                _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
+            }
+            else
+            {
+                _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = _unlockedBodykits[_hullType][_index];
+            }
+            _dataProvider.SaveGame();
+        }
         private void LeftNavButton_OnClicked()
         {
             --_index;

@@ -136,7 +136,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     prefabFactory);
 
             _itemButtons = itemButtons;
-
+            _bodykitDetails.RegisterSelectedHull(selectCruiserButton.SelectedHull);
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
