@@ -14,24 +14,15 @@ using UnityEngine.UI;
 public class AdvertisingBannerScrollingText : MonoBehaviour
 {
     public bool loadAdvert;
-    public GameObject TextMask;
-    public GameObject TextCompanyName;
-    public GameObject ScrollingTextBox;
-    public GameObject MainBannerFront;
-    public GameObject DefaultBanner;
     public GameObject ConfirmationScreen;
     public CanvasGroupButton RemoveAdvertsButton;
-    public GameObject ThankYouEffect;
-    public Animator ThankYouAnimator;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
-    public float scrollSpeed = 50;
     private float _xPos;
     private ILocTable _advertisingTable;
     private int _scrollAdjustment;
     private int[] _randomiserArray = new int[16];
     private int _numberOfRandomAttempts = 0;
-    private bool _ADLoaded = false;
     private bool _isFirstLoad = true;
     [SerializeField]
     public AudioSource _uiAudioSource;
@@ -44,34 +35,8 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         StartPlatformSpecificAds();
 
         HideIAPButton();
-        /* Commented out the transform scale for the banner
-        float xAdjustment = transform.localScale.x;
-        float yAdjustment = transform.localScale.y;
 
-        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f))
-        {
-            xAdjustment = 1.25f;
-            yAdjustment = 1.25f;
-            transform.localScale = new Vector3(xAdjustment, yAdjustment);
-        }
-        else
-        {
-            float scaleAdjustment = 100 / (Screen.dpi / 3.2f);
-            if (scaleAdjustment > 1f)
-            {
-                scaleAdjustment = 1f;
-            }
-            xAdjustment *= scaleAdjustment;
-            yAdjustment *= scaleAdjustment;
-            transform.localScale = new Vector3(xAdjustment, yAdjustment);
-        }
-        */
-
-        _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
-        boxCollider = TextMask.GetComponent<BoxCollider2D>();
         _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
-        Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
-        textBoxCompanyName.text = _advertisingTable.GetString("CompanyName");
 
         _soundPlayer
                 = new SingleSoundPlayer(
@@ -164,7 +129,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             else
             {
                 HideIAPButton();
-                PlayThankYouAnimation();
                 stopAdvert();
             }
         }
@@ -181,22 +145,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
                 dummyText();
             }
         }
-
-        _xPos -= Time.deltaTime * scrollSpeed;
-        ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
-
-        if (_xPos < -_scrollAdjustment)
-        {
-            if (loadAdvert)
-            {
-                Invoke("dummyText", 1.0f);
-            }
-        }
-    }
-
-    private void PlayThankYouAnimation()
-    {
-        ThankYouAnimator.SetTrigger(ANIMATOR_TRIGGER);
     }
 
     public static bool HasParameter(string parameterName, Animator animator)
@@ -211,7 +159,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     private void clearAdvertShowDummy()
     {
-        DefaultBanner.SetActive(true);
         dummyText();
     }
 
@@ -222,10 +169,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     private void setupText()
     {
-
         _xPos = (int)(boxCollider.size.x * 1.8);
-
-        ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
 
         int randomnumber = UnityEngine.Random.Range(1, 16);
         int numberOfRandomAttempts = 0;
@@ -256,11 +200,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     }
 
-    private void RequestBanner()
-    {
-        DefaultBanner.SetActive(true);
-    }
-
     public static float DeviceDiagonalSizeInInches()
     {
         float screenWidth = Screen.width / Screen.dpi;
@@ -271,14 +210,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         return diagonalInches;
     }
-
-    public void HandleOnAdLoaded(object sender, EventArgs args)
-    {
-        DefaultBanner.SetActive(false);
-        _ADLoaded = true;
-        setupText();
-    }
-
 
     public void HandleOnAdOpened(object sender, EventArgs args)
     {
