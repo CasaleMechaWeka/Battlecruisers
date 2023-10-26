@@ -341,9 +341,9 @@ namespace BattleCruisers.Data.Static
                 new Level(19, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.CaptainExo019),
                 new Level(20, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo020),
                 new Level(21, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.CaptainExo021),
-                new Level(22, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo022),
+                new Level(22, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.CaptainExo022),
 
-                // Set 7:  Megolodon
+                // Set 7:  Megalodon
                 new Level(23, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.CaptainExo023),
                 new Level(24, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.CaptainExo024),
                 new Level(25, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.CaptainExo025),
