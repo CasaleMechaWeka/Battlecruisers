@@ -39,6 +39,7 @@ namespace BattleCruisers.Data.Models
         public string _currentCaptain;
         public Dictionary<string, Dictionary<string, string>> _buildLimits;
         public Dictionary<string, Dictionary<string, string>> _unitLimits;
+        public int _currentBodykit;
 
         // What levels have been completed
         // What difficulty those levels have been completed at.
@@ -63,7 +64,7 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-            _saveVersion = 2;
+            _saveVersion = 3;
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -87,6 +88,7 @@ namespace BattleCruisers.Data.Models
             _currentCaptain = game.PlayerLoadout.CurrentCaptain.PrefabName;
             _buildLimits = computeBuildLimits(game.PlayerLoadout.GetBuildLimits());
             _unitLimits = computeUnitLimits(game.PlayerLoadout.GetUnitLimits());
+            _currentBodykit = game.PlayerLoadout.SelectedBodykit;
 
             _hasAttemptedTutorial = game.HasAttemptedTutorial;
         }
@@ -195,6 +197,16 @@ namespace BattleCruisers.Data.Models
 
             // loadout construction actually happens finally:
             game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits, game);
+
+            // current bodykit
+            if (_currentBodykit > 0)
+            {
+                game.PlayerLoadout.SelectedBodykit = _currentBodykit;
+            }
+            else
+            {
+                game.PlayerLoadout.SelectedBodykit = -1;
+            }
 
             // current heckles
             if (_currentHeckles != null)
