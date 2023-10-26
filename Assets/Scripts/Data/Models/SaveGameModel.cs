@@ -199,7 +199,7 @@ namespace BattleCruisers.Data.Models
             game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits, game);
 
             // current bodykit
-            if (_currentBodykit > 0)
+            if (_currentBodykit >= 0)
             {
                 game.PlayerLoadout.SelectedBodykit = _currentBodykit;
             }
