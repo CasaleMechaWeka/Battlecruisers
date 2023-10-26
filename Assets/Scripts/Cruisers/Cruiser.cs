@@ -19,6 +19,7 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -194,6 +195,12 @@ namespace BattleCruisers.Cruisers
             if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
+                int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
+                if(id_bodykit != -1)
+                {
+                    Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
+                    GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                }
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
                 #endif
@@ -208,6 +215,13 @@ namespace BattleCruisers.Cruisers
                                     Debug.Log(e.Message);
                                 }*/
 
+            }
+            else
+            {
+                // AI bot
+                int id_bodykit = UnityEngine.Random.Range(1, StaticPrefabKeys.BodyKits.AllKeys.Count);
+                Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
+                GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
             }
 
             // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
