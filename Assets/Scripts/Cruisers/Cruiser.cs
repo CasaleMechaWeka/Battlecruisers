@@ -11,6 +11,7 @@ using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
@@ -27,6 +28,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
+using System.Collections.Generic;
 using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -192,11 +194,21 @@ namespace BattleCruisers.Cruisers
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 
+
+
+            // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            settingsManager = applicationModel.DataProvider.SettingsManager;
+            if (settingsManager.RichMode)
+            {
+                DroneManager.NumOfDrones = numOfDrones * 4;
+            }
+
             if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
                 int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
-                if(id_bodykit != -1)
+                if (id_bodykit != -1)
                 {
                     Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
                     GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
@@ -222,17 +234,65 @@ namespace BattleCruisers.Cruisers
             else
             {
                 // AI bot
-                int id_bodykit = UnityEngine.Random.Range(1, StaticPrefabKeys.BodyKits.AllKeys.Count);
-                Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
-                GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                Debug.Log("===> AI bot name ---> " + Name );
+                HullType ai_hullType = GetHullType(Name);
+                int id_bodykit = GetRandomBodykitForAI(ai_hullType, applicationModel.DataProvider);
+                if (id_bodykit != -1)
+                {
+                    Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
+                    GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                    Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
+                    Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
+                }
             }
+        }
 
-            // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            settingsManager = applicationModel.DataProvider.SettingsManager;
-            if (settingsManager.RichMode)
+        private int GetRandomBodykitForAI(HullType hullType, IDataProvider _dataProvider)
+        {
+            int id_bodykit = -1;
+            List<int> bodykits = new List<int>();
+            for (int i = 0; i < _dataProvider.GameModel.Bodykits.Count; i++)
             {
-                DroneManager.NumOfDrones = numOfDrones * 4; 
+                if (FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i]).cruiserType == hullType)
+                {
+                    bodykits.Add(i);
+                }
+            }
+            if (bodykits.Count == 0)
+                id_bodykit = -1;
+            else
+                id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
+            return id_bodykit;
+        }
+
+        private HullType GetHullType(string hullName)
+        {
+            switch (hullName)
+            {
+                case "Trident":
+                    return HullType.Trident;
+                case "BlackRig":
+                    return HullType.BlackRig;
+                case "Bullshark":
+                    return HullType.Bullshark;
+                case "Eagle":
+                    return HullType.Eagle;
+                case "Hammerhead":
+                    return HullType.Hammerhead;
+                case "Longbow":
+                    return HullType.Longbow;
+                case "Megalodon":
+                    return HullType.Megalodon;
+                case "Raptor":
+                    return HullType.Raptor;
+                case "Rickshaw":
+                    return HullType.Rickshaw;
+                case "Rockjaw":
+                    return HullType.Rockjaw;
+                case "TasDevil":
+                    return HullType.TasDevil;
+                default:
+                    return HullType.Yeti;
             }
         }
 

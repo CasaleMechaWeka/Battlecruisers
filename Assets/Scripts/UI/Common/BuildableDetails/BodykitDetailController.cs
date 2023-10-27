@@ -27,12 +27,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             set
             {
                 _hullType = value;
-                Debug.Log("===> hull type --->" + _hullType);
                 if (_unlockedBodykits.ContainsKey(_hullType))
                 {
                     if (_unlockedBodykits[_hullType].Count > 0)
                     {
-                        Debug.Log("===> bodykit count ---> " + _unlockedBodykits[_hullType].Count);
                         if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) == 0)
                         {
                             if(_unlockedBodykits[_hullType].Count == 1)
