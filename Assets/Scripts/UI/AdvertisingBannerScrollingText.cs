@@ -16,6 +16,8 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public bool loadAdvert;
     public GameObject ConfirmationScreen;
     public CanvasGroupButton RemoveAdvertsButton;
+    public CanvasGroupButton MerchShoppeButton;
+    public OpenLink merchLink;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     private float _xPos;
@@ -44,12 +46,19 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
-        RemoveAdvertsButton.Initialise(_soundPlayer, ShowPurchaseConfirmationScreenDelayed);
 
+        RemoveAdvertsButton.Initialise(_soundPlayer, ShowPurchaseConfirmationScreenDelayed);
+        MerchShoppeButton.Initialise(_soundPlayer, RedirectToMerchShoppe);
     }
     private void ShowPurchaseConfirmationScreenDelayed()
     {
         Invoke("ShowPurchaseConfirmationScreen", 0.25f);
+    }
+
+    private void RedirectToMerchShoppe()
+    {
+        Debug.Log("Merch Shoppe Button can be clicked!");
+        merchLink.Open();
     }
 
     public void HideIAPButton()
