@@ -181,7 +181,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.ownFeedback.SetActive(false);
 
             await Task.Delay(100);
-            List<int> bodykitList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Bodykits.Count - 1, 1, 1);
+            List<int> bodykitList = GeneratePseudoRandomList(6, 11, 1, 1);
 
             byte ii = 0;
             foreach (int index in bodykitList)
