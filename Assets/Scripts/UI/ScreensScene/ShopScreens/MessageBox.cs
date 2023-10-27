@@ -7,7 +7,6 @@ using TMPro;
 using BattleCruisers.Data;
 using BattleCruisers.UI.Sound.Players;
 using System;
-using Unity.Tutorials.Core.Editor;
 using BattleCruisers.Scenes;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
@@ -37,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void ShowMessage(string message, Action onClick = null, string closeButtonText = "")
         {
-            if (closeButtonText.IsNullOrEmpty())
+            if (closeButtonText == null || closeButtonText == "")
                 closeButton.text = LandingSceneGod.Instance.screenSceneStrings.GetString("UI/OkButton");
             else
                 closeButton.text = closeButtonText;
