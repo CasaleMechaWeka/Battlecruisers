@@ -234,15 +234,17 @@ namespace BattleCruisers.Cruisers
             else
             {
                 // AI bot
-                Debug.Log("===> AI bot name ---> " + Name );
-                HullType ai_hullType = GetHullType(Name);
-                int id_bodykit = GetRandomBodykitForAI(ai_hullType, applicationModel.DataProvider);
-                if (id_bodykit != -1)
+                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
                 {
-                    Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
-                    GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                    Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
-                    Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
+                    HullType ai_hullType = GetHullType(Name);
+                    int id_bodykit = GetRandomBodykitForAI(ai_hullType, applicationModel.DataProvider);
+                    if (id_bodykit != -1)
+                    {
+                        Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
+                        GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                        Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
+                        Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
+                    }
                 }
             }
         }
