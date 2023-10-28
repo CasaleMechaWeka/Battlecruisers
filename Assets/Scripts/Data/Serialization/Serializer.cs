@@ -60,6 +60,7 @@ namespace BattleCruisers.Data.Serialization
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
             }
+
             else
             {
                 // assign as was previously done
@@ -363,7 +364,11 @@ namespace BattleCruisers.Data.Serialization
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
                         dataProivder.GameModel.Heckles[index].isOwned = true;
                     }
-
+                    if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
+                    {
+                        int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
+                        dataProivder.GameModel.Bodykits[index].isOwned = true;
+                    }
                 }
                 dataProivder.SaveGame();
                 return true;
