@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables.Buildings
 {
@@ -58,6 +59,9 @@ namespace BattleCruisers.Buildables.Buildings
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
+
+            if (PerkKey.IsNotNullOrEmpty())
+                PerkName = _commonStrings.GetString(PerkKey);
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)

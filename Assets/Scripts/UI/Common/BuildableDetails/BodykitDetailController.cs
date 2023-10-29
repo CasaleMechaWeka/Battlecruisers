@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     {
                         if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) == 0)
                         {
-                            if(_unlockedBodykits[_hullType].Count == 1)
+                            if (_unlockedBodykits[_hullType].Count == 1)
                             {
                                 leftNavButton.gameObject.SetActive(true);
                                 rightNavButton.gameObject.SetActive(false);
@@ -105,7 +105,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             leftNavButton.Initialise(_soundPlayer, LeftNavButton_OnClicked);
             rightNavButton.Initialise(_soundPlayer, RightNavButton_OnClicked);
-            CollectUnlockedBodykits();
+            //CollectUnlockedBodykits();
         }
 
         public void RegisterSelectedHull(IBroadcastingProperty<HullKey> selectedHull)
@@ -116,7 +116,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private void OnSelectedNewHullType(object sender, EventArgs e)
         {
-            if(_index == -1)
+            if (_index == -1)
             {
                 _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
             }
@@ -134,7 +134,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 _index = -1;
                 leftNavButton.gameObject.SetActive(false);
                 rightNavButton.gameObject.SetActive(true);
-                if(_hullType == _selectedHullType)
+                if (_hullType == _selectedHullType)
                 {
                     _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
                     _dataProvider.SaveGame();

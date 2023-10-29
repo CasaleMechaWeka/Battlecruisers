@@ -12,16 +12,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem>, IHidable
         where TItem : class, ITarget, IComparableItem
-	{
-		public Text itemName, itemDescription;
-		public Image itemImage;
+    {
+        public Text itemName, itemDescription;
+        public Image itemImage;
         private StatsController<TItem> _statsController;
-        
+
         protected TItem _item;
 
         public event EventHandler Dismissed;
 
-		public virtual void Initialise()
+        public virtual void Initialise()
         {
             Helper.AssertIsNotNull(itemName, itemDescription, itemImage);
 
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default)
         {
-			Assert.IsNotNull(item);
+            Assert.IsNotNull(item);
 
             if (_item != null)
             {
@@ -42,14 +42,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
 
             _item = item;
-			
+
             _statsController.ShowStats(item, itemToCompareTo);
             itemName.text = item.Name;
             itemDescription.text = item.Description;
             itemImage.sprite = item.Sprite;
 
-			gameObject.SetActive(true);
-		}
+            gameObject.SetActive(true);
+        }
 
         public virtual void ShowItemDetails()
         {
@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public virtual void SetHullType(HullType hullType)
         {
-            if(GetComponent<BodykitDetailController>() != null)
+            if (GetComponent<BodykitDetailController>() != null)
             {
                 GetComponent<BodykitDetailController>().hullType = hullType;
             }

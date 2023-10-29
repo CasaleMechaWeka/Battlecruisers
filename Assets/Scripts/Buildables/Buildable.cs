@@ -25,7 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
+using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables
 {
@@ -61,7 +63,10 @@ namespace BattleCruisers.Buildables
         public string keyName { get; set; }
         public int numOfDronesRequired;
         public float buildTimeInS;
-
+        public string perkName;
+        public string PerkKey { get; set; }
+        public Sprite PerkSprite { get; set; }
+        public Image perkImage;
         private IAudioClipWrapper _deathSound;
         [Header("Sounds")]
         public AudioClip deathSound;
@@ -166,6 +171,8 @@ namespace BattleCruisers.Buildables
 
         public string Description { get; protected set; }
         public string Name { get; protected set; }
+        public string PerkName { get; protected set; }
+
         #endregion IComparableItem
         #endregion Properties
 
@@ -180,6 +187,13 @@ namespace BattleCruisers.Buildables
         {
             base.StaticInitialise(commonStrings);
             keyName = stringKeyName;
+            PerkKey = perkName;
+            if (perkImage != null)
+            {
+                PerkSprite = perkImage.sprite;
+            }
+            if (perkImage != null)
+                perkImage.gameObject.SetActive(true);
             Helper.AssertIsNotNull(parent, healthBar);
 
             _parent = parent;
@@ -203,6 +217,12 @@ namespace BattleCruisers.Buildables
 
             Assert.IsNotNull(deathSound);
             _deathSound = new AudioClipWrapper(deathSound);
+            if (PerkKey.IsNotNullOrEmpty())
+                PerkName = commonStrings.GetString(PerkKey);
+            if (perkImage != null)
+            {
+                PerkSprite = perkImage.sprite;
+            }
         }
 
         protected void AddDamageStats(IDamageCapability statsToAdd)
@@ -300,6 +320,7 @@ namespace BattleCruisers.Buildables
 
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+
         }
 
         public void Activate(TActivationArgs activationArgs, Faction faction)
@@ -443,10 +464,13 @@ namespace BattleCruisers.Buildables
 
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             RepairCommand.EmitCanExecuteChanged();
+            if (perkImage != null)
+                perkImage.gameObject.SetActive(false);
         }
 
         private void EnableRenderers(bool enabled)
         {
+
             Logging.Log(Tags.BUILDING, $"Renderer count: {InGameRenderers.Count}  enabled: {enabled}");
 
             foreach (Renderer renderer in InGameRenderers)

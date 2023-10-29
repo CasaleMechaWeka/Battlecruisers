@@ -49,7 +49,10 @@ namespace BattleCruisers.Buildables
         ICruiser EnemyCruiser { get; }
         IHealthBar HealthBar { get; }
         string PrefabName { get; }
-        string keyName{get;set;}
+        string keyName { get; set; }
+        string PerkKey { get; }
+        Sprite PerkSprite { get; }
+
         event EventHandler StartedConstruction;
         event EventHandler CompletedBuildable;
         event EventHandler<BuildProgressEventArgs> BuildableProgress;
