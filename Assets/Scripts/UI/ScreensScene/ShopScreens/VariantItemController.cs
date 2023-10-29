@@ -14,7 +14,7 @@ public class VariantItemController : MonoBehaviour
     public CanvasGroupButton clickingArea;
     public GameObject _ownedItemMark;
     public GameObject _clickedFeedback;
-    private IVariantData _variantData;
+    //private IVariantData _variantData;
     private ISingleSoundPlayer _soundPlayer;
     private VariantsContainer _variantsContainer;
     private Sprite _variantSprite;
@@ -23,13 +23,13 @@ public class VariantItemController : MonoBehaviour
     public void StaticInitialise(
         ISingleSoundPlayer soundPlayer,
         Sprite spriteVariant,
-        IVariantData variantData,
+        //IVariantData variantData,
         VariantsContainer variantsContainer,
         int index
         )
     {
-        Helper.AssertIsNotNull(soundPlayer, variantData, _variantImage, clickingArea, _ownedItemMark, _clickedFeedback, variantsContainer);
-        _variantData = variantData;
+        Helper.AssertIsNotNull(soundPlayer, /*variantData,*/ _variantImage, clickingArea, _ownedItemMark, _clickedFeedback, variantsContainer);
+        //_variantData = variantData;
         _soundPlayer = soundPlayer;
         _variantsContainer = variantsContainer;
         _variantSprite = spriteVariant;
@@ -38,7 +38,7 @@ public class VariantItemController : MonoBehaviour
         _variantImage.sprite = _variantSprite;
         _clickedFeedback.SetActive(false);
 
-        _ownedItemMark.SetActive(_variantData.IsOwned);
+        //_ownedItemMark.SetActive(_variantData.IsOwned);
         clickingArea.Initialise(_soundPlayer, OnClicked);
     }
 
@@ -47,11 +47,11 @@ public class VariantItemController : MonoBehaviour
         if (!_clickedFeedback.activeSelf)
         {
             _clickedFeedback.SetActive(true);
-            _variantContainer.variantDataChanged.Invoke(this, new BodykitDataEventArgs
-            {
-                variantData = _variantData,
-                variantImage = _variantSprite
-            });
+            //_variantContainer.variantDataChanged.Invoke(this, new BodykitDataEventArgs
+            //{
+            //    variantData = _variantData,
+            //    variantImage = _variantSprite
+            //});
         }
     }
 }
