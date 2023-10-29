@@ -112,6 +112,7 @@ namespace BattleCruisers.Cruisers
         public event EventHandler Clicked;
         private int updateCnt = 0;
         public bool isCruiser = true;
+        public bool isUsingBodykit = false;
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -215,6 +216,7 @@ namespace BattleCruisers.Cruisers
                     // should update Name and Description for Bodykit
                     Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
                     Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
+                    isUsingBodykit = true;
                 }
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
@@ -244,6 +246,7 @@ namespace BattleCruisers.Cruisers
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                         Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
                         Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
+                        isUsingBodykit = true;
                     }
                 }
             }

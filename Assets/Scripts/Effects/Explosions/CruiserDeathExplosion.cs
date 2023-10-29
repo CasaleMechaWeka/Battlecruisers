@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +13,8 @@ namespace BattleCruisers.Effects.Explosions
     public class CruiserDeathExplosion : ExplosionController
     {
         private AudioSourceGroup _audioSources;
-
+        public BodykitWreck[] wrecks;
+        public SpriteRenderer[] wreckRenders;
         public IExplosion Initialise(ISettingsManager settingsManager)
         {
             IExplosion explosion = base.Initialise();
@@ -30,5 +32,39 @@ namespace BattleCruisers.Effects.Explosions
 
             return explosion;
         }
+        public void ApplyBodykitWreck(int id_bodykit)
+        {
+            if (id_bodykit < 0)
+                return;
+            BODYKIT_TYPE bodykit_type = (BODYKIT_TYPE)id_bodykit;
+            foreach (BodykitWreck wreck in wrecks)
+            {
+                if(wreck.type == bodykit_type)
+                {
+                    for(int i = 0; i < wreckRenders.Length; i ++)
+                    {
+                        wreckRenders[i].sprite = wreck.sprites[i];
+                    }
+                }
+            }
+        }
+    }
+
+    public enum BODYKIT_TYPE
+    {
+        BODYKIT000, BODYKIT001, BODYKIT002, BODYKIT003, BODYKIT004,
+        BODYKIT005, BODYKIT006, BODYKIT007, BODYKIT008, BODYKIT009,
+        BODYKIT010, BODYKIT011, BODYKIT012, BODYKIT013, BODYKIT014,
+        BODYKIT015, BODYKIT016, BODYKIT017, BODYKIT018, BODYKIT019,
+        BODYKIT020, BODYKIT021, BODYKIT022, BODYKIT023, BODYKIT024,
+        BODYKIT025, BODYKIT026, BODYKIT027, BODYKIT028, BODYKIT029,
+        BODYKIT030, BODYKIT031, BODYKIT032, BODYKIT033, BODYKIT034,
+        BODYKIT035
+    }
+    [Serializable]
+    public class BodykitWreck
+    {
+        public BODYKIT_TYPE type;
+        public Sprite[] sprites;
     }
 }
