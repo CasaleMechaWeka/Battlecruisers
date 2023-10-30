@@ -242,7 +242,7 @@ namespace BattleCruisers.Scenes
 #if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
-                await GoogleAttemptSilentSigningAsync(soundPlayer);
+                await GoogleAttemptSilentSigningAsync();
 
 #elif PLATFORM_IOS
                 InitializeAppleAuth();
@@ -408,21 +408,21 @@ namespace BattleCruisers.Scenes
         }
 
         // Attempt Google signin without user input:
-        private async Task GoogleAttemptSilentSigningAsync(ISingleSoundPlayer soundPlayer)
+        private async Task GoogleAttemptSilentSigningAsync()
         {
             try
             {
                 bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
                 if (state != true)
                 {
-                    ShowSignInScreen(soundPlayer);
+                    ShowSignInScreen();
                     Debug.Log("Google silent signin unsuccessful.");
                 }
             }
             catch (Exception ex)
             {
                 // if it fails, show the landing buttons:
-                ShowSignInScreen(soundPlayer);
+                ShowSignInScreen();
                 Debug.Log(ex.Message);
             }
         }
@@ -458,7 +458,7 @@ namespace BattleCruisers.Scenes
                         credential =>
                         {
                             var appleIDCredential = credential as IAppleIDCredential;
-                            Debug.Log("####### User Credential: " + appleIDCredential.ToString());
+                            Debug.Log("####### User Credential: " + appleIDCredential.IdentityToken.ToString());
                             if (appleIDCredential != null)
                             {
                                 var idToken = Encoding.UTF8.GetString(
@@ -467,7 +467,7 @@ namespace BattleCruisers.Scenes
                                     appleIDCredential.IdentityToken.Length);
                                 Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
                                 LogToScreen("Sign-in success."); //Localise for prod
-                                PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                                PlayerPrefs.SetString(AppleUserIdKey, appleIDCredential.IdentityToken.ToString());
                                 SignInWithAppleAsync(idToken);
                             }
                             else
@@ -523,7 +523,7 @@ namespace BattleCruisers.Scenes
                     var appleIdCredential = credential as IAppleIDCredential;
                         if (appleIdCredential != null)
                         {
-                            PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                            PlayerPrefs.SetString(AppleUserIdKey, appleIDCredential.IdentityToken.ToString());
                             HandleAppleSignIn(appleIdCredential, soundPlayer);
                         }
                     },
