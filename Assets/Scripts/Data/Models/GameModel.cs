@@ -236,6 +236,13 @@ namespace BattleCruisers.Data.Models
             set => _outstandingCaptainTransactions = value;
         }
 
+        public List<BodykitData> _outstandingBodykitTransactions;
+        public List<BodykitData> OutstandingBodykitTransactions
+        {
+            get => _outstandingBodykitTransactions;
+            set => _outstandingBodykitTransactions = value;
+        }
+
         private int _creditsChange;
         public int CreditsChange
         {

@@ -404,9 +404,16 @@ namespace BattleCruisers.Data
                 // Surplus
                 // All coin transactions can resolve.
                 // These methods handle buying everything on the Outstanding Transactions lists:
+                if (GameModel.OutstandingBodykitTransactions != null && GameModel.OutstandingBodykitTransactions.Count > 0)
+                {
+                    await ProcessOfflineBodykits();
+                }
                 if (GameModel.OutstandingCaptainTransactions != null && GameModel.OutstandingCaptainTransactions.Count > 0)
                 {
                     await ProcessOfflineCaptains();
+                }
+                if (GameModel.OutstandingHeckleTransactions != null && GameModel.OutstandingHeckleTransactions.Count > 0)
+                {
                     await ProcessOfflineHeckles();
                 }
 
@@ -417,16 +424,23 @@ namespace BattleCruisers.Data
             }
             else
             {
+                Debug.Log("Offline transaction conflict!");
                 // Deficit
                 // Needs to be handled
-                // Captains first
-                Debug.Log("Offline transaction conflict!");
+
+                // Bodykits first
+                if (GameModel.OutstandingBodykitTransactions != null && GameModel.OutstandingBodykitTransactions.Count > 0)
+                {
+                    runningCoinTotal = await ProcessOfflineBodykitsConflicts(runningCoinTotal);
+                }
+
+                // Captains second
                 if (GameModel.OutstandingCaptainTransactions != null && GameModel.OutstandingCaptainTransactions.Count > 0)
                 {
                     runningCoinTotal = await ProcessOfflineCaptainsConflicts(runningCoinTotal);
                 }
 
-                // Heckles second
+                // Heckles third
                 if (GameModel.OutstandingHeckleTransactions != null && GameModel.OutstandingHeckleTransactions.Count > 0)
                 {
                     runningCoinTotal = await ProcessOfflineHecklesConflicts(runningCoinTotal);
@@ -451,6 +465,69 @@ namespace BattleCruisers.Data
 
             SaveGame();
             await CloudSave();
+        }
+
+        // Officially buys all the Bodykits that were bought offline:
+        private async Task ProcessOfflineBodykits()
+        {
+            List<BodykitData> RetryBodykits = new List<BodykitData>();
+
+            // Captains
+            foreach (BodykitData txn in GameModel.OutstandingBodykitTransactions)
+            {
+                Debug.Log("Purchasing Bodykit " + txn.index);
+                bool result = await PurchaseBodykit(txn.index);
+                if (result)
+                {
+                    GameModel.Bodykits[txn.index].isOwned = true;
+                    GameModel.CoinsChange += txn.bodykitCost;
+                }
+                else
+                {
+                    Debug.LogWarning("FAILED: Purchasing Bodykit " + txn.index + ", will retry next time the game is run.");
+                    RetryBodykits.Add(txn);
+                }
+            }
+            await SyncCurrencyFromCloud();
+            // If any failed, they'll be preserved for next connection:
+            if (RetryBodykits != null) { GameModel.OutstandingBodykitTransactions = RetryBodykits; }
+            else { GameModel.OutstandingBodykitTransactions = new List<BodykitData>(); }
+        }
+
+        // Officially buys Captains based on what was bought offline, but only as many as the cloud economy allows:
+        private async Task<int> ProcessOfflineBodykitsConflicts(int runningCoinTotal)
+        {
+            List<int> GoodBodykits = new List<int>();
+
+            foreach (BodykitData txn in GameModel.OutstandingBodykitTransactions)
+            {
+                if (runningCoinTotal - txn.bodykitCost >= 0)
+                {
+                    runningCoinTotal -= txn.bodykitCost;
+                    GoodBodykits.Add(txn.index);
+                }
+                else
+                {
+                    Debug.Log("Reverting purchase of Bodykit " + txn.index);
+                    GameModel.Bodykits[txn.index].isOwned = false;
+                }
+            }
+            GameModel.OutstandingBodykitTransactions = new List<BodykitData>();
+
+            if (GoodBodykits != null && GoodBodykits.Count > 0)
+            {
+                foreach (int bdk in GoodBodykits)
+                {
+                    Debug.Log("Purchasing Bodykit " + bdk);
+                    bool result = await PurchaseBodykit(bdk);
+                    if (result)
+                    {
+                        await SyncCurrencyFromCloud();
+                        GameModel.Bodykits[bdk].isOwned = true;
+                    }
+                }
+            }
+            return runningCoinTotal;
         }
 
         // Officially buys all the Captains that were bought offline:

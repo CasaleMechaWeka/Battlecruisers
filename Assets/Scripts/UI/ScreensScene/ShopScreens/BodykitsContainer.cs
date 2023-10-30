@@ -85,7 +85,38 @@ namespace BattleCruisers.UI.ScreensScene
                 }
                 else
                 {
-                    // offline purchase
+                    // Offline purchasing
+                    try
+                    {
+                        currentItem._clickedFeedback.SetActive(true);
+                        currentItem._ownedItemMark.SetActive(true);
+                        btnBuy.SetActive(false);
+                        ownFeedback.SetActive(true);
+                        ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
+                        _dataProvider.GameModel.Bodykits[currentBodykitData.Index].isOwned = true;
+                        _dataProvider.SaveGame();
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("BodykitPurchased") + " " + commonStrings.GetString(currentBodykitData.NameStringKeyBase));
+
+                        // Subtract from local economy:
+                        _dataProvider.GameModel.Coins -= currentBodykitData.BodykitCost;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+
+                        // Keep track of transaction for later:
+                        _dataProvider.GameModel.CoinsChange -= currentBodykitData.BodykitCost;
+                        BodykitData bodykit = _dataProvider.GameModel.Bodykits[currentBodykitData.Index];
+                        if (_dataProvider.GameModel.OutstandingBodykitTransactions == null)
+                        {
+                            _dataProvider.GameModel.OutstandingBodykitTransactions = new List<BodykitData>();
+                        }
+                        _dataProvider.GameModel.OutstandingBodykitTransactions.Add(bodykit);
+                    }
+                    catch
+                    {
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                    }
+                    ScreensSceneGod.Instance.processingPanel.SetActive(false);
 
                 }
             }
