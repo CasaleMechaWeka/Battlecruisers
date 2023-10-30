@@ -246,7 +246,6 @@ namespace BattleCruisers.Scenes
 
             var prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
 
-
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             if (this == null)
@@ -389,7 +388,6 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
-
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
 
             bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) == 0 ? false : true;
@@ -459,7 +457,6 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
         }
-
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
@@ -502,7 +499,6 @@ namespace BattleCruisers.Scenes
             GoToScreen(levelsScreen);
         }
 
-
         public void GotoHubScreen()
         {
             homeScreen.gameObject.SetActive(false);
@@ -542,7 +538,7 @@ namespace BattleCruisers.Scenes
             fullScreenads.CloseAdvert();
             GoToScreen(blackMarketScreen);
             blackMarketScreen.InitialiseIAPs();
-            AdvertisingBanner.startAdvert();
+            //AdvertisingBanner.startAdvert();
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
@@ -776,11 +772,8 @@ namespace BattleCruisers.Scenes
             {
                 Debug.LogError($"No CaptainExoData component attached to prefab at path: {prefabPath}");
             }
-
             return data;
         }
-
-
 
         private void CleanUp()
         {
