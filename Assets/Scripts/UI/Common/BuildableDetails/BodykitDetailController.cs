@@ -105,7 +105,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             leftNavButton.Initialise(_soundPlayer, LeftNavButton_OnClicked);
             rightNavButton.Initialise(_soundPlayer, RightNavButton_OnClicked);
-            //CollectUnlockedBodykits();
+            CollectUnlockedBodykits();
         }
 
         public void RegisterSelectedHull(IBroadcastingProperty<HullKey> selectedHull)

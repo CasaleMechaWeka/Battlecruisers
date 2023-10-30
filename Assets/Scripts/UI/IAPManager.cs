@@ -54,6 +54,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             applicationModel.DataProvider.GameModel.PremiumEdition = true;
+            applicationModel.DataProvider.GameModel.Bodykits[0].isOwned = true;
             applicationModel.DataProvider.SaveGame();
         }
         else if (args.purchasedProduct.definition.id == small_coin_pack)
