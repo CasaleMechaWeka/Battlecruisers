@@ -589,7 +589,8 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(false);
             cameraOfCaptains.SetActive(false);
             fullScreenads.CloseAdvert();
-        //    loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.CollectUnlockedBodykits();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.CollectUnlockedBodykits();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().RefreshBodykitsUI();
             GoToScreen(loadoutScreen);
         }
 

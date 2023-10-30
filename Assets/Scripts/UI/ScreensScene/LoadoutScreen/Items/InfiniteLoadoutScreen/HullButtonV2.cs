@@ -128,6 +128,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public override void ShowDetails()
         {
             _itemDetailsManager.ShowDetails(_cruiserPrefab);
+            _itemDetailsManager.ShowDetails(GetHullType(_hullKey));
         }
         private void OnSelectionButtonClicked()
         {

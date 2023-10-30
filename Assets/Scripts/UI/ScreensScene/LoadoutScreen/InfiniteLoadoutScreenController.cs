@@ -179,6 +179,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _comparingFamilyTracker.SetComparingFamily(null);
         }
 
+        public void RefreshBodykitsUI()
+        {
+            _itemDetailsManager.ShowDetails(GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull));
+        }
+
         private HullType GetHullType(HullKey hullKey)
         {
             switch (hullKey.PrefabName)
