@@ -3,8 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Categorisation;
-using Unity.Tutorials.Core.Editor;
-using UnityEditor.Build.Utilities;
+//using Unity.Tutorials.Core.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,20 +32,20 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)
         {
-            if (perkName != null)
-                if (item.PerkKey.IsNotNullOrEmpty())
-                    perkName.text = LandingSceneGod.Instance.commonStrings.GetString(item.PerkKey);
-                else
-                    perkName.text = "";
-            if (item.PerkSprite != null)
-            {
-                perkImage.sprite = item.PerkSprite;
-                perkImage.gameObject.SetActive(true);
-            }
-            else
-            {
-                perkImage.gameObject.SetActive(false);
-            }
+            //if (perkName != null)
+            //    if (item.PerkKey.IsNotNullOrEmpty())
+            //        perkName.text = LandingSceneGod.Instance.commonStrings.GetString(item.PerkKey);
+            //    else
+            //        perkName.text = "";
+            //if (item.PerkSprite != null)
+            //{
+            //    perkImage.sprite = item.PerkSprite;
+            //    perkImage.gameObject.SetActive(true);
+            //}
+            //else
+            //{
+            //    perkImage.gameObject.SetActive(false);
+            //}
             drones.ShowResult(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
             buildTime.ShowResult((item.BuildTimeInS * item.NumOfDronesRequired * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS * item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
             health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));

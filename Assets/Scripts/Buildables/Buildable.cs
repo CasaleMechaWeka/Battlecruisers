@@ -27,7 +27,7 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
-using Unity.Tutorials.Core.Editor;
+//using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables
 {
@@ -217,8 +217,8 @@ namespace BattleCruisers.Buildables
 
             Assert.IsNotNull(deathSound);
             _deathSound = new AudioClipWrapper(deathSound);
-            if (PerkKey.IsNotNullOrEmpty())
-                PerkName = commonStrings.GetString(PerkKey);
+            //if (PerkKey.IsNotNullOrEmpty())
+            //    PerkName = commonStrings.GetString(PerkKey);
             if (perkImage != null)
             {
                 PerkSprite = perkImage.sprite;
