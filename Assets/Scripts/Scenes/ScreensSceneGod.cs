@@ -666,7 +666,7 @@ namespace BattleCruisers.Scenes
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
         {
-            AdvertisingBanner.stopAdvert();
+            //AdvertisingBanner.stopAdvert();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
 
