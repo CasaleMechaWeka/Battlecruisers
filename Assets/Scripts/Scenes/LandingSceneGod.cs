@@ -563,6 +563,15 @@ namespace BattleCruisers.Scenes
         {
             try
             {
+                if (idToken != null)
+                {
+                    Debug.Log("####### User ID token is: " + idToken);
+                }
+                else
+                {
+                    Debug.LogError("####### User's Apple ID token is null!");
+                }
+
                 await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
                 Debug.Log("Sign-in was successful.");
             }
