@@ -1,6 +1,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
@@ -95,6 +96,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private Dictionary<HullType, List<int>> _unlockedBodykits = new Dictionary<HullType, List<int>>();
         private int _index;
         public CanvasGroupButton leftNavButton, rightNavButton;
+        private Togglable selectHullButton;
 
         public void Initialise(IDataProvider dataProvider, IPrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer, ILocTable commonStrings)
         {
@@ -107,6 +109,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             leftNavButton.Initialise(_soundPlayer, LeftNavButton_OnClicked);
             rightNavButton.Initialise(_soundPlayer, RightNavButton_OnClicked);
+            selectHullButton = ScreensSceneGod.Instance.loadoutScreen.selectCruiserButton.GetComponent<Togglable>();
             CollectUnlockedBodykits();
         }
 
@@ -130,6 +133,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
         private void LeftNavButton_OnClicked()
         {
+            selectHullButton.Enabled = true;
             --_index;
             if (_index <= -1)
             {
@@ -159,6 +163,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private void RightNavButton_OnClicked()
         {
+            selectHullButton.Enabled = true;
             ++_index;
             if (_index >= _unlockedBodykits[_hullType].Count - 1)
             {
