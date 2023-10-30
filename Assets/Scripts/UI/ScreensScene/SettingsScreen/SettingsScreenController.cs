@@ -39,9 +39,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public GameObject idContainer;
         public TextMeshProUGUI idString;
-        public CanvasGroupButton idButton;
-        public GameObject idHighlight;
-        public AnimationClip idAnim;
+        public CanvasGroupButton idButton, iapRefreshButton;
+        public GameObject idHighlight, iapHighlight;
+        public AnimationClip idAnim, iapAnim;
 
         //public GameObject premiumTab;
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable);
 
@@ -150,6 +150,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
             idButton.Initialise(soundPlayer, CopyID, this);
+            iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
+            #if !PLATFORM_IOS
+            iapRefreshButton.gameObject.SetActive(false); // this only works for iOS right now.
+            #endif
+
             DisplayUserID();
 
             // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
@@ -312,6 +317,19 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             idHighlight.SetActive(true);
             yield return new WaitForSeconds(idAnim.length);
             idHighlight.SetActive(false);
+        }
+
+        public void RefreshIAPs()
+        {
+            IAPManager.instance.RestorePurchases();
+            StartCoroutine(AnimateRefresh());
+        }
+
+        IEnumerator AnimateRefresh()
+        {
+            iapHighlight.SetActive(true);
+            yield return new WaitForSeconds(iapAnim.length);
+            iapHighlight.SetActive(false);
         }
 
         public override void OnDismissing()

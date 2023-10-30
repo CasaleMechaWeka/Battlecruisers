@@ -67,6 +67,8 @@ namespace BattleCruisers.Scenes
 
         public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
+
+        public ISingleSoundPlayer soundPlayer;
         public static string LoadingScreenHint { get; private set; }
 
         public GameObject landingCanvas;
@@ -160,7 +162,7 @@ namespace BattleCruisers.Scenes
                     new AudioSourceBC(platformAudioSource),
                     applicationModel.DataProvider.SettingsManager);
 
-            ISingleSoundPlayer soundPlayer = new SingleSoundPlayer(
+            soundPlayer = new SingleSoundPlayer(
                 new SoundFetcher(),
                 audioSource
                 );
@@ -256,7 +258,7 @@ namespace BattleCruisers.Scenes
                 if (PlayerPrefs.HasKey(AppleUserIdKey))
                 {
                     var storedAppleUserId = PlayerPrefs.GetString(AppleUserIdKey);
-                    CheckCredentialStatusForUserId(storedAppleUserId, soundPlayer);
+                    CheckCredentialStatusForUserId(storedAppleUserId);
                 }
                 // If we do not have an stored Apple User Id, attempt a quick login
                 else
@@ -270,7 +272,7 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                ShowSignInScreen(soundPlayer);
+                ShowSignInScreen();
                 LogToScreen("No internet, continue offline"); // NO INTERNET
             }
 
@@ -278,7 +280,7 @@ namespace BattleCruisers.Scenes
             // should be enabled after completion initialization
         }
 
-        private void ShowSignInScreen(ISingleSoundPlayer soundPlayer)
+        private void ShowSignInScreen()
         {
             landingCanvas.SetActive(true);
             loginPanel.SetActive(true);
@@ -529,13 +531,13 @@ namespace BattleCruisers.Scenes
                     {
                     // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
                     var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                    ShowSignInScreen(soundPlayer);
+                    ShowSignInScreen();
                     });
             }
             catch (Exception ex)
             {
                 Debug.Log("Apple Quick Login failed, Error: " + ex.Message);
-                ShowSignInScreen(soundPlayer);
+                ShowSignInScreen();
             }
         }
 
@@ -550,7 +552,7 @@ namespace BattleCruisers.Scenes
             catch (Exception ex)
             {
                 Debug.LogError("Error while processing Apple Sign-in: " + ex.Message);
-                ShowSignInScreen(soundPlayer);
+                ShowSignInScreen();
             }
         }
 
@@ -568,18 +570,20 @@ namespace BattleCruisers.Scenes
             {
                 // Compare error code to AuthenticationErrorCodes
                 // Notify the player with the proper error message
-                Debug.LogError("####### Error: " + ex.Message);
+                Debug.LogError("####### Authentication Error: " + ex.Message);
+                ShowSignInScreen();
             }
             catch (RequestFailedException ex)
             {
                 // Compare error code to CommonErrorCodes
                 // Notify the player with the proper error message
-                Debug.LogError("####### Error: " + ex.Message);
+                Debug.LogError("####### Request Error: " + ex.Message);
+                ShowSignInScreen();
             }
         }
 
         // Apple-specific ID check
-        private void CheckCredentialStatusForUserId(string appleUserId, ISingleSoundPlayer soundPlayer)
+        private void CheckCredentialStatusForUserId(string appleUserId)
         {
             // If there is an apple ID available, we should check the credential state
             _AppleAuthManager.GetCredentialState(
@@ -590,14 +594,14 @@ namespace BattleCruisers.Scenes
                 {
                 // If it's authorized, login with that user id
                 case CredentialState.Authorized:
-                        SignInWithAppleAsync(AppleUserIdKey);
+                    SignInWithAppleAsync(AppleUserIdKey);
                     return;
                 // If it was revoked, or not found, we need a new sign in with apple attempt
                 // Discard previous apple user id
                 case CredentialState.Revoked:
                 case CredentialState.NotFound:
-                        PlayerPrefs.DeleteKey(AppleUserIdKey);
-                    ShowSignInScreen(soundPlayer);
+                    PlayerPrefs.DeleteKey(AppleUserIdKey);
+                    ShowSignInScreen();
                     return;
                 }
             },
@@ -605,6 +609,7 @@ namespace BattleCruisers.Scenes
             {
                 var authorizationErrorCode = error.GetAuthorizationErrorCode();
                 Debug.LogWarning("Error while trying to get credential state " + authorizationErrorCode.ToString() + " " + error.ToString());
+                ShowSignInScreen();
             });
         }
 #endif
@@ -637,7 +642,9 @@ namespace BattleCruisers.Scenes
                         spinGuest.SetActive(false);
                         labelGuest.SetActive(true);
                         foreach (GameObject i in disableOnSceneTransition)
+                        {
                             i.SetActive(false);
+                        }
                         GoToScene(SceneNames.SCREENS_SCENE, true);
                     }
                 }
@@ -650,7 +657,9 @@ namespace BattleCruisers.Scenes
                 spinGuest.SetActive(false);
                 labelGuest.SetActive(true);
                 foreach (GameObject i in disableOnSceneTransition)
+                {
                     i.SetActive(false);
+                }
                 GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
@@ -678,7 +687,9 @@ namespace BattleCruisers.Scenes
             labelApple.SetActive(true);
             labelGuest.SetActive(true);
             foreach (GameObject i in disableOnSceneTransition)
+            {
                 i.SetActive(false);
+            }
             GoToScene(SceneNames.SCREENS_SCENE, true);
             Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
         }
