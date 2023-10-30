@@ -71,6 +71,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public void ShowIAPButton()
     {
         RemoveAdvertsButton.gameObject.SetActive(true);
+        PremiumBottomButton.gameObject.SetActive(true);
     }
 
     private void ShowPurchaseConfirmationScreen()
