@@ -467,7 +467,7 @@ namespace BattleCruisers.Scenes
                                     appleIDCredential.IdentityToken.Length);
                                 Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
                                 LogToScreen("Sign-in success."); //Localise for prod
-                                PlayerPrefs.SetString(AppleUserIdKey, appleIDCredential.IdentityToken.ToString());
+                                PlayerPrefs.SetString(AppleUserIdKey, idToken);
                                 SignInWithAppleAsync(idToken);
                             }
                             else
@@ -523,7 +523,13 @@ namespace BattleCruisers.Scenes
                     var appleIDCredential = credential as IAppleIDCredential;
                         if (appleIDCredential != null)
                         {
-                            PlayerPrefs.SetString(AppleUserIdKey, appleIDCredential.IdentityToken.ToString());
+                            var idToken = Encoding.UTF8.GetString(
+                                    appleIDCredential.IdentityToken,
+                                    0,
+                                    appleIDCredential.IdentityToken.Length);
+                            Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
+                            LogToScreen("Sign-in success."); //Localise for prod
+                            PlayerPrefs.SetString(AppleUserIdKey, idToken);
                             HandleAppleSignIn(appleIDCredential, soundPlayer);
                         }
                     },
@@ -594,6 +600,7 @@ namespace BattleCruisers.Scenes
         // Apple-specific ID check
         private void CheckCredentialStatusForUserId(string appleUserId)
         {
+            Debug.Log("####### CheckCredentialStatusForUserId; User ID token is: " + appleUserId);
             // If there is an apple ID available, we should check the credential state
             _AppleAuthManager.GetCredentialState(
             appleUserId,
