@@ -56,6 +56,11 @@ namespace BattleCruisers.Data
                     _gameModel.PlayerLoadout.Create_buildsAnd_units();
                     SaveGame();
                 }
+                if (_gameModel.PremiumEdition)
+                {
+                    _gameModel.Bodykits[0].isOwned = true;  // Trident Bodykit000
+                    SaveGame();
+                }
             }
             else
             {
