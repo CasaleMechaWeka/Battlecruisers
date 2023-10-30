@@ -151,7 +151,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             idButton.Initialise(soundPlayer, CopyID, this);
             iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
-            #if !PLAFORM_IOS
+            #if !PLATFORM_IOS
             iapRefreshButton.gameObject.SetActive(false); // this only works for iOS right now.
             #endif
 
