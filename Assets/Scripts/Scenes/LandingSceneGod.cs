@@ -520,11 +520,11 @@ namespace BattleCruisers.Scenes
                     credential =>
                     {
                     // If it's an Apple credential, save the user ID, for later logins
-                    var appleIdCredential = credential as IAppleIDCredential;
-                        if (appleIdCredential != null)
+                    var appleIDCredential = credential as IAppleIDCredential;
+                        if (appleIDCredential != null)
                         {
                             PlayerPrefs.SetString(AppleUserIdKey, appleIDCredential.IdentityToken.ToString());
-                            HandleAppleSignIn(appleIdCredential, soundPlayer);
+                            HandleAppleSignIn(appleIDCredential, soundPlayer);
                         }
                     },
                     error =>
@@ -603,13 +603,13 @@ namespace BattleCruisers.Scenes
                 {
                 // If it's authorized, login with that user id
                 case CredentialState.Authorized:
-                    SignInWithAppleAsync(AppleUserIdKey);
+                    SignInWithAppleAsync(appleUserId);
                     return;
                 // If it was revoked, or not found, we need a new sign in with apple attempt
                 // Discard previous apple user id
                 case CredentialState.Revoked:
                 case CredentialState.NotFound:
-                    PlayerPrefs.DeleteKey(AppleUserIdKey);
+                    PlayerPrefs.DeleteKey(appleUserId);
                     ShowSignInScreen();
                     return;
                 }
