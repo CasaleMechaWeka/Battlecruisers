@@ -267,7 +267,7 @@ namespace BattleCruisers.Scenes
                     AppleQuickLogin();
                 }
 #else
-                ShowSignInScreen(soundPlayer);
+                ShowSignInScreen();
 #endif
             }
             else
