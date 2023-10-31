@@ -120,9 +120,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     return HullType.Rockjaw;
                 case "TasDevil":
                     return HullType.TasDevil;
-                default:
+                case "Yeti":
                     return HullType.Yeti;
             }
+            return HullType.None;
         }
 
         public override void ShowDetails()
