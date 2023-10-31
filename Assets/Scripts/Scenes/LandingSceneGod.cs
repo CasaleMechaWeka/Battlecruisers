@@ -111,7 +111,7 @@ namespace BattleCruisers.Scenes
 #endif
 #if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
-        private const string AppleUserIdKey = "AppleUserId";
+        private string AppleUserIdKey;
 #endif
 
 
@@ -242,7 +242,7 @@ namespace BattleCruisers.Scenes
 #if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
-                await GoogleAttemptSilentSigningAsync();
+                await GoogleAttemptSilentSigningAsync(soundPlayer);
 
 #elif PLATFORM_IOS
                 InitializeAppleAuth();
@@ -264,10 +264,10 @@ namespace BattleCruisers.Scenes
                 else
                 {
                     //Attempt Apple Quick Login
-                    AppleQuickLogin(soundPlayer);
+                    AppleQuickLogin();
                 }
 #else
-                ShowSignInScreen(soundPlayer);
+                ShowSignInScreen();
 #endif
             }
             else
@@ -408,7 +408,7 @@ namespace BattleCruisers.Scenes
         }
 
         // Attempt Google signin without user input:
-        private async Task GoogleAttemptSilentSigningAsync()
+        private async Task GoogleAttemptSilentSigningAsync(ISingleSoundPlayer soundPlayer)
         {
             try
             {
@@ -458,7 +458,7 @@ namespace BattleCruisers.Scenes
                         credential =>
                         {
                             var appleIDCredential = credential as IAppleIDCredential;
-                            Debug.Log("####### User Credential: " + appleIDCredential.IdentityToken.ToString());
+                            Debug.Log("####### User Credential: " + appleIDCredential.ToString());
                             if (appleIDCredential != null)
                             {
                                 var idToken = Encoding.UTF8.GetString(
@@ -467,8 +467,9 @@ namespace BattleCruisers.Scenes
                                     appleIDCredential.IdentityToken.Length);
                                 Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
                                 LogToScreen("Sign-in success."); //Localise for prod
-                                PlayerPrefs.SetString(AppleUserIdKey, appleIDCredential.IdentityToken.ToString());
-                                SignInWithAppleAsync(idToken);
+                                PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                                PlayerPrefs.Save();
+                                HandleAppleSignIn(appleIDCredential);
                             }
                             else
                             {
@@ -501,7 +502,7 @@ namespace BattleCruisers.Scenes
         }
 
         // Attempt Apple signin without user input:
-        private void AppleQuickLogin(ISingleSoundPlayer soundPlayer)
+        private void AppleQuickLogin()
         {
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
@@ -519,19 +520,20 @@ namespace BattleCruisers.Scenes
                     quickLoginArgs,
                     credential =>
                     {
-                    // If it's an Apple credential, save the user ID, for later logins
-                    var appleIdCredential = credential as IAppleIDCredential;
+                        // If it's an Apple credential, save the user ID, for later logins
+                        var appleIdCredential = credential as IAppleIDCredential;
                         if (appleIdCredential != null)
                         {
-                            PlayerPrefs.SetString(AppleUserIdKey, appleIDCredential.IdentityToken.ToString());
-                            HandleAppleSignIn(appleIdCredential, soundPlayer);
+                            PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                            PlayerPrefs.Save();
+                            HandleAppleSignIn(appleIdCredential);
                         }
                     },
                     error =>
                     {
-                    // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
-                    var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                    ShowSignInScreen();
+                        // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
+                        var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                        ShowSignInScreen();
                     });
             }
             catch (Exception ex)
@@ -542,7 +544,7 @@ namespace BattleCruisers.Scenes
         }
 
         // Used by QuickLogin to process the AppleIDCredential
-        private async void HandleAppleSignIn(IAppleIDCredential credential, ISingleSoundPlayer soundPlayer)
+        private async void HandleAppleSignIn(IAppleIDCredential credential)
         {
             try
             {
@@ -563,15 +565,6 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                if (idToken != null)
-                {
-                    Debug.Log("####### User ID token is: " + idToken);
-                }
-                else
-                {
-                    Debug.LogError("####### User's Apple ID token is null!");
-                }
-
                 await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
                 Debug.Log("Sign-in was successful.");
             }
@@ -601,17 +594,17 @@ namespace BattleCruisers.Scenes
             {
                 switch (state)
                 {
-                // If it's authorized, login with that user id
-                case CredentialState.Authorized:
-                    SignInWithAppleAsync(AppleUserIdKey);
-                    return;
-                // If it was revoked, or not found, we need a new sign in with apple attempt
-                // Discard previous apple user id
-                case CredentialState.Revoked:
-                case CredentialState.NotFound:
-                    PlayerPrefs.DeleteKey(AppleUserIdKey);
-                    ShowSignInScreen();
-                    return;
+                    // If it's authorized, login with that user id
+                    case CredentialState.Authorized:
+                        SignInWithAppleAsync(AppleUserIdKey);
+                        return;
+                    // If it was revoked, or not found, we need a new sign in with apple attempt
+                    // Discard previous apple user id
+                    case CredentialState.Revoked:
+                    case CredentialState.NotFound:
+                        PlayerPrefs.DeleteKey(AppleUserIdKey);
+                        ShowSignInScreen();
+                        return;
                 }
             },
             error =>
