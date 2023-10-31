@@ -264,7 +264,7 @@ namespace BattleCruisers.Scenes
                 else
                 {
                     //Attempt Apple Quick Login
-                    AppleQuickLogin(soundPlayer);
+                    AppleQuickLogin();
                 }
 #else
                 ShowSignInScreen(soundPlayer);
@@ -457,18 +457,19 @@ namespace BattleCruisers.Scenes
                         loginArgs,
                         credential =>
                         {
+                            // Obtained credential, cast it to IAppleIDCredential
                             var appleIDCredential = credential as IAppleIDCredential;
-                            Debug.Log("####### User Credential: " + appleIDCredential.IdentityToken.ToString());
                             if (appleIDCredential != null)
                             {
+                                // Apple User ID
                                 var idToken = Encoding.UTF8.GetString(
                                     appleIDCredential.IdentityToken,
                                     0,
                                     appleIDCredential.IdentityToken.Length);
                                 Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
                                 LogToScreen("Sign-in success."); //Localise for prod
-                                PlayerPrefs.SetString(AppleUserIdKey, idToken);
-                                SignInWithAppleAsync(idToken);
+                                var userId = appleIDCredential.User;
+                                PlayerPrefs.SetString(AppleUserIdKey, userId);
                             }
                             else
                             {
@@ -501,7 +502,7 @@ namespace BattleCruisers.Scenes
         }
 
         // Attempt Apple signin without user input:
-        private void AppleQuickLogin(ISingleSoundPlayer soundPlayer)
+        private void AppleQuickLogin()
         {
             var quickLoginArgs = new AppleAuthQuickLoginArgs();
             Debug.Log("####### LoginArgs Set.");
@@ -519,25 +520,17 @@ namespace BattleCruisers.Scenes
                     quickLoginArgs,
                     credential =>
                     {
-                    // If it's an Apple credential, save the user ID, for later logins
-                    var appleIDCredential = credential as IAppleIDCredential;
-                        if (appleIDCredential != null)
-                        {
-                            var idToken = Encoding.UTF8.GetString(
-                                    appleIDCredential.IdentityToken,
-                                    0,
-                                    appleIDCredential.IdentityToken.Length);
-                            Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
-                            LogToScreen("Sign-in success."); //Localise for prod
-                            PlayerPrefs.SetString(AppleUserIdKey, idToken);
-                            HandleAppleSignIn(appleIDCredential, soundPlayer);
-                        }
+                        // Received a valid credential!
+                        // Try casting to IAppleIDCredential or IPasswordCredential
+                        var appleIDCredential = credential as IAppleIDCredential;
+                        var passwordCredential = credential as IPasswordCredential;
                     },
                     error =>
                     {
-                    // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
-                    var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                    ShowSignInScreen();
+                        // If Quick Login fails, we should show the normal sign in with apple menu, to allow for a normal Sign In with apple
+                        var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                        Debug.Log("Apple Quick Login failed.");
+                        ShowSignInScreen();
                     });
             }
             catch (Exception ex)
@@ -565,20 +558,20 @@ namespace BattleCruisers.Scenes
 
 
         // Sign in a returning player or create new player
-        private async Task SignInWithAppleAsync(string idToken)
+        private async Task SignInWithAppleAsync(string appleUserId)
         {
             try
             {
-                if (idToken != null)
+                if (appleUserId != null)
                 {
-                    Debug.Log("####### User ID token is: " + idToken);
+                    Debug.Log("####### User ID is: " + appleUserId);
                 }
                 else
                 {
-                    Debug.LogError("####### User's Apple ID token is null!");
+                    Debug.LogError("####### User's Apple ID is null!");
                 }
 
-                await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
+                await AuthenticationService.Instance.SignInWithAppleAsync(appleUserId);
                 Debug.Log("Sign-in was successful.");
             }
             catch (AuthenticationException ex)
