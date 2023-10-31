@@ -6,6 +6,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -58,6 +59,9 @@ namespace BattleCruisers.UI.ScreensScene.CoinBattleScreen
             int levelIndex = UnityEngine.Random.Range(1, maxLevel);
             _screensSceneGod.GoToTrashScreen(levelIndex);
         }
+
+
+
 
         private void SaveCoinBattleSettings()
         {

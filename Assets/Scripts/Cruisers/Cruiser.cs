@@ -236,10 +236,9 @@ namespace BattleCruisers.Cruisers
             else
             {
                 // AI bot
-                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle)
                 {
-                    HullType ai_hullType = GetHullType(Name);
-                    int id_bodykit = GetRandomBodykitForAI(ai_hullType, applicationModel.DataProvider);
+                    int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot;
                     if (id_bodykit != -1)
                     {
                         Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
@@ -252,23 +251,7 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        private int GetRandomBodykitForAI(HullType hullType, IDataProvider _dataProvider)
-        {
-            int id_bodykit = -1;
-            List<int> bodykits = new List<int>();
-            for (int i = 0; i < _dataProvider.GameModel.Bodykits.Count; i++)
-            {
-                if (FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i]).cruiserType == hullType)
-                {
-                    bodykits.Add(i);
-                }
-            }
-            if (bodykits.Count == 0)
-                id_bodykit = -1;
-            else
-                id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
-            return id_bodykit;
-        }
+
 
         private HullType GetHullType(string hullName)
         {

@@ -32,6 +32,7 @@ namespace BattleCruisers.Data.Models
         List<BodykitData> OutstandingBodykitTransactions { get; set; }
         bool HasSyncdShop { get; set; }
         int NumOfLevelsCompleted { get; }
+        int ID_Bodykit_AIbot { get; set; }
         long LifetimeDestructionScore { get; set; }
         long BestDestructionScore { get; set; }
         bool HasAttemptedTutorial { get; set; }

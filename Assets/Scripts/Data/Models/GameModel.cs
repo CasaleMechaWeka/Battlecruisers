@@ -374,10 +374,8 @@ namespace BattleCruisers.Data.Models
             set => _version = value;
         }
 
-
-
         public int NumOfLevelsCompleted => _completedLevels.Count;
-
+        public int ID_Bodykit_AIbot { get; set; }
         public bool HasAttemptedTutorial
         {
             get { return _hasAttemptedTutorial; }
@@ -548,7 +546,7 @@ namespace BattleCruisers.Data.Models
                     new CaptainData(nameBase:"CaptainExo035",descriptionBase: "CaptainDescription035",id: 35),new CaptainData(nameBase:"CaptainExo036",descriptionBase: "CaptainDescription036",id: 36),new CaptainData(nameBase:"CaptainExo037",descriptionBase: "CaptainDescription037",id: 37),new CaptainData(nameBase : "CaptainExo038",descriptionBase: "CaptainDescription038",id: 38),new CaptainData(nameBase : "CaptainExo039",descriptionBase: "CaptainDescription039",id: 39),new CaptainData(nameBase : "CaptainExo040",descriptionBase: "CaptainDescription040",id: 40)
                 };
 
-            _bodykits = new List<BodykitData> { 
+            _bodykits = new List<BodykitData> {
                     new BodykitData(nameBase: "Bodykit000", descriptionBase : "BodykitDescription000", cost: 120, owned : false, id: 0),
                     new BodykitData(nameBase: "Bodykit001", descriptionBase : "BodykitDescription001", cost: 30, owned : false, id: 1),
                     new BodykitData(nameBase: "Bodykit002", descriptionBase : "BodykitDescription002", cost: 300, owned : false, id: 2),
@@ -599,6 +597,7 @@ namespace BattleCruisers.Data.Models
             _credits = 0;
             _gameMap = 0;
 
+            ID_Bodykit_AIbot = -1;
             _arenas = new List<Arena>
             {
                 new Arena(),

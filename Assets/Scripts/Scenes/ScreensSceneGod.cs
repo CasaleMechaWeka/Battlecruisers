@@ -50,7 +50,7 @@ namespace BattleCruisers.Scenes
 {
     public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
     {
-        private IPrefabFactory _prefabFactory;
+        public IPrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
@@ -304,6 +304,8 @@ namespace BattleCruisers.Scenes
             processingPanel.GetComponentInChildren<Text>().text = screensSceneStrings.GetString("Processing");
             Debug.Log(_applicationModel.Mode);
 
+            _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+            _applicationModel.DataProvider.SaveGame();
             if (_applicationModel.ShowPostBattleScreen)
             {
                 _applicationModel.ShowPostBattleScreen = false;
@@ -613,6 +615,8 @@ namespace BattleCruisers.Scenes
                 if (LevelStages.STAGE_STARTS.Contains(levelNum - 1) && levelToShowCutscene != levelNum)
                 {
                     levelToShowCutscene = levelNum;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
                     //GoToScreen(trashScreen, playDefaultMusic: false);
                     _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
                 }
@@ -627,11 +631,64 @@ namespace BattleCruisers.Scenes
             else if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 levelToShowCutscene = 0;
+                // Random bodykits for AIBot
+                ILevel level = _applicationModel.DataProvider.Levels[levelNum];
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
             }
             else
             {
                 LoadBattleScene();
+            }
+        }
+
+        private int GetRandomBodykitForAI(HullType hullType)
+        {
+            int id_bodykit = -1;
+            List<int> bodykits = new List<int>();
+            for (int i = 0; i < _applicationModel.DataProvider.GameModel.Bodykits.Count; i++)
+            {
+                if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i]).cruiserType == hullType)
+                {
+                    bodykits.Add(i);
+                }
+            }
+            if (bodykits.Count == 0)
+                id_bodykit = -1;
+            else
+                id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
+            return id_bodykit;
+        }
+
+        private HullType GetHullType(string hullName)
+        {
+            switch (hullName)
+            {
+                case "Trident":
+                    return HullType.Trident;
+                case "BlackRig":
+                    return HullType.BlackRig;
+                case "Bullshark":
+                    return HullType.Bullshark;
+                case "Eagle":
+                    return HullType.Eagle;
+                case "Hammerhead":
+                    return HullType.Hammerhead;
+                case "Longbow":
+                    return HullType.Longbow;
+                case "Megalodon":
+                    return HullType.Megalodon;
+                case "Raptor":
+                    return HullType.Raptor;
+                case "Rickshaw":
+                    return HullType.Rickshaw;
+                case "Rockjaw":
+                    return HullType.Rockjaw;
+                case "TasDevil":
+                    return HullType.TasDevil;
+                default:
+                    return HullType.Yeti;
             }
         }
 
