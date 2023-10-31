@@ -239,6 +239,7 @@ namespace BattleCruisers.Cruisers
                 if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle)
                 {
                     int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot;
+                    Debug.Log(id_bodykit);
                     if (id_bodykit != -1)
                     {
                         Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);

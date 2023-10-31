@@ -634,8 +634,9 @@ namespace BattleCruisers.Scenes
             {
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
-                ILevel level = _applicationModel.DataProvider.Levels[levelNum];
+                ILevel level = _applicationModel.DataProvider.Levels[levelNum - 1];
                 _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                //_applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
                 _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
             }
