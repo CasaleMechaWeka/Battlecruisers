@@ -415,14 +415,14 @@ namespace BattleCruisers.Scenes
                 bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
                 if (state != true)
                 {
-                    ShowSignInScreen(soundPlayer);
+                    ShowSignInScreen();
                     Debug.Log("Google silent signin unsuccessful.");
                 }
             }
             catch (Exception ex)
             {
                 // if it fails, show the landing buttons:
-                ShowSignInScreen(soundPlayer);
+                ShowSignInScreen();
                 Debug.Log(ex.Message);
             }
         }
@@ -469,7 +469,7 @@ namespace BattleCruisers.Scenes
                                 LogToScreen("Sign-in success."); //Localise for prod
                                 PlayerPrefs.SetString(AppleUserIdKey, credential.User);
                                 PlayerPrefs.Save();
-                                SignInWithAppleAsync(idToken);
+                                HandleAppleSignIn(appleIDCredential);
                             }
                             else
                             {
