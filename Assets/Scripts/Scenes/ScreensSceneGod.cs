@@ -623,6 +623,8 @@ namespace BattleCruisers.Scenes
                 else
                 {
                     levelToShowCutscene = 0;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
                     //_musicPlayer.PlayTrashMusic();
                     GoToScreen(trashScreen, playDefaultMusic: false);
                     //_musicPlayer.PlayTrashMusic();
