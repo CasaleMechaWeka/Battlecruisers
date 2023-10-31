@@ -111,7 +111,7 @@ namespace BattleCruisers.Scenes
 #endif
 #if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
-        private const string AppleUserIdKey = "AppleUserId";
+        private string AppleUserIdKey;
 #endif
 
 
@@ -558,20 +558,20 @@ namespace BattleCruisers.Scenes
 
 
         // Sign in a returning player or create new player
-        private async Task SignInWithAppleAsync(string appleUserId)
+        private async Task SignInWithAppleAsync(string idToken)
         {
             try
             {
-                if (appleUserId != null)
+                if (idToken != null)
                 {
-                    Debug.Log("####### User ID is: " + appleUserId);
+                    Debug.Log("####### User ID is: " + idToken);
                 }
                 else
                 {
                     Debug.LogError("####### User's Apple ID is null!");
                 }
 
-                await AuthenticationService.Instance.SignInWithAppleAsync(appleUserId);
+                await AuthenticationService.Instance.SignInWithAppleAsync(idToken);
                 Debug.Log("Sign-in was successful.");
             }
             catch (AuthenticationException ex)
