@@ -23,6 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         TasDevil,
         Yeti,
         Rickshaw,
-        BlackRig
+        BlackRig,
+        None   //  no bodykit
     }
 }

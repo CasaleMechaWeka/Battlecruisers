@@ -251,40 +251,6 @@ namespace BattleCruisers.Cruisers
                 }
             }
         }
-
-
-
-        private HullType GetHullType(string hullName)
-        {
-            switch (hullName)
-            {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                default:
-                    return HullType.Yeti;
-            }
-        }
-
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.CRUISER);

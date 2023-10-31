@@ -649,18 +649,21 @@ namespace BattleCruisers.Scenes
         private int GetRandomBodykitForAI(HullType hullType)
         {
             int id_bodykit = -1;
-            List<int> bodykits = new List<int>();
-            for (int i = 0; i <  12 /*_applicationModel.DataProvider.GameModel.Bodykits.Count*/; i++)
+            if(hullType != HullType.None)
             {
-                if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i]).cruiserType == hullType)
+                List<int> bodykits = new List<int>();
+                for (int i = 0; i < 12 /*_applicationModel.DataProvider.GameModel.Bodykits.Count*/; i++)
                 {
-                    bodykits.Add(i);
+                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i]).cruiserType == hullType)
+                    {
+                        bodykits.Add(i);
+                    }
                 }
+                if (bodykits.Count == 0)
+                    id_bodykit = -1;
+                else
+                    id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
             }
-            if (bodykits.Count == 0)
-                id_bodykit = -1;
-            else
-                id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
             return id_bodykit;
         }
 
@@ -690,9 +693,10 @@ namespace BattleCruisers.Scenes
                     return HullType.Rockjaw;
                 case "TasDevil":
                     return HullType.TasDevil;
-                default:
+                case "Yeti":
                     return HullType.Yeti;
             }
+            return HullType.None;
         }
 
         public void GoStraightToTrashScreen(int levelNum)
