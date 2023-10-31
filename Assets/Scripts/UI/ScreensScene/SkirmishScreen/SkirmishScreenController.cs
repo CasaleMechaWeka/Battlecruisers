@@ -210,6 +210,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 Assert.IsTrue(adjustedIndex < _unlockedHulls.Count);
                 cruiserKey = _unlockedHulls[adjustedIndex];
             }
+            if (cruiserKey != _applicationModel.DataProvider.GameModel.PlayerLoadout.Hull)
+                _applicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
 
             return new DropdownResult<HullKey>(wasRandom, cruiserKey);
         }
