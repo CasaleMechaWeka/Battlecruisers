@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
     public abstract class BuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
     {
         public NumberStatValue drones, buildTime;
-        public StarsStatValue health, cruiserDamage, shipDamage, airDamage, speed;
+        public StarsStatValue health, cruiserDamage, shipDamage, airDamage;
 
 
         public override void Initialise()
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             cruiserDamage.Initialise();
             shipDamage.Initialise();
             airDamage.Initialise();
-            speed.Initialise();
+
         }
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)

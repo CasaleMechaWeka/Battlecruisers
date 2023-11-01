@@ -1,17 +1,18 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using UnityEngine;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class UnitStatsController : BuildableStatsController<IUnit>
-	{
+    {
 
-
+        public StarsStatValue speed;
         public override void Initialise()
         {
             base.Initialise();
+            Helper.AssertIsNotNull(speed);
+            speed.Initialise();
         }
 
         protected override void InternalShowStats(IUnit item, IUnit itemToCompareTo)
