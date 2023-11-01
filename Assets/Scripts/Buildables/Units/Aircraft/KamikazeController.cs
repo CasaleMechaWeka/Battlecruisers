@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private ITarget _targetToDamage;
 
-        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 2;
+        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 4;
 
         public void Initialise(IUnit parentAircraft, IFactoryProvider factoryProvider, ITarget target)
         {
@@ -57,18 +57,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
-		{
-			ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
+        {
+            ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
-			if (target != null 
+            if (target != null
                 && !target.IsDestroyed
                 && _targetFilter.IsMatch(target)
                 && !_parentAircraft.IsDestroyed
                 && _targetToDamage == null)
-			{
+            {
                 _targetToDamage = target;
-			}
-		}
+            }
+        }
 
         private void FixedUpdate()
         {
