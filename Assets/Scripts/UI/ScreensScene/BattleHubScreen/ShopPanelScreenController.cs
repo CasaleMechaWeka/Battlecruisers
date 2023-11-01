@@ -62,6 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             bodykitsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
+            variantsContainer.Initialize(soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
 
