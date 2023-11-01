@@ -7,10 +7,11 @@ namespace BattleCruisers.UI.ScreensScene
 {
     public class VariantsContainer : MonoBehaviour
     {
-        public Image UIFriendlyImage;
-        public Text PerkName;
-        public Text BuildableName;
-
+        public Image ParentImage;
+        public Text ParentName;
+        public Text VariantName;
+        public Image PerkIcon;
+        public Text PerkDescription;
     }
 }
 

@@ -7,14 +7,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class UnitStatsController : BuildableStatsController<IUnit>
 	{
-        public StarsStatValue speed;
+
 
         public override void Initialise()
         {
             base.Initialise();
-
-            Assert.IsNotNull(speed);
-            speed.Initialise();
         }
 
         protected override void InternalShowStats(IUnit item, IUnit itemToCompareTo)
