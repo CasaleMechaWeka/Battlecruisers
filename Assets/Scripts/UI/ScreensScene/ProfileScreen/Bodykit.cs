@@ -12,6 +12,5 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public HullType cruiserType;
         public HullType CruiserType => cruiserType;
-
     }
 }

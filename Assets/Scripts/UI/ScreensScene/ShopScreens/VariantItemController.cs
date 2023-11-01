@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene
     public class VariantItemController : MonoBehaviour
     {
         public Image _parentImage;
-        public Image _perkImage;
+        public Image _variantImage;
         public CanvasGroupButton clickingArea;
         public GameObject _ownedItemMark;
         public GameObject _clickedFeedback;
@@ -21,28 +21,28 @@ namespace BattleCruisers.UI.ScreensScene
         private ISingleSoundPlayer _soundPlayer;
         private VariantsContainer _variantsContainer;
         private Sprite _parentSprite;
-        private Sprite _perkSprite;
+        private Sprite _variantSprite;
         public int _index;
 
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
             Sprite spriteParent,
-            Sprite spritePerk,
+            Sprite spriteVariant,
             IVariantData variantData,
             VariantsContainer variantsContainer,
             int index
             )
         {
-            Helper.AssertIsNotNull(soundPlayer, variantData, spriteParent, spritePerk, clickingArea, _ownedItemMark, _clickedFeedback, variantsContainer);
+            Helper.AssertIsNotNull(soundPlayer, variantData, spriteParent, spriteVariant, clickingArea, _ownedItemMark, _clickedFeedback, variantsContainer);
             _variantData = variantData;
             _soundPlayer = soundPlayer;
             _variantsContainer = variantsContainer;
             _parentSprite = spriteParent;
-            _perkSprite = spritePerk;
+            _variantSprite = spriteVariant;
             _index = index;
 
             _parentImage.sprite = _parentSprite;
-            _perkImage.sprite = _perkSprite;
+            _variantImage.sprite = _variantSprite;
             _clickedFeedback.SetActive(false);
 
             _ownedItemMark.SetActive(_variantData.IsOwned);
