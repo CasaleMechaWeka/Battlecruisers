@@ -25,6 +25,7 @@ namespace BattleCruisers.UI.ScreensScene
         public BodykitItemController currentItem;
         private IBodykitData currentBodykitData;
         public GameObject btnBuy, ownFeedback;
+
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;

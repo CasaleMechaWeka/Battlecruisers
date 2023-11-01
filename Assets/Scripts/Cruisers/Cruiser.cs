@@ -59,6 +59,7 @@ namespace BattleCruisers.Cruisers
         public int numOfDrones;
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
+        public HullType hullType;
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
@@ -212,11 +213,14 @@ namespace BattleCruisers.Cruisers
                 if (id_bodykit != -1)
                 {
                     Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
-                    GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                    // should update Name and Description for Bodykit
-                    Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
-                    Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
-                    isUsingBodykit = true;
+                    if(bodykit.cruiserType == hullType)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                        // should update Name and Description for Bodykit
+                        Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
+                        Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
+                        isUsingBodykit = true;
+                    }
                 }
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
@@ -243,48 +247,17 @@ namespace BattleCruisers.Cruisers
                     if (id_bodykit != -1)
                     {
                         Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
-                        GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                        Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
-                        Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
-                        isUsingBodykit = true;
+                        if (bodykit.cruiserType == hullType)
+                        {
+                            GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                            Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
+                            Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
+                            isUsingBodykit = true;
+                        }
                     }
                 }
             }
         }
-
-
-
-        private HullType GetHullType(string hullName)
-        {
-            switch (hullName)
-            {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                default:
-                    return HullType.Yeti;
-            }
-        }
-
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.CRUISER);
