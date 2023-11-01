@@ -4,13 +4,19 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
-    public interface IVariant
+    public interface IVariantPrefab
     {
         Sprite variantSprite { get; }
+        ParentBuildable parent { get; }
         VariantType variantType { get; }
     }
 
     public enum VariantType
+    {
+        Stats,
+        Undefined
+    }
+    public enum ParentBuildable
     {
         AirFactory,
         NavalFactory,
