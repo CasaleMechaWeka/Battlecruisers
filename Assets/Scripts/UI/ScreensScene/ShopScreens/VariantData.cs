@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         public int index;
         public int Index => index;
 
-        public VariantData(string prefabName = "AntiAirTurret", string variantNameBase = "Variant000", string variantDescriptionBase = "VariantDescription000", int cost = 0, bool owned = false, int id = 0)
+        public VariantData(string prefabName = "Variant000", string variantNameBase = "Variant000", string variantDescriptionBase = "VariantDescription000", int cost = 0, bool owned = false, int id = 0)
         {
             variantPrefabName = prefabName;
             variantCost = cost; 

@@ -215,6 +215,13 @@ namespace BattleCruisers.Data.Models
             set => _bodykits = value;
         }
 
+        public List<VariantData> _variants;
+        public List<VariantData> Variants
+        {
+            get => _variants;
+            set => _variants = value;
+        }
+
         public List<IAPData> _iaps;
         public List<IAPData> IAPs
         {
@@ -583,6 +590,11 @@ namespace BattleCruisers.Data.Models
                     new BodykitData(nameBase: "Bodykit033", descriptionBase : "BodykitDescription033", cost: 358, owned : false, id: 33),
                     new BodykitData(nameBase: "Bodykit034", descriptionBase : "BodykitDescription034", cost: 741, owned : false, id: 34),
                     new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 521, owned : false, id: 35),
+            };
+
+            _variants = new List<VariantData>
+            {
+                new VariantData(prefabName: "Variant000", variantNameBase : "Variant000", variantDescriptionBase : "VariantDescription000", cost: 662, owned: false, id: 0)
             };
 
             _iaps = new List<IAPData> {
