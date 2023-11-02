@@ -22,12 +22,12 @@ namespace BattleCruisers.UI.Loading
         public static LoadingScreenController Instance { get; private set; }
         public IApplicationModel applicationModel;
         public GameObject logos;
+        public Text logText;
 
         async void Start()
         {
-
+            Instance = this;
             Helper.AssertIsNotNull(root, loadingText);
-
             applicationModel = ApplicationModelProvider.ApplicationModel;
             ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
             string subTitle = String.Empty;
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.Loading
             _defaultLoadingText = commonStrings.GetString("UI/LoadingScreen/DefaultLoadingText");
             startingText = commonStrings.GetString("UI/LoadingScreen/StartingText");
             loadingText.text = FindLoadingText();
-            Instance = this;
+
 
             //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
@@ -67,7 +67,10 @@ namespace BattleCruisers.UI.Loading
             IsFirstTime = false;
         }
 
-
+        public void LogString(string str)
+        {
+            logText.text = str;
+        }
         void Update()
         {
             /*            AudioListener[] listeners = GameObject.FindObjectsOfType<AudioListener>();

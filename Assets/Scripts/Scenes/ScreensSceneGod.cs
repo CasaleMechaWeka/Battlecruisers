@@ -45,6 +45,7 @@ using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using System.Threading;
 using UnityEditor;
+using BattleCruisers.UI.Loading;
 
 namespace BattleCruisers.Scenes
 {
@@ -140,13 +141,14 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             // Interacting with Cloud
-
+            LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_internet"));
             bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
             float timeStamper = Time.time;
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
                 try
                 {
+                    LoadingScreenController.Instance.LogString(commonStrings.GetString("loading_cloud"));
                     await _dataProvider.LoadBCData();
                     while (!m_cancellationToken.IsCancellationRequested)
                     {
@@ -167,11 +169,13 @@ namespace BattleCruisers.Scenes
                         _dataProvider.GameModel.CreditsChange > 0)
                     {
                         Debug.Log("Processing offline shop purchases and currency changes.");
+                        LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_offline_purchase"));
                         await _dataProvider.ProcessOfflineTransactions();
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                     }
 
                     // version check
+                    LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_app_version"));
                     requiredVer = await _dataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + Application.version);
                     Debug.Log("DataProvider Version: " + requiredVer);
@@ -190,6 +194,7 @@ namespace BattleCruisers.Scenes
                     else
                     {
                         // set pvp status in Battle Hub
+                        LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_multiplayer_server"));
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
                         if (serverStatus)
                         {
@@ -280,6 +285,7 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
+            LoadingScreenController.Instance.LogString(commonStrings.GetString("finalizing"));
             ShowCharlieOnMainMenu();
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
