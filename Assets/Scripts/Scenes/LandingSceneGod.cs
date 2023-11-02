@@ -601,7 +601,15 @@ namespace BattleCruisers.Scenes
                     // If it's authorized, login with that user id
                     case CredentialState.Authorized:
                         Debug.Log("####### Credential found.");
-                        SignInWithAppleAsync(AppleUserToken);
+                        if (PlayerPrefs.HasKey(AppleUserToken))
+                        {
+                            var storedAppleUserToken = PlayerPrefs.GetString(AppleUserToken);
+                            SignInWithAppleAsync(storedAppleUserToken);
+                        }
+                        else
+                        {
+                            ShowSignInScreen();
+                        }
                         return;
                     // If it was revoked, or not found, we need a new sign in with apple attempt
                     // Discard previous apple user id
