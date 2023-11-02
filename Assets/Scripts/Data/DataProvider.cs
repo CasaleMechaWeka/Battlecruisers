@@ -163,7 +163,7 @@ namespace BattleCruisers.Data
                     Debug.Log("===> config.Remote");
                     GetConfigValues();
                     await SyncItemsCost();
-            //        await SyncHecklesCost();
+                    //        await SyncHecklesCost();
                     await SyncCurrencyFromCloud();
                     await SyncInventoryFromCloud();
                     GameModel.HasSyncdShop = true;
