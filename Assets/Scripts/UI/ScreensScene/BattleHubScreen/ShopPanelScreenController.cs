@@ -197,6 +197,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     bodykitsContainer.bodykitPrice.text = _dataProvider.GameModel.Bodykits[index].bodykitCost.ToString();
                     bodykitsContainer.bodykitName.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].nameStringKeyBase);
                     bodykitsContainer.bodykitDescription.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].descriptionKeyBase);
+                    bodykitsContainer.currentBodykitData = _dataProvider.GameModel.Bodykits[index];
                     if (_dataProvider.GameModel.Bodykits[index].isOwned)
                     {
                         bodykitsContainer.btnBuy.SetActive(false);
