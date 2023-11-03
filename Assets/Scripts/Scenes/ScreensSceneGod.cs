@@ -132,11 +132,6 @@ namespace BattleCruisers.Scenes
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
 
-            if (IsFirstTimeLoading)
-            {
-                await _dataProvider.CloudLoad();
-                IsFirstTimeLoading = false;
-            }
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
@@ -155,6 +150,11 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     LoadingScreenController.Instance.LogString(commonStrings.GetString("loading_cloud"));
+                    if (IsFirstTimeLoading)
+                    {
+                        await _dataProvider.CloudLoad();
+                        IsFirstTimeLoading = false;
+                    }
                     await _dataProvider.LoadBCData();
                     while (!m_cancellationToken.IsCancellationRequested)
                     {

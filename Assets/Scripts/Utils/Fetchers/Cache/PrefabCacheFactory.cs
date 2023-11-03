@@ -95,22 +95,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     audioSourceContainer.Value);
         }
 
-        private IList<IPrefabKey> getSelectedCaptaionExo() // we don't need to load all CaptainExo to reduce Memory
-        {
-            IList<IPrefabKey> captainExos = new List<IPrefabKey>();
-            foreach (int index in _dataProvider.GameModel.CaptainExoList)
-            {
-                captainExos.Add(StaticPrefabKeys.CaptainExos.AllKeys[index]);
-            }
-
-            for(int i = 0; i < StaticPrefabKeys.CaptainExos.AllKeys.Count; i++)
-            {
-                if (_dataProvider.GameModel.Captains[i].isOwned && !captainExos.Contains(StaticPrefabKeys.CaptainExos.AllKeys[i]))
-                    captainExos.Add(StaticPrefabKeys.CaptainExos.AllKeys[i]);
-            }
-
-            return captainExos;
-        }
 
         private async Task GetPrefabs<TPrefab>(
             IPrefabFetcher prefabFetcher,
