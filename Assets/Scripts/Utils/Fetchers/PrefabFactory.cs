@@ -17,8 +17,13 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Utils.Fetchers
 {
@@ -138,9 +143,16 @@ namespace BattleCruisers.Utils.Fetchers
             return _prefabCache.GetCaptainExo(key);
         }
 
-        public Bodykit GetBodykit(IPrefabKey key)
+        public async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
         {
-            return _prefabCache.GetBodykit(key);
+            string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
+            await handle.Task;
+            if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+            {
+                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
+            }
+            return handle.Result.GetComponent<Bodykit>();
         }
     }
 }

@@ -62,6 +62,13 @@ namespace BattleCruisers.Data.Models
             set => _selectedBodykit = value;
         }
 
+        private List<int> _selectedVariants;
+        public List<int> SelectedVariants
+        {
+            get => _selectedVariants;
+            set => _selectedVariants = value;
+        }
+
         [SerializeField]
         private List<string> _ownedExosKeys = new List<string>();
         public IReadOnlyList<string> OwnedExosKeys => _ownedExosKeys;

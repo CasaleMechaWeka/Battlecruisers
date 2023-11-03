@@ -188,7 +188,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             foreach (int index in bodykitList)
             {
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer) as GameObject;
-                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
+                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
                 bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, ii);
                 if (ii == 0)
                 {
@@ -198,6 +198,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     bodykitsContainer.bodykitPrice.text = _dataProvider.GameModel.Bodykits[index].bodykitCost.ToString();
                     bodykitsContainer.bodykitName.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].nameStringKeyBase);
                     bodykitsContainer.bodykitDescription.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].descriptionKeyBase);
+                    bodykitsContainer.currentBodykitData = _dataProvider.GameModel.Bodykits[index];
                     if (_dataProvider.GameModel.Bodykits[index].isOwned)
                     {
                         bodykitsContainer.btnBuy.SetActive(false);

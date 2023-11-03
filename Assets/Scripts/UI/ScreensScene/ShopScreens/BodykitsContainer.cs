@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene
         public EventHandler<BodykitDataEventArgs> bodykitDataChanged;
         private ILocTable commonStrings;
         public BodykitItemController currentItem;
-        private IBodykitData currentBodykitData;
+        public IBodykitData currentBodykitData;
         public GameObject btnBuy, ownFeedback;
 
         private ISingleSoundPlayer _soundPlayer;

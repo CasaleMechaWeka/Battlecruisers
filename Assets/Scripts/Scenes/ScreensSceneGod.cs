@@ -600,7 +600,7 @@ namespace BattleCruisers.Scenes
         }
 
         private static int levelToShowCutscene = 0;
-        public void GoToTrashScreen(int levelNum)
+        public async void GoToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
@@ -635,7 +635,7 @@ namespace BattleCruisers.Scenes
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
                 ILevel level = _applicationModel.DataProvider.Levels[levelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? await GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
                 //_applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
                 _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
@@ -646,7 +646,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        private int GetRandomBodykitForAI(HullType hullType)
+        private async Task<int> GetRandomBodykitForAI(HullType hullType)
         {
             int id_bodykit = -1;
             if(hullType != HullType.None)
@@ -654,7 +654,7 @@ namespace BattleCruisers.Scenes
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < 12 /*_applicationModel.DataProvider.GameModel.Bodykits.Count*/; i++)
                 {
-                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i]).cruiserType == hullType)
+                    if ((await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i])).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }
