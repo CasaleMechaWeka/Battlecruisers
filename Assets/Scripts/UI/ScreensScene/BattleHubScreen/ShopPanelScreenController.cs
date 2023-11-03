@@ -162,8 +162,53 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             captainsContainer.gameObject.SetActive(false);
             hecklesContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(false);
             bodykitsContainer.gameObject.SetActive(false);
             variantsContainer.gameObject.SetActive(true);
+
+            VariantItemController[] items = variantsItemContainer.gameObject.GetComponentsInChildren<VariantItemController>();
+            foreach (VariantItemController item in items)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+
+            variantsContainer.btnBuy.SetActive(false);
+            variantsContainer.ownFeedback.SetActive(false);
+
+            await Task.Delay(100);
+            List<int> variantList = GeneratePseudoRandomList(6, 11, 6, 1);
+            byte ii = 0;
+
+            foreach (int index in variantList)
+            {
+                GameObject variantItem = Instantiate(variantItemPrefab, variantsItemContainer) as GameObject;
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.AllKeys[index]);
+                Sprite parentSprite = variant.isUnit ? variant.GetUnit().Sprite : variant.GetBuilding().Sprite;
+                variantItem.GetComponent<VariantItemController>().StaticInitialise(_soundPlayer, parentSprite, variant.variantSprite, _dataProvider.GameModel.Variants[index], variantsContainer, ii);
+                if(ii == 0)
+                {
+                    variantItem.GetComponent<VariantItemController>()._clickedFeedback.SetActive(true);
+                    variantsContainer.currentItem = variantItem.GetComponent<VariantItemController>();
+                    variantsContainer.ParentImage.sprite = parentSprite;
+                    variantsContainer.VariantPrice.text = _dataProvider.GameModel.Variants[index].variantCost.ToString();
+                    variantsContainer.variantIcon.sprite = variant.variantSprite;
+                    variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase);
+                    variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                    variantsContainer.currentVariantData = _dataProvider.GameModel.Variants[index];
+
+                    if (_dataProvider.GameModel.Variants[index].isOwned)
+                    {
+                        variantsContainer.btnBuy.SetActive(false);
+                        variantsContainer.ownFeedback.SetActive(true);
+                    }
+                    else
+                    {
+                        variantsContainer.btnBuy.SetActive(true);
+                        variantsContainer.ownFeedback.SetActive(false);
+                    }
+                }
+                ii++;
+            }
         }
         public async void InitialiseBodykits()
         {

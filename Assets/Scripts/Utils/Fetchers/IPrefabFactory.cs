@@ -31,6 +31,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         CaptainExo GetCaptainExo(IPrefabKey captainKey);
         Task<Bodykit> GetBodykit(IPrefabKey bodykitKey);
+        Task<VariantPrefab> GetVariant(IPrefabKey variantKey);
         IExplosion CreateExplosion(ExplosionKey explosionKey);
         IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
 

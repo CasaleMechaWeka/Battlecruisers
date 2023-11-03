@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
     public interface IVariantPrefab
     {
         Sprite variantSprite { get; }
-        ParentBuildable parent { get; }
+        ParentBuildable parent { get; set; }
         VariantType variantType { get; }
     }
 

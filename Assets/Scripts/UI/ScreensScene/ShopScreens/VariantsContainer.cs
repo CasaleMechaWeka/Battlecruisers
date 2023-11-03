@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene
         public ILocTable commonStrings;
         private ILocTable screensSceneTable;
         public VariantItemController currentItem;
-        private IVariantData currentVariantData;
+        public IVariantData currentVariantData;
         public GameObject btnBuy, ownFeedback;
 
         private ISingleSoundPlayer _soundPlayer;

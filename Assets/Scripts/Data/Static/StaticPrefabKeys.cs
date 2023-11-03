@@ -4,6 +4,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 
 namespace BattleCruisers.Data.Static
 {
@@ -617,7 +618,60 @@ namespace BattleCruisers.Data.Static
                 }
             }
         }
-        public static class Effects
+
+        public static class Variants
+        {
+            public static VariantKey Variant000 { get; } = new VariantKey("Variant000");
+            public static VariantKey Variant001 { get; } = new VariantKey("Variant001");
+            public static VariantKey Variant002 { get; } = new VariantKey("Variant002");
+            public static VariantKey Variant003 { get; } = new VariantKey("Variant003");
+            public static VariantKey Variant004 { get; } = new VariantKey("Variant004");
+            public static VariantKey Variant005 { get; } = new VariantKey("Variant005");
+            public static VariantKey Variant006 { get; } = new VariantKey("Variant006");
+            public static VariantKey Variant007 { get; } = new VariantKey("Variant007");
+            public static VariantKey Variant008 { get; } = new VariantKey("Variant008");
+            public static VariantKey Variant009 { get; } = new VariantKey("Variant009");
+            public static VariantKey Variant010 { get; } = new VariantKey("Variant010");
+            public static VariantKey Variant011 { get; } = new VariantKey("Variant011");
+            public static VariantKey Variant012 { get; } = new VariantKey("Variant012");
+            public static VariantKey Variant013 { get; } = new VariantKey("Variant013");
+            public static VariantKey Variant014 { get; } = new VariantKey("Variant014");
+            public static VariantKey Variant015 { get; } = new VariantKey("Variant015");
+            public static VariantKey Variant016 { get; } = new VariantKey("Variant016");
+            public static VariantKey Variant017 { get; } = new VariantKey("Variant017");
+            public static VariantKey Variant018 { get; } = new VariantKey("Variant018");
+            public static VariantKey Variant019 { get; } = new VariantKey("Variant019");
+            public static VariantKey Variant020 { get; } = new VariantKey("Variant020");
+            public static VariantKey Variant021 { get; } = new VariantKey("Variant021");
+            public static VariantKey Variant022 { get; } = new VariantKey("Variant022");
+            public static VariantKey Variant023 { get; } = new VariantKey("Variant023");
+            public static VariantKey Variant024 { get; } = new VariantKey("Variant024");
+            public static VariantKey Variant025 { get; } = new VariantKey("Variant025");
+            public static VariantKey Variant026 { get; } = new VariantKey("Variant026");
+            public static VariantKey Variant027 { get; } = new VariantKey("Variant027");
+            public static VariantKey Variant028 { get; } = new VariantKey("Variant028");
+            public static VariantKey Variant029 { get; } = new VariantKey("Variant029");
+            public static VariantKey Variant030 { get; } = new VariantKey("Variant030");
+            public static VariantKey Variant031 { get; } = new VariantKey("Variant031");
+            public static VariantKey Variant032 { get; } = new VariantKey("Variant032");
+            public static VariantKey Variant033 { get; } = new VariantKey("Variant033");
+            public static VariantKey Variant034 { get; } = new VariantKey("Variant034");
+            public static VariantKey Variant035 { get; } = new VariantKey("Variant035");
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        Variant000, Variant001, Variant002, Variant003, Variant004, Variant005, Variant006, Variant007, Variant008, Variant009,
+                        Variant010, Variant011, Variant012, Variant013, Variant014, Variant015, Variant016, Variant017, Variant018, Variant019,
+                        Variant020, Variant021, Variant022, Variant023, Variant024, Variant025, Variant026, Variant027, Variant028, Variant029,
+                        Variant030, Variant031, Variant032, Variant033, Variant034, Variant035,
+                    };
+                }
+            }
+        }
+            public static class Effects
         {
             public static EffectKey BuilderDrone { get; } = new EffectKey("BuilderDrone");
         }
