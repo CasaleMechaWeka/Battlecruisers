@@ -310,14 +310,6 @@ namespace BattleCruisers.Data
             }
         }
 
-
-        /*        public async Task<bool> PurchaseIAP(string purchaseId)
-                {
-                    try 
-                    { 
-                        var result =  await EconomyManager.
-                    }
-                }*/
         public async Task<bool> PurchaseCaptain(int index)
         {
             Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
@@ -369,6 +361,21 @@ namespace BattleCruisers.Data
             {
                 return false;
             }
+        }
+
+        public async Task<bool> PurchaseVariant(int index)
+        {
+            Assert.IsTrue(index > 2); // 0,1,2 are Premium
+            try
+            {
+                string purchaseId = virtualShopConfig.categories[4].items[index - 1].id;
+                var result = await EconomyManager.MakeVirtualPurchaseAsync(purchaseId);
+                if (result == null)
+                    return false;
+                await EconomyManager.RefreshCurrencyBalances();
+                return true;
+            }
+            catch { return false; }
         }
 
         List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)

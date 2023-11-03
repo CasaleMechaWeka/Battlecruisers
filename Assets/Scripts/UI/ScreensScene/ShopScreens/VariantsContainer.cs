@@ -12,6 +12,7 @@ using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,7 +58,43 @@ namespace BattleCruisers.UI.ScreensScene
 
         private async void Purchase()
         {
+            ScreensSceneGod.Instance.processingPanel.SetActive(true);
+            if(_dataProvider.GameModel.Credits >=  currentVariantData.VariantCost)
+            {
+                if(await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                {
+                    // online purchase
+                    try
+                    {
 
+                    }
+                    catch
+                    {
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                    }
+                }
+                else
+                {
+                    // offline purchase
+                    try
+                    {
+
+                    }
+                    catch
+                    {
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                    }
+                    ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                }
+            }
+            else
+            {
+                ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+                return;
+            }
         }
 
         private void VariantDataChanged(object sender, VariantDataEventArgs e)
