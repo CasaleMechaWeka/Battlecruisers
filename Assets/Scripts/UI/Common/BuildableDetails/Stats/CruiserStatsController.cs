@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class CruiserStatsController : StatsController<ICruiser>
-	{
+    {
         public StarsStatValue health;
         public NumberStatValue platformSlots, deckSlots, utilitySlots, mastSlots;
 
@@ -22,21 +23,25 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             mastSlots.Initialise();
         }
 
-		protected override void InternalShowStats(ICruiser item, ICruiser itemToCompareTo)
-		{
+        protected override void InternalShowStats(ICruiser item, ICruiser itemToCompareTo)
+        {
             health.ShowResult(_cruiserHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
-			int platformSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Platform);
-			platformSlots.ShowResult(platformSlotCount, _higherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Platform)));
+            int platformSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Platform);
+            platformSlots.ShowResult(platformSlotCount, _higherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Platform)));
 
-			int deckSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Deck);
-			deckSlots.ShowResult(deckSlotCount, _higherIsBetterComparer.CompareStats(deckSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Deck)));
+            int deckSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Deck);
+            deckSlots.ShowResult(deckSlotCount, _higherIsBetterComparer.CompareStats(deckSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Deck)));
 
-			int utilitySlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Utility);
-			utilitySlots.ShowResult(utilitySlotCount, _higherIsBetterComparer.CompareStats(utilitySlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Utility)));
+            int utilitySlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Utility);
+            utilitySlots.ShowResult(utilitySlotCount, _higherIsBetterComparer.CompareStats(utilitySlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Utility)));
 
-			int mastSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Mast);
-			mastSlots.ShowResult(mastSlotCount, _higherIsBetterComparer.CompareStats(mastSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Mast)));
-		}
-	}
+            int mastSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Mast);
+            mastSlots.ShowResult(mastSlotCount, _higherIsBetterComparer.CompareStats(mastSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Mast)));
+        }
+
+        protected override void InternalShowStatsOfVariant(ICruiser item, VariantPrefab variant, ICruiser itemToCompareTo)
+        {
+        }
+    }
 }

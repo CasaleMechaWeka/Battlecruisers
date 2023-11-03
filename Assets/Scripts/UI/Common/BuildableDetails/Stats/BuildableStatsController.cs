@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Categorisation;
 //using Unity.Tutorials.Core.Editor;
@@ -42,6 +43,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             ShowDamageStat(airDamage, GetAntiAirDamage(item), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
         }
 
+        protected override void InternalShowStatsOfVariant(TItem item, VariantPrefab variant, TItem itemToCompareTo = null)
+        {
+            drones.ShowResult((item.NumOfDronesRequired + variant.statVariant.drone_num).ToString() , _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
+            buildTime.ShowResult(((item.BuildTimeInS + variant.statVariant.build_time) * item.NumOfDronesRequired * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS * item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
+            health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth + variant.statVariant.max_health), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+
+            ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item) , GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
+            ShowDamageStat(shipDamage, GetAntiShipDamage(item) + (variant.IsUnit() ? variant.GetUnit().AttackCapabilities.Contains(TargetType.Ships) ? variant.statVariant.damage : 0 : 0), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
+            ShowDamageStat(airDamage, GetAntiAirDamage(item) + (variant.IsUnit() ? variant.GetUnit().AttackCapabilities.Contains(TargetType.Aircraft) ? variant.statVariant.damage : 0 : 0), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
+        }
+
         private void ShowDamageStat(StarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
         {
             bool shouldShowRow = damagePerS > 0;
@@ -80,7 +92,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
                     break;
                 }
             }
-
             return damagePerS;
         }
     }

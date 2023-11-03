@@ -4,6 +4,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
@@ -37,6 +38,7 @@ namespace BattleCruisers.UI.ScreensScene
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
+        private VariantPrefab currentVariant;
         public GameObject content;
 
 
@@ -49,6 +51,8 @@ namespace BattleCruisers.UI.ScreensScene
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
+            buildingStatsController.Initialise();
+            unitStatsController.Initialise();
         }
 
         private async void Purchase()
@@ -61,6 +65,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentItem._clickedFeedback.SetActive(false);
             currentItem = (VariantItemController)sender;
             currentVariantData = e.variantData;
+            currentVariant = e.varint;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
 
             if(e.variantData.IsOwned)
@@ -72,6 +77,19 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 btnBuy.SetActive(true);
                 ownFeedback.SetActive(false);
+            }
+
+            if(currentVariant.IsUnit())
+            {
+                buildingStatsController.gameObject.SetActive(false);
+                unitStatsController.gameObject.SetActive(true);
+                unitStatsController.ShowStatsOfVariant(currentVariant.GetUnit(), currentVariant);
+            }
+            else
+            {
+                buildingStatsController.gameObject.SetActive(true);
+                unitStatsController.gameObject.SetActive(false);
+                buildingStatsController.ShowStatsOfVariant(currentVariant.GetBuilding(), currentVariant);
             }
 
             VariantPrice.text = e.variantData.VariantCost.ToString();
@@ -98,6 +116,7 @@ namespace BattleCruisers.UI.ScreensScene
         public Sprite parentSprite { get; set; }
         public Sprite variantSprite { get; set; }
         public string parentName { get; set; }
+        public VariantPrefab varint { get; set; }
     }
 }
 

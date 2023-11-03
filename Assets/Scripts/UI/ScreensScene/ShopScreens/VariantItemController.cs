@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.UI.ScreensScene
 {
@@ -24,6 +25,7 @@ namespace BattleCruisers.UI.ScreensScene
         private Sprite _variantSprite;
         public string _parentName;
         public int _index;
+        private VariantPrefab _variant;
 
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
@@ -32,16 +34,18 @@ namespace BattleCruisers.UI.ScreensScene
             string parentName,
             IVariantData variantData,
             VariantsContainer variantsContainer,
+            VariantPrefab variant,
             int index
             )
         {
-            Helper.AssertIsNotNull(soundPlayer, variantData, spriteParent, spriteVariant, parentName, clickingArea, _ownedItemMark, _clickedFeedback, variantsContainer);
+            Helper.AssertIsNotNull(soundPlayer, variantData, spriteParent, spriteVariant, parentName, clickingArea, _ownedItemMark, _clickedFeedback, variantsContainer, variant);
             _variantData = variantData;
             _soundPlayer = soundPlayer;
             _variantsContainer = variantsContainer;
             _parentSprite = spriteParent;
             _variantSprite = spriteVariant;
             _parentName = parentName;
+            _variant = variant;
             _index = index;
             _parentImage.sprite = _parentSprite;
             _variantImage.sprite = _variantSprite;
@@ -62,6 +66,7 @@ namespace BattleCruisers.UI.ScreensScene
                     parentSprite = _parentSprite,
                     variantSprite = _variantSprite,
                     parentName = _parentName,
+                    varint = _variant,
                 });
             }
         }
