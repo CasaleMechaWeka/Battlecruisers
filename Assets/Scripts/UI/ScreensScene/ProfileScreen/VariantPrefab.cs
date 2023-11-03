@@ -21,16 +21,17 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             set
             {
                 _parent = value;
-                isUnit = IsUnit();
             }
         }
 
         public VariantType _variantType;
         public VariantType variantType => _variantType;
-
-        public bool isUnit = false;
         public StatVariant statVariant;
 
+        public string GetParentName()
+        {
+            return IsUnit() ? GetUnit().Name : GetBuilding().Name;
+        }
 
         public IBuilding GetBuilding()
         {
@@ -125,7 +126,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             }
             return null;
         }
-        private bool IsUnit()
+        public bool IsUnit()
         {
             bool ret = false;
             switch(_parent)

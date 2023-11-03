@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
@@ -57,13 +58,46 @@ namespace BattleCruisers.UI.ScreensScene
 
         private void VariantDataChanged(object sender, VariantDataEventArgs e)
         {
+            currentItem._clickedFeedback.SetActive(false);
+            currentItem = (VariantItemController)sender;
+            currentVariantData = e.variantData;
+            ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
 
+            if(e.variantData.IsOwned)
+            {
+                btnBuy.SetActive(false);
+                ownFeedback.SetActive(true);
+            }
+            else
+            {
+                btnBuy.SetActive(true);
+                ownFeedback.SetActive(false);
+            }
+
+            VariantPrice.text = e.variantData.VariantCost.ToString();
+            ParentImage.sprite = e.parentSprite;
+            variantIcon.sprite = e.variantSprite;
+            VariantName.text = commonStrings.GetString(e.variantData.VariantNameStringKeyBase);
+            variantDescription.text = commonStrings.GetString(e.variantData.VariantDescriptionStringKeyBase);
+            ParentName.text = e.parentName;
+        }
+
+        private void OnDestroy()
+        {
+            variantDataChanged -= VariantDataChanged;
+        }
+        public void GotoBlackMarket()
+        {
+            GetComponentInParent<ShopPanelScreenController>().GotoBlackMarket();
         }
     }
 
     public class VariantDataEventArgs : EventArgs
     {
-
+        public IVariantData variantData { get; set; }
+        public Sprite parentSprite { get; set; }
+        public Sprite variantSprite { get; set; }
+        public string parentName { get; set; }
     }
 }
 
