@@ -116,6 +116,7 @@ namespace BattleCruisers.Scenes
         public bool serverStatus;
         public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
         public string requiredVer; // App version from Cloud;
+        private static bool IsFirstTimeLoading = true;
         async void Start()
         {
             if (Instance == null)
@@ -131,6 +132,11 @@ namespace BattleCruisers.Scenes
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
 
+            if (IsFirstTimeLoading)
+            {
+                await _dataProvider.CloudLoad();
+                IsFirstTimeLoading = false;
+            }
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
@@ -655,7 +661,7 @@ namespace BattleCruisers.Scenes
         private int GetRandomBodykitForAI(HullType hullType)
         {
             int id_bodykit = -1;
-            if(hullType != HullType.None)
+            if (hullType != HullType.None)
             {
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < 12 /*_applicationModel.DataProvider.GameModel.Bodykits.Count*/; i++)
