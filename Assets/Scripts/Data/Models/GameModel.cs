@@ -292,6 +292,21 @@ namespace BattleCruisers.Data.Models
             set => _playerName = value;
         }
 
+        private List<int> _purchasedExos;
+
+        private List<int> _purchasedHeckles;
+
+        private List<int> _purchasedBodykits;
+
+        private List<int> _purchasedVariants;
+
+        private bool _isDoneMigration;
+        public bool IsDoneMigration
+        {
+            get => _isDoneMigration;
+            set => _isDoneMigration = value;
+        }
+
         /*        private int _rankData;
                 public int RankData
                 {
@@ -330,6 +345,8 @@ namespace BattleCruisers.Data.Models
 
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
+
+
 
 
         [SerializeField]
@@ -594,42 +611,42 @@ namespace BattleCruisers.Data.Models
 
             _variants = new List<VariantData>
             {
-                new VariantData(prefabName: "Variant000", variantNameBase : "Variant000", variantDescriptionBase : "VariantDescription000", cost: 662, owned: false, id: 0),
-                new VariantData(prefabName: "Variant001", variantNameBase : "Variant001", variantDescriptionBase : "VariantDescription001", cost: 662, owned: false, id: 1),
-                new VariantData(prefabName: "Variant002", variantNameBase : "Variant002", variantDescriptionBase : "VariantDescription002", cost: 662, owned: false, id: 2),
-                new VariantData(prefabName: "Variant003", variantNameBase : "Variant003", variantDescriptionBase : "VariantDescription003", cost: 662, owned: false, id: 3),
-                new VariantData(prefabName: "Variant004", variantNameBase : "Variant004", variantDescriptionBase : "VariantDescription004", cost: 662, owned: false, id: 4),
-                new VariantData(prefabName: "Variant005", variantNameBase : "Variant005", variantDescriptionBase : "VariantDescription005", cost: 662, owned: false, id: 5),
-                new VariantData(prefabName: "Variant006", variantNameBase : "Variant006", variantDescriptionBase : "VariantDescription006", cost: 662, owned: false, id: 6),
-                new VariantData(prefabName: "Variant007", variantNameBase : "Variant007", variantDescriptionBase : "VariantDescription007", cost: 662, owned: false, id: 7),
-                new VariantData(prefabName: "Variant008", variantNameBase : "Variant008", variantDescriptionBase : "VariantDescription008", cost: 662, owned: false, id: 8),
-                new VariantData(prefabName: "Variant009", variantNameBase : "Variant009", variantDescriptionBase : "VariantDescription009", cost: 662, owned: false, id: 9),
-                new VariantData(prefabName: "Variant010", variantNameBase : "Variant010", variantDescriptionBase : "VariantDescription010", cost: 662, owned: false, id: 10),
-                new VariantData(prefabName: "Variant011", variantNameBase : "Variant011", variantDescriptionBase : "VariantDescription011", cost: 662, owned: false, id: 11),
-                new VariantData(prefabName: "Variant012", variantNameBase : "Variant012", variantDescriptionBase : "VariantDescription012", cost: 662, owned: false, id: 12),
-                new VariantData(prefabName: "Variant013", variantNameBase : "Variant013", variantDescriptionBase : "VariantDescription013", cost: 662, owned: false, id: 13),
-                new VariantData(prefabName: "Variant014", variantNameBase : "Variant014", variantDescriptionBase : "VariantDescription014", cost: 662, owned: false, id: 14),
-                new VariantData(prefabName: "Variant015", variantNameBase : "Variant015", variantDescriptionBase : "VariantDescription015", cost: 662, owned: false, id: 15),
-                new VariantData(prefabName: "Variant016", variantNameBase : "Variant016", variantDescriptionBase : "VariantDescription016", cost: 662, owned: false, id: 16),
-                new VariantData(prefabName: "Variant017", variantNameBase : "Variant017", variantDescriptionBase : "VariantDescription017", cost: 662, owned: false, id: 17),
-                new VariantData(prefabName: "Variant018", variantNameBase : "Variant018", variantDescriptionBase : "VariantDescription018", cost: 662, owned: false, id: 18),
-                new VariantData(prefabName: "Variant019", variantNameBase : "Variant019", variantDescriptionBase : "VariantDescription019", cost: 662, owned: false, id: 19),
-                new VariantData(prefabName: "Variant020", variantNameBase : "Variant020", variantDescriptionBase : "VariantDescription020", cost: 662, owned: false, id: 20),
-                new VariantData(prefabName: "Variant021", variantNameBase : "Variant021", variantDescriptionBase : "VariantDescription021", cost: 662, owned: false, id: 21),
-                new VariantData(prefabName: "Variant022", variantNameBase : "Variant022", variantDescriptionBase : "VariantDescription022", cost: 662, owned: false, id: 22),
-                new VariantData(prefabName: "Variant023", variantNameBase : "Variant023", variantDescriptionBase : "VariantDescription023", cost: 662, owned: false, id: 23),
-                new VariantData(prefabName: "Variant024", variantNameBase : "Variant024", variantDescriptionBase : "VariantDescription024", cost: 662, owned: false, id: 24),
-                new VariantData(prefabName: "Variant025", variantNameBase : "Variant025", variantDescriptionBase : "VariantDescription025", cost: 662, owned: false, id: 25),
-                new VariantData(prefabName: "Variant026", variantNameBase : "Variant026", variantDescriptionBase : "VariantDescription026", cost: 662, owned: false, id: 26),
-                new VariantData(prefabName: "Variant027", variantNameBase : "Variant027", variantDescriptionBase : "VariantDescription027", cost: 662, owned: false, id: 27),
-                new VariantData(prefabName: "Variant028", variantNameBase : "Variant028", variantDescriptionBase : "VariantDescription028", cost: 662, owned: false, id: 28),
-                new VariantData(prefabName: "Variant029", variantNameBase : "Variant029", variantDescriptionBase : "VariantDescription029", cost: 662, owned: false, id: 29),
-                new VariantData(prefabName: "Variant030", variantNameBase : "Variant030", variantDescriptionBase : "VariantDescription030", cost: 662, owned: false, id: 30),
-                new VariantData(prefabName: "Variant031", variantNameBase : "Variant031", variantDescriptionBase : "VariantDescription031", cost: 662, owned: false, id: 31),
-                new VariantData(prefabName: "Variant032", variantNameBase : "Variant032", variantDescriptionBase : "VariantDescription032", cost: 662, owned: false, id: 32),
-                new VariantData(prefabName: "Variant033", variantNameBase : "Variant033", variantDescriptionBase : "VariantDescription033", cost: 662, owned: false, id: 33),
-                new VariantData(prefabName: "Variant034", variantNameBase : "Variant034", variantDescriptionBase : "VariantDescription034", cost: 662, owned: false, id: 34),
-                new VariantData(prefabName: "Variant035", variantNameBase : "Variant035", variantDescriptionBase : "VariantDescription035", cost: 662, owned: false, id: 35),
+                new VariantData(prefabName: "Variant000", variantNameBase : "Variant000", variantDescriptionBase : "VariantDescription000", coins: 0, credits: 662, owned: false, id: 0),
+                new VariantData(prefabName: "Variant001", variantNameBase : "Variant001", variantDescriptionBase : "VariantDescription001", coins: 0, credits: 662, owned: false, id: 1),
+                new VariantData(prefabName: "Variant002", variantNameBase : "Variant002", variantDescriptionBase : "VariantDescription002", coins: 0, credits: 662, owned: false, id: 2),
+                new VariantData(prefabName: "Variant003", variantNameBase : "Variant003", variantDescriptionBase : "VariantDescription003", coins: 0, credits: 662, owned: false, id: 3),
+                new VariantData(prefabName: "Variant004", variantNameBase : "Variant004", variantDescriptionBase : "VariantDescription004", coins: 0, credits: 662, owned: false, id: 4),
+                new VariantData(prefabName: "Variant005", variantNameBase : "Variant005", variantDescriptionBase : "VariantDescription005", coins: 0, credits: 662, owned: false, id: 5),
+                new VariantData(prefabName: "Variant006", variantNameBase : "Variant006", variantDescriptionBase : "VariantDescription006", coins: 0, credits: 662, owned: false, id: 6),
+                new VariantData(prefabName: "Variant007", variantNameBase : "Variant007", variantDescriptionBase : "VariantDescription007", coins: 0, credits: 662, owned: false, id: 7),
+                new VariantData(prefabName: "Variant008", variantNameBase : "Variant008", variantDescriptionBase : "VariantDescription008", coins: 0, credits: 662, owned: false, id: 8),
+                new VariantData(prefabName: "Variant009", variantNameBase : "Variant009", variantDescriptionBase : "VariantDescription009", coins: 0, credits: 662, owned: false, id: 9),
+                new VariantData(prefabName: "Variant010", variantNameBase : "Variant010", variantDescriptionBase : "VariantDescription010", coins: 0, credits: 662, owned: false, id: 10),
+                new VariantData(prefabName: "Variant011", variantNameBase : "Variant011", variantDescriptionBase : "VariantDescription011", coins: 0, credits: 662, owned: false, id: 11),
+                new VariantData(prefabName: "Variant012", variantNameBase : "Variant012", variantDescriptionBase : "VariantDescription012", coins: 0, credits: 662, owned: false, id: 12),
+                new VariantData(prefabName: "Variant013", variantNameBase : "Variant013", variantDescriptionBase : "VariantDescription013", coins: 0, credits: 662, owned: false, id: 13),
+                new VariantData(prefabName: "Variant014", variantNameBase : "Variant014", variantDescriptionBase : "VariantDescription014", coins: 0, credits: 662, owned: false, id: 14),
+                new VariantData(prefabName: "Variant015", variantNameBase : "Variant015", variantDescriptionBase : "VariantDescription015", coins: 0, credits: 662, owned: false, id: 15),
+                new VariantData(prefabName: "Variant016", variantNameBase : "Variant016", variantDescriptionBase : "VariantDescription016", coins: 0, credits: 662, owned: false, id: 16),
+                new VariantData(prefabName: "Variant017", variantNameBase : "Variant017", variantDescriptionBase : "VariantDescription017", coins: 0, credits: 662, owned: false, id: 17),
+                new VariantData(prefabName: "Variant018", variantNameBase : "Variant018", variantDescriptionBase : "VariantDescription018", coins: 0, credits: 662, owned: false, id: 18),
+                new VariantData(prefabName: "Variant019", variantNameBase : "Variant019", variantDescriptionBase : "VariantDescription019", coins: 0, credits: 662, owned: false, id: 19),
+                new VariantData(prefabName: "Variant020", variantNameBase : "Variant020", variantDescriptionBase : "VariantDescription020", coins: 0, credits: 662, owned: false, id: 20),
+                new VariantData(prefabName: "Variant021", variantNameBase : "Variant021", variantDescriptionBase : "VariantDescription021", coins: 0, credits: 662, owned: false, id: 21),
+                new VariantData(prefabName: "Variant022", variantNameBase : "Variant022", variantDescriptionBase : "VariantDescription022", coins: 0, credits: 662, owned: false, id: 22),
+                new VariantData(prefabName: "Variant023", variantNameBase : "Variant023", variantDescriptionBase : "VariantDescription023", coins: 0, credits: 662, owned: false, id: 23),
+                new VariantData(prefabName: "Variant024", variantNameBase : "Variant024", variantDescriptionBase : "VariantDescription024", coins: 0, credits: 662, owned: false, id: 24),
+                new VariantData(prefabName: "Variant025", variantNameBase : "Variant025", variantDescriptionBase : "VariantDescription025", coins: 0, credits: 662, owned: false, id: 25),
+                new VariantData(prefabName: "Variant026", variantNameBase : "Variant026", variantDescriptionBase : "VariantDescription026", coins: 0, credits: 662, owned: false, id: 26),
+                new VariantData(prefabName: "Variant027", variantNameBase : "Variant027", variantDescriptionBase : "VariantDescription027", coins: 0, credits: 662, owned: false, id: 27),
+                new VariantData(prefabName: "Variant028", variantNameBase : "Variant028", variantDescriptionBase : "VariantDescription028", coins: 0, credits: 662, owned: false, id: 28),
+                new VariantData(prefabName: "Variant029", variantNameBase : "Variant029", variantDescriptionBase : "VariantDescription029", coins: 0, credits: 662, owned: false, id: 29),
+                new VariantData(prefabName: "Variant030", variantNameBase : "Variant030", variantDescriptionBase : "VariantDescription030", coins: 0, credits: 662, owned: false, id: 30),
+                new VariantData(prefabName: "Variant031", variantNameBase : "Variant031", variantDescriptionBase : "VariantDescription031", coins: 0, credits: 662, owned: false, id: 31),
+                new VariantData(prefabName: "Variant032", variantNameBase : "Variant032", variantDescriptionBase : "VariantDescription032", coins: 0, credits: 662, owned: false, id: 32),
+                new VariantData(prefabName: "Variant033", variantNameBase : "Variant033", variantDescriptionBase : "VariantDescription033", coins: 0, credits: 662, owned: false, id: 33),
+                new VariantData(prefabName: "Variant034", variantNameBase : "Variant034", variantDescriptionBase : "VariantDescription034", coins: 0, credits: 662, owned: false, id: 34),
+                new VariantData(prefabName: "Variant035", variantNameBase : "Variant035", variantDescriptionBase : "VariantDescription035", coins: 0, credits: 662, owned: false, id: 35),
             };
 
             _iaps = new List<IAPData> {
@@ -638,6 +655,12 @@ namespace BattleCruisers.Data.Models
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Name", iapDescriptionKeybase: "Coins1000Description", iapIconName: "Coins1000Pack", 2.99f, 1000),
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Name", iapDescriptionKeybase: "Coins5000Description", iapIconName: "Coins5000Pack", 3.99f, 5000),
             };
+
+            _purchasedExos = new List<int> { 0 };
+            _purchasedHeckles = new List<int>();
+            _purchasedBodykits = new List<int>();
+            _purchasedVariants = new List<int>();
+            _isDoneMigration = false;
 
             _playerName = "Charlie";
             _coins = 50;
@@ -872,5 +895,37 @@ namespace BattleCruisers.Data.Models
             return UnlockedBuildings.Contains(buildingKey);
         }
 
+        public void AddExo(int index)
+        {
+            _purchasedExos.Add(index);
+        }
+        public List<int> GetExos()
+        {
+            return _purchasedExos;
+        }
+        public void AddHeckle(int index)
+        {
+            _purchasedHeckles.Add(index);
+        }
+        public List<int> GetHeckles()
+        {
+            return _purchasedHeckles;
+        }
+        public void AddBodykit(int index)
+        {
+            _purchasedBodykits.Add(index);
+        }
+        public List<int> GetBodykits()
+        {
+            return _purchasedBodykits;
+        }
+        public void AddVariant(int index)
+        {
+            _purchasedVariants.Add(index);
+        }
+        public List<int> GetVariants()
+        {
+            return _purchasedVariants;
+        }
     }
 }

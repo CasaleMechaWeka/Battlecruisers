@@ -115,6 +115,7 @@ namespace BattleCruisers.Scenes
         public bool serverStatus;
         public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
         public string requiredVer; // App version from Cloud;
+        private static bool IsFirstTimeLoad = true;
         async void Start()
         {
             if (Instance == null)
@@ -147,6 +148,11 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
+                    if (IsFirstTimeLoad)
+                    {
+                        await _dataProvider.CloudLoad();
+                        IsFirstTimeLoad = false;
+                    }
                     await _dataProvider.LoadBCData();
                     while (!m_cancellationToken.IsCancellationRequested)
                     {
@@ -649,7 +655,7 @@ namespace BattleCruisers.Scenes
         private async Task<int> GetRandomBodykitForAI(HullType hullType)
         {
             int id_bodykit = -1;
-            if(hullType != HullType.None)
+            if (hullType != HullType.None)
             {
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < 12 /*_applicationModel.DataProvider.GameModel.Bodykits.Count*/; i++)

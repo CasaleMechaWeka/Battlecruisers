@@ -72,5 +72,23 @@ namespace BattleCruisers.Data.Models
 
         bool IsUnitUnlocked(UnitKey unitKey);
         bool IsBuildingUnlocked(BuildingKey buildingKey);
+
+        void AddExo(int index);
+
+        List<int> GetExos();
+
+        void AddHeckle(int index);
+
+        List<int> GetHeckles();
+
+        void AddBodykit(int index);
+
+
+        List<int> GetBodykits();
+
+        void AddVariant(int index);
+
+        List<int> GetVariants();
+
     }
 }

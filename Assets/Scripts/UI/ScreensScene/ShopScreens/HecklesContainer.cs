@@ -59,11 +59,11 @@ namespace BattleCruisers.UI.ScreensScene
                     // Online purchasing
                     try
                     {
-                        bool result = await _dataProvider.PurchaseHeckle(currentHeckleData.Index);
+                        bool result = await _dataProvider.PurchaseHeckleV2(currentHeckleData.Index);
                         if (result)
                         {
 
-                            await _dataProvider.SyncCurrencyFromCloud();
+                        //    await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
@@ -71,6 +71,7 @@ namespace BattleCruisers.UI.ScreensScene
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
+                            _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
@@ -127,6 +128,7 @@ namespace BattleCruisers.UI.ScreensScene
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
+                        _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)

@@ -210,7 +210,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     variantItem.GetComponent<VariantItemController>()._clickedFeedback.SetActive(true);
                     variantsContainer.currentItem = variantItem.GetComponent<VariantItemController>();
                     variantsContainer.ParentImage.sprite = parentSprite;
-                    variantsContainer.VariantPrice.text = _dataProvider.GameModel.Variants[index].variantCost.ToString();
+                    variantsContainer.VariantPrice.text = _dataProvider.GameModel.Variants[index].variantCredits.ToString();
                     variantsContainer.variantIcon.sprite = variant.variantSprite;
                     variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase);
                     variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);

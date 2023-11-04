@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if(_dataProvider.GameModel.Credits >=  currentVariantData.VariantCost)
+            if(_dataProvider.GameModel.Credits >=  currentVariantData.VariantCredits)
             {
                 if(await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
@@ -129,7 +129,7 @@ namespace BattleCruisers.UI.ScreensScene
                 buildingStatsController.ShowStatsOfVariant(currentVariant.GetBuilding(), currentVariant);
             }
 
-            VariantPrice.text = e.variantData.VariantCost.ToString();
+            VariantPrice.text = e.variantData.VariantCredits.ToString();
             ParentImage.sprite = e.parentSprite;
             variantIcon.sprite = e.variantSprite;
             VariantName.text = commonStrings.GetString(e.variantData.VariantNameStringKeyBase);

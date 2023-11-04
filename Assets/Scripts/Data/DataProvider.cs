@@ -39,6 +39,7 @@ namespace BattleCruisers.Data
         public IGameModel GameModel => _gameModel;
         public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
+        public EcoConfig ecoConfig { get; set; }
         /*     public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
         public DataProvider(IStaticData staticData, ISerializer serializer)
@@ -162,14 +163,102 @@ namespace BattleCruisers.Data
                 case ConfigOrigin.Remote:
                     Debug.Log("===> config.Remote");
                     GetConfigValues();
-                    await SyncItemsCost();
-            //        await SyncHecklesCost();
+                    //        await SyncItemsCost();
+                    await SyncItemsCostV2();
                     await SyncCurrencyFromCloud();
-                    await SyncInventoryFromCloud();
+                    //        await SyncHecklesCost();
+                    if (_gameModel.IsDoneMigration)
+                    {
+                        await SyncInventroyV2();
+                    }
+                    else
+                    {
+                        await SyncInventoryFromCloud();
+                        await MigrateInventory();
+                        await SyncInventroyV2();
+                        _gameModel.IsDoneMigration = true;
+                        SaveGame();
+                        await CloudSave();
+                    }
                     GameModel.HasSyncdShop = true;
                     ScreensSceneGod.Instance.m_cancellationToken.Cancel();
                     break;
             }
+        }
+
+        public async Task MigrateInventory()
+        {
+            // captain exo
+            for (int i = 0; i < _gameModel.Captains.Count; i++)
+            {
+                if (_gameModel.Captains[i].isOwned)
+                {
+                    _gameModel.AddExo(i);
+                }
+            }
+
+            // heckles
+            for (int i = 0; i < _gameModel.Heckles.Count; i++)
+            {
+                if (_gameModel.Heckles[i].isOwned)
+                {
+                    _gameModel.AddHeckle(i);
+                }
+            }
+
+            // bodykits
+            for (int i = 0; i < _gameModel.Bodykits.Count; i++)
+            {
+                if (_gameModel.Bodykits[i].isOwned)
+                {
+                    _gameModel.AddBodykit(i);
+                }
+            }
+        }
+
+        public async Task SyncInventroyV2()
+        {
+            await Task.Yield();
+            // captain exo
+            for (int i = 0; i < _gameModel.GetExos().Count; i++)
+            {
+                int index = _gameModel.GetExos()[i];
+                if (!_gameModel.Captains[index].isOwned)
+                {
+                    _gameModel.Captains[index].isOwned = true;
+                }
+            }
+
+            // heckles
+            for (int i = 0; i < _gameModel.GetHeckles().Count; i++)
+            {
+                int index = _gameModel.GetHeckles()[i];
+                if (!_gameModel.Heckles[index].isOwned)
+                {
+                    _gameModel.Heckles[index].isOwned = true;
+                }
+            }
+
+            // bodykits
+            for (int i = 0; i < _gameModel.GetBodykits().Count; i++)
+            {
+                int index = _gameModel.GetBodykits()[i];
+                if (!_gameModel.Bodykits[index].IsOwned)
+                {
+                    _gameModel.Bodykits[index].isOwned = true;
+                }
+            }
+
+            // variants
+            for (int i = 0; i < _gameModel.GetVariants().Count; i++)
+            {
+                int index = _gameModel.GetVariants()[i];
+                if (!_gameModel.Variants[index].isOwned)
+                {
+                    _gameModel.Variants[index].isOwned = true;
+                }
+            }
+            SaveGame();
         }
         private async Task FetchConfigs()
         {
@@ -192,6 +281,9 @@ namespace BattleCruisers.Data
 
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
+
+            var ecoCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("ECO_CONFIG");
+            ecoConfig = JsonUtility.FromJson<EcoConfig>(ecoCategoriesConfigJson);
 
             var pvpConfigJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_CONFIG");
             PvPConfig pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
@@ -216,9 +308,9 @@ namespace BattleCruisers.Data
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             version = "EDITOR";
-            #endif
+#endif
 
             return version;
         }
@@ -259,12 +351,12 @@ namespace BattleCruisers.Data
                                         _gameModel.Heckles[index].heckleCost = cost.amount;
                                 }
                             }
-                            if(reward.id.Contains("BODYKIT"))
+                            if (reward.id.Contains("BODYKIT"))
                             {
                                 int index = StaticPrefabKeys.BodykitItems[reward.id];
-                                foreach(ItemAndAmountSpec cost in costs)
+                                foreach (ItemAndAmountSpec cost in costs)
                                 {
-                                    if(cost.id == "COIN")
+                                    if (cost.id == "COIN")
                                         _gameModel.Bodykits[index].bodykitCost = cost.amount;
                                 }
                             }
@@ -277,6 +369,44 @@ namespace BattleCruisers.Data
                     Debug.Log(ex.Message);
                 }
             }
+        }
+
+        public async Task SyncItemsCostV2()
+        {
+            await Task.Yield();
+            // captainexos cost sync
+            for (int i = 0; i < ecoConfig.categories[0].items.Count; i++)
+            {
+                string coins = ecoConfig.categories[0].items[i].coins;
+                int iCoins = 0;
+                int.TryParse(coins, out iCoins);
+                _gameModel.Captains[i].captainCost = iCoins;
+            }
+            // heckles cost sync
+            for (int i = 0; i < ecoConfig.categories[1].items.Count; i++)
+            {
+                string coins = ecoConfig.categories[1].items[i].coins;
+                int iCoins = 0;
+                int.TryParse(coins, out iCoins);
+                _gameModel.Heckles[i].heckleCost = iCoins;
+            }
+            // bodykits cost sync
+            for (int i = 0; i < ecoConfig.categories[2].items.Count; i++)
+            {
+                string coins = ecoConfig.categories[2].items[i].coins;
+                int iCoins = 0;
+                int.TryParse(coins, out iCoins);
+                _gameModel.Bodykits[i].bodykitCost = iCoins;
+            }
+            // variant cost async
+            for (int i = 0; i < ecoConfig.categories[3].items.Count; i++)
+            {
+                string credits = ecoConfig.categories[3].items[i].credits;
+                int iCredits = 0;
+                int.TryParse(credits, out iCredits);
+                _gameModel.Variants[i].variantCredits = iCredits;
+            }
+            SaveGame();
         }
 
         public async Task SyncHecklesCost()
@@ -328,9 +458,20 @@ namespace BattleCruisers.Data
             }
         }
 
+        public async Task<bool> PurchaseCaptainV2(int index)
+        {
+            Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
+            await Task.Yield();
+            int iCoins = _gameModel.Captains[index].CaptainCost;
+            _gameModel.Coins -= iCoins;
+            SaveGame();
+            await SyncCoinsToCloud();
+            return true;
+        }
+
         public async Task<bool> PurchaseHeckle(int index)
         {
-            Assert.IsTrue(index > 2); // 0,1,2 are default items. can not buy them.
+            //    Assert.IsTrue(index > 2); // 0,1,2 are default items. can not buy them.
             try
             {
                 string purchaseId = virtualShopConfig.categories[1].items[index - 3].id;  // category 1 is heckles
@@ -345,12 +486,23 @@ namespace BattleCruisers.Data
                 return false;
             }
         }
+
+        public async Task<bool> PurchaseHeckleV2(int index)
+        {
+            Assert.IsTrue(index >= 0);
+            await Task.Yield();
+            int iCoins = _gameModel.Heckles[index].heckleCost;
+            _gameModel.Coins -= iCoins;
+            SaveGame();
+            await SyncCoinsToCloud();
+            return true;
+        }
         public async Task<bool> PurchaseBodykit(int index)
         {
             Assert.IsTrue(index > 0); // 0 is trident for premium
             try
             {
-                string purchaseId = virtualShopConfig.categories[3].items[index-1].id;  // category 3 is bodykit
+                string purchaseId = virtualShopConfig.categories[3].items[index - 1].id;  // category 3 is bodykit
                 var result = await EconomyManager.MakeVirtualPurchaseAsync(purchaseId);
                 if (result == null)
                     return false;
@@ -363,19 +515,26 @@ namespace BattleCruisers.Data
             }
         }
 
+        public async Task<bool> PurchaseBodykitV2(int index)
+        {
+            Assert.IsTrue(index > 0); // 0 is trident for premium
+            await Task.Yield();
+            int iCoins = _gameModel.Bodykits[index].bodykitCost;
+            _gameModel.Coins -= iCoins;
+            SaveGame();
+            await SyncCoinsToCloud();
+            return true;
+        }
+
         public async Task<bool> PurchaseVariant(int index)
         {
             Assert.IsTrue(index > 2); // 0,1,2 are Premium
-            try
-            {
-                string purchaseId = virtualShopConfig.categories[4].items[index - 1].id;
-                var result = await EconomyManager.MakeVirtualPurchaseAsync(purchaseId);
-                if (result == null)
-                    return false;
-                await EconomyManager.RefreshCurrencyBalances();
-                return true;
-            }
-            catch { return false; }
+            await Task.Yield();
+            int iCredits = _gameModel.Variants[index].variantCredits;
+            _gameModel.Credits -= iCredits;
+            SaveGame();
+            await SyncCreditsToCloud();
+            return true;
         }
 
         List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)
@@ -488,7 +647,7 @@ namespace BattleCruisers.Data
             foreach (BodykitData txn in GameModel.OutstandingBodykitTransactions)
             {
                 Debug.Log("Purchasing Bodykit " + txn.index);
-                bool result = await PurchaseBodykit(txn.index);
+                bool result = await PurchaseBodykitV2(txn.index);
                 if (result)
                 {
                     GameModel.Bodykits[txn.index].isOwned = true;
@@ -500,7 +659,7 @@ namespace BattleCruisers.Data
                     RetryBodykits.Add(txn);
                 }
             }
-            await SyncCurrencyFromCloud();
+            //   await SyncCurrencyFromCloud();
             // If any failed, they'll be preserved for next connection:
             if (RetryBodykits != null) { GameModel.OutstandingBodykitTransactions = RetryBodykits; }
             else { GameModel.OutstandingBodykitTransactions = new List<BodykitData>(); }
@@ -531,10 +690,10 @@ namespace BattleCruisers.Data
                 foreach (int bdk in GoodBodykits)
                 {
                     Debug.Log("Purchasing Bodykit " + bdk);
-                    bool result = await PurchaseBodykit(bdk);
+                    bool result = await PurchaseBodykitV2(bdk);
                     if (result)
                     {
-                        await SyncCurrencyFromCloud();
+                        //    await SyncCurrencyFromCloud();
                         GameModel.Bodykits[bdk].isOwned = true;
                     }
                 }
@@ -551,7 +710,7 @@ namespace BattleCruisers.Data
             foreach (CaptainData txn in GameModel.OutstandingCaptainTransactions)
             {
                 Debug.Log("Purchasing Captain " + txn.index);
-                bool result = await PurchaseCaptain(txn.index);
+                bool result = await PurchaseCaptainV2(txn.index);
                 if (result)
                 {
                     GameModel.Captains[txn.index].isOwned = true;
@@ -563,7 +722,7 @@ namespace BattleCruisers.Data
                     RetryCaptains.Add(txn);
                 }
             }
-            await SyncCurrencyFromCloud();
+            //    await SyncCurrencyFromCloud();
             // If any failed, they'll be preserved for next connection:
             if (RetryCaptains != null) { GameModel.OutstandingCaptainTransactions = RetryCaptains; }
             else { GameModel.OutstandingCaptainTransactions = new List<CaptainData>(); }
@@ -594,10 +753,10 @@ namespace BattleCruisers.Data
                 foreach (int cpt in GoodCaptains)
                 {
                     Debug.Log("Purchasing Captain " + cpt);
-                    bool result = await PurchaseCaptain(cpt);
+                    bool result = await PurchaseCaptainV2(cpt);
                     if (result)
                     {
-                        await SyncCurrencyFromCloud();
+                        //    await SyncCurrencyFromCloud();
                         GameModel.Captains[cpt].isOwned = true;
                     }
                 }
@@ -614,7 +773,7 @@ namespace BattleCruisers.Data
             foreach (HeckleData txn in GameModel.OutstandingHeckleTransactions)
             {
                 Debug.Log("Purchasing Heckle " + txn.index);
-                bool result = await PurchaseHeckle(txn.index);
+                bool result = await PurchaseHeckleV2(txn.index);
                 if (result)
                 {
 
@@ -627,7 +786,7 @@ namespace BattleCruisers.Data
                     RetryHeckles.Add(txn);
                 }
             }
-            await SyncCurrencyFromCloud();
+            //    await SyncCurrencyFromCloud();
             // If any failed, they'll be preserved for next connection:
             if (RetryHeckles != null) { GameModel.OutstandingHeckleTransactions = RetryHeckles; }
             else { GameModel.OutstandingHeckleTransactions = new List<HeckleData>(); }
@@ -658,10 +817,10 @@ namespace BattleCruisers.Data
                 foreach (int hkl in GoodHeckles)
                 {
                     Debug.Log("Purchasing Heckle " + hkl);
-                    bool result = await PurchaseHeckle(hkl);
+                    bool result = await PurchaseHeckleV2(hkl);
                     if (result)
                     {
-                        await SyncCurrencyFromCloud();
+                        //    await SyncCurrencyFromCloud();
                         GameModel.Heckles[hkl].isOwned = true;
                     }
                 }
@@ -682,6 +841,19 @@ namespace BattleCruisers.Data
     }
 
     [Serializable]
+    public struct PriceConfig
+    {
+        public string coins;
+        public string credits;
+        public override string ToString()
+        {
+            var returnString = new StringBuilder($"\"{coins} --- {credits}\"");
+            return returnString.ToString();
+        }
+    }
+
+
+    [Serializable]
     public struct CategoryConfig
     {
         public string id;
@@ -700,10 +872,37 @@ namespace BattleCruisers.Data
     }
 
     [Serializable]
+    public struct ItemCategory
+    {
+        public string id;
+        public bool enabledFlag;
+        public List<PriceConfig> items;
+        public override string ToString()
+        {
+            var returnString = new StringBuilder($"category:\"{id}\", enabled:{enabledFlag}");
+            if (items?.Count > 0)
+            {
+                returnString.Append($", items: {string.Join(", ", items.Select(itemConfig => itemConfig.ToString()).ToArray())}");
+            }
+
+            return returnString.ToString();
+        }
+    }
+
+    [Serializable]
     public struct VirtualShopConfig
     {
         public List<CategoryConfig> categories;
 
+        public override string ToString()
+        {
+            return $"categories: {string.Join(", ", categories.Select(category => category.ToString()).ToArray())}";
+        }
+    }
+    [Serializable]
+    public struct EcoConfig
+    {
+        public List<ItemCategory> categories;
         public override string ToString()
         {
             return $"categories: {string.Join(", ", categories.Select(category => category.ToString()).ToArray())}";

@@ -70,11 +70,10 @@ namespace BattleCruisers.UI.ScreensScene
                     // Online purchasing
                     try
                     {
-                        bool result = await _dataProvider.PurchaseCaptain(currentCaptainData.Index);
+                        bool result = await _dataProvider.PurchaseCaptainV2(currentCaptainData.Index);
                         if (result)
                         {
-
-                            await _dataProvider.SyncCurrencyFromCloud();
+                        //    await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
@@ -82,6 +81,7 @@ namespace BattleCruisers.UI.ScreensScene
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
+                            _dataProvider.GameModel.AddExo(currentCaptainData.Index);
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
@@ -127,6 +127,7 @@ namespace BattleCruisers.UI.ScreensScene
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
+                        _dataProvider.GameModel.AddExo(currentCaptainData.Index);
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));

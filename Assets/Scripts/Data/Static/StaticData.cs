@@ -219,7 +219,10 @@ namespace BattleCruisers.Data.Static
                 );
 
             foreach (int i in playerLoadout.CurrentHeckles)
+            {
                 game._heckles[i].isOwned = true;
+                game.AddHeckle(i);
+            }               
 
             return game;
             //unlockedHulls: AllHullKeys(),

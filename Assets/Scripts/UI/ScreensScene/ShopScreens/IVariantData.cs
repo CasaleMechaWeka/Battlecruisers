@@ -6,7 +6,8 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     public interface IVariantData
     {
-        int VariantCost { get; }
+        int VariantCoins { get; }
+        int VariantCredits { get; }
         string VariantPrefabName { get; }
         string VariantNameStringKeyBase { get; }
         string VariantDescriptionStringKeyBase { get; }
