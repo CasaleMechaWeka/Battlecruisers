@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 
@@ -86,10 +87,10 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
 
             // IAPs:
-            _purchasedExos = game.GetExos();
-            _purchasedHeckles = game.GetHeckles();
-            _purchasedBodykits = game.GetBodykits();
-            _purchasedVariants = game.GetVariants();
+            _purchasedExos = game.GetExos().Distinct().ToList();
+            _purchasedHeckles = game.GetHeckles().Distinct().ToList();
+            _purchasedBodykits = game.GetBodykits().Distinct().ToList();
+            _purchasedVariants = game.GetVariants().Distinct().ToList();
 
             // Loadout fields:
             _currentHullKey = game.PlayerLoadout.Hull.PrefabName;
@@ -117,33 +118,49 @@ namespace BattleCruisers.Data.Models
             // Exos
             if (_purchasedExos != null && _purchasedExos.Count > 0)
             {
+                List<int> currentList = game.GetExos();
                 for (int i = 0; i <= _purchasedExos.Count - 1; i++)
                 {
-                    game.AddExo(i);
+                    if (!currentList.Contains(_purchasedExos[i]))
+                    {
+                        game.AddExo(i);
+                    }
                 }
             }
             // Heckles
             if (_purchasedHeckles != null && _purchasedHeckles.Count > 0)
             {
+                List<int> currentList = game.GetHeckles();
                 for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
                 {
-                    game.AddHeckle(i);
+                    if (!currentList.Contains(_purchasedHeckles[i]))
+                    {
+                        game.AddHeckle(i);
+                    }
                 }
             }
             // Bodykits
             if (_purchasedBodykits != null && _purchasedBodykits.Count > 0)
             {
+                List<int> currentList = game.GetBodykits();
                 for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
                 {
-                    game.AddBodykit(i);
+                    if (!currentList.Contains(_purchasedBodykits[i]))
+                    {
+                        game.AddBodykit(i);
+                    }
                 }
             }
             // Variants
             if (_purchasedVariants != null && _purchasedVariants.Count > 0)
             {
+                List<int> currentList = game.GetVariants();
                 for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
                 {
-                    game.AddVariant(i);
+                    if (!currentList.Contains(_purchasedVariants[i]))
+                    {
+                        game.AddVariant(i);
+                    }
                 }
             }
 
