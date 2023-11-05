@@ -101,7 +101,31 @@ namespace BattleCruisers.UI.ScreensScene
                     // offline purchase
                     try
                     {
+                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        currentItem._clickedFeedback.SetActive(true);
+                        currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 1f);
+                        currentItem._ownedItemMark.SetActive(true);
+                        btnBuy.SetActive(false);
+                        ownFeedback.SetActive(true);
+                        ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
+                        _dataProvider.GameModel.Variants[currentVariantData.Index].isOwned = true;
+                        _dataProvider.GameModel.AddVariant(currentVariantData.Index);
+                        _dataProvider.SaveGame();
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("VariantPurchased") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
 
+                        // Subtract from local economy:
+                        _dataProvider.GameModel.Credits -= currentVariantData.VariantCredits;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+
+                        // Keep track of transaction for later:
+                        _dataProvider.GameModel.CoinsChange -= currentVariantData.VariantCredits;
+                        VariantData variant = _dataProvider.GameModel.Variants[currentVariantData.Index];
+                        if (_dataProvider.GameModel.OutstandingVariantTransactions == null)
+                        {
+                            _dataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
+                        }
+                        _dataProvider.GameModel.OutstandingVariantTransactions.Add(variant);
                     }
                     catch
                     {
