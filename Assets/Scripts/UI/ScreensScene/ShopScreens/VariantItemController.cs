@@ -18,6 +18,7 @@ namespace BattleCruisers.UI.ScreensScene
         public CanvasGroupButton clickingArea;
         public GameObject _ownedItemMark;
         public GameObject _clickedFeedback;
+        public Image _clickedFeedbackVariantImage;
         private IVariantData _variantData;
         private ISingleSoundPlayer _soundPlayer;
         private VariantsContainer _variantsContainer;
@@ -50,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene
             _parentImage.sprite = _parentSprite;
             _variantImage.sprite = _variantSprite;
             _clickedFeedback.SetActive(false);
-
+            _clickedFeedbackVariantImage.color = new Color(_clickedFeedbackVariantImage.color.r, _clickedFeedbackVariantImage.color.g, _clickedFeedbackVariantImage.color.b, 64f/255);
             _ownedItemMark.SetActive(_variantData.IsOwned);
             clickingArea.Initialise(_soundPlayer, OnClicked);
         }
@@ -60,6 +61,7 @@ namespace BattleCruisers.UI.ScreensScene
             if (!_clickedFeedback.activeSelf)
             {
                 _clickedFeedback.SetActive(true);
+                _clickedFeedbackVariantImage.color = new Color(_clickedFeedbackVariantImage.color.r, _clickedFeedbackVariantImage.color.g, _clickedFeedbackVariantImage.color.b, 1f);
                 _variantsContainer.variantDataChanged.Invoke(this, new VariantDataEventArgs
                 {
                     variantData = _variantData,

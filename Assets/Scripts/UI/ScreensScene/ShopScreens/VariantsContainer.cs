@@ -66,7 +66,29 @@ namespace BattleCruisers.UI.ScreensScene
                     // online purchase
                     try
                     {
-
+                        bool result = await _dataProvider.PurchaseVariant(currentVariantData.Index);
+                        if(result)
+                        {
+                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                            currentItem._clickedFeedback.SetActive(true);
+                            currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 1f);
+                            currentItem._ownedItemMark.SetActive(true);
+                            btnBuy.SetActive(false);
+                            ownFeedback.SetActive(true);
+                            ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
+                            _dataProvider.GameModel.Variants[currentVariantData.Index].isOwned = true;
+                            _dataProvider.GameModel.AddVariant(currentVariantData.Index);
+                            _dataProvider.SaveGame();
+                            await _dataProvider.CloudSave();
+                            ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("VariantPurchased") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
+                        }
+                        else
+                        {
+                            ScreensSceneGod.Instance.processingPanel.SetActive(false);
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        }
+                        ScreensSceneGod.Instance.processingPanel.SetActive(false);
                     }
                     catch
                     {
@@ -92,7 +114,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCredits"), null, null);
                 return;
             }
         }
@@ -100,6 +122,7 @@ namespace BattleCruisers.UI.ScreensScene
         private void VariantDataChanged(object sender, VariantDataEventArgs e)
         {
             currentItem._clickedFeedback.SetActive(false);
+            currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 64f/255);
             currentItem = (VariantItemController)sender;
             currentVariantData = e.variantData;
             currentVariant = e.varint;
