@@ -135,7 +135,7 @@ namespace BattleCruisers.Data.Models
                 {
                     if (!currentList.Contains(_purchasedHeckles[i]))
                     {
-                        game.AddHeckle(i);
+                        game.AddHeckle(currentList[i]);
                     }
                 }
             }
@@ -147,7 +147,7 @@ namespace BattleCruisers.Data.Models
                 {
                     if (!currentList.Contains(_purchasedBodykits[i]))
                     {
-                        game.AddBodykit(i);
+                        game.AddBodykit(currentList[i]);
                     }
                 }
             }
@@ -159,7 +159,7 @@ namespace BattleCruisers.Data.Models
                 {
                     if (!currentList.Contains(_purchasedVariants[i]))
                     {
-                        game.AddVariant(i);
+                        game.AddVariant(currentList[i]);
                     }
                 }
             }
