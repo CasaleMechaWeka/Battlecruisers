@@ -119,7 +119,7 @@ namespace BattleCruisers.UI.ScreensScene
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
 
                         // Keep track of transaction for later:
-                        _dataProvider.GameModel.CoinsChange -= currentVariantData.VariantCredits;
+                        _dataProvider.GameModel.CreditsChange -= currentVariantData.VariantCredits;
                         VariantData variant = _dataProvider.GameModel.Variants[currentVariantData.Index];
                         if (_dataProvider.GameModel.OutstandingVariantTransactions == null)
                         {
