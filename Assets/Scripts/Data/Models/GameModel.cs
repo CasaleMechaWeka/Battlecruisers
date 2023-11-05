@@ -250,6 +250,13 @@ namespace BattleCruisers.Data.Models
             set => _outstandingBodykitTransactions = value;
         }
 
+        public List<VariantData> _outstandingVariantTransactions;
+        public List<VariantData> OutstandingVariantTransactions
+        {
+            get => _outstandingVariantTransactions;
+            set => _outstandingVariantTransactions = value;
+        }
+
         private int _creditsChange;
         public int CreditsChange
         {
@@ -897,6 +904,10 @@ namespace BattleCruisers.Data.Models
         {
             _purchasedExos.Add(index);
         }
+        public void RemoveExo(int id)
+        {
+            _purchasedExos.RemoveAll(x => x == id);
+        }
         public List<int> GetExos()
         {
             return _purchasedExos;
@@ -904,6 +915,10 @@ namespace BattleCruisers.Data.Models
         public void AddHeckle(int index)
         {
             _purchasedHeckles.Add(index);
+        }
+        public void RemoveHeckle(int id)
+        {
+            _purchasedHeckles.RemoveAll(x => x == id);
         }
         public List<int> GetHeckles()
         {
@@ -913,6 +928,10 @@ namespace BattleCruisers.Data.Models
         {
             _purchasedBodykits.Add(index);
         }
+        public void RemoveBodykit(int id)
+        {
+            _purchasedBodykits.RemoveAll(x => x == id);
+        }
         public List<int> GetBodykits()
         {
             return _purchasedBodykits;
@@ -920,6 +939,10 @@ namespace BattleCruisers.Data.Models
         public void AddVariant(int index)
         {
             _purchasedVariants.Add(index);
+        }
+        public void RemoveVariant(int id)
+        {
+            _purchasedVariants.RemoveAll(x => x == id);
         }
         public List<int> GetVariants()
         {

@@ -559,11 +559,10 @@ namespace BattleCruisers.Data
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
 
             Debug.Log("Processing offline transactions.");
-            int runningCoinTotal = (int)GameModel.Coins;  // SyncCurrencyFromCloud means these start from what the cloud provides.
+            int runningCoinTotal = (int)GameModel.Coins;
+            int runningCreditTotal = (int)GameModel.Credits;  // SyncCurrencyFromCloud means these start from what the cloud provides.
             int coinLocalTotal = (int)GameModel.Coins + GameModel.CoinsChange;
             int creditLocalTotal = (int)GameModel.Credits + GameModel.CreditsChange;
-            //int runningCreditTotal
-            //int creditLocalTotal
 
             // Surplus: If a LocalTotal is positive, local and cloud economy can coexist. We can just process everything without issue.
             // Deficit: If a LocalTotal is negative then some local spending is incompatible with the cloud economy, and needs to be discarded.
@@ -628,12 +627,36 @@ namespace BattleCruisers.Data
             {
                 Debug.Log("Offline credits transactions do not conflict.");
 
+                // Surplus
+                // All credit transactions can resolve.
+                // These methods handle buying everything on the Outstanding Transactions lists:
+                if (GameModel.OutstandingVariantTransactions != null && GameModel.OutstandingVariantTransactions.Count > 0)
+                {
+                    await ProcessOfflineVariants();
+                }
+
                 // handle any winnings from offline pve games:
                 GameModel.Credits += GameModel.CreditsChange;
                 GameModel.CreditsChange = 0;
                 await SyncCreditsToCloud();
             }
+            else
+            {
+                Debug.Log("Offline transaction conflict!");
+                // Deficit
+                // Needs to be handled
 
+                // Variants first
+                if (GameModel.OutstandingVariantTransactions != null && GameModel.OutstandingVariantTransactions.Count > 0)
+                {
+                    runningCreditTotal = await ProcessOfflineVariantsConflicts(runningCreditTotal);
+                }
+
+                // handle any remainder:
+                GameModel.Credits += runningCreditTotal;
+                GameModel.CreditsChange = 0;
+            }
+            
             SaveGame();
             await CloudSave();
         }
@@ -681,6 +704,7 @@ namespace BattleCruisers.Data
                 {
                     Debug.Log("Reverting purchase of Bodykit " + txn.index);
                     GameModel.Bodykits[txn.index].isOwned = false;
+                    GameModel.RemoveBodykit(txn.index);
                 }
             }
             GameModel.OutstandingBodykitTransactions = new List<BodykitData>();
@@ -744,6 +768,7 @@ namespace BattleCruisers.Data
                 {
                     Debug.Log("Reverting purchase of Captain " + txn.index);
                     GameModel.Captains[txn.index].isOwned = false;
+                    GameModel.RemoveExo(txn.index);
                 }
             }
             GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
@@ -808,6 +833,7 @@ namespace BattleCruisers.Data
                 {
                     Debug.Log("Reverting purchase of Heckle " + txn.index);
                     GameModel.Heckles[txn.index].isOwned = false;
+                    GameModel.RemoveHeckle(txn.index);
                 }
             }
             GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
@@ -826,6 +852,70 @@ namespace BattleCruisers.Data
                 }
             }
             return runningCoinTotal;
+        }
+
+        // Officially buys all the Variants that were bought offline:
+        private async Task ProcessOfflineVariants()
+        {
+            List<VariantData> RetryVariants = new List<VariantData>();
+
+            foreach (VariantData txn in GameModel.OutstandingVariantTransactions)
+            {
+                Debug.Log("Purchasing Heckle " + txn.index);
+                bool result = await PurchaseVariant(txn.index);
+                if (result)
+                {
+
+                    GameModel.Variants[txn.index].isOwned = true;
+                    GameModel.CreditsChange += txn.variantCredits;
+                }
+                else
+                {
+                    Debug.LogWarning("FAILED: Purchasing Variant " + txn.index + ", will retry next time the game is run.");
+                    RetryVariants.Add(txn);
+                }
+            }
+            //    await SyncCurrencyFromCloud();
+            // If any failed, they'll be preserved for next connection:
+            if (RetryVariants != null) { GameModel.OutstandingVariantTransactions = RetryVariants; }
+            else { GameModel.OutstandingVariantTransactions = new List<VariantData>(); }
+        }
+
+        // Officially buys Variants based on what was bought offline, but only as many as the cloud economy allows:
+        private async Task<int> ProcessOfflineVariantsConflicts(int runningCreditTotal)
+        {
+            List<int> GoodVariants = new List<int>();
+
+            foreach (VariantData txn in GameModel.OutstandingVariantTransactions)
+            {
+                if (runningCreditTotal - txn.variantCredits >= 0)
+                {
+                    runningCreditTotal -= txn.variantCredits;
+                    GoodVariants.Add(txn.index);
+                }
+                else
+                {
+                    Debug.Log("Reverting purchase of Variant " + txn.index);
+                    GameModel.Variants[txn.index].isOwned = false;
+                    GameModel.RemoveVariant(txn.index);
+                }
+            }
+            GameModel.OutstandingVariantTransactions = new List<VariantData>();
+
+            if (GoodVariants != null && GoodVariants.Count > 0)
+            {
+                foreach (int vnt in GoodVariants)
+                {
+                    Debug.Log("Purchasing Variant " + vnt);
+                    bool result = await PurchaseVariant(vnt);
+                    if (result)
+                    {
+                        //    await SyncCurrencyFromCloud();
+                        GameModel.Variants[vnt].isOwned = true;
+                    }
+                }
+            }
+            return runningCreditTotal;
         }
     }
 

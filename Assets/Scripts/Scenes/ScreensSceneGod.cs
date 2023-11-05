@@ -169,6 +169,8 @@ namespace BattleCruisers.Scenes
                         _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
                         _dataProvider.GameModel.OutstandingBodykitTransactions != null &&
                         _dataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
+                        _dataProvider.GameModel.OutstandingVariantTransactions != null &&
+                        _dataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
                         _dataProvider.GameModel.CoinsChange > 0 ||
                         _dataProvider.GameModel.CreditsChange > 0)
                     {
