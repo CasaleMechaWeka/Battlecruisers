@@ -53,9 +53,12 @@ namespace BattleCruisers.Data.Serialization
             // Not having a captain set causes the game to hang on the first load screen, so this is a good test now.
             // It should be changed to a version check though.
             var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
+            var bks = output.GetType().GetProperty("Bodykits").GetValue(output);
+            var vts = output.GetType().GetProperty("Variants").GetValue(output);
+
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null)
+            if (loadout.CurrentCaptain == null || bks == null || vts == null)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -363,7 +366,11 @@ namespace BattleCruisers.Data.Serialization
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
                         dataProivder.GameModel.Heckles[index].isOwned = true;
                     }
-
+                    if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
+                    {
+                        int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
+                        dataProivder.GameModel.Bodykits[index].isOwned = true;
+                    }
                 }
                 dataProivder.SaveGame();
                 return true;

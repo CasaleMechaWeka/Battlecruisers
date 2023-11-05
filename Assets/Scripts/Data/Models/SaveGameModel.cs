@@ -20,9 +20,6 @@ namespace BattleCruisers.Data.Models
 
         // What do we need to save, critically? Just the assets and progress.
 
-        // Number of coins I own.
-        public long _coins;
-
         // Total historic destruction score.
         public long _lifetimeDestructionScore;
 
@@ -50,7 +47,15 @@ namespace BattleCruisers.Data.Models
         public Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
         public Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
 
+        // IAPs
+        public List<int> _purchasedExos;
+        public List<int> _purchasedHeckles;
+        public List<int> _purchasedBodykits;
+        public List<int> _purchasedVariants;
+
+        // Status tracking
         public bool _hasAttemptedTutorial;
+        public bool _isDoneMigration;
 
         public SaveGameModel()
         { // this is the constructor for cloud load
@@ -64,7 +69,8 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-            _saveVersion = 3;
+            _saveVersion = 4;
+            // Last change: 5/11/2023
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -72,13 +78,18 @@ namespace BattleCruisers.Data.Models
 
 
             // GameModel fields:
-            _coins = game.Coins;
             _lifetimeDestructionScore = game.LifetimeDestructionScore;
             _playerName = game.PlayerName;
             _levelsCompleted = computeCompletedLevels(game.CompletedLevels);
             _unlockedHulls = computeUnlockedHulls(game.UnlockedHulls);
             _unlockedBuildings = computeUnlockedBuildings(game.UnlockedBuildings);
             _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
+
+            // IAPs:
+            _purchasedExos = game.GetExos();
+            _purchasedHeckles = game.GetHeckles();
+            _purchasedBodykits = game.GetBodykits();
+            _purchasedVariants = game.GetVariants();
 
             // Loadout fields:
             _currentHullKey = game.PlayerLoadout.Hull.PrefabName;
@@ -90,15 +101,51 @@ namespace BattleCruisers.Data.Models
             _unitLimits = computeUnitLimits(game.PlayerLoadout.GetUnitLimits());
             _currentBodykit = game.PlayerLoadout.SelectedBodykit;
 
+            // Status tracking:
             _hasAttemptedTutorial = game.HasAttemptedTutorial;
+            _isDoneMigration = game.IsDoneMigration;
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
-            game.Coins = _coins;
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
             game.PlayerName = _playerName;
+            game.IsDoneMigration = _isDoneMigration;
+
+            // IAPs
+            // Exos
+            if (_purchasedExos != null && _purchasedExos.Count > 0)
+            {
+                for (int i = 0; i <= _purchasedExos.Count - 1; i++)
+                {
+                    game.AddExo(i);
+                }
+            }
+            // Heckles
+            if (_purchasedHeckles != null && _purchasedHeckles.Count > 0)
+            {
+                for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
+                {
+                    game.AddHeckle(i);
+                }
+            }
+            // Bodykits
+            if (_purchasedBodykits != null && _purchasedBodykits.Count > 0)
+            {
+                for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
+                {
+                    game.AddBodykit(i);
+                }
+            }
+            // Variants
+            if (_purchasedVariants != null && _purchasedVariants.Count > 0)
+            {
+                for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
+                {
+                    game.AddVariant(i);
+                }
+            }
 
             // levels completed
             foreach (var level in _levelsCompleted)
@@ -217,7 +264,7 @@ namespace BattleCruisers.Data.Models
             }
             else
             {
-                game.PlayerLoadout.CurrentHeckles = unlockedHeckles(game);
+                game.PlayerLoadout.CurrentHeckles = computeUnlockedHeckles(game);
             }
 
             // current captain
@@ -259,7 +306,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private List<int> unlockedHeckles(GameModel game)
+        private List<int> computeUnlockedHeckles(GameModel game)
         {
             List<int> unlockedHeckles = new List<int>();
             int numHecklesUnlocked = 3;
