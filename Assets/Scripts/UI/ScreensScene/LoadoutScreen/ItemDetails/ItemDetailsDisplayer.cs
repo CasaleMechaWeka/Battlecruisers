@@ -1,4 +1,6 @@
-﻿using BattleCruisers.UI.Common.BuildableDetails;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
@@ -33,6 +35,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         public void SelectItem(HullType hullType)
         {
             _leftDetails.SetHullType(hullType);
+        }
+        public void SelectItem(IBuilding building)
+        {
+            _leftDetails.SetBuilding(building);
+        }
+        public void SelectItem(IUnit unit)
+        {
+            _leftDetails.SetUnit(unit);
         }
 
         public void CompareWithSelectedItem(TItem item)

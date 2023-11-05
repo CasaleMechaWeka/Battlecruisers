@@ -358,6 +358,8 @@ namespace BattleCruisers.Scenes
             await InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
             loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)

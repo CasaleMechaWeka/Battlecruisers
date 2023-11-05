@@ -300,6 +300,7 @@ namespace BattleCruisers.Data.Models
 
         private List<int> _purchasedVariants;
 
+
         private bool _isDoneMigration;
         public bool IsDoneMigration
         {
@@ -345,9 +346,6 @@ namespace BattleCruisers.Data.Models
 
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
-
-
-
 
         [SerializeField]
         private long _lifetimeDestructionScore;

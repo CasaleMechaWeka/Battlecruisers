@@ -1,12 +1,16 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using System;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
@@ -64,6 +68,21 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             if (GetComponent<BodykitDetailController>() != null)
             {
                 GetComponent<BodykitDetailController>().hullType = hullType;
+            }
+        }
+
+        public virtual void SetBuilding(IBuilding building)
+        {
+            if (GetComponent<BuildingDetailController>() != null)
+            {
+                GetComponent<BuildingDetailController>().SelectedBuilding = building;
+            }
+        }
+        public virtual void SetUnit(IUnit unit)
+        {
+            if (GetComponent<UnitDetailController>() != null)
+            {
+                GetComponent<UnitDetailController>().SelectedUnit = unit;
             }
         }
 

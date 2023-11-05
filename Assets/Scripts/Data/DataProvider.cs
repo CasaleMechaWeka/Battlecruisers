@@ -218,7 +218,6 @@ namespace BattleCruisers.Data
 
         public async Task SyncInventroyV2()
         {
-            await Task.Yield();
             // captain exo
             for (int i = 0; i < _gameModel.GetExos().Count; i++)
             {
@@ -259,6 +258,7 @@ namespace BattleCruisers.Data
                 }
             }
             SaveGame();
+            await Task.CompletedTask;
         }
         private async Task FetchConfigs()
         {

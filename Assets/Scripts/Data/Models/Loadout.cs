@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -62,7 +66,7 @@ namespace BattleCruisers.Data.Models
             set => _selectedBodykit = value;
         }
 
-        private List<int> _selectedVariants;
+        private List<int> _selectedVariants;  // index of Prefabs
         public List<int> SelectedVariants
         {
             get => _selectedVariants;
@@ -87,13 +91,83 @@ namespace BattleCruisers.Data.Models
             _builds = buildLimt;
             _unit = unitLimit;
             _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain
-            _selectedBodykit = -1;                                                      
+            _selectedBodykit = -1;
+            _selectedVariants = new List<int>();
         }
 
         public bool Is_buildsNull()
         {
             return _builds == null;
         }
+
+        public async Task<VariantPrefab> GetSelectedUnitVariant(IPrefabFactory prefabFactory, IUnit unit)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if(variantPrefab.IsUnit())
+                {
+                    if(unit.Name == variantPrefab.GetParentName())
+                    {
+                        return variantPrefab;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public async Task<int> GetSelectedUnitVariantIndex(IPrefabFactory prefabFactory, IUnit unit)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (variantPrefab.IsUnit())
+                {
+                    if (unit.Name == variantPrefab.GetParentName())
+                    {
+                        return index;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public async Task<VariantPrefab> GetSelectedBuildingVariant(IPrefabFactory prefabFactory, IBuilding building)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (!variantPrefab.IsUnit())
+                {
+                    if (building.Name == variantPrefab.GetParentName())
+                    {
+                        return variantPrefab;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public async Task<int> GetSelectedBuildingVariantIndex(IPrefabFactory prefabFactory, IBuilding building)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (!variantPrefab.IsUnit())
+                {
+                    if (building.Name == variantPrefab.GetParentName())
+                    {
+                        return index;
+                    }
+                }
+            }
+            return -1;
+        }
+
 
         public void Create_buildsAnd_units()
         {

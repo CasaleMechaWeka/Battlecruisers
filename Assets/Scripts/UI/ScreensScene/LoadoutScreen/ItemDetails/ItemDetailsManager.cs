@@ -68,11 +68,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         public void ShowDetails(IBuilding building)
         {
             ShowDetails(building, _buildingDetails, ItemFamily.Buildings);
+            _buildingDetails.SelectItem(building);
         }
 
         public void ShowDetails(IUnit unit)
         {
             ShowDetails(unit, _unitDetails, ItemFamily.Units);
+            _unitDetails.SelectItem(unit);
         }
 
         public void ShowDetails(ICruiser cruiser)

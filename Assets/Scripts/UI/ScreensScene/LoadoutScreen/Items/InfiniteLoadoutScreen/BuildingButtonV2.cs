@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -27,8 +29,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public Text _buildingName;
         private RectTransform _selectedFeedback;
         public Button toggleSelectionButton;
+        public Image variantIcon;
 
-        public void Initialise(
+        public async void Initialise(
             ISingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -51,6 +54,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
 
             UpdateSelectedFeedback();
+
+            // show variant icon in item button when init load
+            VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedBuildingVariant(ScreensSceneGod.Instance._prefabFactory, buildingPrefab.Buildable);
+            if (variant != null)
+            {
+                variantIcon.gameObject.SetActive(true);
+                variantIcon.sprite = variant.variantSprite;
+            }
+            else
+            {
+                variantIcon.gameObject.SetActive(false);
+            }
         }
 
         protected override void OnClicked()
