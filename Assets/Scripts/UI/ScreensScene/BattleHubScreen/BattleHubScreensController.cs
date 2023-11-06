@@ -54,6 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text continueSubtitle;
         public Text levelsTitle;
         public Text skirmishTitle;
+        public Text openingSoonText;
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -99,6 +100,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             levelsTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("LevelSelect");
             skirmishTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("SkirmishMode");
             offlineOnlyText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineOnlySubtitle");
+            openingSoonText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ArenasOpenDecemberMessage");
         }
 
         private void GoHome()
