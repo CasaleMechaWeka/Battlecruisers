@@ -84,6 +84,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             _unitDetails.SelectItem(unit);
         }
 
+        public void ShowDetails(IUnit unit, ItemButton button)
+        {
+            ShowDetails(unit, _unitDetails, ItemFamily.Units);
+            _unitDetails.SelectItem(unit, button);
+        }
+
         public void ShowDetails(ICruiser cruiser)
         {
             ShowDetails(cruiser, _cruiserDetails, ItemFamily.Hulls);

@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private async void OnVariantChanged(object sender, VariantChangeEventArgs args)
         {
             int index = args.Index;
-            if(index != -1)
+            if (index != -1)
             {
                 VariantPrefab variant = await ScreensSceneGod.Instance._prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
@@ -111,7 +111,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public override void ShowDetails()
         {
-            _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
+            //    _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
+            _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable, this);
         }
 
         private void UpdateSelectedFeedback()

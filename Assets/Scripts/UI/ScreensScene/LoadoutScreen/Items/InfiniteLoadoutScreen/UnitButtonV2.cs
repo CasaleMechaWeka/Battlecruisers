@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Scenes;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -52,10 +53,33 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             // show variant icon in item button when init load
             VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedUnitVariant(ScreensSceneGod.Instance._prefabFactory, unitPrefab.Buildable);
-            if(variant != null)
+            if (variant != null)
             {
                 variantIcon.gameObject.SetActive(true);
                 variantIcon.sprite = variant.variantSprite;
+            }
+            else
+            {
+                variantIcon.gameObject.SetActive(false);
+            }
+            variantChanged += OnVariantChanged;
+        }
+
+        private async void OnVariantChanged(object sender, VariantChangeEventArgs args)
+        {
+            int index = args.Index;
+            if (index != -1)
+            {
+                VariantPrefab variant = await ScreensSceneGod.Instance._prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                if (variant != null)
+                {
+                    variantIcon.gameObject.SetActive(true);
+                    variantIcon.sprite = variant.variantSprite;
+                }
+                else
+                {
+                    variantIcon.gameObject.SetActive(false);
+                }
             }
             else
             {
@@ -69,7 +93,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _comparingFamiltyTracker.SetComparingFamily(itemFamily);
             if (_comparingFamiltyTracker.ComparingFamily.Value == itemFamily)
             {
-                _itemDetailsManager.ShowDetails(_unitPrefab.Buildable);
+                // _itemDetailsManager.ShowDetails(_unitPrefab.Buildable);
+                _itemDetailsManager.ShowDetails(_unitPrefab.Buildable, this);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
@@ -81,7 +106,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public override void ShowDetails()
         {
-            _itemDetailsManager.ShowDetails(_unitPrefab.Buildable);
+            //         _itemDetailsManager.ShowDetails(_unitPrefab.Buildable);
+            _itemDetailsManager.ShowDetails(_unitPrefab.Buildable, this);
         }
 
         private void UpdateSelectedFeedback()

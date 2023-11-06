@@ -96,6 +96,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
         }
 
+        public virtual void SetUnit(IUnit unit, ItemButton button)
+        {
+            if (GetComponent<UnitDetailController>() != null)
+            {
+                GetComponent<UnitDetailController>().SelectedUnit = unit;
+                GetComponent<UnitDetailController>().currentButton = button;
+            }
+        }
+
         public void Hide()
         {
             CleanUp();

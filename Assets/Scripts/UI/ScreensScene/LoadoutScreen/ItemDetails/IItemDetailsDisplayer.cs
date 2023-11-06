@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         void SelectItem(IBuilding building);
         void SelectItem(IBuilding building, ItemButton button);
         void SelectItem(IUnit unit);
+        void SelectItem(IUnit unit, ItemButton button);
         void CompareWithSelectedItem(TItem item);
         void HideDetails();
     }

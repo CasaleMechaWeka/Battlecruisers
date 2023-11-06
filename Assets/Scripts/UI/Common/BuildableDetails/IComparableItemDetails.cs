@@ -16,5 +16,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		void SetBuilding(IBuilding building);
 		void SetBuilding(IBuilding building, ItemButton button);
 		void SetUnit(IUnit unit);
+		void SetUnit(IUnit unit, ItemButton button);
 	}
 }

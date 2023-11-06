@@ -49,6 +49,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         {
             _leftDetails.SetUnit(unit);
         }
+        public void SelectItem(IUnit unit, ItemButton button)
+        {
+            _leftDetails.SetUnit(unit, button);
+        }
 
         public void CompareWithSelectedItem(TItem item)
         {
