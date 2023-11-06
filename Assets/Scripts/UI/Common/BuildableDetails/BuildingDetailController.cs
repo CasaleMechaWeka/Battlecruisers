@@ -46,6 +46,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             leftNav.Initialise(_soundPlayer, LeftNavButton_OnClicked);
             rightNav.Initialise(_soundPlayer, RightNavButton_OnClicked);
+
+            CollectUnlockedBuildingVariant();
         }
         private async void SetInitVariant()
         {
