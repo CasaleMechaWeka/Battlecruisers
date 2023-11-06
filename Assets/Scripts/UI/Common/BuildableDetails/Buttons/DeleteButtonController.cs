@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             _soundPlayer.PlaySoundAsync(ClickSound);
             if (Buildable.BuildableState == BuildableState.NotStarted)
             {
-                Buildable.Destroy();
+                OnLongPressComplete();
             }
         }
 
