@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public abstract IComparableItem Item { get; }
 
         public abstract void ShowDetails();
-
+        public EventHandler<VariantChangeEventArgs> variantChanged;
         public Color Color
         {
             set

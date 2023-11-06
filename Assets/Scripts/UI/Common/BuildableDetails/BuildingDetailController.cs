@@ -2,11 +2,13 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +19,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     public class BuildingDetailController : MonoBehaviour
     {
         private int _selectedVariant;
-        private IBuilding _selectedBuilding;
         public CanvasGroupButton leftNav, rightNav;
+        private IBuilding _selectedBuilding;
         public IBuilding SelectedBuilding
         {
             get { return _selectedBuilding; }
@@ -29,6 +31,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
         }
 
+        private ItemButton _currentButton;
+        public ItemButton CureentButton
+        {
+            get => _currentButton;
+            set { _currentButton = value; }
+        }
 
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
@@ -149,6 +157,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 leftNav.gameObject.SetActive(false);
                 rightNav.gameObject.SetActive(true);
                 ShowOriginalBuilding();
+                _dataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
+                _dataProvider.SaveGame();
+                _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = -1 });
                 return;
             }
             else
@@ -160,12 +171,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _dataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedBuilding][_index]);
             _dataProvider.SaveGame();
             ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
+            _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedBuilding][_index] });
         }
         private async void RightNavButton_OnClicked()
         {
             ++_index;
             int current_index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
-            if (_index >= _unlockedVariants[_selectedBuilding].Count -1)
+            if (_index >= _unlockedVariants[_selectedBuilding].Count - 1)
             {
                 _index = _unlockedVariants[_selectedBuilding].Count - 1;
                 leftNav.gameObject.SetActive(true);
@@ -180,6 +192,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _dataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedBuilding][_index]);
             _dataProvider.SaveGame();
             ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
+            _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedBuilding][_index] });
         }
 
         public async void CollectUnlockedBuildingVariant()

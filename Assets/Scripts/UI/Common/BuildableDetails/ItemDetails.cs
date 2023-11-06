@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using System;
@@ -76,6 +77,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             if (GetComponent<BuildingDetailController>() != null)
             {
                 GetComponent<BuildingDetailController>().SelectedBuilding = building;
+            }
+        }
+
+        public virtual void SetBuilding(IBuilding building, ItemButton button)
+        {
+            if (GetComponent<BuildingDetailController>() != null)
+            {
+                GetComponent<BuildingDetailController>().SelectedBuilding = building;
+                GetComponent<BuildingDetailController>().CureentButton = button;
             }
         }
         public virtual void SetUnit(IUnit unit)

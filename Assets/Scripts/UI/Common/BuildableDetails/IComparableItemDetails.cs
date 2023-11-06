@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEditor.Build;
 
@@ -13,6 +14,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		void Hide();
 		void SetHullType(HullType hullType);
 		void SetBuilding(IBuilding building);
+		void SetBuilding(IBuilding building, ItemButton button);
 		void SetUnit(IUnit unit);
 	}
 }
