@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -9,6 +10,7 @@ using BattleCruisers.Utils.Localisation;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
@@ -34,6 +36,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private ILocTable _commonStrings;
         private Dictionary<IBuilding, List<int>> _unlockedVariants;
         private int _index;
+
+        public Image variantIcon;
+        public Text variantName;
+        public Text variantDescription;
+        public Text variantParentName;
+        public StatsController<IBuilding> variantStats;
 
         public void Initialize(IDataProvider dataProvider, IPrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer, ILocTable commonString)
         {
@@ -115,22 +123,63 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (index < 0)
                 return;
+            variantIcon.gameObject.SetActive(true);
+            variantName.gameObject.SetActive(true);
             VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-            GetComponent<ComparableBuildingDetailsController>().itemName.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
-            GetComponent<ComparableBuildingDetailsController>().itemDescription.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+            variantName.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+            variantIcon.sprite = variant.variantSprite;
+            variantParentName.text = variant.GetParentName();
+            variantDescription.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+            variantStats.ShowStatsOfVariant(_selectedBuilding, variant);
         }
 
         private void ShowOriginalBuilding()
         {
+            variantIcon.gameObject.SetActive(false);
+            variantName.gameObject.SetActive(false);
             GetComponent<ComparableBuildingDetailsController>().ShowItemDetails();
         }
-        private void LeftNavButton_OnClicked()
+        private async void LeftNavButton_OnClicked()
         {
-
+            --_index;
+            int current_index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
+            if (_index <= -1)
+            {
+                _index = -1;
+                leftNav.gameObject.SetActive(false);
+                rightNav.gameObject.SetActive(true);
+                ShowOriginalBuilding();
+                return;
+            }
+            else
+            {
+                leftNav.gameObject.SetActive(true);
+                rightNav.gameObject.SetActive(true);
+            }
+            _dataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
+            _dataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedBuilding][_index]);
+            _dataProvider.SaveGame();
+            ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
         }
-        private void RightNavButton_OnClicked()
+        private async void RightNavButton_OnClicked()
         {
-
+            ++_index;
+            int current_index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
+            if (_index >= _unlockedVariants[_selectedBuilding].Count -1)
+            {
+                _index = _unlockedVariants[_selectedBuilding].Count - 1;
+                leftNav.gameObject.SetActive(true);
+                rightNav.gameObject.SetActive(false);
+            }
+            else
+            {
+                leftNav.gameObject.SetActive(true);
+                rightNav.gameObject.SetActive(true);
+            }
+            _dataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
+            _dataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedBuilding][_index]);
+            _dataProvider.SaveGame();
+            ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
         }
 
         public async void CollectUnlockedBuildingVariant()

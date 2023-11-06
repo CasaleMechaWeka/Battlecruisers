@@ -134,6 +134,8 @@ namespace BattleCruisers.Data.Models
             return -1;
         }
 
+
+
         public async Task<VariantPrefab> GetSelectedBuildingVariant(IPrefabFactory prefabFactory, IBuilding building)
         {
             foreach (int index in _selectedVariants)
@@ -168,6 +170,14 @@ namespace BattleCruisers.Data.Models
             return -1;
         }
 
+        public void RemoveCurrentSelectedVariant(int index)
+        {
+            _selectedVariants.Remove(index);
+        }
+        public void AddSelectedVariant(int index)
+        {
+            _selectedVariants.Add(index);
+        }
 
         public void Create_buildsAnd_units()
         {
