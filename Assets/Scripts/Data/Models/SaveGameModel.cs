@@ -38,6 +38,7 @@ namespace BattleCruisers.Data.Models
         public Dictionary<string, Dictionary<string, string>> _buildLimits;
         public Dictionary<string, Dictionary<string, string>> _unitLimits;
         public int _currentBodykit;
+        public List<int> _selectedVariants;
 
         // What levels have been completed
         // What difficulty those levels have been completed at.
@@ -101,6 +102,7 @@ namespace BattleCruisers.Data.Models
             _buildLimits = computeBuildLimits(game.PlayerLoadout.GetBuildLimits());
             _unitLimits = computeUnitLimits(game.PlayerLoadout.GetUnitLimits());
             _currentBodykit = game.PlayerLoadout.SelectedBodykit;
+            _selectedVariants = game.PlayerLoadout.SelectedVariants;
 
             // Status tracking:
             _hasAttemptedTutorial = game.HasAttemptedTutorial;
@@ -294,6 +296,16 @@ namespace BattleCruisers.Data.Models
 
             // loadout construction actually happens finally:
             game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits, game);
+
+            // current variants
+            if (_selectedVariants != null)
+            {
+                game.PlayerLoadout.SelectedVariants = _selectedVariants;
+            }
+            else
+            {
+                game.PlayerLoadout.SelectedVariants = new List<int>();
+            }
 
             // current bodykit
             if (_currentBodykit == -1 || game.Bodykits[_currentBodykit].isOwned)

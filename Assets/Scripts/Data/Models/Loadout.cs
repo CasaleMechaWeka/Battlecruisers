@@ -46,6 +46,8 @@ namespace BattleCruisers.Data.Models
                 _hull = value;
             }
         }
+
+        [SerializeField]
         private CaptainExoKey _currentCaptain;
         public CaptainExoKey CurrentCaptain
         {
@@ -59,6 +61,7 @@ namespace BattleCruisers.Data.Models
             set => _currentHeckles = value;
         }
 
+        [SerializeField]
         private int _selectedBodykit;     // index of prefabs
         public int SelectedBodykit
         {
@@ -66,6 +69,7 @@ namespace BattleCruisers.Data.Models
             set => _selectedBodykit = value;
         }
 
+        [SerializeField]
         private List<int> _selectedVariants;  // index of Prefabs
         public List<int> SelectedVariants
         {

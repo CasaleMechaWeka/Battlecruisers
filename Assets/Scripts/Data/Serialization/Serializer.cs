@@ -58,7 +58,7 @@ namespace BattleCruisers.Data.Serialization
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || bks == null || vts == null)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -141,6 +141,12 @@ namespace BattleCruisers.Data.Serialization
             if (_playerLoadout.CurrentHeckles == null)
             {
                 compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
+            }
+
+            // Variants
+            if(_playerLoadout.SelectedVariants == null)
+            {
+                _playerLoadout.SelectedVariants = new List<int>();
             }
 
             // Player Name
