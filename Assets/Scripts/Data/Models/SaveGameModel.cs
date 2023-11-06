@@ -123,7 +123,7 @@ namespace BattleCruisers.Data.Models
                 {
                     if (!currentList.Contains(_purchasedExos[i]))
                     {
-                        game.AddExo(i);
+                        game.AddExo(_purchasedExos[i]);
                     }
                 }
             }
@@ -135,7 +135,7 @@ namespace BattleCruisers.Data.Models
                 {
                     if (!currentList.Contains(_purchasedHeckles[i]))
                     {
-                        game.AddHeckle(currentList[i]);
+                        game.AddHeckle(_purchasedHeckles[i]);
                     }
                 }
             }
@@ -147,7 +147,7 @@ namespace BattleCruisers.Data.Models
                 {
                     if (!currentList.Contains(_purchasedBodykits[i]))
                     {
-                        game.AddBodykit(currentList[i]);
+                        game.AddBodykit(_purchasedBodykits[i]);
                     }
                 }
             }
@@ -159,7 +159,7 @@ namespace BattleCruisers.Data.Models
                 {
                     if (!currentList.Contains(_purchasedVariants[i]))
                     {
-                        game.AddVariant(currentList[i]);
+                        game.AddVariant(_purchasedVariants[i]);
                     }
                 }
             }
