@@ -84,8 +84,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (GetComponent<BuildingDetailController>() != null)
             {
-                GetComponent<BuildingDetailController>().SelectedBuilding = building;
                 GetComponent<BuildingDetailController>().CureentButton = button;
+                GetComponent<BuildingDetailController>().SelectedBuilding = building;
             }
         }
         public virtual void SetUnit(IUnit unit)
@@ -100,8 +100,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (GetComponent<UnitDetailController>() != null)
             {
-                GetComponent<UnitDetailController>().SelectedUnit = unit;
                 GetComponent<UnitDetailController>().currentButton = button;
+                GetComponent<UnitDetailController>().SelectedUnit = unit;
             }
         }
 

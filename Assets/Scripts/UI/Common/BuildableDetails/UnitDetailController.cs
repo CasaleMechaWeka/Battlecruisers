@@ -124,6 +124,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 rightNav.gameObject.SetActive(false);
                 _index = -1;
             }
+            _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _selectedVariant });
         }
         private async void ShowVariantDetail(int index)
         {

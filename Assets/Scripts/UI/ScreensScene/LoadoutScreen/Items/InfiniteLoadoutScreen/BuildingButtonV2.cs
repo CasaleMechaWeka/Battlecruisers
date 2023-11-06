@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             UpdateSelectedFeedback();
 
             // show variant icon in item button when init load
-            VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedBuildingVariant(ScreensSceneGod.Instance._prefabFactory, buildingPrefab.Buildable);
+            VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedBuildingVariant(ScreensSceneGod.Instance._prefabFactory, _buildingPrefab.Buildable);
             if (variant != null)
             {
                 variantIcon.gameObject.SetActive(true);

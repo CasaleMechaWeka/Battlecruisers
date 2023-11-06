@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
 
             // show variant icon in item button when init load
-            VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedUnitVariant(ScreensSceneGod.Instance._prefabFactory, unitPrefab.Buildable);
+            VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedUnitVariant(ScreensSceneGod.Instance._prefabFactory, _unitPrefab.Buildable);
             if (variant != null)
             {
                 variantIcon.gameObject.SetActive(true);
