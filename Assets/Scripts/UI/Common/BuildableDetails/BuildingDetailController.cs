@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
@@ -137,7 +138,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
             variantName.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
-            variantParentName.text = variant.GetParentName();
+            variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
             variantDescription.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
             variantStats.ShowStatsOfVariant(_selectedBuilding, variant);
         }
@@ -206,13 +207,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 {
                     if (!variant.IsUnit())
                     {
-                        if (_unlockedVariants.ContainsKey(variant.GetBuilding()))
+                        if (_unlockedVariants.ContainsKey(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)))
                         {
-                            _unlockedVariants[variant.GetBuilding()].Add(_dataProvider.GameModel.GetVariants()[i]);
+                            _unlockedVariants[variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)].Add(_dataProvider.GameModel.GetVariants()[i]);
                         }
                         else
                         {
-                            _unlockedVariants[variant.GetBuilding()] = new List<int> { _dataProvider.GameModel.GetVariants()[i] };
+                            _unlockedVariants[variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)] = new List<int> { _dataProvider.GameModel.GetVariants()[i] };
                         }
                     }
                 }

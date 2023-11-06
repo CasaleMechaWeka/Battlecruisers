@@ -8,6 +8,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -112,7 +113,7 @@ namespace BattleCruisers.Data.Models
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if(variantPrefab.IsUnit())
                 {
-                    if(unit.Name == variantPrefab.GetParentName())
+                    if(unit.Name == variantPrefab.GetParentName(ScreensSceneGod.Instance._prefabFactory))
                     {
                         return variantPrefab;
                     }
@@ -129,7 +130,7 @@ namespace BattleCruisers.Data.Models
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (variantPrefab.IsUnit())
                 {
-                    if (unit.Name == variantPrefab.GetParentName())
+                    if (unit.Name == variantPrefab.GetParentName(ScreensSceneGod.Instance._prefabFactory))
                     {
                         return index;
                     }
@@ -148,7 +149,7 @@ namespace BattleCruisers.Data.Models
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
-                    if (building.Name == variantPrefab.GetParentName())
+                    if (building.Name == variantPrefab.GetParentName(prefabFactory))
                     {
                         return variantPrefab;
                     }
@@ -165,7 +166,7 @@ namespace BattleCruisers.Data.Models
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
-                    if (building.Name == variantPrefab.GetParentName())
+                    if (building.Name == variantPrefab.GetParentName(ScreensSceneGod.Instance._prefabFactory))
                     {
                         return index;
                     }

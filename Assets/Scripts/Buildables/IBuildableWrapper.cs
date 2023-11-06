@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Buildables
+﻿using UnityEngine;
+
+namespace BattleCruisers.Buildables
 {
     /// <summary>
     /// BuildableWrappers contain:
@@ -13,5 +15,6 @@
     {
         TBuildable Buildable { get; }
         BuildableWrapper<TBuildable> UnityObject { get; }
+        void SetVariantIcon(Sprite sprite);
 	}
 }

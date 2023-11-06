@@ -167,13 +167,13 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 buildingStatsController.gameObject.SetActive(false);
                 unitStatsController.gameObject.SetActive(true);
-                unitStatsController.ShowStatsOfVariant(currentVariant.GetUnit(), currentVariant);
+                unitStatsController.ShowStatsOfVariant(currentVariant.GetUnit(ScreensSceneGod.Instance._prefabFactory), currentVariant);
             }
             else
             {
                 buildingStatsController.gameObject.SetActive(true);
                 unitStatsController.gameObject.SetActive(false);
-                buildingStatsController.ShowStatsOfVariant(currentVariant.GetBuilding(), currentVariant);
+                buildingStatsController.ShowStatsOfVariant(currentVariant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), currentVariant);
             }
 
             VariantPrice.text = e.variantData.VariantCredits.ToString();

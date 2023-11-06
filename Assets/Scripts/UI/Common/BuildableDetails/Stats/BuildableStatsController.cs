@@ -50,8 +50,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth + variant.statVariant.max_health), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item) , GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
-            ShowDamageStat(shipDamage, GetAntiShipDamage(item) + (variant.IsUnit() ? variant.GetUnit().AttackCapabilities.Contains(TargetType.Ships) ? variant.statVariant.damage : 0 : 0), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
-            ShowDamageStat(airDamage, GetAntiAirDamage(item) + (variant.IsUnit() ? variant.GetUnit().AttackCapabilities.Contains(TargetType.Aircraft) ? variant.statVariant.damage : 0 : 0), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
+            ShowDamageStat(shipDamage, GetAntiShipDamage(item) + (variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).AttackCapabilities.Contains(TargetType.Ships) ? variant.statVariant.damage : 0 : 0), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
+            ShowDamageStat(airDamage, GetAntiAirDamage(item) + (variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).AttackCapabilities.Contains(TargetType.Aircraft) ? variant.statVariant.damage : 0 : 0), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
         }
 
         private void ShowDamageStat(StarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)

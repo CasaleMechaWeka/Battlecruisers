@@ -2,6 +2,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils.Fetchers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,27 +29,27 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public VariantType variantType => _variantType;
         public StatVariant statVariant;
 
-        public string GetParentName()
+        public string GetParentName(IPrefabFactory prefabFactory)
         {
-            return IsUnit() ? GetUnit().Name : GetBuilding().Name;
+            return IsUnit() ? GetUnit(prefabFactory).Name : GetBuilding(prefabFactory).Name;
         }
 
-        public IBuilding GetBuilding()
+        public IBuilding GetBuilding(IPrefabFactory prefabFactory)
         {
             IBuilding building = null;
-            if (ScreensSceneGod.Instance != null)
+            if (prefabFactory != null)
             {
-                building = ScreensSceneGod.Instance._prefabFactory.GetBuildingWrapperPrefab(GetPrefabKey()).Buildable;
+                building = prefabFactory.GetBuildingWrapperPrefab(GetPrefabKey()).Buildable;
             }
             return building;
         }
 
-        public IUnit GetUnit()
+        public IUnit GetUnit(IPrefabFactory prefabFactory)
         {
             IUnit unit = null;
-            if(ScreensSceneGod.Instance != null)
+            if(prefabFactory != null)
             {
-                unit = ScreensSceneGod.Instance._prefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
+                unit = prefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
             }
             return unit;
         }
