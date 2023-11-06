@@ -88,14 +88,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             variantList = GeneratePseudoRandomList(12, 35, 6, 3); // 0,1,2 are Premium
             foreach (int index in variantList)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.AllKeys[index]);
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 variants.Add(variant);
             }
 
             bodykitList = GeneratePseudoRandomList(6, 11, 6, 1);
             foreach (int index in bodykitList)
             {
-                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
+                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
                 bodykits.Add(bodykit);
             }
         }

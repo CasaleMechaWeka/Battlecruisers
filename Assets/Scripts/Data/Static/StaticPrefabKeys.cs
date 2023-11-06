@@ -567,108 +567,17 @@ namespace BattleCruisers.Data.Static
 
         public static class BodyKits
         {
-            public static BodykitKey Bodykit000 { get; } = new BodykitKey("Bodykit000");
-            public static BodykitKey Bodykit001 { get; } = new BodykitKey("Bodykit001");
-            public static BodykitKey Bodykit002 { get; } = new BodykitKey("Bodykit002");
-            public static BodykitKey Bodykit003 { get; } = new BodykitKey("Bodykit003");
-            public static BodykitKey Bodykit004 { get; } = new BodykitKey("Bodykit004");
-            public static BodykitKey Bodykit005 { get; } = new BodykitKey("Bodykit005");
-            public static BodykitKey Bodykit006 { get; } = new BodykitKey("Bodykit006");
-            public static BodykitKey Bodykit007 { get; } = new BodykitKey("Bodykit007");
-            public static BodykitKey Bodykit008 { get; } = new BodykitKey("Bodykit008");
-            public static BodykitKey Bodykit009 { get; } = new BodykitKey("Bodykit009");
-            public static BodykitKey Bodykit010 { get; } = new BodykitKey("Bodykit010");
-            public static BodykitKey Bodykit011 { get; } = new BodykitKey("Bodykit011");
-            public static BodykitKey Bodykit012 { get; } = new BodykitKey("Bodykit012");
-            public static BodykitKey Bodykit013 { get; } = new BodykitKey("Bodykit013");
-            public static BodykitKey Bodykit014 { get; } = new BodykitKey("Bodykit014");
-            public static BodykitKey Bodykit015 { get; } = new BodykitKey("Bodykit015");
-            public static BodykitKey Bodykit016 { get; } = new BodykitKey("Bodykit016");
-            public static BodykitKey Bodykit017 { get; } = new BodykitKey("Bodykit017");
-            public static BodykitKey Bodykit018 { get; } = new BodykitKey("Bodykit018");
-            public static BodykitKey Bodykit019 { get; } = new BodykitKey("Bodykit019");
-            public static BodykitKey Bodykit020 { get; } = new BodykitKey("Bodykit020");
-            public static BodykitKey Bodykit021 { get; } = new BodykitKey("Bodykit021");
-            public static BodykitKey Bodykit022 { get; } = new BodykitKey("Bodykit022");
-            public static BodykitKey Bodykit023 { get; } = new BodykitKey("Bodykit023");
-            public static BodykitKey Bodykit024 { get; } = new BodykitKey("Bodykit024");
-            public static BodykitKey Bodykit025 { get; } = new BodykitKey("Bodykit025");
-            public static BodykitKey Bodykit026 { get; } = new BodykitKey("Bodykit026");
-            public static BodykitKey Bodykit027 { get; } = new BodykitKey("Bodykit027");
-            public static BodykitKey Bodykit028 { get; } = new BodykitKey("Bodykit028");
-            public static BodykitKey Bodykit029 { get; } = new BodykitKey("Bodykit029");
-            public static BodykitKey Bodykit030 { get; } = new BodykitKey("Bodykit030");
-            public static BodykitKey Bodykit031 { get; } = new BodykitKey("Bodykit031");
-            public static BodykitKey Bodykit032 { get; } = new BodykitKey("Bodykit032");
-            public static BodykitKey Bodykit033 { get; } = new BodykitKey("Bodykit033");
-            public static BodykitKey Bodykit034 { get; } = new BodykitKey("Bodykit034");
-            public static BodykitKey Bodykit035 { get; } = new BodykitKey("Bodykit035");
-      
-            public static IList<IPrefabKey> AllKeys
+            public static BodykitKey GetBodykitKey(int index)
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        Bodykit000, Bodykit001, Bodykit002, Bodykit003, Bodykit004, Bodykit005, Bodykit006, Bodykit007, Bodykit008,
-                        Bodykit009, Bodykit010, Bodykit011, Bodykit012, Bodykit013, Bodykit014, Bodykit015, Bodykit016, Bodykit017,
-                        Bodykit018, Bodykit019, Bodykit020, Bodykit021, Bodykit022, Bodykit023, Bodykit024, Bodykit025, Bodykit026, Bodykit027,
-                        Bodykit028, Bodykit029, Bodykit030, Bodykit031, Bodykit032, Bodykit033, Bodykit034, Bodykit035
-                    };
-                }
+                return new BodykitKey("Bodykit" + index.ToString("000"));
             }
         }
 
         public static class Variants
         {
-            public static VariantKey Variant000 { get; } = new VariantKey("Variant000");
-            public static VariantKey Variant001 { get; } = new VariantKey("Variant001");
-            public static VariantKey Variant002 { get; } = new VariantKey("Variant002");
-            public static VariantKey Variant003 { get; } = new VariantKey("Variant003");
-            public static VariantKey Variant004 { get; } = new VariantKey("Variant004");
-            public static VariantKey Variant005 { get; } = new VariantKey("Variant005");
-            public static VariantKey Variant006 { get; } = new VariantKey("Variant006");
-            public static VariantKey Variant007 { get; } = new VariantKey("Variant007");
-            public static VariantKey Variant008 { get; } = new VariantKey("Variant008");
-            public static VariantKey Variant009 { get; } = new VariantKey("Variant009");
-            public static VariantKey Variant010 { get; } = new VariantKey("Variant010");
-            public static VariantKey Variant011 { get; } = new VariantKey("Variant011");
-            public static VariantKey Variant012 { get; } = new VariantKey("Variant012");
-            public static VariantKey Variant013 { get; } = new VariantKey("Variant013");
-            public static VariantKey Variant014 { get; } = new VariantKey("Variant014");
-            public static VariantKey Variant015 { get; } = new VariantKey("Variant015");
-            public static VariantKey Variant016 { get; } = new VariantKey("Variant016");
-            public static VariantKey Variant017 { get; } = new VariantKey("Variant017");
-            public static VariantKey Variant018 { get; } = new VariantKey("Variant018");
-            public static VariantKey Variant019 { get; } = new VariantKey("Variant019");
-            public static VariantKey Variant020 { get; } = new VariantKey("Variant020");
-            public static VariantKey Variant021 { get; } = new VariantKey("Variant021");
-            public static VariantKey Variant022 { get; } = new VariantKey("Variant022");
-            public static VariantKey Variant023 { get; } = new VariantKey("Variant023");
-            public static VariantKey Variant024 { get; } = new VariantKey("Variant024");
-            public static VariantKey Variant025 { get; } = new VariantKey("Variant025");
-            public static VariantKey Variant026 { get; } = new VariantKey("Variant026");
-            public static VariantKey Variant027 { get; } = new VariantKey("Variant027");
-            public static VariantKey Variant028 { get; } = new VariantKey("Variant028");
-            public static VariantKey Variant029 { get; } = new VariantKey("Variant029");
-            public static VariantKey Variant030 { get; } = new VariantKey("Variant030");
-            public static VariantKey Variant031 { get; } = new VariantKey("Variant031");
-            public static VariantKey Variant032 { get; } = new VariantKey("Variant032");
-            public static VariantKey Variant033 { get; } = new VariantKey("Variant033");
-            public static VariantKey Variant034 { get; } = new VariantKey("Variant034");
-            public static VariantKey Variant035 { get; } = new VariantKey("Variant035");
-            public static IList<IPrefabKey> AllKeys
+            public static VariantKey GetVariantKey(int index)
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        Variant000, Variant001, Variant002, Variant003, Variant004, Variant005, Variant006, Variant007, Variant008, Variant009,
-                        Variant010, Variant011, Variant012, Variant013, Variant014, Variant015, Variant016, Variant017, Variant018, Variant019,
-                        Variant020, Variant021, Variant022, Variant023, Variant024, Variant025, Variant026, Variant027, Variant028, Variant029,
-                        Variant030, Variant031, Variant032, Variant033, Variant034, Variant035,
-                    };
-                }
+                return new VariantKey("Variant" + index.ToString("000"));
             }
         }
             public static class Effects

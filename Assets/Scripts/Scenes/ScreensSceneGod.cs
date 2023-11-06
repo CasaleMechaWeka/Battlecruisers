@@ -665,7 +665,7 @@ namespace BattleCruisers.Scenes
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < 12 /*_applicationModel.DataProvider.GameModel.Bodykits.Count*/; i++)
                 {
-                    if ((await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i])).cruiserType == hullType)
+                    if ((await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i))).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }

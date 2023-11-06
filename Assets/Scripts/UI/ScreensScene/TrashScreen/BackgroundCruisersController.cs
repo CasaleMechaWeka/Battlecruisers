@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
             else
             {
-                Bodykit bodykit = await ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit]);
+                Bodykit bodykit = await ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit));
                 playerCruiserImage.sprite = bodykit.BodykitImage;
             }
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
             else
             {
-                Bodykit bodykit = await ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot]);
+                Bodykit bodykit = await ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot));
                 enemyCruiserImage.sprite = bodykit.BodykitImage;
             }
          

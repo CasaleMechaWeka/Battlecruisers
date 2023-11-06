@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                             rightNav.gameObject.SetActive(true);
                         }
                         _index = 0;
-                        ShowVariantDetail();
+                        ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
                         return;
                     }
                     else if (_unlockedVariants[_selectedBuilding].IndexOf(_selectedVariant) == _unlockedVariants[_selectedBuilding].Count - 1)
@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         leftNav.gameObject.SetActive(true);
                         rightNav.gameObject.SetActive(false);
                         _index = _unlockedVariants[_selectedBuilding].Count - 1;
-                        ShowVariantDetail();
+                        ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
                         return;
                     }
                     else if (_unlockedVariants[_selectedBuilding].IndexOf(_selectedVariant) < 0)
@@ -93,7 +93,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         leftNav.gameObject.SetActive(true);
                         rightNav.gameObject.SetActive(true);
                         _index = _unlockedVariants[_selectedBuilding].IndexOf(_selectedVariant);
-                        ShowVariantDetail();
+                        ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
                         return;
                     }
                 }
@@ -111,14 +111,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 _index = -1;
             }
         }
-        private void ShowVariantDetail()
+        private async void ShowVariantDetail(int index)
         {
-
+            if (index < 0)
+                return;
+            VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+            GetComponent<ComparableBuildingDetailsController>().itemName.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+            GetComponent<ComparableBuildingDetailsController>().itemDescription.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
         }
 
         private void ShowOriginalBuilding()
         {
-
+            GetComponent<ComparableBuildingDetailsController>().ShowItemDetails();
         }
         private void LeftNavButton_OnClicked()
         {
@@ -134,7 +138,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _unlockedVariants = new Dictionary<IBuilding, List<int>>();
             for (int i = 0; i < _dataProvider.GameModel.GetVariants().Count; i++)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.AllKeys[_dataProvider.GameModel.GetVariants()[i]]);
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.GetVariants()[i]));
                 if (variant != null)
                 {
                     if (!variant.IsUnit())

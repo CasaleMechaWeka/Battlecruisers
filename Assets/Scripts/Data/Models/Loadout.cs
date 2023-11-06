@@ -104,7 +104,7 @@ namespace BattleCruisers.Data.Models
         {
             foreach (int index in _selectedVariants)
             {
-                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if(variantPrefab.IsUnit())
                 {
@@ -121,7 +121,7 @@ namespace BattleCruisers.Data.Models
         {
             foreach (int index in _selectedVariants)
             {
-                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (variantPrefab.IsUnit())
                 {
@@ -138,7 +138,7 @@ namespace BattleCruisers.Data.Models
         {
             foreach (int index in _selectedVariants)
             {
-                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
@@ -155,7 +155,7 @@ namespace BattleCruisers.Data.Models
         {
             foreach (int index in _selectedVariants)
             {
-                IPrefabKey variantKey = StaticPrefabKeys.Variants.AllKeys[index];
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
