@@ -601,6 +601,7 @@ namespace BattleCruisers.Scenes
             fullScreenads.CloseAdvert();
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.CollectUnlockedBodykits();
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().RefreshBodykitsUI();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.CollectUnlockedBuildingVariant();
             GoToScreen(loadoutScreen);
         }
 
