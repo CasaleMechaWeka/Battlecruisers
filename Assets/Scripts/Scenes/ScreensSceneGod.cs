@@ -76,6 +76,8 @@ namespace BattleCruisers.Scenes
         public ShopPanelScreenController shopPanelScreen;
         public BlackMarketScreenController blackMarketScreen;
         public MessageBox messageBox;
+        public MessageBoxBig messageBoxBig;
+        public CanvasGroupButton newsButton;
         public GameObject processingPanel;
         public GameObject environmentArt;
         public GameObject homeScreenArt;
@@ -309,6 +311,12 @@ namespace BattleCruisers.Scenes
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize(_dataProvider, _soundPlayer);
             messageBox.HideMessage();
+            messageBoxBig.gameObject.SetActive(true);
+            messageBoxBig.Initialize(_dataProvider, _soundPlayer);
+            messageBoxBig.HideMessage();
+
+            newsButton.Initialise(_soundPlayer, ShowNewsPanel);
+
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             processingPanel.SetActive(false);
@@ -435,6 +443,7 @@ namespace BattleCruisers.Scenes
             }
             PlayerPrefs.GetInt("PLAYED", 1);
             PvPBattleSceneGodTunnel.isCost = false;
+
         }
 
         public async void DestroyAllNetworkObjects()
@@ -796,6 +805,13 @@ namespace BattleCruisers.Scenes
         public void LoadBattle1v1Mode()
         {
 
+        }
+
+        public void ShowNewsPanel()
+        {
+            ILocTable screenssceneStrings = LandingSceneGod.Instance.screenSceneStrings;
+
+            messageBoxBig.ShowMessage(screenssceneStrings.GetString("UpdateTitle"), screenssceneStrings.GetString("UpdateDescription"));
         }
 
         public void PlayAdvertisementMusic()
