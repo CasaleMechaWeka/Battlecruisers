@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.UI.Loading;
 using System;
 
 namespace BattleCruisers.Utils.BattleScene.Lifetime
@@ -22,7 +23,12 @@ namespace BattleCruisers.Utils.BattleScene.Lifetime
         {
             if (_lifetimeEvents.IsPaused.Value)
             {
-                _mainMenuManager.ShowMenu();
+                // only show menu if the loading screen is inactive
+                // otherwise, the game can be locked up by having both active at once
+                if (LoadingScreenController.Instance == null || !LoadingScreenController.Instance.isActiveAndEnabled)
+                {
+                    _mainMenuManager.ShowMenu();
+                }
             }
         }
     }
