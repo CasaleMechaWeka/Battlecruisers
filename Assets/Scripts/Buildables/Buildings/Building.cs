@@ -11,6 +11,12 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BattleCruisers.Data;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Factories;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
+using System.Configuration;
+using static UnityEditor.UIElements.ToolbarMenu;
 //using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -41,6 +47,7 @@ namespace BattleCruisers.Buildables.Buildings
         public virtual bool IsBoostable => false;
 
         private bool isImmune = false;
+        public int variantIndex { get; set; }
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -59,11 +66,16 @@ namespace BattleCruisers.Buildables.Buildings
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
-
+            variantIndex = -1;
             //if (PerkKey.IsNotNullOrEmpty())
             //    PerkName = _commonStrings.GetString(PerkKey);
         }
 
+        public void OverwriteComparableItem(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
         public override void Activate(BuildingActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
@@ -71,6 +83,50 @@ namespace BattleCruisers.Buildables.Buildings
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
+            HealthBar.variantIcon.enabled = false;
+            if (ParentCruiser.IsPlayerCruiser)
+            {
+                // Set variant for Player
+                ApplyVariantToPlayer(this);
+            }
+            else
+            {
+                // Set variant for AI
+
+            }
+        }
+
+        private async void ApplyVariantToPlayer(IBuilding building)
+        {
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
+
+            if (variant != null)
+            {
+
+                // apply icon, name and description
+                HealthBar.variantIcon.sprite = variant.variantSprite;
+                HealthBar.variantIcon.enabled = true;
+                int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
+                variantIndex = index;
+                Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
+
+                // apply variant stats for building (maxhealth, numof drones required, build time)
+                ApplyVariantStats(variant.statVariant);
+            }
+            else
+            {
+                HealthBar.variantIcon.enabled = false;
+                variantIndex = -1;
+            }
+        }
+
+        public void ApplyVariantStats(StatVariant statVariant)
+        {
+            maxHealth += statVariant.max_health;
+            numOfDronesRequired += statVariant.drone_num;
+            buildTimeInS += statVariant.build_time;
         }
 
         public override void StartConstruction()

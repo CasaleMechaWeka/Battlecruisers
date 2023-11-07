@@ -212,7 +212,7 @@ namespace BattleCruisers.Cruisers
                 int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
                 if (id_bodykit != -1)
                 {
-                    Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
+                    Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
                     if(bodykit.cruiserType == hullType)
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
@@ -246,7 +246,7 @@ namespace BattleCruisers.Cruisers
                     Debug.Log(id_bodykit);
                     if (id_bodykit != -1)
                     {
-                        Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[id_bodykit]);
+                        Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
                         if (bodykit.cruiserType == hullType)
                         {
                             GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
@@ -287,7 +287,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
-
+     /*       SetVariantIcon(building);*/
             building.Activate(
                 new BuildingActivationArgs(
                     this,
@@ -328,6 +328,8 @@ namespace BattleCruisers.Cruisers
 
             return building;
         }
+
+
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {

@@ -1,19 +1,18 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using UnityEngine;
-using UnityEngine.Assertions;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class UnitStatsController : BuildableStatsController<IUnit>
-	{
-        public StarsStatValue speed;
+    {
 
+        public StarsStatValue speed;
         public override void Initialise()
         {
             base.Initialise();
-
-            Assert.IsNotNull(speed);
+            Helper.AssertIsNotNull(speed);
             speed.Initialise();
         }
 
@@ -27,6 +26,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
                 starRating = 1;
             }
             ComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS, itemToCompareTo.MaxVelocityInMPerS);
+            speed.ShowResult(starRating, comparisonResult);
+        }
+
+        protected override void InternalShowStatsOfVariant(IUnit item, VariantPrefab variant, IUnit itemToCompareTo)
+        {
+            base.InternalShowStatsOfVariant(item, variant, itemToCompareTo);
+            int starRating = _unitMovementSpeedConverter.ConvertValueToStars(item.MaxVelocityInMPerS + variant.statVariant.max_velocity);
+            if (starRating == 0)
+            {
+                starRating = 1;
+            }
+            ComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS + variant.statVariant.max_velocity, itemToCompareTo.MaxVelocityInMPerS);
             speed.ShowResult(starRating, comparisonResult);
         }
 

@@ -18,6 +18,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
@@ -52,7 +53,8 @@ namespace BattleCruisers.UI.BattleScene
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData)
+            IStaticData staticData,
+            ILocTable commonString)
         {
             Helper.AssertIsNotNull(
                 droneManager, 
@@ -81,7 +83,8 @@ namespace BattleCruisers.UI.BattleScene
                     eventSoundPlayer, 
                     uiSoundPlayer, 
                     populationLimitMonitor,
-                    staticData);
+                    staticData,
+                    commonString);
 
 
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
@@ -102,10 +105,11 @@ namespace BattleCruisers.UI.BattleScene
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData)
+            IStaticData staticData,
+            ILocTable commonString)
         {
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
-            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
+            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory, commonString);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory 

@@ -45,7 +45,6 @@ using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using System.Threading;
 using UnityEditor;
-using BattleCruisers.UI.Loading;
 
 namespace BattleCruisers.Scenes
 {
@@ -76,8 +75,6 @@ namespace BattleCruisers.Scenes
         public ShopPanelScreenController shopPanelScreen;
         public BlackMarketScreenController blackMarketScreen;
         public MessageBox messageBox;
-        public MessageBoxBig messageBoxBig;
-        public CanvasGroupButton newsButton;
         public GameObject processingPanel;
         public GameObject environmentArt;
         public GameObject homeScreenArt;
@@ -118,7 +115,7 @@ namespace BattleCruisers.Scenes
         public bool serverStatus;
         public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
         public string requiredVer; // App version from Cloud;
-        private static bool IsFirstTimeLoading = true;
+        private static bool IsFirstTimeLoad = true;
         async void Start()
         {
             if (Instance == null)
@@ -144,18 +141,17 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             // Interacting with Cloud
-            LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_internet"));
+
             bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
             float timeStamper = Time.time;
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
                 try
                 {
-                    LoadingScreenController.Instance.LogString(commonStrings.GetString("loading_cloud"));
-                    if (IsFirstTimeLoading)
+                    if (IsFirstTimeLoad)
                     {
                         await _dataProvider.CloudLoad();
-                        IsFirstTimeLoading = false;
+                        IsFirstTimeLoad = false;
                     }
                     await _dataProvider.LoadBCData();
                     while (!m_cancellationToken.IsCancellationRequested)
@@ -173,17 +169,17 @@ namespace BattleCruisers.Scenes
                         _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
                         _dataProvider.GameModel.OutstandingBodykitTransactions != null &&
                         _dataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
+                        _dataProvider.GameModel.OutstandingVariantTransactions != null &&
+                        _dataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
                         _dataProvider.GameModel.CoinsChange > 0 ||
                         _dataProvider.GameModel.CreditsChange > 0)
                     {
                         Debug.Log("Processing offline shop purchases and currency changes.");
-                        LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_offline_purchase"));
                         await _dataProvider.ProcessOfflineTransactions();
                         PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                     }
 
                     // version check
-                    LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_app_version"));
                     requiredVer = await _dataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + Application.version);
                     Debug.Log("DataProvider Version: " + requiredVer);
@@ -202,7 +198,6 @@ namespace BattleCruisers.Scenes
                     else
                     {
                         // set pvp status in Battle Hub
-                        LoadingScreenController.Instance.LogString(commonStrings.GetString("checking_multiplayer_server"));
                         serverStatus = await _dataProvider.RefreshPVPServerStatus();
                         if (serverStatus)
                         {
@@ -293,7 +288,6 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            LoadingScreenController.Instance.LogString(commonStrings.GetString("finalizing"));
             ShowCharlieOnMainMenu();
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
@@ -311,12 +305,6 @@ namespace BattleCruisers.Scenes
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize(_dataProvider, _soundPlayer);
             messageBox.HideMessage();
-            messageBoxBig.gameObject.SetActive(true);
-            messageBoxBig.Initialize(_dataProvider, _soundPlayer);
-            messageBoxBig.HideMessage();
-
-            newsButton.Initialise(_soundPlayer, ShowNewsPanel);
-
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             processingPanel.SetActive(false);
@@ -372,6 +360,8 @@ namespace BattleCruisers.Scenes
             await InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
             loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
@@ -443,7 +433,6 @@ namespace BattleCruisers.Scenes
             }
             PlayerPrefs.GetInt("PLAYED", 1);
             PvPBattleSceneGodTunnel.isCost = false;
-
         }
 
         public async void DestroyAllNetworkObjects()
@@ -612,6 +601,8 @@ namespace BattleCruisers.Scenes
             fullScreenads.CloseAdvert();
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.CollectUnlockedBodykits();
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().RefreshBodykitsUI();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.CollectUnlockedBuildingVariant();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.CollectUnlockedUnitVariant();
             GoToScreen(loadoutScreen);
         }
 
@@ -621,7 +612,7 @@ namespace BattleCruisers.Scenes
         }
 
         private static int levelToShowCutscene = 0;
-        public void GoToTrashScreen(int levelNum)
+        public async void GoToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
@@ -656,7 +647,7 @@ namespace BattleCruisers.Scenes
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
                 ILevel level = _applicationModel.DataProvider.Levels[levelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? await GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
                 //_applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
                 _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
@@ -667,15 +658,15 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        private int GetRandomBodykitForAI(HullType hullType)
+        private async Task<int> GetRandomBodykitForAI(HullType hullType)
         {
             int id_bodykit = -1;
             if (hullType != HullType.None)
             {
                 List<int> bodykits = new List<int>();
-                for (int i = 0; i < _applicationModel.DataProvider.GameModel.Bodykits.Count; i++)
+                for (int i = 0; i < 12 /*_applicationModel.DataProvider.GameModel.Bodykits.Count*/; i++)
                 {
-                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[i]).cruiserType == hullType)
+                    if ((await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i))).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }
@@ -805,13 +796,6 @@ namespace BattleCruisers.Scenes
         public void LoadBattle1v1Mode()
         {
 
-        }
-
-        public void ShowNewsPanel()
-        {
-            ILocTable screenssceneStrings = LandingSceneGod.Instance.screenSceneStrings;
-
-            messageBoxBig.ShowMessage(screenssceneStrings.GetString("UpdateTitle"), screenssceneStrings.GetString("UpdateDescription"));
         }
 
         public void PlayAdvertisementMusic()

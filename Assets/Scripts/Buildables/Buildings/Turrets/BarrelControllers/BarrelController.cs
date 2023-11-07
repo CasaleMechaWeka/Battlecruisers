@@ -13,6 +13,11 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -76,13 +81,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IParticleSystemGroupInitialiser muzzleFlashInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("MuzzleFlash");
             _muzzleFlash = muzzleFlashInitialiser.CreateParticleSystemGroup();
         }
-		
-		protected virtual IProjectileStats GetProjectileStats()
-		{
-			ProjectileStats projectileStats = GetComponent<ProjectileStats>();
-			Assert.IsNotNull(projectileStats);
-			return projectileStats;
-		}
+        protected virtual IProjectileStats GetProjectileStats()
+        {
+            ProjectileStats projectileStats = GetComponent<ProjectileStats>();
+            Assert.IsNotNull(projectileStats);
+            return projectileStats;
+        }
 
         protected virtual TurretStats SetupTurretStats()
         {
@@ -96,13 +100,38 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return turretStats;
         }
 
+        public virtual async void ApplyVariantStats(IBuilding building)
+        {
+            int variantIndex = building.variantIndex;
+            if(variantIndex != -1)
+            {
+                if (variantIndex != -1)
+                {
+                    VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                    // turret stats
+                    _baseTurretStats.ApplyVariantStats(variant.statVariant);
+                    GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
+                }
+            }
+        }
+        public virtual async void ApplyVariantStats(IUnit unit)
+        {
+            int variantIndex = unit.variantIndex;
+            if(variantIndex != -1)
+            {
+                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                // turret stats
+                _baseTurretStats.ApplyVariantStats(variant.statVariant);
+                GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
+            }
+        }
 
         protected virtual IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
-		{
-			FireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<FireIntervalManagerInitialiser>();
-			Assert.IsNotNull(fireIntervalManagerInitialiser);
-			return fireIntervalManagerInitialiser.Initialise(turretStats);
-		}
+        {
+            FireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<FireIntervalManagerInitialiser>();
+            Assert.IsNotNull(fireIntervalManagerInitialiser);
+            return fireIntervalManagerInitialiser.Initialise(turretStats);
+        }
 
         protected virtual IDamageCapability FindDamageCapabilities()
         {
@@ -148,7 +177,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected virtual IBarrelFirer CreateFirer(IBarrelControllerArgs args)
         {
-            return 
+            return
                 new BarrelFirer(
                     this,
                     GetBarrelFiringAnimation(args),
@@ -179,7 +208,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public abstract void Fire(float angleInDegrees);
 
-		protected virtual void CeaseFire() { }
+        protected virtual void CeaseFire() { }
 
         public virtual void CleanUp()
         {

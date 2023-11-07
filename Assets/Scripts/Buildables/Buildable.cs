@@ -63,10 +63,6 @@ namespace BattleCruisers.Buildables
         public string keyName { get; set; }
         public int numOfDronesRequired;
         public float buildTimeInS;
-        public string perkName;
-        public string PerkKey { get; set; }
-        public Sprite PerkSprite { get; set; }
-        public Image perkImage;
         private IAudioClipWrapper _deathSound;
         [Header("Sounds")]
         public AudioClip deathSound;
@@ -88,7 +84,7 @@ namespace BattleCruisers.Buildables
         public string PrefabName => _parent.name;
 
         private HealthBarController _healthBar;
-        public IHealthBar HealthBar => _healthBar;
+        public HealthBarController HealthBar => _healthBar;
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
@@ -187,13 +183,6 @@ namespace BattleCruisers.Buildables
         {
             base.StaticInitialise(commonStrings);
             keyName = stringKeyName;
-            PerkKey = perkName;
-            if (perkImage != null)
-            {
-                PerkSprite = perkImage.sprite;
-            }
-            if (perkImage != null)
-                perkImage.gameObject.SetActive(true);
             Helper.AssertIsNotNull(parent, healthBar);
 
             _parent = parent;
@@ -217,12 +206,6 @@ namespace BattleCruisers.Buildables
 
             Assert.IsNotNull(deathSound);
             _deathSound = new AudioClipWrapper(deathSound);
-            //if (PerkKey.IsNotNullOrEmpty())
-            //    PerkName = commonStrings.GetString(PerkKey);
-            if (perkImage != null)
-            {
-                PerkSprite = perkImage.sprite;
-            }
         }
 
         protected void AddDamageStats(IDamageCapability statsToAdd)
@@ -464,8 +447,6 @@ namespace BattleCruisers.Buildables
 
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             RepairCommand.EmitCanExecuteChanged();
-            if (perkImage != null)
-                perkImage.gameObject.SetActive(false);
         }
 
         private void EnableRenderers(bool enabled)

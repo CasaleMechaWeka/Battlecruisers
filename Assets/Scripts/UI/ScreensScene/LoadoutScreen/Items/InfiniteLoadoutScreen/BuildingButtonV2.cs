@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -27,8 +30,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public Text _buildingName;
         private RectTransform _selectedFeedback;
         public Button toggleSelectionButton;
+        public Image variantIcon;
 
-        public void Initialise(
+        public async void Initialise(
             ISingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -51,8 +55,42 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
 
             UpdateSelectedFeedback();
+
+            // show variant icon in item button when init load
+            VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedBuildingVariant(ScreensSceneGod.Instance._prefabFactory, _buildingPrefab.Buildable);
+            if (variant != null)
+            {
+                variantIcon.gameObject.SetActive(true);
+                variantIcon.sprite = variant.variantSprite;
+            }
+            else
+            {
+                variantIcon.gameObject.SetActive(false);
+            }
+            variantChanged += OnVariantChanged;
         }
 
+        private async void OnVariantChanged(object sender, VariantChangeEventArgs args)
+        {
+            int index = args.Index;
+            if (index != -1)
+            {
+                VariantPrefab variant = await ScreensSceneGod.Instance._prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                if (variant != null)
+                {
+                    variantIcon.gameObject.SetActive(true);
+                    variantIcon.sprite = variant.variantSprite;
+                }
+                else
+                {
+                    variantIcon.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                variantIcon.gameObject.SetActive(false);
+            }
+        }
         protected override void OnClicked()
         {
             base.OnClicked();
@@ -60,7 +98,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _comparingFamiltyTracker.SetComparingFamily(ItemFamily.Buildings);
             if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Buildings)
             {
-                _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
+                //    _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
+                _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable, this);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
@@ -72,7 +111,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public override void ShowDetails()
         {
-            _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
+            //    _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
+            _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable, this);
         }
 
         private void UpdateSelectedFeedback()
@@ -90,7 +130,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             if (!GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
                 OnClicked();
             selectBuildingButton.ToggleBuildingSelection();
-
         }
+    }
+    public class VariantChangeEventArgs : EventArgs
+    {
+        public int Index;
     }
 }

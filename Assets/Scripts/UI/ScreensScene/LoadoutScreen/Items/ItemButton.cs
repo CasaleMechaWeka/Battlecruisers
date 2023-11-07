@@ -14,8 +14,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public abstract class ItemButton : ElementWithClickSound, IItemButton
     {
         private Image _itemImage;
-        public  Text _itemName;  // for heckle
+        public Text _itemName;  // for heckle
         private ClickedFeedBack _clickedFeedBack;
+        private VariantClickedFeedback _variantClickedFeedback;
 
         protected IItemDetailsManager _itemDetailsManager;
         protected IComparingItemFamilyTracker _comparingFamiltyTracker;
@@ -27,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public abstract IComparableItem Item { get; }
 
         public abstract void ShowDetails();
-
+        public EventHandler<VariantChangeEventArgs> variantChanged;
         public Color Color
         {
             set
@@ -41,6 +42,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             set
             {
                 _clickedFeedBack.IsVisible = value;
+                if (_variantClickedFeedback != null)
+                    _variantClickedFeedback.IsVisible = value;
             }
         }
 
@@ -57,6 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemImage = transform.FindNamedComponent<Image>("ItemImage");
             // _itemName = transform.FindNamedComponent<Text>("ItemName");
             _clickedFeedBack = GetComponentInChildren<ClickedFeedBack>(includeInactive: true);
+            _variantClickedFeedback = GetComponentInChildren<VariantClickedFeedback>(includeInactive: true);
             Assert.IsNotNull(_clickedFeedBack);
 
             _canvasGroup = GetComponent<CanvasGroup>();
@@ -67,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void _comparingFamiltyTracker_ValueChanged(object sender, EventArgs e)
         {
-            Enabled 
+            Enabled
                 = _comparingFamiltyTracker.ComparingFamily.Value == null
                     || itemFamily == _comparingFamiltyTracker.ComparingFamily.Value;
         }

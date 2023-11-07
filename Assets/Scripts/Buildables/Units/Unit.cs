@@ -1,8 +1,11 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Data;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -13,6 +16,7 @@ using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.Buildables.Units
 {
@@ -34,7 +38,9 @@ namespace BattleCruisers.Buildables.Units
 		public float maxVelocityInMPerS;
         public float MaxVelocityInMPerS => maxVelocityInMPerS;
 
-		private Direction _facingDirection;
+        public int variantIndex { get; set; }
+
+        private Direction _facingDirection;
 		public Direction FacingDirection
 		{
 			get { return _facingDirection; }
@@ -59,6 +65,12 @@ namespace BattleCruisers.Buildables.Units
 
             Name = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Description");
+            variantIndex = -1;
+        }
+        public void OverwriteComparableItem(string name, string description)
+        {
+            Name = name;
+            Description = description;
         }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -79,6 +91,49 @@ namespace BattleCruisers.Buildables.Units
             // Disable gravity
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
             rigidBody.gravityScale = 0;
+
+            HealthBar.variantIcon.enabled = false;
+            if (ParentCruiser.IsPlayerCruiser)
+            {
+                // Set Variant to Player
+                ApplyVariantToPlayer(this);
+            }
+            else
+            {
+                // Set Variant to AI
+
+            }
+        }
+
+        private async void ApplyVariantToPlayer(IUnit unit)
+        {
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            if (variant != null)
+            {
+                // apply icon, name and description
+                HealthBar.variantIcon.sprite = variant.variantSprite;
+                HealthBar.variantIcon.enabled = true;
+                int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
+                variantIndex = index;
+                Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
+
+                // apply max health, num of drone required, build time
+                ApplyVariantStats(variant.statVariant);
+            }
+            else
+            {
+                HealthBar.variantIcon.enabled = false;
+                variantIndex = -1;
+            }
+        }
+
+        public void ApplyVariantStats(StatVariant statVariant)
+        {
+            maxHealth += statVariant.max_health;
+            numOfDronesRequired += statVariant.drone_num;
+            buildTimeInS += statVariant.build_time;
         }
 
         protected override void OnBuildableCompleted()

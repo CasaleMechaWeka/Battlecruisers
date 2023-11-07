@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
@@ -41,5 +42,8 @@ namespace BattleCruisers.Buildables.Buildings
         /// + Nuke launcher
         /// </summary>
         bool IsBoostable { get; }
-	}
+        void OverwriteComparableItem(string name, string description);
+        int variantIndex { get; set; }
+        void ApplyVariantStats(StatVariant statVariant);
+    }
 }

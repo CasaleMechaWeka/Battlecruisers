@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Buildables
+﻿using UnityEngine;
+
+namespace BattleCruisers.Buildables
 {
     /// <summary>
     /// BuildableWrappers contain:

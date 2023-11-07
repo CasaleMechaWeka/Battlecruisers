@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Stats
@@ -42,6 +43,14 @@ namespace BattleCruisers.Projectiles.Stats
             OnAwake();
         }
 
+        public virtual void ApplyVariantStats(StatVariant statVariant)
+        {
+            initialVelocityMultiplier += statVariant.initial_velocity_multiplier;
+            damage += statVariant.damage;
+            maxVelocityInMPerS += statVariant.max_velocity;
+            gravityScale += statVariant.gravity_scale;
+            damageRadiusInM += statVariant.damage_radius;
+        }
         protected virtual void OnAwake() { }
 	}
 }

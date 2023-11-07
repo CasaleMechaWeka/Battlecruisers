@@ -26,10 +26,12 @@ namespace BattleCruisers.Data.Models
         List<CaptainData> Captains { get; set; }
         List<HeckleData> Heckles { get; set; }
         List<BodykitData> Bodykits { get; set; }
+        List<VariantData> Variants { get; set; }
         List<IAPData> IAPs { get; set; }
         List<HeckleData> OutstandingHeckleTransactions { get; set; }
         List<CaptainData> OutstandingCaptainTransactions { get; set; }
         List<BodykitData> OutstandingBodykitTransactions { get; set; }
+        List<VariantData> OutstandingVariantTransactions { get; set; }
         bool HasSyncdShop { get; set; }
         int NumOfLevelsCompleted { get; }
         int ID_Bodykit_AIbot { get; set; }
@@ -71,5 +73,26 @@ namespace BattleCruisers.Data.Models
 
         bool IsUnitUnlocked(UnitKey unitKey);
         bool IsBuildingUnlocked(BuildingKey buildingKey);
+
+        void AddExo(int index);
+
+        List<int> GetExos();
+        void RemoveExo(int id);
+
+        void AddHeckle(int index);
+        void RemoveHeckle(int id);
+
+        List<int> GetHeckles();
+
+        void AddBodykit(int index);
+        void RemoveBodykit(int id);
+
+        List<int> GetBodykits();
+
+        void AddVariant(int index);
+        void RemoveVariant(int id);
+
+        List<int> GetVariants();
+
     }
 }

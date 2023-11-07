@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
     {
         public Image playerCruiserImage, enemyCruiserImage;
 
-        public void Initialise(ICruiser playerCruiser, ICruiser enemyCruiser)
+        public async void Initialise(ICruiser playerCruiser, ICruiser enemyCruiser)
         {
             Helper.AssertIsNotNull(playerCruiserImage, enemyCruiserImage);
             Helper.AssertIsNotNull(playerCruiser, enemyCruiser);
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
             else
             {
-                Bodykit bodykit = ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit]);
+                Bodykit bodykit = await ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit));
                 playerCruiserImage.sprite = bodykit.BodykitImage;
             }
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
             else
             {
-                Bodykit bodykit = ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot]);
+                Bodykit bodykit = await ScreensSceneGod.Instance._prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot));
                 enemyCruiserImage.sprite = bodykit.BodykitImage;
             }
          

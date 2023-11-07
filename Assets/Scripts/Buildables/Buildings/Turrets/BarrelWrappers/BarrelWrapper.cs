@@ -22,6 +22,9 @@ using System.Linq;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -73,9 +76,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public virtual void StaticInitialise()
         {
             _renderers = new List<SpriteRenderer>();
-
             InitialiseBarrels();
-
             DamageCapability = SumBarrelDamage();
             RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
             _minRangeInM = _barrels.Max(barrel => barrel.TurretStats.MinRangeInM);
@@ -85,7 +86,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             _barrels = gameObject.GetComponentsInChildren<BarrelController>();
             Assert.IsTrue(_barrels.Length != 0);
-
             foreach (BarrelController barrel in _barrels)
             {
                 barrel.StaticInitialise();
@@ -105,9 +105,24 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 return new DamageCapability(totalDamagePerS, _barrels[0].DamageCapability.AttackCapabilities);
             }
         }
+        public void ApplyVariantStats(IBuilding building)
+        {
+            foreach (BarrelController barrel in _barrels)
+            {
+                barrel.ApplyVariantStats(building);
+            }
+        }
+
+        public void ApplyVariantStats(IUnit unit)
+        {
+            foreach (BarrelController barrel in _barrels)
+            {
+                barrel.ApplyVariantStats(unit);
+            }
+        }
 
         public void Initialise(
-            IBuildable parent, 
+            IBuildable parent,
             IFactoryProvider factoryProvider,
             ICruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
@@ -129,14 +144,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             foreach (BarrelController barrel in _barrels)
             {
-                IBarrelControllerArgs barrelArgs 
+                IBarrelControllerArgs barrelArgs
                     = CreateBarrelControllerArgs(
-                        barrel, 
-                        parent, 
-                        targetFilter, 
-                        angleCalculator, 
-                        attackablePositionFinder, 
-                        firingSound, 
+                        barrel,
+                        parent,
+                        targetFilter,
+                        angleCalculator,
+                        attackablePositionFinder,
+                        firingSound,
                         localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         barrelFiringAnimation ?? GetBarrelAnimation());
@@ -161,7 +176,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         private IBarrelControllerArgs CreateBarrelControllerArgs(
             IBarrelController barrel,
-            IBuildable parent, 
+            IBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
             IAttackablePositionFinder attackablePositionFinder,
@@ -225,9 +240,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
-            return 
+            return
                 _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
-                    barrel.TurretStats.TurretRotateSpeedInDegrees, 
+                    barrel.TurretStats.TurretRotateSpeedInDegrees,
                     barrel.Transform,
                     deltaTimeProvider);
         }

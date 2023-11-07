@@ -1,8 +1,12 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -14,8 +18,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
 
         public UnitClickHandler(
-            IUIManager uiManager, 
-            IPrioritisedSoundPlayer eventSoundPlayer, 
+            IUIManager uiManager,
+            IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
@@ -29,11 +33,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 
             _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
-			//_uiManager.ShowUnitDetails(unitClicked.Buildable);
+            //_uiManager.ShowUnitDetails(unitClicked.Buildable);
 
             if (canAffordBuildable)
             {
                 _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
+                //   CheckIfVariant(unitClicked.Buildable);
                 HandleFactory(unitClicked, unitFactory);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
@@ -51,6 +56,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
         }
 
+
+        private async void CheckIfVariant(IUnit unit)
+        {
+            int index = await ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(BattleSceneGod.Instance.factoryProvider.PrefabFactory, unit);
+            unit.variantIndex = index;
+            _uiManager.ShowUnitDetails(unit);
+        }
         private void HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             if (ReferenceEquals(unitFactory.UnitWrapper, unitClicked))

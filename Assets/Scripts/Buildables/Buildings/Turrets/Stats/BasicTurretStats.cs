@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -35,6 +36,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         public virtual void MoveToNextDuration()
         {
             // Empty
+        }
+
+        public virtual void ApplyVariantStats(StatVariant statVariant)
+        {
+            fireRatePerS += statVariant.fire_rate;
+            rangeInM += statVariant.range;
+            minRangeInM += statVariant.min_range;
         }
     }
 }

@@ -83,7 +83,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
-        private FactoryProvider factoryProvider;
+        public FactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
@@ -102,6 +102,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public GameObject EnemyName;
 
         public GameObject[] ilegalTutorialSettings;
+        public static BattleSceneGod Instance;
+        private void Awake()
+        {
+            Instance = this;
+        }
         private async void Start()
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
@@ -254,7 +259,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor,
-                    dataProvider.StaticData);
+                    dataProvider.StaticData,
+                    commonStrings);
 
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
             RightPanelComponents rightPanelComponents
@@ -270,7 +276,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
-            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
+            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel, dataProvider, prefabFactory, commonStrings);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new BuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
 

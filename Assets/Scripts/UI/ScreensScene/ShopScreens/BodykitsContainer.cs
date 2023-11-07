@@ -52,10 +52,10 @@ namespace BattleCruisers.UI.ScreensScene
                     // online purchase
                     try
                     {
-                        bool result = await _dataProvider.PurchaseBodykit(currentBodykitData.Index);
+                        bool result = await _dataProvider.PurchaseBodykitV2(currentBodykitData.Index);
                         if (result)
                         {
-                            await _dataProvider.SyncCurrencyFromCloud();
+                        //    await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
@@ -63,6 +63,7 @@ namespace BattleCruisers.UI.ScreensScene
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             _dataProvider.GameModel.Bodykits[currentBodykitData.Index].isOwned = true;
+                            _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
@@ -92,6 +93,7 @@ namespace BattleCruisers.UI.ScreensScene
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.Bodykits[currentBodykitData.Index].isOwned = true;
+                        _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("BodykitPurchased") + " " + commonStrings.GetString(currentBodykitData.NameStringKeyBase));

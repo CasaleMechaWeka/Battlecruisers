@@ -14,6 +14,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Utils.Fetchers
 {
@@ -29,7 +30,8 @@ namespace BattleCruisers.Utils.Fetchers
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);
 
         CaptainExo GetCaptainExo(IPrefabKey captainKey);
-        Bodykit GetBodykit(IPrefabKey bodykitKey);
+        Task<Bodykit> GetBodykit(IPrefabKey bodykitKey);
+        Task<VariantPrefab> GetVariant(IPrefabKey variantKey);
         IExplosion CreateExplosion(ExplosionKey explosionKey);
         IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
 

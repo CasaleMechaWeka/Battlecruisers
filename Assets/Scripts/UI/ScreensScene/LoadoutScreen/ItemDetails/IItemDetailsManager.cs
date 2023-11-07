@@ -19,7 +19,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         HeckleDetailsController HeckleDetails { get; set; }
 
         void ShowDetails(IBuilding building);
+        void ShowDetails(IBuilding building, ItemButton button);
         void ShowDetails(IUnit unit);
+        void ShowDetails(IUnit unit, ItemButton button);
         void ShowDetails(ICruiser cruiser);
         void ShowDetails(HullType hullType);
         void ShowDetails(IHeckleData heckleData);

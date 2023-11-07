@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Categorisation;
 //using Unity.Tutorials.Core.Editor;
@@ -13,14 +14,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
     {
         public NumberStatValue drones, buildTime;
         public StarsStatValue health, cruiserDamage, shipDamage, airDamage;
-        public Image perkImage;
-        public Text perkName;
+
 
         public override void Initialise()
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(drones, buildTime, health, cruiserDamage, shipDamage, airDamage, perkName, perkImage);
+            Helper.AssertIsNotNull(drones, buildTime, health, cruiserDamage, shipDamage, airDamage);
 
             drones.Initialise();
             buildTime.Initialise();
@@ -28,24 +28,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             cruiserDamage.Initialise();
             shipDamage.Initialise();
             airDamage.Initialise();
+
         }
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)
         {
-            //if (perkName != null)
-            //    if (item.PerkKey.IsNotNullOrEmpty())
-            //        perkName.text = LandingSceneGod.Instance.commonStrings.GetString(item.PerkKey);
-            //    else
-            //        perkName.text = "";
-            //if (item.PerkSprite != null)
-            //{
-            //    perkImage.sprite = item.PerkSprite;
-            //    perkImage.gameObject.SetActive(true);
-            //}
-            //else
-            //{
-            //    perkImage.gameObject.SetActive(false);
-            //}
+
             drones.ShowResult(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
             buildTime.ShowResult((item.BuildTimeInS * item.NumOfDronesRequired * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS * item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
             health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
@@ -53,6 +41,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item), GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
             ShowDamageStat(shipDamage, GetAntiShipDamage(item), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
             ShowDamageStat(airDamage, GetAntiAirDamage(item), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
+        }
+
+        protected override void InternalShowStatsOfVariant(TItem item, VariantPrefab variant, TItem itemToCompareTo = null)
+        {
+            drones.ShowResult((item.NumOfDronesRequired + variant.statVariant.drone_num).ToString() , _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
+            buildTime.ShowResult(((item.BuildTimeInS + variant.statVariant.build_time) * (item.NumOfDronesRequired + variant.statVariant.drone_num) * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats(((item.BuildTimeInS + variant.statVariant.build_time) * (item.NumOfDronesRequired + variant.statVariant.drone_num) * 0.5f), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
+            health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth + variant.statVariant.max_health), _higherIsBetterComparer.CompareStats(item.MaxHealth + variant.statVariant.max_health, itemToCompareTo.MaxHealth));
+
+            ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item) , GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
+            ShowDamageStat(shipDamage, GetAntiShipDamage(item) + (variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).AttackCapabilities.Contains(TargetType.Ships) ? variant.statVariant.damage : 0 : 0), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
+            ShowDamageStat(airDamage, GetAntiAirDamage(item) + (variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).AttackCapabilities.Contains(TargetType.Aircraft) ? variant.statVariant.damage : 0 : 0), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
         }
 
         private void ShowDamageStat(StarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
@@ -93,7 +92,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
                     break;
                 }
             }
-
             return damagePerS;
         }
     }

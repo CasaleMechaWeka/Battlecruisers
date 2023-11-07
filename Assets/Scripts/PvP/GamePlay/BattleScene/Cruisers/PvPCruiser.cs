@@ -185,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private async Task LoadBodykit(int index)
         {
-            Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
+            Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
             if (bodykit != null)
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;

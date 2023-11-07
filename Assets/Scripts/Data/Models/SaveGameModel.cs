@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 
@@ -19,9 +20,6 @@ namespace BattleCruisers.Data.Models
         public int _saveVersion;
 
         // What do we need to save, critically? Just the assets and progress.
-
-        // Number of coins I own.
-        public long _coins;
 
         // Total historic destruction score.
         public long _lifetimeDestructionScore;
@@ -40,6 +38,7 @@ namespace BattleCruisers.Data.Models
         public Dictionary<string, Dictionary<string, string>> _buildLimits;
         public Dictionary<string, Dictionary<string, string>> _unitLimits;
         public int _currentBodykit;
+        public List<int> _selectedVariants;
 
         // What levels have been completed
         // What difficulty those levels have been completed at.
@@ -50,7 +49,15 @@ namespace BattleCruisers.Data.Models
         public Dictionary<string, string> _unlockedBuildings;          // prefab filenames, category enum strings
         public Dictionary<string, string> _unlockedUnits;              // prefab filenames, category enum strings
 
+        // IAPs
+        public List<int> _purchasedExos;
+        public List<int> _purchasedHeckles;
+        public List<int> _purchasedBodykits;
+        public List<int> _purchasedVariants;
+
+        // Status tracking
         public bool _hasAttemptedTutorial;
+        public bool _isDoneMigration;
 
         public SaveGameModel()
         { // this is the constructor for cloud load
@@ -64,7 +71,8 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-            _saveVersion = 3;
+            _saveVersion = 4;
+            // Last change: 5/11/2023
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -72,13 +80,18 @@ namespace BattleCruisers.Data.Models
 
 
             // GameModel fields:
-            _coins = game.Coins;
             _lifetimeDestructionScore = game.LifetimeDestructionScore;
             _playerName = game.PlayerName;
             _levelsCompleted = computeCompletedLevels(game.CompletedLevels);
             _unlockedHulls = computeUnlockedHulls(game.UnlockedHulls);
             _unlockedBuildings = computeUnlockedBuildings(game.UnlockedBuildings);
             _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
+
+            // IAPs:
+            _purchasedExos = game.GetExos().Distinct().ToList();
+            _purchasedHeckles = game.GetHeckles().Distinct().ToList();
+            _purchasedBodykits = game.GetBodykits().Distinct().ToList();
+            _purchasedVariants = game.GetVariants().Distinct().ToList();
 
             // Loadout fields:
             _currentHullKey = game.PlayerLoadout.Hull.PrefabName;
@@ -89,16 +102,102 @@ namespace BattleCruisers.Data.Models
             _buildLimits = computeBuildLimits(game.PlayerLoadout.GetBuildLimits());
             _unitLimits = computeUnitLimits(game.PlayerLoadout.GetUnitLimits());
             _currentBodykit = game.PlayerLoadout.SelectedBodykit;
+            _selectedVariants = game.PlayerLoadout.SelectedVariants;
 
+            // Status tracking:
             _hasAttemptedTutorial = game.HasAttemptedTutorial;
+            _isDoneMigration = game.IsDoneMigration;
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
-            game.Coins = _coins;
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
             game.PlayerName = _playerName;
+            game.IsDoneMigration = _isDoneMigration;
+
+            // IAPs
+            // Exos
+            if (_purchasedExos != null && _purchasedExos.Count > 0)
+            {
+                List<int> currentList = game.GetExos();
+                for (int i = 0; i <= _purchasedExos.Count - 1; i++)
+                {
+                    // Add
+                    if (!currentList.Contains(_purchasedExos[i]))
+                    {
+                        game.AddExo(_purchasedExos[i]);
+                        game.Captains[i].isOwned = true;
+                    }
+                    // Remove if they're not in the cloud save data:
+                    List<int> entriesToRemove = currentList.Except(_purchasedExos).ToList();
+                    foreach (int entry in entriesToRemove)
+                    {
+                        game.RemoveExo(entry);
+                        game.Captains[entry].isOwned = false;
+                    }
+                }
+            }
+            // Heckles
+            if (_purchasedHeckles != null && _purchasedHeckles.Count > 0)
+            {
+                List<int> currentList = game.GetHeckles();
+                for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
+                {
+                    // Add
+                    if (!currentList.Contains(_purchasedHeckles[i]))
+                    {
+                        game.AddHeckle(_purchasedHeckles[i]);
+                    }
+                    // Remove if they're not in the cloud save data:
+                    List<int> entriesToRemove = currentList.Except(_purchasedHeckles).ToList();
+                    foreach (int entry in entriesToRemove)
+                    {
+                        game.RemoveHeckle(entry);
+                        game.Heckles[entry].isOwned = false;
+                    }
+                }
+            }
+            // Bodykits
+            if (_purchasedBodykits != null && _purchasedBodykits.Count > 0)
+            {
+                List<int> currentList = game.GetBodykits();
+                for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
+                {
+                    // Add
+                    if (!currentList.Contains(_purchasedBodykits[i]))
+                    {
+                        game.AddBodykit(_purchasedBodykits[i]);
+                    }
+                    // Remove if they're not in the cloud save data:
+                    List<int> entriesToRemove = currentList.Except(_purchasedBodykits).ToList();
+                    foreach (int entry in entriesToRemove)
+                    {
+                        game.RemoveBodykit(entry);
+                        game.Bodykits[entry].isOwned = false;
+                    }
+                }
+            }
+            // Variants
+            if (_purchasedVariants != null && _purchasedVariants.Count > 0)
+            {
+                List<int> currentList = game.GetVariants();
+                for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
+                {
+                    // Add
+                    if (!currentList.Contains(_purchasedVariants[i]))
+                    {
+                        game.AddVariant(_purchasedVariants[i]);
+                    }
+                    // Remove if they're not in the cloud save data:
+                    List<int> entriesToRemove = currentList.Except(_purchasedVariants).ToList();
+                    foreach (int entry in entriesToRemove)
+                    {
+                        game.RemoveVariant(entry);
+                        game.Variants[entry].isOwned = false;
+                    }
+                }
+            }
 
             // levels completed
             foreach (var level in _levelsCompleted)
@@ -198,6 +297,16 @@ namespace BattleCruisers.Data.Models
             // loadout construction actually happens finally:
             game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits, game);
 
+            // current variants
+            if (_selectedVariants != null)
+            {
+                game.PlayerLoadout.SelectedVariants = _selectedVariants;
+            }
+            else
+            {
+                game.PlayerLoadout.SelectedVariants = new List<int>();
+            }
+
             // current bodykit
             if (_currentBodykit == -1 || game.Bodykits[_currentBodykit].isOwned)
             {
@@ -217,7 +326,7 @@ namespace BattleCruisers.Data.Models
             }
             else
             {
-                game.PlayerLoadout.CurrentHeckles = unlockedHeckles(game);
+                game.PlayerLoadout.CurrentHeckles = computeUnlockedHeckles(game);
             }
 
             // current captain
@@ -259,7 +368,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private List<int> unlockedHeckles(GameModel game)
+        private List<int> computeUnlockedHeckles(GameModel game)
         {
             List<int> unlockedHeckles = new List<int>();
             int numHecklesUnlocked = 3;

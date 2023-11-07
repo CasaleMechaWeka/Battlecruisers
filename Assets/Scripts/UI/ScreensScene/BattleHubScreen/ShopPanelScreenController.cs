@@ -13,12 +13,13 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Unity.Services.Core;
+using System.Diagnostics.Contracts;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ShopPanelScreenController : ScreenController
     {
-        public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, infoButton;
+        public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton;
         public CanvasGroupButton captainsButton, hecklesButton, bodykitButton, variantsButton;
         public Transform captainItemContainer, heckleItemContainer, bodykitItemContainer, variantsItemContainer;
         public GameObject captainItemPrefab, heckleItemPrefab, bodykitItemPrefab, variantItemPrefab;
@@ -38,6 +39,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private Color32 navButtonActive = new Color32(255, 255, 255, 255);
         private Color32 navButtonInactive = new Color32(194, 59, 33, 255);
 
+        private List<int> variantList;
+        private List<VariantPrefab> variants = new List<VariantPrefab>();
+
+        private List<int> bodykitList;
+        private List<Bodykit> bodykits = new List<Bodykit>();
         public async Task Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -59,10 +65,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
             bodykitButton.Initialise(_soundPlayer, BodykitButton_OnClick);
             variantsButton.Initialise(_soundPlayer, VariantsButton_OnClick);
-            infoButton.Initialise(_soundPlayer, InfoButton_OnClick);
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             bodykitsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
+            variantsContainer.Initialize(soundPlayer, _dataProvider, _prefabFactory);
             commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
 
@@ -78,6 +84,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 blackMarketButton.gameObject.SetActive(false);
             }
+
+            variantList = GeneratePseudoRandomList(12, 35, 6, 3); // 0,1,2 are Premium
+            foreach (int index in variantList)
+            {
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                variants.Add(variant);
+            }
+
+            bodykitList = GeneratePseudoRandomList(6, 11, 6, 1);
+            foreach (int index in bodykitList)
+            {
+                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
+                bodykits.Add(bodykit);
+            }
         }
 
         void OnEnable()
@@ -89,12 +109,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoHome()
         {
             _screensSceneGod.GotoHubScreen();
-        }
-
-        public void InfoButton_OnClick()
-        {
-            ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
-            ScreensSceneGod.Instance.messageBoxBig.ShowMessage(screensSceneStrings.GetString("ShopInfoTitle"), screensSceneStrings.GetString("ShopInfoText"));
         }
 
         public void GotoBlackMarket()
@@ -168,8 +182,69 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             captainsContainer.gameObject.SetActive(false);
             hecklesContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(false);
             bodykitsContainer.gameObject.SetActive(false);
             variantsContainer.gameObject.SetActive(true);
+
+            VariantItemController[] items = variantsItemContainer.gameObject.GetComponentsInChildren<VariantItemController>();
+            foreach (VariantItemController item in items)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+
+            variantsContainer.btnBuy.SetActive(false);
+            variantsContainer.ownFeedback.SetActive(false);
+
+            await Task.Delay(100);
+            //    List<int> variantList = GeneratePseudoRandomList(12, 35, 6, 3); // 0,1,2 are Premium
+            byte ii = 0;
+            //    variantsItemContainer.gameObject.SetActive(false);
+            foreach (int index in variantList)
+            {
+                GameObject variantItem = Instantiate(variantItemPrefab, variantsItemContainer) as GameObject;
+                VariantPrefab variant = variants[ii];/*await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.AllKeys[index]);*/
+                Sprite parentSprite = variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).Sprite : variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory).Sprite;
+                variantItem.GetComponent<VariantItemController>().StaticInitialise(_soundPlayer, parentSprite, variant.variantSprite, variant.GetParentName(ScreensSceneGod.Instance._prefabFactory), _dataProvider.GameModel.Variants[index], variantsContainer, variant, ii);
+                if (ii == 0)
+                {
+                    variantItem.GetComponent<VariantItemController>()._clickedFeedback.SetActive(true);
+                    variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color = new Color(variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.r, variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.g, variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.b, 1f);
+                    variantsContainer.currentItem = variantItem.GetComponent<VariantItemController>();
+                    variantsContainer.ParentImage.sprite = parentSprite;
+                    variantsContainer.VariantPrice.text = _dataProvider.GameModel.Variants[index].variantCredits.ToString();
+                    variantsContainer.variantIcon.sprite = variant.variantSprite;
+                    variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase);
+                    variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                    variantsContainer.ParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
+                    variantsContainer.currentVariantData = _dataProvider.GameModel.Variants[index];
+
+                    if (variant.IsUnit())
+                    {
+                        variantsContainer.buildingStatsController.gameObject.SetActive(false);
+                        variantsContainer.unitStatsController.gameObject.SetActive(true);
+                        variantsContainer.unitStatsController.ShowStatsOfVariant(variant.GetUnit(ScreensSceneGod.Instance._prefabFactory), variant);
+                    }
+                    else
+                    {
+                        variantsContainer.buildingStatsController.gameObject.SetActive(true);
+                        variantsContainer.unitStatsController.gameObject.SetActive(false);
+                        variantsContainer.buildingStatsController.ShowStatsOfVariant(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), variant);
+                    }
+
+                    if (_dataProvider.GameModel.Variants[index].isOwned)
+                    {
+                        variantsContainer.btnBuy.SetActive(false);
+                        variantsContainer.ownFeedback.SetActive(true);
+                    }
+                    else
+                    {
+                        variantsContainer.btnBuy.SetActive(true);
+                        variantsContainer.ownFeedback.SetActive(false);
+                    }
+                }
+                ii++;
+            }
+            //    variantsItemContainer.gameObject.SetActive(true);
         }
         public async void InitialiseBodykits()
         {
@@ -188,13 +263,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.ownFeedback.SetActive(false);
 
             await Task.Delay(100);
-            List<int> bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
+            //    List<int> bodykitList = GeneratePseudoRandomList(6, 11, 6, 1);
 
             byte ii = 0;
+            // bodykitItemContainer.gameObject.SetActive(false);
             foreach (int index in bodykitList)
             {
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer) as GameObject;
-                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index]);
+                Bodykit bodykit = bodykits[ii]/*await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index])*/;
                 bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, ii);
                 if (ii == 0)
                 {
@@ -218,6 +294,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
                 ii++;
             }
+            //    bodykitItemContainer.gameObject.SetActive(true);
         }
         public async void InitialiseHeckles()
         {

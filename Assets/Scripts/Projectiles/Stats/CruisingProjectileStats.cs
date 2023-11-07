@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Stats
@@ -15,6 +16,11 @@ namespace BattleCruisers.Projectiles.Stats
         protected override void OnAwake()
         {
             Assert.IsTrue(cruisingAltitudeInM > 0);
+        }
+        public override void ApplyVariantStats(StatVariant statVariant)
+        {
+            base.ApplyVariantStats(statVariant);
+            cruisingAltitudeInM += statVariant.cruising_altitude;
         }
     }
 }

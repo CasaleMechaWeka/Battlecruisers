@@ -14,6 +14,7 @@ namespace BattleCruisers
             Assert.IsNotNull(commonStrings);
             _commonStrings = commonStrings;
         }
+
     }
 
 }

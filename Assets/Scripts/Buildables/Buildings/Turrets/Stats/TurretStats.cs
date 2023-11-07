@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
@@ -23,5 +24,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 			Assert.IsTrue(accuracy >= 0 && accuracy <= 1);
 			Assert.IsTrue(turretRotateSpeedInDegrees > 0);
 		}
-	}
+        public override void ApplyVariantStats(StatVariant statVariant)
+        {
+            base.ApplyVariantStats(statVariant);
+            accuracy += statVariant.accuracy;
+            turretRotateSpeedInDegrees += statVariant.rotate_speed;
+        }
+    }
 }

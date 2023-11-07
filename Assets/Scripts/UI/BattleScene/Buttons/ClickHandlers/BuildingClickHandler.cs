@@ -1,8 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -16,10 +19,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         private readonly IAudioClipWrapper _buildingSelectedSound;
 
         public BuildingClickHandler(
-            IUIManager uiManager, 
+            IUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPlayerCruiserFocusHelper playerCruiserFocusHelper, 
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IAudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
@@ -38,6 +41,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             if (canAffordBuildable)
             {
                 _uiManager.SelectBuilding(buildingClicked.Buildable);
+                // CheckIfVariant(buildingClicked.Buildable);
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)
@@ -54,6 +58,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 //_uiManager.SelectBuilding(buildingClicked.Buildable);
                 PlayUnaffordableSound();
             }
+        }
+
+        private async void CheckIfVariant(IBuilding building)
+        {
+            int index = await ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(BattleSceneGod.Instance.factoryProvider.PrefabFactory, building);
+            building.variantIndex = index;
+            _uiManager.SelectBuilding(building);
         }
 
         public void HandleHover(IBuildableWrapper<IBuilding> buildingClicked)

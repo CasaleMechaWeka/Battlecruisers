@@ -40,6 +40,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public HeckleDetailsController _heckleDetails;
         public BodykitDetailController _bodykitDetails;
+        public BuildingDetailController _buildingDetails;
+        public UnitDetailController _unitDetails;
 
         // Heckles
         public CanvasGroupButton heckleButton;

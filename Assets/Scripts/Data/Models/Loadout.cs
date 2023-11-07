@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.Data.Models
 {
@@ -42,6 +48,8 @@ namespace BattleCruisers.Data.Models
                 _hull = value;
             }
         }
+
+        [SerializeField]
         private CaptainExoKey _currentCaptain;
         public CaptainExoKey CurrentCaptain
         {
@@ -55,11 +63,20 @@ namespace BattleCruisers.Data.Models
             set => _currentHeckles = value;
         }
 
+        [SerializeField]
         private int _selectedBodykit;     // index of prefabs
         public int SelectedBodykit
         {
             get => _selectedBodykit;
             set => _selectedBodykit = value;
+        }
+
+        [SerializeField]
+        private List<int> _selectedVariants;  // index of Prefabs
+        public List<int> SelectedVariants
+        {
+            get => _selectedVariants;
+            set => _selectedVariants = value;
         }
 
         [SerializeField]
@@ -80,12 +97,90 @@ namespace BattleCruisers.Data.Models
             _builds = buildLimt;
             _unit = unitLimit;
             _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain
-            _selectedBodykit = -1;                                                      
+            _selectedBodykit = -1;
+            _selectedVariants = new List<int>();
         }
 
         public bool Is_buildsNull()
         {
             return _builds == null;
+        }
+
+        public async Task<VariantPrefab> GetSelectedUnitVariant(IPrefabFactory prefabFactory, IUnit unit)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (variantPrefab.IsUnit())
+                {
+                    if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        return variantPrefab;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public async Task<int> GetSelectedUnitVariantIndex(IPrefabFactory prefabFactory, IUnit unit)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (variantPrefab.IsUnit())
+                {
+                    if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        return index;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public async Task<VariantPrefab> GetSelectedBuildingVariant(IPrefabFactory prefabFactory, IBuilding building)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (!variantPrefab.IsUnit())
+                {
+                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        return variantPrefab;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public async Task<int> GetSelectedBuildingVariantIndex(IPrefabFactory prefabFactory, IBuilding building)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (!variantPrefab.IsUnit())
+                {
+                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        return index;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public void RemoveCurrentSelectedVariant(int index)
+        {
+            _selectedVariants.Remove(index);
+        }
+        public void AddSelectedVariant(int index)
+        {
+            _selectedVariants.Add(index);
         }
 
         public void Create_buildsAnd_units()

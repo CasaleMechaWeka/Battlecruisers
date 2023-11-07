@@ -215,6 +215,13 @@ namespace BattleCruisers.Data.Models
             set => _bodykits = value;
         }
 
+        public List<VariantData> _variants;
+        public List<VariantData> Variants
+        {
+            get => _variants;
+            set => _variants = value;
+        }
+
         public List<IAPData> _iaps;
         public List<IAPData> IAPs
         {
@@ -241,6 +248,13 @@ namespace BattleCruisers.Data.Models
         {
             get => _outstandingBodykitTransactions;
             set => _outstandingBodykitTransactions = value;
+        }
+
+        public List<VariantData> _outstandingVariantTransactions;
+        public List<VariantData> OutstandingVariantTransactions
+        {
+            get => _outstandingVariantTransactions;
+            set => _outstandingVariantTransactions = value;
         }
 
         private int _creditsChange;
@@ -285,6 +299,22 @@ namespace BattleCruisers.Data.Models
             set => _playerName = value;
         }
 
+        private List<int> _purchasedExos;
+
+        private List<int> _purchasedHeckles;
+
+        private List<int> _purchasedBodykits;
+
+        private List<int> _purchasedVariants;
+
+
+        private bool _isDoneMigration;
+        public bool IsDoneMigration
+        {
+            get => _isDoneMigration;
+            set => _isDoneMigration = value;
+        }
+
         /*        private int _rankData;
                 public int RankData
                 {
@@ -323,7 +353,6 @@ namespace BattleCruisers.Data.Models
 
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
-
 
         [SerializeField]
         private long _lifetimeDestructionScore;
@@ -585,12 +614,58 @@ namespace BattleCruisers.Data.Models
                     new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 521, owned : false, id: 35),
             };
 
+            _variants = new List<VariantData>
+            {
+                new VariantData(prefabName: "Variant000", variantNameBase : "DoubleShot", variantDescriptionBase : "DoubleShotDescription", coins: 0, credits: 662, owned: false, id: 0),
+                new VariantData(prefabName: "Variant001", variantNameBase : "TripleShot", variantDescriptionBase : "TripleShotDescription", coins: 0, credits: 662, owned: false, id: 1),
+                new VariantData(prefabName: "Variant002", variantNameBase : "QuickBuild", variantDescriptionBase : "QuickBuildDescription", coins: 0, credits: 662, owned: false, id: 2),
+                new VariantData(prefabName: "Variant003", variantNameBase : "QuickBuild", variantDescriptionBase : "QuickBuildDescription", coins: 0, credits: 662, owned: false, id: 3),
+                new VariantData(prefabName: "Variant004", variantNameBase : "RapidFire", variantDescriptionBase : "RapidFireDescription", coins: 0, credits: 662, owned: false, id: 4),
+                new VariantData(prefabName: "Variant005", variantNameBase : "Robust", variantDescriptionBase : "RobustDescription", coins: 0, credits: 662, owned: false, id: 5),
+                new VariantData(prefabName: "Variant006", variantNameBase : "Robust", variantDescriptionBase : "RobustDescription", coins: 0, credits: 662, owned: false, id: 6),
+                new VariantData(prefabName: "Variant007", variantNameBase : "Refined", variantDescriptionBase : "RefinedDescription", coins: 0, credits: 662, owned: false, id: 7),
+                new VariantData(prefabName: "Variant008", variantNameBase : "RapidFire", variantDescriptionBase : "RapidFireDescription", coins: 0, credits: 662, owned: false, id: 8),
+                new VariantData(prefabName: "Variant009", variantNameBase : "RapidFire", variantDescriptionBase : "RapidFireDescription", coins: 0, credits: 662, owned: false, id: 9),
+                new VariantData(prefabName: "Variant010", variantNameBase : "Refined", variantDescriptionBase : "RefinedDescription", coins: 0, credits: 662, owned: false, id: 10),
+                new VariantData(prefabName: "Variant011", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 11),
+                new VariantData(prefabName: "Variant012", variantNameBase : "Robust", variantDescriptionBase : "RobustDescription", coins: 0, credits: 662, owned: false, id: 12),
+                new VariantData(prefabName: "Variant013", variantNameBase : "RapidFire", variantDescriptionBase : "RapidFireDescription", coins: 0, credits: 662, owned: false, id: 13),
+                new VariantData(prefabName: "Variant014", variantNameBase : "QuickBuild", variantDescriptionBase : "QuickBuildDescription", coins: 0, credits: 662, owned: false, id: 14),
+                new VariantData(prefabName: "Variant015", variantNameBase : "RapidFire", variantDescriptionBase : "RapidFireDescription", coins: 0, credits: 662, owned: false, id: 15),
+                new VariantData(prefabName: "Variant016", variantNameBase : "RapidFire", variantDescriptionBase : "RapidFireDescription", coins: 0, credits: 662, owned: false, id: 16),
+                new VariantData(prefabName: "Variant017", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 17),
+                new VariantData(prefabName: "Variant018", variantNameBase : "QuickBuild", variantDescriptionBase : "QuickBuildDescription", coins: 0, credits: 662, owned: false, id: 18),
+                new VariantData(prefabName: "Variant019", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 19),
+                new VariantData(prefabName: "Variant020", variantNameBase : "LongRange", variantDescriptionBase : "LongRangeDescription", coins: 0, credits: 662, owned: false, id: 20),
+                new VariantData(prefabName: "Variant021", variantNameBase : "LongRange", variantDescriptionBase : "LongRangeDescription", coins: 0, credits: 662, owned: false, id: 21),
+                new VariantData(prefabName: "Variant022", variantNameBase : "LongRange", variantDescriptionBase : "LongRangeDescription", coins: 0, credits: 662, owned: false, id: 22),
+                new VariantData(prefabName: "Variant023", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 23),
+                new VariantData(prefabName: "Variant024", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 24),
+                new VariantData(prefabName: "Variant025", variantNameBase : "Refined", variantDescriptionBase : "RefinedDescription", coins: 0, credits: 662, owned: false, id: 25),
+                new VariantData(prefabName: "Variant026", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 26),
+                new VariantData(prefabName: "Variant027", variantNameBase : "QuickBuild", variantDescriptionBase : "QuickBuildDescription", coins: 0, credits: 662, owned: false, id: 27),
+                new VariantData(prefabName: "Variant028", variantNameBase : "Refined", variantDescriptionBase : "RefinedDescription", coins: 0, credits: 662, owned: false, id: 28),
+                new VariantData(prefabName: "Variant029", variantNameBase : "Refined", variantDescriptionBase : "RefinedDescription", coins: 0, credits: 662, owned: false, id: 29),
+                new VariantData(prefabName: "Variant030", variantNameBase : "Refined", variantDescriptionBase : "RefinedDescription", coins: 0, credits: 662, owned: false, id: 30),
+                new VariantData(prefabName: "Variant031", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 31),
+                new VariantData(prefabName: "Variant032", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 32),
+                new VariantData(prefabName: "Variant033", variantNameBase : "LongRange", variantDescriptionBase : "LongRangeDescription", coins: 0, credits: 662, owned: false, id: 33),
+                new VariantData(prefabName: "Variant034", variantNameBase : "RapidFire", variantDescriptionBase : "RapidFireDescription", coins: 0, credits: 662, owned: false, id: 34),
+                new VariantData(prefabName: "Variant035", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 35),
+            };
+
             _iaps = new List<IAPData> {
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins100Name", iapDescriptionKeybase: "Coins100Description", iapIconName: "Coins100Pack", 0.99f, 100),
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins500Name", iapDescriptionKeybase: "Coins500Description", iapIconName: "Coins500Pack", 1.99f, 500),
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Name", iapDescriptionKeybase: "Coins1000Description", iapIconName: "Coins1000Pack", 2.99f, 1000),
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Name", iapDescriptionKeybase: "Coins5000Description", iapIconName: "Coins5000Pack", 3.99f, 5000),
             };
+
+            _purchasedExos = new List<int> { 0 };
+            _purchasedHeckles = new List<int>();
+            _purchasedBodykits = new List<int>();
+            _purchasedVariants = new List<int>();
+            _isDoneMigration = false;
 
             _playerName = "Charlie";
             _coins = 50;
@@ -825,5 +900,53 @@ namespace BattleCruisers.Data.Models
             return UnlockedBuildings.Contains(buildingKey);
         }
 
+        public void AddExo(int index)
+        {
+            _purchasedExos.Add(index);
+        }
+        public void RemoveExo(int id)
+        {
+            _purchasedExos.RemoveAll(x => x == id);
+        }
+        public List<int> GetExos()
+        {
+            return _purchasedExos;
+        }
+        public void AddHeckle(int index)
+        {
+            _purchasedHeckles.Add(index);
+        }
+        public void RemoveHeckle(int id)
+        {
+            _purchasedHeckles.RemoveAll(x => x == id);
+        }
+        public List<int> GetHeckles()
+        {
+            return _purchasedHeckles;
+        }
+        public void AddBodykit(int index)
+        {
+            _purchasedBodykits.Add(index);
+        }
+        public void RemoveBodykit(int id)
+        {
+            _purchasedBodykits.RemoveAll(x => x == id);
+        }
+        public List<int> GetBodykits()
+        {
+            return _purchasedBodykits;
+        }
+        public void AddVariant(int index)
+        {
+            _purchasedVariants.Add(index);
+        }
+        public void RemoveVariant(int id)
+        {
+            _purchasedVariants.RemoveAll(x => x == id);
+        }
+        public List<int> GetVariants()
+        {
+            return _purchasedVariants;
+        }
     }
 }

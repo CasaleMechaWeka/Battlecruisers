@@ -45,13 +45,18 @@ namespace BattleCruisers.Data
         Task<bool> SyncCreditsToCloud();
         Task<bool> RefreshPVPServerStatus();
         Task SyncItemsCost();
+        Task SyncItemsCostV2();
         Task SyncHecklesCost();
         Task ProcessOfflineTransactions();
         Task<bool> PurchaseCaptain(int index);
+        Task<bool> PurchaseCaptainV2(int index);
         Task<bool> PurchaseHeckle(int index);
+        Task<bool> PurchaseHeckleV2(int index);
         Task<bool> PurchaseBodykit(int index);
+        Task<bool> PurchaseBodykitV2(int index);
+        Task<bool> PurchaseVariant(int index);
 
-/*        Task<bool> PurchaseIAP(string purchaseId);*/
+        /*        Task<bool> PurchaseIAP(string purchaseId);*/
 
         /*        Task RefreshEconomyConfiguration();
                 Task FetchConfigs();*/

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
@@ -24,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			}
 		}
 
-		void Awake()
+		protected virtual void Awake()
 		{
 			_outlineWidth = ((RectTransform)progressBarOutline.transform).rect.width;
 			OnProgressChanged(originalProgress);

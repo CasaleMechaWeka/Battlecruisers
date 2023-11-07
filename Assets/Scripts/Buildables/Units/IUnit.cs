@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.ObjectModel;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Buildables.Units
 {
@@ -26,5 +27,8 @@ namespace BattleCruisers.Buildables.Units
         bool IsUltra { get; }
 
         void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders);
-	}
+        void OverwriteComparableItem(string name, string description);
+        int variantIndex { get; set; }
+        void ApplyVariantStats(StatVariant statVariant);
+    }
 }

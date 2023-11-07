@@ -4,6 +4,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 
 namespace BattleCruisers.Data.Static
 {
@@ -566,58 +567,20 @@ namespace BattleCruisers.Data.Static
 
         public static class BodyKits
         {
-            public static BodykitKey Bodykit000 { get; } = new BodykitKey("Bodykit000");
-            public static BodykitKey Bodykit001 { get; } = new BodykitKey("Bodykit001");
-            public static BodykitKey Bodykit002 { get; } = new BodykitKey("Bodykit002");
-            public static BodykitKey Bodykit003 { get; } = new BodykitKey("Bodykit003");
-            public static BodykitKey Bodykit004 { get; } = new BodykitKey("Bodykit004");
-            public static BodykitKey Bodykit005 { get; } = new BodykitKey("Bodykit005");
-            public static BodykitKey Bodykit006 { get; } = new BodykitKey("Bodykit006");
-            public static BodykitKey Bodykit007 { get; } = new BodykitKey("Bodykit007");
-            public static BodykitKey Bodykit008 { get; } = new BodykitKey("Bodykit008");
-            public static BodykitKey Bodykit009 { get; } = new BodykitKey("Bodykit009");
-            public static BodykitKey Bodykit010 { get; } = new BodykitKey("Bodykit010");
-            public static BodykitKey Bodykit011 { get; } = new BodykitKey("Bodykit011");
-            public static BodykitKey Bodykit012 { get; } = new BodykitKey("Bodykit012");
-            public static BodykitKey Bodykit013 { get; } = new BodykitKey("Bodykit013");
-            public static BodykitKey Bodykit014 { get; } = new BodykitKey("Bodykit014");
-            public static BodykitKey Bodykit015 { get; } = new BodykitKey("Bodykit015");
-            public static BodykitKey Bodykit016 { get; } = new BodykitKey("Bodykit016");
-            public static BodykitKey Bodykit017 { get; } = new BodykitKey("Bodykit017");
-            public static BodykitKey Bodykit018 { get; } = new BodykitKey("Bodykit018");
-            public static BodykitKey Bodykit019 { get; } = new BodykitKey("Bodykit019");
-            public static BodykitKey Bodykit020 { get; } = new BodykitKey("Bodykit020");
-            public static BodykitKey Bodykit021 { get; } = new BodykitKey("Bodykit021");
-            public static BodykitKey Bodykit022 { get; } = new BodykitKey("Bodykit022");
-            public static BodykitKey Bodykit023 { get; } = new BodykitKey("Bodykit023");
-            public static BodykitKey Bodykit024 { get; } = new BodykitKey("Bodykit024");
-            public static BodykitKey Bodykit025 { get; } = new BodykitKey("Bodykit025");
-            public static BodykitKey Bodykit026 { get; } = new BodykitKey("Bodykit026");
-            public static BodykitKey Bodykit027 { get; } = new BodykitKey("Bodykit027");
-            public static BodykitKey Bodykit028 { get; } = new BodykitKey("Bodykit028");
-            public static BodykitKey Bodykit029 { get; } = new BodykitKey("Bodykit029");
-            public static BodykitKey Bodykit030 { get; } = new BodykitKey("Bodykit030");
-            public static BodykitKey Bodykit031 { get; } = new BodykitKey("Bodykit031");
-            public static BodykitKey Bodykit032 { get; } = new BodykitKey("Bodykit032");
-            public static BodykitKey Bodykit033 { get; } = new BodykitKey("Bodykit033");
-            public static BodykitKey Bodykit034 { get; } = new BodykitKey("Bodykit034");
-            public static BodykitKey Bodykit035 { get; } = new BodykitKey("Bodykit035");
-      
-            public static IList<IPrefabKey> AllKeys
+            public static BodykitKey GetBodykitKey(int index)
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        Bodykit000, Bodykit001, Bodykit002, Bodykit003, Bodykit004, Bodykit005, Bodykit006, Bodykit007, Bodykit008,
-                        Bodykit009, Bodykit010, Bodykit011, Bodykit012, Bodykit013, Bodykit014, Bodykit015, Bodykit016, Bodykit017,
-                        Bodykit018, Bodykit019, Bodykit020, Bodykit021, Bodykit022, Bodykit023, Bodykit024, Bodykit025, Bodykit026, Bodykit027,
-                        Bodykit028, Bodykit029, Bodykit030, Bodykit031, Bodykit032, Bodykit033, Bodykit034, Bodykit035
-                    };
-                }
+                return new BodykitKey("Bodykit" + index.ToString("000"));
             }
         }
-        public static class Effects
+
+        public static class Variants
+        {
+            public static VariantKey GetVariantKey(int index)
+            {
+                return new VariantKey("Variant" + index.ToString("000"));
+            }
+        }
+            public static class Effects
         {
             public static EffectKey BuilderDrone { get; } = new EffectKey("BuilderDrone");
         }
