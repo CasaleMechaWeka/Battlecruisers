@@ -5,6 +5,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -18,10 +19,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         private readonly IAudioClipWrapper _buildingSelectedSound;
 
         public BuildingClickHandler(
-            IUIManager uiManager, 
+            IUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPlayerCruiserFocusHelper playerCruiserFocusHelper, 
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IAudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
@@ -39,8 +40,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
             if (canAffordBuildable)
             {
-                //    _uiManager.SelectBuilding(buildingClicked.Buildable);
-                CheckIfVariant(buildingClicked.Buildable);
+                _uiManager.SelectBuilding(buildingClicked.Buildable);
+                // CheckIfVariant(buildingClicked.Buildable);
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)

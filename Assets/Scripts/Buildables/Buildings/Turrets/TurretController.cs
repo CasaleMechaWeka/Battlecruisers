@@ -11,9 +11,9 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public abstract class TurretController : Building
-	{
+    {
         private IAnimation _barrelAnimation;
-		protected IBarrelWrapper _barrelWrapper;
+        protected IBarrelWrapper _barrelWrapper;
 
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound => null;
@@ -22,32 +22,34 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         public override bool IsBoostable => true;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
-		{
+        {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
-			Assert.IsNotNull(_barrelWrapper);
-			_barrelWrapper.StaticInitialise();
+            Assert.IsNotNull(_barrelWrapper);
+            _barrelWrapper.StaticInitialise();
+
             AddDamageStats(_barrelWrapper.DamageCapability);
 
             IAnimationInitialiser barrelAnimationInitialiser = GetComponent<IAnimationInitialiser>();
             Assert.IsNotNull(barrelAnimationInitialiser);
             _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
-		}
+        }
 
-		protected override void OnBuildableCompleted()
+        protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 
             _barrelWrapper
                 .Initialise(
-                    this, 
-                    _factoryProvider, 
-                    _cruiserSpecificFactories, 
-                    FiringSound, 
-                    _parentSlot.BoostProviders, 
+                    this,
+                    _factoryProvider,
+                    _cruiserSpecificFactories,
+                    FiringSound,
+                    _parentSlot.BoostProviders,
                     TurretFireRateBoostProviders,
                     _barrelAnimation);
+            _barrelWrapper.ApplyVariantStats(this);
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()
@@ -65,9 +67,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             }
             else
             {
-			    GameObject turretBase = transform.Find("Base").gameObject;
+                GameObject turretBase = transform.Find("Base").gameObject;
                 SpriteRenderer[] turretBaseRenderers = turretBase.GetComponentsInChildren<SpriteRenderer>();
-			    Assert.IsTrue(turretBaseRenderers.Length > 0);
+                Assert.IsTrue(turretBaseRenderers.Length > 0);
                 return turretBaseRenderers;
             }
         }

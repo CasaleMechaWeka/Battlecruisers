@@ -46,8 +46,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
         protected override void InternalShowStatsOfVariant(TItem item, VariantPrefab variant, TItem itemToCompareTo = null)
         {
             drones.ShowResult((item.NumOfDronesRequired + variant.statVariant.drone_num).ToString() , _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
-            buildTime.ShowResult(((item.BuildTimeInS + variant.statVariant.build_time) * item.NumOfDronesRequired * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS * item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
-            health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth + variant.statVariant.max_health), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+            buildTime.ShowResult(((item.BuildTimeInS + variant.statVariant.build_time) * (item.NumOfDronesRequired + variant.statVariant.drone_num) * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats(((item.BuildTimeInS + variant.statVariant.build_time) * (item.NumOfDronesRequired + variant.statVariant.drone_num) * 0.5f), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
+            health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth + variant.statVariant.max_health), _higherIsBetterComparer.CompareStats(item.MaxHealth + variant.statVariant.max_health, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item) , GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
             ShowDamageStat(shipDamage, GetAntiShipDamage(item) + (variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).AttackCapabilities.Contains(TargetType.Ships) ? variant.statVariant.damage : 0 : 0), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);

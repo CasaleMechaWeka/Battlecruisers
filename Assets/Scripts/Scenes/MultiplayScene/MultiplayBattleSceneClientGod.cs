@@ -243,7 +243,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor,
-                    dataProvider.StaticData);
+                    dataProvider.StaticData, null);
 
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
             RightPanelComponents rightPanelComponents

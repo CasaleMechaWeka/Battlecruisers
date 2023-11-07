@@ -16,6 +16,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Factories;
 using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 using System.Configuration;
+using static UnityEditor.UIElements.ToolbarMenu;
 //using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -85,7 +86,8 @@ namespace BattleCruisers.Buildables.Buildings
             HealthBar.variantIcon.enabled = false;
             if (ParentCruiser.IsPlayerCruiser)
             {
-                SetVariantIcon(this);
+                // Set variant for Player
+                ApplyVariantToPlayer(this);
             }
             else
             {
@@ -94,25 +96,37 @@ namespace BattleCruisers.Buildables.Buildings
             }
         }
 
-        private async void SetVariantIcon(IBuilding building)
+        private async void ApplyVariantToPlayer(IBuilding building)
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
 
             if (variant != null)
             {
+
+                // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
                 int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
                 variantIndex = index;
                 Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                 Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
+
+                // apply variant stats for building (maxhealth, numof drones required, build time)
+                ApplyVariantStats(variant.statVariant);
             }
             else
             {
                 HealthBar.variantIcon.enabled = false;
                 variantIndex = -1;
             }
+        }
+
+        public void ApplyVariantStats(StatVariant statVariant)
+        {
+            maxHealth += statVariant.max_health;
+            numOfDronesRequired += statVariant.drone_num;
+            buildTimeInS += statVariant.build_time;
         }
 
         public override void StartConstruction()

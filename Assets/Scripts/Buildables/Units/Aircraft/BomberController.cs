@@ -14,29 +14,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class BomberController : AircraftController, ITargetConsumer
-	{
-		private BombSpawner _bombSpawner;
+    {
+        private BombSpawner _bombSpawner;
         private IProjectileStats _bombStats;
         private ITargetProcessor _targetProcessor;
         private IBomberMovementController _bomberMovementControler;
-		private bool _haveDroppedBombOnRun = false;
+        private bool _haveDroppedBombOnRun = false;
         private bool _isAtCruisingHeight = false;
 
         private const float TURN_AROUND_DISTANCE_MULTIPLIER = 1.5f;
         private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
-		#region Properties
-		private ITarget _target;
-		public ITarget Target
-		{ 
-			get { return _target; }
-			set
-			{
-				_target = value;
+        #region Properties
+        private ITarget _target;
+        public ITarget Target
+        {
+            get { return _target; }
+            set
+            {
+                _target = value;
 
                 if (_target == null)
                 {
@@ -46,8 +49,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 {
                     SwitchToBomberMovement();
                 }
-			}
-		}
+            }
+        }
 
         protected override Vector2 MaskHighlightableSize
         {
@@ -62,23 +65,23 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
-		{
+        {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
-			Assert.IsNotNull(_bombSpawner);
+            _bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
+            Assert.IsNotNull(_bombSpawner);
 
-            _bombStats = GetComponent<ProjectileStats>();
-            Assert.IsNotNull(_bombStats);
+            /*            _bombStats = GetComponent<ProjectileStats>();
+                        Assert.IsNotNull(_bombStats);
 
-            float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
-            IList<TargetType> attackCapabilities = new List<TargetType>()
-            {
-                TargetType.Cruiser,
-                TargetType.Buildings
-            };
-            AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
-		}
+                        float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
+                        IList<TargetType> attackCapabilities = new List<TargetType>()
+                        {
+                            TargetType.Cruiser,
+                            TargetType.Buildings
+                        };
+                        AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));*/
+        }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
@@ -99,27 +102,48 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
 
             _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
-		}
-		
-		protected async override void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
 
-			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
+            // apply variant stats
+            ApplyVariantStats();
+        }
 
-			_targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
-			_targetProcessor.AddTargetConsumer(this);
+        private async void ApplyVariantStats()
+        {
+            _bombStats = GetComponent<ProjectileStats>();
+            Assert.IsNotNull(_bombStats);
+            if (variantIndex != -1)
+            {
+                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
+            }
+            float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
+            IList<TargetType> attackCapabilities = new List<TargetType>()
+            {
+                TargetType.Cruiser,
+                TargetType.Buildings
+            };
+            AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
+        }
+
+        protected async override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+
+            Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
+
+            _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
+            _targetProcessor.AddTargetConsumer(this);
 
             _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
-		}
+        }
 
-		protected override IList<IPatrolPoint> GetPatrolPoints()
-		{
+        protected override IList<IPatrolPoint> GetPatrolPoints()
+        {
             IList<Vector2> patrolPositions = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
             return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
-		}
+        }
 
-		private void OnFirstPatrolPointReached()
+        private void OnFirstPatrolPointReached()
         {
             _isAtCruisingHeight = true;
             SwitchToBomberMovement();
@@ -132,141 +156,141 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
 
         protected override void OnFixedUpdate()
-		{
-			base.OnFixedUpdate();
+        {
+            base.OnFixedUpdate();
 
-            if (_isAtCruisingHeight 
+            if (_isAtCruisingHeight
                 && !IsInKamikazeMode
                 && Target != null)
-			{
-				TryBombTarget();
-			}
-		}
+            {
+                TryBombTarget();
+            }
+        }
 
-		private void TryBombTarget()
-		{
-			if (_haveDroppedBombOnRun)
-			{
-				if (IsReadyToTurnAround(transform.position, Target.Position, EffectiveMaxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
-				{
-					Logging.Log(Tags.AIRCRAFT, "About to turn around");
+        private void TryBombTarget()
+        {
+            if (_haveDroppedBombOnRun)
+            {
+                if (IsReadyToTurnAround(transform.position, Target.Position, EffectiveMaxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
+                {
+                    Logging.Log(Tags.AIRCRAFT, "About to turn around");
 
-					TurnAround();
-					_haveDroppedBombOnRun = false;
-				}
-			}
-			else if (IsDirectionCorrect(rigidBody.velocity.x, _bomberMovementControler.TargetVelocity.x)
-				&& IsOnTarget(transform.position, Target.Position, rigidBody.velocity.x))
-			{
-				Logging.Log(Tags.AIRCRAFT, "About to drop bomb");
+                    TurnAround();
+                    _haveDroppedBombOnRun = false;
+                }
+            }
+            else if (IsDirectionCorrect(rigidBody.velocity.x, _bomberMovementControler.TargetVelocity.x)
+                && IsOnTarget(transform.position, Target.Position, rigidBody.velocity.x))
+            {
+                Logging.Log(Tags.AIRCRAFT, "About to drop bomb");
 
-				_bombSpawner.SpawnShell(rigidBody.velocity.x);
-				_haveDroppedBombOnRun = true;
-			}
-		}
-		
-		/// <returns>
-		/// True if the bomber has overflown the target enough so that it can turn around
-		/// and have enough space for the next bombing run.  False otherwise.
-		/// </returns>
-		private bool IsReadyToTurnAround(Vector2 planePosition, Vector2 targetPosition, float absoluteMaxXVelocity, float targetXVelocity)
-		{
-			Assert.IsTrue(targetXVelocity != 0);
+                _bombSpawner.SpawnShell(rigidBody.velocity.x);
+                _haveDroppedBombOnRun = true;
+            }
+        }
 
-			float absoluteLeadDistance = FindLeadDistance(planePosition, targetPosition, absoluteMaxXVelocity);
-			float turnAroundDistance = absoluteLeadDistance * TURN_AROUND_DISTANCE_MULTIPLIER;
-			float xTurnAroundPosition = targetXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
+        /// <returns>
+        /// True if the bomber has overflown the target enough so that it can turn around
+        /// and have enough space for the next bombing run.  False otherwise.
+        /// </returns>
+        private bool IsReadyToTurnAround(Vector2 planePosition, Vector2 targetPosition, float absoluteMaxXVelocity, float targetXVelocity)
+        {
+            Assert.IsTrue(targetXVelocity != 0);
+
+            float absoluteLeadDistance = FindLeadDistance(planePosition, targetPosition, absoluteMaxXVelocity);
+            float turnAroundDistance = absoluteLeadDistance * TURN_AROUND_DISTANCE_MULTIPLIER;
+            float xTurnAroundPosition = targetXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
 
             Logging.Verbose(Tags.AIRCRAFT, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
 
-			return 
-				((targetXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
-				|| (targetXVelocity < 0 && planePosition.x <= xTurnAroundPosition));
-		}
+            return
+                ((targetXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
+                || (targetXVelocity < 0 && planePosition.x <= xTurnAroundPosition));
+        }
 
-		private void TurnAround()
-		{
+        private void TurnAround()
+        {
             Logging.Log(Tags.AIRCRAFT, $"Position: {Position}");
 
-			Vector2 newTargetVelocity = new Vector2(EffectiveMaxVelocityInMPerS, 0);
-			if (rigidBody.velocity.x > 0)
-			{
-				newTargetVelocity *= -1;
-			}
-			_bomberMovementControler.TargetVelocity = newTargetVelocity;
-		}
+            Vector2 newTargetVelocity = new Vector2(EffectiveMaxVelocityInMPerS, 0);
+            if (rigidBody.velocity.x > 0)
+            {
+                newTargetVelocity *= -1;
+            }
+            _bomberMovementControler.TargetVelocity = newTargetVelocity;
+        }
 
-		/// <summary>
-		/// Assumes target is stationary.
-		/// </summary>
-		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
-		{
+        /// <summary>
+        /// Assumes target is stationary.
+        /// </summary>
+        private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
+        {
             Logging.Verbose(Tags.AIRCRAFT, $"targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
 
-			float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
-			float xDropPosition = targetPosition.x - leadDistance;
+            float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
+            float xDropPosition = targetPosition.x - leadDistance;
 
-			return
-				((planeXVelocityInMPerS > 0 && planePosition.x >= xDropPosition)
-				|| (planeXVelocityInMPerS < 0 && planePosition.x <= xDropPosition));
-		}
+            return
+                ((planeXVelocityInMPerS > 0 && planePosition.x >= xDropPosition)
+                || (planeXVelocityInMPerS < 0 && planePosition.x <= xDropPosition));
+        }
 
-		private bool IsDirectionCorrect(float currentXVelocity, float targetXVelocity)
-		{
-			return currentXVelocity * targetXVelocity > 0;
-		}
+        private bool IsDirectionCorrect(float currentXVelocity, float targetXVelocity)
+        {
+            return currentXVelocity * targetXVelocity > 0;
+        }
 
-		/// <summary>
-		/// Note:
-		/// 1. Will be negative if xVelocityInMPerS is negative!
-		/// 2. Assumes the target is stationary.
-		/// </summary>
-		/// <returns>>
-		/// The x distance before the target where the bomb needs to be dropped
-		/// for it to land on the target.
-		/// </returns>
-		private float FindLeadDistance(Vector2 planePosition, Vector2 targetPosition, float xVelocityInMPerS)
-		{
-			float yDifference = planePosition.y - targetPosition.y;
-			Assert.IsTrue(yDifference > 0);
-			float timeBombWillTravel = FindTimeBombWillTravel(yDifference);
-			return xVelocityInMPerS * timeBombWillTravel;
-		}
+        /// <summary>
+        /// Note:
+        /// 1. Will be negative if xVelocityInMPerS is negative!
+        /// 2. Assumes the target is stationary.
+        /// </summary>
+        /// <returns>>
+        /// The x distance before the target where the bomb needs to be dropped
+        /// for it to land on the target.
+        /// </returns>
+        private float FindLeadDistance(Vector2 planePosition, Vector2 targetPosition, float xVelocityInMPerS)
+        {
+            float yDifference = planePosition.y - targetPosition.y;
+            Assert.IsTrue(yDifference > 0);
+            float timeBombWillTravel = FindTimeBombWillTravel(yDifference);
+            return xVelocityInMPerS * timeBombWillTravel;
+        }
 
-		private float FindTimeBombWillTravel(float verticalDistanceInM)
-		{
-			return Mathf.Sqrt(2 * verticalDistanceInM / (_bombStats.GravityScale * Constants.GRAVITY));
-		}
+        private float FindTimeBombWillTravel(float verticalDistanceInM)
+        {
+            return Mathf.Sqrt(2 * verticalDistanceInM / (_bombStats.GravityScale * Constants.GRAVITY));
+        }
 
-		protected override void OnBoostChanged()
+        protected override void OnBoostChanged()
         {
             SetTargetVelocity();
         }
 
         private void SetTargetVelocity()
         {
-			if (_target != null)
-			{
-				_bomberMovementControler.TargetVelocity = FindTargetVelocity(_target.Position);
-			}
+            if (_target != null)
+            {
+                _bomberMovementControler.TargetVelocity = FindTargetVelocity(_target.Position);
+            }
         }
 
         private Vector2 FindTargetVelocity(Vector2 targetPosition)
         {
-			float xVelocity = EffectiveMaxVelocityInMPerS;
+            float xVelocity = EffectiveMaxVelocityInMPerS;
             if (targetPosition.x < transform.position.x)
-			{
-				xVelocity *= -1;
-			}
-			return new Vector2(xVelocity, 0);
+            {
+                xVelocity *= -1;
+            }
+            return new Vector2(xVelocity, 0);
         }
 
         protected override void CleanUp()
         {
             base.CleanUp();
 
-			_targetProcessor.RemoveTargetConsumer(this);
-			_targetProcessor = null;
+            _targetProcessor.RemoveTargetConsumer(this);
+            _targetProcessor = null;
         }
     }
 }

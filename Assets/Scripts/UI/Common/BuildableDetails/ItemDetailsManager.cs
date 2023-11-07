@@ -11,6 +11,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Properties;
 using System.Diagnostics;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
@@ -57,16 +58,22 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private async void ShowItemDetailsV2(IBuilding building)
         {
-            int index = building.variantIndex;
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            int index = await dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
             if (index != -1)
             {
-                building.OverwriteComparableItem(_commonString.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase), _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase));
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-                _buildingDetails.ShowItemDetails(building, variant);
+                IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
+                _buildingDetails.ShowItemDetails(staticBuilding, variant);
+                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                _buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
                 _selectedItem.Value = building;
             }
             else
             {
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(false);
                 _buildingDetails.ShowItemDetails(building);
                 _selectedItem.Value = building;
             }
@@ -89,16 +96,22 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private async void ShowItemDetailsV2(IUnit unit)
         {
-            int index = unit.variantIndex;
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            int index = await dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
             if (index != -1)
             {
-                unit.OverwriteComparableItem(_commonString.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase),_commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase));
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-                _unitDetails.ShowItemDetails(unit, variant);
+                IUnit staticUnit = variant.GetUnit(_prefabFactory);
+                _unitDetails.ShowItemDetails(staticUnit, variant);
+                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                _unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
                 _selectedItem.Value = unit;
             }
             else
             {
+                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(false);
                 _unitDetails.ShowItemDetails(unit);
                 _selectedItem.Value = unit;
             }

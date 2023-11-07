@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Effects;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
@@ -19,7 +20,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         IList<SpriteRenderer> Renderers { get; }
 
 		void StaticInitialise();
-
         void Initialise(
             IBuildable parent,
             IFactoryProvider factoryProvider,
@@ -28,5 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null);
+        void ApplyVariantStats(IBuilding building);
+        void ApplyVariantStats(IUnit unit);
 	}
 }

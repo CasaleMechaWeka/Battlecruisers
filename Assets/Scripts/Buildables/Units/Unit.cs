@@ -95,28 +95,45 @@ namespace BattleCruisers.Buildables.Units
             HealthBar.variantIcon.enabled = false;
             if (ParentCruiser.IsPlayerCruiser)
             {
-                SetVariantIcon(this);
+                // Set Variant to Player
+                ApplyVariantToPlayer(this);
+            }
+            else
+            {
+                // Set Variant to AI
+
             }
         }
 
-        private async void SetVariantIcon(IUnit unit)
+        private async void ApplyVariantToPlayer(IUnit unit)
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
             if (variant != null)
             {
+                // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
                 int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
                 variantIndex = index;
                 Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                 Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
+
+                // apply max health, num of drone required, build time
+                ApplyVariantStats(variant.statVariant);
             }
             else
             {
                 HealthBar.variantIcon.enabled = false;
                 variantIndex = -1;
             }
+        }
+
+        public void ApplyVariantStats(StatVariant statVariant)
+        {
+            maxHealth += statVariant.max_health;
+            numOfDronesRequired += statVariant.drone_num;
+            buildTimeInS += statVariant.build_time;
         }
 
         protected override void OnBuildableCompleted()

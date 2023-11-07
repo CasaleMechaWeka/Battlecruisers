@@ -37,6 +37,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
 
         protected abstract StatsController<TItem> GetStatsController();
+        public virtual BuildingVariantDetailController GetBuildingVariantDetailController() { return null; }
+        public virtual UnitVariantDetailController GetUnitVariantDetailController() { return null; }
 
         public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default)
         {

@@ -6,6 +6,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -17,8 +18,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
 
         public UnitClickHandler(
-            IUIManager uiManager, 
-            IPrioritisedSoundPlayer eventSoundPlayer, 
+            IUIManager uiManager,
+            IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
@@ -32,12 +33,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 
             _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
-			//_uiManager.ShowUnitDetails(unitClicked.Buildable);
+            //_uiManager.ShowUnitDetails(unitClicked.Buildable);
 
             if (canAffordBuildable)
             {
-                //   _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
-                CheckIfVariant(unitClicked.Buildable);
+                _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
+                //   CheckIfVariant(unitClicked.Buildable);
                 HandleFactory(unitClicked, unitFactory);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))

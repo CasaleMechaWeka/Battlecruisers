@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
@@ -69,11 +70,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             _meanFireRatePerS = burstSize / cycleTime;
 
             QueryIndex = 0;
+
+
         }
 
         public override void MoveToNextDuration()
         {
             QueryIndex++;
+        }
+
+        public override void ApplyVariantStats(StatVariant statVariant)
+        {
+            base.ApplyVariantStats(statVariant);
+            burstFireRatePerS += statVariant.burst_fire_rate;
+            burstSize += statVariant.burst_size;
         }
     }
 }

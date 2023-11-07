@@ -9,5 +9,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             return GetComponentInChildren<BuildingStatsController>();
         }
+        public override BuildingVariantDetailController GetBuildingVariantDetailController() { return GetComponent<BuildingVariantDetailController>(); }
     }
 }

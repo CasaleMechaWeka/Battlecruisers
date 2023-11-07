@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
@@ -19,6 +20,12 @@ namespace BattleCruisers.Projectiles.Stats
             Assert.IsTrue(attackCapabilities.Count > 0);
 
             AttackCapabilities = attackCapabilities.AsReadOnly();
+        }
+
+        public override void ApplyVariantStats(StatVariant statVariant)
+        {
+            base.ApplyVariantStats(statVariant);
+            detectionRangeM += statVariant.detection_range;
         }
     }
 }
