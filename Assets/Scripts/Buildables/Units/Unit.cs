@@ -63,6 +63,11 @@ namespace BattleCruisers.Buildables.Units
             Name = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Description");
         }
+        public void OverwriteComparableItem(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {

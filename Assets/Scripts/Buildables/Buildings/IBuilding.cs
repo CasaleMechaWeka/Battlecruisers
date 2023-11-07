@@ -41,5 +41,7 @@ namespace BattleCruisers.Buildables.Buildings
         /// + Nuke launcher
         /// </summary>
         bool IsBoostable { get; }
-	}
+        void OverwriteComparableItem(string name, string description);
+
+    }
 }

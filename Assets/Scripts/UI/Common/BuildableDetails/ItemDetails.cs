@@ -6,6 +6,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEditorInternal;
 using UnityEngine;
@@ -49,6 +50,24 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _item = item;
 
             _statsController.ShowStats(item, itemToCompareTo);
+            itemName.text = item.Name;
+            itemDescription.text = item.Description;
+            itemImage.sprite = item.Sprite;
+
+            gameObject.SetActive(true);
+        }
+        public virtual void ShowItemDetails(TItem item, VariantPrefab variant, TItem itemToCompareTo = default)
+        {
+            Assert.IsNotNull(item);
+
+            if (_item != null)
+            {
+                CleanUp();
+            }
+
+            _item = item;
+
+            _statsController.ShowStatsOfVariant(item,variant, itemToCompareTo);
             itemName.text = item.Name;
             itemDescription.text = item.Description;
             itemImage.sprite = item.Sprite;

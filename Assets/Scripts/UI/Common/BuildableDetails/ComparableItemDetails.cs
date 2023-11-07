@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -20,6 +22,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public override void ShowItemDetails(TItem item, TItem itemToCompareTo = null)
         {
             base.ShowItemDetails(item, itemToCompareTo);
+
+            // There is only space for the right side if there is no comparison item
+            rightSide.SetActive(itemToCompareTo == null);
+        }
+
+        public override void ShowItemDetails(TItem item, VariantPrefab variant, TItem itemToCompareTo = null)
+        {
+            base.ShowItemDetails(item, variant, itemToCompareTo);
 
             // There is only space for the right side if there is no comparison item
             rightSide.SetActive(itemToCompareTo == null);

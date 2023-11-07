@@ -17,6 +17,7 @@ using BattleCruisers.Utils.Fetchers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.Data.Models
 {
@@ -111,9 +112,9 @@ namespace BattleCruisers.Data.Models
             {
                 IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
-                if(variantPrefab.IsUnit())
+                if (variantPrefab.IsUnit())
                 {
-                    if(unit.Name == variantPrefab.GetParentName(ScreensSceneGod.Instance._prefabFactory))
+                    if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
                     {
                         return variantPrefab;
                     }
@@ -130,7 +131,7 @@ namespace BattleCruisers.Data.Models
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (variantPrefab.IsUnit())
                 {
-                    if (unit.Name == variantPrefab.GetParentName(ScreensSceneGod.Instance._prefabFactory))
+                    if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
                     {
                         return index;
                     }
@@ -138,8 +139,6 @@ namespace BattleCruisers.Data.Models
             }
             return -1;
         }
-
-
 
         public async Task<VariantPrefab> GetSelectedBuildingVariant(IPrefabFactory prefabFactory, IBuilding building)
         {
@@ -149,7 +148,7 @@ namespace BattleCruisers.Data.Models
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
-                    if (building.Name == variantPrefab.GetParentName(prefabFactory))
+                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
                     {
                         return variantPrefab;
                     }
@@ -166,7 +165,7 @@ namespace BattleCruisers.Data.Models
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
-                    if (building.Name == variantPrefab.GetParentName(ScreensSceneGod.Instance._prefabFactory))
+                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
                     {
                         return index;
                     }

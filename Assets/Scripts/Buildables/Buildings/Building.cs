@@ -68,6 +68,11 @@ namespace BattleCruisers.Buildables.Buildings
             //    PerkName = _commonStrings.GetString(PerkKey);
         }
 
+        public void OverwriteComparableItem(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
         public override void Activate(BuildingActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
@@ -86,10 +91,14 @@ namespace BattleCruisers.Buildables.Buildings
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
+
             if (variant != null)
             {
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
+                int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
+                Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
             }
             else
             {

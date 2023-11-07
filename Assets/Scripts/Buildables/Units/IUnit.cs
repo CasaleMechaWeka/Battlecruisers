@@ -26,5 +26,6 @@ namespace BattleCruisers.Buildables.Units
         bool IsUltra { get; }
 
         void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders);
-	}
+        void OverwriteComparableItem(string name, string description);
+    }
 }

@@ -47,14 +47,14 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public IUnit GetUnit(IPrefabFactory prefabFactory)
         {
             IUnit unit = null;
-            if(prefabFactory != null)
+            if (prefabFactory != null)
             {
                 unit = prefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
             }
             return unit;
         }
 
-        private IPrefabKey GetPrefabKey()
+        public IPrefabKey GetPrefabKey()
         {
             switch (_parent)
             {
@@ -63,37 +63,37 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 case ParentBuildable.NavalFactory:
                     return new BuildingKey(BuildingCategory.Factory, "NavalFactory");
                 case ParentBuildable.EngineeringBay:
-                    return new BuildingKey(BuildingCategory.Factory, "EngineeringBay"); 
+                    return new BuildingKey(BuildingCategory.Factory, "EngineeringBay");
                 case ParentBuildable.EngineeringBay4:
                     return new BuildingKey(BuildingCategory.Factory, "EngineeringBay4");
                 case ParentBuildable.EngineeringBay8:
-                    return new BuildingKey(BuildingCategory.Factory, "EngineeringBay8"); 
+                    return new BuildingKey(BuildingCategory.Factory, "EngineeringBay8");
                 case ParentBuildable.ShieldGenerator:
                     return new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
                 case ParentBuildable.StealthGenerator:
                     return new BuildingKey(BuildingCategory.Tactical, "StealthGenerator");
                 case ParentBuildable.SpySatelliteLauncher:
-                    return new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher"); 
+                    return new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher");
                 case ParentBuildable.LocalBooster:
                     return new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
                 case ParentBuildable.ControlTower:
-                    return new BuildingKey(BuildingCategory.Tactical, "ControlTower"); 
+                    return new BuildingKey(BuildingCategory.Tactical, "ControlTower");
                 case ParentBuildable.AntiShipTurret:
-                    return new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"); 
+                    return new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
                 case ParentBuildable.AntiAirTurret:
-                    return new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"); 
+                    return new BuildingKey(BuildingCategory.Defence, "AntiAirTurret");
                 case ParentBuildable.Mortar:
                     return new BuildingKey(BuildingCategory.Defence, "Mortar");
                 case ParentBuildable.SamSite:
-                    return new BuildingKey(BuildingCategory.Defence, "SamSite"); 
+                    return new BuildingKey(BuildingCategory.Defence, "SamSite");
                 case ParentBuildable.TeslaCoil:
                     return new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
                 case ParentBuildable.Coastguard:
                     return new BuildingKey(BuildingCategory.Defence, "Coastguard");
                 case ParentBuildable.Artillery:
-                    return new BuildingKey(BuildingCategory.Offence, "Artillery"); 
+                    return new BuildingKey(BuildingCategory.Offence, "Artillery");
                 case ParentBuildable.RocketLauncher:
-                    return new BuildingKey(BuildingCategory.Offence, "RocketLauncher"); 
+                    return new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
                 case ParentBuildable.Railgun:
                     return new BuildingKey(BuildingCategory.Offence, "Railgun");
                 case ParentBuildable.MLRS:
@@ -113,7 +113,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 case ParentBuildable.SteamCopter:
                     return new UnitKey(UnitCategory.Aircraft, "SteamCopter");
                 case ParentBuildable.Broadsword:
-                    return new UnitKey(UnitCategory.Aircraft, "Broadsword"); 
+                    return new UnitKey(UnitCategory.Aircraft, "Broadsword");
                 case ParentBuildable.AttackBoat:
                     return new UnitKey(UnitCategory.Naval, "AttackBoat");
                 case ParentBuildable.AttackRIB:
@@ -130,7 +130,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public bool IsUnit()
         {
             bool ret = false;
-            switch(_parent)
+            switch (_parent)
             {
                 case ParentBuildable.AirFactory:
                     ret = false;
