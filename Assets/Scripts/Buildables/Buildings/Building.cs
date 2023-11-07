@@ -11,6 +11,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BattleCruisers.Data;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Factories;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 //using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -71,6 +75,26 @@ namespace BattleCruisers.Buildables.Buildings
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
+            HealthBar.variantIcon.enabled = false;
+            if(ParentCruiser.IsPlayerCruiser)
+            {
+                SetVariantIcon(this);
+            }
+        }
+
+        private async void SetVariantIcon(IBuilding building)
+        {
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
+            if (variant != null)
+            {
+                HealthBar.variantIcon.sprite = variant.variantSprite;
+                HealthBar.variantIcon.enabled = true;
+            }
+            else
+            {
+                HealthBar.variantIcon.enabled = false;
+            }
         }
 
         public override void StartConstruction()

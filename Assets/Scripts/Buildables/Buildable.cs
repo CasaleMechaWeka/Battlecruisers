@@ -84,7 +84,7 @@ namespace BattleCruisers.Buildables
         public string PrefabName => _parent.name;
 
         private HealthBarController _healthBar;
-        public IHealthBar HealthBar => _healthBar;
+        public HealthBarController HealthBar => _healthBar;
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }

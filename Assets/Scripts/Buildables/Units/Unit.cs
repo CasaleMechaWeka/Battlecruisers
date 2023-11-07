@@ -1,8 +1,11 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Data;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -79,6 +82,27 @@ namespace BattleCruisers.Buildables.Units
             // Disable gravity
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
             rigidBody.gravityScale = 0;
+
+            HealthBar.variantIcon.enabled = false;
+            if (ParentCruiser.IsPlayerCruiser)
+            {
+                SetVariantIcon(this);
+            }
+        }
+
+        private async void SetVariantIcon(IUnit unit)
+        {
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            if (variant != null)
+            {
+                HealthBar.variantIcon.sprite = variant.variantSprite;
+                HealthBar.variantIcon.enabled = true;
+            }
+            else
+            {
+                HealthBar.variantIcon.enabled = false;
+            }
         }
 
         protected override void OnBuildableCompleted()

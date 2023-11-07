@@ -15,6 +15,5 @@ namespace BattleCruisers.Buildables
     {
         TBuildable Buildable { get; }
         BuildableWrapper<TBuildable> UnityObject { get; }
-        void SetVariantIcon(Sprite sprite);
 	}
 }

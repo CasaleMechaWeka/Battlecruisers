@@ -3,6 +3,7 @@ using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
@@ -11,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		private IDamagable _damagable;
 		private float _maxHealth;
         private bool _followDamagable;
-
+		public Image variantIcon;
         private Vector2 _offset;
 		public Vector2 Offset
         {

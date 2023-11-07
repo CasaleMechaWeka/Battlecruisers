@@ -287,7 +287,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
-            SetVariantIcon(building);
+     /*       SetVariantIcon(building);*/
             building.Activate(
                 new BuildingActivationArgs(
                     this,
@@ -329,19 +329,7 @@ namespace BattleCruisers.Cruisers
             return building;
         }
 
-        private async void SetVariantIcon(IBuilding building)
-        {
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(FactoryProvider.PrefabFactory, building);
-            if(variant != null)
-            {
-                SelectedBuildingPrefab.SetVariantIcon(variant.variantSprite);
-            }
-            else
-            {
-                SelectedBuildingPrefab.SetVariantIcon(null);
-            }
-        }
+
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {

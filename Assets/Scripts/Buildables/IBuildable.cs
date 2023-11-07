@@ -47,7 +47,7 @@ namespace BattleCruisers.Buildables
         bool IsInitialised { get; }
         ICruiser ParentCruiser { get; }
         ICruiser EnemyCruiser { get; }
-        IHealthBar HealthBar { get; }
+        HealthBarController HealthBar { get; }
         string PrefabName { get; }
         string keyName { get; set; }
         event EventHandler StartedConstruction;
