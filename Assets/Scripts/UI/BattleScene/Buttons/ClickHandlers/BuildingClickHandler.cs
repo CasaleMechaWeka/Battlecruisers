@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
@@ -37,7 +39,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
             if (canAffordBuildable)
             {
-                _uiManager.SelectBuilding(buildingClicked.Buildable);
+                //    _uiManager.SelectBuilding(buildingClicked.Buildable);
+                CheckIfVariant(buildingClicked.Buildable);
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)
@@ -54,6 +57,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 //_uiManager.SelectBuilding(buildingClicked.Buildable);
                 PlayUnaffordableSound();
             }
+        }
+
+        private async void CheckIfVariant(IBuilding building)
+        {
+            int index = await ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(BattleSceneGod.Instance.factoryProvider.PrefabFactory, building);
+            building.variantIndex = index;
+            _uiManager.SelectBuilding(building);
         }
 
         public void HandleHover(IBuildableWrapper<IBuilding> buildingClicked)

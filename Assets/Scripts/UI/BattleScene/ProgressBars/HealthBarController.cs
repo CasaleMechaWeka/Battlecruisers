@@ -23,8 +23,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
                 UpdatePosition();
             }
         }
+        protected override void Awake()
+        {
+            base.Awake();
+            variantIcon.enabled = false;
+        }
 
-		public void Initialise(IDamagable damagable, bool followDamagable = false)
+        public void Initialise(IDamagable damagable, bool followDamagable = false)
 		{
 			Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
 

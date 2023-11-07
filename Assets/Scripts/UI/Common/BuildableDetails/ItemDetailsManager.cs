@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
@@ -56,11 +57,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private async void ShowItemDetailsV2(IBuilding building)
         {
-            VariantPrefab variant = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_prefabFactory, building);
-            if (variant != null)
+            int index = building.variantIndex;
+            if (index != -1)
             {
-                int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
                 building.OverwriteComparableItem(_commonString.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase), _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase));
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 _buildingDetails.ShowItemDetails(building, variant);
                 _selectedItem.Value = building;
             }
@@ -88,18 +89,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private async void ShowItemDetailsV2(IUnit unit)
         {
-            VariantPrefab variant = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_prefabFactory, unit);
-            if (variant != null)
+            int index = unit.variantIndex;
+            if (index != -1)
             {
-                UnityEngine.Debug.Log("===> CCC");
-                int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
                 unit.OverwriteComparableItem(_commonString.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase),_commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase));
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 _unitDetails.ShowItemDetails(unit, variant);
                 _selectedItem.Value = unit;
             }
             else
             {
-                UnityEngine.Debug.Log("===> DDD");
                 _unitDetails.ShowItemDetails(unit);
                 _selectedItem.Value = unit;
             }

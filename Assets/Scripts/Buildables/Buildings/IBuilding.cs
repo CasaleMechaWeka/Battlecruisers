@@ -42,6 +42,7 @@ namespace BattleCruisers.Buildables.Buildings
         /// </summary>
         bool IsBoostable { get; }
         void OverwriteComparableItem(string name, string description);
+        int variantIndex { get; set; }
 
     }
 }

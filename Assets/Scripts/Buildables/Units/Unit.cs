@@ -16,6 +16,7 @@ using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.Buildables.Units
 {
@@ -37,7 +38,9 @@ namespace BattleCruisers.Buildables.Units
 		public float maxVelocityInMPerS;
         public float MaxVelocityInMPerS => maxVelocityInMPerS;
 
-		private Direction _facingDirection;
+        public int variantIndex { get; set; }
+
+        private Direction _facingDirection;
 		public Direction FacingDirection
 		{
 			get { return _facingDirection; }
@@ -62,6 +65,7 @@ namespace BattleCruisers.Buildables.Units
 
             Name = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Description");
+            variantIndex = -1;
         }
         public void OverwriteComparableItem(string name, string description)
         {
@@ -103,10 +107,15 @@ namespace BattleCruisers.Buildables.Units
             {
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
+                int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
+                variantIndex = index;
+                Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
             }
             else
             {
                 HealthBar.variantIcon.enabled = false;
+                variantIndex = -1;
             }
         }
 

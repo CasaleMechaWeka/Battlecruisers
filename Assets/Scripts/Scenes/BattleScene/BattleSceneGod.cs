@@ -83,7 +83,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
-        private FactoryProvider factoryProvider;
+        public FactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
@@ -102,6 +102,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public GameObject EnemyName;
 
         public GameObject[] ilegalTutorialSettings;
+        public static BattleSceneGod Instance;
+        private void Awake()
+        {
+            Instance = this;
+        }
         private async void Start()
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");

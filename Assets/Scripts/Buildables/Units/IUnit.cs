@@ -27,5 +27,6 @@ namespace BattleCruisers.Buildables.Units
 
         void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders);
         void OverwriteComparableItem(string name, string description);
+        int variantIndex { get; set; }
     }
 }

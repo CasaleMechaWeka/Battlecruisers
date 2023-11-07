@@ -1,7 +1,10 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -33,7 +36,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
             if (canAffordBuildable)
             {
-                _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
+                //   _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
+                CheckIfVariant(unitClicked.Buildable);
                 HandleFactory(unitClicked, unitFactory);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
@@ -51,6 +55,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
         }
 
+
+        private async void CheckIfVariant(IUnit unit)
+        {
+            int index = await ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(BattleSceneGod.Instance.factoryProvider.PrefabFactory, unit);
+            unit.variantIndex = index;
+            _uiManager.ShowUnitDetails(unit);
+        }
         private void HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             if (ReferenceEquals(unitFactory.UnitWrapper, unitClicked))

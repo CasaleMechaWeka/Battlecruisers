@@ -15,6 +15,7 @@ using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Factories;
 using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
+using System.Configuration;
 //using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -45,6 +46,7 @@ namespace BattleCruisers.Buildables.Buildings
         public virtual bool IsBoostable => false;
 
         private bool isImmune = false;
+        public int variantIndex { get; set; }
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -63,7 +65,7 @@ namespace BattleCruisers.Buildables.Buildings
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
-
+            variantIndex = -1;
             //if (PerkKey.IsNotNullOrEmpty())
             //    PerkName = _commonStrings.GetString(PerkKey);
         }
@@ -81,9 +83,14 @@ namespace BattleCruisers.Buildables.Buildings
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
             HealthBar.variantIcon.enabled = false;
-            if(ParentCruiser.IsPlayerCruiser)
+            if (ParentCruiser.IsPlayerCruiser)
             {
                 SetVariantIcon(this);
+            }
+            else
+            {
+                // Set variant for AI
+
             }
         }
 
@@ -97,12 +104,14 @@ namespace BattleCruisers.Buildables.Buildings
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
                 int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
+                variantIndex = index;
                 Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                 Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
             }
             else
             {
                 HealthBar.variantIcon.enabled = false;
+                variantIndex = -1;
             }
         }
 
