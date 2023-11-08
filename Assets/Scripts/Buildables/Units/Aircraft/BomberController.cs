@@ -99,23 +99,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
-            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
-
-            _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
-
             // apply variant stats
             ApplyVariantStats();
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
+            _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
 
         private async void ApplyVariantStats()
         {
-            _bombStats = GetComponent<ProjectileStats>();
-            Assert.IsNotNull(_bombStats);
             if (variantIndex != -1)
             {
                 VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
             }
+            _bombStats = GetComponent<ProjectileStats>();
+            Assert.IsNotNull(_bombStats);
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
             IList<TargetType> attackCapabilities = new List<TargetType>()
             {
