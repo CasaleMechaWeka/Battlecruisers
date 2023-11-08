@@ -94,11 +94,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
         {
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
             _aiCruiser.SlotHighlighter.UnhighlightSlots();
-            ShownItem = null;
+/*            ShownItem = null;
             lastClickedBuilding = null;
             lastClickedUnit = null;
             lastClickedType = -1;
-            lastClickedBuildable = null;
+            lastClickedBuildable = null;*/
         }
 
         public void HideCurrentlyShownMenu()
