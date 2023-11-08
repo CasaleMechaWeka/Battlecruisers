@@ -90,7 +90,18 @@ namespace BattleCruisers.UI.BattleScene.Manager
             lastClickedBuildable = null;
         }
 
-		public void HideCurrentlyShownMenu()
+        public virtual void HideSlotsIfCannotAffordable()
+        {
+            _playerCruiser.SlotHighlighter.UnhighlightSlots();
+            _aiCruiser.SlotHighlighter.UnhighlightSlots();
+            ShownItem = null;
+            lastClickedBuilding = null;
+            lastClickedUnit = null;
+            lastClickedType = -1;
+            lastClickedBuildable = null;
+        }
+
+        public void HideCurrentlyShownMenu()
         {
             Logging.LogMethod(Tags.UI_MANAGER);
 
@@ -117,8 +128,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
-            _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             //_detailsManager.ShowDetails(buildingWrapper.Buildable);
+            _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
             ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
             if (_explanationPanel != null)

@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         void ShowUnitDetails(IUnit unit);
         void ShowCruiserDetails(ICruiser cruiser);
         void HideItemDetails();
+        void HideSlotsIfCannotAffordable();
         void PeakBuildingDetails(IBuilding building);
         void PeakUnitDetails(IUnit unit);
         void UnpeakUnitDetails();

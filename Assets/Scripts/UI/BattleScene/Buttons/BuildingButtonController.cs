@@ -14,20 +14,20 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BuildingButtonController : BuildableButtonController, IPointerDownHandler, IEndDragHandler, IDragHandler
     {
-		private IBuildableWrapper<IBuilding> _buildingWrapper;
+        private IBuildableWrapper<IBuilding> _buildingWrapper;
         private IBuildingClickHandler _clickHandler;
         private Transform _clickAndDragIcon;
         private Vector3 _originalClickAndDragPosition;
         private BuildableClickAndDrag _buildableClickAndDrag;
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IBuildableWrapper<IBuilding> buildingWrapper, 
+            IBuildableWrapper<IBuilding> buildingWrapper,
             IBuildingClickHandler clickHandler,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
-		{
+        {
             base.Initialise(soundPlayer, buildingWrapper.Buildable, shouldBeEnabledFilter);
-			
-			_buildingWrapper = buildingWrapper;
+            base.ApplyVariantIfExist(buildingWrapper.Buildable);
+            _buildingWrapper = buildingWrapper;
             _clickHandler = clickHandler;
             _clickAndDragIcon = transform.Find("ClickAndDragIcon");
             _originalClickAndDragPosition = transform.position;
@@ -38,9 +38,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public void Update()
         {
-         
-        }
 
+        }
 
         public void OnEndDrag(PointerEventData eventData)
         {
@@ -61,11 +60,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 {
                     mousePosition.y = mousePosition.y + (Screen.height / 5);//move to just above the pointer - this enables better visability of icon and for pointer to gameobject interactions
                 }
-                else 
+                else
                 {
                     mousePosition.y = mousePosition.y + (Screen.height / 10);//move to just above the pointer - this enables better visability of icon and for pointer to gameobject interactions
                 }
-                
+
                 _clickAndDragIcon.position = mousePosition;
             }
         }
@@ -78,17 +77,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override void HandleClick(bool isButtonEnabled)
         {
             //we are now controlling the selection via OnPointerDown
-            _clickHandler.HandleClick(IsMatch, _buildingWrapper);
-		}
+            // _clickHandler.HandleClick(IsMatch, _buildingWrapper);
+        }
 
         public override void HandleHover()
         {
             _clickHandler.HandleHover(_buildingWrapper);
-		}
+        }
 
         public override void HandleHoverExit()
         {
             _clickHandler.HandleHoverExit();
-		}
-	}
+        }
+    }
 }

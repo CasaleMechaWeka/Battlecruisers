@@ -37,11 +37,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Assert.IsNotNull(buildingClicked);
 
             _uiSoundPlayer.PlaySound(_buildingSelectedSound);
-
+            _uiManager.SelectBuilding(buildingClicked.Buildable);
             if (canAffordBuildable)
             {
-                _uiManager.SelectBuilding(buildingClicked.Buildable);
-                // CheckIfVariant(buildingClicked.Buildable);
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)
@@ -55,16 +53,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
             else
             {
-                //_uiManager.SelectBuilding(buildingClicked.Buildable);
+                _uiManager.HideSlotsIfCannotAffordable();
                 PlayUnaffordableSound();
             }
-        }
-
-        private async void CheckIfVariant(IBuilding building)
-        {
-            int index = await ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(BattleSceneGod.Instance.factoryProvider.PrefabFactory, building);
-            building.variantIndex = index;
-            _uiManager.SelectBuilding(building);
         }
 
         public void HandleHover(IBuildableWrapper<IBuilding> buildingClicked)

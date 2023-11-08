@@ -1,10 +1,17 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,6 +33,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public Image upgradeIconImage4;
         public Image upgradeIconImage5;
         public Image warheadIconImage;
+
+        public GameObject upgradeIconImage1Object;
+        public GameObject upgradeIconImage2Object;
+        public GameObject upgradeIconImage3Object;
+        public GameObject upgradeIconImage4Object;
+        public GameObject upgradeIconImage5Object;
+        public GameObject warheadIconImageObject;
+
 
         public Image redGlowImage;
 
@@ -106,6 +121,52 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             _isEnabledToggler = new FilterToggler(this, this);
 		}
+
+        public async void ApplyVariantIfExist(IBuilding building)
+        {
+            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            IPrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
+            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
+            if(index != -1)
+            {
+                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                if(variant != null)
+                {
+                    buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    droneLevel.text = (Buildable.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
+                    upgradeIconImage1Object.SetActive(true);
+                    upgradeIconImage1.sprite = variant.variantSprite;
+                }
+            }
+            else
+            {
+                upgradeIconImage1Object.SetActive(false);
+            }
+        }
+
+        public async void ApplyVariantIfExist(IUnit unit)
+        {
+            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            IPrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
+            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
+            if (index != -1)
+            {
+                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                if (variant != null)
+                {
+                    buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    droneLevel.text = (Buildable.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
+                    upgradeIconImage1Object.SetActive(true);
+                    upgradeIconImage1.sprite = variant.variantSprite;
+                }
+            }
+            else
+            {
+                upgradeIconImage1Object.SetActive(false);
+            }
+        }
 
         private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
         {

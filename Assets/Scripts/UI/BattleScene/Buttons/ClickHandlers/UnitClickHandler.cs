@@ -33,12 +33,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 
             _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
-            //_uiManager.ShowUnitDetails(unitClicked.Buildable);
+            _uiManager.ShowUnitDetails(unitClicked.Buildable);
 
             if (canAffordBuildable)
             {
-                _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
-                //   CheckIfVariant(unitClicked.Buildable);
+            //    _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
                 HandleFactory(unitClicked, unitFactory);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
@@ -48,21 +47,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
             else if (unitFactory.BuildableState == BuildableState.Completed)
             {
+                _uiManager.HideSlotsIfCannotAffordable();
                 PlayUnaffordableSound();
             }
             else
             {
+                _uiManager.HideSlotsIfCannotAffordable();
                 _eventSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.IncompleteFactory);
             }
         }
 
-
-        private async void CheckIfVariant(IUnit unit)
-        {
-            int index = await ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(BattleSceneGod.Instance.factoryProvider.PrefabFactory, unit);
-            unit.variantIndex = index;
-            _uiManager.ShowUnitDetails(unit);
-        }
         private void HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             if (ReferenceEquals(unitFactory.UnitWrapper, unitClicked))
