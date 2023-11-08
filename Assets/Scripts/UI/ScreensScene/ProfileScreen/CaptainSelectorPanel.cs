@@ -11,6 +11,7 @@ using System;
 using System.Reflection;
 using static BattleCruisers.Data.Static.StaticPrefabKeys;
 using BattleCruisers.Data.Models.PrefabKeys;
+using Unity.Services.Authentication;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
@@ -118,7 +119,13 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     oldExoKey = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
                     _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey(currentCaptainData.NameStringKeyBase);
                     _dataProvider.SaveGame();
-                    await _dataProvider.CloudSave();
+
+                    // online functions
+                    if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                    {
+                        await _dataProvider.CloudSave();
+                    }
+
                     return true;
                 }
                 catch(Exception ex)
