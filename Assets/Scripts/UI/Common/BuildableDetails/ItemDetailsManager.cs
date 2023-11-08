@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 _buildingDetails.ShowItemDetails(staticBuilding, variant);
                 _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                 _buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
-                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
                 _selectedItem.Value = building;
             }
@@ -105,7 +105,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 _unitDetails.ShowItemDetails(staticUnit, variant);
                 _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                 _unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
-                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
                 _selectedItem.Value = unit;
             }
