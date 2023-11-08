@@ -104,7 +104,7 @@ namespace BattleCruisers.Buildables.Units
             else
             {
                 // Set Variant to AI
-             //   if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
                     ApplyRandomeVariantToAI(this);
             }
         }

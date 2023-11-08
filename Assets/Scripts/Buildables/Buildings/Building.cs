@@ -92,7 +92,7 @@ namespace BattleCruisers.Buildables.Buildings
             else
             {
                 // Set variant for AI
-            //    if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
                     ApplyRandomeVariantToAI(this);
             }
         }
