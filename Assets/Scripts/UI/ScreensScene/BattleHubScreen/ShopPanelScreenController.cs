@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ShopPanelScreenController : ScreenController
     {
-        public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton;
+        public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, infoButton;
         public CanvasGroupButton captainsButton, hecklesButton, bodykitButton, variantsButton;
         public Transform captainItemContainer, heckleItemContainer, bodykitItemContainer, variantsItemContainer;
         public GameObject captainItemPrefab, heckleItemPrefab, bodykitItemPrefab, variantItemPrefab;
@@ -65,6 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
             bodykitButton.Initialise(_soundPlayer, BodykitButton_OnClick);
             variantsButton.Initialise(_soundPlayer, VariantsButton_OnClick);
+            infoButton.Initialise(_soundPlayer, InfoButton_OnClick);
             captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             bodykitsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
@@ -92,7 +93,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 variants.Add(variant);
             }
 
-            bodykitList = GeneratePseudoRandomList(6, 11, 6, 1);
+            bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
             foreach (int index in bodykitList)
             {
                 Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
@@ -109,6 +110,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoHome()
         {
             _screensSceneGod.GotoHubScreen();
+        }
+
+        public void InfoButton_OnClick()
+        {
+            ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
+            ScreensSceneGod.Instance.messageBoxBig.ShowMessage(screensSceneStrings.GetString("ShopInfoTitle"), screensSceneStrings.GetString("ShopInfoText"));
         }
 
         public void GotoBlackMarket()
