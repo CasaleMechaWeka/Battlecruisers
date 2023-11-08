@@ -30,29 +30,29 @@ namespace BattleCruisers.Buildables.Units
 
         [Header("Other")]
         public UnitCategory category;
-		public Rigidbody2D rigidBody;
+        public Rigidbody2D rigidBody;
 
         #region Properties
-        public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
-		public UnitCategory Category => category;
-		public override Vector2 Velocity => rigidBody.velocity;
+        public IDroneConsumerProvider DroneConsumerProvider { set { _droneConsumerProvider = value; } }
+        public UnitCategory Category => category;
+        public override Vector2 Velocity => rigidBody.velocity;
         public virtual bool IsUltra => false;
 
-		public float maxVelocityInMPerS;
+        public float maxVelocityInMPerS;
         public float MaxVelocityInMPerS => maxVelocityInMPerS;
 
         public int variantIndex { get; set; }
 
         private Direction _facingDirection;
-		public Direction FacingDirection
-		{
-			get { return _facingDirection; }
+        public Direction FacingDirection
+        {
+            get { return _facingDirection; }
             set
-			{
-				_facingDirection = value;
-				OnDirectionChange();
-			}
-		}
+            {
+                _facingDirection = value;
+                OnDirectionChange();
+            }
+        }
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
@@ -87,7 +87,7 @@ namespace BattleCruisers.Buildables.Units
         {
             base.Activate(activationArgs);
 
-			FacingDirection = ParentCruiser.Direction;
+            FacingDirection = ParentCruiser.Direction;
 
             HealthBar.IsVisible = true;
 
@@ -104,7 +104,8 @@ namespace BattleCruisers.Buildables.Units
             else
             {
                 // Set Variant to AI
-                ApplyRandomeVariantToAI(this);
+             //   if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                    ApplyRandomeVariantToAI(this);
             }
         }
 
@@ -204,48 +205,48 @@ namespace BattleCruisers.Buildables.Units
         }
 
         void FixedUpdate()
-		{
+        {
             if (!IsDestroyed)
             {
-    			OnFixedUpdate();
+                OnFixedUpdate();
             }
-		}
+        }
 
-		protected virtual void OnFixedUpdate() { }
+        protected virtual void OnFixedUpdate() { }
 
-		protected override void OnSingleClick()
-		{
-			_uiManager.ShowUnitDetails(this);
-		}
+        protected override void OnSingleClick()
+        {
+            _uiManager.ShowUnitDetails(this);
+        }
 
-		protected virtual void OnDirectionChange()
-		{
-			int yRotation = FindYRotation(FacingDirection);
-			Quaternion rotation = gameObject.transform.rotation;
-			rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, yRotation, rotation.eulerAngles.z);
-			gameObject.transform.rotation = rotation;
-		}
+        protected virtual void OnDirectionChange()
+        {
+            int yRotation = FindYRotation(FacingDirection);
+            Quaternion rotation = gameObject.transform.rotation;
+            rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, yRotation, rotation.eulerAngles.z);
+            gameObject.transform.rotation = rotation;
+        }
 
-		private int FindYRotation(Direction facingDirection)
-		{
-			switch (facingDirection)
-			{
-				case Direction.Right:
-					// Sprites by default are facing right, so DO NOT mirror
-					return 0;
-				case Direction.Left:
-					// Sprites by default are facing right, so DO mirror
-					return 180;
-				default:
-					throw new ArgumentException();
-			}
-		}
+        private int FindYRotation(Direction facingDirection)
+        {
+            switch (facingDirection)
+            {
+                case Direction.Right:
+                    // Sprites by default are facing right, so DO NOT mirror
+                    return 0;
+                case Direction.Left:
+                    // Sprites by default are facing right, so DO mirror
+                    return 180;
+                default:
+                    throw new ArgumentException();
+            }
+        }
 
-		protected override bool CanRepairCommandExecute()
-		{
-			// Cannot repair units :)
-			return false;
-		}
+        protected override bool CanRepairCommandExecute()
+        {
+            // Cannot repair units :)
+            return false;
+        }
 
         protected override void OnDestroyed()
         {

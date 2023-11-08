@@ -92,14 +92,15 @@ namespace BattleCruisers.Buildables.Buildings
             else
             {
                 // Set variant for AI
-                ApplyRandomeVariantToAI(this);
+            //    if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                    ApplyRandomeVariantToAI(this);
             }
         }
 
         public async void ApplyRandomeVariantToAI(IBuilding building)
         {
             int randomID = await GetRandomVariantForAI(building);
-            if(randomID != -1)
+            if (randomID != -1)
             {
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
                 if (variant != null)
@@ -133,14 +134,14 @@ namespace BattleCruisers.Buildables.Buildings
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
                 if (variant != null)
                 {
-                    if(building.PrefabName.ToUpper().Replace("(CLONE)", "") == variant.GetPrefabKey().PrefabName.ToUpper())
+                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variant.GetPrefabKey().PrefabName.ToUpper())
                     {
                         ids.Add(i);
                     }
                 }
             }
 
-            if(ids.Count != 0)
+            if (ids.Count != 0)
             {
                 variant_ID = ids[UnityEngine.Random.Range(0, ids.Count)];
             }
