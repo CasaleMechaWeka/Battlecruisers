@@ -3,50 +3,50 @@
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public interface IComparisonResult
-	{
+    {
         float RowAlpha { get; }
-		Color RowColour { get; }
-	}
+        Color RowColour { get; }
+    }
 
-	public abstract class ComparisonResult : IComparisonResult
-	{
+    public abstract class ComparisonResult : IComparisonResult
+    {
         protected class Alpha
         {
-		    public const float NEUTRAL = 1;
+            public const float NEUTRAL = 1;
             public const float BETTER = 1;
-            public const float WORSE = 0.5f;
+            public const float WORSE = 1;
         }
 
-		protected class Hue
+        protected class Hue
         {
-			public static Color NEUTRAL = Color.white;
-			public static Color BETTER = Color.white;
-			public static Color WORSE = Color.black;
+            public static Color NEUTRAL = Color.white;
+            public static Color BETTER = Color.white;
+            public static Color WORSE = Color.white;
         }
 
         public float RowAlpha { get; }
         public Color RowColour { get; }
 
         protected ComparisonResult(float rowAlpha, Color rowColour)
-		{
+        {
             RowAlpha = rowAlpha;
-			RowColour = rowColour;
-		}
-	}
+            RowColour = rowColour;
+        }
+    }
 
-	public class NeutralResult : ComparisonResult
-	{
-		public NeutralResult() : base(Alpha.NEUTRAL, Hue.NEUTRAL) { }
-	}
+    public class NeutralResult : ComparisonResult
+    {
+        public NeutralResult() : base(Alpha.NEUTRAL, Hue.NEUTRAL) { }
+    }
 
-	public class BetterResult : ComparisonResult
-	{
-		public BetterResult() : base(Alpha.BETTER, Hue.BETTER) { }
-	}
+    public class BetterResult : ComparisonResult
+    {
+        public BetterResult() : base(Alpha.BETTER, Hue.BETTER) { }
+    }
 
-	public class WorseResult : ComparisonResult
-	{
-		public WorseResult() : base(Alpha.WORSE, Hue.WORSE) { }
-	}
+    public class WorseResult : ComparisonResult
+    {
+        public WorseResult() : base(Alpha.WORSE, Hue.WORSE) { }
+    }
 }
 
