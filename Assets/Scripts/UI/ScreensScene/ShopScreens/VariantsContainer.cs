@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
@@ -59,15 +60,15 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if(_dataProvider.GameModel.Credits >=  currentVariantData.VariantCredits)
+            if (_dataProvider.GameModel.Credits >= currentVariantData.VariantCredits)
             {
-                if(await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
                     // online purchase
                     try
                     {
                         bool result = await _dataProvider.PurchaseVariant(currentVariantData.Index);
-                        if(result)
+                        if (result)
                         {
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
@@ -81,7 +82,7 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("VariantPurchased") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
                         }
                         else
                         {
@@ -146,13 +147,13 @@ namespace BattleCruisers.UI.ScreensScene
         private void VariantDataChanged(object sender, VariantDataEventArgs e)
         {
             currentItem._clickedFeedback.SetActive(false);
-            currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 64f/255);
+            currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 64f / 255);
             currentItem = (VariantItemController)sender;
             currentVariantData = e.variantData;
             currentVariant = e.varint;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
 
-            if(e.variantData.IsOwned)
+            if (e.variantData.IsOwned)
             {
                 btnBuy.SetActive(false);
                 ownFeedback.SetActive(true);
@@ -163,7 +164,7 @@ namespace BattleCruisers.UI.ScreensScene
                 ownFeedback.SetActive(false);
             }
 
-            if(currentVariant.IsUnit())
+            if (currentVariant.IsUnit())
             {
                 buildingStatsController.gameObject.SetActive(false);
                 unitStatsController.gameObject.SetActive(true);
