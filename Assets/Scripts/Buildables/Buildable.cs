@@ -35,7 +35,7 @@ namespace BattleCruisers.Buildables
         where TActivationArgs : BuildableActivationArgs
     {
         private float _cumulativeBuildProgressInDroneS;
-        private float _buildTimeInDroneSeconds;
+        protected float _buildTimeInDroneSeconds;
         private IClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -305,6 +305,8 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
 
         }
+
+
 
         public void Activate(TActivationArgs activationArgs, Faction faction)
         {

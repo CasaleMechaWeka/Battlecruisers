@@ -24,6 +24,8 @@ namespace BattleCruisers.Buildables
 
         void SetMinHealth();
         void SetHealth(float amount);
+        void OverrideHealth(float health);
+        void OverrideMaxHealth(float maxHealth);
         
     }
 }

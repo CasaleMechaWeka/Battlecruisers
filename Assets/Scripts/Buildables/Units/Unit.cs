@@ -134,6 +134,13 @@ namespace BattleCruisers.Buildables.Units
             maxHealth += statVariant.max_health;
             numOfDronesRequired += statVariant.drone_num;
             buildTimeInS += statVariant.build_time;
+
+            _healthTracker.OverrideHealth(maxHealth);
+            _healthTracker.OverrideMaxHealth(maxHealth);
+            _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+            HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
+
+            HealthBar.OverrideHealth(this);
         }
 
         protected override void OnBuildableCompleted()

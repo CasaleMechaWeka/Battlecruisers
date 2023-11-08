@@ -6,7 +6,13 @@ namespace BattleCruisers.Buildables
     {
         public const float MIN_HEALTH = 1;
 
-        public float MaxHealth { get; set; }
+        private float _maxHealth;
+        public float MaxHealth { 
+            get => _maxHealth;
+            set {
+                _maxHealth = value;
+            }
+        }
         public HealthTrackerState State { private get; set; }
 
         private float _health;
@@ -42,6 +48,14 @@ namespace BattleCruisers.Buildables
             MaxHealth = maxHealth;
             Health = maxHealth;
             State = HealthTrackerState.Mutable;
+        }
+        public void OverrideHealth(float health)
+        {
+            _health = health;
+        }
+        public void OverrideMaxHealth(float maxHealth)
+        {
+            _maxHealth = maxHealth;
         }
 
         public bool RemoveHealth(float amountToRemove)

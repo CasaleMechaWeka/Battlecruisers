@@ -66,9 +66,7 @@ namespace BattleCruisers.Buildables.Buildings
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
-            variantIndex = -1;
-            //if (PerkKey.IsNotNullOrEmpty())
-            //    PerkName = _commonStrings.GetString(PerkKey);
+            variantIndex = -1;            
         }
 
         public void OverwriteComparableItem(string name, string description)
@@ -96,14 +94,13 @@ namespace BattleCruisers.Buildables.Buildings
             }
         }
 
-        private async void ApplyVariantToPlayer(IBuilding building)
+        public async void ApplyVariantToPlayer(IBuilding building)
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
 
             if (variant != null)
             {
-
                 // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
@@ -127,6 +124,13 @@ namespace BattleCruisers.Buildables.Buildings
             maxHealth += statVariant.max_health;
             numOfDronesRequired += statVariant.drone_num;
             buildTimeInS += statVariant.build_time;
+
+            _healthTracker.OverrideHealth(maxHealth);
+            _healthTracker.OverrideMaxHealth(maxHealth);   
+            _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+            HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
+
+            HealthBar.OverrideHealth(this);
         }
 
         public override void StartConstruction()

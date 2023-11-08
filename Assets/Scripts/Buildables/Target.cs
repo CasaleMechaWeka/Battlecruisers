@@ -86,7 +86,7 @@ namespace BattleCruisers.Buildables
             base.StaticInitialise(commonStrings);
 
             _healthTracker = new HealthTracker(maxHealth);
-            _healthTracker.HealthGone += _health_HealthGone;
+            _healthTracker.HealthGone += _health_HealthGone;           
 
             _time = TimeBC.Instance;
             _attackCapabilities = new List<TargetType>();

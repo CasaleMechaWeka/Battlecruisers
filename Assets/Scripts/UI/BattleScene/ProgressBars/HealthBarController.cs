@@ -44,6 +44,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			damagable.HealthChanged += Damagable_HealthChanged;
 		}
 
+        public void OverrideHealth(IDamagable damagable)
+        {
+            Assert.IsNotNull(damagable);
+            Assert.IsTrue(damagable.Health > 0);
+            _maxHealth = _damagable.Health;
+        }
+
 		private void Damagable_HealthChanged(object sender, EventArgs e)
 		{
 			OnProgressChanged(_damagable.Health / _maxHealth);
