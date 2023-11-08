@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.DataStrctures;
@@ -63,7 +64,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 	                if (_unitWrapper != null)
                     {
-                        SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
+                        //    SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
+                        ApplyVariantIfExist(_unitWrapper.Buildable);
                         EnsureDroneConsumerHasHighestPriority();
                         _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
 
@@ -73,6 +75,20 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			}
 			get { return _unitWrapper; }
 		}
+
+        private async void ApplyVariantIfExist(IUnit unit)
+        {
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            VariantPrefab variant = await dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            if(variant != null)
+            {
+                SetupDroneConsumer(unit.NumOfDronesRequired + variant.statVariant.drone_num, showDroneFeedback: false);
+            }
+            else
+            {
+                SetupDroneConsumer(unit.NumOfDronesRequired, showDroneFeedback: false);
+            }
+        }
 
         public int NumOfDrones
         {
