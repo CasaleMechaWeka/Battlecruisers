@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
@@ -13,7 +14,9 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
@@ -101,8 +104,59 @@ namespace BattleCruisers.Buildables.Units
             else
             {
                 // Set Variant to AI
-
+                ApplyRandomeVariantToAI(this);
             }
+        }
+
+        public async void ApplyRandomeVariantToAI(IUnit unit)
+        {
+            int randomID = await GetRandomVariantForAI(unit);
+            if (randomID != -1)
+            {
+                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
+                if (variant != null)
+                {
+                    IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+                    // apply icon, name and description
+                    HealthBar.variantIcon.sprite = variant.variantSprite;
+                    HealthBar.variantIcon.enabled = true;
+                    variantIndex = randomID;
+                    Name = _commonStrings.GetString(dataProvider.GameModel.Variants[randomID].VariantNameStringKeyBase);
+                    Description = _commonStrings.GetString(dataProvider.GameModel.Variants[randomID].VariantDescriptionStringKeyBase);
+
+                    // apply variant stats for building (maxhealth, numof drones required, build time)
+                    ApplyVariantStats(variant.statVariant);
+                }
+                else
+                {
+                    HealthBar.variantIcon.enabled = false;
+                    variantIndex = -1;
+                }
+            }
+        }
+
+        private async Task<int> GetRandomVariantForAI(IUnit unit)
+        {
+            int variant_ID = -1;
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            List<int> ids = new List<int>();
+            for (int i = 0; i < dataProvider.GameModel.Variants.Count; i++)
+            {
+                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
+                if (variant != null)
+                {
+                    if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variant.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        ids.Add(i);
+                    }
+                }
+            }
+
+            if (ids.Count != 0)
+            {
+                variant_ID = ids[UnityEngine.Random.Range(0, ids.Count)];
+            }
+            return variant_ID;
         }
 
         private async void ApplyVariantToPlayer(IUnit unit)

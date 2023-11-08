@@ -17,6 +17,8 @@ using BattleCruisers.Utils.Factories;
 using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 using System.Configuration;
 using static UnityEditor.UIElements.ToolbarMenu;
+using System.Threading.Tasks;
+using BattleCruisers.Data.Static;
 //using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -66,7 +68,7 @@ namespace BattleCruisers.Buildables.Buildings
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
-            variantIndex = -1;            
+            variantIndex = -1;
         }
 
         public void OverwriteComparableItem(string name, string description)
@@ -90,8 +92,59 @@ namespace BattleCruisers.Buildables.Buildings
             else
             {
                 // Set variant for AI
-
+                ApplyRandomeVariantToAI(this);
             }
+        }
+
+        public async void ApplyRandomeVariantToAI(IBuilding building)
+        {
+            int randomID = await GetRandomVariantForAI(building);
+            if(randomID != -1)
+            {
+                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
+                if (variant != null)
+                {
+                    IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+                    // apply icon, name and description
+                    HealthBar.variantIcon.sprite = variant.variantSprite;
+                    HealthBar.variantIcon.enabled = true;
+                    variantIndex = randomID;
+                    Name = _commonStrings.GetString(dataProvider.GameModel.Variants[randomID].VariantNameStringKeyBase);
+                    Description = _commonStrings.GetString(dataProvider.GameModel.Variants[randomID].VariantDescriptionStringKeyBase);
+
+                    // apply variant stats for building (maxhealth, numof drones required, build time)
+                    ApplyVariantStats(variant.statVariant);
+                }
+                else
+                {
+                    HealthBar.variantIcon.enabled = false;
+                    variantIndex = -1;
+                }
+            }
+        }
+
+        private async Task<int> GetRandomVariantForAI(IBuilding building)
+        {
+            int variant_ID = -1;
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            List<int> ids = new List<int>();
+            for (int i = 0; i < dataProvider.GameModel.Variants.Count; i++)
+            {
+                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
+                if (variant != null)
+                {
+                    if(building.PrefabName.ToUpper().Replace("(CLONE)", "") == variant.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        ids.Add(i);
+                    }
+                }
+            }
+
+            if(ids.Count != 0)
+            {
+                variant_ID = ids[UnityEngine.Random.Range(0, ids.Count)];
+            }
+            return variant_ID;
         }
 
         public async void ApplyVariantToPlayer(IBuilding building)
@@ -126,7 +179,7 @@ namespace BattleCruisers.Buildables.Buildings
             buildTimeInS += statVariant.build_time;
 
             _healthTracker.OverrideHealth(maxHealth);
-            _healthTracker.OverrideMaxHealth(maxHealth);   
+            _healthTracker.OverrideMaxHealth(maxHealth);
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
 
