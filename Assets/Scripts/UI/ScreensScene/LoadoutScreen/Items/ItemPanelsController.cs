@@ -12,6 +12,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -99,6 +100,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
 
         public bool IsMatch(ItemType element)
+        {
+            return
+                CurrentlyShownPanel != null
+                && CurrentlyShownPanel.ItemType == element;
+        }
+
+        public bool IsMatch(ItemType element, VariantPrefab variant)
         {
             return
                 CurrentlyShownPanel != null

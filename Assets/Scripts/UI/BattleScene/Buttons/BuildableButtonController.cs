@@ -62,7 +62,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override bool Disable => false;
         protected override ISoundKey ClickSound => SoundKeys.UI.Click;
 
-        public virtual bool IsMatch => _shouldBeEnabledFilter.IsMatch(Buildable);
+        public virtual bool IsMatch => current_variant == null ? _shouldBeEnabledFilter.IsMatch(Buildable) : _shouldBeEnabledFilter.IsMatch(Buildable, current_variant);
+        private VariantPrefab current_variant = null;
         public Color Color
         {
             set
@@ -112,10 +113,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
             _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
 
-            buildableName.text = Buildable.Name;
-            droneLevel.text = Buildable.NumOfDronesRequired.ToString();
+            if(current_variant == null)
+            {
+                buildableName.text = Buildable.Name;
+                droneLevel.text = Buildable.NumOfDronesRequired.ToString();
+            }
             buildableImage.sprite = Buildable.Sprite;
-
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
@@ -133,8 +136,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if(variant != null)
                 {
+                    current_variant = variant;
                     buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
-                    droneLevel.text = (Buildable.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
+                    droneLevel.text = (building.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;
                 }
@@ -156,8 +160,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
+                    current_variant = variant;
                     buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
-                    droneLevel.text = (Buildable.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
+                    droneLevel.text = (unit.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;
                 }

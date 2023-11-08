@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using System;
 using UnityEngine.Assertions;
@@ -39,6 +40,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         /// </summary>
         /// <returns><c>true</c>, if the given buildable name matches the permitted building name, <c>false</c> otherwise.</returns>
         public bool IsMatch(IBuildable buildable)
+        {
+            return
+                _permittedBuilding != null
+                && _permittedBuilding.Name == buildable.Name;
+        }
+        public bool IsMatch(IBuildable buildable, VariantPrefab variant)
         {
             return
                 _permittedBuilding != null

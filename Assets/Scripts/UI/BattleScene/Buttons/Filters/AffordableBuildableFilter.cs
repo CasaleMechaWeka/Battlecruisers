@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 using UnityEngine.Assertions;
 
@@ -10,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
     {
         private readonly IDroneManager _droneManager;
 
-		public event EventHandler PotentialMatchChange;
+        public event EventHandler PotentialMatchChange;
 
         public AffordableBuildableFilter(IDroneManager droneManager)
         {
@@ -28,6 +29,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         /// <returns><c>true</c>, if the buildable is affordable (can be built), <c>false</c> otherwise.</returns>
         public bool IsMatch(IBuildable buildable)
         {
+            return _droneManager.CanSupportDroneConsumer(buildable.NumOfDronesRequired);
+        }
+        public bool IsMatch(IBuildable buildable, VariantPrefab variant)
+        {
+            if (variant != null)
+                return _droneManager.CanSupportDroneConsumer(buildable.NumOfDronesRequired + variant.statVariant.drone_num);
             return _droneManager.CanSupportDroneConsumer(buildable.NumOfDronesRequired);
         }
     }

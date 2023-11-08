@@ -25,8 +25,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             IBuildingClickHandler clickHandler,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
         {
-            base.Initialise(soundPlayer, buildingWrapper.Buildable, shouldBeEnabledFilter);
             base.ApplyVariantIfExist(buildingWrapper.Buildable);
+            base.Initialise(soundPlayer, buildingWrapper.Buildable, shouldBeEnabledFilter);
             _buildingWrapper = buildingWrapper;
             _clickHandler = clickHandler;
             _clickAndDragIcon = transform.Find("ClickAndDragIcon");

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.Drones
@@ -17,6 +18,11 @@ namespace BattleCruisers.AI.Drones
                  factoryMonitor.HasFactoryBuiltDesiredNumOfUnits
                  && factoryMonitor.Factory.DroneConsumer != null
                  && factoryMonitor.Factory.DroneConsumer.State != DroneConsumerState.Idle;
+        }
+        public bool IsMatch(IFactoryMonitor factoryMonitor, VariantPrefab variant)
+        {
+            // need to implement
+            return false;
         }
     }
 }

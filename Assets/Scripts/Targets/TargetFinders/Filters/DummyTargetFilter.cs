@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
@@ -15,5 +16,9 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 		{
             return _isMatchResult;
 		}
-	}
+        public virtual bool IsMatch(ITarget target, VariantPrefab variant)
+        {
+            return _isMatchResult;
+        }
+    }
 }

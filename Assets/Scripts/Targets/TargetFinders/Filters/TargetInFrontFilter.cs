@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
@@ -17,6 +18,14 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
         public bool IsMatch(ITarget target)
         {
             return 
+                (_source.FacingDirection == Direction.Right
+                    && target.Position.x > _source.Position.x)
+                || (_source.FacingDirection == Direction.Left
+                    && target.Position.x < _source.Position.x);
+        }
+        public bool IsMatch(ITarget target, VariantPrefab variant)
+        {
+            return
                 (_source.FacingDirection == Direction.Right
                     && target.Position.x > _source.Position.x)
                 || (_source.FacingDirection == Direction.Left

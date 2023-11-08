@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Filters
 {
@@ -12,6 +13,10 @@ namespace BattleCruisers.UI.Filters
         }
 
         public bool IsMatch(TElement element)
+        {
+            return _isMatch;
+        }
+        public bool IsMatch(TElement element, VariantPrefab variant)
         {
             return _isMatch;
         }

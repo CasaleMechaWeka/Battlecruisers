@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
@@ -18,6 +19,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         }
 
         public bool IsMatch(BuildingCategory category)
+        {
+            return
+                _allowAll
+                || _permittedCategory == category;
+        }
+        public bool IsMatch(BuildingCategory category, VariantPrefab variant)
         {
             return
                 _allowAll

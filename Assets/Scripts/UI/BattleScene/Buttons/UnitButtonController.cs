@@ -59,9 +59,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             IUnitClickHandler unitClickHandler)
 		{
             Helper.AssertIsNotNull(unitWrapper, unitClickHandler);
-
-            base.Initialise(soundPlayer, unitWrapper.Buildable, shouldBeEnabledFilter);
             base.ApplyVariantIfExist(unitWrapper.Buildable);
+            base.Initialise(soundPlayer, unitWrapper.Buildable, shouldBeEnabledFilter);
 
 			_unitWrapper = unitWrapper;
             _unitClickHandler = unitClickHandler;
