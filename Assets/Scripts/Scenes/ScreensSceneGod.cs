@@ -45,6 +45,7 @@ using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using System.Threading;
 using UnityEditor;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 
 namespace BattleCruisers.Scenes
 {
@@ -75,6 +76,8 @@ namespace BattleCruisers.Scenes
         public ShopPanelScreenController shopPanelScreen;
         public BlackMarketScreenController blackMarketScreen;
         public MessageBox messageBox;
+        public MessageBoxBig messageBoxBig;
+        public CanvasGroupButton newsButton;
         public GameObject processingPanel;
         public GameObject environmentArt;
         public GameObject homeScreenArt;
@@ -305,6 +308,12 @@ namespace BattleCruisers.Scenes
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize(_dataProvider, _soundPlayer);
             messageBox.HideMessage();
+            messageBoxBig.gameObject.SetActive(true);
+            messageBoxBig.Initialize(_dataProvider, _soundPlayer);
+            messageBoxBig.HideMessage();
+
+            newsButton.Initialise(_soundPlayer, ShowNewsPanel);
+
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             processingPanel.SetActive(false);
@@ -796,6 +805,13 @@ namespace BattleCruisers.Scenes
         public void LoadBattle1v1Mode()
         {
 
+        }
+
+        public void ShowNewsPanel()
+        {
+            ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
+
+            messageBoxBig.ShowMessage(screensSceneStrings.GetString("UpdateTitle"), screensSceneStrings.GetString("UpdateDescription"));
         }
 
         public void PlayAdvertisementMusic()
