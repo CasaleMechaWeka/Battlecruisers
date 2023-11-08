@@ -86,7 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 blackMarketButton.gameObject.SetActive(false);
             }
 
-            variantList = GeneratePseudoRandomList(12, 35, 6, 3); // 0,1,2 are Premium
+            variantList = GeneratePseudoRandomList(12, _dataProvider.GameModel.Variants.Count - 1, 6, 0);
             foreach (int index in variantList)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
