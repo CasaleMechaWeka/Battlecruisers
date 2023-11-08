@@ -861,7 +861,7 @@ namespace BattleCruisers.Data
 
             foreach (VariantData txn in GameModel.OutstandingVariantTransactions)
             {
-                Debug.Log("Purchasing Heckle " + txn.index);
+                Debug.Log("Purchasing Variant " + txn.index);
                 bool result = await PurchaseVariant(txn.index);
                 if (result)
                 {
