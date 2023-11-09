@@ -73,30 +73,33 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             if (inputField.text != _dataProvider.GameModel.PlayerName)
             {
-                if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                try
                 {
-                    try
+                    oldPlayerName = _dataProvider.GameModel.PlayerName;
+                    string temp = inputField.text;
+                    temp.Replace("#", "");
+                    _dataProvider.GameModel.PlayerName = temp;
+                    _dataProvider.SaveGame();
+                    string name = temp + "#" + captain.captainName;
+                    Debug.Log(name);
+
+                    // online functions
+                    if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                     {
-                        oldPlayerName = _dataProvider.GameModel.PlayerName;
-                        string temp = inputField.text;
-                        temp.Replace("#", "");
-                        _dataProvider.GameModel.PlayerName = temp;
-                        _dataProvider.SaveGame();
                         await _dataProvider.CloudSave();
-                        string name = temp + "#" + captain.captainName;
-                        Debug.Log(name);
                         await AuthenticationService.Instance.UpdatePlayerNameAsync(name);
-                        PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
-                        ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
                     }
-                    catch (Exception ex)
-                    {
-                        _dataProvider.GameModel.PlayerName = oldPlayerName;
-                        _dataProvider.SaveGame();
-                        PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
-                        ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
-                        Debug.LogException(ex);
-                    }
+
+                    PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
+                    ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
+                }
+                catch (Exception ex)
+                {
+                    _dataProvider.GameModel.PlayerName = oldPlayerName;
+                    _dataProvider.SaveGame();
+                    PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
+                    ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
+                    Debug.LogException(ex);
                 }
 
             }
