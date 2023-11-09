@@ -113,7 +113,11 @@ namespace BattleCruisers.Data.Models
         public void AssignSaveToGameModel(GameModel game)
         {
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
-            game.PlayerName = _playerName;
+            if (game.PlayerName == "Charlie")
+            {
+                game.PlayerName = _playerName;
+                // otherwise keep the local name
+            }
             game.IsDoneMigration = _isDoneMigration;
 
             // IAPs
