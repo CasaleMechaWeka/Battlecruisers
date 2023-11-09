@@ -119,6 +119,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     leftNav.gameObject.SetActive(false);
                     rightNav.gameObject.SetActive(false);
                     _index = -1;
+                    ShowOriginalBuilding();
                 }
             }
             else
@@ -126,6 +127,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 leftNav.gameObject.SetActive(false);
                 rightNav.gameObject.SetActive(false);
                 _index = -1;
+                ShowOriginalBuilding();
             }
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _selectedVariant });
         }
