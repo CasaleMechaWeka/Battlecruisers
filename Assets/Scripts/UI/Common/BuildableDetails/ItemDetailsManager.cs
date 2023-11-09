@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                 _buildingDetails.ShowItemDetails(staticBuilding, variant);
-                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
                 _buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
@@ -90,8 +90,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _informatorPanel.Show(unit);
             ShowItemDetailsV2(unit);
-/*            _unitDetails.ShowItemDetails(unit);
-            _selectedItem.Value = unit;*/
+            /*            _unitDetails.ShowItemDetails(unit);
+                        _selectedItem.Value = unit;*/
         }
 
         private async void ShowItemDetailsV2(IUnit unit)
@@ -103,7 +103,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IUnit staticUnit = variant.GetUnit(_prefabFactory);
                 _unitDetails.ShowItemDetails(staticUnit, variant);
-                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
                 _unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
