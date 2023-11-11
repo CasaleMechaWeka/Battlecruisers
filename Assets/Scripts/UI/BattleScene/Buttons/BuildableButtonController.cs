@@ -41,12 +41,28 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public GameObject upgradeIconImage5Object;
         public GameObject warheadIconImageObject;
 
+     
+
 
         public Image redGlowImage;
 
-        public Image buildableImageOutline;//modified
-		public Text buildableName;
+
+        public Image buildableImageOutline; //  original outline
+        public Image buildableImageOutlineUpgrade1; // upgraded variant outline
+
+
+        public Image buildableButton; //  original button
+        public Image buildableButtonUpgrade1; // upgraded variant button
+
+        private Sprite originalOutlineSprite;
+        private Sprite originalButtonSprite;
+
+
+        public Text buildableName;
+
 		public Text droneLevel;
+        public Image droneIcon;
+
 
         public Color redColor;
 
@@ -82,6 +98,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     upgradeIconImage5.color = value;
                     warheadIconImage.color = value;
                     redGlowImage.color = redGlowColor;
+                    droneLevel.color = Color.black; // Or any original color
+                    droneIcon.color = Color.black; // Assuming black is the original color
                     isSelected = true;
                 }
                 else{
@@ -94,6 +112,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     upgradeIconImage5.color = redColor;
                     warheadIconImage.color = redColor;
                     redGlowImage.color = Color.clear;
+                    droneLevel.color = Color.black;
+                    droneIcon.color = Color.black;
                     isSelected = false;
                 }
                 
@@ -123,7 +143,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Assert.IsNotNull(_canvasGroup);
 
             _isEnabledToggler = new FilterToggler(this, this);
-		}
+
+            // Store the original sprites
+            originalOutlineSprite = buildableImageOutline.sprite;
+            originalButtonSprite = buildableButton.sprite;
+        }
 
         public async void ApplyVariantIfExist(IBuilding building)
         {
@@ -131,21 +155,28 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             IPrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
             ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
-            if(index != -1)
+            if (index != -1)
             {
                 VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-                if(variant != null)
+                if (variant != null)
                 {
                     current_variant = variant;
                     buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
                     droneLevel.text = (building.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;
+
+                    // Swap sprites for variant
+                    buildableImageOutline.sprite = buildableImageOutlineUpgrade1.sprite;
+                    buildableButton.sprite = buildableButtonUpgrade1.sprite;
                 }
             }
             else
             {
                 upgradeIconImage1Object.SetActive(false);
+                // Reset to original sprites if not a variant
+                buildableImageOutline.sprite = originalOutlineSprite;
+                buildableButton.sprite = originalButtonSprite;
             }
         }
 
@@ -165,11 +196,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     droneLevel.text = (unit.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;
+
+                    // Swap sprites for variant
+                    buildableImageOutline.sprite = buildableImageOutlineUpgrade1.sprite;
+                    buildableButton.sprite = buildableButtonUpgrade1.sprite;
                 }
             }
             else
             {
                 upgradeIconImage1Object.SetActive(false);
+                buildableImageOutline.sprite = originalOutlineSprite;
+                buildableButton.sprite = originalButtonSprite;
             }
         }
 
