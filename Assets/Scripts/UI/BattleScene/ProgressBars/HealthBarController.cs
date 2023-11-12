@@ -62,6 +62,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			{
                 UpdatePosition();
 			}
+            UpdateVariantImage();
 		}
 
         private void UpdatePosition()
@@ -73,5 +74,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
                     parentPosition.y + Offset.y,
                     transform.position.z);
 		}
+
+        private void UpdateVariantImage()
+        {
+            if (_damagable.Health != _maxHealth)
+                variantIcon.gameObject.SetActive(true);
+            else
+                variantIcon.gameObject.SetActive(false);
+        }
 	}
 }
