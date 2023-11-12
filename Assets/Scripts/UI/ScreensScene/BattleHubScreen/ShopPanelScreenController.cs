@@ -44,6 +44,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private List<int> bodykitList;
         private List<Bodykit> bodykits = new List<Bodykit>();
+
+        private List<int> exoBaseList;
+        private List<CaptainExo> captains = new List<CaptainExo>();
         public async Task Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -84,6 +87,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             else
             {
                 blackMarketButton.gameObject.SetActive(false);
+            }
+
+            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
+            foreach (int index in exoBaseList)
+            {
+                CaptainExo captainExo = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
+                captains.Add(captainExo);
             }
 
             variantList = GeneratePseudoRandomList(12, _dataProvider.GameModel.Variants.Count - 1, 6, 0);
@@ -391,14 +401,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-            List<int> exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
-            exoBaseList.Insert(0, 0);
+/*            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
+            exoBaseList.Insert(0, 0);*/
 
             byte ii = 0;
             foreach (int index in exoBaseList)
             {
                 GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
-                CaptainExo captainExoPrefab = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
+                CaptainExo captainExoPrefab = captains[ii];/*await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));*/
                 CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
                 captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                 captainExo.gameObject.SetActive(false);
