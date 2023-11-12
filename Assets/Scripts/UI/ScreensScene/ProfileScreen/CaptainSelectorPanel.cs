@@ -69,13 +69,14 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             RemoveAllCaptainsFromRenderCamera();            
 
             byte ii = 0;
-            for (int i = 0; i < StaticPrefabKeys.CaptainExos.AllKeys.Count; i++)
+            for (int i = 0; i < StaticPrefabKeys.CaptainExos.CaptainExoCount(); i++)
             {
                 if (_dataProvider.GameModel.Captains[i].isOwned)
                 {
                     
                     GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
-                    CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[i]), captainCamContainer);
+                    CaptainExo captainExoPrefab = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(i));
+                    CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
                     captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                     captainExo.gameObject.SetActive(false);
                     visualOfCaptains.Add(captainExo.gameObject);
@@ -94,9 +95,10 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             }
         }
 
-        public void ShowCurrentCaptain()
+        public async void ShowCurrentCaptain()
         {
-            CaptainExo charlie = Instantiate(_prefabFactory.GetCaptainExo( _dataProvider.GameModel.PlayerLoadout.CurrentCaptain), captainCamContainer);
+            CaptainExo chaliePrefab = await _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charlie = Instantiate(chaliePrefab, captainCamContainer);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             visualOfCaptains.Add(charlie.gameObject);
         }

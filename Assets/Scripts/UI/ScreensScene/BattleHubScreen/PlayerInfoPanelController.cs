@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public async void UpdateInfo(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
-            CaptainExo captain = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captain = await prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
 
             _captainImage.sprite = captain.CaptainExoImage;
             _selectedCaptainImage.sprite = captain.CaptainExoImage;

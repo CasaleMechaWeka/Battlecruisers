@@ -21,7 +21,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly IMultiCache<Cruiser> _cruisers;
         private readonly IMultiCache<ExplosionController> _explosions;
         private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
-        private readonly IMultiCache<CaptainExo> _captains;
+/*        private readonly IMultiCache<CaptainExo> _captains;*/
   /*      private readonly IMultiCache<Bodykit> _bodykits;*/
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
@@ -34,20 +34,20 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IMultiCache<Cruiser> cruisers, 
             IMultiCache<ExplosionController> explosions, 
             IMultiCache<ShipDeathInitialiser> shipDeaths,
-            IMultiCache<CaptainExo> captains,
+/*            IMultiCache<CaptainExo> captains,*/
 /*            IMultiCache <Bodykit> bodykits,*/
             IUntypedMultiCache<Projectile> projectiles, 
             DroneController drone,
             AudioSourceInitialiser audioSource)
         {
-            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource, captains/*, bodykits*/);
+            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource/*, captains, bodykits*/);
 
             _buildings = buildings;
             _units = units;
             _cruisers = cruisers;
             _explosions = explosions;
             _shipDeaths = shipDeaths;
-            _captains = captains;
+/*            _captains = captains;*/
             _projectiles = projectiles;
 /*            _bodykits = bodykits;*/
             Drone = drone;
@@ -84,10 +84,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             return _projectiles.GetPrefab<TProjectile>(prefabKey);
         }
 
-        public CaptainExo GetCaptainExo(IPrefabKey key)
+/*        public CaptainExo GetCaptainExo(IPrefabKey key)
         {
             return _captains.GetPrefab(key);
-        }
+        }*/
 
 /*        public Bodykit GetBodykit(IPrefabKey key)
         {

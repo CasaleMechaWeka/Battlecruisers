@@ -189,7 +189,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             FoundOpponentText.text = commonStrings.GetString("FoundOpponent");
 
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
-            charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            CaptainExo charliePrefab = await _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.4f;
             characterOfCharlie = charlie.gameObject;
 

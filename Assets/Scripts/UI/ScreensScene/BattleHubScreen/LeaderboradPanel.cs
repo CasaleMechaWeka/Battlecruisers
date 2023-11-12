@@ -17,16 +17,19 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject Captain;
         public GameObject PlaceNumber;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer,
+        public async void Initialise(ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
             string playerName,
             double eol,
             int placenumber,
             string captain)
         {
-            CaptainNameToKey nameToKey = new CaptainNameToKey(StaticPrefabKeys.CaptainExos.AllKeys, prefabFactory);
-            IPrefabKey key = nameToKey.GetKey(captain);
-            CaptainExo captainexo = prefabFactory.GetCaptainExo(key);
+            /*            CaptainNameToKey nameToKey = new CaptainNameToKey(StaticPrefabKeys.CaptainExos.AllKeys, prefabFactory);
+                        IPrefabKey key = nameToKey.GetKey(captain);*/
+            string str_index = captain.ToUpper().Replace("CAPTAIN", "");
+            int index = 0;
+            int.TryParse(str_index, out index);
+            CaptainExo captainexo = await prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
             Text name = PlayerName.gameObject.GetComponent<Text>();
             name.text = playerName;
             Text eolString = EOL.GetComponent<Text>();

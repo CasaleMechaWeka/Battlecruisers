@@ -46,7 +46,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     _skirmish.AICruiser,
                     backgroundLevel.MusicKeys,
                     backgroundLevel.SkyMaterialName,
-                    StaticPrefabKeys.CaptainExos.CaptainExo021);
+                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(21)) ;
         }
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)

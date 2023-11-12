@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private IDataProvider _dataProvider;
         private CaptainExoKey loadedCaptain;
 
-        public void Initialise(
+        public async void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
         IPrefabFactory prefabFactory,
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
 
             applyBtn.Initialise(_soundPlayer, ApplyName);
-            CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captain = await _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             loadedCaptain = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
             charlieImage.sprite = captain.CaptainExoImage;
 
@@ -54,11 +54,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             btnLabel.GetComponent<Text>().text = LandingSceneGod.Instance.commonStrings.GetString("UI/Buttons/SaveButton");
         }
 
-        public void Update()
+        public async void Update()
         {
             if (loadedCaptain != _dataProvider.GameModel.PlayerLoadout.CurrentCaptain)
             {
-                CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                CaptainExo captain = await _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 loadedCaptain = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
                 charlieImage.sprite = captain.CaptainExoImage;
             }
@@ -70,7 +70,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             spinner.SetActive(true);
             applyBtn.enabled = false;
             string oldPlayerName = string.Empty;
-            CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captain = await _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             if (inputField.text != _dataProvider.GameModel.PlayerName)
             {
                 try

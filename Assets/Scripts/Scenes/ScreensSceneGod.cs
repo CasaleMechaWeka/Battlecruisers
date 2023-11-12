@@ -291,7 +291,7 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            ShowCharlieOnMainMenu();
+            await ShowCharlieOnMainMenu();
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
@@ -466,15 +466,15 @@ namespace BattleCruisers.Scenes
                 GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
         }
 
-        void ShowCharlieOnMainMenu()
+        async Task ShowCharlieOnMainMenu()
         {
             if (charlie is not null)
             {
-                DestroyImmediate(charlie.gameObject);
+                Destroy(charlie.gameObject);
                 charlie = null;
             }
-
-            charlie = Instantiate(_prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain), ContainerCaptain);
+            CaptainExo charliePrefab = await _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             characterOfCharlie = charlie.gameObject;
             cameraOfCharacter.SetActive(true);
@@ -497,10 +497,10 @@ namespace BattleCruisers.Scenes
             //<---
         }
 
-        public void GoToHomeScreen()
+        public async void GoToHomeScreen()
         {
             homeScreen.gameObject.SetActive(true);
-            ShowCharlieOnMainMenu();
+            await ShowCharlieOnMainMenu();
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
             characterOfCharlie.SetActive(true);

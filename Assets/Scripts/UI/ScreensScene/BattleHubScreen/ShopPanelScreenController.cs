@@ -323,8 +323,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             hecklesContainer.btnBuy.SetActive(false);
             hecklesContainer.ownFeedback.SetActive(false);
-
-            CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain), captainCamContainer);
+            CaptainExo charliePrefab = await _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captainExo = Instantiate(charliePrefab, captainCamContainer);
             captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
             captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
 
@@ -398,7 +398,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             foreach (int index in exoBaseList)
             {
                 GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
-                CaptainExo captainExo = Instantiate(_prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.AllKeys[index]), captainCamContainer);
+                CaptainExo captainExoPrefab = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
+                CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
                 captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                 captainExo.gameObject.SetActive(false);
                 captainsContainer.visualOfCaptains.Add(captainExo.gameObject);

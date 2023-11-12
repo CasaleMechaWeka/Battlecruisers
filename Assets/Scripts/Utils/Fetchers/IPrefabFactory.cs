@@ -29,7 +29,7 @@ namespace BattleCruisers.Utils.Fetchers
 		Cruiser GetCruiserPrefab(IPrefabKey hullKey);
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);
 
-        CaptainExo GetCaptainExo(IPrefabKey captainKey);
+        Task<CaptainExo> GetCaptainExo(IPrefabKey captainKey);
         Task<Bodykit> GetBodykit(IPrefabKey bodykitKey);
         Task<VariantPrefab> GetVariant(IPrefabKey variantKey);
         IExplosion CreateExplosion(ExplosionKey explosionKey);

@@ -138,9 +138,16 @@ namespace BattleCruisers.Utils.Fetchers
             return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
         }
 
-        public CaptainExo GetCaptainExo(IPrefabKey key)
+        public async Task<CaptainExo> GetCaptainExo(IPrefabKey prefabKey)
         {
-            return _prefabCache.GetCaptainExo(key);
+            string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
+            await handle.Task;
+            if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+            {
+                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
+            }
+            return handle.Result.GetComponent<CaptainExo>();
         }
 
         public async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)

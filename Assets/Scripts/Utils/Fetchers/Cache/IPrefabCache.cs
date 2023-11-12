@@ -24,7 +24,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         Cruiser GetCruiser(IPrefabKey key);
         ExplosionController GetExplosion(IPrefabKey key);
         ShipDeathInitialiser GetShipDeath(IPrefabKey key);
-        CaptainExo GetCaptainExo(IPrefabKey key);
+ /*       CaptainExo GetCaptainExo(IPrefabKey key);*/
    /*     Bodykit GetBodykit(IPrefabKey key);*/
 
         // Multiple untyped prefab caches
