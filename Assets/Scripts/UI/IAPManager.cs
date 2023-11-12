@@ -140,6 +140,16 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                 Debug.Log("RestorePurchases continuing: " + success + ". If no further messages, no purchases available to restore.");
             });
         }
+        else if(Application.platform == RuntimePlatform.Android)
+        {
+            Debug.Log("RestorePurchases started ...");
+
+            var android = _StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>();
+            android.RestoreTransactions((bool success, string error) =>
+            {
+                Debug.Log("RestorePurchases continuing: " + success + ". If no further messages, no purchases available to restore.");
+            });
+        }
         else
         {
             Debug.Log("RestorePurchases FAIL. Not supported on this platform. Current = " + Application.platform);
