@@ -48,14 +48,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 
         public Image buildableImageOutline; //  original outline
-        public Image buildableImageOutlineUpgrade1; // upgraded variant outline
+/*        public Image buildableImageOutlineUpgrade1; // upgraded variant outline*/
 
 
         public Image buildableButton; //  original button
-        public Image buildableButtonUpgrade1; // upgraded variant button
+/*        public Image buildableButtonUpgrade1; // upgraded variant button*/
 
-        private Sprite originalOutlineSprite;
-        private Sprite originalButtonSprite;
+        public Sprite originalOutlineSprite;
+        public Sprite originalButtonSprite;
+
+        public Sprite variantOutlineSprite;
+        public Sprite variantButtonSprite;
 
 
         public Text buildableName;
@@ -145,8 +148,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _isEnabledToggler = new FilterToggler(this, this);
 
             // Store the original sprites
-            originalOutlineSprite = buildableImageOutline.sprite;
-            originalButtonSprite = buildableButton.sprite;
+/*            originalOutlineSprite = buildableImageOutline.sprite;
+            originalButtonSprite = buildableButton.sprite;*/
         }
 
         public async void ApplyVariantIfExist(IBuilding building)
@@ -167,8 +170,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     upgradeIconImage1.sprite = variant.variantSprite;
 
                     // Swap sprites for variant
-                    buildableImageOutline.sprite = buildableImageOutlineUpgrade1.sprite;
-                    buildableButton.sprite = buildableButtonUpgrade1.sprite;
+                    buildableImageOutline.sprite = /*buildableImageOutlineUpgrade1.sprite;*/variantOutlineSprite;
+                    buildableButton.sprite = /*buildableButtonUpgrade1.sprite;*/ variantButtonSprite;
                 }
             }
             else
@@ -198,8 +201,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     upgradeIconImage1.sprite = variant.variantSprite;
 
                     // Swap sprites for variant
-                    buildableImageOutline.sprite = buildableImageOutlineUpgrade1.sprite;
-                    buildableButton.sprite = buildableButtonUpgrade1.sprite;
+                    buildableImageOutline.sprite = /*buildableImageOutlineUpgrade1.sprite;*/ variantOutlineSprite;
+                    buildableButton.sprite = /*buildableButtonUpgrade1.sprite;*/ variantButtonSprite;
                 }
             }
             else
