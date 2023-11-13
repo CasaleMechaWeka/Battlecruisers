@@ -15,10 +15,10 @@ using System;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Commands;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+//using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+//using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using System.Collections;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine.Localization.Components;
@@ -195,8 +195,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         /*                        loadingSpinner.SetActive(true);
                                                 battleButton.gameObject.SetActive(false);*/
                         _dataProvider.GameModel.GameMap = IndexCurrentArena;
-                        PvPBattleSceneGodTunnel.isCost = false;
-                        PvPBattleCompletionHandler._isCompleted = false;
+                        //PvPBattleSceneGodTunnel.isCost = false;
+                        //PvPBattleCompletionHandler._isCompleted = false;
                         _screenSceneGod.LoadPvPBattleScene();
                     }
                     else

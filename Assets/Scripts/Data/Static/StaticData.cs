@@ -4,15 +4,15 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+//using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+//using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
+//using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
+//using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 
 namespace BattleCruisers.Data.Static
 {
@@ -45,14 +45,14 @@ namespace BattleCruisers.Data.Static
 
         public GameModel InitialGameModel { get; }
         public ReadOnlyCollection<ILevel> Levels { get; }
-        public ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; }
+        //public ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; }
         public ReadOnlyCollection<HullKey> HullKeys { get; }
         public ReadOnlyCollection<UnitKey> UnitKeys { get; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
-        public IPvPLevelStrategies PvPStrategies { get; }
+        //public IPvPLevelStrategies PvPStrategies { get; }
 
         public StaticData()
         {
@@ -69,13 +69,13 @@ namespace BattleCruisers.Data.Static
             _hullToUnlockedLevel = CreateHullAvailabilityMap();
 
             Strategies = new LevelStrategies();
-            PvPStrategies = new PvPLevelStrategies();
+            //PvPStrategies = new PvPLevelStrategies();
 
             AIBannedUltrakeys = new ReadOnlyCollection<BuildingKey>(CreateAIBannedUltraKeys());
 
             InitialGameModel = CreateInitialGameModel();
             Levels = new ReadOnlyCollection<ILevel>(CreateLevels());
-            PvPLevels = new ReadOnlyDictionary<Map, IPvPLevel>(CreatePvPLevels());
+            //PvPLevels = new ReadOnlyDictionary<Map, IPvPLevel>(CreatePvPLevels());
         }
 
         private List<HullKey> AllHullKeys()
@@ -373,30 +373,30 @@ namespace BattleCruisers.Data.Static
         }
 
 
-        private IDictionary<Map, IPvPLevel> CreatePvPLevels()
-        {
-            return new Dictionary<Map, IPvPLevel>()
-            {
-                // Practice Wreckyards
-             {Map.PracticeWreckyards,  new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Morning)},
-                // Oz Penitentiary
-             {Map.OzPenitentiary,   new PvPLevel(2, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple)},
-                // San Francisco Fight Club
-            {Map.SanFranciscoFightClub, new PvPLevel(3, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Dusk)},
-                // UAC Battle Night
-            {Map.UACBattleNight, new PvPLevel(4, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold) },
-                // Nuclear Dome
-            {Map.NuclearDome,  new PvPLevel(5, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midday)},
-                // UAC Arena
-            {Map.UACArena, new PvPLevel(6, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight)},
-                // Rio Battlesport
-            {Map.RioBattlesport, new PvPLevel(7, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)},
-                // UAC Ultimate
-            {Map.UACUltimate,  new PvPLevel(8, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold)},
-                // Mercenary One
-            {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning)},
-            };
-        }
+        //private IDictionary<Map, IPvPLevel> CreatePvPLevels()
+        //{
+        //    return new Dictionary<Map, IPvPLevel>()
+        //    {
+        //        // Practice Wreckyards
+        //     {Map.PracticeWreckyards,  new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Morning)},
+        //        // Oz Penitentiary
+        //     {Map.OzPenitentiary,   new PvPLevel(2, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple)},
+        //        // San Francisco Fight Club
+        //    {Map.SanFranciscoFightClub, new PvPLevel(3, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Dusk)},
+        //        // UAC Battle Night
+        //    {Map.UACBattleNight, new PvPLevel(4, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold) },
+        //        // Nuclear Dome
+        //    {Map.NuclearDome,  new PvPLevel(5, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midday)},
+        //        // UAC Arena
+        //    {Map.UACArena, new PvPLevel(6, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight)},
+        //        // Rio Battlesport
+        //    {Map.RioBattlesport, new PvPLevel(7, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)},
+        //        // UAC Ultimate
+        //    {Map.UACUltimate,  new PvPLevel(8, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold)},
+        //        // Mercenary One
+        //    {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning)},
+        //    };
+        //}
         private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()
         {
             return new Dictionary<BuildingKey, int>()
