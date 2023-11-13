@@ -147,6 +147,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             // Store the original sprites
             originalOutlineSprite = buildableImageOutline.sprite;
             originalButtonSprite = buildableButton.sprite;
+
+            // Check if the original sprite is assigned
+            Assert.IsNotNull(originalButtonSprite, "Original button sprite is not assigned");
         }
 
         public async void ApplyVariantIfExist(IBuilding building)
@@ -174,9 +177,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             else
             {
                 upgradeIconImage1Object.SetActive(false);
-                // Reset to original sprites if not a variant
-                buildableImageOutline.sprite = originalOutlineSprite;
-                buildableButton.sprite = originalButtonSprite;
+
+                // Check if original sprites are available before resetting
+                if (originalOutlineSprite != null)
+                    buildableImageOutline.sprite = originalOutlineSprite;
+
+                if (originalButtonSprite != null)
+                    buildableButton.sprite = originalButtonSprite;
             }
         }
 
