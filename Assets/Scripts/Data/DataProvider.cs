@@ -528,7 +528,7 @@ namespace BattleCruisers.Data
 
         public async Task<bool> PurchaseVariant(int index)
         {
-            Assert.IsTrue(index > 2); // 0,1,2 are Premium
+            Assert.IsTrue(index >= 0);
             await Task.Yield();
             int iCredits = _gameModel.Variants[index].variantCredits;
             _gameModel.Credits -= iCredits;
