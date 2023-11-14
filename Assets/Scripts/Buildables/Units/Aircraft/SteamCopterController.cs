@@ -103,6 +103,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
             //create Sprite Chooser
             _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
+            _barrelWrapper.ApplyVariantStats(this);
         }
 
         private void SetupTargetDetection()

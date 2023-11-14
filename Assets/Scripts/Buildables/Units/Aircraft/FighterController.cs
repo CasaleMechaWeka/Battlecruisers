@@ -127,6 +127,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             SetupTargetDetection();
 
             _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+            _barrelController.ApplyVariantStats(this);
+
         }
 
         /// <summary>

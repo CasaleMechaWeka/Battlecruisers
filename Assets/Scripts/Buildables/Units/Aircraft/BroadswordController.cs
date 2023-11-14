@@ -130,9 +130,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         break;
                 }
                 barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, soundKey);
+                barrelWrapper.ApplyVariantStats(this);
             }
-
-
             List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
             foreach (Sprite sprite in allSprites)
             {
