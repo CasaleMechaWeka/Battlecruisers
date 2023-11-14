@@ -50,5 +50,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             return renderers;
         }
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            _antiSeaTurret.ApplyVariantStats(this);
+        }
     }
 }

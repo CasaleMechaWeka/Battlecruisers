@@ -142,5 +142,11 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.Deactivate();
             bones.SetActive(false);
         }
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            laser.ApplyVariantStats(this);
+        }
     }
 }

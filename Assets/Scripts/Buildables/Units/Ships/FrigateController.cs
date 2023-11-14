@@ -60,5 +60,13 @@ namespace BattleCruisers.Buildables.Units.Ships
             //_directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
             _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
 		}
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            _samSite.ApplyVariantStats(this);
+            _directFireAntiSea.ApplyVariantStats(this);
+            _mortar.ApplyVariantStats(this);
+        }
 	}
 }

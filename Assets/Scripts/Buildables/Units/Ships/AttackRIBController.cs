@@ -52,5 +52,12 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             return renderers;
         }
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            ak1.ApplyVariantStats(this);
+            ak2.ApplyVariantStats(this);
+        }
     }
 }

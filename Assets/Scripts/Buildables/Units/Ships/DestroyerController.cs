@@ -78,5 +78,14 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             return renderers;
         }
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            _directFireAntiAir.ApplyVariantStats(this);
+            _directFireAntiSea.ApplyVariantStats(this);
+            _mortar.ApplyVariantStats(this);
+            _missileLauncher.ApplyVariantStats(this);
+        }
     }
 }
