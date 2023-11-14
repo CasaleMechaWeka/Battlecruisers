@@ -136,9 +136,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
             _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
 
-            if(current_variant == null)
+            buildableName.text = Buildable.Name;
+            if (current_variant == null)
             {
-                buildableName.text = Buildable.Name;
+                //buildableName.text = Buildable.Name;
                 droneLevel.text = Buildable.NumOfDronesRequired.ToString();
             }
             buildableImage.sprite = Buildable.Sprite;
@@ -164,7 +165,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 if (variant != null)
                 {
                     current_variant = variant;
-                    buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
                     droneLevel.text = (building.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;
@@ -195,7 +196,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 if (variant != null)
                 {
                     current_variant = variant;
-                    buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
                     droneLevel.text = (unit.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;
