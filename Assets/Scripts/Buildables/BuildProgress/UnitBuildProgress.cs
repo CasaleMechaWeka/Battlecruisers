@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.BuildProgress
         public void ShowBuildProgressIfNecessary(IUnit unit, IFactory factory)
         {
             if (unit != null
-                && unit.Name == _unitName)
+                && unit.keyName == _unitName)
             {
                 _buildProgressFeedback.ShowBuildProgress(unit, factory);
             }
