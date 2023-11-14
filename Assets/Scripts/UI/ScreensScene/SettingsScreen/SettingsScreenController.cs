@@ -151,9 +151,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             idButton.Initialise(soundPlayer, CopyID, this);
             iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
-            #if !PLATFORM_IOS || !PLATFORM_ANDROID
-            iapRefreshButton.gameObject.SetActive(false);
-            #endif
+            iapRefreshButton.gameObject.SetActive(true);
 
             DisplayUserID();
 
