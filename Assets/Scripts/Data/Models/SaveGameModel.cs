@@ -130,10 +130,11 @@ namespace BattleCruisers.Data.Models
                     for (int i = 0; i <= _purchasedExos.Count - 1; i++)
                     {
                         // Add
+                        int index = _purchasedExos[i];
                         if (!currentList.Contains(_purchasedExos[i]))
                         {
-                            game.AddExo(_purchasedExos[i]);
-                            game.Captains[i].isOwned = true;
+                            game.AddExo(_purchasedExos[index]);
+                            game.Captains[_purchasedExos[index]].isOwned = true;
                         }
                     }
                 }
@@ -154,9 +155,10 @@ namespace BattleCruisers.Data.Models
                     for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
                     {
                         // Add
-                        if (!currentList.Contains(_purchasedHeckles[i]))
+                        int index = _purchasedHeckles[i];
+                        if (!currentList.Contains(index))
                         {
-                            game.AddHeckle(_purchasedHeckles[i]);
+                            game.AddHeckle(index);
                         }
                     }
                 }
@@ -177,9 +179,10 @@ namespace BattleCruisers.Data.Models
                     for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
                     {
                         // Add
-                        if (!currentList.Contains(_purchasedBodykits[i]))
+                        int index = _purchasedBodykits[i];
+                        if (!currentList.Contains(_purchasedBodykits[index]))
                         {
-                            game.AddBodykit(_purchasedBodykits[i]);
+                            game.AddBodykit(_purchasedBodykits[index]);
                         }
                     }
                 }
@@ -200,9 +203,10 @@ namespace BattleCruisers.Data.Models
                     for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
                     {
                         // Add
-                        if (!currentList.Contains(_purchasedVariants[i]))
+                        int index = _purchasedVariants[i];
+                        if (!currentList.Contains(_purchasedVariants[index]))
                         {
-                            game.AddVariant(_purchasedVariants[i]);
+                            game.AddVariant(_purchasedVariants[index]);
                         }
                     }
                 }
