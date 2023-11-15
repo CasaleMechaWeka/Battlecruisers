@@ -72,7 +72,7 @@ namespace BattleCruisers.Data.Models
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
             _saveVersion = 4;
-            // Last change: 5/11/2023
+            // Last change: 5/16/2023
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -122,16 +122,19 @@ namespace BattleCruisers.Data.Models
 
             // IAPs
             // Exos
-            if (_purchasedExos != null && _purchasedExos.Count > 0)
+            if (_purchasedExos != null)
             {
                 List<int> currentList = game.GetExos();
-                for (int i = 0; i <= _purchasedExos.Count - 1; i++)
+                if (_purchasedExos.Count > 0)
                 {
-                    // Add
-                    if (!currentList.Contains(_purchasedExos[i]))
+                    for (int i = 0; i <= _purchasedExos.Count - 1; i++)
                     {
-                        game.AddExo(_purchasedExos[i]);
-                        game.Captains[i].isOwned = true;
+                        // Add
+                        if (!currentList.Contains(_purchasedExos[i]))
+                        {
+                            game.AddExo(_purchasedExos[i]);
+                            game.Captains[i].isOwned = true;
+                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
@@ -143,15 +146,18 @@ namespace BattleCruisers.Data.Models
                 }
             }
             // Heckles
-            if (_purchasedHeckles != null && _purchasedHeckles.Count > 0)
+            if (_purchasedHeckles != null)
             {
                 List<int> currentList = game.GetHeckles();
-                for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
+                if (_purchasedHeckles.Count > 0)
                 {
-                    // Add
-                    if (!currentList.Contains(_purchasedHeckles[i]))
+                    for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
                     {
-                        game.AddHeckle(_purchasedHeckles[i]);
+                        // Add
+                        if (!currentList.Contains(_purchasedHeckles[i]))
+                        {
+                            game.AddHeckle(_purchasedHeckles[i]);
+                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
@@ -163,15 +169,18 @@ namespace BattleCruisers.Data.Models
                 }
             }
             // Bodykits
-            if (_purchasedBodykits != null && _purchasedBodykits.Count > 0)
+            if (_purchasedBodykits != null)
             {
                 List<int> currentList = game.GetBodykits();
-                for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
+                if (_purchasedBodykits.Count > 0)
                 {
-                    // Add
-                    if (!currentList.Contains(_purchasedBodykits[i]))
+                    for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
                     {
-                        game.AddBodykit(_purchasedBodykits[i]);
+                        // Add
+                        if (!currentList.Contains(_purchasedBodykits[i]))
+                        {
+                            game.AddBodykit(_purchasedBodykits[i]);
+                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
@@ -183,15 +192,18 @@ namespace BattleCruisers.Data.Models
                 }
             }
             // Variants
-            if (_purchasedVariants != null && _purchasedVariants.Count > 0)
+            if (_purchasedVariants != null)
             {
                 List<int> currentList = game.GetVariants();
-                for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
+                if (_purchasedVariants.Count > 0)
                 {
-                    // Add
-                    if (!currentList.Contains(_purchasedVariants[i]))
+                    for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
                     {
-                        game.AddVariant(_purchasedVariants[i]);
+                        // Add
+                        if (!currentList.Contains(_purchasedVariants[i]))
+                        {
+                            game.AddVariant(_purchasedVariants[i]);
+                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
