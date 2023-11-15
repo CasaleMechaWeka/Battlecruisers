@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
@@ -28,7 +29,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         {
             base.ApplyVariantStats(statVariant);
             accuracy += statVariant.accuracy;
+            accuracy = Mathf.Clamp01(accuracy);
             turretRotateSpeedInDegrees += statVariant.rotate_speed;
+            turretRotateSpeedInDegrees = turretRotateSpeedInDegrees <= 0 ? 0.1f : turretRotateSpeedInDegrees;    
         }
     }
 }

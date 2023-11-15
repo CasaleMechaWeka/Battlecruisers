@@ -50,6 +50,12 @@ namespace BattleCruisers.Projectiles.Stats
             maxVelocityInMPerS += statVariant.max_velocity;
             gravityScale += statVariant.gravity_scale;
             damageRadiusInM += statVariant.damage_radius;
+
+            initialVelocityMultiplier = initialVelocityMultiplier <= 0 ? 0.1f : initialVelocityMultiplier;
+            damage = damage <= 0 ? 0.1f : damage;
+            maxVelocityInMPerS = maxVelocityInMPerS <= 0 ? 0.1f : maxVelocityInMPerS;
+            gravityScale = gravityScale < 0 ? 0 : gravityScale;
+            damageRadiusInM = damageRadiusInM <= 0 ? 0.1f : damageRadiusInM;
         }
         protected virtual void OnAwake() { }
 	}
