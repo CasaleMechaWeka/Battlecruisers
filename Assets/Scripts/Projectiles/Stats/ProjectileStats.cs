@@ -49,7 +49,7 @@ namespace BattleCruisers.Projectiles.Stats
             if(!isAppliedVariant)
             {
                 initialVelocityMultiplier += statVariant.initial_velocity_multiplier;
-                damage += statVariant.damage;
+                damage *= statVariant.damage;
                 maxVelocityInMPerS += statVariant.max_velocity;
                 gravityScale += statVariant.gravity_scale;
                 damageRadiusInM += statVariant.damage_radius;

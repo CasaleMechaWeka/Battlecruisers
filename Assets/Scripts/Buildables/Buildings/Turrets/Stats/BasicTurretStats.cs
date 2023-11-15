@@ -44,8 +44,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         {
             if(!isAppliedVariant)
             {
-                fireRatePerS += statVariant.fire_rate;
-                rangeInM += statVariant.range;
+                fireRatePerS *= statVariant.fire_rate;
+                rangeInM *= statVariant.range;
                 minRangeInM += statVariant.min_range;
 
                 fireRatePerS = fireRatePerS <= 0 ? 0.1f : fireRatePerS;
