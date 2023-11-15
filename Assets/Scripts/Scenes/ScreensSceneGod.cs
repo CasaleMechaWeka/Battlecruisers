@@ -11,7 +11,7 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
-//using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.SkirmishScreen;
@@ -37,15 +37,15 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using Unity.Services.Authentication;
 using UnityEngine.Localization.Components;
 using BattleCruisers.UI;
-//using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
-//using BattleCruisers.Network.Multiplay.ConnectionManagement;
-//using BattleCruisers.Network.Multiplay.Gameplay.UI;
-//using BattleCruisers.Network.Multiplay.Infrastructure;
+using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
+using BattleCruisers.Network.Multiplay.ConnectionManagement;
+using BattleCruisers.Network.Multiplay.Gameplay.UI;
+using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using System.Threading;
 using UnityEditor;
-//using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 
 namespace BattleCruisers.Scenes
 {
@@ -129,7 +129,7 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            //DestroyAllNetworkObjects();
+            DestroyAllNetworkObjects();
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
@@ -441,30 +441,30 @@ namespace BattleCruisers.Scenes
                 }
             }
             PlayerPrefs.GetInt("PLAYED", 1);
-            //PvPBattleSceneGodTunnel.isCost = false;
+            PvPBattleSceneGodTunnel.isCost = false;
         }
 
-        //public async void DestroyAllNetworkObjects()
-        //{
-        //    await Task.Delay(10);
-        //    if (GameObject.Find("ApplicationController") != null)
-        //        GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
-        //
-        //    if (GameObject.Find("ConnectionManager") != null)
-        //        GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
-        //
-        //    if (GameObject.Find("PopupPanelManager") != null)
-        //        GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
-        //
-        //    if (GameObject.Find("UIMessageManager") != null)
-        //        GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
-        //
-        //    if (GameObject.Find("UpdateRunner") != null)
-        //        GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
-        //
-        //    if (GameObject.Find("NetworkManager") != null)
-        //        GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
-        //}
+        public async void DestroyAllNetworkObjects()
+        {
+            await Task.Delay(10);
+            if (GameObject.Find("ApplicationController") != null)
+                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
+
+            if (GameObject.Find("ConnectionManager") != null)
+                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("PopupPanelManager") != null)
+                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UIMessageManager") != null)
+                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+
+            if (GameObject.Find("UpdateRunner") != null)
+                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
+
+            if (GameObject.Find("NetworkManager") != null)
+                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
+        }
 
         async Task ShowCharlieOnMainMenu()
         {

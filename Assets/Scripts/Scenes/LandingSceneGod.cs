@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
-//using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -787,16 +787,16 @@ namespace BattleCruisers.Scenes
 
             // Hide loading scene.  Don't unload, because that destroys all prefabs that have been loaded :P
 
-            //if (sceneName == SceneNames.PvP_BOOT_SCENE)
-            //{
-                //if (MatchmakingScreenController.Instance != null)
-                //    MatchmakingScreenController.Instance.Destroy();
-            //}
-            //else
-            //{
+            if (sceneName == SceneNames.PvP_BOOT_SCENE)
+            {
+                if (MatchmakingScreenController.Instance != null)
+                    MatchmakingScreenController.Instance.Destroy();
+            }
+            else
+            {
                 if (LoadingScreenController.Instance != null)
                     LoadingScreenController.Instance.Destroy();
-            //}
+            }
         }
 
         private IEnumerator LoadScene(string sceneName, LoadSceneMode loadSceneMode)

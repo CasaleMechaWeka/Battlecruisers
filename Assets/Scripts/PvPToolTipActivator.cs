@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.ScreensScene.SettingsScreen;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.ScreensScene.SettingsScreen;
 
 
 public class PvPToolTipActivator : MonoBehaviour
 {
 
 
-    //public PvPToggleController toggleController;
+    public PvPToggleController toggleController;
     public GameObject toolTipTextDisplay;
     private bool started;
 
@@ -17,7 +17,7 @@ public class PvPToolTipActivator : MonoBehaviour
     {
         if (started)
         {
-            //toolTipTextDisplay.SetActive(toggleController.IsChecked.Value);
+            toolTipTextDisplay.SetActive(toggleController.IsChecked.Value);
         }
     }
 

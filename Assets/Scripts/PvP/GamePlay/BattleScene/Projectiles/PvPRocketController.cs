@@ -1,0 +1,348 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.Assertions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using System;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
+{
+    /// <summary>
+    /// The RocketController wants the behaviour of both:
+    /// 1. ProjectileController
+    /// 2. Target
+    /// But it can only subclass one of these.  Hence subclass ProjectileController, and
+    /// have a child game object deriving of Target, to get both behaviours.
+    /// </summary>
+    public class PvPRocketController :
+        PvPProjectileWithTrail<PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>,
+        IPvPTargetProvider
+    {
+        private PvPRocketTarget _rocketTarget;
+
+        public IPvPTarget Target { get; private set; }
+
+        public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
+        {
+            base.Initialise(commonStrings, factoryProvider);
+
+            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
+        }
+
+        public override void Activate(PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats> activationArgs)
+        {
+            base.Activate(activationArgs);
+
+            Target = activationArgs.Target;
+            if (Target.GameObject.GetComponent<PvPBuilding>() != null)
+            {
+                ulong objectId = (ulong)Target.GameObject.GetComponent<PvPBuilding>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
+                OnAddMoveControllerToClientRpc(objectId, activationArgs.ProjectileStats.MaxVelocityInMPerS, activationArgs.ProjectileStats.IsAccurate, activationArgs.ProjectileStats.CruisingAltitudeInM);
+            }
+            else if (Target.GameObject.GetComponent<PvPUnit>() != null)
+            {
+                ulong objectId = (ulong)Target.GameObject.GetComponent<PvPUnit>()._parent.GetComponent<NetworkObject>().NetworkObjectId;
+                OnAddMoveControllerToClientRpc(objectId, activationArgs.ProjectileStats.MaxVelocityInMPerS, activationArgs.ProjectileStats.IsAccurate, activationArgs.ProjectileStats.CruisingAltitudeInM);
+            }
+            else if (Target.GameObject.GetComponents<PvPCruiser>() != null)
+            {
+                ulong objectId = (ulong)Target.GameObject.GetComponent<PvPCruiser>().GetComponent<NetworkObject>().NetworkObjectId;
+                OnAddMoveControllerToClientRpc(objectId, activationArgs.ProjectileStats.MaxVelocityInMPerS, activationArgs.ProjectileStats.IsAccurate, activationArgs.ProjectileStats.CruisingAltitudeInM);
+            }
+
+            IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            IPvPTargetProvider targetProvider = this;
+            IPvPFlightPointsProvider flightPointsProvider
+                = activationArgs.ProjectileStats.IsAccurate ?
+                    _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
+                    _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
+
+            MovementController
+                = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+                    _rigidBody,
+                    maxVelocityProvider,
+                    targetProvider,
+                    activationArgs.ProjectileStats.CruisingAltitudeInM,
+                    flightPointsProvider);
+
+            _rocketTarget.GameObject.SetActive(true);
+            isVisible = true;
+            timeStamp = Time.time;
+            SetRocketTargetVisibleClientRpc(true);
+            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+        }
+
+        protected override void OnActiveClient(Vector3 velocity, float gravityScale, bool isAlive)
+        {
+            OnActiveClientRpc(velocity, gravityScale, isAlive);
+        }
+
+        protected override void DestroyProjectile()
+        {
+            base.DestroyProjectile();
+            DestroyProjectileClientRpc();
+        }
+        protected override void OnImpactCleanUp()
+        {
+            base.OnImpactCleanUp();
+            _rocketTarget.GameObject.SetActive(false);
+            SetRocketTargetVisibleClientRpc(false);
+
+            isVisible = false;
+            timeStamp = Time.time;
+        }
+
+        // Sava added these fields and methods
+        protected override bool needToTeleport => true;
+        protected override float timeToActiveTrail => 0.2f;
+        private PvPSoundType _type;
+        private string _name;
+        private Vector3 _pos;
+        private bool isVisible = false;
+        private float timeStamp = 0f;
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient)
+            {
+                PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
+            }
+            if (!IsHost)
+                _factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
+        }
+
+        // Set Position
+        protected override void OnSetPosition_Visible(Vector3 position, bool visible)
+        {
+            OnSetPosition_VisibleClientRpc(position, visible);
+        }
+
+        protected override void OnActiveClient_PositionVisible(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            OnActiveClient_PositionVisibleClientRpc(velocity, gravityScale, isAlive, position, visible);
+        }
+
+        // PlayExplosionSound
+        protected override void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
+        {
+            OnPlayExplosionSoundClientRpc(type, name, position);
+        }
+
+        private async void PlayExplosionSound()
+        {
+            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(_type, _name), _pos);
+        }
+
+        private void Update()
+        {
+            if (isVisible)
+            {
+                if (Time.time - timeStamp > 15f)
+                    _rocketTarget.GameObject.SetActive(false);
+            }
+        }
+        // should be called by client
+
+        private void Awake()
+        {
+            InitialiseTril();
+            // rocket
+            _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
+            _rigidBody = GetComponent<Rigidbody2D>();
+            _isActiveAndAlive = false;
+        }
+
+        protected override void HideEffectsOfClient()
+        {
+            if (IsServer)
+                HideEffectsOfClientRpc();
+            else
+                base.HideEffectsOfClient();
+        }
+
+        protected override void ShowAllEffectsOfClient()
+        {
+            if (IsServer)
+                ShowAllEffectsOfClientRpc();
+            else
+                base.ShowAllEffectsOfClient();
+        }
+
+        //----------------------------- Rpcs -----------------------------
+        [ClientRpc]
+        private void DestroyProjectileClientRpc()
+        {
+            if (!IsHost)
+            {
+                _rigidBody.velocity = Vector2.zero;
+                MovementController = null;
+            }
+        }
+
+        [ClientRpc]
+        private void OnActiveClientRpc(Vector2 velocity, float gravityScale, bool isAlive)
+        {
+            if (!IsHost)
+            {
+                _rigidBody.velocity = velocity;
+                _rigidBody.gravityScale = gravityScale;
+                _isActiveAndAlive = isAlive;
+
+                if (_rigidBody.velocity != Vector2.zero)
+                {
+                    transform.right = _rigidBody.velocity;
+                }
+                /*                if (velocity == Vector2.zero && gravityScale == 0f)
+                                    base.OnImpactCleanUp();*/
+            }
+        }
+
+        Vector3 temp_velocity;
+        float temp_gravityScale;
+        bool temp_isAlive;
+        [ClientRpc]
+        private void OnActiveClient_PositionVisibleClientRpc(Vector3 velocity, float gravityScale, bool isAlive, Vector3 position, bool visible)
+        {
+            if (!IsHost)
+            {
+                transform.position = position;
+                if (!visible)
+                    gameObject.SetActive(false);
+                else
+                {
+                    temp_velocity = velocity;
+                    temp_gravityScale = gravityScale;
+                    temp_isAlive = isAlive;
+                    Invoke("iSetActive_Rigidbody", timeToActiveTrail);
+                }
+            }
+        }
+
+        [ClientRpc]
+        private void OnAddMoveControllerToClientRpc(ulong objectID, float MaxVelocityInMPerS, bool IsAccurate, float CruisingAltitudeInM)
+        {
+            if (!IsHost)
+            {
+                NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectID);
+                if (obj != null)
+                {
+                    IPvPTarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                    if (target == null)
+                    {
+                        target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPTarget>();
+                    }
+                    if (target == null)
+                    {
+                        target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<IPvPTarget>();
+                    }
+                    Target = target;
+                    IPvPTargetProvider targetProvider = this;
+                    IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);
+
+                    IPvPFlightPointsProvider flightPointsProvider
+                        = IsAccurate ?
+                            _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
+                            _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
+                    MovementController
+                        = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+                            _rigidBody,
+                            maxVelocityProvider,
+                            targetProvider,
+                            CruisingAltitudeInM,
+                            flightPointsProvider);
+                }
+            }
+        }
+
+        [ClientRpc]
+        private void OnSetPosition_VisibleClientRpc(Vector3 position, bool visible)
+        {
+            transform.position = position;
+            if (!visible)
+                gameObject.SetActive(false);
+            else
+                Invoke("iSetActive", timeToActiveTrail);
+        }
+
+
+        private void iSetActive()
+        {
+            gameObject.SetActive(true);
+        }
+        private void iSetActive_Rigidbody()
+        {
+            gameObject.SetActive(true);
+            _rigidBody.velocity = temp_velocity;
+            _rigidBody.gravityScale = temp_gravityScale;
+            _isActiveAndAlive = temp_isAlive;
+
+            if (_rigidBody.velocity != Vector2.zero)
+            {
+                transform.right = _rigidBody.velocity;
+            }
+            /*                if (velocity == Vector2.zero && gravityScale == 0f)
+                                base.OnImpactCleanUp();*/
+        }
+        [ClientRpc]
+        private void OnPlayExplosionSoundClientRpc(PvPSoundType type, string name, Vector3 position)
+        {
+            _type = type;
+            _name = name;
+            _pos = position;
+            Invoke("PlayExplosionSound", 0.05f);
+        }
+
+        // rocket
+        [ClientRpc]
+        private void SetRocketTargetVisibleClientRpc(bool visible)
+        {
+            if (!IsHost)
+            {
+                _rocketTarget.gameObject.SetActive(visible);
+                if (visible)
+                {
+                    isVisible = true;
+                    timeStamp = Time.time;
+                }
+                else
+                {
+                    isVisible = false;
+                    timeStamp = Time.time;
+                }
+            }
+        }
+
+        [ClientRpc]
+        protected void HideEffectsOfClientRpc()
+        {
+            if (!IsHost)
+                HideEffectsOfClient();
+        }
+
+        [ClientRpc]
+        protected void ShowAllEffectsOfClientRpc()
+        {
+            if (!IsHost)
+                ShowAllEffectsOfClient();
+        }
+    }
+}

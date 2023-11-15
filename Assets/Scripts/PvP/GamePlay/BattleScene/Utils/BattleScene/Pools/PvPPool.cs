@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using Unity.Netcode;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools
+{
+    public class PvPPool<TPoolable, TArgs> : IPvPPool<TPoolable, TArgs> where TPoolable : class, IPvPPoolable<TArgs>
+    {
+        private readonly Stack<TPoolable> _items;
+        private readonly IPvPPoolableFactory<TPoolable, TArgs> _itemFactory;
+        private int _createCount = 0;
+        private int MaxLimit = 1000;
+
+        public PvPPool(IPvPPoolableFactory<TPoolable, TArgs> itemFactory)
+        {
+            Assert.IsNotNull(itemFactory);
+            _itemFactory = itemFactory;
+            _items = new Stack<TPoolable>();
+        }
+
+        public async Task AddCapacity(int capacityToAdd)
+        {
+            for (int i = 0; i < capacityToAdd; ++i)
+            {
+                var item = await _itemFactory.CreateItem();
+                await Task.Delay(100);
+                _items.Push(item);                
+            }
+        }
+
+        public async Task<TPoolable> GetItem(TArgs activationArgs)
+        {
+            if (_items.Count < MaxLimit)
+            {
+                TPoolable item = _items.Count != 0 ? _items.Pop() : await CreateItem();
+                item.Activate(activationArgs);
+                return item;
+            }
+            return null;
+        }
+
+        public async Task<TPoolable> GetItem(TArgs activationArgs, PvPFaction faction)
+        {
+            TPoolable item = _items.Count != 0 ? _items.Pop() : await CreateItem();
+            item.Activate(activationArgs, faction);
+            return item;
+        }
+
+        private async Task<TPoolable> CreateItem()
+        {
+            TPoolable item = await _itemFactory.CreateItem();
+            item.Deactivated += Item_Deactivated;
+            return item;
+        }
+
+        private void Item_Deactivated(object sender, EventArgs e)
+        {
+            _items.Push(sender.Parse<TPoolable>());
+        }
+
+        public void SetMaxLimit(int amount)
+        {
+            MaxLimit = amount;
+        }
+    }
+}

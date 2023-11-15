@@ -2,8 +2,8 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
-//using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
-//using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Threading.Tasks;
 using Unity.Services.Economy.Model;
 using JetBrains.Annotations;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Data
         public bool pvpServerAvailable { get; set; }
         Task<string> GetPVPVersion();
         ILevel GetLevel(int levelNum);
-        //IPvPLevel GetPvPLevel(Map map);
+        IPvPLevel GetPvPLevel(Map map);
         void SaveGame();
 
         /// <summary>
