@@ -26,6 +26,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
 using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController;
 using BattleCruisers.Network.Multiplay.UnityServices;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -177,18 +178,31 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-
+            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
             leftCruiserName.text = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
             leftPlayerRankName.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             leftPlayerRankImage.sprite = (await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
-            leftCruiserImage.sprite = sprites[dataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
+            // show bodykit in MM if owned
+            int id_bodyKit = _dataProvider.GameModel.PlayerLoadout.SelectedBodykit;
+            if(id_bodyKit != -1)
+            {
+                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodyKit));
+                if(bodykit.cruiserType == GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull.PrefabName))
+                {
+                    leftCruiserImage.sprite = bodykit.BodykitImage;
+                }
+            }
+            else
+            {
+                leftCruiserImage.sprite = sprites[dataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
+            }          
 
             LookingForOpponentsText.text = commonStrings.GetString("LookingForOpponents");
             FoundOpponentText.text = commonStrings.GetString("FoundOpponent");
 
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
+            
             CaptainExo charliePrefab = await _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.4f;
@@ -227,6 +241,39 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         //    m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
         }
+
+        private HullType GetHullType(string hullName)
+        {
+            switch (hullName)
+            {
+                case "Trident":
+                    return HullType.Trident;
+                case "BlackRig":
+                    return HullType.BlackRig;
+                case "Bullshark":
+                    return HullType.Bullshark;
+                case "Eagle":
+                    return HullType.Eagle;
+                case "Hammerhead":
+                    return HullType.Hammerhead;
+                case "Longbow":
+                    return HullType.Longbow;
+                case "Megalodon":
+                    return HullType.Megalodon;
+                case "Raptor":
+                    return HullType.Raptor;
+                case "Rickshaw":
+                    return HullType.Rickshaw;
+                case "Rockjaw":
+                    return HullType.Rockjaw;
+                case "TasDevil":
+                    return HullType.TasDevil;
+                case "Yeti":
+                    return HullType.Yeti;
+            }
+            return HullType.None;
+        }
+
 
         bool isProcessing = false;
         public bool isLoaded = false;

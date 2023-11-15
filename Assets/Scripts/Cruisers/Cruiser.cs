@@ -213,7 +213,7 @@ namespace BattleCruisers.Cruisers
                 if (id_bodykit != -1)
                 {
                     Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
-                    if(bodykit.cruiserType == hullType)
+                    if (bodykit.cruiserType == hullType)
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                         // should update Name and Description for Bodykit
@@ -287,7 +287,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
-     /*       SetVariantIcon(building);*/
+            /*       SetVariantIcon(building);*/
             building.Activate(
                 new BuildingActivationArgs(
                     this,
