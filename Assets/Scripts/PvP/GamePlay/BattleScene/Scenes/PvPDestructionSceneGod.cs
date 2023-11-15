@@ -1,0 +1,974 @@
+using BattleCruisers.Data;
+using BattleCruisers.PostBattleScreen;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.UI;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils;
+using System;
+using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
+{
+    public class PvPDestructionSceneGod : MonoBehaviour
+    {
+        [SerializeField]
+        private Text screenTitle;
+
+        private IApplicationModel applicationModel;
+        private ISceneNavigator _sceneNavigator;
+        public DestructionCard[] destructionCards;
+        public CanvasGroupButton nextButton;
+        public CanvasGroupButton skipButton;
+        [SerializeField]
+        private AudioSource _uiAudioSource;
+        private ISingleSoundPlayer _soundPlayer;
+        public Text million, billion, trillion, quadrillion;
+
+        private long[] destructionValues;
+
+        private bool realScene = true;
+
+        [SerializeField]
+        private AnimationClip cardRevealAnim;
+        [SerializeField]
+        private TextMeshProUGUI damageCausedValueText; //<-- Damage totals are TextMeshPro for better formatting. Everything else could be too, but that takes effort.
+        [SerializeField]
+        private Text timeValueText;
+        [SerializeField]
+        private TextMeshProUGUI allTimeDamageValueText;
+        [SerializeField]
+        private Text scoreText;
+        [SerializeField]
+        private Text rankText;
+        [SerializeField]
+        private Text rankNumber;
+        [SerializeField]
+        private Image rankGraphic;
+        [SerializeField]
+        private Text modalOldRankText;
+        [SerializeField]
+        private Text modalNewRankText;
+        [SerializeField]
+        private Image modalOldRankGraphic;
+        [SerializeField]
+        private Image modalNewRankGraphic;
+
+        // Damage values to interpolate damaged caused with:
+        private long aircraftVal;
+        private long shipsVal;
+        private long cruiserVal;
+        private long buildingsVal;
+        private long allTimeVal;
+        private long prevAllTimeVal;
+
+        // Time value to interpolate with:
+        private float levelTimeInSeconds = 1f;
+
+        // Level and XP tracking:
+        [SerializeField]
+        private Slider levelBar;
+        private int nextLevelXP;
+        private int currentXP;
+        private long levelScore;
+        private int rank;
+        public DestructionRanker ranker;
+
+        [SerializeField]
+        private GameObject levelUpModal;
+        [SerializeField]
+        private AnimationClip levelUpModalAnim;
+        private float modalPeriod; // length of levelUpModalAnim
+
+        private float timeStep; // used as the basis for all WaitForSeconds() returns 
+        private float stepPeriod;
+        [SerializeField]
+        private int steps;
+
+        // values to control scores and rewards:
+        private int scoreDivider;
+        private int creditDivider;
+        private int coin1Threshold;
+        private int coin2Threshold;
+        private int coin3Threshold;
+        private int coin4Threshold;
+        private int coin5Threshold;
+        private int creditMax;
+
+        // rewards panel parent
+        [SerializeField]
+        private GameObject rewardsCounter;
+
+        // coins variables:
+        private int coinsToAward;
+        [SerializeField]
+        private GameObject coinsCounter;
+        [SerializeField]
+        private Text coinsText;
+
+        // credits variables:
+        private long creditsToAward;
+        [SerializeField]
+        private GameObject creditsCounter;
+        [SerializeField]
+        private Text creditsText;
+
+        // nukes variables:
+        private int nukesToAward;
+        [SerializeField]
+        private GameObject nukesCounter;
+        [SerializeField]
+        private Text nukesText;
+
+
+        public Sprite BlackRig;
+        public Sprite Bullshark;
+        public Sprite Eagle;
+        public Sprite Hammerhead;
+        public Sprite HuntressBoss;
+        public Sprite Longbow;
+        public Sprite ManOfWarBoss;
+        public Sprite Megalodon;
+        public Sprite Raptor;
+        public Sprite Rickshaw;
+        public Sprite Rockjaw;
+        public Sprite TasDevil;
+        public Sprite Trident;
+        public Sprite Yeti;
+
+        async void Start()
+        {
+            _sceneNavigator = LandingSceneGod.SceneNavigator;
+
+            if (_sceneNavigator != null)
+            {
+                LandingSceneGod.MusicPlayer.PlayVictoryMusic();
+                applicationModel = ApplicationModelProvider.ApplicationModel;
+
+                _soundPlayer
+                    = new SingleSoundPlayer(
+                        new SoundFetcher(),
+                        new EffectVolumeAudioSource(
+                            new AudioSourceBC(_uiAudioSource),
+                            applicationModel.DataProvider.SettingsManager, 1));
+
+                nextButton.Initialise(_soundPlayer, Done);
+                skipButton.Initialise(_soundPlayer, SkipAnim);
+                _sceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
+
+            }
+
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditdivider", out creditDivider);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
+            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditmax", out creditMax);
+
+
+            PopulateScreen();
+
+            StartCoroutine(AnimateScreen());
+        }
+
+
+        // Gets all the GameModel vars.
+        // Turns them into local vars for frequently-used values,
+        // Populates text fields on the screen with those values,
+        // Calculates and awards any rewards.
+        private void PopulateScreen()
+        {
+            // Get some values from GameModel and its friends:
+            allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+
+
+            if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+            {
+                levelTimeInSeconds = PvPBattleSceneGodTunnel._levelTimeInSeconds;
+                aircraftVal = PvPBattleSceneGodTunnel._aircraftVal;
+                shipsVal = PvPBattleSceneGodTunnel._shipsVal;
+                cruiserVal = PvPBattleSceneGodTunnel._cruiserVal;
+                buildingsVal = PvPBattleSceneGodTunnel._buildingsVal;
+            }
+
+            if (PvPBattleSceneGodTunnel.isDisconnected == 1)
+            {
+                levelTimeInSeconds = PvPBattleSceneGodTunnel._playerALevelTimeInSeconds;
+                aircraftVal = PvPBattleSceneGodTunnel._playerAAircraftVal;
+                shipsVal = PvPBattleSceneGodTunnel._playerAShipsVal;
+                cruiserVal = PvPBattleSceneGodTunnel._playerACruiserVal;
+                buildingsVal = PvPBattleSceneGodTunnel._playerABuildingsVal;
+            }
+            if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+            {
+                levelTimeInSeconds = PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds;
+                aircraftVal = PvPBattleSceneGodTunnel._playerBAircraftVal;
+                shipsVal = PvPBattleSceneGodTunnel._playerBShipsVal;
+                cruiserVal = PvPBattleSceneGodTunnel._playerBCruiserVal;
+                buildingsVal = PvPBattleSceneGodTunnel._playerBBuildingsVal;
+            }
+
+
+            // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
+            destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].destructionValue.text = FormatNumber(destructionValues[i]);
+                if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+                    destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._totalDestroyed[i];
+                if (PvPBattleSceneGodTunnel.isDisconnected == 1)
+                    destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._playerATotoalDestroyed[i];
+                if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+                    destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._playerBTotoalDestroyed[i];
+            }
+
+            /*destructionCards[2].image.sprite = PvPBattleSceneGodServer.enemyCruiserSprite;*/
+            if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+                switch (PvPBattleSceneGodTunnel._enemyCruiserName)
+                {
+                    case "BlackRig":
+                        destructionCards[2].image.sprite = BlackRig;
+                        break;
+                    case "Bullshark":
+                        destructionCards[2].image.sprite = Bullshark;
+                        break;
+                    case "Eagle":
+                        destructionCards[2].image.sprite = Eagle;
+                        break;
+                    case "Hammerhead":
+                        destructionCards[2].image.sprite = Hammerhead;
+                        break;
+                    case "HuntressBoss":
+                        destructionCards[2].image.sprite = HuntressBoss;
+                        break;
+                    case "Longbow":
+                        destructionCards[2].image.sprite = Longbow;
+                        break;
+                    case "ManOfWarBoss":
+                        destructionCards[2].image.sprite = ManOfWarBoss;
+                        break;
+                    case "Megalodon":
+                        destructionCards[2].image.sprite = Megalodon;
+                        break;
+                    case "Raptor":
+                        destructionCards[2].image.sprite = Raptor;
+                        break;
+                    case "Rickshaw":
+                        destructionCards[2].image.sprite = Rickshaw;
+                        break;
+                    case "Rockjaw":
+                        destructionCards[2].image.sprite = Rockjaw;
+                        break;
+                    case "TasDevil":
+                        destructionCards[2].image.sprite = TasDevil;
+                        break;
+                    case "Trident":
+                        destructionCards[2].image.sprite = Trident;
+                        break;
+                    case "Yeti":
+                        destructionCards[2].image.sprite = Yeti;
+                        break;
+                }
+
+            if (PvPBattleSceneGodTunnel.isDisconnected == 1)
+                switch (PvPBattleSceneGodTunnel._playerACruiserName)
+                {
+                    case "BlackRig":
+                        destructionCards[2].image.sprite = BlackRig;
+                        break;
+                    case "Bullshark":
+                        destructionCards[2].image.sprite = Bullshark;
+                        break;
+                    case "Eagle":
+                        destructionCards[2].image.sprite = Eagle;
+                        break;
+                    case "Hammerhead":
+                        destructionCards[2].image.sprite = Hammerhead;
+                        break;
+                    case "HuntressBoss":
+                        destructionCards[2].image.sprite = HuntressBoss;
+                        break;
+                    case "Longbow":
+                        destructionCards[2].image.sprite = Longbow;
+                        break;
+                    case "ManOfWarBoss":
+                        destructionCards[2].image.sprite = ManOfWarBoss;
+                        break;
+                    case "Megalodon":
+                        destructionCards[2].image.sprite = Megalodon;
+                        break;
+                    case "Raptor":
+                        destructionCards[2].image.sprite = Raptor;
+                        break;
+                    case "Rickshaw":
+                        destructionCards[2].image.sprite = Rickshaw;
+                        break;
+                    case "Rockjaw":
+                        destructionCards[2].image.sprite = Rockjaw;
+                        break;
+                    case "TasDevil":
+                        destructionCards[2].image.sprite = TasDevil;
+                        break;
+                    case "Trident":
+                        destructionCards[2].image.sprite = Trident;
+                        break;
+                    case "Yeti":
+                        destructionCards[2].image.sprite = Yeti;
+                        break;
+                }
+            if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+                switch (PvPBattleSceneGodTunnel._playerBCruiserName)
+                {
+                    case "BlackRig":
+                        destructionCards[2].image.sprite = BlackRig;
+                        break;
+                    case "Bullshark":
+                        destructionCards[2].image.sprite = Bullshark;
+                        break;
+                    case "Eagle":
+                        destructionCards[2].image.sprite = Eagle;
+                        break;
+                    case "Hammerhead":
+                        destructionCards[2].image.sprite = Hammerhead;
+                        break;
+                    case "HuntressBoss":
+                        destructionCards[2].image.sprite = HuntressBoss;
+                        break;
+                    case "Longbow":
+                        destructionCards[2].image.sprite = Longbow;
+                        break;
+                    case "ManOfWarBoss":
+                        destructionCards[2].image.sprite = ManOfWarBoss;
+                        break;
+                    case "Megalodon":
+                        destructionCards[2].image.sprite = Megalodon;
+                        break;
+                    case "Raptor":
+                        destructionCards[2].image.sprite = Raptor;
+                        break;
+                    case "Rickshaw":
+                        destructionCards[2].image.sprite = Rickshaw;
+                        break;
+                    case "Rockjaw":
+                        destructionCards[2].image.sprite = Rockjaw;
+                        break;
+                    case "TasDevil":
+                        destructionCards[2].image.sprite = TasDevil;
+                        break;
+                    case "Trident":
+                        destructionCards[2].image.sprite = Trident;
+                        break;
+                    case "Yeti":
+                        destructionCards[2].image.sprite = Yeti;
+                        break;
+                }
+
+            if (PvPBattleSceneGodTunnel.isDisconnected == 0)
+                destructionCards[2].description.text = PvPBattleSceneGodTunnel._enemyCruiserName;
+            if (PvPBattleSceneGodTunnel.isDisconnected == 1)
+                destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerACruiserName;
+            if (PvPBattleSceneGodTunnel.isDisconnected == 2)
+                destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerBCruiserName;
+
+            //### Screen Setup ###
+
+            // Turn cards off by default:
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].gameObject.SetActive(false);
+            }
+
+            // Turn off Coins Counter by default:
+            rewardsCounter.SetActive(false);
+
+            // Turn off Level Up Modal by default:
+            levelUpModal.SetActive(false);
+
+            timeStep = cardRevealAnim.length;
+            modalPeriod = levelUpModalAnim.length;
+
+            // Set value texts:
+            damageCausedValueText.text = "0";
+            timeValueText.text = "00:00";
+            prevAllTimeVal = allTimeVal - (aircraftVal + shipsVal + cruiserVal + buildingsVal);
+            allTimeDamageValueText.text = FormatNumber(prevAllTimeVal);
+            scoreText.text = "";
+
+            // Set starting rank values:
+            rank = ranker.CalculateRank(prevAllTimeVal);
+
+            currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
+            nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+            rankNumber.text = FormatRankNumber(rank);
+            rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+
+            if (applicationModel.Mode != GameMode.Skirmish)
+            {
+                CalculateRewards();
+            }
+
+            // Set XP bar current/max values:
+            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
+            {
+                levelBar.maxValue = 1;
+                levelBar.value = 1;
+            }
+            else
+            {
+                levelBar.maxValue = nextLevelXP;
+                levelBar.value = currentXP;
+            }
+
+            // From here on out, the screen shouldn't be needing to GET any GameModel variables,
+            // so we can give the player all their points and coins now.
+            // That way if there's a crash or anything before the animation completes, they still get credit.
+            UpdateGameModelVals();
+
+            skipButton.gameObject.SetActive(true);
+        }
+
+        // Duplicate of PopulateScreen(), but with fake numbers.
+        // Turns them into local vars for frequently-used values,
+        // Populates text fields on the screen with those values.
+        // This should not be displayed to real users.
+        // DOES NOT awards any rewards.
+        private void PopulateScreenFake()
+        {
+            long randomVal = 1000000000;
+
+            allTimeVal = randomVal;
+            levelTimeInSeconds = UnityEngine.Random.Range(300, 600);
+            aircraftVal = randomVal / UnityEngine.Random.Range(4, 6);
+            shipsVal = randomVal / UnityEngine.Random.Range(4, 6);
+            cruiserVal = randomVal / UnityEngine.Random.Range(4, 6);
+            buildingsVal = randomVal / UnityEngine.Random.Range(4, 6);
+
+            // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
+            destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].destructionValue.text = FormatNumber(destructionValues[i]);
+                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + UnityEngine.Random.Range(1, 100).ToString();
+            }
+            //### Screen Setup ###
+
+            // Turn cards off by default:
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].gameObject.SetActive(false);
+            }
+
+            // Turn off Coins Counter by default:
+            rewardsCounter.SetActive(false);
+
+            // Turn off Level Up Modal by default:
+            levelUpModal.SetActive(false);
+
+            timeStep = cardRevealAnim.length;
+            modalPeriod = levelUpModalAnim.length;
+
+            // Set value texts:
+            damageCausedValueText.text = "0";
+            timeValueText.text = "00:00";
+            prevAllTimeVal = allTimeVal - (aircraftVal + shipsVal + cruiserVal + buildingsVal);
+            allTimeDamageValueText.text = FormatNumber(prevAllTimeVal);
+            scoreText.text = "";
+
+            // Set starting rank values:
+            rank = ranker.CalculateRank(prevAllTimeVal);
+
+            currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
+            nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+            rankNumber.text = FormatRankNumber(rank);
+            rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
+            coinsText.text = "+" + coinsToAward.ToString();
+
+            // Set XP bar current/max values:
+            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
+            {
+                levelBar.maxValue = 1;
+                levelBar.value = 1;
+            }
+            else
+            {
+                levelBar.maxValue = nextLevelXP;
+                levelBar.value = currentXP;
+            }
+
+            CalculateRewards();
+
+            screenTitle.text = "Debug Mode";
+            realScene = false;
+        }
+
+        IEnumerator AnimateScreen()
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            // Enable a card, interpolate its total into the Damage Total, add XP to bar, repeat
+            long damageRunningTotal = 0;
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                // Enable a card (playing its animation in the process):
+                destructionCards[i].gameObject.SetActive(true);
+
+                // Interpolate the Damage Caused value, from the current running total to that + the card's damage value
+                // by the specified number of steps. Steps are divided over time:
+                yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], steps));
+                damageRunningTotal += destructionValues[i];
+                //yield return new WaitForSeconds(timeStep); // wait for destruction card reveal anim to finish before proceeding
+
+                // Increase XP counter:
+
+                // TODO: Check if it's max rank already
+
+                int xpToAdd = Convert.ToInt32(destructionValues[i]);
+                int xpRunningTotal = currentXP;
+
+                // If the bar would fill up, it needs some special handling.
+                if (xpToAdd + currentXP >= nextLevelXP)
+                {
+                    // Only deal with it if the player isn't max rank:
+                    if (ranker.CalculateRank(allTimeVal) < ranker.destructionRanks.Length - 1)
+                    {
+                        while (xpToAdd > 0)
+                        {
+                            if (xpToAdd + currentXP > nextLevelXP)
+                            {
+                                yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, nextLevelXP, steps, stepPeriod));
+
+                                // Update rank text elements (on screen and in following modal):
+                                rank++;
+                                // in modal
+                                string oldRankText = rankText.text;
+                                string newRankText = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+                                Sprite oldRankImage = rankGraphic.sprite;
+                                Sprite newRankImage = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+                                modalOldRankText.text = oldRankText;
+                                modalNewRankText.text = newRankText;
+                                modalOldRankGraphic.sprite = oldRankImage;
+                                modalNewRankGraphic.sprite = newRankImage;
+
+                                yield return StartCoroutine(DisplayRankUpModal(modalPeriod));
+
+                                // in screen
+                                rankText.text = newRankText;
+                                rankNumber.text = FormatRankNumber(rank);
+                                rankGraphic.sprite = newRankImage;
+
+                                xpToAdd -= (nextLevelXP - xpRunningTotal);
+                                xpRunningTotal = 0;
+                                currentXP = 0;
+
+                                // Get the next level's XP and overwrite the nextLevelXP var
+                                rank++;
+                                nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+                                levelBar.maxValue = nextLevelXP;
+                            }
+                            else
+                            {
+                                // finish the while loop by interp'ing the remaining overflow XP:
+                                yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
+                                xpRunningTotal += xpToAdd;
+                                currentXP = xpRunningTotal;
+                                xpToAdd = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        levelBar.maxValue = 1;
+                        levelBar.value = 1;
+                        // TODO: any extra handling for max rank.
+                    }
+                }
+                else
+                {
+                    yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
+                    currentXP += xpToAdd;
+                }
+            }
+
+            // Interpolate time counter:
+            yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, (int)Mathf.Clamp(steps * 2, 1, Mathf.Infinity)));
+
+            // Interpolate game score:
+            levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
+            yield return StartCoroutine(InterpolateScore(0, levelScore, steps));
+
+            skipButton.gameObject.SetActive(false);
+
+            // Award any rewards:
+            if (applicationModel.Mode != GameMode.Skirmish)
+            {
+                if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
+                {
+                    rewardsCounter.SetActive(true);
+                }
+            }
+
+            // TODO: level rating (maybe?)
+
+            // Interpolate Lifetime Damage (same deal as regular damage)
+            yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, (int)Mathf.Clamp(steps / 3, 1, Mathf.Infinity)));
+        }
+
+        private void SkipAnim()
+        {
+            skipButton.gameObject.SetActive(false);
+
+            timeStep = 0.0f;
+            stepPeriod = 0.0f;
+            steps = 1;
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                GameObject card = destructionCards[i].gameObject;
+                Animator anim = card.GetComponent<Animator>();
+                card.SetActive(true);
+                anim.Play("DestructionCard", 0, 1);
+            }
+        }
+
+        IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
+        {
+            long interpStep = (endVal - startVal) / steps;
+            float stepPeriod = timeStep / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                damageCausedValueText.text = FormatNumber(startVal);
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateLifetimeDamageValue(long startVal, long endVal, int steps)
+        {
+            long interpStep = (long)MathF.Min(1, (endVal - startVal)) / (long)MathF.Min(1, steps);
+            float stepPeriod = timeStep / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                allTimeDamageValueText.text = FormatNumber(startVal);
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateTimeValue(float startVal, float endVal, int steps)
+        {
+            float interpStep = (endVal - startVal) / steps;
+            float stepPeriod = (timeStep * 2.0f) / steps; // timestamps look a bit nicer if they interp a bit slower
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                timeValueText.text = FormatTime(startVal);
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateXPBar(float startVal, float endVal, int steps, float stepPeriod)
+        {
+            float interpStep = (endVal - startVal) / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                levelBar.value = startVal;
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateScore(long startVal, long endVal, int steps)
+        {
+            long interpStep = (endVal - startVal) / steps;
+            float stepPeriod = timeStep / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                scoreText.text = startVal.ToString();
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator DisplayRankUpModal(float stepPeriod)
+        {
+            // Display modal
+            levelUpModal.SetActive(true);
+            yield return new WaitForSeconds(stepPeriod);
+            levelUpModal.SetActive(false);
+        }
+
+        private void CalculateRewards()
+        {
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
+            if (coinsToAward > 0)
+            {
+                coinsCounter.SetActive(true);
+                coinsText.text = "+" + coinsToAward.ToString();
+            }
+            else
+            {
+                coinsCounter.SetActive(false);
+            }
+
+            creditsToAward = CalculateCredits();
+            if (creditsToAward > 0)
+            {
+                creditsCounter.SetActive(true);
+                creditsText.text = "+" + creditsToAward.ToString();
+            }
+            else
+            {
+                creditsCounter.SetActive(false);
+            }
+
+            nukesToAward = CalculateNukes();
+            if (nukesToAward > 0)
+            {
+                nukesCounter.SetActive(true);
+                nukesText.text = "+" + nukesToAward.ToString();
+            }
+            else
+            {
+                nukesCounter.SetActive(false);
+            }
+        }
+
+        private long CalculateScore(float time, long damage)
+        {
+            // feels weird to make this a method but I don't like doing it directly in the animation methods:
+            long score = 0;
+
+            // time under one minute gets penalized to prevent disconnection abuse:
+            long convertedtime = (long)(time * 250);
+            if (time < 60)
+            {
+                convertedtime = (long)(60 * 250);
+            }
+
+            if (damage > 0)
+            {
+                long divider = convertedtime / scoreDivider;
+                if (divider < 1)
+                    divider = 1;
+                score = (damage * 1000) / divider;
+            }
+            return score;
+        }
+
+        private int CalculateCoins(long score)
+        {
+            int result = 0;
+            Arena arena = applicationModel.DataProvider.GameModel.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+
+            if (levelTimeInSeconds > 60)
+            {
+                // Arena earnings:
+                if (cruiserVal > 0) // winner only
+                {
+                    result += arena.prizecoins;
+                }
+
+                // Regular rewards:
+
+                // 5 coins
+                if (score >= coin5Threshold)
+                {
+                    return result + 5;
+                }
+                // 4 coins
+                if (score >= coin4Threshold)
+                {
+                    return result + 4;
+                }
+                // 3 coins
+                if (score >= coin3Threshold)
+                {
+                    return result + 3;
+                }
+                // 2 coins
+                else if (score >= coin2Threshold)
+                {
+                    return result + 2;
+                }
+                // 1 coin
+                else if (score >= coin1Threshold)
+                {
+                    return result + 1;
+                }
+            }
+            else
+            {
+                // Arena refund
+                if(PvPBattleSceneGodTunnel.isCost)
+                {
+                    result += arena.costcoins;
+                }                
+            }
+
+            return result;
+        }
+
+        private long CalculateCredits()
+        {
+            long creditsAward = 0;
+            Arena arena = applicationModel.DataProvider.GameModel.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+
+            if (levelTimeInSeconds > 60)
+            {
+                // Regular rewards:
+                creditsAward = (aircraftVal + shipsVal + cruiserVal + buildingsVal) / creditDivider;
+                if (creditsAward > creditMax)
+                {
+                    creditsAward = creditMax;
+                }
+
+                // Arena earnings:
+                if (cruiserVal > 0) // winner only
+                {
+                    creditsAward += arena.prizecredits;
+                }
+            }
+            else
+            {
+                // Arena refund
+                creditsAward += arena.costcredits;
+            }
+
+            return creditsAward;
+        }
+
+        private int CalculateNukes()
+        {
+            // Nuke Calculation Goes Here?
+            return 0;
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.Escape)
+                || Input.GetKeyUp(KeyCode.Space)
+                || Input.GetKeyUp(KeyCode.Return))
+            {
+                Done();
+            }
+        }
+
+        private async void UpdateGameModelVals()
+        {
+            // Update GameModel vars
+            // lifetime damage (this value is all we need for rank image/titles elsewhere):
+            if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
+            {
+                long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
+                applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+
+                // we need XPToNextLevel to populate any XP progress bars:
+                long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+
+                // Give the player their rewards:
+                applicationModel.DataProvider.GameModel.Coins += coinsToAward;
+                applicationModel.DataProvider.GameModel.Credits += creditsToAward;
+                applicationModel.DataProvider.SaveGame();
+
+                //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
+                await applicationModel.DataProvider.SyncCoinsToCloud();
+                await applicationModel.DataProvider.SyncCreditsToCloud();
+                // Save changes:
+                await applicationModel.DataProvider.CloudSave();
+            }
+        }
+
+        private void Done()
+        {
+            // and now we actually are done:
+            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
+        }
+
+        //taken from https://stackoverflow.com/questions/30180672/string-format-numbers-to-millions-thousands-with-rounding
+        private string FormatNumber(long num)
+        {
+            num = num * 1000;
+            long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
+            num = num / i * i;
+            if (num >= 1000000000000)
+                return "$" + (num / 1000000000000D).ToString("0.##") + " " + quadrillion.text;
+            if (num >= 1000000000)
+                return "$" + (num / 1000000000D).ToString("0.##") + " " + trillion.text;
+            if (num >= 1000000)
+                return "$" + (num / 1000000D).ToString("0.##") + " " + billion.text;
+            if (num >= 1000)
+                return "$" + (num / 1000D).ToString("0.##") + " " + million.text;
+
+            return "$" + num.ToString("#,0");
+        }
+
+        private string FormatRankNumber(int rank)
+        {
+            string numString = rank.ToString();
+            if (rank < 10)
+            {
+                numString = "0" + rank.ToString();
+            }
+            return numString;
+        }
+
+        private string FormatTime(float num)
+        {
+            TimeSpan time = TimeSpan.FromSeconds(num);
+
+            // less than an hour (filtering these values is probably not necessary but WHO KNOWS):
+            if (num <= 3659.0f)
+            {
+                return time.ToString("mm':'ss");
+            }
+            // less than 23:59:59, the maximum of the clock:
+            else if (num > 3659.0f && num <= 86399.0f)
+            {
+                return time.ToString("hh':'mm':'ss");
+            }
+            else
+            {
+                return "Owwww";
+            }
+        }
+
+        void OnApplicationQuit()
+        {
+            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
+            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            try
+            {
+                applicationModel.DataProvider.SaveGame();
+                applicationModel.DataProvider.SyncCoinsToCloud();
+                applicationModel.DataProvider.SyncCreditsToCloud();
+
+                // Save changes:
+                applicationModel.DataProvider.CloudSave();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
+        }
+    }
+}
+

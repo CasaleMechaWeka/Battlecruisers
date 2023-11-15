@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Scenes;
+﻿using BattleCruisers.Network.Multiplay.Scenes;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.BattleScene.Presentables;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,6 +9,7 @@ namespace BattleCruisers.UI.ScreensScene
     public abstract class ScreenController : PresentableController
 	{ 
 		protected IScreensSceneGod _screensSceneGod;
+        protected IMultiplayScreensSceneGod _multiplayScreensSceneGod;
         public bool IsInitialised => _screensSceneGod != null;
 
         protected void Initialise(IScreensSceneGod screensSceneGod)
@@ -17,6 +19,14 @@ namespace BattleCruisers.UI.ScreensScene
             Assert.IsNotNull(screensSceneGod);
 			_screensSceneGod = screensSceneGod;
 		}
+
+        protected void Initialise(IMultiplayScreensSceneGod multiplayScreensSceneGod)
+        {
+            base.Initialise();
+
+            Assert.IsNotNull(multiplayScreensSceneGod);
+            _multiplayScreensSceneGod = multiplayScreensSceneGod;
+        }
 
         public virtual void Cancel() { }
 
