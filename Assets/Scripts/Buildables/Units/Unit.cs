@@ -53,6 +53,7 @@ namespace BattleCruisers.Buildables.Units
                 OnDirectionChange();
             }
         }
+        private bool isAppliedVariant = false;
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
@@ -96,16 +97,20 @@ namespace BattleCruisers.Buildables.Units
             rigidBody.gravityScale = 0;
 
             HealthBar.variantIcon.enabled = false;
-            if (ParentCruiser.IsPlayerCruiser)
+            if (ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
                 // Set Variant to Player
                 ApplyVariantToPlayer(this);
+                isAppliedVariant = true;
             }
-            else
+            else if(!ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
                 // Set Variant to AI
                 if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                {
                     ApplyRandomeVariantToAI(this);
+                    isAppliedVariant = true;
+                }
             }
         }
 

@@ -13,13 +13,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Utils.Factories;
-using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
-using System.Configuration;
-using static UnityEditor.UIElements.ToolbarMenu;
 using System.Threading.Tasks;
 using BattleCruisers.Data.Static;
-//using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables.Buildings
 {
@@ -50,6 +45,7 @@ namespace BattleCruisers.Buildables.Buildings
 
         private bool isImmune = false;
         public int variantIndex { get; set; }
+        private bool isAppliedVariant = false;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -84,16 +80,20 @@ namespace BattleCruisers.Buildables.Buildings
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
             HealthBar.variantIcon.enabled = false;
-            if (ParentCruiser.IsPlayerCruiser)
+            if (ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
                 // Set variant for Player
                 ApplyVariantToPlayer(this);
+                isAppliedVariant = true;
             }
-            else
+            else if(!ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
                 // Set variant for AI
                 if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                {
                     ApplyRandomeVariantToAI(this);
+                    isAppliedVariant = true;
+                }
             }
         }
 
