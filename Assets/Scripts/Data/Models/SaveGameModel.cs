@@ -133,13 +133,13 @@ namespace BattleCruisers.Data.Models
                         game.AddExo(_purchasedExos[i]);
                         game.Captains[i].isOwned = true;
                     }
-                    // Remove if they're not in the cloud save data:
-                    List<int> entriesToRemove = currentList.Except(_purchasedExos).ToList();
-                    foreach (int entry in entriesToRemove)
-                    {
-                        game.RemoveExo(entry);
-                        game.Captains[entry].isOwned = false;
-                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedExos).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveExo(entry);
+                    game.Captains[entry].isOwned = false;
                 }
             }
             // Heckles
@@ -153,13 +153,13 @@ namespace BattleCruisers.Data.Models
                     {
                         game.AddHeckle(_purchasedHeckles[i]);
                     }
-                    // Remove if they're not in the cloud save data:
-                    List<int> entriesToRemove = currentList.Except(_purchasedHeckles).ToList();
-                    foreach (int entry in entriesToRemove)
-                    {
-                        game.RemoveHeckle(entry);
-                        game.Heckles[entry].isOwned = false;
-                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedHeckles).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveHeckle(entry);
+                    game.Heckles[entry].isOwned = false;
                 }
             }
             // Bodykits
@@ -173,13 +173,13 @@ namespace BattleCruisers.Data.Models
                     {
                         game.AddBodykit(_purchasedBodykits[i]);
                     }
-                    // Remove if they're not in the cloud save data:
-                    List<int> entriesToRemove = currentList.Except(_purchasedBodykits).ToList();
-                    foreach (int entry in entriesToRemove)
-                    {
-                        game.RemoveBodykit(entry);
-                        game.Bodykits[entry].isOwned = false;
-                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedBodykits).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveBodykit(entry);
+                    game.Bodykits[entry].isOwned = false;
                 }
             }
             // Variants
@@ -193,13 +193,13 @@ namespace BattleCruisers.Data.Models
                     {
                         game.AddVariant(_purchasedVariants[i]);
                     }
-                    // Remove if they're not in the cloud save data:
-                    List<int> entriesToRemove = currentList.Except(_purchasedVariants).ToList();
-                    foreach (int entry in entriesToRemove)
-                    {
-                        game.RemoveVariant(entry);
-                        game.Variants[entry].isOwned = false;
-                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedVariants).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveVariant(entry);
+                    game.Variants[entry].isOwned = false;
                 }
             }
 
