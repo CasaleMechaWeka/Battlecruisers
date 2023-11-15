@@ -90,6 +90,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
 
             exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
+#if UNITY_EDITOR
+            exoBaseList = GenerateFullList(_dataProvider.GameModel.Captains.Count);
+#endif
             foreach (int index in exoBaseList)
             {
                 CaptainExo captainExo = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
@@ -97,6 +100,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
 
             variantList = GeneratePseudoRandomList(12, _dataProvider.GameModel.Variants.Count - 1, 6, 0);
+#if UNITY_EDITOR
+            variantList = GenerateFullList(_dataProvider.GameModel.Variants.Count);
+#endif
             foreach (int index in variantList)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
@@ -104,6 +110,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
 
             bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
+#if UNITY_EDITOR
+            bodykitList = GenerateFullList(_dataProvider.GameModel.Bodykits.Count);
+#endif
             foreach (int index in bodykitList)
             {
                 Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
@@ -341,7 +350,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             await Task.Delay(100);
 
             List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Heckles.Count - 1, 10);
-
+#if UNITY_EDITOR
+            heckleBaseList = GenerateFullList(_dataProvider.GameModel.Heckles.Count);
+#endif
             byte ii = 0;
             foreach (int index in heckleBaseList)
             {
@@ -449,6 +460,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             for (int i = startValue; i < elements + startValue; i++)
                 randomList.Add((startValue + (maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue - startValue)));
             return randomList;
+        }
+
+        List<int> GenerateFullList(int elements)
+        {
+            List<int> fullList = new List<int>();
+            for (int i = 0; i < elements; i++)
+                fullList.Add(i);
+            return fullList;
         }
     }
 }
