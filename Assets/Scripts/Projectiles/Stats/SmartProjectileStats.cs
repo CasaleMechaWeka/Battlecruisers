@@ -24,8 +24,11 @@ namespace BattleCruisers.Projectiles.Stats
 
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            base.ApplyVariantStats(statVariant);
-            detectionRangeM += statVariant.detection_range;
+            if(!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                detectionRangeM += statVariant.detection_range;
+            }
         }
     }
 }

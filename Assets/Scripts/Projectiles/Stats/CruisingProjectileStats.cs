@@ -19,8 +19,11 @@ namespace BattleCruisers.Projectiles.Stats
         }
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            base.ApplyVariantStats(statVariant);
-            cruisingAltitudeInM += statVariant.cruising_altitude;
+            if(!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                cruisingAltitudeInM += statVariant.cruising_altitude;
+            }
         }
     }
 }

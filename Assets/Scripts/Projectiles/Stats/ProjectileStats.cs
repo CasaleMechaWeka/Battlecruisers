@@ -25,6 +25,7 @@ namespace BattleCruisers.Projectiles.Stats
         public float DamageRadiusInM => damageRadiusInM;
 
         public float InitialVelocityInMPerS { get; private set; }
+        protected bool isAppliedVariant = false;
 
         void Awake()
         {
@@ -45,17 +46,23 @@ namespace BattleCruisers.Projectiles.Stats
 
         public virtual void ApplyVariantStats(StatVariant statVariant)
         {
-            initialVelocityMultiplier += statVariant.initial_velocity_multiplier;
-            damage += statVariant.damage;
-            maxVelocityInMPerS += statVariant.max_velocity;
-            gravityScale += statVariant.gravity_scale;
-            damageRadiusInM += statVariant.damage_radius;
+            if(!isAppliedVariant)
+            {
+                initialVelocityMultiplier += statVariant.initial_velocity_multiplier;
+                damage += statVariant.damage;
+                maxVelocityInMPerS += statVariant.max_velocity;
+                gravityScale += statVariant.gravity_scale;
+                damageRadiusInM += statVariant.damage_radius;
 
-            initialVelocityMultiplier = initialVelocityMultiplier <= 0 ? 0.1f : initialVelocityMultiplier;
-            damage = damage <= 0 ? 0.1f : damage;
-            maxVelocityInMPerS = maxVelocityInMPerS <= 0 ? 0.1f : maxVelocityInMPerS;
-            gravityScale = gravityScale < 0 ? 0 : gravityScale;
-            damageRadiusInM = damageRadiusInM <= 0 ? 0.1f : damageRadiusInM;
+                initialVelocityMultiplier = initialVelocityMultiplier <= 0 ? 0.1f : initialVelocityMultiplier;
+                damage = damage <= 0 ? 0.1f : damage;
+                maxVelocityInMPerS = maxVelocityInMPerS <= 0 ? 0.1f : maxVelocityInMPerS;
+                gravityScale = gravityScale < 0 ? 0 : gravityScale;
+                damageRadiusInM = damageRadiusInM <= 0 ? 0.1f : damageRadiusInM;
+
+                isAppliedVariant = true;
+            }
+            
         }
         protected virtual void OnAwake() { }
 	}

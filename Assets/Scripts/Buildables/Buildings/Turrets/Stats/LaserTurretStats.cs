@@ -12,9 +12,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            base.ApplyVariantStats(statVariant);
-            damagePerS += statVariant.damagePerS;
-            laserDurationInS += statVariant.laser_duration;
+            if(!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                damagePerS += statVariant.damagePerS;
+                laserDurationInS += statVariant.laser_duration;
+            }
         }
     }
 }

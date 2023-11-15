@@ -27,11 +27,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 		}
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            base.ApplyVariantStats(statVariant);
-            accuracy += statVariant.accuracy;
-            accuracy = Mathf.Clamp01(accuracy);
-            turretRotateSpeedInDegrees += statVariant.rotate_speed;
-            turretRotateSpeedInDegrees = turretRotateSpeedInDegrees <= 0 ? 0.1f : turretRotateSpeedInDegrees;    
+            if(!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                accuracy += statVariant.accuracy;
+                accuracy = Mathf.Clamp01(accuracy);
+                turretRotateSpeedInDegrees += statVariant.rotate_speed;
+                turretRotateSpeedInDegrees = turretRotateSpeedInDegrees <= 0 ? 0.1f : turretRotateSpeedInDegrees;
+            }
         }
     }
 }

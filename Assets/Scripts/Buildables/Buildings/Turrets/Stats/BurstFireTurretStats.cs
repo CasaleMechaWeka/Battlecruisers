@@ -81,12 +81,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            base.ApplyVariantStats(statVariant);
-            burstFireRatePerS += statVariant.burst_fire_rate;
-            burstSize += statVariant.burst_size;
+            if(!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                burstFireRatePerS += statVariant.burst_fire_rate;
+                burstSize += statVariant.burst_size;
 
-            burstFireRatePerS = burstFireRatePerS <= 0 ? 0.1f : burstFireRatePerS;
-            burstSize = burstSize < MIN_BURST_SIZE ? MIN_BURST_SIZE : burstSize;    
+                burstFireRatePerS = burstFireRatePerS <= 0 ? 0.1f : burstFireRatePerS;
+                burstSize = burstSize < MIN_BURST_SIZE ? MIN_BURST_SIZE : burstSize;
+            }
         }
     }
 }
