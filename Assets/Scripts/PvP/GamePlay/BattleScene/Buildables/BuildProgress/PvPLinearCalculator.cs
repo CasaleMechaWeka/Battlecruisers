@@ -1,3 +1,4 @@
+using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine.Assertions;
 
@@ -15,8 +16,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.Log(Tags.BUILD_PROGRESS, $"build speed multiplier: {buildSpeedMultiplier}");
 
-            //    should be enabled in Production
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            //should be enabled in Production
             _buildMultiplier = buildSpeedMultiplier;
+
+            //if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 4)
+            //{
+            //    _buildMultiplier = 2;
+            //}
+            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 6)
+            //{
+            //    _buildMultiplier = 3;
+            //}
+            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 8)
+            //{
+            //    _buildMultiplier = 4;
+            //}
+            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 9)
+            //{
+            //    _buildMultiplier = 5;
+            //}
+            //else
+            //{
+            //    _buildMultiplier = buildSpeedMultiplier;
+            //}
 
             // cheat code 
             // _buildMultiplier = 10;
