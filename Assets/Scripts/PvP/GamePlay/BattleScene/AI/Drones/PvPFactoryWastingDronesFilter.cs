@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones
 {
@@ -17,6 +18,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
                  factoryMonitor.HasFactoryBuiltDesiredNumOfUnits
                  && factoryMonitor.Factory.DroneConsumer != null
                  && factoryMonitor.Factory.DroneConsumer.State != PvPDroneConsumerState.Idle;
+        }
+
+        public bool IsMatch(IPvPFactoryMonitor factoryMonitor, VariantPrefab variant)
+        {
+            // need to implement
+            return false;
         }
     }
 }

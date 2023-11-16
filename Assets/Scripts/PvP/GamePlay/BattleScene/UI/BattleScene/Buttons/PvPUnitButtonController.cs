@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUnitClickHandler unitClickHandler)
         {
             PvPHelper.AssertIsNotNull(unitWrapper, unitClickHandler);
-
+            base.ApplyVariantIfExist(unitWrapper.Buildable);
             base.Initialise(soundPlayer, unitWrapper.Buildable, shouldBeEnabledFilter);
 
             _unitWrapper = unitWrapper;

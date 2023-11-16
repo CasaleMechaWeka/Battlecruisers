@@ -1,7 +1,9 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 using UnityEngine.Assertions;
 
@@ -47,6 +49,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             //  return true;
             //  return _droneManager.CanSupportDroneConsumer(buildable.NumOfDronesRequired);
             // NumOfDrones >= numOfDronesRequired;
+            return _playerCruiser.pvp_NumOfDrones.Value >= buildable.NumOfDronesRequired;
+        }
+
+
+        public bool IsMatch(IPvPBuildable buildable, VariantPrefab variant)
+        {
+            if (variant != null)
+                return _playerCruiser.pvp_NumOfDrones.Value >= (buildable.NumOfDronesRequired + variant.statVariant.drone_num);
             return _playerCruiser.pvp_NumOfDrones.Value >= buildable.NumOfDronesRequired;
         }
     }

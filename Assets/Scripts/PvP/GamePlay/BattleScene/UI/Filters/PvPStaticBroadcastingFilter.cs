@@ -1,3 +1,4 @@
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
@@ -30,6 +31,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Fil
         }
 
         public bool IsMatch(TElement element)
+        {
+            return _isMatch;
+        }
+
+        public bool IsMatch(TElement element, VariantPrefab variant)
         {
             return _isMatch;
         }

@@ -1,5 +1,7 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters
@@ -15,6 +17,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         }
 
         public bool IsMatch(IPvPTarget target)
+        {
+            return
+                (_source.FacingDirection == PvPDirection.Right
+                    && target.Position.x > _source.Position.x)
+                || (_source.FacingDirection == PvPDirection.Left
+                    && target.Position.x < _source.Position.x);
+        }
+
+        public bool IsMatch(IPvPTarget target, VariantPrefab variant)
         {
             return
                 (_source.FacingDirection == PvPDirection.Right

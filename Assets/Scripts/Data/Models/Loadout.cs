@@ -8,6 +8,9 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
@@ -140,6 +143,23 @@ namespace BattleCruisers.Data.Models
             return -1;
         }
 
+        public async Task<int> GetSelectedUnitVariantIndex(IPvPPrefabFactory prefabFactory, IPvPUnit unit)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (variantPrefab.IsUnit())
+                {
+                    if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == "PVP" + variantPrefab.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        return index;
+                    }
+                }
+            }
+            return -1;
+        }
+
         public async Task<VariantPrefab> GetSelectedBuildingVariant(IPrefabFactory prefabFactory, IBuilding building)
         {
             foreach (int index in _selectedVariants)
@@ -166,6 +186,23 @@ namespace BattleCruisers.Data.Models
                 if (!variantPrefab.IsUnit())
                 {
                     if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
+                    {
+                        return index;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public async Task<int> GetSelectedBuildingVariantIndex(IPvPPrefabFactory prefabFactory, IPvPBuilding building)
+        {
+            foreach (int index in _selectedVariants)
+            {
+                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
+                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
+                if (!variantPrefab.IsUnit())
+                {
+                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == "PVP" + variantPrefab.GetPrefabKey().PrefabName.ToUpper())
                     {
                         return index;
                     }

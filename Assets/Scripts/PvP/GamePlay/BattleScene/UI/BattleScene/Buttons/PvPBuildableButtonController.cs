@@ -1,10 +1,21 @@
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -27,11 +38,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public Image upgradeIconImage5;
         public Image warheadIconImage;
 
+        public GameObject upgradeIconImage1Object;
+        public GameObject upgradeIconImage2Object;
+        public GameObject upgradeIconImage3Object;
+        public GameObject upgradeIconImage4Object;
+        public GameObject upgradeIconImage5Object;
+        public GameObject warheadIconImageObject;
+
         public Image redGlowImage;
 
+
+
         public Image buildableImageOutline;//modified
+
+        public Image buildableButton;
+
+        public Sprite originalOutlineSprite;
+        public Sprite originalButtonSprite;
+
+        public Sprite variantOutlineSprite;
+        public Sprite variantButtonSprite;
+
         public Text buildableName;
         public Text droneLevel;
+        public Image droneIcon;
 
         public Color redColor;
 
@@ -47,7 +77,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         protected override bool Disable => false;
         protected override IPvPSoundKey ClickSound => PvPSoundKeys.UI.Click;
 
-        public virtual bool IsMatch => _shouldBeEnabledFilter.IsMatch(Buildable);
+        public virtual bool IsMatch => current_variant == null ? _shouldBeEnabledFilter.IsMatch(Buildable) : _shouldBeEnabledFilter.IsMatch(Buildable, current_variant);
+
+        private VariantPrefab current_variant = null;
         public Color Color
         {
             set
@@ -66,6 +98,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     upgradeIconImage5.color = value;
                     warheadIconImage.color = value;
                     redGlowImage.color = redGlowColor;
+                    droneLevel.color = Color.black; // Or any original color
+                    droneIcon.color = Color.black; // Assuming black is the original color
                     isSelected = true;
                 }
                 else
@@ -79,6 +113,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     upgradeIconImage5.color = redColor;
                     warheadIconImage.color = redColor;
                     redGlowImage.color = Color.clear;
+                    droneLevel.color = Color.black;
+                    droneIcon.color = Color.black;
                     isSelected = false;
                 }
 
@@ -107,6 +143,74 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _isEnabledToggler = new PvPFilterToggler(this, this);
         }
+
+        public async void ApplyVariantIfExist(IPvPBuilding building)
+        {
+            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
+
+            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
+            if (index != -1)
+            {
+                Debug.Log("===> Building Variant --- AAA");
+                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                if (variant != null)
+                {
+                    Debug.Log("===> Building Variant --- BBB");
+                    current_variant = variant;
+                    //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    droneLevel.text = (building.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
+                    upgradeIconImage1Object.SetActive(true);
+                    upgradeIconImage1.sprite = variant.variantSprite;
+
+                    // Swap sprites for variant
+                    buildableImageOutline.sprite = variantOutlineSprite;
+                    buildableButton.sprite = variantButtonSprite;
+                }
+            }
+            else
+            {
+                upgradeIconImage1Object.SetActive(false);
+                // Reset to original sprites if not a variant
+                buildableImageOutline.sprite = originalOutlineSprite;
+                buildableButton.sprite = originalButtonSprite;
+            }
+        }
+
+
+        public async void ApplyVariantIfExist(IPvPUnit unit)
+        {
+            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
+            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
+            if (index != -1)
+            {
+                Debug.Log("===> Unit Variant --- AAA");
+                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                if (variant != null)
+                {
+                    Debug.Log("===> Unit Variant --- BBB");
+                    current_variant = variant;
+                    //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    droneLevel.text = (unit.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
+                    upgradeIconImage1Object.SetActive(true);
+                    upgradeIconImage1.sprite = variant.variantSprite;
+
+                    // Swap sprites for variant
+                    buildableImageOutline.sprite = /*buildableImageOutlineUpgrade1.sprite;*/ variantOutlineSprite;
+                    buildableButton.sprite = /*buildableButtonUpgrade1.sprite;*/ variantButtonSprite;
+                }
+            }
+            else
+            {
+                upgradeIconImage1Object.SetActive(false);
+                buildableImageOutline.sprite = originalOutlineSprite;
+                buildableButton.sprite = originalButtonSprite;
+            }
+        }
+
 
         private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
         {

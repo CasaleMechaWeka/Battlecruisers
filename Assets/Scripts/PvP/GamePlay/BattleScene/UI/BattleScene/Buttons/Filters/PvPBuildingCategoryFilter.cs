@@ -1,5 +1,7 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters
@@ -18,6 +20,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         public bool IsMatch(PvPBuildingCategory category)
+        {
+            return
+                _allowAll
+                || _permittedCategory == category;
+        }
+
+        public bool IsMatch(PvPBuildingCategory category, VariantPrefab variant)
         {
             return
                 _allowAll

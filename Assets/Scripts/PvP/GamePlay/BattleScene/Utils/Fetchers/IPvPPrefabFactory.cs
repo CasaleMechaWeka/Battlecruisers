@@ -37,6 +37,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         PvPPrefab GetPrefab(string prefabPath);
         Task<Bodykit> GetBodykit(IPrefabKey prefabKey);
 
+        Task<VariantPrefab> GetVariant(IPrefabKey prefabKey);
+
         Task<IPvPExplosion> CreateExplosion(PvPExplosionKey explosionKey);
         Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey);
 
