@@ -63,17 +63,17 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             CaptainSelectionItemController[] items = itemContainer.gameObject.GetComponentsInChildren<CaptainSelectionItemController>();
             foreach (CaptainSelectionItemController item in items)
             {
-                DestroyImmediate(item.gameObject);
+                Destroy(item.gameObject);
             }
 
-            RemoveAllCaptainsFromRenderCamera();            
+            RemoveAllCaptainsFromRenderCamera();
 
             byte ii = 0;
             for (int i = 0; i < StaticPrefabKeys.CaptainExos.CaptainExoCount(); i++)
             {
                 if (_dataProvider.GameModel.Captains[i].isOwned)
                 {
-                    
+
                     GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
                     CaptainExo captainExoPrefab = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(i));
                     CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
@@ -105,8 +105,18 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         private void CaptainDataChanged(object sender, CaptainDataEventArgs e)
         {
-            currentItem._clickedFeedback.SetActive(false);
-            visualOfCaptains[currentItem._index].SetActive(false);
+            if (currentItem != null)
+            {
+                currentItem._clickedFeedback.SetActive(false);
+                visualOfCaptains[currentItem._index].SetActive(false);
+            }
+            else
+            {
+                foreach(GameObject obj in visualOfCaptains)
+                {
+                    obj.SetActive(false);
+                }
+            }
             currentItem = (CaptainSelectionItemController)sender;
             currentCaptainData = e.captainData;
         }
@@ -130,7 +140,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
                     return true;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = oldExoKey;
                     _dataProvider.SaveGame();
