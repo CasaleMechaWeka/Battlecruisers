@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        void Awake()
+        protected virtual void Awake()
         {
             _outlineWidth = ((RectTransform)progressBarOutline.transform).rect.width;
             OnProgressChanged(originalProgress);

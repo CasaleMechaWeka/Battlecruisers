@@ -5,6 +5,8 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars
 {
     public class PvPHealthBarController : PvPBaseProgressBarController, IPvPHealthBar
@@ -12,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPDamagable _damagable;
         private float _maxHealth;
         private bool _followDamagable;
-
+        public Image variantIcon;
         private Vector2 _offset;
         public Action OffsetChanged;
         public Vector2 Offset
@@ -26,6 +28,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+            variantIcon.enabled = false;
+        }
         public void Initialise(IPvPDamagable damagable, bool followDamagable = false)
         {
             Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
@@ -59,6 +66,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 UpdatePosition();
             }
+
+            UpdateVariantImage();
         }
 
         private void UpdatePosition()
@@ -69,6 +78,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     parentPosition.x + Offset.x,
                     parentPosition.y + Offset.y,
                     transform.position.z);
+        }
+
+        private void UpdateVariantImage()
+        {
+            if (_damagable.Health != _maxHealth)
+                variantIcon.gameObject.SetActive(true);
+            else
+                variantIcon.gameObject.SetActive(false);
         }
 
         [ClientRpc]

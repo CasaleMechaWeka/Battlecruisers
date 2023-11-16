@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -41,6 +42,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private bool isImmune = false;
 
+        public int variantIndex 
+        {
+            get;
+            set;
+        }
+
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
@@ -58,6 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
+            variantIndex = -1;
             if (!IsHost)
                 _doubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
         }
@@ -75,6 +83,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
+        }
+
+        public void ApplyVariantStats(StatVariant statVariant)
+        {
+
         }
 
         public override void StartConstruction()
