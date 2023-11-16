@@ -131,10 +131,10 @@ namespace BattleCruisers.Data.Models
                     {
                         // Add
                         int index = _purchasedExos[i];
-                        if (!currentList.Contains(_purchasedExos[i]))
+                        if (!currentList.Contains(index))
                         {
-                            game.AddExo(_purchasedExos[index]);
-                            game.Captains[_purchasedExos[index]].isOwned = true;
+                            game.AddExo(index);
+                            game.Captains[index].isOwned = true;
                         }
                     }
                 }
