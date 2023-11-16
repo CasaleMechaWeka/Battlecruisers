@@ -217,10 +217,10 @@ namespace BattleCruisers.Data.Serialization
                 if (keys != null && keys.Contains("GameModel"))
                 {
                     Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
-                    if (savedData != null && savedData["GameModel"] != String.Empty)
+                    if (savedData != null && savedData.TryGetValue("GameModel", out string gameModelData) && !string.IsNullOrEmpty(gameModelData))
                     {
-                        SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(savedData["GameModel"]);
-                        Debug.Log(savedData["GameModel"]);
+                        SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(gameModelData);
+                        Debug.Log(gameModelData);
 
                         //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
                         if (saveModel._lifetimeDestructionScore >= game.LifetimeDestructionScore)
