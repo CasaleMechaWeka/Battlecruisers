@@ -1,9 +1,15 @@
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
@@ -14,17 +20,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly IPvPComparableItemDetails<IPvPUnit> _unitDetails;
         private readonly IPvPComparableItemDetails<IPvPCruiser> _cruiserDetails;
 
+        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly IDataProvider _dataProvider;
+        private readonly ILocTable _commonString;
+
         private IPvPSettableBroadcastingProperty<IPvPTarget> _selectedItem;
         public IPvPBroadcastingProperty<IPvPTarget> SelectedItem { get; }
 
-        public PvPItemDetailsManager(IPvPInformatorPanel informator)
+        public PvPItemDetailsManager(IPvPInformatorPanel informator, IDataProvider dataProvider, IPvPPrefabFactory prefabFactory, ILocTable commonString)
         {
-            PvPHelper.AssertIsNotNull(informator);
+            PvPHelper.AssertIsNotNull(informator, dataProvider, prefabFactory, commonString);
 
             _informatorPanel = informator;
             _buildingDetails = informator.BuildingDetails;
             _unitDetails = informator.UnitDetails;
             _cruiserDetails = informator.CruiserDetails;
+
+            _commonString = commonString;
+            _prefabFactory = prefabFactory;
+            _dataProvider = dataProvider;
 
             _selectedItem = new PvPSettableBroadcastingProperty<IPvPTarget>(initialValue: null);
             SelectedItem = new PvPBroadcastingProperty<IPvPTarget>(_selectedItem);
@@ -35,8 +49,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             HideInformatorContent();
 
             _informatorPanel.Show(building);
-            _buildingDetails.ShowItemDetails(building);
-            _selectedItem.Value = building;
+            ShowItemDetailsV2(building);
+            /*            _buildingDetails.ShowItemDetails(building);
+                        _selectedItem.Value = building;*/
+        }
+
+        private async void ShowItemDetailsV2(IPvPBuilding building)
+        {
+          //  IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
+            if (index != -1)
+            {
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                IPvPBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
+                _buildingDetails.ShowItemDetails(staticBuilding, variant);
+                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
+                //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
+                _selectedItem.Value = building;
+            }
+            else
+            {
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _buildingDetails.ShowItemDetails(building);
+                _selectedItem.Value = building;
+            }
         }
 
         public void SelectBuilding(IPvPBuilding building)
@@ -49,8 +87,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             HideInformatorContent();
 
             _informatorPanel.Show(unit);
-            _unitDetails.ShowItemDetails(unit);
-            _selectedItem.Value = unit;
+            ShowItemDetailsV2(unit);
+            /*            _unitDetails.ShowItemDetails(unit);
+                        _selectedItem.Value = unit;*/
+        }
+
+        private async void ShowItemDetailsV2(IPvPUnit unit)
+        {
+         //   IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
+            if (index != -1)
+            {
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                IPvPUnit staticUnit = variant.GetUnit(_prefabFactory);
+                _unitDetails.ShowItemDetails(staticUnit, variant);
+                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
+                //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
+                _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
+                _selectedItem.Value = unit;
+            }
+            else
+            {
+                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _unitDetails.ShowItemDetails(unit);
+                _selectedItem.Value = unit;
+            }
         }
 
         public void SelectUnit(IPvPUnit unit)

@@ -2,6 +2,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -30,6 +32,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         }
 
         protected abstract PvPStatsController<TItem> GetStatsController();
+        public virtual PvPBuildingVariantDetailController GetBuildingVariantDetailController() { return null; }
+        public virtual PvPUnitVariantDetailController GetUnitVariantDetailController() { return null; }
 
         public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default)
         {
@@ -43,6 +47,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _item = item;
 
             _statsController.ShowStats(item, itemToCompareTo);
+            itemName.text = item.Name;
+            itemDescription.text = item.Description;
+            itemImage.sprite = item.Sprite;
+
+            gameObject.SetActive(true);
+        }
+
+        public virtual void ShowItemDetails(TItem item, VariantPrefab variant, TItem itemToCompareTo = default)
+        {
+            Assert.IsNotNull(item);
+
+            if (_item != null)
+            {
+                CleanUp();
+            }
+
+            _item = item;
+
+            _statsController.ShowStatsOfVariant(item, variant, itemToCompareTo);
             itemName.text = item.Name;
             itemDescription.text = item.Description;
             itemImage.sprite = item.Sprite;

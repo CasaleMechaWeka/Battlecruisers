@@ -33,11 +33,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(unitClicked, unitFactory);
 
             _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
-            //_uiManager.ShowUnitDetails(unitClicked.Buildable);
+            _uiManager.ShowUnitDetails(unitClicked.Buildable);
 
             if (canAffordBuildable)
             {
-                _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
+             //   _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
                 HandleFactory(unitClicked, unitFactory);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_playerCruiser, unitFactory))
@@ -47,10 +47,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
             else if (unitFactory.BuildableState == PvPBuildableState.Completed)
             {
+                _uiManager.HideSlotsIfCannotAffordable();
                 PlayUnaffordableSound();
             }
             else
             {
+                _uiManager.HideSlotsIfCannotAffordable();
                 _eventSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.IncompleteFactory);
             }
         }

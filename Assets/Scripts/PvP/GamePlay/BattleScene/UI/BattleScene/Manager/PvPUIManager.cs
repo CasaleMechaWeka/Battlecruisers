@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
+using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
 {
@@ -174,6 +175,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             lastClickedType = 0;
         }
 
+        public virtual void HideSlotsIfCannotAffordable()
+        {
+            _playerCruiser.SlotHighlighter.UnhighlightSlots();
+            _enemyCruiser.SlotHighlighter.UnhighlightSlots();
+            /*            ShownItem = null;
+                        lastClickedBuilding = null;
+                        lastClickedUnit = null;
+                        lastClickedType = -1;
+                        lastClickedBuildable = null;*/
+        }
         public void ShowFactoryUnits(IPvPFactory factory)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);

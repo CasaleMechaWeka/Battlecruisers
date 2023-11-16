@@ -1,6 +1,8 @@
+using BattleCruisers.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats
 {
@@ -37,6 +39,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
             int mastSlotCount = item.SlotNumProvider.GetSlotCount(PvPSlotType.Mast);
             mastSlots.ShowResult(mastSlotCount, _higherIsBetterComparer.CompareStats(mastSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(PvPSlotType.Mast)));
+        }
+
+        protected override void InternalShowStatsOfVariant(IPvPCruiser item, VariantPrefab variant, IPvPCruiser itemToCompareTo)
+        {
         }
     }
 }

@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
             if (canAffordBuildable)
             {
-            //    _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
+                //    _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
                 HandleFactory(unitClicked, unitFactory);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))

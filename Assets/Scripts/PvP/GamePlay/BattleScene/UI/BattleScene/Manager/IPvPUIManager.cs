@@ -15,6 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         void SelectBuildingFromMenu(IPvPBuildableWrapper<IPvPBuilding> buildingWrapper);
         void SelectBuilding(IPvPBuilding building);
         void ShowFactoryUnits(IPvPFactory factory);
+        void HideSlotsIfCannotAffordable();
         void ShowUnitDetails(IPvPUnit unit);
         void ShowCruiserDetails(IPvPCruiser cruiser);
         void HideItemDetails();

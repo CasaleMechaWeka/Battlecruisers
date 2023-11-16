@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _item = item;
 
-            _statsController.ShowStatsOfVariant(item,variant, itemToCompareTo);
+            _statsController.ShowStatsOfVariant(item, variant, itemToCompareTo);
             itemName.text = item.Name;
             itemDescription.text = item.Description;
             itemImage.sprite = item.Sprite;

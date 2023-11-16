@@ -34,10 +34,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsNotNull(buildingClicked);
 
             _uiSoundPlayer.PlaySound(_buildingSelectedSound);
-
+            _uiManager.SelectBuilding(buildingClicked.Buildable);
             if (canAffordBuildable)
             {
-                _uiManager.SelectBuilding(buildingClicked.Buildable);
+                // _uiManager.SelectBuilding(buildingClicked.Buildable);
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == PvPSlotType.Bow)
@@ -51,7 +51,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
             else
             {
-                _uiManager.SelectBuilding(buildingClicked.Buildable);
+                // _uiManager.SelectBuilding(buildingClicked.Buildable);
+                _uiManager.HideSlotsIfCannotAffordable();
                 PlayUnaffordableSound();
             }
         }

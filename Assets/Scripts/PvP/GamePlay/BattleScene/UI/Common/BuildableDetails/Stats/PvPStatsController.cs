@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats
@@ -36,6 +37,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             InternalShowStats(item, itemToCompareTo);
         }
 
+        public void ShowStatsOfVariant(T item, VariantPrefab variant, T itemToCompareTo = null)
+        {
+            if (itemToCompareTo == null)
+            {
+                itemToCompareTo = item;
+            }
+            InternalShowStatsOfVariant(item, variant, itemToCompareTo);
+        }
+
         protected abstract void InternalShowStats(T item, T itemToCompareTo);
+
+        protected abstract void InternalShowStatsOfVariant(T item, VariantPrefab variant, T itemToCompareTo);
     }
 }

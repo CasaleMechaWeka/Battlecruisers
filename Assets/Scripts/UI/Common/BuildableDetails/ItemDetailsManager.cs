@@ -36,14 +36,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _buildingDetails = informator.BuildingDetails;
             _unitDetails = informator.UnitDetails;
             _cruiserDetails = informator.CruiserDetails;
-            _commonString = commonString;
 
+            _commonString = commonString;
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
 
             _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
             SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
-            _dataProvider = dataProvider;
         }
 
         public void ShowDetails(IBuilding building)

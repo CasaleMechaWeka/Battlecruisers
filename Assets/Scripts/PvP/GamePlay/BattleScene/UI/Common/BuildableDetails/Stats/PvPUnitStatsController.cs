@@ -1,5 +1,8 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.UI.Common.BuildableDetails.Stats;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -27,6 +30,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 starRating = 1;
             }
             PvPComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS, itemToCompareTo.MaxVelocityInMPerS);
+            speed.ShowResult(starRating, comparisonResult);
+        }
+
+
+        protected override void InternalShowStatsOfVariant(IPvPUnit item, VariantPrefab variant, IPvPUnit itemToCompareTo)
+        {
+            base.InternalShowStatsOfVariant(item, variant, itemToCompareTo);
+            int starRating = _unitMovementSpeedConverter.ConvertValueToStars(item.MaxVelocityInMPerS + variant.statVariant.max_velocity);
+            if (starRating == 0)
+            {
+                starRating = 1;
+            }
+            PvPComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS + variant.statVariant.max_velocity, itemToCompareTo.MaxVelocityInMPerS);
             speed.ShowResult(starRating, comparisonResult);
         }
 

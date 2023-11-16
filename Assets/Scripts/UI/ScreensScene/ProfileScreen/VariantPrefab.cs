@@ -1,6 +1,10 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils.Fetchers;
 using System;
@@ -44,12 +48,32 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             return building;
         }
 
+        public IPvPBuilding GetBuilding(IPvPPrefabFactory prefabFactory)
+        {
+            IPvPBuilding building = null;
+            if (prefabFactory != null)
+            {
+                building = prefabFactory.GetBuildingWrapperPrefab(GetPvPPrefabKey()).Buildable;
+            }
+            return building;
+        }
+
         public IUnit GetUnit(IPrefabFactory prefabFactory)
         {
             IUnit unit = null;
             if (prefabFactory != null)
             {
                 unit = prefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
+            }
+            return unit;
+        }
+
+        public IPvPUnit GetUnit(IPvPPrefabFactory prefabFactory)
+        {
+            IPvPUnit unit = null;
+            if (prefabFactory != null)
+            {
+                unit = prefabFactory.GetUnitWrapperPrefab(GetPvPPrefabKey()).Buildable;
             }
             return unit;
         }
@@ -124,6 +148,81 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new UnitKey(UnitCategory.Naval, "Destroyer");
                 case ParentBuildable.ArchonBattleship:
                     return new UnitKey(UnitCategory.Naval, "ArchonBattleship");
+            }
+            return null;
+        }
+
+
+        public IPvPPrefabKey GetPvPPrefabKey()
+        {
+            switch (_parent)
+            {
+                case ParentBuildable.AirFactory:
+                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPAirFactory");
+                case ParentBuildable.NavalFactory:
+                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPNavalFactory");
+                case ParentBuildable.EngineeringBay:
+                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay");
+                case ParentBuildable.EngineeringBay4:
+                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay4");
+                case ParentBuildable.EngineeringBay8:
+                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay8");
+                case ParentBuildable.ShieldGenerator:
+                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPShieldGenerator");
+                case ParentBuildable.StealthGenerator:
+                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPStealthGenerator");
+                case ParentBuildable.SpySatelliteLauncher:
+                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPSpySatelliteLauncher");
+                case ParentBuildable.LocalBooster:
+                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPLocalBooster");
+                case ParentBuildable.ControlTower:
+                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPControlTower");
+                case ParentBuildable.AntiShipTurret:
+                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPAntiShipTurret");
+                case ParentBuildable.AntiAirTurret:
+                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPAntiAirTurret");
+                case ParentBuildable.Mortar:
+                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPMortar");
+                case ParentBuildable.SamSite:
+                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPSamSite");
+                case ParentBuildable.TeslaCoil:
+                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPTeslaCoil");
+                case ParentBuildable.Coastguard:
+                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPCoastguard");
+                case ParentBuildable.Artillery:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPArtillery");
+                case ParentBuildable.RocketLauncher:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPRocketLauncher");
+                case ParentBuildable.Railgun:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPRailgun");
+                case ParentBuildable.MLRS:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMLRS");
+                case ParentBuildable.GatlingMortar:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPGatlingMortar");
+                case ParentBuildable.IonCannon:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPIonCannon");
+                case ParentBuildable.MissilePod:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMissilePod");
+                case ParentBuildable.Bomber:
+                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBomber");
+                case ParentBuildable.Fighter:
+                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPFighter");
+                case ParentBuildable.Gunship:
+                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPGunship");
+                case ParentBuildable.SteamCopter:
+                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSteamCopter");
+                case ParentBuildable.Broadsword:
+                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBroadsword");
+                case ParentBuildable.AttackBoat:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackBoat");
+                case ParentBuildable.AttackRIB:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackRIB");
+                case ParentBuildable.Frigate:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPFrigate");
+                case ParentBuildable.Destroyer:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPDestroyer");
+                case ParentBuildable.ArchonBattleship:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPArchonBattleship");
             }
             return null;
         }
