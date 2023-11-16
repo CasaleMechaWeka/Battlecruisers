@@ -674,6 +674,7 @@ namespace BattleCruisers.Data
                 if (result)
                 {
                     GameModel.Bodykits[txn.index].isOwned = true;
+                    GameModel.AddBodykit(txn.index);
                     GameModel.CoinsChange += txn.bodykitCost;
                 }
                 else
@@ -719,6 +720,7 @@ namespace BattleCruisers.Data
                     {
                         //    await SyncCurrencyFromCloud();
                         GameModel.Bodykits[bdk].isOwned = true;
+                        GameModel.AddBodykit(bdk);
                     }
                 }
             }
@@ -738,6 +740,7 @@ namespace BattleCruisers.Data
                 if (result)
                 {
                     GameModel.Captains[txn.index].isOwned = true;
+                    GameModel.AddExo(txn.index);
                     GameModel.CoinsChange += txn.captainCost;
                 }
                 else
@@ -783,6 +786,7 @@ namespace BattleCruisers.Data
                     {
                         //    await SyncCurrencyFromCloud();
                         GameModel.Captains[cpt].isOwned = true;
+                        GameModel.AddExo(cpt);
                     }
                 }
             }
@@ -803,6 +807,7 @@ namespace BattleCruisers.Data
                 {
 
                     GameModel.Heckles[txn.index].isOwned = true;
+                    GameModel.AddHeckle(txn.index);
                     GameModel.CoinsChange += txn.heckleCost;
                 }
                 else
@@ -848,6 +853,7 @@ namespace BattleCruisers.Data
                     {
                         //    await SyncCurrencyFromCloud();
                         GameModel.Heckles[hkl].isOwned = true;
+                        GameModel.AddHeckle(hkl);
                     }
                 }
             }
@@ -867,6 +873,7 @@ namespace BattleCruisers.Data
                 {
 
                     GameModel.Variants[txn.index].isOwned = true;
+                    GameModel.AddVariant(txn.index);
                     GameModel.CreditsChange += txn.variantCredits;
                 }
                 else
@@ -912,6 +919,7 @@ namespace BattleCruisers.Data
                     {
                         //    await SyncCurrencyFromCloud();
                         GameModel.Variants[vnt].isOwned = true;
+                        GameModel.AddVariant(vnt);
                     }
                 }
             }
