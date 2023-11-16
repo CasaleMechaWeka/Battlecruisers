@@ -197,15 +197,34 @@ namespace BattleCruisers.Data.Serialization
 
         public async Task CloudSave(GameModel game)
         {
-            SaveGameModel saveData = new SaveGameModel(game);
             try
             {
-                var data = new Dictionary<string, object> { { "GameModel", SerializeGameModel(saveData) } };
-                await CloudSaveService.Instance.Data.ForceSaveAsync(data);
+                SaveGameModel saveData = new SaveGameModel(game);
+                if (CloudSaveService.Instance != null && CloudSaveService.Instance.Data != null)
+                {
+                    var serializedData = SerializeGameModel(saveData);
+                    if (!string.IsNullOrEmpty(serializedData))
+                    {
+                        var data = new Dictionary<string, object> { { "GameModel", serializedData } };
+                        await CloudSaveService.Instance.Data.ForceSaveAsync(data);
+                    }
+                    else
+                    {
+                        Debug.LogError("CloudSave Error: Serialized data is empty or null.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("CloudSave Error: CloudSaveService instance or Data is null.");
+                }
             }
-            catch (UnityException e)
+            catch (TimeoutException e)
             {
-                Debug.LogException(e);
+                Debug.LogWarning("Timeout occurred: " + e.Message);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("CloudSave Error: " + e);
             }
         }
 
@@ -246,17 +265,17 @@ namespace BattleCruisers.Data.Serialization
             }
             catch(UnityException e)
             {
-                Debug.LogError(e);
+                Debug.LogError("CloudLoad Error: " + e);
                 return null;
             }
             catch(TimeoutException e)
             {
-                Debug.LogWarning("Timeout Occurred: " + e);
+                Debug.LogWarning("CloudLoad Timeout Occurred: " + e);
                 return null;
             }
             catch(Exception e)
             {
-                Debug.LogError(e);
+                Debug.LogError("CloudLoad Error: " + e);
                 return null;
             }
         }
