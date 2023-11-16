@@ -6,13 +6,10 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {

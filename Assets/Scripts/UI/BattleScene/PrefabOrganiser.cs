@@ -12,7 +12,6 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
-using static UnityEditor.UIElements.ToolbarMenu;
 
 namespace BattleCruisers.UI.BattleScene
 {

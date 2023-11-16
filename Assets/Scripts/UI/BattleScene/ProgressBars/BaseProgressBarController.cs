@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars

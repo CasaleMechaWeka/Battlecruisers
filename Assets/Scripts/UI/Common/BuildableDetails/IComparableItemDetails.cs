@@ -3,8 +3,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Utils.Localisation;
-using UnityEditor.Build;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
