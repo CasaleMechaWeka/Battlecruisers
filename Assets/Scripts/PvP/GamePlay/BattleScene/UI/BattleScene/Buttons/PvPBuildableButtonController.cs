@@ -106,12 +106,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 {
                     buildableImageOutline.color = Color.clear;
                     buildableName.color = redColor;
-                    upgradeIconImage1.color = redColor;
-                    upgradeIconImage2.color = redColor;
-                    upgradeIconImage3.color = redColor;
-                    upgradeIconImage4.color = redColor;
-                    upgradeIconImage5.color = redColor;
-                    warheadIconImage.color = redColor;
+                    upgradeIconImage1.color = Color.black;
+                    upgradeIconImage2.color = Color.black;
+                    upgradeIconImage3.color = Color.black;
+                    upgradeIconImage4.color = Color.black;
+                    upgradeIconImage5.color = Color.black;
+                    warheadIconImage.color = Color.black;
                     redGlowImage.color = Color.clear;
                     droneLevel.color = Color.black;
                     droneIcon.color = Color.black;
