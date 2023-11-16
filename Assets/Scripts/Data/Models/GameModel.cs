@@ -904,7 +904,8 @@ namespace BattleCruisers.Data.Models
         {
             if (_purchasedExos != null)
             {
-                _purchasedExos.Add(index);
+                if (!_purchasedExos.Contains(index))
+                    _purchasedExos.Add(index);
             }
             else
             {
@@ -923,7 +924,8 @@ namespace BattleCruisers.Data.Models
         {
             if (_purchasedHeckles != null)
             {
-                _purchasedHeckles.Add(index);
+                if (!_purchasedHeckles.Contains(index))
+                    _purchasedHeckles.Add(index);
             }
             else
             {
@@ -942,7 +944,8 @@ namespace BattleCruisers.Data.Models
         {
             if (_purchasedBodykits != null)
             {
-                _purchasedBodykits.Add(index);
+                if (!_purchasedBodykits.Contains(index))
+                    _purchasedBodykits.Add(index);
             }
             else
             {
@@ -961,7 +964,8 @@ namespace BattleCruisers.Data.Models
         {
             if (_purchasedVariants != null)
             {
-                _purchasedVariants.Add(index);
+                if(!_purchasedVariants.Contains(index))
+                    _purchasedVariants.Add(index);
             }
             else
             {

@@ -159,6 +159,7 @@ namespace BattleCruisers.Data.Models
                         if (!currentList.Contains(index))
                         {
                             game.AddHeckle(index);
+                            game.Heckles[index].isOwned = true;
                         }
                     }
                 }
@@ -183,6 +184,7 @@ namespace BattleCruisers.Data.Models
                         if (!currentList.Contains(index))
                         {
                             game.AddBodykit(index);
+                            game.Bodykits[index].isOwned = true;
                         }
                     }
                 }
@@ -207,6 +209,7 @@ namespace BattleCruisers.Data.Models
                         if (!currentList.Contains(index))
                         {
                             game.AddVariant(index);
+                            game.Variants[index].isOwned = true;
                         }
                     }
                 }
