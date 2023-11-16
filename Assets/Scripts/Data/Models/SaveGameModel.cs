@@ -180,9 +180,9 @@ namespace BattleCruisers.Data.Models
                     {
                         // Add
                         int index = _purchasedBodykits[i];
-                        if (!currentList.Contains(_purchasedBodykits[index]))
+                        if (!currentList.Contains(index))
                         {
-                            game.AddBodykit(_purchasedBodykits[index]);
+                            game.AddBodykit(index);
                         }
                     }
                 }
@@ -204,9 +204,9 @@ namespace BattleCruisers.Data.Models
                     {
                         // Add
                         int index = _purchasedVariants[i];
-                        if (!currentList.Contains(_purchasedVariants[index]))
+                        if (!currentList.Contains(index))
                         {
-                            game.AddVariant(_purchasedVariants[index]);
+                            game.AddVariant(index);
                         }
                     }
                 }
