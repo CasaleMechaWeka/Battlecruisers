@@ -211,10 +211,10 @@ namespace BattleCruisers.Data.Serialization
 
         public async Task<SaveGameModel> CloudLoad(GameModel game)
         {
-            List<string> keys = await CloudSaveService.Instance.Data.RetrieveAllKeysAsync();
-            if (keys.Contains("GameModel"))
+            try
             {
-                try
+                List<string> keys = await CloudSaveService.Instance.Data.RetrieveAllKeysAsync();
+                if (keys != null && keys.Contains("GameModel"))
                 {
                     Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
                     if (savedData != null && savedData["GameModel"] != String.Empty)
@@ -239,14 +239,24 @@ namespace BattleCruisers.Data.Serialization
                         return null;
                     }
                 }
-                catch (UnityException e)
+                else
                 {
-                    Debug.LogException(e);
                     return null;
                 }
             }
-            else
+            catch(UnityException e)
             {
+                Debug.LogError(e);
+                return null;
+            }
+            catch(TimeoutException e)
+            {
+                Debug.LogWarning("Timeout Occurred: " + e);
+                return null;
+            }
+            catch(Exception e)
+            {
+                Debug.LogError(e);
                 return null;
             }
         }
