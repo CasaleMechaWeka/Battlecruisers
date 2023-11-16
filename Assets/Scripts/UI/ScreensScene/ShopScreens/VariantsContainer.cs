@@ -113,7 +113,7 @@ namespace BattleCruisers.UI.ScreensScene
                         _dataProvider.GameModel.AddVariant(currentVariantData.Index);
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("VariantPurchased") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
 
                         // Subtract from local economy:
                         _dataProvider.GameModel.Credits -= currentVariantData.VariantCredits;
