@@ -244,8 +244,9 @@ namespace BattleCruisers.Scenes
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await GoogleAttemptSilentSigningAsync(soundPlayer);
+                ShowSignInScreen();
 
-                #elif PLATFORM_IOS
+#elif PLATFORM_IOS
                 InitializeAppleAuth();
 
                 // If at any point we receive a credentials revoked notification, we delete the stored User ID
@@ -268,9 +269,9 @@ namespace BattleCruisers.Scenes
                     //Attempt Apple Quick Login
                     AppleQuickLogin();
                 }
-                #else
+#else
                 ShowSignInScreen();
-                #endif
+#endif
             }
             else
             {
