@@ -369,5 +369,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         [Header("Shield Stats")]
         public float shield_recharge_delay;
         public float shield_recharge_rate;
+        public float shield_health;
     }
 }
