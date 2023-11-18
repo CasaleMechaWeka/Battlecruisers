@@ -455,5 +455,15 @@ namespace BattleCruisers.Data.Models
         {
             return this.GetHashCode(_hull, _buildings, _units);
         }
+
+/*        public string GetSelectedVariantsAsString()
+        {
+            string ret = string.Empty;
+            foreach(int i in _selectedVariants)
+            {
+                ret += i.ToString() + " ";
+            }
+            return ret;
+        }*/
     }
 }

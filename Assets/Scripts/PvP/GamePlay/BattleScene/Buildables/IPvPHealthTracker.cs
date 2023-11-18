@@ -25,6 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void SetMinHealth();
         void SetHealth(float amount);
         void SetMaxHealth();
+        void OverrideHealth(float health);
+        void OverrideMaxHealth(float maxHealth);
 
     }
 }

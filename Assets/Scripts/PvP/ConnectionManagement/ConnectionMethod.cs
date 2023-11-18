@@ -53,7 +53,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 playerCaptainPrefabName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,
                 playerGameMap = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap,
                 playerRating = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore,
-                playerBodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit
+                playerBodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit,
+        //        playerSelectedVariants = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedVariantsAsString()
                 //               isDebug = Debug.isDebugBuild
             });
 

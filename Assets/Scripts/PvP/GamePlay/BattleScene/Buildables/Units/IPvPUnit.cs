@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using System.Collections.ObjectModel;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
 {
@@ -26,5 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         bool IsUltra { get; }
 
         void AddBuildRateBoostProviders(ObservableCollection<IPvPBoostProvider> boostProviders);
+
+        int variantIndex { get; set; }
+        void ApplyVariantStats(StatVariant statVariant);
     }
 }

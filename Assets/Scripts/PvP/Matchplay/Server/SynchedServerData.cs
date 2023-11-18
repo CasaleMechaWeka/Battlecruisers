@@ -27,6 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<NetworkString> captainAPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<float> playerARating = new NetworkVariable<float>();
         public NetworkVariable<int> playerABodykit = new NetworkVariable<int>();
+    //    public NetworkVariable<NetworkString> playerASelectedVariants = new NetworkVariable<NetworkString>();
+
 
         public NetworkVariable<NetworkString> playerBPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<ulong> playerBClientNetworkId = new NetworkVariable<ulong>();
@@ -35,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<NetworkString> captainBPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<float> playerBRating = new NetworkVariable<float>();
         public NetworkVariable<int> playerBBodykit = new NetworkVariable<int>();
+    //    public NetworkVariable<NetworkString> playerBSelectedVariants = new NetworkVariable<NetworkString>();
 
         public NetworkVariable<float> left_levelTimeInSeconds = new NetworkVariable<float>();
         public NetworkVariable<long> left_aircraftVal = new NetworkVariable<long>();

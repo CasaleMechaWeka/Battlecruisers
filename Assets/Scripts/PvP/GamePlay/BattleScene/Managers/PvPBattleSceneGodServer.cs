@@ -98,6 +98,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
+        public List<int> playerASelectedVariants = new List<int>();
+        public List<int> playerBSelectedVariants = new List<int>();
+
         static PvPBattleSceneGodServer s_pvpBattleSceneGodServer;
         void Awake()
         {
@@ -245,6 +248,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         }
                         */
         }
+
+/*        public void GetSelectedVariantsFromString()
+        {
+            string[] str_VaraintsA = SynchedServerData.Instance.playerASelectedVariants.Value.ToString().Split(' ');
+            foreach(string str in str_VaraintsA) 
+            {
+                int tempI;
+                if(int.TryParse(str, out tempI))
+                {
+                    playerASelectedVariants.Add(tempI);
+                }
+            }
+
+            string[] str_VariantsB = SynchedServerData.Instance.playerBSelectedVariants.Value.ToString().Split(' ');
+            foreach(string str in str_VariantsB)
+            {
+                int tempP;
+                if (int.TryParse(str, out tempP))
+                {
+                    playerBSelectedVariants.Add(tempP);
+                }
+            }
+        }*/
 
         public async void Initialise_Rest()
         {

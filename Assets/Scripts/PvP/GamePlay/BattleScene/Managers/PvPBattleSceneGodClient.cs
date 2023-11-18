@@ -342,6 +342,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             if (!NetworkManager.Singleton.IsHost)
             {
                 PvPBattleSceneGodTunnel._playerACruiserName = SynchedServerData.Instance.playerAPrefabName.Value;
+                // variants
+    //            GetComponent<PvPBattleSceneGodServer>().GetSelectedVariantsFromString();
             }
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             battleCompletionHandler.registeredTime = Time.time;
@@ -479,7 +481,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Invoke("ApplyEconomy", 60f);
             isStartedPvP = true;
             if (NetworkManager.Singleton.IsHost)
+            {
+                PvPBattleSceneGodServer.Instance.playerASelectedVariants = dataProvider.GameModel.PlayerLoadout.SelectedVariants;
                 PvPBattleSceneGodServer.Instance.Initialise_Rest();
+            }                
         }
 
         private async void ApplyEconomy()

@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         where TPvPActivationArgs : PvPBuildableActivationArgs
     {
         private float _cumulativeBuildProgressInDroneS;
-        private float _buildTimeInDroneSeconds;
+        protected float _buildTimeInDroneSeconds;
         private IPvPClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public string PrefabName => _parent.name;
 
         private PvPHealthBarController _healthBar;
-        public IPvPHealthBar HealthBar => _healthBar;
+        public PvPHealthBarController HealthBar => _healthBar;
 
         private IList<IPvPDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; private set; }

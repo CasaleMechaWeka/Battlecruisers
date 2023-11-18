@@ -1,4 +1,5 @@
 
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Utils;
 using System;
@@ -60,6 +61,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 
         }
 
+        public void OverrideHealth(IPvPDamagable damagable)
+        {
+            Assert.IsNotNull(damagable);
+            Assert.IsTrue(damagable.Health > 0);
+            _maxHealth = _damagable.Health;
+        }
         void LateUpdate()
         {
             if (_followDamagable)
