@@ -66,7 +66,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     pvp_variantIndex.Value = value;
             }
         }
-        NetworkList<int> a;
 
         #endregion Properties
 
@@ -110,10 +109,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
             rigidBody.gravityScale = 0;
 
+            variantIndex = activationArgs.VariantIndex;
             HealthBar.variantIcon.enabled = false;
             if(!isAppliedVariant)
             {
 
+                isAppliedVariant = true;
             }            
         }
 
