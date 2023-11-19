@@ -35,7 +35,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 new PvPBuildableActivationArgs(
                     ParentCruiser,
                     EnemyCruiser,
-                    _cruiserSpecificFactories));
+                    _cruiserSpecificFactories,
+                    variantIndex));
 
             _satellite.StartConstruction();
         }

@@ -97,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
 
-            variantIndex = -1;
+            variantIndex = activationArgs.VariantIndex;
             HealthBar.variantIcon.enabled = false;
             if(!isAppliedVariant)
             {

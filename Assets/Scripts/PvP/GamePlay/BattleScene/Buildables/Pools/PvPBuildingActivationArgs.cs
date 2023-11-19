@@ -17,8 +17,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPCruiser enemyCruiser,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPSlot parentSlot,
-            IPvPDoubleClickHandler<IPvPBuilding> doubleClickHandler)
-            : base(parentCruiser, enemyCruiser, cruiserSpecificFactories)
+            IPvPDoubleClickHandler<IPvPBuilding> doubleClickHandler,
+            int variantIndex)
+            : base(parentCruiser, enemyCruiser, cruiserSpecificFactories, variantIndex)
         {
             Helper.AssertIsNotNull(parentSlot, doubleClickHandler);
 

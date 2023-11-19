@@ -140,9 +140,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         // StartBuildingUnit
 
-        protected override void OnStartBuildingUnit(PvPUnitCategory category, string prefabName)
+        protected override void OnStartBuildingUnit(PvPUnitCategory category, string prefabName, int variantIndex)
         {
-            OnStartBuildingUnitServerRpc(category, prefabName);
+            OnStartBuildingUnitServerRpc(category, prefabName, variantIndex);
         }
         // PauseBuildingUnit
         protected override void OnPauseBuildingUnit()
@@ -350,10 +350,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ServerRpc(RequireOwnership = true)]
-        private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName)
+        private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName, int variantIndex)
         {
             PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
             UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
+            VariantIndex = variantIndex;
         }
 
         [ServerRpc(RequireOwnership = true)]

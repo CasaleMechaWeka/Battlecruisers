@@ -97,6 +97,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 SelectedBuildableOutlinePrefab = FactoryProvider.PrefabFactory.GetOutline(new PvPBuildableOutlineKey(value.Buildable.PrefabName + "Outline"));
             }
         }
+
+        private int _variantIndexOfSelectedBuilding = -1;
+        public int VariantIndexOfSelectedBuilding
+        {
+            get
+            {
+                return _variantIndexOfSelectedBuilding;
+            }
+            set
+            {
+                _variantIndexOfSelectedBuilding = value;
+            }
+        }
         public IPvPDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public PvPDirection Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
@@ -406,10 +419,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _enemyCruiser,
                     CruiserSpecificFactories,
                     slot,
-                    _buildingDoubleClickHandler));
+                    _buildingDoubleClickHandler,
+                    VariantIndexOfSelectedBuilding));
 
             slot.SetBuilding(building);
-
 
             building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
@@ -673,13 +686,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         [ServerRpc(RequireOwnership = true)]
-        public void PvP_SelectedBuildingPrefabServerRpc(PvPBuildingCategory category, string prefabName, ServerRpcParams serverRpcParams = default)
+        public void PvP_SelectedBuildingPrefabServerRpc(PvPBuildingCategory category, string prefabName, int variantIndex, ServerRpcParams serverRpcParams = default)
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
             if (NetworkManager.ConnectedClientsIds.Contains(clientId))
             {
                 PvPBuildingKey buildingKey = new PvPBuildingKey(category, prefabName);
                 SelectedBuildingPrefab = FactoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+                VariantIndexOfSelectedBuilding = variantIndex;
             }
         }
 

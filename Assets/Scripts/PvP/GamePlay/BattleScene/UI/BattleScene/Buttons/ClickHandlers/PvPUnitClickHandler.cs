@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _playerCruiser = playerCruiser;
         }
 
-        public void HandleClick(bool canAffordBuildable, IPvPBuildableWrapper<IPvPUnit> unitClicked, IPvPFactory unitFactory)
+        public async void HandleClick(bool canAffordBuildable, IPvPBuildableWrapper<IPvPUnit> unitClicked, IPvPFactory unitFactory)
         {
             PvPHelper.AssertIsNotNull(unitClicked, unitFactory);
 
@@ -37,8 +37,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             if (canAffordBuildable)
             {
-             //   _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
-                HandleFactory(unitClicked, unitFactory);
+                //   _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
+                int variantIndex = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(PvPBattleSceneGodClient.Instance.prefabFactory, unitClicked.Buildable);
+                HandleFactory(unitClicked, unitFactory, variantIndex);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_playerCruiser, unitFactory))
                 {
@@ -57,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        private void HandleFactory(IPvPBuildableWrapper<IPvPUnit> unitClicked, IPvPFactory unitFactory)
+        private void HandleFactory(IPvPBuildableWrapper<IPvPUnit> unitClicked, IPvPFactory unitFactory, int variantIndex)
         {
             if (ReferenceEquals(unitFactory.UnitWrapper, unitClicked))
             {
@@ -74,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             else
             {
                 // Different unit
-                unitFactory.StartBuildingUnit(unitClicked);
+                unitFactory.StartBuildingUnit(unitClicked, variantIndex);
             }
         }
 

@@ -18,6 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPAudioClipWrapper SelectedSound { get; }
         IPvPAudioClipWrapper UnitSelectedSound { get; }
 
+        void StartBuildingUnit(IPvPBuildableWrapper<IPvPUnit> unit, int variantIndex);
         void StartBuildingUnit(IPvPBuildableWrapper<IPvPUnit> unit);
         void StopBuildingUnit();
         void PauseBuildingUnit();

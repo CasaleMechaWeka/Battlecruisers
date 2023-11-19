@@ -78,6 +78,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             get { return _unitWrapper; }
         }
 
+        private int _variantIndex = -1;
+        public int VariantIndex
+        {
+            get { return _variantIndex; }
+            set { _variantIndex = value; }
+        }
+
         public int NumOfDrones
         {
             get
@@ -154,7 +161,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 return;
             }
-            PvPBuildableActivationArgs activationArgs = new PvPBuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories);
+            PvPBuildableActivationArgs activationArgs = new PvPBuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories, VariantIndex);
             UnitUnderConstruction = await _unitPool.GetItem(activationArgs);
             Assert.IsNotNull(UnitUnderConstruction);
             UnitUnderConstruction.DroneConsumerProvider = this;
@@ -339,16 +346,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             UnitUnderConstruction = null;
         }
 
+        public void StartBuildingUnit(IPvPBuildableWrapper<IPvPUnit> unit, int variantIndex)
+        {
+            // Logging.Log(Tags.FACTORY, unit?.ToString());
+            UnitWrapper = unit;
+            VariantIndex = variantIndex;
+            if (IsClient)
+            {
+                OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName, VariantIndex);
+            }
+        }
+
         public void StartBuildingUnit(IPvPBuildableWrapper<IPvPUnit> unit)
         {
             // Logging.Log(Tags.FACTORY, unit?.ToString());
             UnitWrapper = unit;
             if (IsClient)
             {
-                OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName);
+                OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName, VariantIndex);
             }
         }
-
 
 
         public void StopBuildingUnit()
@@ -441,7 +458,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        protected virtual void OnStartBuildingUnit(PvPUnitCategory category, string prefabName)
+        protected virtual void OnStartBuildingUnit(PvPUnitCategory category, string prefabName, int variantIndex)
         {
         }
 

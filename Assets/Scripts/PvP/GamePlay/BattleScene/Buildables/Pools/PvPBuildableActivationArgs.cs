@@ -11,17 +11,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPCruiser ParentCruiser { get; }
         public IPvPCruiser EnemyCruiser { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
+        public int VariantIndex { get; }
 
         public PvPBuildableActivationArgs(
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
-            IPvPCruiserSpecificFactories cruiserSpecificFactories)
+            IPvPCruiserSpecificFactories cruiserSpecificFactories,
+            int varintIndex)
         {
             Helper.AssertIsNotNull(parentCruiser, enemyCruiser, cruiserSpecificFactories);
 
             ParentCruiser = parentCruiser;
             EnemyCruiser = enemyCruiser;
             CruiserSpecificFactories = cruiserSpecificFactories;
+            VariantIndex = varintIndex;
         }
     }
 }

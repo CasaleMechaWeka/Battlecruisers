@@ -125,14 +125,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
-        public void SelectBuildingFromMenu(IPvPBuildableWrapper<IPvPBuilding> buildingWrapper)
+        public async void SelectBuildingFromMenu(IPvPBuildableWrapper<IPvPBuilding> buildingWrapper)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
-
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-
+            int variant_index = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory, buildingWrapper.Buildable);
+            _playerCruiser.VariantIndexOfSelectedBuilding = variant_index;
             // ServerRpc call
-            _playerCruiser.PvP_SelectedBuildingPrefabServerRpc(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
+            _playerCruiser.PvP_SelectedBuildingPrefabServerRpc(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName, variant_index);
 
             hecklePanelController.Hide();
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
