@@ -83,7 +83,8 @@ namespace BattleCruisers.UI
         public virtual void Initialise()
         {
             _enabled = true;
-            _rectTransform = transform.Parse<RectTransform>();
+            if (transform != null)
+                _rectTransform = transform.Parse<RectTransform>();
 
             if (highlightSizeMultiplier == default)
             {

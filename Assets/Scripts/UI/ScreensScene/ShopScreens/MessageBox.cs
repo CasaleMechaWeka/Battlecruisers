@@ -37,9 +37,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void ShowMessage(string message, Action onClick = null, string closeButtonText = "")
         {
             if (closeButtonText == null || closeButtonText == "")
-                closeButton.text = LandingSceneGod.Instance.screenSceneStrings.GetString("UI/OkButton");
+            {
+                if (closeButton != null)
+                    closeButton.text = LandingSceneGod.Instance.screenSceneStrings.GetString("UI/OkButton");
+            }
             else
-                closeButton.text = closeButtonText;
+            {
+                if (closeButton != null)
+                    closeButton.text = closeButtonText;
+            }
 
             label.text = message;
             _onClick = onClick;
