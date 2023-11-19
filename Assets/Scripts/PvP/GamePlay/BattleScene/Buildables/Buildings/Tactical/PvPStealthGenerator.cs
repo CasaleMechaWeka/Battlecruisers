@@ -146,11 +146,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 BuildProgress = PvP_BuildProgress.Value;
             }
         }
-
         public override void OnNetworkSpawn()
         {
+            base.OnNetworkSpawn();
             if (IsServer)
                 pvp_Health.Value = maxHealth;
+        }
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
         }
 
         [ClientRpc]

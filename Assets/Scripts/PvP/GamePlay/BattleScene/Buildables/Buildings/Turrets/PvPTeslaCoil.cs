@@ -165,8 +165,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void OnNetworkSpawn()
         {
+            base.OnNetworkSpawn();
             if (IsServer)
                 pvp_Health.Value = maxHealth;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
         }
 
 
@@ -253,7 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
-                _buildableProgress.gameObject.SetActive(isEnabled);
+            _buildableProgress.gameObject.SetActive(isEnabled);
         }
 
         [ClientRpc]

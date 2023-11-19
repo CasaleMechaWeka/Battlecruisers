@@ -13,11 +13,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using Utils.Localisation;
-using System.Threading.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data;
 
@@ -80,7 +75,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
 
             if (!IsHost)
+            {
                 _doubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
+            }
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if (!IsHost)
+                pvp_variantIndex.OnValueChanged += ApplyVariantIconOnClient;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+            if (!IsHost)
+                pvp_variantIndex.OnValueChanged -= ApplyVariantIconOnClient;
+        }
+
+        private async void ApplyVariantIconOnClient(int oldVal, int newVal)
+        {
+            Debug.Log("===>AAA ---> " + newVal.ToString());
+            if (newVal != -1)
+            {
+                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(newVal));
+                HealthBar.variantIcon.sprite = variant.variantSprite;
+                HealthBar.variantIcon.enabled = true;
+            }
+            else
+            {
+                HealthBar.variantIcon.enabled = false;
+            }
         }
 
 
@@ -97,8 +123,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
 
+
             variantIndex = activationArgs.VariantIndex;
             HealthBar.variantIcon.enabled = false;
+
             if (!isAppliedVariant)
             {
                 ApplyVariantPvP(this, variantIndex);
@@ -114,15 +142,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public async void ApplyVariantPvP(IPvPBuilding building, int variant_index)
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            if(variant_index != -1)
+            if (variant_index != -1)
             {
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variant_index));
                 if (variant != null)
                 {
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
-/*                    int index = await GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
-                    variantIndex = index;*/
                     Name = _commonStrings.GetString(dataProvider.GameModel.Variants[variant_index].VariantNameStringKeyBase);
                     Description = _commonStrings.GetString(dataProvider.GameModel.Variants[variant_index].VariantDescriptionStringKeyBase);
                     ApplyVariantStats(variant.statVariant);
@@ -140,63 +166,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-
-        private async Task<VariantPrefab> GetSelectedBuildingVariant(IPvPPrefabFactory prefabFactory, IPvPBuilding building)
-        {
-            List<int> selectedVariants = new List<int>();
-            if (Faction == PvPFaction.Blues)
-            {
-                selectedVariants = PvPBattleSceneGodServer.Instance.playerASelectedVariants;
-            }
-            else
-            {
-                selectedVariants = PvPBattleSceneGodServer.Instance.playerBSelectedVariants;
-            }
-            foreach (int index in selectedVariants)
-            {
-                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
-                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
-                if (!variantPrefab.IsUnit())
-                {
-                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == "PvP" + variantPrefab.GetPrefabKey().PrefabName.ToUpper())
-                    {
-                        return variantPrefab;
-                    }
-                }
-            }
-            return null;
-        }
-
-        private async Task<int> GetSelectedBuildingVariantIndex(IPvPPrefabFactory prefabFactory, IPvPBuilding building)
-        {
-            List<int> selectedVariants = new List<int>();
-            if (Faction == PvPFaction.Blues)
-            {
-                selectedVariants = PvPBattleSceneGodServer.Instance.playerASelectedVariants;
-            }
-            else
-            {
-                selectedVariants = PvPBattleSceneGodServer.Instance.playerBSelectedVariants;
-            }
-
-            foreach (int index in selectedVariants)
-            {
-                IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
-                VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
-                if (!variantPrefab.IsUnit())
-                {
-                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == "PVP" + variantPrefab.GetPrefabKey().PrefabName.ToUpper())
-                    {
-                        return index;
-                    }
-                }
-            }
-            return -1;
-        }
-
         public void ApplyVariantStats(StatVariant statVariant)
         {
             maxHealth += statVariant.max_health;
+            pvp_Health.Value = maxHealth;
             numOfDronesRequired += statVariant.drone_num;
             buildTimeInS += statVariant.build_time;
 
@@ -261,8 +234,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         protected override void AddBuildRateBoostProviders(
-    IPvPGlobalBoostProviders globalBoostProviders,
-    IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
+            IPvPGlobalBoostProviders globalBoostProviders,
+            IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);

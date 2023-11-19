@@ -153,11 +153,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
             {
-                Debug.Log("===> Building Variant --- AAA");
                 VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
-                    Debug.Log("===> Building Variant --- BBB");
                     current_variant = variant;
                     //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
                     droneLevel.text = (building.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
@@ -187,11 +185,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)
             {
-                Debug.Log("===> Unit Variant --- AAA");
                 VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
-                    Debug.Log("===> Unit Variant --- BBB");
                     current_variant = variant;
                     //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
                     droneLevel.text = (unit.NumOfDronesRequired + variant.statVariant.drone_num).ToString();

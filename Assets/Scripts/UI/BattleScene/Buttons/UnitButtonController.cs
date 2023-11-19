@@ -12,14 +12,14 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class UnitButtonController : BuildableButtonController
-	{
+    {
         // The unit wrapper is always the same for this button.  In contrast 
         // the factory can change
-		private IBuildableWrapper<IUnit> _unitWrapper;
+        private IBuildableWrapper<IUnit> _unitWrapper;
         private IUnitClickHandler _unitClickHandler;
         private IUnitBuildProgressTrigger _unitBuildProgress;
 
-		private IFactory _currentFactory;
+        private IFactory _currentFactory;
         private IFactory CurrentFactory
         {
             get => _currentFactory;
@@ -42,27 +42,27 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         }
 
         public override bool IsMatch
-		{
-			get
-			{
-				return 
+        {
+            get
+            {
+                return
                     base.IsMatch
                     && CurrentFactory != null
                     && CurrentFactory.BuildableState == BuildableState.Completed;
-			}
-		}
+            }
+        }
 
-		public void Initialise(
+        public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IBuildableWrapper<IUnit> unitWrapper, 
+            IBuildableWrapper<IUnit> unitWrapper,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
             IUnitClickHandler unitClickHandler)
-		{
+        {
             Helper.AssertIsNotNull(unitWrapper, unitClickHandler);
             base.ApplyVariantIfExist(unitWrapper.Buildable);
             base.Initialise(soundPlayer, unitWrapper.Buildable, shouldBeEnabledFilter);
 
-			_unitWrapper = unitWrapper;
+            _unitWrapper = unitWrapper;
             _unitClickHandler = unitClickHandler;
 
             BuildProgressFeedbackWrapper feedbackWrapper = GetComponentInChildren<BuildProgressFeedbackWrapper>();
@@ -72,25 +72,25 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _unitBuildProgress = new UnitBuildProgressTrigger(new UnitBuildProgress(unitWrapper.Buildable.keyName, buildProgressFeedback));
         }
 
-		public override void OnPresenting(object activationParameter)
-		{
-			CurrentFactory = activationParameter.Parse<IFactory>();
+        public override void OnPresenting(object activationParameter)
+        {
+            CurrentFactory = activationParameter.Parse<IFactory>();
             TriggerPotentialMatchChange();
 
-			// Usually have this at the start of the overriding method, but 
-			// do not want parent to call ShouldBeEnabled() until we have
-			// set our factory field.
-			base.OnPresenting(activationParameter);
-		}
+            // Usually have this at the start of the overriding method, but 
+            // do not want parent to call ShouldBeEnabled() until we have
+            // set our factory field.
+            base.OnPresenting(activationParameter);
+        }
 
         private void _currentFactory_CompletedBuildable(object sender, EventArgs e)
-		{
+        {
             TriggerPotentialMatchChange();
-		}
+        }
 
-		public override void OnDismissing()
-		{
-			base.OnDismissing();
+        public override void OnDismissing()
+        {
+            base.OnDismissing();
             CurrentFactory = null;
         }
 
@@ -98,16 +98,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             Assert.IsNotNull(CurrentFactory);
             _unitClickHandler.HandleClick(isButtonEnabled, _unitWrapper, CurrentFactory);
-		}
+        }
 
         public override void HandleHover()
         {
             _unitClickHandler.HandleHover(_unitWrapper);
-		}
+        }
 
         public override void HandleHoverExit()
         {
             _unitClickHandler.HandleHoverExit();
-		}
-	}
+        }
+    }
 }

@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPDamagable _damagable;
         private float _maxHealth;
         private bool _followDamagable;
-        public Image variantIcon;
+        
         private Vector2 _offset;
         public Action OffsetChanged;
         public Vector2 Offset
@@ -28,12 +28,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 OffsetChanged?.Invoke();
             }
         }
+        private NetworkVariable<float> pvp_hp = new NetworkVariable<float>();
 
         protected override void Awake()
         {
             base.Awake();
             variantIcon.enabled = false;
+            pvp_hp.OnValueChanged += OnHpValueChanged;
         }
+
+        private void OnHpValueChanged(float oldVal, float newVal)
+        {
+            if(!IsHost)
+            {
+                OnProgressChanged(newVal);
+            }
+        }
+
         public void Initialise(IPvPDamagable damagable, bool followDamagable = false)
         {
             Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
@@ -56,9 +67,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 float hp = _damagable.Health / _maxHealth;
                 OnProgressChanged(hp);
-                Damagable_HealthChangedClientRpc(hp);
+                pvp_hp.Value = hp;
+            //    Damagable_HealthChangedClientRpc(hp);
             }
-                
         }
 
         public void OverrideHealth(IPvPDamagable damagable)
@@ -73,8 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 UpdatePosition();
             }
-
-            UpdateVariantImage();
+        //    UpdateVariantImage();
         }
 
         private void UpdatePosition()

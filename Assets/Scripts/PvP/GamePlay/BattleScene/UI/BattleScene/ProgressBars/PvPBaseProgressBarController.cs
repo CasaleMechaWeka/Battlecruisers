@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public Image progressSoFar;
         public bool hideWhenFull;
         public float originalProgress;
-
+        public Image variantIcon;
         private bool AreImagesEnabled
         {
             get
@@ -87,6 +87,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             progressBarOutline.enabled = enabled;
             progressSoFar.enabled = enabled;
+            if (!enabled)
+                variantIcon.enabled = enabled;
         }
 
         public void UpdateSize(float width, float height)

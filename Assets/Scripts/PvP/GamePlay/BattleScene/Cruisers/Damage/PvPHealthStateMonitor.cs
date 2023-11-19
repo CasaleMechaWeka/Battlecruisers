@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private PvPHealthState FindHealthState(float healthProportionRemaining)
         {
-            if (healthProportionRemaining == 1)
+            if (healthProportionRemaining >= 1)
             {
                 return PvPHealthState.FullHealth;
             }
