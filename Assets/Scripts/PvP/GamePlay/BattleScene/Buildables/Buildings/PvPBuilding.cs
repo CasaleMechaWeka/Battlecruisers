@@ -99,9 +99,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             variantIndex = activationArgs.VariantIndex;
             HealthBar.variantIcon.enabled = false;
-            if(!isAppliedVariant)
+            if (!isAppliedVariant)
             {
-                ApplyVariantPvP(this);
+                ApplyVariantPvP(this, variantIndex);
                 isAppliedVariant = true;
             }
         }
@@ -111,19 +111,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.Activate_PvPClient();
         }
 
-            public async void ApplyVariantPvP(IPvPBuilding building)
+        public async void ApplyVariantPvP(IPvPBuilding building, int variant_index)
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            VariantPrefab variant = await GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
-            if(variant != null)
+            if(variant_index != -1)
             {
-                HealthBar.variantIcon.sprite = variant.variantSprite;
-                HealthBar.variantIcon.enabled = true;
-                int index = await GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
-                variantIndex = index;
-                Name = _commonStrings.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
-                Description = _commonStrings.GetString(dataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
-                ApplyVariantStats(variant.statVariant);
+                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variant_index));
+                if (variant != null)
+                {
+                    HealthBar.variantIcon.sprite = variant.variantSprite;
+                    HealthBar.variantIcon.enabled = true;
+/*                    int index = await GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
+                    variantIndex = index;*/
+                    Name = _commonStrings.GetString(dataProvider.GameModel.Variants[variant_index].VariantNameStringKeyBase);
+                    Description = _commonStrings.GetString(dataProvider.GameModel.Variants[variant_index].VariantDescriptionStringKeyBase);
+                    ApplyVariantStats(variant.statVariant);
+                }
+                else
+                {
+                    HealthBar.variantIcon.enabled = false;
+                    variantIndex = -1;
+                }
             }
             else
             {
@@ -150,7 +158,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
-                    if(building.PrefabName.ToUpper().Replace("(CLONE)", "") == "PvP" + variantPrefab.GetPrefabKey().PrefabName.ToUpper())
+                    if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == "PvP" + variantPrefab.GetPrefabKey().PrefabName.ToUpper())
                     {
                         return variantPrefab;
                     }
@@ -171,7 +179,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 selectedVariants = PvPBattleSceneGodServer.Instance.playerBSelectedVariants;
             }
 
-            foreach(int index in selectedVariants)
+            foreach (int index in selectedVariants)
             {
                 IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
                 VariantPrefab variantPrefab = await prefabFactory.GetVariant(variantKey);

@@ -16,7 +16,6 @@ using UnityEngine.Assertions;
 using System.Collections;
 using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -113,26 +112,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             HealthBar.variantIcon.enabled = false;
             if(!isAppliedVariant)
             {
-
+                ApplyVariantPvP(this, variantIndex);
                 isAppliedVariant = true;
             }            
         }
 
 
-        private async void ApplyVariantPvP(IPvPUnit unit)
+        private async void ApplyVariantPvP(IPvPUnit unit, int varint_index)
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            VariantPrefab variant = await GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
-            if (variant != null)
+            if(varint_index != -1)
             {
-                HealthBar.variantIcon.sprite = variant.variantSprite;
-                HealthBar.variantIcon.enabled = true;
-                int index = await GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
-                variantIndex = index;
-                Name = _commonStrings.GetString(dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
-                Description = _commonStrings.GetString(dataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
-                ApplyVariantStats(variant.statVariant);
+                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(varint_index));
+                if (variant != null)
+                {
+                    HealthBar.variantIcon.sprite = variant.variantSprite;
+                    HealthBar.variantIcon.enabled = true;
+                    Name = _commonStrings.GetString(dataProvider.GameModel.Variants[varint_index].VariantNameStringKeyBase);
+                    Description = _commonStrings.GetString(dataProvider.GameModel.Variants[varint_index].VariantDescriptionStringKeyBase);
+                    ApplyVariantStats(variant.statVariant);
+                }
+                else
+                {
+                    HealthBar.variantIcon.enabled = false;
+                    variantIndex = -1;
+                }
             }
+            else
+            {
+                HealthBar.variantIcon.enabled = false;
+                variantIndex = -1;
+            }
+
         }
         private async Task<VariantPrefab> GetSelectedUnitVariant(IPvPPrefabFactory prefabFactory, IPvPUnit unit)
         {
