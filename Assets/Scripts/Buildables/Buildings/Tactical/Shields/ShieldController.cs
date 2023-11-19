@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
@@ -12,27 +14,27 @@ using System.Collections.Generic;
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class ShieldController : Target
-	{
+    {
         private ISoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
-		private IDebouncer _takeDamageSoundDebouncer;
+        private IDebouncer _takeDamageSoundDebouncer;
 
         public GameObject visuals;
         public CircleCollider2D circleCollider;
         public HealthBarController healthBar;
-		private List<Collider2D> protectedColliders;
+        private List<Collider2D> protectedColliders;
 
         private const int NUM_OF_POINTS_IN_RING = 100;
         private const float HEALTH_BAR_Y_POSITION_MULTIPLIER = 1.2f;
         private const float SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER = 1.6f;
         private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
-        public IShieldStats Stats { get; private set; } 
-		public override TargetType TargetType => TargetType.Buildings;
+        public IShieldStats Stats { get; private set; }
+        public override TargetType TargetType => TargetType.Buildings;
 
         private Vector2 _size;
         public override Vector2 Size => _size;
-		private int shieldUpdateCnt = 0;
+        private int shieldUpdateCnt = 0;
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -46,97 +48,97 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             float diameter = 2 * Stats.ShieldRadiusInM;
             _size = new Vector2(diameter, diameter);
 
-			_takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
+            _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-		public void Initialise(Faction faction, ISoundPlayer soundPlayer)
-		{
-			Faction = faction;
+        public void Initialise(Faction faction, ISoundPlayer soundPlayer)
+        {
+            Faction = faction;
 
             _soundPlayer = soundPlayer;
-			_timeSinceDamageInS = 1000;
-			circleCollider.radius = Stats.ShieldRadiusInM;
+            _timeSinceDamageInS = 1000;
+            circleCollider.radius = Stats.ShieldRadiusInM;
 
-			SetupHealthBar();
-		}
+            SetupHealthBar();
+        }
 
-		private void SetupHealthBar()
-		{
-			healthBar.Initialise(this);
-			
-			float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * Stats.ShieldRadiusInM;
+        private void SetupHealthBar()
+        {
+            healthBar.Initialise(this);
+
+            float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * Stats.ShieldRadiusInM;
             healthBar.Offset = new Vector2(0, yPos);
-			
-			float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * Stats.ShieldRadiusInM;
-			float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;
-			healthBar.UpdateSize(width, height);
-		}
+
+            float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * Stats.ShieldRadiusInM;
+            float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;
+            healthBar.UpdateSize(width, height);
+        }
 
         // PERF:  Don't need to do this every frame
-		void Update()
-		{
-			
-			// Eat into recharge delay
-			if (Health < maxHealth)
-			{
-				_timeSinceDamageInS += _time.DeltaTime;
+        void Update()
+        {
 
-				// Heal
-				if (_timeSinceDamageInS >= Stats.ShieldRechargeDelayInS)
-				{
-					if (IsDestroyed)
-					{
-						EnableShield();
-					}
+            // Eat into recharge delay
+            if (Health < maxHealth)
+            {
+                _timeSinceDamageInS += _time.DeltaTime;
 
-					RepairCommandExecute(Stats.ShieldRechargeRatePerS * _time.DeltaTime);
+                // Heal
+                if (_timeSinceDamageInS >= Stats.ShieldRechargeDelayInS)
+                {
+                    if (IsDestroyed)
+                    {
+                        EnableShield();
+                    }
+
+                    RepairCommandExecute(Stats.ShieldRechargeRatePerS * _time.DeltaTime);
 
                     if (Health == maxHealth)
                     {
                         _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
                     }
                 }
-			}
-			shieldUpdateCnt++;
-			shieldUpdateCnt %= 100;
-			if (shieldUpdateCnt == 0)
-			{
-				UpdateBuildingImmunity(circleCollider.enabled);
-			}
-		}
+            }
+            shieldUpdateCnt++;
+            shieldUpdateCnt %= 100;
+            if (shieldUpdateCnt == 0)
+            {
+                UpdateBuildingImmunity(circleCollider.enabled);
+            }
+        }
 
-		protected override void OnHealthGone()
-		{
-			DisableShield();
-			InvokeDestroyedEvent();
-			_timeSinceDamageInS = 0;
-		}
+        protected override void OnHealthGone()
+        {
+            DisableShield();
+            InvokeDestroyedEvent();
+            _timeSinceDamageInS = 0;
+        }
 
-		protected override void OnTakeDamage()
-        {            
+        protected override void OnTakeDamage()
+        {
             _takeDamageSoundDebouncer.Debounce(PlayDamagedSound);
         }
 
-		private void UpdateBuildingImmunity(bool boo)
-		{
-			Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5.0f);
+        private void UpdateBuildingImmunity(bool boo)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5.0f);
 
-			foreach(Collider2D c2d in colliders)
-			{
-				if (c2d.gameObject.layer == 15)
-				{
+            foreach (Collider2D c2d in colliders)
+            {
+                if (c2d.gameObject.layer == 15)
+                {
                     // Check if the center of the collider is within the circle
                     Vector2 circleCenter = transform.position;
                     Vector2 colliderCenter = c2d.bounds.center;
                     //float colliderRadius = c2d.bounds.extents.magnitude;
                     if ((colliderCenter - circleCenter).sqrMagnitude <= 25.0f) // 5.0f * 5.0f
-					{
+                    {
                         ITarget target = c2d.gameObject.GetComponent<ITargetProxy>()?.Target;
                         target.SetBuildingImmunity(boo);
                     }
-				}
-			}
-		}
+                }
+            }
+        }
 
         private void PlayDamagedSound()
         {
@@ -144,23 +146,37 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         }
 
         private void EnableShield()
-		{
+        {
             visuals.SetActive(true);
-			circleCollider.enabled = true;
-			UpdateBuildingImmunity(true);
+            circleCollider.enabled = true;
+            UpdateBuildingImmunity(true);
         }
 
         private void DisableShield()
-		{
+        {
             visuals.SetActive(false);
             circleCollider.enabled = false;
             _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
-			UpdateBuildingImmunity(false);
-		}
+            UpdateBuildingImmunity(false);
+        }
 
-		public override bool IsShield()
-		{
-			return true;
-		}
-	}
+        public override bool IsShield()
+        {
+            return true;
+        }
+
+        public virtual async void ApplyVariantStats(IBuilding building)
+        {
+            int variantIndex = building.variantIndex;
+            Debug.Log(variantIndex);
+            if (variantIndex != -1)
+            {
+                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                StatVariant statVariant = variant.statVariant;
+                maxHealth += statVariant.shield_health;
+                Stats.shieldRechargeDelayModifier += statVariant.shield_recharge_delay;
+                Stats.shieldRechargeRateModifier += statVariant.shield_recharge_rate;
+            }
+        }
+    }
 }

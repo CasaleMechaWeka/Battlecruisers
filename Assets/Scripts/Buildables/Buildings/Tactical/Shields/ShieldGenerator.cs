@@ -38,21 +38,22 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)
-		{
+        {
             base.Activate(activationArgs);
 
-			_shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer);
-			_shieldController.gameObject.SetActive(false);
+            _shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer);
+            _shieldController.gameObject.SetActive(false);
 
             _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
             _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
-		}
+        }
 
-		protected override void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
 
-			_shieldController.gameObject.SetActive(true);
-		}
+            _shieldController.gameObject.SetActive(true);
+            _shieldController.ApplyVariantStats(this);
+        }
     }
 }
