@@ -24,13 +24,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     && progressSoFar.enabled;
             }
         }
-
         protected virtual void Awake()
         {
             _outlineWidth = ((RectTransform)progressBarOutline.transform).rect.width;
             OnProgressChanged(originalProgress);
         }
-
         protected void OnProgressChanged(float newProgress)
         {
             Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
@@ -87,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             progressBarOutline.enabled = enabled;
             progressSoFar.enabled = enabled;
-            if (!enabled && variantIcon != null) // shield generator
+            if (variantIcon != null) // shield generator
                 variantIcon.enabled = enabled;
         }
 

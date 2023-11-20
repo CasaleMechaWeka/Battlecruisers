@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPDamagable _damagable;
         private float _maxHealth;
         private bool _followDamagable;
-        
+
         private Vector2 _offset;
         public Action OffsetChanged;
         public Vector2 Offset
@@ -33,13 +33,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         protected override void Awake()
         {
             base.Awake();
-            variantIcon.enabled = false;
+            if (variantIcon != null) // shield generator
+                variantIcon.enabled = false;
             pvp_hp.OnValueChanged += OnHpValueChanged;
         }
 
         private void OnHpValueChanged(float oldVal, float newVal)
         {
-            if(!IsHost)
+            if (!IsHost)
             {
                 OnProgressChanged(newVal);
             }
@@ -68,7 +69,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 float hp = _damagable.Health / _maxHealth;
                 OnProgressChanged(hp);
                 pvp_hp.Value = hp;
-            //    Damagable_HealthChangedClientRpc(hp);
             }
         }
 
@@ -84,7 +84,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 UpdatePosition();
             }
-        //    UpdateVariantImage();
         }
 
         private void UpdatePosition()
@@ -95,20 +94,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     parentPosition.x + Offset.x,
                     parentPosition.y + Offset.y,
                     transform.position.z);
-        }
-
-        private void UpdateVariantImage()
-        {
-            if (_damagable.Health != _maxHealth)
-                variantIcon.gameObject.SetActive(true);
-            else
-                variantIcon.gameObject.SetActive(false);
-        }
-
-        [ClientRpc]
-        private void Damagable_HealthChangedClientRpc(float hp)
-        {
-            OnProgressChanged(hp);
         }
     }
 }

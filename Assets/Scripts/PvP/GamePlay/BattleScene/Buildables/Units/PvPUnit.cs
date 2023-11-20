@@ -83,9 +83,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (newVal != -1)
             {
-                Debug.Log("===> AAA --- " + Name);
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(newVal));
                 HealthBar.variantIcon.sprite = variant.variantSprite;
+                HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
                 HealthBar.variantIcon.enabled = true;
             }
         }
@@ -130,6 +130,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             rigidBody.gravityScale = 0;
 
             variantIndex = activationArgs.VariantIndex;
+            HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 0f);
             HealthBar.variantIcon.enabled = false;
 
             if (!isAppliedVariant)
@@ -141,6 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 if (variantIndex != -1)
                 {
+                    HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
                     HealthBar.variantIcon.enabled = true;
                 }
             }
@@ -156,20 +158,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 {
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
+                    HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
                     Name = _commonStrings.GetString(dataProvider.GameModel.Variants[varint_index].VariantNameStringKeyBase);
                     Description = _commonStrings.GetString(dataProvider.GameModel.Variants[varint_index].VariantDescriptionStringKeyBase);
             //        ApplyVariantStats(variant.statVariant);
                 }
                 else
                 {
+                    HealthBar.variantIcon.sprite = null;
+                    HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 0f);
                     HealthBar.variantIcon.enabled = false;
-                    variantIndex = -1;
                 }
             }
             else
             {
+                HealthBar.variantIcon.sprite = null;
+                HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 0f);
                 HealthBar.variantIcon.enabled = false;
-                variantIndex = -1;
             }
 
         }
