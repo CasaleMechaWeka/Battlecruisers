@@ -99,7 +99,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 captains.Add(captainExo);
             }
 
-            variantList = GeneratePseudoRandomList(12, _dataProvider.GameModel.Variants.Count - 1, 12, 0);
+            variantList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Variants.Count - 1, 12, 0);
 #if UNITY_EDITOR
             variantList = GenerateFullList(_dataProvider.GameModel.Variants.Count);
 #endif
