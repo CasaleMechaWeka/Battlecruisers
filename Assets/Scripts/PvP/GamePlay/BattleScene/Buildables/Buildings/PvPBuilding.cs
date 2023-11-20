@@ -96,7 +96,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private async void ApplyVariantIconOnClient(int oldVal, int newVal)
         {
-            Debug.Log("===>AAA ---> " + newVal.ToString());
             if (newVal != -1)
             {
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(newVal));
@@ -132,6 +131,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 ApplyVariantPvP(this, variantIndex);
                 isAppliedVariant = true;
             }
+            else
+            {
+                if(variantIndex != -1)
+                {
+                    HealthBar.variantIcon.enabled = true;
+                }
+            }
         }
 
         public override void Activate_PvPClient()
@@ -151,18 +157,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.enabled = true;
                     Name = _commonStrings.GetString(dataProvider.GameModel.Variants[variant_index].VariantNameStringKeyBase);
                     Description = _commonStrings.GetString(dataProvider.GameModel.Variants[variant_index].VariantDescriptionStringKeyBase);
-                    ApplyVariantStats(variant.statVariant);
+                //    ApplyVariantStats(variant.statVariant);
                 }
                 else
                 {
                     HealthBar.variantIcon.enabled = false;
                     variantIndex = -1;
                 }
-            }
-            else
-            {
-                HealthBar.variantIcon.enabled = false;
-                variantIndex = -1;
             }
         }
 

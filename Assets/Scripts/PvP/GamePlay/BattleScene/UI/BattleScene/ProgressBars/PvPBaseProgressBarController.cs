@@ -87,7 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             progressBarOutline.enabled = enabled;
             progressSoFar.enabled = enabled;
-            if (!enabled)
+            if (!enabled && variantIcon != null) // shield generator
                 variantIcon.enabled = enabled;
         }
 
