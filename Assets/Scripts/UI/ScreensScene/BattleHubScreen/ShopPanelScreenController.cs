@@ -99,7 +99,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 captains.Add(captainExo);
             }
 
-            variantList = GeneratePseudoRandomList(12, _dataProvider.GameModel.Variants.Count - 1, 6, 0);
+            variantList = GeneratePseudoRandomList(12, _dataProvider.GameModel.Variants.Count - 1, 12, 0);
 #if UNITY_EDITOR
             variantList = GenerateFullList(_dataProvider.GameModel.Variants.Count);
 #endif
@@ -412,8 +412,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-/*            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
-            exoBaseList.Insert(0, 0);*/
+            /*            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
+                        exoBaseList.Insert(0, 0);*/
 
             byte ii = 0;
             foreach (int index in exoBaseList)
