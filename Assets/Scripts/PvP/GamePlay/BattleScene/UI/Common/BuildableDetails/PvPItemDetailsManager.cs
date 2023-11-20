@@ -56,8 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPBuilding building)
         {
-          //  IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
+            //  IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            int index = building.variantIndex;
             if (index != -1)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
@@ -94,8 +94,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPUnit unit)
         {
-         //   IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
+            //   IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            int index = unit.variantIndex;
             if (index != -1)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));

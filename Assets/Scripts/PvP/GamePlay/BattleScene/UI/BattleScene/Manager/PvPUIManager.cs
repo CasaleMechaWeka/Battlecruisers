@@ -134,7 +134,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // ServerRpc call
             _playerCruiser.PvP_SelectedBuildingPrefabServerRpc(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName, variant_index);
 
-            hecklePanelController.Hide();
+            if (hecklePanelController != null)
+                hecklePanelController.Hide();
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
 
             bool wasAnySlotHighlighted = _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
@@ -166,7 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public virtual void SelectBuilding(IPvPBuilding building)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
-            hecklePanelController.Hide();
+            if (hecklePanelController != null)
+                hecklePanelController.Hide();
             _detailsManager.ShowDetails(building);
             _detailsManager.SelectBuilding(building);
             ShownItem = building;
@@ -199,7 +201,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public virtual void ShowUnitDetails(IPvPUnit unit)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
-            hecklePanelController.Hide();
+            if (hecklePanelController != null)
+                hecklePanelController.Hide();
             _detailsManager.ShowDetails(unit);
             _detailsManager.SelectUnit(unit);
             ShownItem = unit;
@@ -211,7 +214,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public virtual void ShowCruiserDetails(IPvPCruiser cruiser)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
-            hecklePanelController.Hide();
+            if (hecklePanelController != null)
+                hecklePanelController.Hide();
             _detailsManager.ShowDetails(cruiser);
             ShownItem = cruiser;
             lastClickedCruiser = cruiser;
@@ -227,7 +231,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public void PeakUnitDetails(IPvPUnit unit)
         {
-            hecklePanelController.Hide();
+            if (hecklePanelController != null)
+                hecklePanelController.Hide();
             _detailsManager.ShowDetails(unit);
             ShownItem = unit;
         }
@@ -238,20 +243,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 if (lastClickedType == 0)
                 {
-                    hecklePanelController.Hide();
+                    if (hecklePanelController != null)
+                        hecklePanelController.Hide();
                     _detailsManager.ShowDetails(lastClickedBuilding);
                 }
                 else if (lastClickedType == 1)
                 {
-                    hecklePanelController.Hide();
+                    if (hecklePanelController != null)
+                        hecklePanelController.Hide();
                     _detailsManager.ShowDetails(lastClickedUnit);
                 }
                 else
                 {
-                    hecklePanelController.Hide();
+                    if (hecklePanelController != null)
+                        hecklePanelController.Hide();
                     _detailsManager.ShowDetails(lastClickedCruiser);
                 }
-
             }
             else
             {
@@ -265,17 +272,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 if (lastClickedType == 0)
                 {
-                    hecklePanelController.Hide();
+                    if (hecklePanelController != null)
+                        hecklePanelController.Hide();
                     _detailsManager.ShowDetails(lastClickedBuilding);
                 }
                 else if (lastClickedType == 1)
                 {
-                    hecklePanelController.Hide();
+                    if (hecklePanelController != null)
+                        hecklePanelController.Hide();
                     _detailsManager.ShowDetails(lastClickedUnit);
                 }
                 else
                 {
-                    hecklePanelController.Hide();
+                    if (hecklePanelController != null)
+                        hecklePanelController.Hide();
                     _detailsManager.ShowDetails(lastClickedCruiser);
                 }
             }

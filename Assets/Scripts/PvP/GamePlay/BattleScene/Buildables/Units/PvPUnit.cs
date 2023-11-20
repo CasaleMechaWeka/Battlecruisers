@@ -170,13 +170,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.enabled = false;
                 }
             }
-            else
-            {
-                HealthBar.variantIcon.sprite = null;
-                HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 0f);
-                HealthBar.variantIcon.enabled = false;
-            }
-
         }
 
         public void ApplyVariantStats(StatVariant statVariant)
