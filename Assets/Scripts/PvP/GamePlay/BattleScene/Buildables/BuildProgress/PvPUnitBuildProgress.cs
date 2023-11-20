@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void ShowBuildProgressIfNecessary(IPvPUnit unit, IPvPFactory factory)
         {
             if (unit != null
-                && unit.Name == _unitName)
+                && unit.keyName == _unitName)
             {
                 _buildProgressFeedback.ShowBuildProgress(unit, factory);                
             }
