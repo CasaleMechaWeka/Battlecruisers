@@ -58,7 +58,7 @@ namespace BattleCruisers.Data.Serialization
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || ((GameModel)output).Variants.Count < 131)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -144,7 +144,7 @@ namespace BattleCruisers.Data.Serialization
             }
 
             // Variants
-            if(_playerLoadout.SelectedVariants == null)
+            if (_playerLoadout.SelectedVariants == null)
             {
                 _playerLoadout.SelectedVariants = new List<int>();
             }
@@ -263,17 +263,17 @@ namespace BattleCruisers.Data.Serialization
                     return null;
                 }
             }
-            catch(UnityException e)
+            catch (UnityException e)
             {
                 Debug.LogError("CloudLoad Error: " + e);
                 return null;
             }
-            catch(TimeoutException e)
+            catch (TimeoutException e)
             {
                 Debug.LogWarning("CloudLoad Timeout Occurred: " + e);
                 return null;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.LogError("CloudLoad Error: " + e);
                 return null;
@@ -375,7 +375,7 @@ namespace BattleCruisers.Data.Serialization
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
                         dataProivder.GameModel.Heckles[index].isOwned = true;
                     }
-                    if(inventory.GetItemDefinition().Name.Contains("Bodykit"))
+                    if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
                         dataProivder.GameModel.Bodykits[index].isOwned = true;
