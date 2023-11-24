@@ -34,6 +34,7 @@ namespace BattleCruisers.UI.ScreensScene
         private ILocTable screensSceneTable;
         public GameObject bodykitMessagePanel;
         public GameObject itemDetailsPanel;
+        public Text t_bodykitsMessage;
 
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {

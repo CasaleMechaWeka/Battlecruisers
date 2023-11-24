@@ -279,6 +279,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.itemDetailsPanel.SetActive(false);
             captainsContainer.itemDetailsPanel.SetActive(false);
             // this keeps the details panels from popping in for a frame on changing shop tabs
+
+            variantsContainer.t_variantsMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("VariantsShopHelp");
         }
         public async void InitialiseBodykits()
         {
@@ -334,6 +336,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.itemDetailsPanel.SetActive(false);
             captainsContainer.itemDetailsPanel.SetActive(false);
             // this keeps the details panels from popping in for a frame on changing shop tabs
+
+            bodykitsContainer.t_bodykitsMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BodykitsShopHelp");
         }
         public async void InitialiseHeckles()
         {
@@ -472,6 +476,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.itemDetailsPanel.SetActive(false);
             captainsContainer.itemDetailsPanel.SetActive(false);
             // this keeps the details panels from popping in for a frame on changing shop tabs
+            captainsContainer.t_captainMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("CaptainsShopHelp");
         }
 
         List<int> GeneratePseudoRandomList(int elements, int maxValue, int dailyShift, int startValue = 0)  //elements = number of elements in output list

@@ -45,6 +45,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject content;
         public GameObject variantMessagePanel;
         public GameObject itemDetailsPanel;
+        public Text t_variantsMessage;
 
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
