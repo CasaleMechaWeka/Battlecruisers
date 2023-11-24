@@ -26,6 +26,7 @@ namespace BattleCruisers.UI.ScreensScene
     {
         private ILocTable hecklesStrings;
         public EventHandler<HeckleDataEventArgs> heckleDataChanged;
+        public EventHandler<HeckleDataEventArgs> onHeckleItemClick;
 
         public Text t_heckleMessage;
         public GameObject obj_heckleMessage;

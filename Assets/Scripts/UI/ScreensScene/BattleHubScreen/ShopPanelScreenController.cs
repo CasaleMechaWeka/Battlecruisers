@@ -73,6 +73,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             bodykitsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             variantsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false); // this keeps the details panels from popping in for a frame on changing shop tabs
             commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
 
@@ -270,7 +273,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
                 ii++;
             }
-            //    variantsItemContainer.gameObject.SetActive(true);
+            // Show the message panel and hide the item details initially
+            variantsContainer.variantMessagePanel.SetActive(true);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false);
+            // this keeps the details panels from popping in for a frame on changing shop tabs
         }
         public async void InitialiseBodykits()
         {
@@ -320,7 +328,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
                 ii++;
             }
-            //    bodykitItemContainer.gameObject.SetActive(true);
+            // Show the message panel and hide the item details initially
+            bodykitsContainer.bodykitMessagePanel.SetActive(true);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false);
+            // this keeps the details panels from popping in for a frame on changing shop tabs
         }
         public async void InitialiseHeckles()
         {
@@ -366,7 +379,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     heckleItem.GetComponent<HeckleItemController>().OnClicked();
                     hecklesContainer.hecklePrice.text = _dataProvider.GameModel.Heckles[index].heckleCost.ToString();
                     hecklesContainer.currentHeckleData = _dataProvider.GameModel.Heckles[index];
-                    hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(_dataProvider.GameModel.Heckles[index].StringKeyBase);
+                    //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(_dataProvider.GameModel.Heckles[index].StringKeyBase);
 
                     if (_dataProvider.GameModel.Heckles[index].IsOwned)
                     {
@@ -383,6 +396,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 ii++;
             }
 
+            // special heckle-specific infotext handling here
+            //hecklesContainer.t_heckleMessage.text =
         }
 
         public override void OnDismissing()
@@ -451,6 +466,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
                 ii++;
             }
+
+            captainsContainer.captainMessagePanel.SetActive(true);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false);
+            // this keeps the details panels from popping in for a frame on changing shop tabs
         }
 
         List<int> GeneratePseudoRandomList(int elements, int maxValue, int dailyShift, int startValue = 0)  //elements = number of elements in output list

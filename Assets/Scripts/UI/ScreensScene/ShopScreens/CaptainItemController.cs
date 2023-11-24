@@ -52,6 +52,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void OnClicked()
         {
+            _captainsContainer.onCaptainItemClick.Invoke(this, new CaptainDataEventArgs { });
             if (!_clickedFeedback.activeSelf)
             {
                 _clickedFeedback.SetActive(true);

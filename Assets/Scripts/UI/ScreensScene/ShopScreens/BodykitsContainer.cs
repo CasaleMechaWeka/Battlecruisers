@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.ScreensScene
         public Text bodykitDescription;
         public Text bodykitPrice;
         public EventHandler<BodykitDataEventArgs> bodykitDataChanged;
+        public EventHandler<BodykitDataEventArgs> onBodykitItemClick;
         private ILocTable commonStrings;
         public BodykitItemController currentItem;
         public IBodykitData currentBodykitData;
@@ -31,11 +32,14 @@ namespace BattleCruisers.UI.ScreensScene
         private IPrefabFactory _prefabFactory;
         public GameObject content;
         private ILocTable screensSceneTable;
+        public GameObject bodykitMessagePanel;
+        public GameObject itemDetailsPanel;
 
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
             bodykitDataChanged += BodykitDataChanged;
+            onBodykitItemClick += OnBodykitItemClick;
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
@@ -127,6 +131,17 @@ namespace BattleCruisers.UI.ScreensScene
                 return;
             }
         }
+
+        private void OnBodykitItemClick(object sender, BodykitDataEventArgs e)
+        {
+            // Hide the message panel and show the item details
+            if (bodykitMessagePanel.activeSelf)
+            {
+                bodykitMessagePanel.SetActive(false);
+                itemDetailsPanel.SetActive(true);
+            }
+        }
+
         private void BodykitDataChanged(object sender, BodykitDataEventArgs e)
         {
             currentItem._clickedFeedback.SetActive(false);
@@ -152,6 +167,7 @@ namespace BattleCruisers.UI.ScreensScene
         private void OnDestroy()
         {
             bodykitDataChanged -= BodykitDataChanged;
+            onBodykitItemClick -= OnBodykitItemClick;
         }
 
         public void GotoBlackMarket()

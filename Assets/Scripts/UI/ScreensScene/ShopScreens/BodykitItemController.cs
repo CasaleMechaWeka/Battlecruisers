@@ -47,6 +47,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void OnClicked()
         {
+            _bodykitContainer.onBodykitItemClick.Invoke(this, new BodykitDataEventArgs { });
             if (!_clickedFeedback.activeSelf)
             {
                 _clickedFeedback.SetActive(true);

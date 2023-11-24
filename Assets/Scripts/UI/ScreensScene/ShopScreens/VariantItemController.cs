@@ -58,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void OnClicked()
         {
+            _variantsContainer.onVariantItemClick.Invoke(this, new VariantDataEventArgs { });
             if (!_clickedFeedback.activeSelf)
             {
                 _clickedFeedback.SetActive(true);

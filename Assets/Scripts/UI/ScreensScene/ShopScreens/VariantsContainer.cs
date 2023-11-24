@@ -31,6 +31,7 @@ namespace BattleCruisers.UI.ScreensScene
         public StatsController<IUnit> unitStatsController;
 
         public EventHandler<VariantDataEventArgs> variantDataChanged;
+        public EventHandler<VariantDataEventArgs> onVariantItemClick;
         public ILocTable commonStrings;
         private ILocTable screensSceneTable;
         public VariantItemController currentItem;
@@ -42,13 +43,15 @@ namespace BattleCruisers.UI.ScreensScene
         private IPrefabFactory _prefabFactory;
         private VariantPrefab currentVariant;
         public GameObject content;
-
+        public GameObject variantMessagePanel;
+        public GameObject itemDetailsPanel;
 
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
             variantDataChanged += VariantDataChanged;
+            onVariantItemClick += OnVariantItemClick;
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
@@ -144,6 +147,16 @@ namespace BattleCruisers.UI.ScreensScene
             }
         }
 
+        private void OnVariantItemClick(object sender, VariantDataEventArgs e)
+        {
+            // Hide the message panel and show the item details
+            if (variantMessagePanel.activeSelf)
+            {
+                variantMessagePanel.SetActive(false);
+                itemDetailsPanel.SetActive(true);
+            }
+        }
+
         private void VariantDataChanged(object sender, VariantDataEventArgs e)
         {
             currentItem._clickedFeedback.SetActive(false);
@@ -188,6 +201,7 @@ namespace BattleCruisers.UI.ScreensScene
         private void OnDestroy()
         {
             variantDataChanged -= VariantDataChanged;
+            onVariantItemClick -= OnVariantItemClick;
         }
         public void GotoBlackMarket()
         {
