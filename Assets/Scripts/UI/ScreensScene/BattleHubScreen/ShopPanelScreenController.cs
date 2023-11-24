@@ -397,7 +397,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
 
             // special heckle-specific infotext handling here
-            //hecklesContainer.t_heckleMessage.text =
+            hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("HecklesShopHelp");
         }
 
         public override void OnDismissing()
