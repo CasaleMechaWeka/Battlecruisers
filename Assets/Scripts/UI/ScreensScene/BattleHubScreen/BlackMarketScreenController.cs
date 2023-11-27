@@ -47,18 +47,22 @@ namespace BattleCruisers.UI.ScreensScene
                 case IAPManager.small_coin_pack:
                     _dataProvider.GameModel.Coins += 275;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack100Purchased"));
+                    ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.medium_coin_pack:
                     _dataProvider.GameModel.Coins += 900;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack500Purchased"));
+                    ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.large_coin_pack:
                     _dataProvider.GameModel.Coins += 3750;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack1000Purchased"));
+                    ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.extralarge_coin_pack:
                     _dataProvider.GameModel.Coins += 20000;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(screenSceneStrings.GetString("CoinsPack5000Purchased"));
+                    ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
             }
             _dataProvider.SaveGame();
