@@ -170,7 +170,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void OpenProfile()
         {
             // Profile button is available in the shop, so we need to be able to turn that off when entering profile (otherwise shop gets in the way)
-            if (ScreensSceneGod.Instance.shopPanelScreen.gameObject.activeInHierarchy)
+            if (ScreensSceneGod.Instance.shopPanelScreen.gameObject.activeInHierarchy || ScreensSceneGod.Instance.blackMarketScreen.gameObject.activeInHierarchy)
             {
                 ScreensSceneGod.Instance.characterOfBlackmarket.SetActive(false);
                 ScreensSceneGod.Instance.characterOfShop.SetActive(false);
