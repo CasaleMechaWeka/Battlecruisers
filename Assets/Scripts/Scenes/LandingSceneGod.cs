@@ -27,6 +27,7 @@ using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
 using System.IO;
 using UnityEngine.UI;
+using TMPro;
 
 #if PLATFORM_ANDROID
 using GooglePlayGames;
@@ -315,6 +316,7 @@ namespace BattleCruisers.Scenes
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
+            guestBtn.GetComponentInChildren<TMP_Text>().text = screenSceneStrings.GetString("UI/HomeScreen/PlayButton");
 
             if (CurrentInternetConnectivity.IsConnected)
             {
