@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Net;
 using Unity.Services.Qos;
 using System.Threading;
+using BattleCruisers.Network.Multiplay.Gameplay.UI;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -55,6 +56,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         const int k_DefaultPort = 7777;
         const string k_DefaultIP = "127.0.0.1";
 
+        //CPU REQUIRMENTS
+        const int k_minCPuCores = 2;
+        const int k_minCpuFreq = 1200;
+        private bool k_meetsCPUReq = true;
 
         public TrashTalkDataList trashDataList;
         [SerializeField]
@@ -131,6 +136,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             if (!playerIsAuthorized)
             {
+                HandleNotAuthorized();
                 return;
             }
 
@@ -193,8 +199,13 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
                                 CheckLatency(ClientLatency);
                                 UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
+                                if (ClientLatency > ConnectionManager.LatencyLimit / 2)
+                                {
+                                    HandleClientLatency(true);
+                                    continue;
+                                }
                                 int iHostLatency = 0;
-                                int.TryParse(HostLatency, out iHostLatency);
+                                int.TryParse(HostLatency, out iHostLatency); 
                                 if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
                                 {
                                     continue;
@@ -240,6 +251,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
                                     CheckLatency(ClientLatency);
                                     UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
+                                    
+                                    HandleClientLatency(ClientLatency > ConnectionManager.LatencyLimit / 2);
+                                    if (ClientLatency > ConnectionManager.LatencyLimit / 2)
+                                    {
+                                        continue;
+                                    }
                                     int iHostLatency = 0;
                                     int.TryParse(HostLatency, out iHostLatency);
                                     if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
@@ -267,13 +284,20 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             }
                         }
                     }
+                    //no valid lobbies found, start hosting
                     if (!joined)
                     {
+                        if (!k_meetsCPUReq)
+                            continue;
+
                         var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
                         int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
                         CheckLatency(averageLatency);
+                        HandleClientLatency(averageLatency > ConnectionManager.LatencyLimit / 2);
                         if (averageLatency > ConnectionManager.LatencyLimit / 2)
+                        {
                             continue;
+                        }
                         MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                         var lobbyData = new Dictionary<string, DataObject>()
                         {
@@ -307,11 +331,18 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         }
                     }
                 }
+                //no lobbies found at all, start hosting
                 else
                 {
+                    if (!k_meetsCPUReq)
+                    {
+                        UnityEngine.Debug.Log("CPU requirments are not met, can't host");
+                        continue;
+                    }
                     var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
                     int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
                     CheckLatency(averageLatency);
+                    HandleClientLatency(averageLatency > ConnectionManager.LatencyLimit / 2);
                     if (averageLatency > ConnectionManager.LatencyLimit / 2)
                         continue;
                     
@@ -350,11 +381,13 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 if (isFound)
                     break;
                 await Task.Delay(1000);
+                UnityEngine.Debug.Log("Join with Lobby Loop");
             }
         }
 
         void CheckLatency(int latency)
         {
+            UnityEngine.Debug.Log($"Update latency: {latency}");
             if (latency < 50)
             {
                 MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.HIGH;
@@ -373,6 +406,34 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 return;
             }
             MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.DEAD;
+        }
+
+        private void HandleNotAuthorized()
+        {
+            //TODO show a user not authorized error message -> reload scene/ go back to previous scene/ or show AI battle option
+        }
+
+        private void HandleClientLatency(bool tooHigh)
+        {
+            UnityEngine.Debug.Log($"Client latency is {(tooHigh?"too high": "good")}");
+            //TODO persistemt latency /Message "Internet connection too slow for PvP right now, sorry."
+            //TODO give option to play AI battle instead
+        }
+
+        private void CheckMinCPUReq()
+        {
+            //iOS doesn't support reading processorFrequency, so we have to relay on something else if low end iPhones are an issue.
+#if UNITY_IOS
+            //TODO check system version, or device generation if necessary on iOS
+            k_meetsCPUReq = true;
+#endif
+            //test and figure out CPU core and frequency thresholds
+            k_meetsCPUReq = SystemInfo.processorCount > k_minCPuCores && SystemInfo.processorFrequency > k_minCpuFreq;
+            if (!k_meetsCPUReq)
+            {
+                // Not 100% necessary, but could show non blocking message PopupManager.ShowPopupPanel("CPU is slow", "It may take longer to find an opponent.");
+            }
+            UnityEngine.Debug.Log($"Meets Minimum CPU Requirments: {k_meetsCPUReq}");
         }
 
         string ConvertToScene(Map map)
@@ -447,8 +508,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             //   TrySignIn();
         }
 
-
-
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
@@ -495,6 +554,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
             m_LobbyServiceFacade.OnMatchMakingStarted += onMatchmakingStarted;
 
+            CheckMinCPUReq();
             StartCoroutine(iStartPvP());
         }
     }
