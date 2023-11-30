@@ -56,15 +56,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPBuilding building)
         {
-            //  IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            int index = building.variantIndex;
+            int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
             if (index != -1)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IPvPBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                 _buildingDetails.ShowItemDetails(staticBuilding, variant);
                 _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
-                //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
                 _selectedItem.Value = building;
@@ -94,15 +93,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPUnit unit)
         {
-            //   IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            int index = unit.variantIndex;
+            int index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
             if (index != -1)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IPvPUnit staticUnit = variant.GetUnit(_prefabFactory);
                 _unitDetails.ShowItemDetails(staticUnit, variant);
                 _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
-                //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
                 _selectedItem.Value = unit;
