@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
                 Instance = this;
         }
 
-        public void ShowMessage(string message, Action onClick = null)
+        public void ShowMessage(string message, Action onClick = null, bool autoHide = true)
         {
             label.text = message;
             okBtn.onClick.RemoveAllListeners();
@@ -37,7 +37,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
             okBtn.onClick.AddListener(() => _onClick?.Invoke());
             panel.SetActive(true);
             blockUIPanel.SetActive(true);
-            Invoke("HideMessage", 3f);
+            if(autoHide)
+                Invoke("HideMessage", 3f);
         }
         public void HideMessage()
         {

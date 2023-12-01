@@ -201,8 +201,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
                                 if (ClientLatency > ConnectionManager.LatencyLimit / 2)
                                 {
-                                    HandleClientLatency(true);
-                                    continue;
+                                    HandleClientLatency();
+                                    return;
                                 }
                                 int iHostLatency = 0;
                                 int.TryParse(HostLatency, out iHostLatency); 
@@ -252,10 +252,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     CheckLatency(ClientLatency);
                                     UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
                                     
-                                    HandleClientLatency(ClientLatency > ConnectionManager.LatencyLimit / 2);
+
                                     if (ClientLatency > ConnectionManager.LatencyLimit / 2)
                                     {
-                                        continue;
+                                        HandleClientLatency();
+                                        return;
                                     }
                                     int iHostLatency = 0;
                                     int.TryParse(HostLatency, out iHostLatency);
@@ -293,10 +294,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
                         int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
                         CheckLatency(averageLatency);
-                        HandleClientLatency(averageLatency > ConnectionManager.LatencyLimit / 2);
                         if (averageLatency > ConnectionManager.LatencyLimit / 2)
                         {
-                            continue;
+                            HandleClientLatency();
+                            return;
                         }
                         MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                         var lobbyData = new Dictionary<string, DataObject>()
@@ -342,10 +343,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
                     int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
                     CheckLatency(averageLatency);
-                    HandleClientLatency(averageLatency > ConnectionManager.LatencyLimit / 2);
                     if (averageLatency > ConnectionManager.LatencyLimit / 2)
-                        continue;
-                    
+                    {
+                        HandleClientLatency();
+                        return;
+                    }
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
                         ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
@@ -413,9 +415,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             //TODO show a user not authorized error message -> reload scene/ go back to previous scene/ or show AI battle option
         }
 
-        private void HandleClientLatency(bool tooHigh)
+        private void HandleClientLatency()
         {
-            UnityEngine.Debug.Log($"Client latency is {(tooHigh?"too high": "good")}");
+            UnityEngine.Debug.Log($"Client latency is too high");
+            MatchmakingScreenController.Instance.ShowBadInternetMessageBox();
+
             //TODO persistemt latency /Message "Internet connection too slow for PvP right now, sorry."
             //TODO give option to play AI battle instead
         }
@@ -426,14 +430,20 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 #if UNITY_IOS
             //TODO check system version, or device generation if necessary on iOS
             k_meetsCPUReq = true;
-#endif
+#else
             //test and figure out CPU core and frequency thresholds
-            k_meetsCPUReq = SystemInfo.processorCount > k_minCPuCores && SystemInfo.processorFrequency > k_minCpuFreq;
-            if (!k_meetsCPUReq)
+            if (SystemInfo.processorCount > 0 && SystemInfo.processorFrequency > 0)
             {
-                // Not 100% necessary, but could show non blocking message PopupManager.ShowPopupPanel("CPU is slow", "It may take longer to find an opponent.");
+                k_meetsCPUReq = SystemInfo.processorCount > k_minCPuCores && SystemInfo.processorFrequency > k_minCpuFreq;
             }
+            else
+            {
+                k_meetsCPUReq = true;
+                //TODO how do we handle processer info not being available?
+            }
+#endif
             UnityEngine.Debug.Log($"Meets Minimum CPU Requirments: {k_meetsCPUReq}");
+
         }
 
         string ConvertToScene(Map map)

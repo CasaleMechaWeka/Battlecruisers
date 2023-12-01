@@ -27,6 +27,8 @@ using BattleCruisers.Network.Multiplay.Scenes;
 using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController;
 using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using UnityEditor.Build.Utilities;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -41,6 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         private ILocTable _storyStrings;
         public Animator animator;
         public TrashTalkBubblesController trashTalkBubbles;
+        public PvPMessageBox messageBox;
+
 
         public Text leftPlayerName;
         public Image leftPlayerRankImage;
@@ -245,6 +249,13 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             //    m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
         }
 
+        public void ShowBadInternetMessageBox()
+        {
+            //refactor to using translation string tool
+            messageBox.ShowMessage("Sorry your internet connection is too rangi for muliplayer, try again when you have a more stable connection", () => { messageBox.HideMessage(); _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false); }, false);
+        }
+
+        
         private HullType GetHullType(string hullName)
         {
             switch (hullName)
