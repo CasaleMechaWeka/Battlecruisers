@@ -184,7 +184,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
                     _applicationModel.DataProvider.SaveGame();
                 }
-                
+
                 double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
                 const string LeaderboardID = "BC-PvP1v1Leaderboard";
                 bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
@@ -208,17 +208,48 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //<---
             PvPTimeBC.Instance.TimeScale = 1;
             await Task.Delay(POST_GAME_WAIT_TIME_IN_S);
-
-            // Whatever the outcome, everyone goes to Destruction Scene:
-            _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
-            if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+            if (wasVictory)
             {
-                _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                if (team == Cruisers.Team.LEFT)
+                {
+                    _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                    if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                    {
+                        _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                    }
+                    _applicationModel.DataProvider.SaveGame();
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
+                    _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
+                }
+                else
+                {
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
+                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                }
             }
-            _applicationModel.DataProvider.SaveGame();
-            NetworkManager.Singleton.Shutdown(true);
-            DestroyAllNetworkObjects();
-            _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
+            else
+            {
+                if (team == Cruisers.Team.LEFT)
+                {
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
+                    _sceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                }
+                else
+                {
+                    _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                    if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                    {
+                        _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                    }
+                    _applicationModel.DataProvider.SaveGame();
+                    NetworkManager.Singleton.Shutdown(true);
+                    DestroyAllNetworkObjects();
+                    _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
+                }
+            }
         }
 
         public async void DestroyAllNetworkObjects()
