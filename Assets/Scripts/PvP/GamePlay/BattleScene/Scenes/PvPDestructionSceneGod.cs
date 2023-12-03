@@ -189,7 +189,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // Get some values from GameModel and its friends:
             allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
 
-
             if (PvPBattleSceneGodTunnel.isDisconnected == 0)
             {
                 levelTimeInSeconds = PvPBattleSceneGodTunnel._levelTimeInSeconds;
@@ -232,152 +231,59 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             /*destructionCards[2].image.sprite = PvPBattleSceneGodServer.enemyCruiserSprite;*/
+            string cruiserName = "";
             if (PvPBattleSceneGodTunnel.isDisconnected == 0)
-                switch (PvPBattleSceneGodTunnel._enemyCruiserName)
-                {
-                    case "BlackRig":
-                        destructionCards[2].image.sprite = BlackRig;
-                        break;
-                    case "Bullshark":
-                        destructionCards[2].image.sprite = Bullshark;
-                        break;
-                    case "Eagle":
-                        destructionCards[2].image.sprite = Eagle;
-                        break;
-                    case "Hammerhead":
-                        destructionCards[2].image.sprite = Hammerhead;
-                        break;
-                    case "HuntressBoss":
-                        destructionCards[2].image.sprite = HuntressBoss;
-                        break;
-                    case "Longbow":
-                        destructionCards[2].image.sprite = Longbow;
-                        break;
-                    case "ManOfWarBoss":
-                        destructionCards[2].image.sprite = ManOfWarBoss;
-                        break;
-                    case "Megalodon":
-                        destructionCards[2].image.sprite = Megalodon;
-                        break;
-                    case "Raptor":
-                        destructionCards[2].image.sprite = Raptor;
-                        break;
-                    case "Rickshaw":
-                        destructionCards[2].image.sprite = Rickshaw;
-                        break;
-                    case "Rockjaw":
-                        destructionCards[2].image.sprite = Rockjaw;
-                        break;
-                    case "TasDevil":
-                        destructionCards[2].image.sprite = TasDevil;
-                        break;
-                    case "Trident":
-                        destructionCards[2].image.sprite = Trident;
-                        break;
-                    case "Yeti":
-                        destructionCards[2].image.sprite = Yeti;
-                        break;
-                }
-
+                cruiserName = PvPBattleSceneGodTunnel._enemyCruiserName;
             if (PvPBattleSceneGodTunnel.isDisconnected == 1)
-                switch (PvPBattleSceneGodTunnel._playerACruiserName)
-                {
-                    case "BlackRig":
-                        destructionCards[2].image.sprite = BlackRig;
-                        break;
-                    case "Bullshark":
-                        destructionCards[2].image.sprite = Bullshark;
-                        break;
-                    case "Eagle":
-                        destructionCards[2].image.sprite = Eagle;
-                        break;
-                    case "Hammerhead":
-                        destructionCards[2].image.sprite = Hammerhead;
-                        break;
-                    case "HuntressBoss":
-                        destructionCards[2].image.sprite = HuntressBoss;
-                        break;
-                    case "Longbow":
-                        destructionCards[2].image.sprite = Longbow;
-                        break;
-                    case "ManOfWarBoss":
-                        destructionCards[2].image.sprite = ManOfWarBoss;
-                        break;
-                    case "Megalodon":
-                        destructionCards[2].image.sprite = Megalodon;
-                        break;
-                    case "Raptor":
-                        destructionCards[2].image.sprite = Raptor;
-                        break;
-                    case "Rickshaw":
-                        destructionCards[2].image.sprite = Rickshaw;
-                        break;
-                    case "Rockjaw":
-                        destructionCards[2].image.sprite = Rockjaw;
-                        break;
-                    case "TasDevil":
-                        destructionCards[2].image.sprite = TasDevil;
-                        break;
-                    case "Trident":
-                        destructionCards[2].image.sprite = Trident;
-                        break;
-                    case "Yeti":
-                        destructionCards[2].image.sprite = Yeti;
-                        break;
-                }
+                cruiserName = PvPBattleSceneGodTunnel._playerACruiserName;
             if (PvPBattleSceneGodTunnel.isDisconnected == 2)
-                switch (PvPBattleSceneGodTunnel._playerBCruiserName)
-                {
-                    case "BlackRig":
-                        destructionCards[2].image.sprite = BlackRig;
-                        break;
-                    case "Bullshark":
-                        destructionCards[2].image.sprite = Bullshark;
-                        break;
-                    case "Eagle":
-                        destructionCards[2].image.sprite = Eagle;
-                        break;
-                    case "Hammerhead":
-                        destructionCards[2].image.sprite = Hammerhead;
-                        break;
-                    case "HuntressBoss":
-                        destructionCards[2].image.sprite = HuntressBoss;
-                        break;
-                    case "Longbow":
-                        destructionCards[2].image.sprite = Longbow;
-                        break;
-                    case "ManOfWarBoss":
-                        destructionCards[2].image.sprite = ManOfWarBoss;
-                        break;
-                    case "Megalodon":
-                        destructionCards[2].image.sprite = Megalodon;
-                        break;
-                    case "Raptor":
-                        destructionCards[2].image.sprite = Raptor;
-                        break;
-                    case "Rickshaw":
-                        destructionCards[2].image.sprite = Rickshaw;
-                        break;
-                    case "Rockjaw":
-                        destructionCards[2].image.sprite = Rockjaw;
-                        break;
-                    case "TasDevil":
-                        destructionCards[2].image.sprite = TasDevil;
-                        break;
-                    case "Trident":
-                        destructionCards[2].image.sprite = Trident;
-                        break;
-                    case "Yeti":
-                        destructionCards[2].image.sprite = Yeti;
-                        break;
-                }
-
-            if (PvPBattleSceneGodTunnel.isDisconnected == 0)
-                destructionCards[2].description.text = PvPBattleSceneGodTunnel._enemyCruiserName;
-            if (PvPBattleSceneGodTunnel.isDisconnected == 1)
-                destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerACruiserName;
-            if (PvPBattleSceneGodTunnel.isDisconnected == 2)
-                destructionCards[2].description.text = PvPBattleSceneGodTunnel._playerBCruiserName;
+                cruiserName = PvPBattleSceneGodTunnel._playerBCruiserName;
+            switch (cruiserName)
+            {
+                case "BlackRig":
+                    destructionCards[2].image.sprite = BlackRig;
+                    break;
+                case "Bullshark":
+                    destructionCards[2].image.sprite = Bullshark;
+                    break;
+                case "Eagle":
+                    destructionCards[2].image.sprite = Eagle;
+                    break;
+                case "Hammerhead":
+                    destructionCards[2].image.sprite = Hammerhead;
+                    break;
+                case "HuntressBoss":
+                    destructionCards[2].image.sprite = HuntressBoss;
+                    break;
+                case "Longbow":
+                    destructionCards[2].image.sprite = Longbow;
+                    break;
+                case "ManOfWarBoss":
+                    destructionCards[2].image.sprite = ManOfWarBoss;
+                    break;
+                case "Megalodon":
+                    destructionCards[2].image.sprite = Megalodon;
+                    break;
+                case "Raptor":
+                    destructionCards[2].image.sprite = Raptor;
+                    break;
+                case "Rickshaw":
+                    destructionCards[2].image.sprite = Rickshaw;
+                    break;
+                case "Rockjaw":
+                    destructionCards[2].image.sprite = Rockjaw;
+                    break;
+                case "TasDevil":
+                    destructionCards[2].image.sprite = TasDevil;
+                    break;
+                case "Trident":
+                    destructionCards[2].image.sprite = Trident;
+                    break;
+                case "Yeti":
+                    destructionCards[2].image.sprite = Yeti;
+                    break;
+            }
+            destructionCards[2].description.text = cruiserName; // <-- Improve this by getting loc key for the cruiser instead.
 
             //### Screen Setup ###
 
