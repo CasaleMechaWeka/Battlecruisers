@@ -252,7 +252,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void ShowBadInternetMessageBox()
         {
             //refactor to using translation string tool
-            messageBox.ShowMessage("Sorry your internet connection is too rangi for muliplayer, try again when you have a more stable connection", () => { messageBox.HideMessage(); _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false); }, false);
+            messageBox.ShowMessage("Sorry your internet connection is too rangi for muliplayer, try again when you have a more stable connection", () => { messageBox.HideMessage(); FailedMatchmaking(); }, false);
         }
 
         
