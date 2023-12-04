@@ -221,11 +221,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        public void CompleteBattle(bool wasPlayerVictory, bool retryLevel, long destructionScore)
+        public void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
         {
             if (IsServer)
             {
-                if (wasPlayerVictory)
+                if (wasVictory)
                 {
                     float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
                     long aircraftVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();
@@ -238,7 +238,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     {
                         totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_left[(PvPTargetType)i].GetTotalDestroyed();
                     }
-                    CompleteBattleClientRpc(wasPlayerVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
+                    CompleteBattleClientRpc(wasVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
                 }
                 else
                 {
@@ -253,7 +253,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     {
                         totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(PvPTargetType)i].GetTotalDestroyed();
                     }
-                    CompleteBattleClientRpc(wasPlayerVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
+                    CompleteBattleClientRpc(wasVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
                 }
             }
         }

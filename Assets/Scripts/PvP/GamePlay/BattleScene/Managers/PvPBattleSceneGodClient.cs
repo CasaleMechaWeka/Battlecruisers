@@ -201,7 +201,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         PvPBattleSceneGodTunnel.isDisconnected = 1;
                         messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         IsBattleCompleted = true;
-                        components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 10f);
+                        components.Deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 10f);
                     }
                     else
                     {
@@ -209,7 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         PvPBattleSceneGodTunnel.isDisconnected = 1;
                         IsBattleCompleted = true;
                         //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
-                        battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
+                        _battleSceneGodTunnel.CompleteBattle(wasVictory: true, retryLevel: false);
                     }
                 }
                 if (!isCompletedBattleByFlee && canFlee && NetworkManager.Singleton.IsHost && NetworkManager.Singleton.ConnectedClientsIds.Count != 2)
@@ -225,7 +225,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
                         messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         IsBattleCompleted = true;
-                        components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 10f);
+                        components.Deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 10f);
                     }
                     else
                     {
@@ -233,7 +233,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
                         IsBattleCompleted = true;
                         //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
-                        battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
+                        _battleSceneGodTunnel.CompleteBattle(wasVictory: true, retryLevel: false);
                     }
                 }
             }
