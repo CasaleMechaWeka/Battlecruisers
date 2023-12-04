@@ -257,7 +257,6 @@ namespace BattleCruisers.Data
                     _gameModel.Variants[index].isOwned = true;
                 }
             }
-            SaveGame();
             await Task.CompletedTask;
         }
         private async Task FetchConfigs()
@@ -300,7 +299,6 @@ namespace BattleCruisers.Data
             var pvpQueueName = "bcqueuname"; //RemoteConfigService.Instance.appConfig.GetString("PvP_QUEUE");
             if (_gameModel.QueueName != pvpQueueName)
                 _gameModel.QueueName = pvpQueueName;
-            SaveGame();
         }
 
         public async Task<string> GetPVPVersion()

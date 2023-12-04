@@ -325,7 +325,6 @@ namespace BattleCruisers.Data.Serialization
                         dataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
-                dataProvider.SaveGame();
                 return true;
             }
             catch (EconomyRateLimitedException e)
@@ -344,7 +343,6 @@ namespace BattleCruisers.Data.Serialization
                         dataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
-                dataProvider.SaveGame();
                 return true;
             }
             catch (Exception e)
