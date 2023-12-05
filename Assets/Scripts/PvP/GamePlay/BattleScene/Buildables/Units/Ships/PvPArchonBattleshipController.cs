@@ -68,7 +68,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             //Debug.Log("Done 4 head");
+            bones.SetActive(false);
             base.Activate(activationArgs);
+            bones.SetActive(true);
         }
 
         protected override void OnShipCompleted()
