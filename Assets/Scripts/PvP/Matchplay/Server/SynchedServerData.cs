@@ -74,6 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         public void CalculateScoresOfLeftPlayer()
         {
+            Debug.Log("Calculate Right player score");
             left_levelTimeInSeconds.Value = PvPBattleSceneGodServer.deadBuildables_left[PvPTargetType.PlayedTime].GetPlayedTime();
             left_aircraftVal.Value = PvPBattleSceneGodServer.deadBuildables_left[PvPTargetType.Aircraft].GetTotalDamageInCredits();
             left_shipsVal.Value = PvPBattleSceneGodServer.deadBuildables_left[PvPTargetType.Ships].GetTotalDamageInCredits();
@@ -109,6 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         public void CalculateScoresOfRightPlayer()
         {
+            Debug.Log("Calculate Right player score");
             right_levelTimeInSeconds.Value = PvPBattleSceneGodServer.deadBuildables_right[PvPTargetType.PlayedTime].GetPlayedTime();
             right_aircraftVal.Value = PvPBattleSceneGodServer.deadBuildables_right[PvPTargetType.Aircraft].GetTotalDamageInCredits();
             right_shipsVal.Value = PvPBattleSceneGodServer.deadBuildables_right[PvPTargetType.Ships].GetTotalDamageInCredits();
@@ -140,6 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             }
             right_destructionScore.Value = ds;
         }
+
         public static SynchedServerData Instance
         {
             get

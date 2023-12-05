@@ -189,6 +189,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // Get some values from GameModel and its friends:
             allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
 
+            Debug.Log($"POPULATE DESTRUCTION SCREEN isDisconnected: {PvPBattleSceneGodTunnel.isDisconnected}");
             if (PvPBattleSceneGodTunnel.isDisconnected == 0)
             {
                 levelTimeInSeconds = PvPBattleSceneGodTunnel._levelTimeInSeconds;
@@ -223,7 +224,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             {
                 destructionCards[i].destructionValue.text = FormatNumber(destructionValues[i]);
                 if (PvPBattleSceneGodTunnel.isDisconnected == 0)
-                    destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._totalDestroyed[i];
+                    destructionCards[i].numberOfUnitsDestroyed.text = "" + PvPBattleSceneGodTunnel._totalDestroyed[i];
                 if (PvPBattleSceneGodTunnel.isDisconnected == 1)
                     destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + PvPBattleSceneGodTunnel._playerATotoalDestroyed[i];
                 if (PvPBattleSceneGodTunnel.isDisconnected == 2)

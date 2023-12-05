@@ -129,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             StopAllShips(victoryCruiser);
             _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S / 2);            
         //    _battleSceneGodTunnel.HandleCruiserDestroyed();
-        //    _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore);
+            _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore);
             //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
         }
 

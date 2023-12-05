@@ -410,6 +410,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 {
                     return;
                 }
+                if (type == PvPTargetType.Cruiser)
+                    Debug.Log("CRUISER DESTROYED LEFT");
+
                 deadBuildables_left[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
                 SynchedServerData.Instance.CalculateScoresOfLeftPlayer();
                 if (type == PvPTargetType.Cruiser)
@@ -436,6 +439,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 {
                     return;
                 }
+                if (type == PvPTargetType.Cruiser)
+                    Debug.Log("CRUISER DESTROYED RIGHT");
                 deadBuildables_right[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
                 SynchedServerData.Instance.CalculateScoresOfRightPlayer();
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
