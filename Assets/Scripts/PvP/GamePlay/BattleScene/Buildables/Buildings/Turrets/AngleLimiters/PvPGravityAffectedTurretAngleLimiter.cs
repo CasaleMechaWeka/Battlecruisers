@@ -3,7 +3,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPGravityAffectedTurretAngleLimiter : PvPAngleLimiter
     {
         public PvPGravityAffectedTurretAngleLimiter()
-            : base(minAngle: 0, maxAngle: 85)
+            : base(minAngle: -20, maxAngle: 85)
         {
         }
     }
