@@ -813,19 +813,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         //taken from https://stackoverflow.com/questions/30180672/string-format-numbers-to-millions-thousands-with-rounding
         private string FormatNumber(long num)
         {
-            num = num * 1000;
-            long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
-            num = num / i * i;
-            if (num >= 1000000000000)
-                return "$" + (num / 1000000000000D).ToString("0.##") + " " + quadrillion.text;
-            if (num >= 1000000000)
-                return "$" + (num / 1000000000D).ToString("0.##") + " " + trillion.text;
-            if (num >= 1000000)
-                return "$" + (num / 1000000D).ToString("0.##") + " " + billion.text;
-            if (num >= 1000)
-                return "$" + (num / 1000D).ToString("0.##") + " " + million.text;
+            if (num > 0)
+            {
+                num = num * 1000;
+                long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
+                num = num / i * i;
+                if (num >= 1000000000000)
+                    return "$" + (num / 1000000000000D).ToString("0.##") + " " + quadrillion.text;
+                if (num >= 1000000000)
+                    return "$" + (num / 1000000000D).ToString("0.##") + " " + trillion.text;
+                if (num >= 1000000)
+                    return "$" + (num / 1000000D).ToString("0.##") + " " + billion.text;
+                if (num >= 1000)
+                    return "$" + (num / 1000D).ToString("0.##") + " " + million.text;
 
-            return "$" + num.ToString("#,0");
+                return "$" + num.ToString("#,0");
+            }
+            else
+            {
+                return "";
+            }
         }
 
         private string FormatRankNumber(int rank)
