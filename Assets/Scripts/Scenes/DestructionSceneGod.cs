@@ -745,7 +745,7 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                return "";
+                return "$0";
             }
         }
 

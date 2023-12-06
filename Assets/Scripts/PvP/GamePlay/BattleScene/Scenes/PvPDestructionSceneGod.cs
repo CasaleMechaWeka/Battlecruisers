@@ -831,7 +831,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
             else
             {
-                return "";
+                return "$0";
             }
         }
 
