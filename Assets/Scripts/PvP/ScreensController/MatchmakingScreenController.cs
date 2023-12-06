@@ -28,7 +28,6 @@ using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScr
 using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using UnityEditor.Build.Utilities;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
