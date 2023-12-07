@@ -119,6 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
                 //create Sprite Chooser
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+                _barrelWrapper.ApplyVariantStats(this);
                 OnBuildableCompletedClientRpc();
             }
             else
@@ -130,6 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     allSpriteWrappers.Add(new PvPSpriteWrapper(sprite));
                 }
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+                _barrelWrapper.ApplyVariantStats(this);
             }
         }
 

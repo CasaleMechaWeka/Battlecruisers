@@ -235,6 +235,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnBuildableCompleted();
+            _samSite.ApplyVariantStats(this);
+            _directFireAntiSea.ApplyVariantStats(this);
+            _mortar.ApplyVariantStats(this);
         }
 
         [ClientRpc]

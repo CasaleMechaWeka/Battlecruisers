@@ -244,6 +244,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnBuildableCompleted();
+            ak1.ApplyVariantStats(this);
+            ak2.ApplyVariantStats(this);
         }
 
         [ClientRpc]

@@ -128,7 +128,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (variantIndex != -1)
             {
-                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = await PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 GetComponent<PvPProjectileStats>().ApplyVariantStats(variant.statVariant);
             }
             _bombStats = GetComponent<PvPProjectileStats>();

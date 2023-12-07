@@ -339,6 +339,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnBuildableCompleted();
+            laser.ApplyVariantStats(this);
         }
 
         [ClientRpc]
