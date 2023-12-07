@@ -20,6 +20,8 @@ namespace BattleCruisers.Data.Models
         float BattleWinScore { get; set; }
         string QueueName { get; set; }
         List<Arena> Arenas { get; set; }
+        int MinCPUCores { get; set; }
+        int MinCPUFreq { get; set; }
         Dictionary<string, int> GameConfigs { get; set; }
         List<int> CaptainExoList { get; set; }
         List<int> HeckleList { get; set; }

@@ -292,6 +292,21 @@ namespace BattleCruisers.Data.Models
             set => _queueName = value;
         }
 
+        // MinCPuCores and MinCPuFreq are used for setting which devices are allowed to host in pvp
+        private int minCPUCores;
+        public int MinCPUCores
+        {
+            get => minCPUCores;
+            set => minCPUCores = value;
+        }
+
+        private int minCPUFreq;
+        public int MinCPUFreq
+        {
+            get => minCPUFreq;
+            set => minCPUFreq = value;
+        }
+
         private string _playerName;
         public String PlayerName
         {

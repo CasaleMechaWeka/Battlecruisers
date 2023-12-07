@@ -57,8 +57,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         const string k_DefaultIP = "127.0.0.1";
 
         //CPU REQUIRMENTS
-        const int k_minCPuCores = 2;
-        const int k_minCpuFreq = 1200;
+        private int k_minCPUCores = 2;
+        private int k_minCPUFreq = 1200;
         private bool k_meetsCPUReq = true;
 
         public TrashTalkDataList trashDataList;
@@ -434,7 +434,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             //test and figure out CPU core and frequency thresholds
             if (SystemInfo.processorCount > 0 && SystemInfo.processorFrequency > 0)
             {
-                k_meetsCPUReq = SystemInfo.processorCount > k_minCPuCores && SystemInfo.processorFrequency > k_minCpuFreq;
+                k_minCPUCores = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MinCPUCores;
+                k_minCPUFreq = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MinCPUFreq;
+                k_meetsCPUReq = SystemInfo.processorCount > k_minCPUCores && SystemInfo.processorFrequency > k_minCPUFreq;
             }
             else
             {

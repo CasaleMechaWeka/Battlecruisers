@@ -299,6 +299,12 @@ namespace BattleCruisers.Data
             var pvpQueueName = "bcqueuname"; //RemoteConfigService.Instance.appConfig.GetString("PvP_QUEUE");
             if (_gameModel.QueueName != pvpQueueName)
                 _gameModel.QueueName = pvpQueueName;
+
+            var sysReqsJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_REQUIREMENTS");
+            Debug.Log("####### " + sysReqsJson.ToString());
+            PvPSysReqs sysReqs = JsonConvert.DeserializeObject<PvPSysReqs>(sysReqsJson);
+            _gameModel.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
+            _gameModel.MinCPUFreq = sysReqs.PvPSystemReqs.MinCPUFreq;
         }
 
         public async Task<string> GetPVPVersion()
@@ -1064,6 +1070,19 @@ namespace BattleCruisers.Data
     public struct GameConfig
     {
         public Dictionary<string, int> gameconfigs;
+    }
+
+    [Serializable]
+    public struct PvPSysReqs
+    {
+        public PvPSystemRequirements PvPSystemReqs { get; set; }
+    }
+
+    [Serializable]
+    public struct PvPSystemRequirements
+    {
+        public int MinCPUCores { get; set; }
+        public int MinCPUFreq { get; set; }
     }
 
     struct UserAttributes { }
