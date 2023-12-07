@@ -1,3 +1,4 @@
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public List<PvPTargetType> attackCapabilities;
         public ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; private set; }
 
+        protected bool isAppliedVariant = false;
+
         public virtual void Initialise()
         {
             Assert.IsTrue(FireRatePerS > 0);
@@ -35,6 +38,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual void MoveToNextDuration()
         {
             // Empty
+        }
+
+        public virtual void ApplyVariantStats(StatVariant statVariant)
+        {
+            if (!isAppliedVariant)
+            {
+                fireRatePerS *= statVariant.fire_rate;
+                rangeInM *= statVariant.range;
+                minRangeInM += statVariant.min_range;
+
+                fireRatePerS = fireRatePerS <= 0 ? 0.1f : fireRatePerS;
+                rangeInM = rangeInM < minRangeInM ? minRangeInM : rangeInM;
+
+                isAppliedVariant = true;
+            }
         }
     }
 }

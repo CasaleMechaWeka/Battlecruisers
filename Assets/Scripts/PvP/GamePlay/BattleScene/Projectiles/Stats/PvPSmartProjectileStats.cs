@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
@@ -19,6 +20,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsTrue(attackCapabilities.Count > 0);
 
             AttackCapabilities = attackCapabilities.AsReadOnly();
+        }
+
+        public override void ApplyVariantStats(StatVariant statVariant)
+        {
+            if (!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                detectionRangeM += statVariant.detection_range;
+            }
         }
     }
 }

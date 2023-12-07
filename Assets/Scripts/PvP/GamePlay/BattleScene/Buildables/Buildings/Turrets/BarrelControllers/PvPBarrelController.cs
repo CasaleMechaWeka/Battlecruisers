@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
@@ -12,6 +13,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -86,6 +91,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(turretStats);
             turretStats.Initialise();
             return turretStats;
+        }
+
+        public virtual async void ApplyVariantStats(IPvPBuilding building)
+        {
+            int variantIndex = building.variantIndex;
+            if (variantIndex != -1)
+            {
+                if (variantIndex != -1)
+                {
+                    VariantPrefab variant = await PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                    // turret stats
+                    _baseTurretStats.ApplyVariantStats(variant.statVariant);
+                    GetComponent<PvPProjectileStats>().ApplyVariantStats(variant.statVariant);
+                }
+            }
+        }
+        public virtual async void ApplyVariantStats(IPvPUnit unit)
+        {
+            int variantIndex = unit.variantIndex;
+            if (variantIndex != -1)
+            {
+                VariantPrefab variant = await PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                // turret stats
+                _baseTurretStats.ApplyVariantStats(variant.statVariant);
+                GetComponent<PvPProjectileStats>().ApplyVariantStats(variant.statVariant);
+            }
         }
 
         protected virtual IPvPFireIntervalManager SetupFireIntervalManager(IPvPTurretStats turretStats)

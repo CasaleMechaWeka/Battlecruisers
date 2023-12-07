@@ -160,9 +160,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
                 OnBuildableCompletedClientRpc();
+                _antiSeaTurret.ApplyVariantStats(this);
             }
             else
+            {
                 OnBuildableCompleted_PvPClient();
+                _antiSeaTurret.ApplyVariantStats(this);
+            }
         }
 
         protected override void StartMovementEffectsOfClient()

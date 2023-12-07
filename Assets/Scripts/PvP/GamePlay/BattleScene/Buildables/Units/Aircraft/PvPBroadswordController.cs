@@ -27,6 +27,7 @@ using UnityEngine.Assertions;
 using UnityEngine.U2D;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -148,8 +149,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                             break;
                     }
                     barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, soundKey);
+                    barrelWrapper.ApplyVariantStats(this);
                 }
-
 
                 List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
                 foreach (Sprite sprite in allSprites)
@@ -163,6 +164,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
             {
                 OnBuildableCompleted_PvPClient();
+                //barrelWrapper.ApplyVariantStats(this);
                 List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
                 foreach (Sprite sprite in allSprites)
                 {

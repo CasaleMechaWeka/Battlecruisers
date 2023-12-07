@@ -1,3 +1,4 @@
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -15,6 +16,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override void OnAwake()
         {
             Assert.IsTrue(cruisingAltitudeInM > 0);
+        }
+
+        public override void ApplyVariantStats(StatVariant statVariant)
+        {
+            if (!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                cruisingAltitudeInM += statVariant.cruising_altitude;
+            }
         }
     }
 }

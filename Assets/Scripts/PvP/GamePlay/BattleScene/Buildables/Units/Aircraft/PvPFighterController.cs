@@ -137,12 +137,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 SetupTargetDetection();
 
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+                _barrelController.ApplyVariantStats(this);
                 OnBuildableCompletedClientRpc();
             }
 
             else
             {
                 OnBuildableCompleted_PvPClient();
+                _barrelController.ApplyVariantStats(this);
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
             }
 

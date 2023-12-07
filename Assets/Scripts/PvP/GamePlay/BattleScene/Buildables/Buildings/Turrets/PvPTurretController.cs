@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _parentSlot.BoostProviders,
                     TurretFireRateBoostProviders,
                     _barrelAnimation);
-
+            _barrelWrapper.ApplyVariantStats(this);
         }
 
         protected override void OnBuildableCompleted_PvPClient()
@@ -60,7 +60,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 this,
                 _factoryProvider,
                 FiringSound,
-                _barrelAnimation);     
+                _barrelAnimation);
+            _barrelWrapper.ApplyVariantStats(this);
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()

@@ -18,6 +18,12 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using System;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Buildables;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -107,6 +113,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
             IPvPTargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
+            // apply variant stats
+            ApplyVariantStats();
             IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
             _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
@@ -115,6 +123,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Activate_PvPClient();
         }
+
+        private async void ApplyVariantStats()
+        {
+            if (variantIndex != -1)
+            {
+                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                GetComponent<PvPProjectileStats>().ApplyVariantStats(variant.statVariant);
+            }
+            _bombStats = GetComponent<PvPProjectileStats>();
+            Assert.IsNotNull(_bombStats);
+            float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
+            IList<PvPTargetType> attackCapabilities = new List<PvPTargetType>()
+            {
+                PvPTargetType.Cruiser,
+                PvPTargetType.Buildings
+            };
+            AddDamageStats(new PvPDamageCapability(damagePerS, attackCapabilities));
+        }
+
         protected async override void OnBuildableCompleted()
         {
             if (IsServer)

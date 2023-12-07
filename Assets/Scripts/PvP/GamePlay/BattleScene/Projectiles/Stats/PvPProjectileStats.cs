@@ -1,3 +1,4 @@
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -25,6 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public float InitialVelocityInMPerS { get; private set; }
 
+        protected bool isAppliedVariant = false;
+
         void Awake()
         {
             Assert.IsTrue(damage > 0);
@@ -40,6 +43,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             InitialVelocityInMPerS = MaxVelocityInMPerS * initialVelocityMultiplier;
 
             OnAwake();
+        }
+
+        public virtual void ApplyVariantStats(StatVariant statVariant)
+        {
+            if (!isAppliedVariant)
+            {
+                initialVelocityMultiplier += statVariant.initial_velocity_multiplier;
+                damage *= statVariant.damage;
+                maxVelocityInMPerS += statVariant.max_velocity;
+                gravityScale += statVariant.gravity_scale;
+                damageRadiusInM += statVariant.damage_radius;
+
+                initialVelocityMultiplier = initialVelocityMultiplier <= 0 ? 0.1f : initialVelocityMultiplier;
+                damage = damage <= 0 ? 0.1f : damage;
+                maxVelocityInMPerS = maxVelocityInMPerS <= 0 ? 0.1f : maxVelocityInMPerS;
+                gravityScale = gravityScale < 0 ? 0 : gravityScale;
+                damageRadiusInM = damageRadiusInM <= 0 ? 0.1f : damageRadiusInM;
+
+                isAppliedVariant = true;
+            }
         }
 
         protected virtual void OnAwake() { }
