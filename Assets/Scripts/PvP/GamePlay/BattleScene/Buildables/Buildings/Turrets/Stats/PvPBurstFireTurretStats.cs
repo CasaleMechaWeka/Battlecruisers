@@ -1,3 +1,4 @@
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
@@ -74,6 +75,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void MoveToNextDuration()
         {
             QueryIndex++;
+        }
+
+        public override void ApplyVariantStats(StatVariant statVariant)
+        {
+            if (!isAppliedVariant)
+            {
+                base.ApplyVariantStats(statVariant);
+                burstFireRatePerS += statVariant.burst_fire_rate;
+                burstSize += statVariant.burst_size;
+
+                burstFireRatePerS = burstFireRatePerS <= 0 ? 0.1f : burstFireRatePerS;
+                burstSize = burstSize < MIN_BURST_SIZE ? MIN_BURST_SIZE : burstSize;
+            }
         }
     }
 }

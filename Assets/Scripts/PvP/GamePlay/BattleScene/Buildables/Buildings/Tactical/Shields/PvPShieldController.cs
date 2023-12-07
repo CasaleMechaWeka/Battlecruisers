@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -174,6 +178,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override bool IsShield()
         {
             return true;
+        }
+
+        public virtual async void ApplyVariantStats(IPvPBuilding building)
+        {
+            int variantIndex = building.variantIndex;
+            Debug.Log(variantIndex);
+            if (variantIndex != -1)
+            {
+                VariantPrefab variant = await PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                StatVariant statVariant = variant.statVariant;
+                maxHealth += statVariant.shield_health;
+                Stats.shieldRechargeDelayModifier += statVariant.shield_recharge_delay;
+                Stats.shieldRechargeRateModifier += statVariant.shield_recharge_rate;
+            }
         }
 
         [ClientRpc]

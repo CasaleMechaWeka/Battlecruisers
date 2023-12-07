@@ -161,7 +161,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
                     Name = _commonStrings.GetString(dataProvider.GameModel.Variants[varint_index].VariantNameStringKeyBase);
                     Description = _commonStrings.GetString(dataProvider.GameModel.Variants[varint_index].VariantDescriptionStringKeyBase);
-            //        ApplyVariantStats(variant.statVariant);
+                    ApplyVariantStats(variant.statVariant);
                 }
                 else
                 {

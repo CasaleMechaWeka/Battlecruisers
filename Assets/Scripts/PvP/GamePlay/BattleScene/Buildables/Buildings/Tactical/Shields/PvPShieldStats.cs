@@ -8,9 +8,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float shieldRechargeDelayInS;
         public float shieldRechargeRatePerS;
 
+        public float shieldRechargeDelayModifier { get; set; }
+        public float shieldRechargeRateModifier { get; set; }
+
         public float ShieldRadiusInM => shieldRadiusInM;
-        public float ShieldRechargeDelayInS => shieldRechargeDelayInS;
-        public float ShieldRechargeRatePerS => BoostMultiplier * shieldRechargeRatePerS;
+        public float ShieldRechargeDelayInS => shieldRechargeDelayInS + shieldRechargeDelayModifier;
+        public float ShieldRechargeRatePerS => BoostMultiplier * (shieldRechargeRatePerS + shieldRechargeRateModifier);
 
         public float BoostMultiplier { get; set; }
     }
