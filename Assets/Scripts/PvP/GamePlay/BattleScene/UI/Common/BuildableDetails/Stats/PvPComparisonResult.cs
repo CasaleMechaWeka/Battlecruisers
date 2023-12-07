@@ -14,14 +14,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             public const float NEUTRAL = 1;
             public const float BETTER = 1;
-            public const float WORSE = 0.5f;
+            public const float WORSE = 1f;
         }
 
         protected class PvPHue
         {
             public static Color NEUTRAL = Color.white;
             public static Color BETTER = Color.white;
-            public static Color WORSE = Color.black;
+            public static Color WORSE = Color.white;
         }
 
         public float RowAlpha { get; }
