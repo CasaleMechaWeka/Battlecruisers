@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         string m_ServerIP = "0.0.0.0";
         int m_ServerPort = 7777;
         int m_QueryPort = 7787;
-        const int k_MultiplyServiceTimeout = 20000;
+        const int k_MultiplyServiceTimeout = 45000; // was 20000;
         MultiplayAllocationService m_MultiplayAllocationService;
         MultiplayServerQueryService m_MultiplayServerQueryService;
 
