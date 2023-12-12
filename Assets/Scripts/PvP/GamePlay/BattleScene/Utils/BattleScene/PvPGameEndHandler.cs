@@ -100,7 +100,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
+
+        //    _battleSceneGodTunnel.HandleCruiserDestroyed();
             _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false);
+            //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
 
         public void HandleCruiserDestroyed(bool wasPlayerVictory, long destructionScore)
@@ -124,8 +127,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             victoryCruiser.MakeInvincible();
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-            _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S / 2);
+            _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S / 2);            
+        //    _battleSceneGodTunnel.HandleCruiserDestroyed();
             _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore);
+            //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
         }
 
         public void RegisterAIOfLeftPlayer(IPvPArtificialIntelligence ai_LeftPlayer)
