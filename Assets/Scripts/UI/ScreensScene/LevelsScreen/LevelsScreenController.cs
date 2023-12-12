@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -91,6 +92,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }
+            secretLevelsHint.GetComponentInChildren<Text>(false).text = LandingSceneGod.Instance.screenSceneStrings.GetString("SecretLevelHintText");
             if (numOfLevelsUnlocked < 31)
                 secretLevelsHint.SetActive(false);
             else
