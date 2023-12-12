@@ -225,7 +225,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
                         messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         IsBattleCompleted = true;
-                        components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 10f);
+                        components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false), 10f); //Runs on desync too
                     }
                     else
                     {
@@ -235,6 +235,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                     }
+                }
+            }
+
+            // Working on it. We need handling for if the other player leaves the match on purpose, as distinct from a disconnection.
+            else if (NetworkManager.Singleton != null && WasLeftMatch)
+            {
+                isCompletedBattleByFlee = true;
+                wasOpponentDisconnected = true;
+                if (isStartedPvP)
+                {
+                    HandleCruiserDestroyed();
+                    cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
+                    _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
+                    PvPBattleSceneGodTunnel.isDisconnected = 2;
+                    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                    IsBattleCompleted = true;
+                    components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false), 10f); //Runs on desync too
+                }
+                else
+                {
+                    HandleClientDisconnected();
+                    PvPBattleSceneGodTunnel.isDisconnected = 2;
+                    IsBattleCompleted = true;
+                    //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                    battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                 }
             }
         }
