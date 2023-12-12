@@ -214,6 +214,15 @@ namespace BattleCruisers.Data
                     _gameModel.AddBodykit(i);
                 }
             }
+
+            // variants
+            for (int i = 0; i < _gameModel.Variants.Count; i++)
+            {
+                if (_gameModel.Variants[i].isOwned)
+                {
+                    _gameModel.AddVariant(i);
+                }
+            }
         }
 
         public async Task SyncInventroyV2()
