@@ -214,11 +214,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return;
             if (!IsDestroyed)
             {
-                if (!isUpdating)
-                {
-                    isUpdating = true;
-                    StartCoroutine(iOnFixedUpdte());
-                }
+                //if (!isUpdating)
+                //{
+                //    isUpdating = true;
+                //    StartCoroutine(iOnFixedUpdte());
+                //}
+                OnFixedUpdate();
             }
         }
         bool isUpdating = false;
