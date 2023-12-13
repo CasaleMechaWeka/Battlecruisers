@@ -333,10 +333,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
 
             enemyCruiserSprite = playerACruiser.Sprite;
-            enemyCruiserName = playerACruiser.Name;
+            enemyCruiserName = playerACruiser.stringKeyBase;
 
             playerBCruiserSprite = playerBCruiser.Sprite;
-            playerBCruiserName = playerBCruiser.Name;
+            playerBCruiserName = playerBCruiser.stringKeyBase;
 
             droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
             droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
