@@ -10,6 +10,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Localisation;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
@@ -55,14 +56,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         }
 
         private async void ShowItemDetailsV2(IPvPBuilding building)
-        {
+        {            
             int index = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory, building);
+            
             if (index != -1)
             {
                 VariantPrefab variant = await PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IPvPBuilding staticBuilding = variant.GetBuilding(PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory);
                 _buildingDetails.ShowItemDetails(staticBuilding, variant);
-                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
+                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(PvPBattleSceneGodClient.Instance.dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
                 //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
@@ -99,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 VariantPrefab variant = await PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IPvPUnit staticUnit = variant.GetUnit(PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory);
                 _unitDetails.ShowItemDetails(staticUnit, variant);
-                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
+                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(PvPBattleSceneGodClient.Instance.dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
                 //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
