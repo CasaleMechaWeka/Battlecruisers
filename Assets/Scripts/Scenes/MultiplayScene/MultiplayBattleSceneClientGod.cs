@@ -191,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
             enemyCruiserSprite = aiCruiser.Sprite;
-            enemyCruiserName = aiCruiser.Name;
+            enemyCruiserName = aiCruiser.stringKeyBase;
 
             // Camera
             cameraComponents
