@@ -190,18 +190,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 if (!isCompletedBattleByFlee && canFlee && !NetworkManager.Singleton.IsHost && !NetworkManager.Singleton.IsConnectedClient)
                 {
-                    // the opponent left match
+                    // the Host left match
                     isCompletedBattleByFlee = true;
                     wasOpponentDisconnected = true;
                     if (isStartedPvP)
                     {
-                        HandleCruiserDestroyed();
-                        cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
-                        _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
-                        PvPBattleSceneGodTunnel.isDisconnected = 1;
-                        messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
-                        IsBattleCompleted = true;
-                        components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 10f);
+                        // No-fault Disconnect:
+                        if (!PvPBattleSceneGodTunnel.OpponentQuit)
+                        {
+                            Debug.Log("No-fault Disconnect");
+                            HandleCruiserDestroyed();
+                            cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
+                            _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
+                            PvPBattleSceneGodTunnel.isDisconnected = 1;
+                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            IsBattleCompleted = true;
+                            components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
+                        }
+                        else
+                        {
+                            Debug.Log("Opponent Quit");
+                            HandleCruiserDestroyed();
+                            cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
+                            _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
+                            PvPBattleSceneGodTunnel.isDisconnected = 1;
+                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            IsBattleCompleted = true;
+                            components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5);
+                        }
                     }
                     else
                     {
@@ -214,18 +230,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 if (!isCompletedBattleByFlee && canFlee && NetworkManager.Singleton.IsHost && NetworkManager.Singleton.ConnectedClientsIds.Count != 2)
                 {
-                    // the opponent left match
+                    // the Client left match
                     isCompletedBattleByFlee = true;
                     wasOpponentDisconnected = true;
                     if (isStartedPvP)
                     {
-                        HandleCruiserDestroyed();
-                        cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
-                        _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
-                        PvPBattleSceneGodTunnel.isDisconnected = 2;
-                        messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
-                        IsBattleCompleted = true;
-                        components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 10f);
+                        // No-fault Disconnect:
+                        if(!PvPBattleSceneGodTunnel.OpponentQuit)
+                        {
+                            Debug.Log("No-fault Disconnect");
+                            HandleCruiserDestroyed();
+                            cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
+                            _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
+                            PvPBattleSceneGodTunnel.isDisconnected = 2;
+                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            IsBattleCompleted = true;
+                            components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
+                        }
+                        // Opponent Quit:
+                        else
+                        {
+                            Debug.Log("Opponent Quit");
+                            HandleCruiserDestroyed();
+                            cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
+                            _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
+                            PvPBattleSceneGodTunnel.isDisconnected = 2;
+                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            IsBattleCompleted = true;
+                            components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5f);
+                        }
                     }
                     else
                     {

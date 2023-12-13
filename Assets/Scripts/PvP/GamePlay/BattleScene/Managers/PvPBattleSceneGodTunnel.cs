@@ -65,6 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static long[] _playerBTotoalDestroyed = new long[4];
         public static string _playerBCruiserName;
 
+        public static bool OpponentQuit = false;
         public static int isDisconnected = 0;
         public static bool isCost = false;
         public static float difficultyDestructionScoreMultiplier = 1.0f;

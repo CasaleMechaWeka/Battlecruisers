@@ -34,8 +34,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void Exit() { }
         public override void OnClientDisconnect(ulong clientId)
         {
-
+            Debug.Log("ClientConnectedState:OnClientDisconnect: " + clientId);
+            PvPBattleSceneGodTunnel.OpponentQuit = true;
         }
+
         public override void LeaveLobby()
         {
             base.LeaveLobby();
