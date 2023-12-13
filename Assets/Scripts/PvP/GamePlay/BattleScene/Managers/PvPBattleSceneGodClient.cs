@@ -667,7 +667,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 PvPBattleSceneGodTunnel._shipsVal = SynchedServerData.Instance.left_shipsVal.Value;
                 PvPBattleSceneGodTunnel._cruiserVal = SynchedServerData.Instance.left_cruiserVal.Value;
                 PvPBattleSceneGodTunnel._buildingsVal = SynchedServerData.Instance.left_buildingsVal.Value;
-                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.Name;
+                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.stringKeyBase;
                 PvPBattleSceneGodTunnel._totalDestroyed = new long[4]
                 {   SynchedServerData.Instance.left_totalDestroyed1.Value,
                     SynchedServerData.Instance.left_totalDestroyed2.Value,
@@ -683,7 +683,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 PvPBattleSceneGodTunnel._shipsVal = SynchedServerData.Instance.right_shipsVal.Value;
                 PvPBattleSceneGodTunnel._cruiserVal = SynchedServerData.Instance.right_cruiserVal.Value;
                 PvPBattleSceneGodTunnel._buildingsVal = SynchedServerData.Instance.right_buildingsVal.Value;
-                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.Name;
+                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.stringKeyBase;
                 PvPBattleSceneGodTunnel._totalDestroyed = new long[4]
                 {       SynchedServerData.Instance.right_totalDestroyed1.Value,
                         SynchedServerData.Instance.right_totalDestroyed2.Value,
@@ -710,7 +710,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 PvPBattleSceneGodTunnel._shipsVal = SynchedServerData.Instance.left_shipsVal.Value;
                 PvPBattleSceneGodTunnel._cruiserVal = SynchedServerData.Instance.left_cruiserVal.Value;
                 PvPBattleSceneGodTunnel._buildingsVal = SynchedServerData.Instance.left_buildingsVal.Value;
-                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.Name;
+                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.stringKeyBase;
                 PvPBattleSceneGodTunnel._totalDestroyed = new long[4]
                 {   SynchedServerData.Instance.left_totalDestroyed1.Value,
                     SynchedServerData.Instance.left_totalDestroyed2.Value,
@@ -726,7 +726,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 PvPBattleSceneGodTunnel._shipsVal = SynchedServerData.Instance.right_shipsVal.Value;
                 PvPBattleSceneGodTunnel._cruiserVal = SynchedServerData.Instance.right_cruiserVal.Value;
                 PvPBattleSceneGodTunnel._buildingsVal = SynchedServerData.Instance.right_buildingsVal.Value;
-                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.Name;
+                PvPBattleSceneGodTunnel._enemyCruiserName = enemyCruiser.stringKeyBase;
                 PvPBattleSceneGodTunnel._totalDestroyed = new long[4]
                 {       SynchedServerData.Instance.right_totalDestroyed1.Value,
                         SynchedServerData.Instance.right_totalDestroyed2.Value,
