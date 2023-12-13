@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPBuilding building)
         {
-            int index = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory, building);
+            int index = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
             if (index != -1)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPUnit unit)
         {
-            int index = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory, unit);
+            int index = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
             if (index != -1)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
