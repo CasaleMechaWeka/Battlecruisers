@@ -201,7 +201,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             else
             {
-                leftCruiserName.text = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
+                leftCruiserName.text = _commonStrings.GetString("Cruisers/" + dataProvider.GameModel.PlayerLoadout.Hull.PrefabName + "Name");
                 leftCruiserImage.sprite = sprites[dataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
             }
 
@@ -254,7 +254,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             messageBox.ShowMessage("Sorry your internet connection is too rangi for muliplayer, try again when you have a more stable connection", () => { messageBox.HideMessage(); FailedMatchmaking(); }, false);
         }
 
-        
+
         private HullType GetHullType(string hullName)
         {
             switch (hullName)
@@ -467,7 +467,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             else
             {
-                leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
+                leftCruiserName.text = _commonStrings.GetString("Cruisers/" + SynchedServerData.Instance.playerAPrefabName.Value + "Name");
                 leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
             }
 
@@ -483,7 +483,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             else
             {
-                rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
+                rightCruiserName.text = _commonStrings.GetString("Cruisers/" + SynchedServerData.Instance.playerBPrefabName.Value + "Name");
                 rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
             }
 
