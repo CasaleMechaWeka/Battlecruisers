@@ -284,7 +284,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     destructionCards[2].image.sprite = Yeti;
                     break;
             }
-            destructionCards[2].description.text = cruiserName; // <-- Improve this by getting loc key for the cruiser instead.
+            destructionCards[2].description.text = LandingSceneGod.Instance.commonStrings.GetString("Cruisers/" + cruiserName + "Name");
 
             //### Screen Setup ###
 
@@ -725,10 +725,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             else
             {
                 // Arena refund
-                if(PvPBattleSceneGodTunnel.isCost)
+                if (PvPBattleSceneGodTunnel.isCost)
                 {
                     result += arena.costcoins;
-                }                
+                }
             }
 
             return result;
