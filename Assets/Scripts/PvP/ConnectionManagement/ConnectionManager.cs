@@ -65,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public int playerGameMap;
         public float playerRating;
         public int playerBodykit;
-    //    public string playerSelectedVariants;
+        //    public string playerSelectedVariants;
         //        public bool isDebug;
     }
 
@@ -100,7 +100,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 #if UNITY_EDITOR
         public const int LatencyLimit = 2000;
 #else
-        public const int LatencyLimit = 200;
+        public const int LatencyLimit = 300;
 #endif
 
         const string k_DefaultIP = "127.0.0.1";
