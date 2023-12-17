@@ -25,7 +25,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Cruisers
 {
     public class CruiserFactory : ICruiserFactory
-	{
+    {
         private readonly IFactoryProvider _factoryProvider;
         private readonly IBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
@@ -76,8 +76,8 @@ namespace BattleCruisers.Cruisers
         }
 
         public void InitialisePlayerCruiser(
-            Cruiser playerCruiser, 
-            Cruiser aiCruiser, 
+            Cruiser playerCruiser,
+            Cruiser aiCruiser,
             ICameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker)
         {
@@ -108,8 +108,8 @@ namespace BattleCruisers.Cruisers
         }
 
         public void InitialiseAICruiser(
-            Cruiser playerCruiser, 
-            Cruiser aiCruiser, 
+            Cruiser playerCruiser,
+            Cruiser aiCruiser,
             ICameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker,
             IUserChosenTargetHelper userChosenTargetHelper)
@@ -142,11 +142,11 @@ namespace BattleCruisers.Cruisers
         }
 
         private void InitialiseCruiser(
-            Cruiser cruiser, 
+            Cruiser cruiser,
             ICruiser enemyCruiser,
             IUIManager uiManager,
             ICruiserHelper helper,
-            Faction faction, 
+            Faction faction,
             Direction facingDirection,
             FogStrength fogStrength,
             ISlotFilter highlightableFilter,
@@ -170,7 +170,7 @@ namespace BattleCruisers.Cruisers
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, _factoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor);
+            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
 
             RepairManager repairManager = new RepairManager(cruiserSpecificFactories.DroneFeedbackFactory, droneConsumerProvider, cruiser);
             if (!isPlayerCruiser)

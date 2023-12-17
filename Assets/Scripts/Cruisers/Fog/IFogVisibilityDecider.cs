@@ -2,6 +2,6 @@
 {
     public interface IFogVisibilityDecider
     {
-        bool ShouldFogBeVisible(int numOfFriendlyStealthGenerators, int numOfEnemySpySatellites);
+        bool ShouldFogBeVisible(int numOfFriendlyStealthGenerators, int numOfEnemySpySatellites, int numOfEnemySpyPlanes);
     }
 }

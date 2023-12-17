@@ -16,25 +16,25 @@ namespace BattleCruisers.Tests.Cruisers.Fog
         [Test]
         public void ShouldFogBeVisible_0StealthGenerators_0SpySatellites_ReturnsFalse()
         {
-            Assert.IsFalse(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 0));
+            Assert.IsFalse(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 0, numOfEnemySpyPlanes: 0));
         }
 
         [Test]
         public void ShouldFogBeVisible_1StealthGenerators_0SpySatellites_ReturnsTrue()
         {
-            Assert.IsTrue(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0));
+            Assert.IsTrue(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 0, numOfEnemySpyPlanes: 0));
         }
 
         [Test]
         public void ShouldFogBeVisible_0StealthGenerators_1SpySatellites_ReturnsFalse()
         {
-            Assert.IsFalse(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1));
+            Assert.IsFalse(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 0, numOfEnemySpySatellites: 1, numOfEnemySpyPlanes: 0));
         }
 
         [Test]
         public void ShouldFogBeVisible_1StealthGenerators_1SpySatellites_ReturnsFalse()
         {
-            Assert.IsFalse(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 1));
+            Assert.IsFalse(_decider.ShouldFogBeVisible(numOfFriendlyStealthGenerators: 1, numOfEnemySpySatellites: 1, numOfEnemySpyPlanes: 0));
         }
     }
 }
