@@ -307,6 +307,13 @@ namespace BattleCruisers.Data.Models
             set => minCPUFreq = value;
         }
 
+        private int maxLatency;
+        public int MaxLatency
+        {
+            get => maxLatency;
+            set => maxLatency = value;
+        }
+
         private string _playerName;
         public String PlayerName
         {

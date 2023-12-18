@@ -314,6 +314,7 @@ namespace BattleCruisers.Data
             PvPSysReqs sysReqs = JsonConvert.DeserializeObject<PvPSysReqs>(sysReqsJson);
             _gameModel.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
             _gameModel.MinCPUFreq = sysReqs.PvPSystemReqs.MinCPUFreq;
+            _gameModel.MaxLatency = sysReqs.PvPSystemReqs.MaxLatency;
         }
 
         public async Task<string> GetPVPVersion()
@@ -1092,6 +1093,7 @@ namespace BattleCruisers.Data
     {
         public int MinCPUCores { get; set; }
         public int MinCPUFreq { get; set; }
+        public int MaxLatency { get; set; }
     }
 
     struct UserAttributes { }

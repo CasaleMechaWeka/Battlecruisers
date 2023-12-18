@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.Client;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -97,11 +98,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         LocalLobby m_LocalLobby;
 
         public int MaxConnectedPlayers = 2;
-#if UNITY_EDITOR
-        public const int LatencyLimit = 2000;
-#else
-        public const int LatencyLimit = 300;
-#endif
+
+        // Latency gets assigned from Remote Config values now
+        private static int latencyLimit;
+        public static int LatencyLimit
+        {
+            get { return latencyLimit; }
+            set { latencyLimit = value; }
+        }
 
         const string k_DefaultIP = "127.0.0.1";
         const int k_DefaultPort = 7777;
@@ -146,6 +150,19 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         void Start()
         {
+#if UNITY_EDITOR
+            LatencyLimit = 2000;
+            Debug.Log("Running in editor mode, latency limit set to 2000. Remote Config latency limit would be " + ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MaxLatency);
+#else
+            LatencyLimit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MaxLatency;
+            if(LatencyLimit == 0) // Just in case 
+            {
+                LatencyLimit = 300;
+            }
+            Debug.Log("Remote Config latency limit set to " + ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MaxLatency);
+#endif
+
+
             List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_Hosting };
             foreach (var connectionState in states)
             {
