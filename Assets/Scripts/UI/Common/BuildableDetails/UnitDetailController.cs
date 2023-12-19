@@ -60,8 +60,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             leftNav.Initialise(_soundPlayer, LeftNavButton_OnClicked);
             rightNav.Initialise(_soundPlayer, RightNavButton_OnClicked);
-            CollectUnlockedUnitVariant();
 
+            variantIcon.gameObject.SetActive(false);
+            variantName.gameObject.SetActive(false);
+
+            CollectUnlockedUnitVariant();
         }
 
         private async void SetInitVariant()
@@ -87,7 +90,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         ShowVariantDetail(_unlockedVariants[_selectedUnit][_index]);
                         return;
                     }
-                    else if(_unlockedVariants[_selectedUnit].IndexOf(_selectedVariant) == _unlockedVariants[_selectedUnit].Count - 1)
+                    else if (_unlockedVariants[_selectedUnit].IndexOf(_selectedVariant) == _unlockedVariants[_selectedUnit].Count - 1)
                     {
                         leftNav.gameObject.SetActive(true);
                         rightNav.gameObject.SetActive(false);
