@@ -39,9 +39,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-        public TargetValue targetValue;
-        public override TargetValue TargetValue => targetValue;
-
         protected async override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
@@ -54,39 +51,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
         }
 
-        public void SetTargetType(TargetType targetType)
-        {
-            _targetType = targetType;
-        }
-
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
             return BCUtils.Helper.ConvertVectorsToPatrolPoints(patrolPoints);
-        }
-
-        public void SetHealth(float healthProportion)
-        {
-            Assert.IsTrue(healthProportion >= 0);
-            Assert.IsTrue(healthProportion <= 1);
-
-            float currentProportion = Health / MaxHealth;
-
-            if (Mathf.Approximately(healthProportion, currentProportion))
-            {
-                return;
-            }
-            else if (healthProportion > currentProportion)
-            {
-                float proportionToAdd = healthProportion - currentProportion;
-                float healthToAdd = proportionToAdd * MaxHealth;
-                RepairCommandExecute(healthToAdd);
-            }
-            else if (healthProportion < currentProportion)
-            {
-                float proportionToRemove = currentProportion - healthProportion;
-                float healthToRemove = proportionToRemove * MaxHealth;
-                TakeDamage(healthToRemove, damageSource: null);
-            }
         }
     }
 }
