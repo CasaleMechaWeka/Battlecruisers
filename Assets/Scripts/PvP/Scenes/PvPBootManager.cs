@@ -164,13 +164,16 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             };
 
             List<QueryOrder> mOrders = new List<QueryOrder>
-        {
+            {
                 // Order by newest lobbies first
             new QueryOrder(false, QueryOrder.FieldOptions.Created),
             new QueryOrder(false, QueryOrder.FieldOptions.N1),
             new QueryOrder(false, QueryOrder.FieldOptions.N2),
-        };
+            };
+
             string joinedCode = PlayerPrefs.GetString("JOINCODE", " ");
+            int joinTryCount = 0;
+            int joinTryLimit = 3;
             while (true && !m_CancellationToken.IsCancellationRequested)
             {
                 UnityEngine.Debug.Log("===> Started Finding Lobbies");
@@ -201,8 +204,17 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
                                 if (ClientLatency > ConnectionManager.LatencyLimit / 2)
                                 {
-                                    HandleClientLatency();
-                                    return;
+                                    if (joinTryCount < joinTryLimit)
+                                    {
+                                        joinTryCount++;
+                                        await Task.Delay(500);
+                                    }
+                                    if (joinTryCount >= joinTryLimit)
+                                    {
+                                        HandleClientLatency();
+                                        return;
+                                    }
+                                    break;
                                 }
                                 int iHostLatency = 0;
                                 int.TryParse(HostLatency, out iHostLatency); 
@@ -251,12 +263,20 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     int ClientLatency = qosResultsForRegion[0].AverageLatencyMs;
                                     CheckLatency(ClientLatency);
                                     UnityEngine.Debug.Log("===>client latency ---> " + ClientLatency);
-                                    
 
                                     if (ClientLatency > ConnectionManager.LatencyLimit / 2)
                                     {
-                                        HandleClientLatency();
-                                        return;
+                                        if (joinTryCount < joinTryLimit)
+                                        {
+                                            joinTryCount++;
+                                            await Task.Delay(500);
+                                        }
+                                        if (joinTryCount >= joinTryLimit)
+                                        {
+                                            HandleClientLatency();
+                                            return;
+                                        }
+                                        break;
                                     }
                                     int iHostLatency = 0;
                                     int.TryParse(HostLatency, out iHostLatency);
@@ -296,8 +316,17 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         CheckLatency(averageLatency);
                         if (averageLatency > ConnectionManager.LatencyLimit / 2)
                         {
-                            HandleClientLatency();
-                            return;
+                            if (joinTryCount < joinTryLimit)
+                            {
+                                joinTryCount++;
+                                await Task.Delay(500);
+                            }
+                            if (joinTryCount >= joinTryLimit)
+                            {
+                                HandleClientLatency();
+                                return;
+                            }
+                            break;
                         }
                         MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                         var lobbyData = new Dictionary<string, DataObject>()
@@ -345,8 +374,17 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     CheckLatency(averageLatency);
                     if (averageLatency > ConnectionManager.LatencyLimit / 2)
                     {
-                        HandleClientLatency();
-                        return;
+                        if (joinTryCount < joinTryLimit)
+                        {
+                            joinTryCount++;
+                            await Task.Delay(500);
+                            return;
+                        }
+                        else
+                        {
+                            HandleClientLatency();
+                            return;
+                        }
                     }
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
