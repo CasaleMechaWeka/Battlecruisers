@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private IPvPTarget _targetToDamage;
 
-        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 2;
+        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 4;
 
         public void Initialise(IPvPUnit parentAircraft, IPvPFactoryProvider factoryProvider, IPvPTarget target)
         {
