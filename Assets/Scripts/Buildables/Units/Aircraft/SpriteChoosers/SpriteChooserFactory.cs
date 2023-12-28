@@ -26,12 +26,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             IList<ISpriteWrapper> bomberSprites = await _spriteProvider.GetBomberSpritesAsync();
             return new SpriteChooser(_assignerFactory, bomberSprites, maxVelocityProvider);
         }
-		
-		public async Task<ISpriteChooser> CreateFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-		{
+
+        public async Task<ISpriteChooser> CreateFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
+        {
             IList<ISpriteWrapper> fighterSprites = await _spriteProvider.GetFighterSpritesAsync();
             return new SpriteChooser(_assignerFactory, fighterSprites, maxVelocityProvider);
-		}
+        }
 
         public async Task<ISpriteChooser> CreateGunshipSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
         {
@@ -48,6 +48,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         public async Task<ISpriteChooser> CreateBroadswordSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
         {
             IList<ISpriteWrapper> broadswordSprites = await _spriteProvider.GetBroadswordSpritesAsync();
+            return new SpriteChooser(_assignerFactory, broadswordSprites, maxVelocityProvider);
+        }
+
+        public async Task<ISpriteChooser> CreateSpyPlaneSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
+        {
+            IList<ISpriteWrapper> broadswordSprites = await _spriteProvider.GetSpyPlaneSpritesAsync();
             return new SpriteChooser(_assignerFactory, broadswordSprites, maxVelocityProvider);
         }
 
