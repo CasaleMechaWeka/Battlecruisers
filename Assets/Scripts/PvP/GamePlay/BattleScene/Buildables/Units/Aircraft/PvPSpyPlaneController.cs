@@ -1,14 +1,14 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units.Aircraft;
-using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BCUtils = BattleCruisers.Utils;
+using BCUtils = BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
-namespace BattleCruisers.Buildables.Units.Aircraft
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.Test.Utilities
 {
-    public class SpyPlaneController : AircraftController, ISpyPlaneController
+    public class PvPSpyPlaneController : PvPAircraftController
     {
         // IList is not picked up by the Unity inspector
         public List<Vector2> patrolPoints;
@@ -44,12 +44,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 ActiveMovementController = DummyMovementController;
             }
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSpyPlaneSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
         }
 
-        protected override IList<IPatrolPoint> GetPatrolPoints()
+        protected override IList<IPvPPatrolPoint> GetPatrolPoints()
         {
-            return BCUtils.Helper.ConvertVectorsToPatrolPoints(patrolPoints);
+            return BCUtils.PvPHelper.ConvertVectorsToPatrolPoints(patrolPoints);
         }
     }
 }

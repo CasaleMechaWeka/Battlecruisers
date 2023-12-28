@@ -2,6 +2,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public interface IPvPFogVisibilityDecider
     {
-        bool ShouldFogBeVisible(int numOfFriendlyStealthGenerators, int numOfEnemySpySatellites);
+        bool ShouldFogBeVisible(int numOfFriendlyStealthGenerators, int numOfEnemySpySatellites, int numOfEnemySpyPlanes);
     }
 }

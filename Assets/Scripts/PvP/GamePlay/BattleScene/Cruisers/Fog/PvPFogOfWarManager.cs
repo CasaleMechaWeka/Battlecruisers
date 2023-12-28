@@ -1,12 +1,16 @@
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog
@@ -19,14 +23,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IPvPGameObject _fog;
         private readonly IPvPFogVisibilityDecider _visibilityDecider;
         private readonly IPvPCruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
+        private readonly IPvPCruiserUnitMonitor _enemyUnitMonitor;
         private readonly IList<IPvPStealthGenerator> _friendlyIStealthGenerators;
         private readonly IList<IPvPSpySatelliteLauncher> _enemySpySatellites;
+        private readonly IList<IPvPSpyPlaneController> _enemySpyPlanes;
 
         public PvPFogOfWarManager(
             IPvPGameObject fog,
             IPvPFogVisibilityDecider visibilityDecider,
             IPvPCruiserBuildingMonitor friendlyBuildingMonitor,
-            IPvPCruiserBuildingMonitor enemyBuildingMonitor)
+            IPvPCruiserBuildingMonitor enemyBuildingMonitor,
+            IPvPCruiserUnitMonitor enemyUnitMonitor)
         {
             PvPHelper.AssertIsNotNull(fog, visibilityDecider, friendlyBuildingMonitor, enemyBuildingMonitor);
 
@@ -34,12 +41,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _visibilityDecider = visibilityDecider;
             _friendlyBuildingMonitor = friendlyBuildingMonitor;
             _enemyBuildingMonitor = enemyBuildingMonitor;
+            _enemyUnitMonitor = enemyUnitMonitor;
 
             _friendlyBuildingMonitor.BuildingCompleted += _friendlyBuildingMonitor_BuildingCompleted;
             _enemyBuildingMonitor.BuildingCompleted += _enemyBuildingMonitor_BuildingCompleted;
+            _enemyUnitMonitor.UnitCompleted += _enemyUnitMonitor_UnitCompleted;
 
             _friendlyIStealthGenerators = new List<IPvPStealthGenerator>();
             _enemySpySatellites = new List<IPvPSpySatelliteLauncher>();
+            _enemySpyPlanes = new List<IPvPSpyPlaneController>();
         }
 
         private void _friendlyBuildingMonitor_BuildingCompleted(object sender, PvPBuildingCompletedEventArgs e)
@@ -59,9 +69,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             AddBuilding(_enemySpySatellites, e.CompletedBuilding, SatelliteLauncher_Destroyed);
         }
 
+        private void _enemyUnitMonitor_UnitCompleted(object sender, PvPUnitCompletedEventArgs e)
+        {
+            AddUnit(_enemySpyPlanes, e.CompletedUnit, SpyPlane_Destroyed);
+        }
+
         private void SatelliteLauncher_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
             RemoveBuilding(_enemySpySatellites, e.DestroyedTarget, SatelliteLauncher_Destroyed);
+        }
+
+        private void SpyPlane_Destroyed(object sender, PvPDestroyedEventArgs e)
+        {
+            RemoveUnit(_enemySpyPlanes, e.DestroyedTarget, SpyPlane_Destroyed);
         }
 
         private void AddBuilding<T>(IList<T> buildings, IPvPBuildable buildingCompleted, EventHandler<PvPDestroyedEventArgs> destroyedHander)
@@ -73,6 +93,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 buildings.Add(building);
                 building.Destroyed += destroyedHander;
+
+                UpdateFogState();
+            }
+        }
+
+        private void AddUnit<T>(IList<T> units, IPvPBuildable unitCompleted, EventHandler<PvPDestroyedEventArgs> destroyedHander)
+            where T : class, IPvPUnit
+        {
+            T unit = unitCompleted as T;
+
+            if (unit != null)
+            {
+                units.Add(unit);
+                unit.Destroyed += destroyedHander;
 
                 UpdateFogState();
             }
@@ -91,9 +125,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UpdateFogState();
         }
 
+        private void RemoveUnit<T>(IList<T> units, IPvPTarget desroyedTarget, EventHandler<PvPDestroyedEventArgs> destroyedHandler)
+            where T : class, IPvPUnit
+        {
+            T destroyedUnit = desroyedTarget.Parse<T>();
+
+            destroyedUnit.Destroyed -= destroyedHandler;
+            Assert.IsTrue(units.Contains(destroyedUnit));
+            units.Remove(destroyedUnit);
+
+            UpdateFogState();
+        }
         private void UpdateFogState()
         {
-            _fog.IsVisible = _visibilityDecider.ShouldFogBeVisible(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count);
+            _fog.IsVisible = _visibilityDecider.ShouldFogBeVisible(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count, _enemySpyPlanes.Count);
         }
 
         public void DisposeManagedState()
