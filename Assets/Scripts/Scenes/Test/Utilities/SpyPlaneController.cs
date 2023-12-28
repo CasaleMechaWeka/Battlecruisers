@@ -10,7 +10,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class SpyPlaneController : AircraftController, ISpyPlaneController
     {
-        private TargetType _targetType;
 
         // IList is not picked up by the Unity inspector
         public List<Vector2> patrolPoints;
@@ -20,7 +19,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             set { patrolPoints = new List<Vector2>(value); }
         }
 
-        public override TargetType TargetType => _targetType;
+
 
         private bool _useDummyMovementController = false;
         public bool UseDummyMovementController
@@ -48,7 +47,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 ActiveMovementController = DummyMovementController;
             }
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSpyPlaneSpriteChooserAsync(this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
