@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPCruiserBuildingMonitor enemyBuildingMonitor,
             IPvPCruiserUnitMonitor enemyUnitMonitor)
         {
-            PvPHelper.AssertIsNotNull(fog, visibilityDecider, friendlyBuildingMonitor, enemyBuildingMonitor);
+            PvPHelper.AssertIsNotNull(fog, visibilityDecider, friendlyBuildingMonitor, enemyBuildingMonitor, enemyUnitMonitor);
 
             _fog = fog;
             _visibilityDecider = visibilityDecider;
@@ -145,6 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             _friendlyBuildingMonitor.BuildingCompleted -= _friendlyBuildingMonitor_BuildingCompleted;
             _enemyBuildingMonitor.BuildingCompleted -= _enemyBuildingMonitor_BuildingCompleted;
+            _enemyUnitMonitor.UnitCompleted -= _enemyUnitMonitor_UnitCompleted;
         }
     }
 }

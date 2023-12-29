@@ -82,6 +82,8 @@ namespace BattleCruisers.Data.Static
             public static UnitKey Gunship { get; } = new UnitKey(UnitCategory.Aircraft, "Gunship");
             public static UnitKey SteamCopter { get; } = new UnitKey(UnitCategory.Aircraft, "SteamCopter");
             public static UnitKey Broadsword { get; } = new UnitKey(UnitCategory.Aircraft, "Broadsword");
+            public static UnitKey SpyPlane { get; } = new UnitKey(UnitCategory.Aircraft, "SpyPlane");
+
             public static UnitKey TestAircraft { get; } = new UnitKey(UnitCategory.Aircraft, "TestAircraft");
 
             // Ships
@@ -98,7 +100,7 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         // Aircraft
-                        Bomber, Fighter, Gunship, SteamCopter, Broadsword, TestAircraft,
+                        Bomber, Fighter, Gunship, SteamCopter, Broadsword, SpyPlane, TestAircraft,
                         // Ships
                         AttackBoat, AttackRIB, Frigate, Destroyer, ArchonBattleship
                     };
@@ -532,7 +534,7 @@ namespace BattleCruisers.Data.Static
                 return new VariantKey("Variant" + index.ToString("000"));
             }
         }
-            public static class Effects
+        public static class Effects
         {
             public static EffectKey BuilderDrone { get; } = new EffectKey("BuilderDrone");
         }

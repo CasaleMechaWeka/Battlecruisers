@@ -222,7 +222,7 @@ namespace BattleCruisers.Data.Static
             {
                 game._heckles[i].isOwned = true;
                 game.AddHeckle(i);
-            }               
+            }
 
             return game;
             //unlockedHulls: AllHullKeys(),
@@ -452,6 +452,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Fighter, 12 },
                 { StaticPrefabKeys.Units.SteamCopter, 28 },
                 { StaticPrefabKeys.Units.Broadsword, 41 },
+                { StaticPrefabKeys.Units.SpyPlane, 41 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
