@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using BCUtils = BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.Test.Utilities
 {
-    public class PvPSpyPlaneController : PvPAircraftController
+    public class PvPSpyPlaneController : PvPAircraftController, IPvPSpyPlaneController
     {
         // IList is not picked up by the Unity inspector
         public List<Vector2> patrolPoints;
