@@ -430,7 +430,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
                 { StaticPrefabKeys.Buildings.MLRS, 29},
                 { StaticPrefabKeys.Buildings.GatlingMortar, 32},
-                { StaticPrefabKeys.Buildings.IonCannon, 37 },
+                { StaticPrefabKeys.Buildings.IonCannon, 38 },
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
@@ -477,7 +477,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Megalodon, 26 },
                 { StaticPrefabKeys.Hulls.Rickshaw, 34 },
                 { StaticPrefabKeys.Hulls.TasDevil, 35 },
-                { StaticPrefabKeys.Hulls.BlackRig, 38 },
+                { StaticPrefabKeys.Hulls.BlackRig, 37 },
                 { StaticPrefabKeys.Hulls.Yeti, 40 }
             };
         }
