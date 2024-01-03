@@ -192,7 +192,7 @@ namespace BattleCruisers.Scenes
                 {
                     await UnityServices.InitializeAsync(options);
                 }
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
                 {
                     // When using a ParrelSync clone, switch to a different authentication profile to force the clone
@@ -200,7 +200,7 @@ namespace BattleCruisers.Scenes
                     string customArgument = ParrelSync.ClonesManager.GetArgument();
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
-                #endif
+#endif
                 if (InternetConnectivity.Value)
                 {
                     List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
@@ -241,7 +241,7 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
-                #if PLATFORM_ANDROID
+#if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await GoogleAttemptSilentSigningAsync(soundPlayer);
@@ -320,13 +320,13 @@ namespace BattleCruisers.Scenes
 
             if (CurrentInternetConnectivity.IsConnected)
             {
-                #if PLATFORM_IOS
+#if PLATFORM_IOS
                 appleBtn.Initialise(soundPlayer, AppleLogin);
                 appleBtn.gameObject.SetActive(true);
-                #elif PLATFORM_ANDROID
+#elif PLATFORM_ANDROID
                 googleBtn.Initialise(soundPlayer, GoogleLogin);
                 googleBtn.gameObject.SetActive(true);
-                #endif
+#endif
             }
 
             LogToScreen("All assets loaded"); // ALL ASSETS LOADED
@@ -372,6 +372,8 @@ namespace BattleCruisers.Scenes
 #elif PLATFORM_ANDROID
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
 #elif PLATFORM_IOS
+            return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
+#elif PLATFORM_STANDALONE_WIN
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
 #endif
         }
