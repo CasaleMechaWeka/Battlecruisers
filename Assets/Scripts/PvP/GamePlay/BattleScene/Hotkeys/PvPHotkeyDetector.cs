@@ -309,7 +309,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             if (_input.GetKeyUp(_hotkeyList.Broadsword))
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Fighter: {_hotkeyList.Broadsword}");
-                AircraftButton4?.Invoke(this, EventArgs.Empty);
+                AircraftButton5?.Invoke(this, EventArgs.Empty);
             }
 
             // Naval
