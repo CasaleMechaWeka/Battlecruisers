@@ -71,13 +71,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);
-            _clickHandler.HandleClick(IsMatch, _buildingWrapper);
+            HandleClick(IsMatch);
         }
 
         protected override void HandleClick(bool isButtonEnabled)
         {
-            //we are now controlling the selection via OnPointerDown
-            // _clickHandler.HandleClick(IsMatch, _buildingWrapper);
+            _clickHandler.HandleClick(IsMatch, _buildingWrapper);
         }
 
         public override void HandleHover()
