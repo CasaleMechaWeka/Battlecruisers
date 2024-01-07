@@ -351,7 +351,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public float rotate_speed;
         public int burst_fire_rate;
         public int burst_size;
-        public int laser_duration;
+        public float laser_duration;
         public float damagePerS; // cannon
 
         [Header("Projectile Stats")]
