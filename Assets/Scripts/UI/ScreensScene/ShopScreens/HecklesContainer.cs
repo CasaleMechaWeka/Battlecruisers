@@ -166,7 +166,9 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+                //STEAM HOTFIX    ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), null, null);
+                // STEAM HOTFIX
                 return;
             }
         }
