@@ -326,6 +326,8 @@ namespace BattleCruisers.Scenes
 #elif PLATFORM_ANDROID
                 googleBtn.Initialise(soundPlayer, GoogleLogin);
                 googleBtn.gameObject.SetActive(true);
+#elif PLATFORM_STANDALONE_WIN 
+                AnonymousLogin();
 #endif
             }
 

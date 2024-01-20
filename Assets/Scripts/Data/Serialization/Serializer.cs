@@ -69,6 +69,11 @@ namespace BattleCruisers.Data.Serialization
                 game = (GameModel)output;
             }
 
+#if PREMIUM_EDITION
+            game.PremiumEdition = true;
+            game._bodykits[0].isOwned = true;
+#endif
+
             file.Close();
             return game;
         }
