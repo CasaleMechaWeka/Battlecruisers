@@ -166,10 +166,15 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                //STEAM HOTFIX    ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+
+                // Check for Windows platform
+#if UNITY_STANDALONE_WIN
+                // Execute this line if it's a Windows build
                 ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), null, null);
-                // STEAM HOTFIX
-                return;
+#else
+        // Execute the original line for non-Windows builds
+        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+#endif
             }
         }
 
