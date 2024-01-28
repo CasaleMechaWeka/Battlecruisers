@@ -14,6 +14,8 @@ using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using Unity.Services.Authentication;
+using Unity.Services.Leaderboards;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -52,6 +54,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Image badgeIcon, medalIcon;
         public Text rankTitle;
         public Image rankImage;
+        public Text notorietyScore;
+        private string playerID;
 
         private ILocTable commonStrings;
 
@@ -109,6 +113,21 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             xpBar.setValues(currentXP, nextLevelXP);
             currentXPString.text = FormatNumber(currentXP);
             levelXPString.text = FormatNumber(nextLevelXP);
+
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                try
+                {
+                const string LeaderboardID = "BC-PvP1v1Leaderboard";
+                var score = await LeaderboardsService.Instance.GetPlayerScoreAsync(LeaderboardID);
+                Text scoreString = notorietyScore?.GetComponent<Text>();
+                scoreString.text = Mathf.Floor((float)score.Score).ToString();
+                }
+                catch (Exception e)
+                {
+                    e.ToString();
+                }
+            }
         }
 
         private int CalculateRank(long score)
