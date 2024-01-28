@@ -119,9 +119,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 try
                 {
                 const string LeaderboardID = "BC-PvP1v1Leaderboard";
-                var score = await LeaderboardsService.Instance.GetPlayerScoreAsync(LeaderboardID);
+                var playerEntry = await LeaderboardsService.Instance.GetPlayerScoreAsync(LeaderboardID);
                 Text scoreString = notorietyScore?.GetComponent<Text>();
-                scoreString.text = Mathf.Floor((float)score.Score).ToString();
+                scoreString.text = Mathf.Floor((float)playerEntry.Score).ToString();
                 }
                 catch (Exception e)
                 {
