@@ -330,6 +330,10 @@ namespace BattleCruisers.Scenes
                 AnonymousLogin();
 #endif
             }
+            else
+            {
+                AnonymousLogin();
+            }
 
             LogToScreen("All assets loaded"); // ALL ASSETS LOADED
         }
