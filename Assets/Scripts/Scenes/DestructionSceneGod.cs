@@ -226,7 +226,7 @@ namespace BattleCruisers.Scenes
             }
 
             destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
-            destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
+            // destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
 
             //### Screen Setup ###
 
