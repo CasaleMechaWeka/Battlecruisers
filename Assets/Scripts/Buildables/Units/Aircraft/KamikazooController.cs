@@ -43,7 +43,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private const float WITHIN_RANGE_VELOCITY_MULTIPLIER = 0.5f;
 
         public float enemyHoverRangeInM, enemyFollowRangeInM;
-        bool completed = false;
 
         private ITarget _target;
         public ITarget Target
@@ -100,14 +99,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _isAtCruisingHeight = false;
         }
 
-        protected override void AddBuildRateBoostProviders(
-    IGlobalBoostProviders globalBoostProviders,
-    IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
-        }
-
         protected override async void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
@@ -140,7 +131,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
             //create Sprite Chooser
             _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
-            completed = true;
         }
 
         private void SetupTargetDetection()
