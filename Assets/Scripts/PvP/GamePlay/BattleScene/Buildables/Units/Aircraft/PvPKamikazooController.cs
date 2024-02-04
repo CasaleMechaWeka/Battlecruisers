@@ -212,15 +212,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
         {
             IList<Vector2> patrolPositions = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
-            IList<IPvPPatrolPoint> patrolPoints = new List<IPvPPatrolPoint>(1)
-            {
-                new PvPPatrolPoint(patrolPositions[1], removeOnceReached: true)
-            };
-            for (int i = 2; i < patrolPositions.Count; ++i)
-            {
-                patrolPoints.Add(new PvPPatrolPoint(patrolPositions[i]));
-            }
-            return patrolPoints;
+            return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
         }
 
         private void OnFirstPatrolPointReached()
