@@ -49,6 +49,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     return _unitPoolProvider.SteamCopterPool;
                 case "PvPBroadsword":
                     return _unitPoolProvider.BroadswordPool;
+                case "PvPSpyPlane":
+                    return _unitPoolProvider.SpyPlanePool;
 
                 case "PvPTestAircraft":
                     return _unitPoolProvider.TestAircraftPool;

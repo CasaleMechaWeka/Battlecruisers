@@ -177,6 +177,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Units.Fighter,
                 StaticPrefabKeys.Units.SteamCopter,
                 StaticPrefabKeys.Units.Broadsword,
+                StaticPrefabKeys.Units.SpyPlane,
 
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,

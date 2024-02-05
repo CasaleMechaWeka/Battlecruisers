@@ -9,9 +9,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Data.Models;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
@@ -25,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
         private readonly static PvPUnitKey LATEGAME_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPSteamCopter;
         private readonly static PvPUnitKey ANTI_AIR_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPFighter;
         private readonly static PvPUnitKey ANTI_NAVAL_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPGunship;
-
+        private readonly static PvPUnitKey SPYPLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPSpyPlane;
         public PvPFactoryManagerFactory(PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPPrefabFactory prefabFactory, IPvPThreatMonitorFactory threatMonitorFactory)
         {
             PvPHelper.AssertIsNotNull(battleSceneGodTunnel, prefabFactory, threatMonitorFactory);
@@ -72,6 +69,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             IPvPBuildableWrapper<IPvPUnit> antiNavalPlane =
               (aiCruiser.Faction == PvPFaction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(ANTI_NAVAL_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(ANTI_NAVAL_PLANE_KEY)) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
+                defaultPlane;
+
+            IPvPBuildableWrapper<IPvPUnit> spyPlane =
+              (aiCruiser.Faction == PvPFaction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(SPYPLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(SPYPLANE_KEY)) ?
+                _prefabFactory.GetUnitWrapperPrefab(SPYPLANE_KEY) :
                 defaultPlane;
 
             IPvPThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());

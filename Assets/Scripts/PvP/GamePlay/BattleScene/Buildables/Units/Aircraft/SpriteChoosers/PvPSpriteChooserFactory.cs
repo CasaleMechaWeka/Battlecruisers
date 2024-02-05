@@ -45,6 +45,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPSpriteChooser(_assignerFactory, copterSprites, maxVelocityProvider);
         }
 
+        public async Task<IPvPSpriteChooser> CreateSpyPlaneSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
+        {
+            IList<IPvPSpriteWrapper> spyPlaneSprites = await _spriteProvider.GetSpyPlaneSpritesAsync();
+            return new PvPSpriteChooser(_assignerFactory, spyPlaneSprites, maxVelocityProvider);
+        }
+
         public IPvPSpriteChooser CreateDummySpriteChooser(Sprite sprite)
         {
             return new PvPDummySpriteChooser(sprite);
