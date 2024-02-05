@@ -77,6 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             FighterPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFighter);
             GunshipPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGunship);
             SteamCopterPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSteamCopter);
+            BroadswordPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPBroadsword);
             SpyPlanePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSpyPlane);
             TestAircraftPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPTestAircraft);
 

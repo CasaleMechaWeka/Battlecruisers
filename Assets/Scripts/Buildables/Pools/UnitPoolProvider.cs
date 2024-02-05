@@ -51,7 +51,6 @@ namespace BattleCruisers.Buildables.Pools
             GunshipPool = CreatePool(StaticPrefabKeys.Units.Gunship);
             SteamCopterPool = CreatePool(StaticPrefabKeys.Units.SteamCopter);
             BroadswordPool = CreatePool(StaticPrefabKeys.Units.Broadsword);
-            BroadswordPool = CreatePool(StaticPrefabKeys.Units.Broadsword);
             SpyPlanePool = CreatePool(StaticPrefabKeys.Units.SpyPlane);
             TestAircraftPool = CreatePool(StaticPrefabKeys.Units.TestAircraft);
 
