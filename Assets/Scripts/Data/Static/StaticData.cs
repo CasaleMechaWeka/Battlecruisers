@@ -453,7 +453,6 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Fighter, 12 },
                 { StaticPrefabKeys.Units.SteamCopter, 28 },
                 { StaticPrefabKeys.Units.Broadsword, 41 },
-                { StaticPrefabKeys.Units.SpyPlane, 41 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
