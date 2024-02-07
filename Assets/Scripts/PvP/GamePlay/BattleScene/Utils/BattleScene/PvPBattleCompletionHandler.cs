@@ -67,11 +67,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 {
                     _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
                     _applicationModel.DataProvider.SaveGame();
+                    Debug.Log(" -----------------> Host elo has been updated");
                 }
-                else
+                else if (team == Cruisers.Team.RIGHT)
                 {
                     _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
                     _applicationModel.DataProvider.SaveGame();
+                    Debug.Log("------------------> Client elo has been updated");
                 }
 
                 double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
