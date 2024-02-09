@@ -74,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         public void CalculateScoresOfLeftPlayer()
         {
-            Debug.Log("Calculate Right player score");
+            Debug.Log("Calculate Left player score");
             left_levelTimeInSeconds.Value = PvPBattleSceneGodServer.deadBuildables_left[PvPTargetType.PlayedTime].GetPlayedTime();
             left_aircraftVal.Value = PvPBattleSceneGodServer.deadBuildables_left[PvPTargetType.Aircraft].GetTotalDamageInCredits();
             left_shipsVal.Value = PvPBattleSceneGodServer.deadBuildables_left[PvPTargetType.Ships].GetTotalDamageInCredits();
