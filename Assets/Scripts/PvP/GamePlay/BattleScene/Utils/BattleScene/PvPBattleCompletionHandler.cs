@@ -62,19 +62,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
-                var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
+                var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
                 if (team == Cruisers.Team.LEFT)
                 {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
-                    _applicationModel.DataProvider.SaveGame();
-                    Debug.Log(" -----------------> Host elo has been updated");
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item1;
                 }
-                else if (team == Cruisers.Team.RIGHT)
+                else
                 {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
-                    _applicationModel.DataProvider.SaveGame();
-                    Debug.Log("------------------> Client elo has been updated");
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item2;
                 }
+                _applicationModel.DataProvider.SaveGame();
 
                 double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
                 const string LeaderboardID = "BC-PvP1v1Leaderboard";
@@ -135,30 +132,43 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private float Probability(float rating1, float rating2)
         {
-            return 1.0f * 1.0f
-            / (1
-               + 1.0f
-                     * (float)(Math.Pow(
-                         10, 1.0f * (rating1 - rating2)
-                                 / 400)));
+            return 1.0f * 1.0f / (1 + 1.0f * (float)(Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
         }
-        private (float, float) EloRating(float Ra, float Rb, int K, bool d)
+        private (float hostRating, float clientRating) CalculateNewRatings(float hostRating, float clientRating, bool wasVictory, Team playerTeam)
         {
-            float Pb = Probability(Ra, Rb);
-            float Pa = Probability(Rb, Ra);
+            const int K = 30;
+            float Pb = Probability(hostRating, clientRating);
+            float Pa = Probability(clientRating, hostRating);
 
-            if (d == true)
+            //If wasVictory == true check if is Host or Client and update elo, if !wasVictory, check if Host or Client and update elo
+            if (wasVictory) 
             {
-                Ra = Ra + K * (1 - Pa);
-                Rb = Rb + K * (0 - Pb);
+                if (playerTeam == Cruisers.Team.LEFT)
+                {
+                    hostRating = hostRating + K * (1 - Pa);
+                    clientRating = clientRating + K * (0 - Pb);
+                }
+                else 
+                {
+                    clientRating = clientRating + K * (1 - Pb);
+                    hostRating = hostRating + K * (0 - Pa);
+                }
             }
 
             else
             {
-                Ra = Ra + K * (0 - Pa);
-                Rb = Rb + K * (1 - Pb);
+                if (playerTeam == Cruisers.Team.LEFT)
+                {
+                    hostRating = hostRating + K * (0 - Pa);
+                    clientRating = clientRating + K * (1 - Pb);
+                }
+                else
+                {
+                    clientRating = clientRating + K * (0 - Pb);
+                    hostRating = hostRating + K * (1 - Pa);
+                }
             }
-            return (Ra, Rb);
+            return (hostRating, clientRating);
         }
 
         // For match normally completed
@@ -175,17 +185,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             }
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
-                var Ratings = EloRating(playerARating, playerBRating, 30, wasVictory);
+                var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
                 if (team == Cruisers.Team.LEFT)
                 {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item1;
-                    _applicationModel.DataProvider.SaveGame();
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item1;
                 }
                 else
                 {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = Ratings.Item2;
-                    _applicationModel.DataProvider.SaveGame();
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item2;
                 }
+                _applicationModel.DataProvider.SaveGame();
 
                 double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
                 const string LeaderboardID = "BC-PvP1v1Leaderboard";
