@@ -36,6 +36,7 @@ namespace BattleCruisers.Data.Settings
         bool ShowAds { get; set; }
         bool TurboMode { get; set; }
         bool RichMode { get; set; }
+        bool HecklesAllowed {  get; set; }
         void Save();
     }
 }

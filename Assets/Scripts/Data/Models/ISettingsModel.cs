@@ -13,6 +13,7 @@ namespace BattleCruisers.Data.Models
         public bool ShowAds { get; set; }
         public bool TurboMode { get; set; }
         public bool RichMode { get; set; }
+        public bool HecklesAllowed { get; set; }
         bool VSync { get; set; }
         bool FullScreen { get; set; }
         int ZoomSpeedLevel { get; set; }

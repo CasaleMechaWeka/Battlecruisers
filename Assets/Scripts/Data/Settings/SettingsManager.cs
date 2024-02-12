@@ -98,6 +98,12 @@ namespace BattleCruisers.Data.Settings
             set => _settings.RichMode = value;
         }
 
+        public bool HecklesAllowed
+        {
+            get => _settings.HecklesAllowed;
+            set => _settings.HecklesAllowed= value;
+        }
+
         public bool VSync
         {
             get => _settings.VSync;

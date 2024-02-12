@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public ResolutionDropdown resolutionDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
-        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle, turboToggle, richToggle;
+        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle, turboToggle, richToggle, hecklesToggle;
         public SaveButton saveButton;
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
@@ -106,6 +106,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             adsToggle.Initialise(_settingsManager.ShowAds);
             turboToggle.Initialise(_settingsManager.TurboMode);
             richToggle.Initialise(_settingsManager.RichMode);
+            hecklesToggle.Initialise(_settingsManager.HecklesAllowed);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -132,6 +133,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     adsToggle.IsChecked,
                     turboToggle.IsChecked,
                     richToggle.IsChecked,
+                    hecklesToggle.IsChecked,
                     fullScreenToggle.IsChecked,       
                     VSyncToggle.IsChecked,            
                     hotkeysPanel);                    
@@ -354,6 +356,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             adsToggle.ResetToDefaults(_settingsManager.ShowAds);
             turboToggle.ResetToDefaults(_settingsManager.TurboMode);
             richToggle.ResetToDefaults(_settingsManager.RichMode);
+            hecklesToggle.ResetToDefaults(_settingsManager.HecklesAllowed);
         }
     }
 }

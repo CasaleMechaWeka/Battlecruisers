@@ -205,6 +205,14 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private bool _hecklesAllowed;
+        public bool HecklesAllowed
+        {
+            get => _hecklesAllowed;
+            set => _hecklesAllowed = value;
+        }
+
+        [SerializeField]
         private bool _VSync;
         public bool VSync
         {
@@ -271,6 +279,7 @@ namespace BattleCruisers.Data.Models
             ShowAds = false;
             TurboMode = false;
             RichMode = false;
+            HecklesAllowed = true;
 
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
             InitialiseGraphicsSettings();
