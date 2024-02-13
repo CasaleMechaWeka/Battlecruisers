@@ -345,14 +345,15 @@ namespace BattleCruisers.Data.Models
                 && AlertVolume == other.AlertVolume
                 && InterfaceVolume == other.InterfaceVolume
                 && MusicVolume == other.MusicVolume
-                && ShowToolTips == other.ShowToolTips;
+                && ShowToolTips == other.ShowToolTips
+                && HecklesAllowed == other.HecklesAllowed;
         }
 
         public override int GetHashCode()
         {
             return this.GetHashCode
                 (AIDifficulty, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel,
-                MasterVolume, EffectVolume, AmbientVolume, AlertVolume, InterfaceVolume, MusicVolume, ShowToolTips);
+                MasterVolume, EffectVolume, AmbientVolume, AlertVolume, InterfaceVolume, MusicVolume, ShowToolTips, HecklesAllowed);
         }
     }
 }
