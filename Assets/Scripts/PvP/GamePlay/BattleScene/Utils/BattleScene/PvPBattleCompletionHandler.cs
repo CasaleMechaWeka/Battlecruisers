@@ -132,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private float Probability(float rating1, float rating2)
         {
-            return 1.0f * 1.0f / (1 + 1.0f * (float)(Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
+            return 1.0f / (1 + (float)(Math.Pow(10, (rating1 - rating2) / 400)));
         }
         private (float hostRating, float clientRating) CalculateNewRatings(float hostRating, float clientRating, bool wasVictory, Team playerTeam)
         {
@@ -141,17 +141,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             float Pa = Probability(clientRating, hostRating);
 
             //If wasVictory == true check if is Host or Client and update elo, if !wasVictory, check if Host or Client and update elo
-            if (wasVictory) 
+            if (wasVictory)
             {
                 if (playerTeam == Cruisers.Team.LEFT)
                 {
-                    hostRating = hostRating + K * (1 - Pa);
-                    clientRating = clientRating + K * (0 - Pb);
+                    hostRating += K * (1 - Pa);
+                    clientRating += K * (0 - Pb);
                 }
-                else 
+                else
                 {
-                    clientRating = clientRating + K * (1 - Pb);
-                    hostRating = hostRating + K * (0 - Pa);
+                    hostRating += K * (0 - Pa);
+                    clientRating += K * (1 - Pb);
                 }
             }
 
@@ -159,13 +159,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (playerTeam == Cruisers.Team.LEFT)
                 {
-                    hostRating = hostRating + K * (0 - Pa);
-                    clientRating = clientRating + K * (1 - Pb);
+                    hostRating += K * (0 - Pa);
+                    clientRating += K * (1 - Pb);
                 }
                 else
                 {
-                    clientRating = clientRating + K * (0 - Pb);
-                    hostRating = hostRating + K * (1 - Pa);
+                    hostRating += K * (1 - Pa);
+                    clientRating += clientRating + K * (0 - Pb);
                 }
             }
             return (hostRating, clientRating);
