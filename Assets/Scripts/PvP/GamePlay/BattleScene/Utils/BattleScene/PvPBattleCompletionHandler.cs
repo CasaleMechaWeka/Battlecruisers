@@ -75,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
                 double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
                 const string LeaderboardID = "BC-PvP1v1Leaderboard";
-                bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+                bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) != 0;
                 if (isSetPlayerName)
                 {
                     try
@@ -132,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private float Probability(float rating1, float rating2)
         {
-            return 1.0f * 1.0f / (1 + 1.0f * (float)(Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
+            return 1.0f / (1 + (float)(Math.Pow(10, (rating1 - rating2) / 400)));
         }
         private (float hostRating, float clientRating) CalculateNewRatings(float hostRating, float clientRating, bool wasVictory, Team playerTeam)
         {
@@ -140,18 +140,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             float Pb = Probability(hostRating, clientRating);
             float Pa = Probability(clientRating, hostRating);
 
-            //If wasVictory == true check if is Host or Client and update elo, if !wasVictory, check if Host or Client and update elo
-            if (wasVictory) 
+            //If wasVictory == true if host wins; false if client wins
+            if (wasVictory)
             {
                 if (playerTeam == Cruisers.Team.LEFT)
                 {
-                    hostRating = hostRating + K * (1 - Pa);
-                    clientRating = clientRating + K * (0 - Pb);
+                    hostRating += K * (1 - Pa);
+                    clientRating -= K * Pb;
                 }
-                else 
+                else
                 {
-                    clientRating = clientRating + K * (1 - Pb);
-                    hostRating = hostRating + K * (0 - Pa);
+                    hostRating -= K * Pa;
+                    clientRating += K * (1 - Pb);
                 }
             }
 
@@ -159,13 +159,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (playerTeam == Cruisers.Team.LEFT)
                 {
-                    hostRating = hostRating + K * (0 - Pa);
-                    clientRating = clientRating + K * (1 - Pb);
+                    hostRating -= K * Pa;
+                    clientRating += K * (1 - Pb);
                 }
                 else
                 {
-                    clientRating = clientRating + K * (0 - Pb);
-                    hostRating = hostRating + K * (1 - Pa);
+                    hostRating += K * (1 - Pa);
+                    clientRating -= K * Pb;
                 }
             }
             return (hostRating, clientRating);
@@ -179,26 +179,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
             _isCompleted = true;
-            if (MatchmakingScreenController.Instance != null)
-            {
-                MatchmakingScreenController.Instance.Destroy();
-            }
+            MatchmakingScreenController.Instance?.Destroy();
+
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
                 var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
                 if (team == Cruisers.Team.LEFT)
                 {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item1;
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.hostRating;
                 }
                 else
                 {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item2;
+                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.clientRating;
                 }
                 _applicationModel.DataProvider.SaveGame();
 
                 double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
                 const string LeaderboardID = "BC-PvP1v1Leaderboard";
-                bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+                bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) != 0;
                 if (isSetPlayerName)
                 {
                     try
@@ -207,6 +205,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     }
                     catch
                     {
+                        Debug.Log("Failed to update player leaderboard score");
                     }
                 }
             }
@@ -235,23 +234,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async void DestroyAllNetworkObjects()
         {
             await Task.Delay(10);
-            if (GameObject.Find("ApplicationController") != null)
-                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
-
-            if (GameObject.Find("ConnectionManager") != null)
-                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("PopupPanelManager") != null)
-                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("UIMessageManager") != null)
-                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("UpdateRunner") != null)
-                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
-
-            if (GameObject.Find("NetworkManager") != null)
-                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
+            GameObject.Find("ApplicationController")?.GetComponent<ApplicationController>().DestroyNetworkObject();
+            GameObject.Find("ConnectionManager")?.GetComponent<ConnectionManager>().DestroyNetworkObject();
+            GameObject.Find("PopupPanelManager")?.GetComponent<PopupManager>().DestroyNetworkObject();
+            GameObject.Find("UIMessageManager")?.GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
+            GameObject.Find("UpdateRunner")?.GetComponent<UpdateRunner>().DestroyNetworkObject();
+            GameObject.Find("NetworkManager")?.GetComponent<BCNetworkManager>().DestroyNetworkObject();
         }
     }
 }

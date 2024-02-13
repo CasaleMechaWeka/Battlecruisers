@@ -114,20 +114,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             currentXPString.text = FormatNumber(currentXP);
             levelXPString.text = FormatNumber(nextLevelXP);
 
-            if (Application.internetReachability != NetworkReachability.NotReachable)
-            {
-                try
-                {
-                const string LeaderboardID = "BC-PvP1v1Leaderboard";
-                var playerEntry = await LeaderboardsService.Instance.GetPlayerScoreAsync(LeaderboardID);
-                Text scoreString = notorietyScore?.GetComponent<Text>();
-                scoreString.text = Mathf.Floor((float)playerEntry.Score).ToString();
-                }
-                catch (Exception e)
-                {
-                    e.ToString();
-                }
-            }
+            Text scoreString = notorietyScore?.GetComponent<Text>();
+            scoreString.text = Mathf.Floor(_dataProvider.GameModel.BattleWinScore).ToString();
+
         }
 
         private int CalculateRank(long score)
