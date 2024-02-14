@@ -83,7 +83,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPGunship { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPGunship");
             public static PvPUnitKey PvPSteamCopter { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSteamCopter");
             public static PvPUnitKey PvPBroadsword { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBroadsword");
-            public static PvPUnitKey PvPSpyPlane { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpyPlane");
             public static PvPUnitKey PvPTestAircraft { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPTestAircraft");
             public static PvPUnitKey PvPSpySatellite { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpySatellite");
             public static PvPUnitKey PvPDeathstar { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPDeathstar");
@@ -102,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     return new List<IPvPPrefabKey>()
                     {
                         // Aircraft
-                        PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPSpyPlane, PvPTestAircraft,PvPSpySatellite,PvPDeathstar,
+                        PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPTestAircraft,PvPSpySatellite,PvPDeathstar,
                         // Ships
                         PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPArchonBattleship
                     };

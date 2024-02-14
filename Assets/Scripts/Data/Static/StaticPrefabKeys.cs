@@ -82,7 +82,6 @@ namespace BattleCruisers.Data.Static
             public static UnitKey Gunship { get; } = new UnitKey(UnitCategory.Aircraft, "Gunship");
             public static UnitKey SteamCopter { get; } = new UnitKey(UnitCategory.Aircraft, "SteamCopter");
             public static UnitKey Broadsword { get; } = new UnitKey(UnitCategory.Aircraft, "Broadsword");
-            public static UnitKey SpyPlane { get; } = new UnitKey(UnitCategory.Aircraft, "SpyPlane");
 
             public static UnitKey TestAircraft { get; } = new UnitKey(UnitCategory.Aircraft, "TestAircraft");
 
@@ -100,7 +99,7 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         // Aircraft
-                        Bomber, Fighter, Gunship, SteamCopter, Broadsword, SpyPlane, TestAircraft,
+                        Bomber, Fighter, Gunship, SteamCopter, Broadsword, TestAircraft,
                         // Ships
                         AttackBoat, AttackRIB, Frigate, Destroyer, ArchonBattleship
                     };

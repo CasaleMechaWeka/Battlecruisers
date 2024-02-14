@@ -138,8 +138,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new UnitKey(UnitCategory.Aircraft, "SteamCopter");
                 case ParentBuildable.Broadsword:
                     return new UnitKey(UnitCategory.Aircraft, "Broadsword");
-                case ParentBuildable.SpyPlane:
-                    return new UnitKey(UnitCategory.Aircraft, "SpyPlane");
                 case ParentBuildable.AttackBoat:
                     return new UnitKey(UnitCategory.Naval, "AttackBoat");
                 case ParentBuildable.AttackRIB:
@@ -215,8 +213,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSteamCopter");
                 case ParentBuildable.Broadsword:
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBroadsword");
-                case ParentBuildable.SpyPlane:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpyPlane");
                 case ParentBuildable.AttackBoat:
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackBoat");
                 case ParentBuildable.AttackRIB:
@@ -317,9 +313,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = true;
                     break;
                 case ParentBuildable.Broadsword:
-                    ret = true;
-                    break;
-                case ParentBuildable.SpyPlane:
                     ret = true;
                     break;
                 case ParentBuildable.AttackBoat:
