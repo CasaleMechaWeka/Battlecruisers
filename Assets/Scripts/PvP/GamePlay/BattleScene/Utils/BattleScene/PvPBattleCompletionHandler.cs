@@ -179,7 +179,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
             _isCompleted = true;
-            MatchmakingScreenController.Instance?.Destroy();
+            if (MatchmakingScreenController.Instance != null)
+            {
+                MatchmakingScreenController.Instance.Destroy();
+            }
 
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
