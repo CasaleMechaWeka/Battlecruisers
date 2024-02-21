@@ -18,7 +18,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         {
             Assert.IsNotNull(prefabKey);
             //Assert.IsTrue(_prefabs.ContainsKey(prefabKey));
-            return _prefabs[prefabKey];
+            if (_prefabs.ContainsKey(prefabKey))
+                return _prefabs[prefabKey];
+            else
+                return null;
         }
     }
 }
