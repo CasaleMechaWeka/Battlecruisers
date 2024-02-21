@@ -17,6 +17,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 {
     public class PvPDeleteButtonController : PvPCanvasGroupButton
     {
+        public GameObject buildingMenu;
+        private CanvasGroup canvasGroup;
         private IPvPUIManager _uiManager;
         private IPvPFilter<IPvPTarget> _buttonVisibilityFilter;
         private IPvPLongPressIdentifier _longPressIdentifier;
@@ -59,10 +61,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _longPressIdentifier.LongPressStart += _longPressIdentifier_LongPressStart;
             _longPressIdentifier.LongPressEnd += _longPressIdentifier_LongPressEnd;
             _longPressIdentifier.LongPressInterval += _longPressIdentifier_LongPressInterval;
+            canvasGroup = buildingMenu.GetComponent<CanvasGroup>();
         }
 
         private void _longPressIdentifier_LongPressStart(object sender, EventArgs e)
         {
+            SetCanvasGroupProperties(false, false);
             activeImage.sprite = activeStateImages[0];
             activeImage.gameObject.SetActive(true);
             _soundPlayer.PlaySoundAsync(ClickSound);
@@ -75,6 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private void _longPressIdentifier_LongPressEnd(object sender, EventArgs e)
         {
             activeImage.gameObject.SetActive(false);
+            SetCanvasGroupProperties(true, true);
         }
 
         private void _longPressIdentifier_LongPressInterval(object sender, EventArgs e)
@@ -93,6 +98,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             _uiManager.HideItemDetails();
             Buildable.Destroy();
+        }
+        private void SetCanvasGroupProperties(bool interactable, bool blocksRaycasts) //This function is made for BugFix
+        {
+            if (canvasGroup != null)
+            {
+                canvasGroup.interactable = interactable;
+                canvasGroup.blocksRaycasts = blocksRaycasts;
+            }
         }
     }
 }
