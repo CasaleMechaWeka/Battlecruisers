@@ -17,8 +17,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 {
     public class PvPDeleteButtonController : PvPCanvasGroupButton
     {
-        public GameObject buildingMenu;
-        private CanvasGroup canvasGroup;
+        public GameObject PvPbuildingMenu;
+        private CanvasGroup PvPcanvasGroup;
         private IPvPUIManager _uiManager;
         private IPvPFilter<IPvPTarget> _buttonVisibilityFilter;
         private IPvPLongPressIdentifier _longPressIdentifier;
@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _longPressIdentifier.LongPressStart += _longPressIdentifier_LongPressStart;
             _longPressIdentifier.LongPressEnd += _longPressIdentifier_LongPressEnd;
             _longPressIdentifier.LongPressInterval += _longPressIdentifier_LongPressInterval;
-            canvasGroup = buildingMenu.GetComponent<CanvasGroup>();
+            PvPcanvasGroup = PvPbuildingMenu.GetComponent<CanvasGroup>();
         }
 
         private void _longPressIdentifier_LongPressStart(object sender, EventArgs e)
@@ -99,12 +99,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _uiManager.HideItemDetails();
             Buildable.Destroy();
         }
-        private void SetCanvasGroupProperties(bool interactable, bool blocksRaycasts) //This function is made for BugFix
+        private void SetCanvasGroupProperties(bool interactable, bool blocksRaycasts) //This function is made for BugFixing
         {
-            if (canvasGroup != null)
+            if (PvPcanvasGroup != null)
             {
-                canvasGroup.interactable = interactable;
-                canvasGroup.blocksRaycasts = blocksRaycasts;
+                PvPcanvasGroup.interactable = interactable;
+                PvPcanvasGroup.blocksRaycasts = blocksRaycasts;
             }
         }
     }
