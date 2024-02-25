@@ -14,6 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> BulletsPool { get; }
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> HighCalibreBulletsPool { get; }
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> TinyBulletsPool { get; }
+        public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> FlakBulletsPool { get; }
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> ShellsLargePool { get; }
 
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> NovaShellPool { get; }
@@ -48,6 +49,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                = CreatePool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
                    factoryProvider,
                    PvPStaticPrefabKeys.PvPProjectiles.PvPTinyBullet,
+                   PvPInitialCapacity.BULLET);
+            
+            FlakBulletsPool
+               = CreatePool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
+                   factoryProvider,
+                   PvPStaticPrefabKeys.PvPProjectiles.PvPFlakBullet,
                    PvPInitialCapacity.BULLET);
 
             ShellsSmallPool
@@ -137,6 +144,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await BulletsPool.AddCapacity(1);
             await HighCalibreBulletsPool.AddCapacity(1);
             await TinyBulletsPool.AddCapacity(1);
+            await FlakBulletsPool.AddCapacity(1);
             await ShellsSmallPool.AddCapacity(1);
             await ShellsLargePool.AddCapacity(1);
             await NovaShellPool.AddCapacity(1);
@@ -155,6 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await BulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
             await HighCalibreBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
             await TinyBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
+            await FlakBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
             await ShellsSmallPool.AddCapacity(PvPInitialCapacity.SHELL_SMALL - 1);
             await ShellsLargePool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
             await NovaShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
