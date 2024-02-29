@@ -43,7 +43,8 @@ namespace BattleCruisers.UI
             {
                 if (_soundPlayer == null)
                     Debug.Log("Sound player is null");
-                _soundPlayer.PlaySoundAsync(ClickSound);
+                else
+                    _soundPlayer.PlaySoundAsync(ClickSound);
             }
 
             _clickAction?.Invoke();
