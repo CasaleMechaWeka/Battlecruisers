@@ -12,23 +12,23 @@ namespace BattleCruisers.Projectiles.ActivationArgs
     public class SmartMissileActivationArgs<TStats> : ProjectileActivationArgs<TStats> where TStats : IProjectileStats
     {
         public ICruiserTargetFactoriesProvider TargetFactories { get; }
-        public ICruiser EnempCruiser { get; }
+        public ICruiser EnemyCruiser { get; }
 
         public SmartMissileActivationArgs(
             Vector3 position,
-            TStats projectileStats, 
-            Vector2 initialVelocityInMPerS, 
-            ITargetFilter targetFilter, 
+            TStats projectileStats,
+            Vector2 initialVelocityInMPerS,
+            ITargetFilter targetFilter,
             ITarget parent,
             IAudioClipWrapper impactSound,
             ICruiserTargetFactoriesProvider targetFactories,
-            ICruiser enemyCruiser) 
+            ICruiser enemyCruiser)
             : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent, impactSound)
         {
             Helper.AssertIsNotNull(targetFactories, enemyCruiser);
 
             TargetFactories = targetFactories;
-            EnempCruiser = enemyCruiser;
+            EnemyCruiser = enemyCruiser;
         }
     }
 }

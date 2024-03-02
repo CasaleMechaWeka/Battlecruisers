@@ -100,7 +100,7 @@ namespace BattleCruisers.Projectiles
             base.Activate(activationArgs);
             _activationArgs = activationArgs;
 
-            Target = activationArgs.EnempCruiser;
+            Target = activationArgs.EnemyCruiser;
 
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
 
@@ -130,7 +130,7 @@ namespace BattleCruisers.Projectiles
         {
             ITargetFilter targetFilter
                 = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(
-                    activationArgs.EnempCruiser.Faction,
+                    activationArgs.EnemyCruiser.Faction,
                     activationArgs.ProjectileStats.AttackCapabilities);
             _enemyDetectorProvider
                 = activationArgs.TargetFactories.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
@@ -158,7 +158,7 @@ namespace BattleCruisers.Projectiles
 
         private void Retarget()
         {
-            Target = _activationArgs.EnempCruiser;
+            Target = _activationArgs.EnemyCruiser;
 
             SetupTargetProcessor(_activationArgs);
         }
