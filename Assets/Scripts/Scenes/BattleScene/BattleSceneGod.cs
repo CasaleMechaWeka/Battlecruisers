@@ -12,7 +12,6 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.UI.BattleScene.HelpLabels;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
@@ -43,7 +42,6 @@ using BattleCruisers.Buildables;
 using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
-using Unity.Services.Analytics;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 // === Tag keys :D ===
