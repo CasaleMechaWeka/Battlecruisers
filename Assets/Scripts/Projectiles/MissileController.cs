@@ -14,9 +14,9 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Projectiles
 {
     public class MissileController :
-        ProjectileWithTrail<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>, 
+        ProjectileWithTrail<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>,
         ITargetProvider
-	{
+    {
         private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;
 
@@ -27,7 +27,9 @@ namespace BattleCruisers.Projectiles
         public SpriteRenderer missile;
 
         protected override float TrailLifetimeInS => 3;
-        public  ITarget Target { get; private set; }
+        public ITarget Target { get; private set; }
+
+        private TargetProviderActivationArgs<IProjectileStats> _activationArgs;
 
         public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
         {
@@ -41,55 +43,58 @@ namespace BattleCruisers.Projectiles
 
         public override void Activate(TargetProviderActivationArgs<IProjectileStats> activationArgs)
         {
-            base.Activate(activationArgs);
+            _activationArgs = activationArgs;
+            base.Activate(_activationArgs);
 
             Logging.Log(Tags.MISSILE, $"Rotation: {transform.rotation.eulerAngles}");
 
-			Target = activationArgs.Target;
+            Target = _activationArgs.Target;
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
 
             IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
-			ITargetProvider targetProvider = this;
+            ITargetProvider targetProvider = this;
 
-			MovementController 
+            MovementController
                 = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
-                    _rigidBody, 
-                    maxVelocityProvider, 
-                    targetProvider, 
+                    _rigidBody,
+                    maxVelocityProvider,
+                    targetProvider,
                     _factoryProvider.TargetPositionPredictorFactory);
 
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;
 
             _rocketTarget.GameObject.SetActive(true);
-            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(_commonStrings, _activationArgs.Parent.Faction, _rigidBody, this);
 
-            activationArgs.Target.Destroyed += Target_Destroyed;
-		}
+            _activationArgs.Target.Destroyed += Target_Destroyed;
+        }
 
-		private void Target_Destroyed(object sender, DestroyedEventArgs e)
-		{
+        private void Target_Destroyed(object sender, DestroyedEventArgs e)
+        {
             // Let missile keep current velocity
             MovementController = _dummyMovementController;
 
             // Destroy missile eventually (in case it does not hit a matching target)
             _deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
-		}
+        }
+
 
         private void ConditionalDestroy()
         {
-            if (gameObject.activeSelf)
+            if (gameObject.activeSelf && missile.enabled)
             {
                 DestroyProjectile();
             }
         }
 
-		protected override void DestroyProjectile()
-		{
+        protected override void DestroyProjectile()
+        {
+            Debug.Log("DestroyProjectile");
             missile.enabled = false;
             _rocketTarget.GameObject.SetActive(false);
             Target.Destroyed -= Target_Destroyed;
-			base.DestroyProjectile();
-		}
-	}
+            base.DestroyProjectile();
+        }
+    }
 }
