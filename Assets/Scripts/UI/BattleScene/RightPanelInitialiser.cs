@@ -42,25 +42,25 @@ namespace BattleCruisers.UI.BattleScene
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
             Helper.AssertIsNotNull(
-                applicationModel, 
-                uiManager, 
-                playerCruiser, 
-                userChosenTargetHelper, 
-                buttonVisibilityFilters, 
+                applicationModel,
+                uiManager,
+                playerCruiser,
+                userChosenTargetHelper,
+                buttonVisibilityFilters,
                 pauseGameManager,
                 battleCompletionHandler,
                 soundPlayer,
                 navigationPermitterManager);
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
-            SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
+            SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters, applicationModel);
             IMainMenuManager mainMenuManager = new MainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
- 
-            return 
+
+            return
                 new RightPanelComponents(
-                    informator, 
+                    informator,
                     mainMenuManager,
                     modalMenu,
                     speedComponents,
@@ -88,11 +88,11 @@ namespace BattleCruisers.UI.BattleScene
             return informator;
         }
 
-        private SpeedComponents SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
+        private SpeedComponents SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters, IApplicationModel applicationModel)
         {
             SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
-            return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
+            return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter, applicationModel);
         }
 
         private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
@@ -104,6 +104,6 @@ namespace BattleCruisers.UI.BattleScene
             modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
         }
 
-     
+
     }
 }
