@@ -125,7 +125,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             Loadout loadout = _gameModel.PlayerLoadout;
             if (!GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
                 OnClicked();
-            if (_gameModel.PlayerLoadout.GetUnitListSize(_unitPrefab.Buildable.Category) > 1)
+            if (_gameModel.PlayerLoadout.GetUnitListSize(_unitPrefab.Buildable.Category) > 1 || !loadout.GetUnitKeys(_unitPrefab.Buildable.Category).Contains(_unitkey))
                 selectUnitButton.ToggleUnitSelection();
         }
     }
