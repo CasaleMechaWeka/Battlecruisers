@@ -12,7 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelsSetController : MonoBehaviourWrapper
     {
         private int _numOfLevels;
-
         public int firstLevelIndex;
         public NavigationFeedbackButton navigationFeedbackButton;
 
@@ -22,8 +21,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
             LevelsScreenController levelsScreen,
-            IList<LevelInfo> allLevels, 
-            int numOfLevelsUnlocked, 
+            IList<LevelInfo> allLevels,
+            int numOfLevelsUnlocked,
             ISingleSoundPlayer soundPlayer,
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider trashDataList,
@@ -55,15 +54,15 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             // Set up Secret levels
             SecretLevelButtonController[] secretLevelButton = GetComponentsInChildren<SecretLevelButtonController>();
             int secretLevelNum = secretLevelButton.Length;
-            if(secretLevelButton != null)
+            if (secretLevelButton != null)
             {
-                for(int i= 0; i < secretLevelNum; ++i)
+                for (int i = 0; i < secretLevelNum; ++i)
                 {
                     secretLevelButton[i].Initialise(screensSceneGod, soundPlayer, numOfLevelsUnlocked);
                 }
             }
-            
-            
+
+
 
             // Set up trails
             TrailController[] trails = GetComponentsInChildren<TrailController>();
@@ -81,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             navigationFeedbackButton.Initialise(levelsScreen, setIndex, hasUnlockedLevels);
 
             SideQuestButtonController sideQuestButton = GetComponentInChildren<SideQuestButtonController>();
-            if(sideQuestButton != null)
+            if (sideQuestButton != null)
             {
                 sideQuestButton.Initialise(screensSceneGod, soundPlayer, 0, numOfLevelsUnlocked, true);
             }
@@ -93,5 +92,5 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelNum > firstLevelIndex
                 && levelNum <= firstLevelIndex + _numOfLevels;
         }
-	}
+    }
 }
