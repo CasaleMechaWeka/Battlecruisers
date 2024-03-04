@@ -46,6 +46,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using System.Threading;
 using UnityEditor;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Tutorial;
+using BattleCruisers.Utils.Threading;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Scenes
 {
@@ -53,13 +57,18 @@ namespace BattleCruisers.Scenes
     {
         public IPrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
-        private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
         private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
+        private readonly IBattleSceneHelper _battleSceneHelper;
+        private ITutorialProvider _tutorialProvider;
+        private IApplicationModel _applicationModel;
+        private IDataProvider _dataProvider;
+        //private ScreensSceneGodCompoments components;
+        private NavigationPermitters navigationPermitters;
+        private IBattleSceneHelper helper;
 
         public HomeScreenController homeScreen;
         public LevelsScreenController levelsScreen;
@@ -133,14 +142,17 @@ namespace BattleCruisers.Scenes
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
+            //components = GetComponent<ScreensSceneGodCompoments>();
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
+            IPrefabFetcher prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
+            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             // Interacting with Cloud
@@ -257,7 +269,6 @@ namespace BattleCruisers.Scenes
                 // if not Internet Connection or Sign in, we will use local data.
             }
 
-            var prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
@@ -442,6 +453,11 @@ namespace BattleCruisers.Scenes
             }
             PlayerPrefs.GetInt("PLAYED", 1);
             PvPBattleSceneGodTunnel.isCost = false;
+            //helper = CreateHelper(_applicationModel, prefabFetcher, prefabFactory, navigationPermitters, storyStrings); //The error prompts here
+        }
+        public ScreensSceneGod(IBattleSceneHelper battleSceneHelper)
+        {
+            _battleSceneHelper = battleSceneHelper;
         }
 
         public async void DestroyAllNetworkObjects()
@@ -740,6 +756,93 @@ namespace BattleCruisers.Scenes
                 LoadBattleScene();
             }
         }
+        private IBattleSceneHelper CreateHelper(
+            IApplicationModel applicationModel,
+            IPrefabFetcher prefabFetcher,
+            IPrefabFactory prefabFactory,
+            IDeferrer deferrer,
+            NavigationPermitters navigationPermitters,
+            ILocTable storyStrings)
+        {
+            switch (applicationModel.Mode)
+            {
+                case GameMode.Tutorial:
+                    TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, navigationPermitters);
+                    _tutorialProvider = helper;
+                    return helper;
+
+                case GameMode.Campaign:
+                    return new NormalHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+
+                case GameMode.Skirmish:
+                    return new SkirmishHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+
+                case GameMode.CoinBattle:
+                    return new CoinBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+
+                default:
+                    throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");
+            }
+        }
+        public void SomeMethodUsingBattleSceneHelper()
+        {
+            if (_battleSceneHelper != null)
+            {
+                // Here you can use methods from IBattleSceneHelper
+                ILevel currentLevel = helper.GetLevel();
+                
+                // Example usage:
+                Debug.Log($"Current level: {currentLevel}");
+            }
+            else
+            {
+                Debug.LogWarning("BattleSceneHelper is not set!");
+            }
+        }
+
+
+        public async Task GoToSideQuestTrashScreenAsync(int sideQuestLevelNum)
+        {
+            // Implementation similar to GoToTrashScreen method, but for side quest levels
+            AdvertisingBanner.stopAdvert();
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {sideQuestLevelNum}");
+            Assert.IsTrue(
+                sideQuestLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + sideQuestLevelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+
+            _applicationModel.SelectedLevel = sideQuestLevelNum;
+
+            if (_applicationModel.Mode == GameMode.Campaign)
+            {
+                if (LevelStages.STAGE_STARTS.Contains(sideQuestLevelNum - 1) && levelToShowCutscene != sideQuestLevelNum)
+                {
+                    levelToShowCutscene = sideQuestLevelNum;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
+                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                }
+                else
+                {
+                    levelToShowCutscene = 0;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
+                    GoToScreen(trashScreen, playDefaultMusic: false);
+                }
+            }
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                levelToShowCutscene = 0;
+                // Random bodykits for AIBot
+                ILevel level = _applicationModel.DataProvider.Levels[sideQuestLevelNum - 1];
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? await GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.SaveGame();
+                GoToScreen(trashScreen, playDefaultMusic: false);
+            }
+            else
+            {
+                LoadBattleScene();
+            }
+        }
 
         public void GoToChooseDifficultyScreen()
         {
@@ -919,5 +1022,9 @@ namespace BattleCruisers.Scenes
 
             return int.Parse(version);
         }
+    }
+
+    internal class ScreensSceneGodCompoments
+    {
     }
 }

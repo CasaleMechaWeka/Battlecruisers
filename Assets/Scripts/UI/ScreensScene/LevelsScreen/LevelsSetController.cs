@@ -79,6 +79,12 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             // Setup navigation feedback button
             bool hasUnlockedLevels = numOfLevelsUnlocked > firstLevelIndex;
             navigationFeedbackButton.Initialise(levelsScreen, setIndex, hasUnlockedLevels);
+
+            SideQuestButtonController sideQuestButton = GetComponentInChildren<SideQuestButtonController>();
+            if(sideQuestButton != null)
+            {
+                sideQuestButton.Initialise(screensSceneGod, soundPlayer, 0, numOfLevelsUnlocked, true);
+            }
         }
 
         public bool ContainsLevel(int levelNum)

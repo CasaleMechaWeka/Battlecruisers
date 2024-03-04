@@ -31,6 +31,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Tutorial;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Scenes
 {
@@ -45,6 +49,13 @@ namespace BattleCruisers.Scenes
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
+        private readonly IBattleSceneHelper _battleSceneHelper;
+        private ITutorialProvider _tutorialProvider;
+        private IApplicationModel applicationModel;
+        private IDataProvider dataProvider;
+        private BattleSceneGodComponents components;
+        private NavigationPermitters navigationPermitters;
+        private IBattleSceneHelper helper;
 
         public HomeScreenController homeScreen;
         public LevelsScreenController levelsScreen;
@@ -440,6 +451,115 @@ namespace BattleCruisers.Scenes
                     }
                 }
             }
+        }
+        public void SomeMethodUsingBattleSceneHelper()
+        {
+            if (_battleSceneHelper != null)
+            {
+                // Here you can use methods from IBattleSceneHelper
+                ILevel currentLevel = helper.GetLevel();
+                
+                // Example usage:
+                Debug.Log($"Current level: {currentLevel}");
+            }
+            else
+            {
+                Debug.LogWarning("BattleSceneHelper is not set!");
+            }
+        }
+
+        public async Task GoToSideQuestTrashScreenAsync(int sideQuestLevelNum)
+        {
+            // Implementation similar to GoToTrashScreen method, but for side quest levels
+            AdvertisingBanner.stopAdvert();
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {sideQuestLevelNum}");
+            Assert.IsTrue(
+                sideQuestLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + sideQuestLevelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+
+            _applicationModel.SelectedLevel = sideQuestLevelNum;
+
+            if (_applicationModel.Mode == GameMode.Campaign)
+            {
+                if (LevelStages.STAGE_STARTS.Contains(sideQuestLevelNum - 1) && levelToShowCutscene != sideQuestLevelNum)
+                {
+                    levelToShowCutscene = sideQuestLevelNum;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
+                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                }
+                else
+                {
+                    levelToShowCutscene = 0;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
+                    GoToScreen(trashScreen, playDefaultMusic: false);
+                }
+            }
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                levelToShowCutscene = 0;
+                // Random bodykits for AIBot
+                ILevel level = _applicationModel.DataProvider.Levels[sideQuestLevelNum - 1];
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? await GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.SaveGame();
+                GoToScreen(trashScreen, playDefaultMusic: false);
+            }
+            else
+            {
+                LoadBattleScene();
+            }
+        }
+        private async Task<int> GetRandomBodykitForAI(HullType hullType)
+        {
+            int id_bodykit = -1;
+            if (hullType != HullType.None)
+            {
+                List<int> bodykits = new List<int>();
+                for (int i = 0; i < /*12*/ _applicationModel.DataProvider.GameModel.Bodykits.Count; i++)
+                {
+                    if ((await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i))).cruiserType == hullType)
+                    {
+                        bodykits.Add(i);
+                    }
+                }
+                if (bodykits.Count == 0)
+                    id_bodykit = -1;
+                else
+                    id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
+            }
+            return id_bodykit;
+        }
+        private HullType GetHullType(string hullName)
+        {
+            switch (hullName)
+            {
+                case "Trident":
+                    return HullType.Trident;
+                case "BlackRig":
+                    return HullType.BlackRig;
+                case "Bullshark":
+                    return HullType.Bullshark;
+                case "Eagle":
+                    return HullType.Eagle;
+                case "Hammerhead":
+                    return HullType.Hammerhead;
+                case "Longbow":
+                    return HullType.Longbow;
+                case "Megalodon":
+                    return HullType.Megalodon;
+                case "Raptor":
+                    return HullType.Raptor;
+                case "Rickshaw":
+                    return HullType.Rickshaw;
+                case "Rockjaw":
+                    return HullType.Rockjaw;
+                case "TasDevil":
+                    return HullType.TasDevil;
+                case "Yeti":
+                    return HullType.Yeti;
+            }
+            return HullType.None;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.UI.ScreensScene;
+using System.Threading.Tasks;
+
 namespace BattleCruisers.Scenes
 {
     public interface IScreensSceneGod
@@ -19,5 +21,7 @@ namespace BattleCruisers.Scenes
         void LoadBattle1v1Mode();
         void GotoShopScreen();
         public void GotoBlackMarketScreen();
+        Task GoToSideQuestTrashScreenAsync(int sideQuestLevelNum);
+        void SomeMethodUsingBattleSceneHelper();
     }
 }
