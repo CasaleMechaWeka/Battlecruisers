@@ -1,17 +1,9 @@
-using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
-using Mono.CompilerServices.SymbolWriter;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using BattleCruisers.Utils;
-using System.Linq;
 
 namespace BattleCruisers.UI.ScreensScene
 {
