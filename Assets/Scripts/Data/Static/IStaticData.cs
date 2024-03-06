@@ -31,8 +31,8 @@ namespace BattleCruisers.Data.Static
         IPvPLevelStrategies PvPStrategies { get; }
 
         ILoot GetLevelLoot(int levelCompleted);
-        int LevelFirstAvailableIn(UnitKey unitKey);
-        int LevelFirstAvailableIn(BuildingKey buildingKey);
+        int UnitUnlockLevel(UnitKey unitKey);
+        int BuildingUnlockLevel(BuildingKey buildingKey);
 
     }
 }

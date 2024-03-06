@@ -307,12 +307,12 @@ namespace BattleCruisers.Data.Static
 
         private List<BuildingKey> GetInitialBuildings()
         {
-            return GetBuildingsFirstAvailableIn(levelFirstAvailableIn: 1).ToList();
+            return GetBuildingsUnlockLevel(levelFirstAvailableIn: 1).ToList();
         }
 
         private List<UnitKey> GetInitialUnits()
         {
-            return GetUnitsFirstAvailableIn(levelFirstAvailableIn: 1).ToList();
+            return GetUnitUnlockLevel(levelFirstAvailableIn: 1).ToList();
         }
 
         private IList<ILevel> CreateLevels()
@@ -551,26 +551,26 @@ namespace BattleCruisers.Data.Static
 
             return
                 new Loot(
-                    hullKeys: GetHullsFirstAvailableIn(availabilityLevelNum),
-                    unitKeys: GetUnitsFirstAvailableIn(availabilityLevelNum),
-                    buildingKeys: GetBuildingsFirstAvailableIn(availabilityLevelNum));
+                    hullKeys: GetHullUnlockLevel(availabilityLevelNum),
+                    unitKeys: GetUnitUnlockLevel(availabilityLevelNum),
+                    buildingKeys: GetBuildingsUnlockLevel(availabilityLevelNum));
         }
 
-        private IList<UnitKey> GetUnitsFirstAvailableIn(int levelFirstAvailableIn)
+        private IList<UnitKey> GetUnitUnlockLevel(int levelFirstAvailableIn)
         {
-            return GetBuildablesFirstAvailableIn(_unitToUnlockedLevel, levelFirstAvailableIn);
+            return GetBuildableUnlockLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
         }
 
-        private IList<BuildingKey> GetBuildingsFirstAvailableIn(int levelFirstAvailableIn)
+        private IList<BuildingKey> GetBuildingsUnlockLevel(int levelFirstAvailableIn)
         {
-            return GetBuildablesFirstAvailableIn(_buildingToUnlockedLevel, levelFirstAvailableIn);
+            return GetBuildableUnlockLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }
 
         /// <summary>
         /// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
         /// (ie, the starting level, where we have multiple buildables available).
         /// </summary>
-        private IList<TKey> GetBuildablesFirstAvailableIn<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+        private IList<TKey> GetBuildableUnlockLevel<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
             where TKey : IPrefabKey
         {
             return
@@ -580,7 +580,7 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 
-        private IList<HullKey> GetHullsFirstAvailableIn(int levelFirstAvailableIn)
+        private IList<HullKey> GetHullUnlockLevel(int levelFirstAvailableIn)
         {
             return
                 _hullToUnlockedLevel
@@ -589,13 +589,13 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 
-        public int LevelFirstAvailableIn(UnitKey unitKey)
+        public int UnitUnlockLevel(UnitKey unitKey)
         {
             Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
             return _unitToUnlockedLevel[unitKey];
         }
 
-        public int LevelFirstAvailableIn(BuildingKey buildingKey)
+        public int BuildingUnlockLevel(BuildingKey buildingKey)
         {
             //Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
             return _buildingToUnlockedLevel[buildingKey];
