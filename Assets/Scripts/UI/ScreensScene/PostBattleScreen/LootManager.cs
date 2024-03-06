@@ -30,16 +30,36 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _rightDetailsGroup = rightDetailsGroup;
         }
 
-        public bool ShouldShowLoot(int levelCompleted)
+        public bool ShouldShowLevelLoot(int levelCompleted)
         {
             return
                 levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
                 && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
         }
 
-        public ILoot UnlockLoot(int levelCompleted)
+
+        //have to do when SideQuest data is stored in StaticData
+        public bool ShouldShowSideQuestLoot(int levelCompleted)
+        {
+            return true;
+        }
+
+        public ILoot UnlockLevelLoot(int levelCompleted)
         {
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
+
+            if (unlockedLoot.Items.Count != 0)
+            {
+                UnlockLootItems(unlockedLoot);
+                _dataProvider.SaveGame();
+            }
+
+            return unlockedLoot;
+        }
+
+        public ILoot UnlockSideQuestLoot(int sideQuestID)
+        {
+            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
 
             if (unlockedLoot.Items.Count != 0)
             {
