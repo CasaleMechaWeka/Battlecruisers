@@ -487,7 +487,7 @@ namespace BattleCruisers.Data.Models
 
         public int SelectedSideQuestID
         {
-            get { Debug.Log(_selectedSideQuestID); return _selectedSideQuestID; }
+            get { return _selectedSideQuestID; }
             set
             {
 

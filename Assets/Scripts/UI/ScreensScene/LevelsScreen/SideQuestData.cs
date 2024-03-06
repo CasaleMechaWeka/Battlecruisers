@@ -44,8 +44,6 @@ namespace BattleCruisers.Data
         int unlockRequirementLevel,
         string unlockRequirementQuestID,
         SoundKeyPair musicBackgroundKey,
-        BackgroundImageStats backgroundImage,
-        IArtificialIntelligence aiStrategy,
         bool isCompleted,
         int sideLevelNum)
         {

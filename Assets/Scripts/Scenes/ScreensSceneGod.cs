@@ -877,7 +877,6 @@ namespace BattleCruisers.Scenes
 
         public void LoadBattleSceneSideQuest(int sideQuestID)
         {
-            Debug.Log(sideQuestID);
             _applicationModel.SelectedSideQuestID = sideQuestID;
             _applicationModel.Mode = GameMode.SideQuest;
             AdvertisingBanner.stopAdvert();
