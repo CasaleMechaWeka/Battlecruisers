@@ -414,6 +414,9 @@ namespace BattleCruisers.Data.Models
         private CoinBattleModel _coinBattle;
 
         [SerializeField]
+        private SideQuestData _sideQuest;
+
+        [SerializeField]
         private HotkeysModel _hotkeys;
         public HotkeysModel Hotkeys => _hotkeys;
 
@@ -491,6 +494,12 @@ namespace BattleCruisers.Data.Models
             set { _coinBattle = value; }
         }
 
+        public SideQuestData SideQuest
+        {
+            get { return _sideQuest; }
+            set { _sideQuest = value; }
+        }
+
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
@@ -523,6 +532,7 @@ namespace BattleCruisers.Data.Models
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
+            _sideQuest = null;
 
             _captainExoList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };

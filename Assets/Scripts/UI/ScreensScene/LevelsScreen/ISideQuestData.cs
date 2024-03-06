@@ -1,9 +1,5 @@
-using UnityEngine;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.AI;
 
 namespace BattleCruisers.Data
 {
@@ -17,8 +13,6 @@ namespace BattleCruisers.Data
         // EnemyHull Hull { get; }
         SoundKeyPair MusicBackgroundKey { get; }
         // SkyMaterials SkyMaterial { get; }
-        BackgroundImageStats BackgroundImage { get; }
-        IArtificialIntelligence AIStrategy { get; }
         bool IsCompleted { get; }
         int SideLevelNum { get; }
 
