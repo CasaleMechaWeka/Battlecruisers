@@ -15,24 +15,25 @@ public class SideQuestButtonController : ElementWithClickSound
     private GameObject sideQuestCompleted;
     private GameObject sideQuestIncomplete;
     private GameObject checkbox;
-    public GameObject requiredLevel;
+    public int requiredLevel;
     private Transform buttonImages;
 
     public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
         int sideQuestLevelNum,
-        int numOfLevelUnlocked, 
+        int numOfLevelUnlocked,
         bool completed)
     {
+        //Most of side quest scripts will need to be modified once side quest manager is done
         _screensSceneGod = screensSceneGod;
         base.Initialise(soundPlayer);
         _sideQuestLevelNum = sideQuestLevelNum;
         Enabled = numOfLevelUnlocked >= _sideQuestLevelNum;
-        enabled = numOfLevelUnlocked >= 3;
+        enabled = numOfLevelUnlocked >= requiredLevel;
         checkmark = transform.Find("Checked").gameObject;
         checkmark.SetActive(completed && enabled);
-        buttonImages = transform.Find("ButtonImages"); 
+        buttonImages = transform.Find("ButtonImages");
         checkbox = transform.Find("Unchecked").gameObject;
         checkbox.SetActive(enabled);
         if (buttonImages != null)
