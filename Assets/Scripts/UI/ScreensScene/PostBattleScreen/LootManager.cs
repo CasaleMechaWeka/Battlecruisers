@@ -15,8 +15,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         public LootManager(
-            IDataProvider dataProvider, 
-            IPrefabFactory prefabFactory, 
+            IDataProvider dataProvider,
+            IPrefabFactory prefabFactory,
             IItemDetailsGroup middleDetailsGroup,
             IItemDetailsGroup leftDetailsGroup,
             IItemDetailsGroup rightDetailsGroup)
@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool ShouldShowLoot(int levelCompleted)
         {
-            return 
+            return
                 levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
                 && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
         }
@@ -68,13 +68,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     // Show item details in middle of screen
                     unlockedLoot.Items[0].ShowItemDetails(_prefabFactory, _middleDetailsGroup);
                     break;
-                
+
                 case 2:
                     // Show item details to left and right sides of screen
                     unlockedLoot.Items[0].ShowItemDetails(_prefabFactory, _leftDetailsGroup);
                     unlockedLoot.Items[1].ShowItemDetails(_prefabFactory, _rightDetailsGroup);
                     break;
-                
+
                 default:
                     throw new ArgumentException();
             }
