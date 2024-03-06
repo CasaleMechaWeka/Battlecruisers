@@ -54,7 +54,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
-            IPrefabContainer<BackgroundImageStats> backgroundStats = await backgroundStatsList.GetStatsAsync(startingLevelNum);
+            IPrefabContainer<BackgroundImageStats> backgroundStats = await backgroundStatsList.GetStatsAsyncLevel(startingLevelNum);
             cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.VerySlowUpdater, mainCamera.aspect, backgroundStats);
 
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;

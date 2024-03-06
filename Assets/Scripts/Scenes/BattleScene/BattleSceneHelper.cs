@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _prefabFetcher = prefabFetcher;
             _storyStrings = storyStrings;
             _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
-            _calculatorFactory 
+            _calculatorFactory
                 = new BuildProgressCalculatorFactory(
                     new BuildSpeedCalculator());
         }
@@ -75,7 +75,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsync(levelNum);
+            return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
         }
 
         public virtual IPrefabKey GetAiCruiserKey()

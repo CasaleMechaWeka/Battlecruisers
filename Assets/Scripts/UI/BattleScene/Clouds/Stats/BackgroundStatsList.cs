@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, _stats.Length);
         }
 
-        public Task<IPrefabContainer<BackgroundImageStats>> GetStatsAsync(int levelNum)
+        public Task<IPrefabContainer<BackgroundImageStats>> GetStatsAsyncLevel(int levelNum)
         {
             int index = levelNum - 1;
             Assert.IsTrue(index >= 0);

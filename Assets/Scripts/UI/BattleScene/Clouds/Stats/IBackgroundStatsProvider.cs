@@ -5,6 +5,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public interface IBackgroundStatsProvider
     {
-        Task<IPrefabContainer<BackgroundImageStats>> GetStatsAsync(int levelNum);
+        Task<IPrefabContainer<BackgroundImageStats>> GetStatsAsyncLevel(int levelNum);
     }
 }
