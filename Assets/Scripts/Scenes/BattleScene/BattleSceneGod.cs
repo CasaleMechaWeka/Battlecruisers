@@ -329,7 +329,11 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
-            IPrefabContainer<BackgroundImageStats> backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
+            IPrefabContainer<BackgroundImageStats> backgroundStats;
+            if (applicationModel.Mode != GameMode.SideQuest)
+                backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
+            else
+                backgroundStats = await helper.GetBackgroundStatsAsync(applicationModel.SelectedSideQuestID);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
             components.HotkeyInitialiser.Initialise(

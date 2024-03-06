@@ -4,6 +4,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
+using System.ComponentModel;
 
 public class SideQuestButtonController : ElementWithClickSound
 {
@@ -21,7 +22,7 @@ public class SideQuestButtonController : ElementWithClickSound
     public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        int sideQuestLevelNum,
+        int sideQuestiD,
         int numOfLevelUnlocked,
         bool completed)
     {
@@ -29,8 +30,8 @@ public class SideQuestButtonController : ElementWithClickSound
         _screensSceneGod = screensSceneGod;
 
         base.Initialise(soundPlayer);
-        _sideQuestID = sideQuestLevelNum;
-        Enabled = numOfLevelUnlocked >= _sideQuestID;
+        _sideQuestID = sideQuestiD;
+        Enabled = numOfLevelUnlocked >= requiredLevel;
         enabled = numOfLevelUnlocked >= requiredLevel;
         checkmark = transform.Find("Checked").gameObject;
         checkmark.SetActive(completed && enabled);
