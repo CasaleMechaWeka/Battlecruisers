@@ -5,6 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     public interface ILootManager
     {
         bool ShouldShowLevelLoot(int levelNum);
+        bool ShouldShowSideQuestLoot(int sideQuestID);
 
         /// <summary>
         /// Adds these items to the:
