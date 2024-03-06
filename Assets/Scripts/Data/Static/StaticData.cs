@@ -10,7 +10,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 
@@ -21,6 +20,10 @@ namespace BattleCruisers.Data.Static
         private readonly IDictionary<BuildingKey, int> _buildingToUnlockedLevel;
         private readonly IDictionary<UnitKey, int> _unitToUnlockedLevel;
         private readonly IDictionary<HullKey, int> _hullToUnlockedLevel;
+
+        private readonly IDictionary<BuildingKey, int> _buildingToCompletedSideQuest;
+        private readonly IDictionary<UnitKey, int> _unitToCompletedSideQuest;
+        private readonly IDictionary<HullKey, int> _hullToCompletedSideQuest;
 
         private readonly IList<BuildingKey> _allBuildings;
         private readonly IList<UnitKey> _allUnits;
@@ -64,9 +67,13 @@ namespace BattleCruisers.Data.Static
             _allUnits = AllUnitKeys();
             UnitKeys = new ReadOnlyCollection<UnitKey>(_allUnits);
 
-            _buildingToUnlockedLevel = CreateBuildingAvailabilityMap();
-            _unitToUnlockedLevel = CreateUnitAvailabilityMap();
-            _hullToUnlockedLevel = CreateHullAvailabilityMap();
+            _buildingToUnlockedLevel = AssignBuildingUnlockLevel();
+            _unitToUnlockedLevel = AssignUnitUnlockLevel();
+            _hullToUnlockedLevel = AssignHullUnlockLevel();
+
+            _buildingToCompletedSideQuest = AssignBuildingUnlockSideQuest();
+            _unitToCompletedSideQuest = AssignUnitUnlockSideQuest();
+            _hullToCompletedSideQuest = AssignHullUnlockSideQuest();
 
             Strategies = new LevelStrategies();
             PvPStrategies = new PvPLevelStrategies();
@@ -397,7 +404,7 @@ namespace BattleCruisers.Data.Static
             {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning)},
             };
         }
-        private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()
+        private IDictionary<BuildingKey, int> AssignBuildingUnlockLevel()
         {
             return new Dictionary<BuildingKey, int>()
             {
@@ -411,9 +418,9 @@ namespace BattleCruisers.Data.Static
                 // Tactical
                 { StaticPrefabKeys.Buildings.ShieldGenerator, 2 },
                 { StaticPrefabKeys.Buildings.LocalBooster, 9 },
-                { StaticPrefabKeys.Buildings.ControlTower, 24 },
                 { StaticPrefabKeys.Buildings.StealthGenerator, 17 },
                 { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 18 },
+                { StaticPrefabKeys.Buildings.ControlTower, 24 },
 
                 // Defence
                 { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
@@ -422,7 +429,6 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
                 { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
                 { StaticPrefabKeys.Buildings.Coastguard, 39 },
-                { StaticPrefabKeys.Buildings.MissilePod, 36 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
@@ -430,6 +436,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
                 { StaticPrefabKeys.Buildings.MLRS, 29},
                 { StaticPrefabKeys.Buildings.GatlingMortar, 32},
+                { StaticPrefabKeys.Buildings.MissilePod, 36 },
                 { StaticPrefabKeys.Buildings.IonCannon, 38 },
 
                 // Ultras
@@ -442,7 +449,7 @@ namespace BattleCruisers.Data.Static
             };
         }
 
-        private IDictionary<UnitKey, int> CreateUnitAvailabilityMap()
+        private IDictionary<UnitKey, int> AssignUnitUnlockLevel()
         {
             return new Dictionary<UnitKey, int>()
             {
@@ -462,7 +469,7 @@ namespace BattleCruisers.Data.Static
             };
         }
 
-        private IDictionary<HullKey, int> CreateHullAvailabilityMap()
+        private IDictionary<HullKey, int> AssignHullUnlockLevel()
         {
             return new Dictionary<HullKey, int>()
             {
@@ -474,6 +481,53 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Hammerhead, 19 },
                 { StaticPrefabKeys.Hulls.Longbow, 23 },
                 { StaticPrefabKeys.Hulls.Megalodon, 26 },
+                                { StaticPrefabKeys.Hulls.Rickshaw, 34 },
+                { StaticPrefabKeys.Hulls.TasDevil, 35 },
+                { StaticPrefabKeys.Hulls.BlackRig, 37 },
+                { StaticPrefabKeys.Hulls.Yeti, 40 }
+            };
+        }
+
+        private IDictionary<BuildingKey, int> AssignBuildingUnlockSideQuest()
+        {
+            //The number represents the side quest ID that unlocks the building
+            //Right now, this only contains the loot from the secret levels
+
+            return new Dictionary<BuildingKey, int>()
+            {
+                // Defence
+                { StaticPrefabKeys.Buildings.MissilePod, 36 },
+                { StaticPrefabKeys.Buildings.Coastguard, 39 },
+
+                // Offence
+                { StaticPrefabKeys.Buildings.IonCannon, 38 },
+
+                // Ultras
+                { StaticPrefabKeys.Buildings.NovaArtillery, 33 }
+            };
+        }
+
+        private IDictionary<UnitKey, int> AssignUnitUnlockSideQuest()
+        {
+            //The number represents the side quest ID that unlocks the unit
+            //Right now, this only contains the loot from the secret levels
+
+            return new Dictionary<UnitKey, int>()
+            {
+                // Aircraft
+                { StaticPrefabKeys.Units.Broadsword, 41 },
+                
+                // Ships
+            };
+        }
+
+        private IDictionary<HullKey, int> AssignHullUnlockSideQuest()
+        {
+            //The number represents the side quest ID that unlocks the hull
+            //Right now, this only contains the loot from the secret levels
+
+            return new Dictionary<HullKey, int>()
+            {
                 { StaticPrefabKeys.Hulls.Rickshaw, 34 },
                 { StaticPrefabKeys.Hulls.TasDevil, 35 },
                 { StaticPrefabKeys.Hulls.BlackRig, 37 },
