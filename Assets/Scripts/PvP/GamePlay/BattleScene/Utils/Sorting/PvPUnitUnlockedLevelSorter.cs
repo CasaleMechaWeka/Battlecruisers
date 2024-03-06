@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return
                 units
                       //   .OrderBy(unit => _staticData.LevelFirstAvailableIn(_keyFactory.CreateUnitKey(unit.Buildable)))
-                      .OrderBy(unit => _staticData.LevelFirstAvailableIn(new BattleCruisers.Data.Models.PrefabKeys.UnitKey(convertToPvP(unit.Buildable.Category), convertToPvP(unit.Buildable.PrefabName))))
+                      .OrderBy(unit => _staticData.UnitUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.UnitKey(convertToPvP(unit.Buildable.Category), convertToPvP(unit.Buildable.PrefabName))))
                     .ToList();
 
             // return null;

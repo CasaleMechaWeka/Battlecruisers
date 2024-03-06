@@ -307,12 +307,12 @@ namespace BattleCruisers.Data.Static
 
         private List<BuildingKey> GetInitialBuildings()
         {
-            return GetBuildingsUnlockLevel(levelFirstAvailableIn: 1).ToList();
+            return GetBuildingsUnlockedInLevel(levelFirstAvailableIn: 1).ToList();
         }
 
         private List<UnitKey> GetInitialUnits()
         {
-            return GetUnitUnlockLevel(levelFirstAvailableIn: 1).ToList();
+            return GetUnitsUnlockedInLevel(levelFirstAvailableIn: 1).ToList();
         }
 
         private IList<ILevel> CreateLevels()
@@ -542,6 +542,7 @@ namespace BattleCruisers.Data.Static
         /// 
         /// Availability level number = loot level number + 1
         /// </summary>
+
         public ILoot GetLevelLoot(int levelCompleted)
         {
             int availabilityLevelNum = levelCompleted + 1;
@@ -551,26 +552,42 @@ namespace BattleCruisers.Data.Static
 
             return
                 new Loot(
-                    hullKeys: GetHullUnlockLevel(availabilityLevelNum),
-                    unitKeys: GetUnitUnlockLevel(availabilityLevelNum),
-                    buildingKeys: GetBuildingsUnlockLevel(availabilityLevelNum));
+                    hullKeys: GetHullsUnlockedInLevel(availabilityLevelNum),
+                    unitKeys: GetUnitsUnlockedInLevel(availabilityLevelNum),
+                    buildingKeys: GetBuildingsUnlockedInLevel(availabilityLevelNum));
         }
 
-        private IList<UnitKey> GetUnitUnlockLevel(int levelFirstAvailableIn)
+        public ILoot GetSideQuestLoot(int levelCompleted)
         {
-            return GetBuildableUnlockLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
+
+            int availabilitySideQuestNum = levelCompleted + 1;
+
+            Assert.IsTrue(availabilitySideQuestNum >= MIN_AVAILABILITY_LEVEL_NUM);
+            Assert.IsTrue(availabilitySideQuestNum <= Levels.Count + 1);
+
+            return
+                new Loot(
+                    hullKeys: GetHullsUnlockedInSideQuest(availabilitySideQuestNum),
+                    unitKeys: GetUnitsUnlockedInSideQuest(availabilitySideQuestNum),
+                    buildingKeys: GetBuildingsUnlockedInSideQuest(availabilitySideQuestNum));
+
         }
 
-        private IList<BuildingKey> GetBuildingsUnlockLevel(int levelFirstAvailableIn)
+        private IList<UnitKey> GetUnitsUnlockedInLevel(int levelFirstAvailableIn)
         {
-            return GetBuildableUnlockLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
+            return GetBuildablesUnlockedInLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
+        }
+
+        private IList<BuildingKey> GetBuildingsUnlockedInLevel(int levelFirstAvailableIn)
+        {
+            return GetBuildablesUnlockedInLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }
 
         /// <summary>
         /// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
         /// (ie, the starting level, where we have multiple buildables available).
         /// </summary>
-        private IList<TKey> GetBuildableUnlockLevel<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+        private IList<TKey> GetBuildablesUnlockedInLevel<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
             where TKey : IPrefabKey
         {
             return
@@ -580,7 +597,7 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 
-        private IList<HullKey> GetHullUnlockLevel(int levelFirstAvailableIn)
+        private IList<HullKey> GetHullsUnlockedInLevel(int levelFirstAvailableIn)
         {
             return
                 _hullToUnlockedLevel
@@ -599,6 +616,47 @@ namespace BattleCruisers.Data.Static
         {
             //Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
             return _buildingToUnlockedLevel[buildingKey];
+        }
+
+        private IList<UnitKey> GetUnitsUnlockedInSideQuest(int requiredSideQuestID)
+        {
+            return GetBuildablesUnlockedInSideQuest(_unitToCompletedSideQuest, requiredSideQuestID);
+        }
+
+        private IList<BuildingKey> GetBuildingsUnlockedInSideQuest(int requiredSideQuestID)
+        {
+            return GetBuildablesUnlockedInSideQuest(_buildingToCompletedSideQuest, requiredSideQuestID);
+        }
+
+        private IList<TKey> GetBuildablesUnlockedInSideQuest<TKey>(IDictionary<TKey, int> buildableToCompletedSideQuest, int requiredSideQuestID)
+            where TKey : IPrefabKey
+        {
+            return
+                buildableToCompletedSideQuest
+                    .Where(buildableToSideQuest => buildableToSideQuest.Value == requiredSideQuestID)
+                    .Select(buildableToSideQuest => buildableToSideQuest.Key)
+                    .ToList();
+        }
+
+        private IList<HullKey> GetHullsUnlockedInSideQuest(int requiredSideQuestID)
+        {
+            return
+                _hullToCompletedSideQuest
+                    .Where(hullToSideQuest => hullToSideQuest.Value == requiredSideQuestID)
+                    .Select(hullToSideQuest => hullToSideQuest.Key)
+                    .ToList();
+        }
+
+        public int UnitUnlockSideQuest(UnitKey unitKey)
+        {
+            Assert.IsTrue(_unitToCompletedSideQuest.ContainsKey(unitKey));
+            return _unitToCompletedSideQuest[unitKey];
+        }
+
+        public int BuildingSideQuest(BuildingKey buildingKey)
+        {
+            Assert.IsTrue(_buildingToCompletedSideQuest.ContainsKey(buildingKey));
+            return _buildingToCompletedSideQuest[buildingKey];
         }
     }
 }

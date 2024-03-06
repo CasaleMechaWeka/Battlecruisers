@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.Sorting
         {
             return
                 units
-                    .OrderBy(unit => _staticData.LevelFirstAvailableIn(_keyFactory.CreateUnitKey(unit.Buildable)))
+                    .OrderBy(unit => _staticData.UnitUnlockLevel(_keyFactory.CreateUnitKey(unit.Buildable)))
                     .ToList();
         }
     }
