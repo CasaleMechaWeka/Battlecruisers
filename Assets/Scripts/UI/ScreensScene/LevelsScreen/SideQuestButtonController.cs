@@ -49,5 +49,6 @@ public class SideQuestButtonController : ElementWithClickSound
     {
         base.OnClicked();
         _screensSceneGod.LoadBattleScene();
+        //_screensSceneGod.GoToTrashScreen(_sideQuestLevelNum);
     }
 }
