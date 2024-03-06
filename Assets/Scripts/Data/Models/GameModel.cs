@@ -408,6 +408,9 @@ namespace BattleCruisers.Data.Models
         private int _selectedPvPLevel;
 
         [SerializeField]
+        private int _selectedSideQuestID;
+
+        [SerializeField]
         private SkirmishModel _skirmish;
 
         [SerializeField]
@@ -479,6 +482,18 @@ namespace BattleCruisers.Data.Models
                 if (value < 0) { _selectedPvPLevel = 0; return; }
                 if (value >= StaticData.NUM_OF_PvPLEVELS) { _selectedPvPLevel = StaticData.NUM_OF_PvPLEVELS - 1; return; }
                 _selectedPvPLevel = value;
+            }
+        }
+
+        public int SelectedSideQuestID
+        {
+            get { Debug.Log(_selectedSideQuestID); return _selectedSideQuestID; }
+            set
+            {
+
+                if (value < 0) { _selectedSideQuestID = 0; return; }
+                if (value >= StaticData.NUM_OF_SIDEQUESTS) { _selectedSideQuestID = StaticData.NUM_OF_SIDEQUESTS - 1; return; }
+                _selectedSideQuestID = value;
             }
         }
 

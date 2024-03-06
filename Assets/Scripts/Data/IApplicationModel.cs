@@ -17,6 +17,7 @@
 
         int SelectedLevel { get; set; }
         int SelectedPvPLevel { get; set; }
+        int SelectedSideQuestID { get; set; }
         bool ShowPostBattleScreen { get; set; }
         bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }

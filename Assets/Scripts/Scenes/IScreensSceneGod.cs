@@ -14,6 +14,7 @@ namespace BattleCruisers.Scenes
         void GoToSkirmishScreen();
         void GoToTrashScreen(int levelNum);
         void GoStraightToTrashScreen(int levelNum);
+        void LoadBattleSceneSideQuest(int sideQuestID);
         void LoadBattleScene();
         void LoadCreditsScene();
         void LoadCutsceneScene();
@@ -21,7 +22,7 @@ namespace BattleCruisers.Scenes
         void LoadBattle1v1Mode();
         void GotoShopScreen();
         public void GotoBlackMarketScreen();
-        Task GoToSideQuestTrashScreenAsync(int sideQuestLevelNum);
+        Task GoToSideQuestTrashScreenAsync(int sideQuestID);
         void SomeMethodUsingBattleSceneHelper();
     }
 }

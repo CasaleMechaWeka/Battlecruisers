@@ -1,4 +1,4 @@
-﻿using BattleCruisers.AI;
+using BattleCruisers.AI;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
@@ -485,6 +485,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
                 case GameMode.CoinBattle:
                     return new CoinBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+
+                case GameMode.SideQuest:
+                    return new SideQuestHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");

@@ -9,7 +9,7 @@ public class SideQuestButtonController : ElementWithClickSound
 {
     private bool enabled;
     private IScreensSceneGod _screensSceneGod;
-    private int _sideQuestLevelNum;
+    private int _sideQuestID;
     protected override ISoundKey ClickSound => SoundKeys.UI.Click;
     private GameObject checkmark;
     private GameObject sideQuestCompleted;
@@ -27,15 +27,17 @@ public class SideQuestButtonController : ElementWithClickSound
     {
         //Most of side quest scripts will need to be modified once side quest manager is done
         _screensSceneGod = screensSceneGod;
+
         base.Initialise(soundPlayer);
-        _sideQuestLevelNum = sideQuestLevelNum;
-        Enabled = numOfLevelUnlocked >= _sideQuestLevelNum;
+        _sideQuestID = sideQuestLevelNum;
+        Enabled = numOfLevelUnlocked >= _sideQuestID;
         enabled = numOfLevelUnlocked >= requiredLevel;
         checkmark = transform.Find("Checked").gameObject;
         checkmark.SetActive(completed && enabled);
         buttonImages = transform.Find("ButtonImages");
         checkbox = transform.Find("Unchecked").gameObject;
         checkbox.SetActive(enabled);
+
         if (buttonImages != null)
         {
             sideQuestCompleted = buttonImages.transform.Find("CompleteSideQuest").gameObject;
@@ -48,6 +50,6 @@ public class SideQuestButtonController : ElementWithClickSound
     protected override void OnClicked()
     {
         base.OnClicked();
-        _screensSceneGod.LoadBattleScene();
+        _screensSceneGod.LoadBattleSceneSideQuest(_sideQuestID);
     }
 }

@@ -20,7 +20,6 @@ namespace BattleCruisers.Data.Models.PrefabKeys
 
         private static string CreatePrefabName(int levelNum)
         {
-            Assert.IsTrue(levelNum > 0);
             Assert.IsTrue(levelNum <= StaticData.NUM_OF_SIDEQUESTS);
 
             return $"BackgroundStatsSideQuest ({levelNum}) Variant";
