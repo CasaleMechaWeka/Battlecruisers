@@ -399,6 +399,15 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        public void LoadBattleSceneSideQuest(int sideQuestID)
+        {
+            _applicationModel.SelectedSideQuestID = sideQuestID;
+            _applicationModel.Mode = GameMode.SideQuest;
+            AdvertisingBanner.stopAdvert();
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            CleanUp();
+        }
+
         public void LoadBattleScene()
         {
             AdvertisingBanner.stopAdvert();
@@ -458,7 +467,7 @@ namespace BattleCruisers.Scenes
             {
                 // Here you can use methods from IBattleSceneHelper
                 ILevel currentLevel = helper.GetLevel();
-                
+
                 // Example usage:
                 Debug.Log($"Current level: {currentLevel}");
             }

@@ -408,10 +408,16 @@ namespace BattleCruisers.Data.Models
         private int _selectedPvPLevel;
 
         [SerializeField]
+        private int _selectedSideQuestID;
+
+        [SerializeField]
         private SkirmishModel _skirmish;
 
         [SerializeField]
         private CoinBattleModel _coinBattle;
+
+        [SerializeField]
+        private SideQuestData _sideQuest;
 
         [SerializeField]
         private HotkeysModel _hotkeys;
@@ -479,6 +485,18 @@ namespace BattleCruisers.Data.Models
             }
         }
 
+        public int SelectedSideQuestID
+        {
+            get { return _selectedSideQuestID; }
+            set
+            {
+
+                if (value < 0) { _selectedSideQuestID = 0; return; }
+                if (value >= StaticData.NUM_OF_SIDEQUESTS) { _selectedSideQuestID = StaticData.NUM_OF_SIDEQUESTS - 1; return; }
+                _selectedSideQuestID = value;
+            }
+        }
+
         public SkirmishModel Skirmish
         {
             get { return _skirmish; }
@@ -489,6 +507,12 @@ namespace BattleCruisers.Data.Models
         {
             get { return _coinBattle; }
             set { _coinBattle = value; }
+        }
+
+        public SideQuestData SideQuest
+        {
+            get { return _sideQuest; }
+            set { _sideQuest = value; }
         }
 
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
@@ -523,6 +547,7 @@ namespace BattleCruisers.Data.Models
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
+            _sideQuest = null;
 
             _captainExoList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };

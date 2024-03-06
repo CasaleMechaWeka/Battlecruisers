@@ -4,8 +4,10 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -81,10 +83,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             //Set up Side Quest levels
             SideQuestButtonController[] sideQuestButtons = GetComponentsInChildren<SideQuestButtonController>();
-            foreach (SideQuestButtonController button in sideQuestButtons)
-            {
-                button.Initialise(screensSceneGod, soundPlayer, button.requiredLevel, numOfLevelsUnlocked, true);
-            }
+            for (int i = 0; i < sideQuestButtons.Count(); i++)
+                sideQuestButtons[i].Initialise(screensSceneGod, soundPlayer, i, numOfLevelsUnlocked, true);
+
         }
 
         public bool ContainsLevel(int levelNum)

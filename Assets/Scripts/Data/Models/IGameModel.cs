@@ -49,6 +49,7 @@ namespace BattleCruisers.Data.Models
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }
         int SelectedPvPLevel { get; set; }
+        int SelectedSideQuestID { get; set; }
         HotkeysModel Hotkeys { get; }
         SkirmishModel Skirmish { get; set; }
         CoinBattleModel CoinBattle { get; set; }

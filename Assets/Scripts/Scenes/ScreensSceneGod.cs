@@ -11,7 +11,6 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.SkirmishScreen;
@@ -31,7 +30,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Localization;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Models.PrefabKeys;
 using Unity.Services.Authentication;
@@ -44,8 +42,6 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using System.Threading;
-using UnityEditor;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Tutorial;
 using BattleCruisers.Utils.Threading;
@@ -790,7 +786,7 @@ namespace BattleCruisers.Scenes
             {
                 // Here you can use methods from IBattleSceneHelper
                 ILevel currentLevel = helper.GetLevel();
-                
+
                 // Example usage:
                 Debug.Log($"Current level: {currentLevel}");
             }
@@ -877,6 +873,15 @@ namespace BattleCruisers.Scenes
             {
                 _musicPlayer.PlayScreensSceneMusic();
             }
+        }
+
+        public void LoadBattleSceneSideQuest(int sideQuestID)
+        {
+            _applicationModel.SelectedSideQuestID = sideQuestID;
+            _applicationModel.Mode = GameMode.SideQuest;
+            AdvertisingBanner.stopAdvert();
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            CleanUp();
         }
 
         public void LoadBattleScene()

@@ -27,8 +27,8 @@ namespace BattleCruisers.Scenes.BattleScene
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
-            IPrefabFactory prefabFactory, 
-            IDeferrer deferrer) 
+            IPrefabFactory prefabFactory,
+            IDeferrer deferrer)
             : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
         {
             _skirmish = DataProvider.GameModel.Skirmish;
@@ -46,7 +46,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     _skirmish.AICruiser,
                     backgroundLevel.MusicKeys,
                     backgroundLevel.SkyMaterialName,
-                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(21)) ;
+                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(21));
         }
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
@@ -62,7 +62,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsync(_skirmish.BackgroundLevelNum);
+            return await _backgroundStatsProvider.GetStatsAsyncLevel(_skirmish.BackgroundLevelNum);
         }
 
         public override IPrefabKey GetAiCruiserKey()

@@ -24,8 +24,7 @@ public class SideQuestManager : ElementWithClickSound
     public async void Initialize()
     {
         backgroundStatsProvider = new BackgroundStatsProvider(prefabFetcher);
-        IPrefabContainer<BackgroundImageStats> backgroundStats = await backgroundStatsProvider.GetStatsAsync(3);
-        SideQuests.Add(new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(31), 3, null, SoundKeys.Music.Background.Confusion, (BackgroundImageStats)backgroundStats, null, false, 1));
+        SideQuests.Add(new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(31), 3, null, SoundKeys.Music.Background.Confusion, false, 0));
         // Add more quests as needed
     }
 

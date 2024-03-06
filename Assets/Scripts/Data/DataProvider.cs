@@ -181,7 +181,7 @@ namespace BattleCruisers.Data
                         await CloudSave();
                     }
                     GameModel.HasSyncdShop = true;
-                    ScreensSceneGod.Instance.m_cancellationToken.Cancel();
+                    //ScreensSceneGod.Instance.m_cancellationToken.Cancel();
                     break;
             }
         }
@@ -670,7 +670,7 @@ namespace BattleCruisers.Data
                 GameModel.Credits += runningCreditTotal;
                 GameModel.CreditsChange = 0;
             }
-            
+
             SaveGame();
             await CloudSave();
         }
