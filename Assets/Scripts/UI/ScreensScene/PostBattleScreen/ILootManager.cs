@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         ///     b) User's loadout
         /// </summary>
         ILoot UnlockLevelLoot(int levelNum);
+        ILoot UnlockSideQuestLoot(int sideQuestID);
 
         void ShowLoot(ILoot unlockedLoot);
     }

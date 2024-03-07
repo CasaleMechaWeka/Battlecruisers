@@ -505,7 +505,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.IonCannon, 38 },
 
                 // Ultras
-                { StaticPrefabKeys.Buildings.NovaArtillery, 33 }
+                { StaticPrefabKeys.Buildings.NovaArtillery, 0 }
             };
         }
 
@@ -559,13 +559,13 @@ namespace BattleCruisers.Data.Static
                     buildingKeys: GetBuildingsUnlockedInLevel(availabilityLevelNum));
         }
 
-        public ILoot GetSideQuestLoot(int levelCompleted)
+        public ILoot GetSideQuestLoot(int sideQuestID)
         {
 
-            int availabilitySideQuestNum = levelCompleted + 1;
-
-            Assert.IsTrue(availabilitySideQuestNum >= MIN_AVAILABILITY_LEVEL_NUM);
-            Assert.IsTrue(availabilitySideQuestNum <= Levels.Count + 1);
+            int availabilitySideQuestNum = sideQuestID;
+            //hardcoded values while testing
+            Assert.IsTrue(availabilitySideQuestNum >= 0);
+            Assert.IsTrue(availabilitySideQuestNum <= NUM_OF_SIDEQUESTS);
 
             return
                 new Loot(

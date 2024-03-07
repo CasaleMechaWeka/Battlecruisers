@@ -16,10 +16,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.Services.Analytics;
-using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -36,7 +33,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         Victory_DemoCompleted,
         Victory_GameCompleted,
         Victory_Skirmish,
-        Defeat_Skirmish
+        Defeat_Skirmish,
+        Victory_SideQuest_LootUnlocked,
+        Victory_SideQuest_NoNewLoot,
+        Defeat_SideQuest
     }
 
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
@@ -230,7 +230,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
-                ITrashTalkData levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
+                ITrashTalkData levelTrashTalkData;
+
+                if (applicationModel.Mode != GameMode.SideQuest)
+                    levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
+                else
+                    levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(BattleResult.LevelNum + 1);
+
                 levelName.Initialise(BattleResult.LevelNum, levelTrashTalkData);
                 unlockedItemSection.Initialise();
                 Debug.Log(desiredBehaviour);

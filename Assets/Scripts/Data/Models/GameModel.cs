@@ -375,6 +375,7 @@ namespace BattleCruisers.Data.Models
 
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
+        private List<CompletedLevel> _completedSideQuests;
 
         [SerializeField]
         private long _lifetimeDestructionScore;
@@ -432,6 +433,7 @@ namespace BattleCruisers.Data.Models
         }
 
         public int NumOfLevelsCompleted => _completedLevels.Count;
+        public int NumOfSideQuestsCompleted => _completedSideQuests.Count;
         public int ID_Bodykit_AIbot { get; set; }
         public bool HasAttemptedTutorial
         {
@@ -519,6 +521,7 @@ namespace BattleCruisers.Data.Models
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
+        public ReadOnlyCollection<CompletedLevel> CompletedSideQuests { get; }
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
@@ -537,7 +540,9 @@ namespace BattleCruisers.Data.Models
             UnlockedUnits = _unlockedUnits.AsReadOnly();
 
             _completedLevels = new List<CompletedLevel>();
+            _completedSideQuests = new List<CompletedLevel>();
             CompletedLevels = _completedLevels.AsReadOnly();
+            CompletedSideQuests = _completedSideQuests.AsReadOnly();
 
             NewHulls = new NewItems<HullKey>();
             NewBuildings = new NewItems<BuildingKey>();
@@ -942,6 +947,26 @@ namespace BattleCruisers.Data.Models
                 {
                     currentLevel.HardestDifficulty = completedLevel.HardestDifficulty;
                 }
+            }
+        }
+
+        public void AddCompletedSideQuest(CompletedLevel completedSideQuest)
+        {
+            Assert.IsTrue(completedSideQuest.LevelNum <= StaticData.NUM_OF_SIDEQUESTS, "Have not completed preceeding level :/");
+            Assert.IsTrue(completedSideQuest.LevelNum >= 0);
+
+            // First time SideQuest has been completed
+            if (_completedSideQuests == null)
+                _completedSideQuests = new List<CompletedLevel> { completedSideQuest };
+            else if (completedSideQuest.LevelNum + 1 > _completedSideQuests.Count)
+                _completedSideQuests.Add(completedSideQuest);
+            else
+            {
+                // Level has been completed before
+                CompletedLevel currentSideQuest = _completedSideQuests[completedSideQuest.LevelNum];
+
+                if (completedSideQuest.HardestDifficulty > currentSideQuest.HardestDifficulty)
+                    currentSideQuest.HardestDifficulty = completedSideQuest.HardestDifficulty;
             }
         }
 
