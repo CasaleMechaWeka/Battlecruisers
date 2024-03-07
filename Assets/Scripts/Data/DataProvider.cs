@@ -90,15 +90,22 @@ namespace BattleCruisers.Data
 
         public void SaveGame()
         {
-            if (_gameModel.NumOfLevelsCompleted > 1)
-                for (int i = 1; i < _gameModel.NumOfLevelsCompleted; i++)
-                {
-                    ILoot unlockedLoot = StaticData.GetLevelLoot(i);
-
-                    if (unlockedLoot.Items.Count != 0)
-                        foreach (ILootItem lootItem in unlockedLoot.Items)
-                            lootItem.UnlockItem(_gameModel);
-                }
+            try
+            {
+                if (_gameModel.NumOfLevelsCompleted > 1)
+                    for (int i = 1; i < _gameModel.NumOfLevelsCompleted; i++)
+                    {
+                        ILoot unlockedLoot = StaticData.GetLevelLoot(i);
+                        if (unlockedLoot != null)
+                            if (unlockedLoot.Items.Count != 0)
+                                foreach (ILootItem lootItem in unlockedLoot.Items)
+                                    lootItem.UnlockItem(_gameModel);
+                    }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
 
             _serializer.SaveGame(_gameModel);
         }
