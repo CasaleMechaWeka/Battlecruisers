@@ -3,6 +3,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
@@ -89,6 +90,16 @@ namespace BattleCruisers.Data
 
         public void SaveGame()
         {
+            if (_gameModel.NumOfLevelsCompleted > 1)
+                for (int i = 1; i < _gameModel.NumOfLevelsCompleted; i++)
+                {
+                    ILoot unlockedLoot = StaticData.GetLevelLoot(i);
+
+                    if (unlockedLoot.Items.Count != 0)
+                        foreach (ILootItem lootItem in unlockedLoot.Items)
+                            lootItem.UnlockItem(_gameModel);
+                }
+
             _serializer.SaveGame(_gameModel);
         }
 
