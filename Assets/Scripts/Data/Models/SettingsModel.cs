@@ -20,7 +20,8 @@ namespace BattleCruisers.Data.Models
         public const int MIN_SCROLL_SPEED_LEVEL = 2;
         public const int MAX_SCROLL_SPEED_LEVEL = 9;
 
-        public const float DEFAULT_VOLUME = 1f;
+        public const float DEFAULT_VOLUME = .5f;
+        public const float DEFAULT_VOLUME_MUSIC = 1f;
         public const float MIN_VOLUME = 0;
         public const float MAX_VOLUME = 1;
 
@@ -231,11 +232,12 @@ namespace BattleCruisers.Data.Models
         public Vector2 Resolution
         {
             get => new Vector2(_resolutionWidth, _resolutionHeight);
-            set {
+            set
+            {
                 _resolutionWidth = (int)value.x;
                 _resolutionHeight = (int)value.y;
             }
-            
+
         }
 
         [SerializeField]
@@ -271,7 +273,7 @@ namespace BattleCruisers.Data.Models
             AmbientVolume = DEFAULT_VOLUME;
             AlertVolume = DEFAULT_VOLUME;
             InterfaceVolume = DEFAULT_VOLUME;
-            MusicVolume = DEFAULT_VOLUME;
+            MusicVolume = DEFAULT_VOLUME_MUSIC;
 
             MasterVolume = 0.5f;
             ShowInGameHints = true;
@@ -283,7 +285,7 @@ namespace BattleCruisers.Data.Models
 
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
             InitialiseGraphicsSettings();
-            
+
             //Debug.Log(Application.systemLanguage);
 
         }
