@@ -291,7 +291,7 @@ namespace BattleCruisers.Data.Models
                 _buildings.Add(buildingToAdd);
 
                 if (GetBuildingListSize(buildingToAdd.BuildingCategory) < 5)
-                    AddbuildItem(buildingToAdd.BuildingCategory, buildingToAdd);
+                    AddBuildingItem(buildingToAdd.BuildingCategory, buildingToAdd);
             }
         }
 
@@ -319,7 +319,7 @@ namespace BattleCruisers.Data.Models
         }
 
         //functions to handle the lists for the buildables
-        public void AddbuildItem(BuildingCategory category, BuildingKey keyToAdd)
+        public void AddBuildingItem(BuildingCategory category, BuildingKey keyToAdd)
         {
             List<BuildingKey> builds = _builds[category];
             builds.Add(keyToAdd);
