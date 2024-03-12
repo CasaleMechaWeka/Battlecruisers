@@ -9,10 +9,10 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using Unity.Services.Leaderboards;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -39,9 +39,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public GameObject idContainer;
         public TextMeshProUGUI idString;
-        public CanvasGroupButton idButton, iapRefreshButton;
-        public GameObject idHighlight, iapHighlight;
-        public AnimationClip idAnim, iapAnim;
+        public CanvasGroupButton idButton, iapRefreshButton, deleteCloudDataButton;
+        public GameObject idHighlight, iapHighlight, deleteCloudDataHighlight;
+        public AnimationClip idAnim, iapAnim, deleteCloudDataAnim;
 
         //public GameObject premiumTab;
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable);
 
@@ -112,31 +112,31 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             saveButton
                 .Initialise(
-                    soundPlayer,                      
-                    this,                             
-                    screensSceneGod,                  
-                    _settingsManager,                 
-                    difficultyDropdown,               
-                    languageDropdown,                 
-                    resolutionDropdown,               
-                    zoomSlider.SliderValue,           
-                    scrollSlider.SliderValue,         
-                    masterVolumeSlider.SliderValue,   
-                    effectVolumeSlider.SliderValue,   
-                    ambientVolumeSlider.SliderValue,  
-                    alertVolumeSlider.SliderValue,    
+                    soundPlayer,
+                    this,
+                    screensSceneGod,
+                    _settingsManager,
+                    difficultyDropdown,
+                    languageDropdown,
+                    resolutionDropdown,
+                    zoomSlider.SliderValue,
+                    scrollSlider.SliderValue,
+                    masterVolumeSlider.SliderValue,
+                    effectVolumeSlider.SliderValue,
+                    ambientVolumeSlider.SliderValue,
+                    alertVolumeSlider.SliderValue,
                     interfaceVolumeSlider.SliderValue,
-                    musicVolumeSlider.SliderValue,    
-                    showInGameHintsToggle.IsChecked,  
-                    showToolTipsToggle.IsChecked,     
-                    altDroneSoundsToggle.IsChecked,   
+                    musicVolumeSlider.SliderValue,
+                    showInGameHintsToggle.IsChecked,
+                    showToolTipsToggle.IsChecked,
+                    altDroneSoundsToggle.IsChecked,
                     adsToggle.IsChecked,
                     turboToggle.IsChecked,
                     richToggle.IsChecked,
                     hecklesToggle.IsChecked,
-                    fullScreenToggle.IsChecked,       
-                    VSyncToggle.IsChecked,            
-                    hotkeysPanel);                    
+                    fullScreenToggle.IsChecked,
+                    VSyncToggle.IsChecked,
+                    hotkeysPanel);
 
             cancelButton.Initialise(soundPlayer, this);
             resetHotkeysButton.Initialise(soundPlayer, hotkeysPanel.ResetToDefaults);
@@ -154,6 +154,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             idButton.Initialise(soundPlayer, CopyID, this);
             iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
             iapRefreshButton.gameObject.SetActive(true);
+            deleteCloudDataButton.Initialise(soundPlayer, DeleteCloudData, this);
 
             DisplayUserID();
 
@@ -330,6 +331,20 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             iapHighlight.SetActive(true);
             yield return new WaitForSeconds(iapAnim.length);
             iapHighlight.SetActive(false);
+        }
+
+        public void DeleteCloudData()
+        {
+            AuthenticationService.Instance.DeleteAccountAsync();
+            idButton.gameObject.SetActive(false);
+            StartCoroutine(AnimateDeleteCloudData());
+        }
+
+        IEnumerator AnimateDeleteCloudData()
+        {
+            deleteCloudDataHighlight.SetActive(true);
+            yield return new WaitForSeconds(deleteCloudDataAnim.length);
+            deleteCloudDataHighlight.SetActive(false);
         }
 
         public override void OnDismissing()
