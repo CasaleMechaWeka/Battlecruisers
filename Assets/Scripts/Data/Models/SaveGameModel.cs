@@ -292,7 +292,8 @@ namespace BattleCruisers.Data.Models
                 {
                     Enum.TryParse(buildKey.Value, out BuildingCategory keycat);
                     BuildingKey newKey = new BuildingKey(keycat, buildKey.Key);
-                    parsedBuildingKeys.Add(newKey);
+                    if (parsedBuildingKeys.Count == 0 || newKey.PrefabName != parsedBuildingKeys[parsedBuildingKeys.Count - 1].PrefabName)
+                        parsedBuildingKeys.Add(newKey);
                 }
                 buildLimits.Add(bc, parsedBuildingKeys);
             }
