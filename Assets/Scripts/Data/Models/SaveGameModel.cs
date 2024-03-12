@@ -311,7 +311,8 @@ namespace BattleCruisers.Data.Models
                 {
                     Enum.TryParse(unitKey.Value, out UnitCategory keycat);
                     UnitKey newKey = new UnitKey(keycat, unitKey.Key);
-                    parsedUnitKeys.Add(newKey);
+                    if (parsedUnitKeys.Count == 0 || newKey.PrefabName != parsedUnitKeys[parsedUnitKeys.Count - 1].PrefabName)
+                        parsedUnitKeys.Add(newKey);
                 }
                 unitLimits.Add(uc, parsedUnitKeys);
             }
