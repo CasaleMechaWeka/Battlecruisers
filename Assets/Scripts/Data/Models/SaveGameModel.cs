@@ -1,6 +1,4 @@
-using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Data.Models.PrefabKeys;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
