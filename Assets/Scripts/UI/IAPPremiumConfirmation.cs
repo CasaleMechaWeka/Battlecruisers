@@ -4,8 +4,6 @@ using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
@@ -32,7 +30,8 @@ public class IAPPremiumConfirmation : MonoBehaviour
         Button_Upgrade.Initialise(_soundPlayer, UpgradeToPremium);
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         Product premiumVersionProduct = IAPManager.instance.storeController.products.WithID("premium_version");
         if (premiumVersionProduct != null)
         {
@@ -42,16 +41,19 @@ public class IAPPremiumConfirmation : MonoBehaviour
         AdvertistingBanner.stopAdvert();
     }
 
-    private void Close() {
+    private void Close()
+    {
         Invoke("HideSelf", 0.25f);
-}
+    }
 
-    private void HideSelf() {
+    private void HideSelf()
+    {
         gameObject.SetActive(false);
         AdvertistingBanner.startAdvert();
     }
 
-    public void UpgradeToPremium() {
+    public void UpgradeToPremium()
+    {
         Close();
         IAPManager.instance.storeController.InitiatePurchase(IAPManager.premium_version_product);
     }
@@ -60,11 +62,5 @@ public class IAPPremiumConfirmation : MonoBehaviour
     {
         //Debug.Log("upgraing has failed please try again");
         //UpgradeToPremium has failed do nothing - things will remain unchanged
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

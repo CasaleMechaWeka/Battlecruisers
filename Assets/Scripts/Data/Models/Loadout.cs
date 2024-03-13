@@ -5,22 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Scenes;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
-using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.Data.Models
 {
@@ -59,7 +53,7 @@ namespace BattleCruisers.Data.Models
             get => _currentCaptain;
             set => _currentCaptain = value;
         }
-        private List<int> _currentHeckles = unlockedHeckles();
+        private List<int> _currentHeckles = UnlockedHeckles();
         public List<int> CurrentHeckles
         {
             get => _currentHeckles;
@@ -297,7 +291,7 @@ namespace BattleCruisers.Data.Models
                 _buildings.Add(buildingToAdd);
 
                 if (GetBuildingListSize(buildingToAdd.BuildingCategory) < 5)
-                    AddbuildItem(buildingToAdd.BuildingCategory, buildingToAdd);
+                    AddBuildingItem(buildingToAdd.BuildingCategory, buildingToAdd);
             }
         }
 
@@ -325,7 +319,7 @@ namespace BattleCruisers.Data.Models
         }
 
         //functions to handle the lists for the buildables
-        public void AddbuildItem(BuildingCategory category, BuildingKey keyToAdd)
+        public void AddBuildingItem(BuildingCategory category, BuildingKey keyToAdd)
         {
             List<BuildingKey> builds = _builds[category];
             builds.Add(keyToAdd);
@@ -339,7 +333,7 @@ namespace BattleCruisers.Data.Models
             _unit[category] = unitList;
         }
 
-        private static List<int> unlockedHeckles()
+        private static List<int> UnlockedHeckles()
         {
             List<int> unlockedHeckles = new List<int>();
             int numHecklesUnlocked = 3;
@@ -456,14 +450,14 @@ namespace BattleCruisers.Data.Models
             return this.GetHashCode(_hull, _buildings, _units);
         }
 
-/*        public string GetSelectedVariantsAsString()
-        {
-            string ret = string.Empty;
-            foreach(int i in _selectedVariants)
-            {
-                ret += i.ToString() + " ";
-            }
-            return ret;
-        }*/
+        /*        public string GetSelectedVariantsAsString()
+                {
+                    string ret = string.Empty;
+                    foreach(int i in _selectedVariants)
+                    {
+                        ret += i.ToString() + " ";
+                    }
+                    return ret;
+                }*/
     }
 }
