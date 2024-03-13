@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Static;
-using BattleCruisers.Utils.Localisation;
+﻿using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -29,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             int index = levelNum - 1;
             Assert.IsTrue(index >= 0);
             Assert.IsTrue(index < _trashDataList.Length);
-            Debug.Log(_trashDataList[index].StringKeyBase);
             return Task.FromResult(_trashDataList[index]);
         }
 
@@ -38,7 +36,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             int index = sideQuestID;
             Assert.IsTrue(index >= 0);
             Assert.IsTrue(index < _trashDataList.Length);
-            Debug.Log(_trashDataList[index].StringKeyBase);
             return Task.FromResult(_trashDataList[index]);
         }
     }
