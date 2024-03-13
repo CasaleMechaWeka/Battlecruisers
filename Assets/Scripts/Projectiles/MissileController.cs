@@ -90,7 +90,6 @@ namespace BattleCruisers.Projectiles
 
         protected override void DestroyProjectile()
         {
-            Debug.Log("DestroyProjectile");
             missile.enabled = false;
             _rocketTarget.GameObject.SetActive(false);
             Target.Destroyed -= Target_Destroyed;

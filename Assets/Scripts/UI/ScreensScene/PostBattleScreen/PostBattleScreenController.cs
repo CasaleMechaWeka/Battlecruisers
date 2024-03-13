@@ -96,9 +96,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 appraisalButtonsPanel);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider, screensSceneStrings);
 
-            Debug.Log(applicationModel.Mode);
             _applicationModel = applicationModel;
-            Debug.Log(_applicationModel.Mode);
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
             if (desiredBehaviour != PostBattleScreenBehaviour.Default)
@@ -235,7 +233,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
                 ITrashTalkData trashTalkData;
-                Debug.Log(applicationModel.Mode);
 
                 if (applicationModel.Mode == GameMode.SideQuest)
                     trashTalkData = await sideQuestTrashTalkList.GetSideQuestTrashTalkAsync(BattleResult.LevelNum);
