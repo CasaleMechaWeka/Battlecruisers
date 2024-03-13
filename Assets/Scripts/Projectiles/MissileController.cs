@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
@@ -90,7 +90,6 @@ namespace BattleCruisers.Projectiles
 
         protected override void DestroyProjectile()
         {
-            Debug.Log("DestroyProjectile");
             missile.enabled = false;
             _rocketTarget.GameObject.SetActive(false);
             Target.Destroyed -= Target_Destroyed;

@@ -12,7 +12,6 @@ using System.Collections;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using Unity.Services.Leaderboards;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -191,13 +190,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             }
 
             if (showGameSettingsFirst)
-            {
                 ShowGameSettings();
-            }
             else
-            {
                 ShowHotkeys();
-            }
         }
 
         public override void Cancel()
