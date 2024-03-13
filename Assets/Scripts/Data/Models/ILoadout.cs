@@ -9,11 +9,14 @@ using BattleCruisers.Utils.Fetchers;
 namespace BattleCruisers.Data.Models
 {
     public interface ILoadout
-	{
+    {
         HullKey Hull { get; set; }
 
         IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory);
         IList<UnitKey> GetUnits(UnitCategory unitCategory);
+        IList<BuildingKey> GetAllBuildings();
+        IList<UnitKey> GetAllUnits();
+
 
         List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory);
         List<UnitKey> GetUnitKeys(UnitCategory unitCategory);
