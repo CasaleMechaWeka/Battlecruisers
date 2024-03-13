@@ -100,9 +100,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
             if (desiredBehaviour != PostBattleScreenBehaviour.Default)
-            {
                 SetupBattleResult();
-            }
 
             IPostBattleState postBattleState = null;
             Debug.Log(desiredBehaviour);
@@ -242,9 +240,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 levelName.Initialise(BattleResult.LevelNum, trashTalkData);
                 if (_applicationModel.Mode == GameMode.SideQuest)
                     levelName.gameObject.SetActive(false);
+
                 unlockedItemSection.Initialise();
-                if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
-                    || !BattleResult.WasVictory)
+                if (desiredBehaviour == PostBattleScreenBehaviour.Defeat || !BattleResult.WasVictory)
                 {
                     postBattleState = new DefeatState(this, _applicationModel, musicPlayer, screensSceneStrings);
                     title.color = Color.white; // Set title text to white for defeat
@@ -307,17 +305,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 bool wasVicotry = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
 
                 if (BattleResult == null)
-                {
                     _dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum, wasVicotry);
-                }
 
                 BattleResult.LevelNum = levelNum;
                 BattleResult.WasVictory = wasVicotry;
 
                 if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted)
-                {
                     BattleResult.LevelNum = StaticData.NUM_OF_LEVELS;
-                }
             }
 
         }
@@ -360,9 +354,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 appraisalButtonsPanel.gameObject.SetActive(true);
             }
             else
-            {
                 Destroy(appraisalButtonsPanel.gameObject);
-            }
         }
 
         public void Retry()
@@ -411,14 +403,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             // If this was the final campaign level, NEXT should not be displayed.
             // All subsequent levels are bonuses that users can find on their own:
             if (BattleResult.LevelNum == StaticData.NUM_OF_STANDARD_LEVELS)
-            {
                 return false;
-            }
             // The rest of the time we do the normal thing:
             else
-            {
                 return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked;
-            }
         }
 
         private void ClockedGameCommandExecute()

@@ -83,9 +83,7 @@ namespace BattleCruisers.Projectiles
         private void ConditionalDestroy()
         {
             if (gameObject.activeSelf && missile.enabled)
-            {
                 DestroyProjectile();
-            }
         }
 
         protected override void DestroyProjectile()
