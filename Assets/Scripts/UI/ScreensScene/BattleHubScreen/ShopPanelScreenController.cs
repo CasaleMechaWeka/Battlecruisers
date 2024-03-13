@@ -13,7 +13,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Unity.Services.Core;
-using System.Diagnostics.Contracts;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
