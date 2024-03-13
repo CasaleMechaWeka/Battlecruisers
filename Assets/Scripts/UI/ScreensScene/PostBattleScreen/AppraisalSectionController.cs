@@ -23,13 +23,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             appraisalDroneText.text = appraisalText;
 
             if (lootButtonAction != null)
-            {
                 lootButton.Initialise(soundPlayer, lootButtonAction);
-            }
             else
-            {
                 lootButton.gameObject.SetActive(false);
-            }
 
             gameObject.SetActive(true);
         }
