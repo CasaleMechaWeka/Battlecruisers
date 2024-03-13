@@ -33,6 +33,7 @@ namespace BattleCruisers.Scenes.Test.UI
                     helper.PrefabFactory,
                     new SpriteFetcher(),
                     trashDataList,
+                    trashDataList,
                     Substitute.For<IMusicPlayer>(),
                     helper.CommonStrings,
                     helper.StoryStrings);

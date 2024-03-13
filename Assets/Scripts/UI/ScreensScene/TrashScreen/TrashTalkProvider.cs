@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
@@ -19,11 +19,19 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _storyStrings = storyStrings;
         }
 
-        public async Task<ITrashTalkData> GetTrashTalkAsync(int levelNum)
+        public async Task<ITrashTalkData> GetLevelTrashTalkAsync(int levelNum)
         {
             IPrefabKey key = new TrashTalkKey(levelNum);
             IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
             prefabContainer.Prefab.Initialise(_storyStrings);
+            return prefabContainer.Prefab;
+        }
+
+        public async Task<ITrashTalkData> GetSideQuestTrashTalkAsync(int sideQuestID)
+        {
+            IPrefabKey key = new TrashTalkKey(sideQuestID);
+            IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
+            prefabContainer.Prefab.Initialise(_storyStrings, true);
             return prefabContainer.Prefab;
         }
     }

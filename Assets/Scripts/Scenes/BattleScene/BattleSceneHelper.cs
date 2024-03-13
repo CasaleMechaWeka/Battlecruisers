@@ -69,7 +69,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
             ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher, _storyStrings);
-            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
+            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetLevelTrashTalkAsync(levelNum);
             return levelTrashTalkData.EnemyName.ToUpper();
         }
 

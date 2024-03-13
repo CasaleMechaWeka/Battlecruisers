@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private IApplicationModel _appModel;
         private IPrefabFactory _prefabFactory;
         private ISpriteFetcher _spriteFetcher;
-        private ITrashTalkProvider _trashDataList;
+        private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
         private ILocTable _commonStrings;
         private ILocTable _storyStrings;
@@ -45,20 +45,22 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
             ISpriteFetcher spriteFetcher,
-            ITrashTalkProvider trashDataList,
+            ITrashTalkProvider levelTrashDataList,
+            ITrashTalkProvider sideQuestTrashDataList,
             IMusicPlayer musicPlayer,
             ILocTable commonStrings,
             ILocTable storyStrings)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, trashDataList, homeButton);
-            Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, trashDataList, musicPlayer, commonStrings);
+            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, levelTrashDataList, homeButton);
+            Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, levelTrashDataList, musicPlayer, commonStrings);
 
             _appModel = appModel;
             _prefabFactory = prefabFactory;
             _spriteFetcher = spriteFetcher;
-            _trashDataList = trashDataList;
+            _levelTrashDataList = levelTrashDataList;
+            _sideQuestTrashDataList = sideQuestTrashDataList;
             _musicPlayer = musicPlayer;
             _commonStrings = commonStrings;
             _storyStrings = storyStrings;
@@ -76,7 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             int levelIndex = _appModel.SelectedLevel - 1;
             ILevel level = _appModel.DataProvider.Levels[levelIndex];
 
-            ITrashTalkData trashTalkData = await _trashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
+            ITrashTalkData trashTalkData = await _levelTrashDataList.GetLevelTrashTalkAsync(_appModel.SelectedLevel);
             trashTalkBubbles.Initialise(trashTalkData, _commonStrings, _storyStrings);
             SetupEnemyCharacter(trashTalkData);
 

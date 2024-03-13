@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             {
                 LevelButtonController button = levelButtons[i];
                 LevelInfo level = allLevels[firstLevelIndex + i];
-                ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(level.Num);
+                ITrashTalkData trashTalkData = await trashDataList.GetLevelTrashTalkAsync(level.Num);
 
                 await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData, levelsScreen);
             }

@@ -433,7 +433,16 @@ namespace BattleCruisers.Data.Models
         }
 
         public int NumOfLevelsCompleted => _completedLevels.Count;
-        public int NumOfSideQuestsCompleted => _completedSideQuests.Count;
+        public int NumOfSideQuestsCompleted
+        {
+            get
+            {
+                if (_completedSideQuests == null)
+                    return 0;
+                else
+                    return _completedSideQuests.Count;
+            }
+        }
         public int ID_Bodykit_AIbot { get; set; }
         public bool HasAttemptedTutorial
         {

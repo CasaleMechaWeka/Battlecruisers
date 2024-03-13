@@ -52,18 +52,19 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkProvider trashDataList,
+            ITrashTalkProvider levelTrashDataList,
+            ITrashTalkProvider sideQuestTrashDataList,  //if this variable is unused after sideQuests are fully implemented, this can be deleted
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
-            Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList, nextLevelHelper);
+            Helper.AssertIsNotNull(levels, difficultySpritesProvider, levelTrashDataList, nextLevelHelper);
 
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
             _nextLevelHelper = nextLevelHelper;
 
-            await InitialiseLevelSetsAsync(soundPlayer, screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
+            await InitialiseLevelSetsAsync(soundPlayer, screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, levelTrashDataList);
 
             _nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
             nextSetButton.Initialise(soundPlayer, _nextSetCommand);

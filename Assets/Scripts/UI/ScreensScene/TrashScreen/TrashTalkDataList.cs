@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             Assert.IsNotNull(storyStrings);
 
             _trashDataList = GetComponentsInChildren<TrashTalkData>();
-            Assert.AreEqual(StaticData.NUM_OF_LEVELS, _trashDataList.Length);
+            //Assert.AreEqual(StaticData.NUM_OF_LEVELS, _trashDataList.Length);
             //int cnt = 0;
             foreach (TrashTalkData trashTalk in _trashDataList)
             {
@@ -24,11 +24,21 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
         }
 
-        public Task<ITrashTalkData> GetTrashTalkAsync(int levelNum)
+        public Task<ITrashTalkData> GetLevelTrashTalkAsync(int levelNum)
         {
             int index = levelNum - 1;
             Assert.IsTrue(index >= 0);
             Assert.IsTrue(index < _trashDataList.Length);
+            Debug.Log(_trashDataList[index].StringKeyBase);
+            return Task.FromResult(_trashDataList[index]);
+        }
+
+        public Task<ITrashTalkData> GetSideQuestTrashTalkAsync(int sideQuestID)
+        {
+            int index = sideQuestID;
+            Assert.IsTrue(index >= 0);
+            Assert.IsTrue(index < _trashDataList.Length);
+            Debug.Log(_trashDataList[index].StringKeyBase);
             return Task.FromResult(_trashDataList[index]);
         }
     }

@@ -31,15 +31,16 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public string StringKeyBase => stringKeyBase;
 
-        public void Initialise(ILocTable storyStrings)
+        public void Initialise(ILocTable storyStrings, bool isSideQuest = false)
         {
             Assert.IsNotNull(storyStrings);
+            if (isSideQuest)
+                stringKeyBase = "sideQuest" + stringKeyBase;
             //Debug.Log(stringKeyBase);
             PlayerText = storyStrings.GetString($"{stringKeyBase}/PlayerText");
             EnemyText = storyStrings.GetString($"{stringKeyBase}/EnemyText");
             AppraisalDroneText = storyStrings.GetString($"{stringKeyBase}/DroneText");
             enemyName = storyStrings.GetString($"{stringKeyBase}/name");
-
         }
     }
 }

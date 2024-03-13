@@ -11,7 +11,6 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.SkirmishScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
@@ -64,7 +63,7 @@ namespace BattleCruisers.Scenes
         public SettingsScreenController settingsScreen;
         public BattleHubScreensController hubScreen;
         public TrashScreenController trashScreen;
-        public TrashTalkDataList trashDataList;
+        public TrashTalkDataList levelTrashDataList, sideQuestTrashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
         public SkirmishScreenController skirmishScreen;
         public AdvertisingBannerScrollingText AdvertisingBanner;
@@ -98,7 +97,7 @@ namespace BattleCruisers.Scenes
         async void Start()
         {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, levelTrashDataList, sideQuestTrashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -123,7 +122,8 @@ namespace BattleCruisers.Scenes
                         _dataProvider.SettingsManager, 1));
 
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
-            trashDataList.Initialise(storyStrings);
+            levelTrashDataList.Initialise(storyStrings);
+            sideQuestTrashDataList.Initialise(storyStrings);
 
             // TEMP  For showing PostBattleScreen :)
             if (goToPostBattleScreen)
@@ -147,7 +147,7 @@ namespace BattleCruisers.Scenes
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
@@ -229,7 +229,7 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, levelTrashDataList, sideQuestTrashDataList, screensSceneStrings);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
@@ -272,7 +272,8 @@ namespace BattleCruisers.Scenes
                 levels,
                 testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
                 difficultySpritesProvider,
-                trashDataList,
+                levelTrashDataList,
+                sideQuestTrashDataList,
                 nextLevelHelper);
         }
 

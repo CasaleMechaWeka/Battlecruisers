@@ -28,11 +28,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             ILocTable screensSceneStrings,
             ISingleSoundPlayer soundPlayer,
             ILootManager lootManager,
-            ITrashTalkData levelTrashTalkData,
+            ITrashTalkData trashTalkData,
             PostBattleScreenBehaviour desiredBehaviour)
             : base(postBattleScreen, appModel, musicPlayer, screensSceneStrings)
         {
-            Helper.AssertIsNotNull(soundPlayer, lootManager, levelTrashTalkData);
+            Helper.AssertIsNotNull(soundPlayer, lootManager, trashTalkData);
 
 
             _lootManager = lootManager;
@@ -55,6 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             }
             else
             {
+                //completed a levels that unlocks new loot
                 if (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked
                     || (desiredBehaviour == PostBattleScreenBehaviour.Default
                     && _lootManager.ShouldShowLevelLoot(battleResult.LevelNum)))
@@ -63,23 +64,21 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                     postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
 
                     _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
-                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
+                    postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
                     _unlockedLoot = lootManager.UnlockLevelLoot(battleResult.LevelNum);
                 }
                 else
                 {
+                    //completed a side quest that unlocks new loot
                     if (desiredBehaviour == PostBattleScreenBehaviour.Victory_SideQuest_LootUnlocked ||
                         desiredBehaviour == PostBattleScreenBehaviour.Default
                         && appModel.Mode == GameMode.SideQuest && _lootManager.ShouldShowSideQuestLoot(battleResult.LevelNum))
                     {
-
-                        Debug.Log(battleResult.LevelNum);
-
                         postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
                         postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
 
                         _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
-                        postBattleScreen.appraisalSection.Initialise("imaginary loot unlocked! if you read this in a production version, please report it to the developers", soundPlayer, ShowLoot);
+                        postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
                         _unlockedLoot = lootManager.UnlockSideQuestLoot(battleResult.LevelNum);
 
                     }
@@ -93,7 +92,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                     else
                     {
                         postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
-                        postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer);
+                        postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer);
                     }
 
                 }
