@@ -183,8 +183,10 @@ namespace BattleCruisers.Projectiles
         private void _target_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= _target_Destroyed;
-            Retarget();
-            //ReleaseMissile();
+            if (_activationArgs.EnemyCruiser != null)
+                Retarget();
+            else
+                ReleaseMissile();
         }
 
         private void CleanUpTargetProcessor()
