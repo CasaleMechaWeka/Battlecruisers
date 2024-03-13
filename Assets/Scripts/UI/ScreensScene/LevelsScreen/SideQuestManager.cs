@@ -8,7 +8,6 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.AI;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Utils.Threading;
 
 
