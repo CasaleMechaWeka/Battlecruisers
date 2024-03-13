@@ -4,7 +4,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public interface ITrashTalkProvider
     {
-        Task<ITrashTalkData> GetLevelTrashTalkAsync(int levelNum);
-        Task<ITrashTalkData> GetSideQuestTrashTalkAsync(int sideQuestID);
+        Task<ITrashTalkData> GetTrashTalkAsync(int levelNum, bool isSideQuest = false);
     }
 }

@@ -595,7 +595,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
 
             trashDataList.Initialise(storyStrings);
-            ITrashTalkData trashTalkData = await trashDataList.GetLevelTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
+            ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
             MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData, commonStrings, storyStrings);
 
             // cheat code for local test

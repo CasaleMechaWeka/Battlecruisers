@@ -17,6 +17,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
+using UnityEngine;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -66,10 +67,24 @@ namespace BattleCruisers.Scenes.BattleScene
             return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel);
         }
 
+        public virtual ISideQuestData GetSideQuest()
+        {
+            return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID);
+        }
+
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
+            ITrashTalkData levelTrashTalkData = new TrashTalkData();
             ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher, _storyStrings);
-            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetLevelTrashTalkAsync(levelNum);
+
+            if (_appModel.Mode == GameMode.SideQuest)
+            {
+                levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum, true);
+                Debug.Log(levelNum);
+            }
+            else
+                levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
+
             return levelTrashTalkData.EnemyName.ToUpper();
         }
 

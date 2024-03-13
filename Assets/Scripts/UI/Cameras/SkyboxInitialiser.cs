@@ -8,12 +8,12 @@ namespace BattleCruisers.UI.Cameras
 {
     public class SkyboxInitialiser : MonoBehaviour
     {
-        public async Task InitialiseAsync(Skybox skybox, ILevel level)
+        public async Task InitialiseAsync(Skybox skybox, string skyMaterialName)
         {
-            Helper.AssertIsNotNull(skybox, level);
+            Helper.AssertIsNotNull(skybox, skyMaterialName);
 
             IMaterialFetcher materialFetcher = new MaterialFetcher();
-            skybox.material = await materialFetcher.GetMaterialAsync(level.SkyMaterialName);
+            skybox.material = await materialFetcher.GetMaterialAsync(skyMaterialName);
         }
     }
 }

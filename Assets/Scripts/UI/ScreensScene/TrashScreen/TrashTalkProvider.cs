@@ -19,20 +19,22 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _storyStrings = storyStrings;
         }
 
-        public async Task<ITrashTalkData> GetLevelTrashTalkAsync(int levelNum)
+        public async Task<ITrashTalkData> GetTrashTalkAsync(int levelNum, bool isSideQuest = false)
         {
-            IPrefabKey key = new TrashTalkKey(levelNum);
-            IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
-            prefabContainer.Prefab.Initialise(_storyStrings);
-            return prefabContainer.Prefab;
-        }
-
-        public async Task<ITrashTalkData> GetSideQuestTrashTalkAsync(int sideQuestID)
-        {
-            IPrefabKey key = new TrashTalkKey(sideQuestID);
-            IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
-            prefabContainer.Prefab.Initialise(_storyStrings, true);
-            return prefabContainer.Prefab;
+            if (isSideQuest)
+            {
+                IPrefabKey key = new LevelTrashTalkKey(levelNum, true);
+                IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
+                prefabContainer.Prefab.Initialise(_storyStrings, true);
+                return prefabContainer.Prefab;
+            }
+            else
+            {
+                IPrefabKey key = new LevelTrashTalkKey(levelNum);
+                IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
+                prefabContainer.Prefab.Initialise(_storyStrings);
+                return prefabContainer.Prefab;
+            }
         }
     }
 }

@@ -32,6 +32,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
         IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
         ILevel GetLevel();
+        ISideQuestData GetSideQuest();
         ILoadout GetPlayerLoadout();
         IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         ISlotFilter CreateHighlightableSlotFilter();
@@ -39,7 +40,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         IUserChosenTargetHelper CreateUserChosenTargetHelper(
-            IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator);
         Task<string> GetEnemyNameAsync(int levelNum);

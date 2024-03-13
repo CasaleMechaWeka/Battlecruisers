@@ -13,9 +13,9 @@ namespace BattleCruisers.Data
         // EnemyHull Hull { get; }
         PrefabKey Hull { get; }
         SoundKeyPair MusicBackgroundKey { get; }
-        // SkyMaterials SkyMaterial { get; }
         bool IsCompleted { get; }
         int SideLevelNum { get; }
+        string SkyMaterial { get; }
 
     }
 }

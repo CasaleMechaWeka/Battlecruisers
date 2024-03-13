@@ -23,20 +23,22 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
         }
 
-        public Task<ITrashTalkData> GetLevelTrashTalkAsync(int levelNum)
+        public Task<ITrashTalkData> GetTrashTalkAsync(int levelNum, bool isSideQuest = false)
         {
-            int index = levelNum - 1;
-            Assert.IsTrue(index >= 0);
-            Assert.IsTrue(index < _trashDataList.Length);
-            return Task.FromResult(_trashDataList[index]);
-        }
-
-        public Task<ITrashTalkData> GetSideQuestTrashTalkAsync(int sideQuestID)
-        {
-            int index = sideQuestID;
-            Assert.IsTrue(index >= 0);
-            Assert.IsTrue(index < _trashDataList.Length);
-            return Task.FromResult(_trashDataList[index]);
+            if (isSideQuest)
+            {
+                int index = levelNum;
+                Assert.IsTrue(index >= 0);
+                Assert.IsTrue(index < _trashDataList.Length);
+                return Task.FromResult(_trashDataList[index]);
+            }
+            else
+            {
+                int index = levelNum - 1;
+                Assert.IsTrue(index >= 0);
+                Assert.IsTrue(index < _trashDataList.Length);
+                return Task.FromResult(_trashDataList[index]);
+            }
         }
     }
 }
