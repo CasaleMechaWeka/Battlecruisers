@@ -80,7 +80,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual IPrefabKey GetAiCruiserKey()
         {
-            return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel).Hull;
+            if (_appModel.Mode == GameMode.SideQuest)
+                return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID).Hull;
+            else
+                return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel).Hull;
         }
     }
 }

@@ -26,7 +26,9 @@ namespace BattleCruisers.Data
         private string _unlockRequirementQuestID;
         public string UnlockRequirementQuestID => _unlockRequirementQuestID;
         //public RewardKey StaticPrefabKeys { get; }
-        //public EnemyHull Hull { get; }
+        [SerializeField]
+        private PrefabKey _hull;
+        public PrefabKey Hull => _hull;
         [SerializeField]
         private SoundKeyPair _musicBackgroundKey;
         public SoundKeyPair MusicBackgroundKey => _musicBackgroundKey;
@@ -43,6 +45,7 @@ namespace BattleCruisers.Data
         IPrefabKey enemyCaptainExo,
         int unlockRequirementLevel,
         string unlockRequirementQuestID,
+        PrefabKey hull,
         SoundKeyPair musicBackgroundKey,
         bool isCompleted,
         int sideLevelNum)
@@ -51,6 +54,7 @@ namespace BattleCruisers.Data
             _enemyCaptainExo = enemyCaptainExo;
             _unlockRequirementLevel = unlockRequirementLevel;
             _unlockRequirementQuestID = unlockRequirementQuestID;
+            _hull = hull;
             _musicBackgroundKey = musicBackgroundKey;
             _isCompleted = isCompleted;
             _sideLevelNum = sideLevelNum;

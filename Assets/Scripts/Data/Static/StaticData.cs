@@ -50,6 +50,7 @@ namespace BattleCruisers.Data.Static
 
         public GameModel InitialGameModel { get; }
         public ReadOnlyCollection<ILevel> Levels { get; }
+        public ReadOnlyCollection<ISideQuestData> SideQuests { get; }
         public ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; }
         public ReadOnlyCollection<HullKey> HullKeys { get; }
         public ReadOnlyCollection<UnitKey> UnitKeys { get; }
@@ -85,6 +86,7 @@ namespace BattleCruisers.Data.Static
             InitialGameModel = CreateInitialGameModel();
             Levels = new ReadOnlyCollection<ILevel>(CreateLevels());
             PvPLevels = new ReadOnlyDictionary<Map, IPvPLevel>(CreatePvPLevels());
+            SideQuests = new ReadOnlyCollection<ISideQuestData>(CreateSideQuests());
         }
 
         private List<HullKey> AllHullKeys()
@@ -378,6 +380,14 @@ namespace BattleCruisers.Data.Static
                 new Level(38, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(38)),
                 new Level(39, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(39)),
                 new Level(40, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(40)) //TODO: Change to new boss broadsword
+            };
+        }
+
+        private List<ISideQuestData> CreateSideQuests()
+        {
+            return new List<ISideQuestData>()
+            {
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(31), 3, null, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, false, 0)
             };
         }
 

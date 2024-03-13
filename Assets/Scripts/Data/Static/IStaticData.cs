@@ -21,6 +21,7 @@ namespace BattleCruisers.Data.Static
         bool HasAsserts { get; }
         GameModel InitialGameModel { get; }
         ReadOnlyCollection<ILevel> Levels { get; }
+        ReadOnlyCollection<ISideQuestData> SideQuests { get; }
         ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; }
         ReadOnlyCollection<HullKey> HullKeys { get; }
         ReadOnlyCollection<UnitKey> UnitKeys { get; }

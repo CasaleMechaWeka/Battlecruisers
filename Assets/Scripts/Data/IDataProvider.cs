@@ -21,10 +21,11 @@ namespace BattleCruisers.Data
 
         List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
- /*       public PvPConfig pvpConfig { get; set; }*/
+        /*       public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
         Task<string> GetPVPVersion();
         ILevel GetLevel(int levelNum);
+        ISideQuestData GetSideQuest(int sideQuestID);
         IPvPLevel GetPvPLevel(Map map);
         void SaveGame();
 
@@ -33,8 +34,8 @@ namespace BattleCruisers.Data
         /// Designed for user playtests, so users can start with a clean slate.
         /// </summary>
         void Reset();
-/*        Task<int> GetCaptainCost(int index);
-        Task<int> GetHeckleCost(int index);*/
+        /*        Task<int> GetCaptainCost(int index);
+                Task<int> GetHeckleCost(int index);*/
         // Cloud Saving:
         Task CloudSave();
         Task CloudLoad();

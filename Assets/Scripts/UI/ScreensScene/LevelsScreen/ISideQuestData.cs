@@ -11,6 +11,7 @@ namespace BattleCruisers.Data
         string UnlockRequirementQuestID { get; }
         // RewardKey StaticPrefabKeys { get; }
         // EnemyHull Hull { get; }
+        PrefabKey Hull { get; }
         SoundKeyPair MusicBackgroundKey { get; }
         // SkyMaterials SkyMaterial { get; }
         bool IsCompleted { get; }
