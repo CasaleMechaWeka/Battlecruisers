@@ -238,16 +238,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 Debug.Log(applicationModel.Mode);
 
                 if (applicationModel.Mode == GameMode.SideQuest)
-                {
                     trashTalkData = await sideQuestTrashTalkList.GetSideQuestTrashTalkAsync(BattleResult.LevelNum);
-                    Debug.Log("TADAAA");
-                }
                 else
                     trashTalkData = await levelTrashTalkList.GetLevelTrashTalkAsync(BattleResult.LevelNum + 1);
 
                 levelName.Initialise(BattleResult.LevelNum, trashTalkData);
+                if (_applicationModel.Mode == GameMode.SideQuest)
+                    levelName.gameObject.SetActive(false);
                 unlockedItemSection.Initialise();
-                Debug.Log(desiredBehaviour);
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
                     || !BattleResult.WasVictory)
                 {
