@@ -27,6 +27,11 @@ namespace BattleCruisers.Data
         [SerializeField]
         private PrefabKey _hull;
         public PrefabKey Hull => _hull;
+
+        [SerializeField]
+        private string _skyMaterial;
+        public string SkyMaterial => _skyMaterial;
+
         [SerializeField]
         private SoundKeyPair _musicBackgroundKey;
         public SoundKeyPair MusicBackgroundKey => _musicBackgroundKey;
@@ -38,10 +43,6 @@ namespace BattleCruisers.Data
         private int _sideLevelNum;
         public int SideLevelNum => _sideLevelNum;
 
-        [SerializeField]
-        private string _skyMaterial;
-        public string SkyMaterial => _skyMaterial;
-
         public SideQuestData(
         bool playerTalksFirst,
         IPrefabKey enemyCaptainExo,
@@ -49,19 +50,20 @@ namespace BattleCruisers.Data
         string unlockRequirementQuestID,
         PrefabKey hull,
         SoundKeyPair musicBackgroundKey,
+        string skyMaterial,
         bool isCompleted,
-        int sideLevelNum,
-        string skyMaterial)
+        int sideLevelNum
+        )
         {
             _playerTalksFirst = playerTalksFirst;
             _enemyCaptainExo = enemyCaptainExo;
             _unlockRequirementLevel = unlockRequirementLevel;
             _unlockRequirementQuestID = unlockRequirementQuestID;
             _hull = hull;
+            _skyMaterial = skyMaterial;
             _musicBackgroundKey = musicBackgroundKey;
             _isCompleted = isCompleted;
             _sideLevelNum = sideLevelNum;
-            _skyMaterial = skyMaterial;
         }
         //Set vars, functions, check screenscenegod for trashtalk, pass all the parameters to battlescenegod
         /*Step 1: secure that the button is receiving input

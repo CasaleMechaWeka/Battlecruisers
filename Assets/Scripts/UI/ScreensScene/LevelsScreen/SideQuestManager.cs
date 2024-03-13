@@ -23,7 +23,8 @@ public class SideQuestManager : ElementWithClickSound
     public async void Initialize()
     {
         backgroundStatsProvider = new BackgroundStatsProvider(prefabFetcher);
-        SideQuests.Add(new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(31), 3, null, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, false, 0, SkyMaterials.Purple));
+        SideQuests.Add(new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(32), 3, null, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Confusion, SkyMaterials.Purple, false, 0)
+);
         // Add more quests as needed
     }
 

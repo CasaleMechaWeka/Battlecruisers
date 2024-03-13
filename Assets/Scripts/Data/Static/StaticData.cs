@@ -387,7 +387,7 @@ namespace BattleCruisers.Data.Static
         {
             return new List<ISideQuestData>()
             {
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(32), 3, null, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Confusion, false, 0, SkyMaterials.Purple)
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(32), 3, null, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Confusion, SkyMaterials.Purple, false, 0)
             };
         }
 
