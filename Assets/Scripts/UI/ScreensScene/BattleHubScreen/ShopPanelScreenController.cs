@@ -13,6 +13,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Unity.Services.Core;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -46,6 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private List<int> exoBaseList;
         private List<CaptainExo> captains = new List<CaptainExo>();
+
         public async Task Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -59,6 +61,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
+            await VariantsForOwnedItems();
+
             //Initialise each button with its function
             backButton.Initialise(_soundPlayer, GoHome, this);
             /*            buyCaptainButton.Initialise(_soundPlayer, PurchaseCaptainExo, this);
@@ -87,9 +91,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
             }
             else
-            {
                 blackMarketButton.gameObject.SetActive(false);
-            }
 
             exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
 #if UNITY_EDITOR
@@ -101,10 +103,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 captains.Add(captainExo);
             }
 
-            variantList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Variants.Count - 1, 12, 0);
-#if UNITY_EDITOR
-            variantList = GenerateFullList(_dataProvider.GameModel.Variants.Count);
-#endif
+            variantList = await VariantsForOwnedItems();
             foreach (int index in variantList)
             {
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
@@ -200,10 +199,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void RemoveAllCaptainsFromRenderCamera()
         {
             foreach (GameObject obj in captainsContainer.visualOfCaptains)
-            {
                 if (obj != null)
                     DestroyImmediate(obj);
-            }
+
             captainsContainer.visualOfCaptains.Clear();
         }
         public async void InitialiseVariants()
@@ -216,9 +214,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             VariantItemController[] items = variantsItemContainer.gameObject.GetComponentsInChildren<VariantItemController>();
             foreach (VariantItemController item in items)
-            {
                 DestroyImmediate(item.gameObject);
-            }
 
             variantsContainer.btnBuy.SetActive(false);
             variantsContainer.ownFeedback.SetActive(false);
@@ -291,9 +287,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             BodykitItemController[] items = bodykitItemContainer.gameObject.GetComponentsInChildren<BodykitItemController>();
             foreach (BodykitItemController item in items)
-            {
                 DestroyImmediate(item.gameObject);
-            }
+
             bodykitsContainer.btnBuy.SetActive(false);
             bodykitsContainer.ownFeedback.SetActive(false);
 
@@ -349,9 +344,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             // remove all old children to refresh
             HeckleItemController[] items = heckleItemContainer.gameObject.GetComponentsInChildren<HeckleItemController>();
             foreach (HeckleItemController item in items)
-            {
                 DestroyImmediate(item.gameObject);
-            }
 
             RemoveAllCaptainsFromRenderCamera();
 
@@ -420,9 +413,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             // remove all old children to refersh
             CaptainItemController[] items = captainItemContainer.gameObject.GetComponentsInChildren<CaptainItemController>();
             foreach (CaptainItemController item in items)
-            {
                 DestroyImmediate(item.gameObject);
-            }
+
             captainsContainer.btnBuy.SetActive(false);
             captainsContainer.ownFeedback.SetActive(false);
             await Task.Delay(100);
@@ -484,7 +476,34 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             List<int> randomList = new List<int>();
             for (int i = startValue; i < elements + startValue; i++)
                 randomList.Add((startValue + (maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue - startValue)));
+
             return randomList;
+        }
+
+        async Task<List<int>> VariantsForOwnedItems()
+        {
+            List<int> variantsList = new List<int>();
+            IList<BuildingKey> buildingKeys = _dataProvider.GameModel.PlayerLoadout.GetAllBuildings();
+            IList<UnitKey> unitKeys = _dataProvider.GameModel.PlayerLoadout.GetAllUnits();
+            List<string> buildablePrefabNames = new List<string>();
+
+            for (int i = 0; i < buildingKeys.Count; i++)
+                buildablePrefabNames.Add(buildingKeys[i].PrefabName);
+
+            for (int i = 0; i < unitKeys.Count; i++)
+                buildablePrefabNames.Add(unitKeys[i].PrefabName);
+
+
+            for (int i = 0; i < _dataProvider.GameModel.Variants.Count; i++)
+            {
+                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
+
+                for (int j = 0; j < buildablePrefabNames.Count; j++)
+                    if (variant.parent.ToString() == buildablePrefabNames[j])
+                        variantsList.Add(variant.variantIndex);
+            }
+
+            return variantsList;
         }
 
         List<int> GenerateFullList(int elements)
@@ -492,6 +511,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             List<int> fullList = new List<int>();
             for (int i = 0; i < elements; i++)
                 fullList.Add(i);
+
             return fullList;
         }
     }

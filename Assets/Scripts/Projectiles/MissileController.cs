@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;

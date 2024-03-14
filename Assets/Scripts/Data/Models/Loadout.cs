@@ -284,6 +284,16 @@ namespace BattleCruisers.Data.Models
             return _units.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
         }
 
+        public IList<BuildingKey> GetAllBuildings()
+        {
+            return _buildings.ToList();
+        }
+
+        public IList<UnitKey> GetAllUnits()
+        {
+            return _units.ToList();
+        }
+
         public void AddBuilding(BuildingKey buildingToAdd)
         {
             if (!_buildings.Contains(buildingToAdd))

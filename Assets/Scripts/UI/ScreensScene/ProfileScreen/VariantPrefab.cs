@@ -5,17 +5,16 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Scenes;
 using BattleCruisers.Utils.Fetchers;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
     public class VariantPrefab : Prefab, IVariantPrefab
     {
+        public int _index;
+        public int variantIndex => _index;
         public Sprite _variantSprite;
         public Sprite variantSprite => _variantSprite;
 
@@ -42,9 +41,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             IBuilding building = null;
             if (prefabFactory != null)
-            {
                 building = prefabFactory.GetBuildingWrapperPrefab(GetPrefabKey()).Buildable;
-            }
+
             return building;
         }
 
@@ -52,9 +50,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             IPvPBuilding building = null;
             if (prefabFactory != null)
-            {
                 building = prefabFactory.GetBuildingWrapperPrefab(GetPvPPrefabKey()).Buildable;
-            }
+
             return building;
         }
 
@@ -62,9 +59,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             IUnit unit = null;
             if (prefabFactory != null)
-            {
                 unit = prefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
-            }
+
             return unit;
         }
 
@@ -72,9 +68,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             IPvPUnit unit = null;
             if (prefabFactory != null)
-            {
                 unit = prefabFactory.GetUnitWrapperPrefab(GetPvPPrefabKey()).Buildable;
-            }
+
             return unit;
         }
 

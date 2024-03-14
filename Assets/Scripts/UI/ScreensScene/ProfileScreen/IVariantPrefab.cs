@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
     public interface IVariantPrefab
     {
+        int variantIndex { get; }
         Sprite variantSprite { get; }
         ParentBuildable parent { get; set; }
         VariantType variantType { get; }
