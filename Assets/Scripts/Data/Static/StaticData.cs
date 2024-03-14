@@ -58,6 +58,7 @@ namespace BattleCruisers.Data.Static
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
+        public ILevelStrategies SideQuestStrategies { get; }
         public IPvPLevelStrategies PvPStrategies { get; }
 
         public StaticData()
@@ -79,6 +80,7 @@ namespace BattleCruisers.Data.Static
             _hullToCompletedSideQuest = AssignHullUnlockSideQuest();
 
             Strategies = new LevelStrategies();
+            SideQuestStrategies = new SideQuestStrategies();
             PvPStrategies = new PvPLevelStrategies();
 
             AIBannedUltrakeys = new ReadOnlyCollection<BuildingKey>(CreateAIBannedUltraKeys());

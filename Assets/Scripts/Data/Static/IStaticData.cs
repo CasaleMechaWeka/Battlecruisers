@@ -29,6 +29,7 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
+        ILevelStrategies SideQuestStrategies { get; }
         IPvPLevelStrategies PvPStrategies { get; }
 
         ILoot GetLevelLoot(int levelCompleted);

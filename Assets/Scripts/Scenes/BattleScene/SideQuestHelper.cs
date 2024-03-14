@@ -97,7 +97,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected virtual IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new DefaultStrategyFactory(DataProvider.StaticData.Strategies, currentLevelNum);
+            return new DefaultStrategyFactory(DataProvider.StaticData.Strategies, DataProvider.StaticData.SideQuestStrategies, currentLevelNum, _appModel.Mode == GameMode.SideQuest);
         }
 
         public override ISlotFilter CreateHighlightableSlotFilter()

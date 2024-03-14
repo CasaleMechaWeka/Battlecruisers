@@ -1,4 +1,5 @@
-﻿using BattleCruisers.AI;
+﻿using System.Diagnostics;
+using BattleCruisers.AI;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
@@ -41,7 +42,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
-            IPrefabFactory prefabFactory, 
+            IPrefabFactory prefabFactory,
             IDeferrer deferrer)
             : base(appModel, prefabFetcher, storyStrings)
         {
@@ -63,14 +64,14 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             return DataProvider.GameModel.PlayerLoadout;
         }
-		
+
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
-		{
+        {
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
             IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo, FindDifficulty());
-		}
+        }
 
         public override IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()
         {
@@ -89,13 +90,13 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected virtual IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new DefaultStrategyFactory(DataProvider.StaticData.Strategies, currentLevelNum);
+            return new DefaultStrategyFactory(DataProvider.StaticData.Strategies, DataProvider.StaticData.SideQuestStrategies, currentLevelNum, _appModel.Mode == GameMode.SideQuest);
         }
-		
-		public override ISlotFilter CreateHighlightableSlotFilter()
-		{
+
+        public override ISlotFilter CreateHighlightableSlotFilter()
+        {
             return new FreeSlotFilter();
-		}
+        }
 
         public override IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
         {
