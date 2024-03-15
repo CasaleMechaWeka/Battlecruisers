@@ -100,26 +100,26 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return turretStats;
         }
 
-        public virtual async void ApplyVariantStats(IBuilding building)
+        public virtual void ApplyVariantStats(IBuilding building)
         {
             int variantIndex = building.variantIndex;
-            if(variantIndex != -1)
+            if (variantIndex != -1)
             {
                 if (variantIndex != -1)
                 {
-                    VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                    VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                     // turret stats
                     _baseTurretStats.ApplyVariantStats(variant.statVariant);
                     GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
                 }
             }
         }
-        public virtual async void ApplyVariantStats(IUnit unit)
+        public virtual void ApplyVariantStats(IUnit unit)
         {
             int variantIndex = unit.variantIndex;
-            if(variantIndex != -1)
+            if (variantIndex != -1)
             {
-                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 // turret stats
                 _baseTurretStats.ApplyVariantStats(variant.statVariant);
                 GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);

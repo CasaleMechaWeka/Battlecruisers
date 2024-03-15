@@ -138,40 +138,19 @@ namespace BattleCruisers.Utils.Fetchers
             return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
         }
 
-        public async Task<CaptainExo> GetCaptainExo(IPrefabKey prefabKey)
+        public CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
         {
-            string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
-            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
-            await handle.Task;
-            if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
-            {
-                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
-            }
-            return handle.Result.GetComponent<CaptainExo>();
+            return _prefabCache.GetCaptainExo(captainExoKey);
         }
 
-        public async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
+        public Bodykit GetBodykit(IPrefabKey bodykitKey)
         {
-            string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
-            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
-            await handle.Task;
-            if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
-            {
-                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
-            }
-            return handle.Result.GetComponent<Bodykit>();
+            return _prefabCache.GetBodykit(bodykitKey);
         }
 
-        public async Task<VariantPrefab> GetVariant(IPrefabKey prefabKey)
+        public VariantPrefab GetVariant(IPrefabKey variantKey)
         {
-            string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
-            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
-            await handle.Task;
-            if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
-            {
-                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
-            }
-            return handle.Result.GetComponent<VariantPrefab>();
+            return _prefabCache.GetVariant(variantKey);
         }
     }
 }

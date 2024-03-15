@@ -103,7 +103,7 @@ namespace BattleCruisers.Buildables.Units
                 ApplyVariantToPlayer(this);
                 isAppliedVariant = true;
             }
-            else if(!ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
+            else if (!ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
                 // Set Variant to AI
                 if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
@@ -114,12 +114,12 @@ namespace BattleCruisers.Buildables.Units
             }
         }
 
-        public async void ApplyRandomeVariantToAI(IUnit unit)
+        public void ApplyRandomeVariantToAI(IUnit unit)
         {
-            int randomID = await GetRandomVariantForAI(unit);
+            int randomID = GetRandomVariantForAI(unit);
             if (randomID != -1)
             {
-                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
+                VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
                 if (variant != null)
                 {
                     IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
@@ -141,14 +141,14 @@ namespace BattleCruisers.Buildables.Units
             }
         }
 
-        private async Task<int> GetRandomVariantForAI(IUnit unit)
+        private int GetRandomVariantForAI(IUnit unit)
         {
             int variant_ID = -1;
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             List<int> ids = new List<int>();
             for (int i = 0; i < dataProvider.GameModel.Variants.Count; i++)
             {
-                VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
+                VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
                 if (variant != null)
                 {
                     if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variant.GetPrefabKey().PrefabName.ToUpper())
@@ -165,16 +165,16 @@ namespace BattleCruisers.Buildables.Units
             return variant_ID;
         }
 
-        private async void ApplyVariantToPlayer(IUnit unit)
+        private void ApplyVariantToPlayer(IUnit unit)
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            VariantPrefab variant = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            VariantPrefab variant = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
             if (variant != null)
             {
                 // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
-                int index = await applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
+                int index = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
                 variantIndex = index;
                 Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                 Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);

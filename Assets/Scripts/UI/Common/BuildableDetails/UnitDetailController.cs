@@ -67,9 +67,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             CollectUnlockedUnitVariant();
         }
 
-        private async void SetInitVariant()
+        private void SetInitVariant()
         {
-            _selectedVariant = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
+            _selectedVariant = _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
             if (_unlockedVariants.ContainsKey(_selectedUnit))
             {
                 if (_unlockedVariants[_selectedUnit].Count > 0)
@@ -132,13 +132,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _selectedVariant });
         }
-        private async void ShowVariantDetail(int index)
+        private void ShowVariantDetail(int index)
         {
             if (index < 0)
                 return;
             variantIcon.gameObject.SetActive(true);
             variantName.gameObject.SetActive(true);
-            VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+            VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
             variantName.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
             variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
@@ -152,10 +152,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             variantName.gameObject.SetActive(false);
             GetComponent<ComparableUnitDetailsController>().ShowItemDetails();
         }
-        private async void LeftNavButton_OnClicked()
+        private void LeftNavButton_OnClicked()
         {
             --_index;
-            int current_index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
+            int current_index = _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
             if (_index <= -1)
             {
                 _index = -1;
@@ -178,10 +178,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ShowVariantDetail(_unlockedVariants[_selectedUnit][_index]);
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedUnit][_index] });
         }
-        private async void RightNavButton_OnClicked()
+        private void RightNavButton_OnClicked()
         {
             ++_index;
-            int current_index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
+            int current_index = _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
             if (_index >= _unlockedVariants[_selectedUnit].Count - 1)
             {
                 _index = _unlockedVariants[_selectedUnit].Count - 1;
@@ -200,12 +200,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedUnit][_index] });
         }
 
-        public async void CollectUnlockedUnitVariant()
+        public void CollectUnlockedUnitVariant()
         {
             _unlockedVariants = new Dictionary<IUnit, List<int>>();
             for (int i = 0; i < _dataProvider.GameModel.GetVariants().Count; i++)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.GetVariants()[i]));
+                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.GetVariants()[i]));
                 if (variant != null)
                 {
                     if (variant.IsUnit())

@@ -75,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 {
 
                     GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
-                    CaptainExo captainExoPrefab = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(i));
+                    CaptainExo captainExoPrefab = _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(i));
                     CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
                     captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                     captainExo.gameObject.SetActive(false);
@@ -95,9 +95,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             }
         }
 
-        public async void ShowCurrentCaptain()
+        public void ShowCurrentCaptain()
         {
-            CaptainExo chaliePrefab = await _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo chaliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo charlie = Instantiate(chaliePrefab, captainCamContainer);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             visualOfCaptains.Add(charlie.gameObject);
@@ -112,7 +112,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             }
             else
             {
-                foreach(GameObject obj in visualOfCaptains)
+                foreach (GameObject obj in visualOfCaptains)
                 {
                     obj.SetActive(false);
                 }

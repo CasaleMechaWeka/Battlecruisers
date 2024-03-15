@@ -215,10 +215,10 @@ namespace BattleCruisers.Scenes.BattleScene
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 
             //Setting up Captains
-            CaptainExo playerCaptainExoPrefab = await prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo playerCaptain = Instantiate(playerCaptainExoPrefab, playerCaptainContainer);
 
-            CaptainExo aiCaptainExoPrefab = await prefabFactory.GetCaptainExo(currentLevel.Captains);
+            CaptainExo aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentLevel.Captains);
             CaptainExo AICaptain = Instantiate(aiCaptainExoPrefab, AICaptainContainer);
             foreach (SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
             {

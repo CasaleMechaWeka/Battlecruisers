@@ -165,13 +165,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             return true;
         }
 
-        public virtual async void ApplyVariantStats(IBuilding building)
+        public virtual void ApplyVariantStats(IBuilding building)
         {
             int variantIndex = building.variantIndex;
             Debug.Log(variantIndex);
             if (variantIndex != -1)
             {
-                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 StatVariant statVariant = variant.statVariant;
                 maxHealth += statVariant.shield_health;
                 Stats.shieldRechargeDelayModifier += statVariant.shield_recharge_delay;

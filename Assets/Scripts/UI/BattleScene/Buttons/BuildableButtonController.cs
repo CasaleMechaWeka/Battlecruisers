@@ -21,11 +21,11 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public abstract class BuildableButtonController : ClickablePresentableController, IBuildableButton, IBroadcastingFilter
-	{
+    {
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
         private FilterToggler _isEnabledToggler;
 
-		public Image buildableImage;
+        public Image buildableImage;
 
         public Image upgradeIconImage1;
         public Image upgradeIconImage2;
@@ -41,18 +41,18 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public GameObject upgradeIconImage5Object;
         public GameObject warheadIconImageObject;
 
-     
+
 
 
         public Image redGlowImage;
 
 
         public Image buildableImageOutline; //  original outline
-/*        public Image buildableImageOutlineUpgrade1; // upgraded variant outline*/
+        /*        public Image buildableImageOutlineUpgrade1; // upgraded variant outline*/
 
 
         public Image buildableButton; //  original button
-/*        public Image buildableButtonUpgrade1; // upgraded variant button*/
+        /*        public Image buildableButtonUpgrade1; // upgraded variant button*/
 
         public Sprite originalOutlineSprite;
         public Sprite originalButtonSprite;
@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public Text buildableName;
 
-		public Text droneLevel;
+        public Text droneLevel;
         public Image droneIcon;
 
 
@@ -88,7 +88,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             set
             {
                 //buildableImage.color = value;
-                 //modified
+                //modified
                 //droneLevel.color = value;
                 if (value.Equals(Color.white))
                 {
@@ -105,7 +105,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     droneIcon.color = Color.black; // Assuming black is the original color
                     isSelected = true;
                 }
-                else{
+                else
+                {
                     buildableImageOutline.color = Color.clear;
                     buildableName.color = redColor;
                     upgradeIconImage1.color = Color.black;
@@ -119,19 +120,19 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     droneIcon.color = Color.black;
                     isSelected = false;
                 }
-                
+
             }
         }
 
         public bool isSelected = false;
         public void Initialise(ISingleSoundPlayer soundPlayer, IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
-		{
-			base.Initialise(soundPlayer);
+        {
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(buildableImage, buildableName, droneLevel);
             Helper.AssertIsNotNull(buildable, shouldBeEnabledFilter);
 
-			Buildable = buildable;
+            Buildable = buildable;
 
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
             _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
@@ -149,8 +150,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _isEnabledToggler = new FilterToggler(this, this);
 
             // Store the original sprites
-/*            originalOutlineSprite = buildableImageOutline.sprite;
-            originalButtonSprite = buildableButton.sprite;*/
+            /*            originalOutlineSprite = buildableImageOutline.sprite;
+                        originalButtonSprite = buildableButton.sprite;*/
         }
 
         public async void ApplyVariantIfExist(IBuilding building)
@@ -158,10 +159,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
             ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
-            int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
+            int index = dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
             {
-                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;
@@ -189,10 +190,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
             ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
-            int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
+            int index = dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)
             {
-                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;
@@ -237,7 +238,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             OnClicked();
         }
 
-        public override void OnPointerDown(PointerEventData eventData) {
+        public override void OnPointerDown(PointerEventData eventData)
+        {
             base.OnPointerDown(eventData);
         }
 
@@ -258,8 +260,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             HandleHoverExit();
         }
 
-        public virtual void HandleHover(){}
+        public virtual void HandleHover() { }
 
-        public virtual void HandleHoverExit(){}
+        public virtual void HandleHoverExit() { }
     }
 }

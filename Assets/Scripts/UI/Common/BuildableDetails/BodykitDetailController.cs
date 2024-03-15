@@ -181,11 +181,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ShowBodyKitDetail(_unlockedBodykits[_hullType][_index]);
         }
 
-        private async void ShowBodyKitDetail(int index)
+        private void ShowBodyKitDetail(int index)
         {
             if (index < 0)
                 return;
-            Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
+            Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
             GetComponent<ComparableCruiserDetailsController>().itemName.text = _commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].NameStringKeyBase);
             GetComponent<ComparableCruiserDetailsController>().itemDescription.text = _commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].DescriptionKeyBase);
             GetComponent<ComparableCruiserDetailsController>().itemImage.sprite = bodykit.BodykitImage;
@@ -227,14 +227,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
         }
 
-        public async void CollectUnlockedBodykits()
+        public void CollectUnlockedBodykits()
         {
             _unlockedBodykits = new Dictionary<HullType, List<int>>();
             for (int i = 0; i < _dataProvider.GameModel.Bodykits.Count; i++)
             {
                 if (_dataProvider.GameModel.Bodykits[i].isOwned)
                 {
-                    Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i));
+                    Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i));
                     if (_unlockedBodykits.ContainsKey(bodykit.cruiserType))
                     {
                         _unlockedBodykits[bodykit.cruiserType].Add(i);

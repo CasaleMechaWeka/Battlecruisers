@@ -65,11 +65,14 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IDictionary<IPrefabKey, Projectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Projectile>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
 
-/*            IDictionary<IPrefabKey, CaptainExo> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.CaptainExos.AllKeys *//*getSelectedCaptaionExo()*//*, keyToCaptains));*/
+            IDictionary<IPrefabKey, CaptainExo> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.CaptainExos.AllKeys, keyToCaptains));
 
-/*            IDictionary<IPrefabKey, Bodykit> keyToBodykits = new ConcurrentDictionary<IPrefabKey, Bodykit>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.BodyKits.AllKeys, keyToBodykits));*/
+            IDictionary<IPrefabKey, Bodykit> keyToBodykits = new ConcurrentDictionary<IPrefabKey, Bodykit>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.BodyKits.AllKeys, keyToBodykits));
+
+            IDictionary<IPrefabKey, VariantPrefab> keyToVariants = new ConcurrentDictionary<IPrefabKey, VariantPrefab>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Variants.AllKeys, keyToVariants));
 
             Container<DroneController> droneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));
@@ -88,8 +91,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<Cruiser>(keyToCruiser),
                     new MultiCache<ExplosionController>(keyToExplosion),
                     new MultiCache<ShipDeathInitialiser>(keyToDeath),
-         /*           new MultiCache<CaptainExo>(keyToCaptains),*/
-/*                    new MultiCache<Bodykit>(keyToBodykits),*/
+                    new MultiCache<CaptainExo>(keyToCaptains),
+                    new MultiCache<Bodykit>(keyToBodykits),
+                    new MultiCache<VariantPrefab>(keyToVariants),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
                     droneContainer.Value,
                     audioSourceContainer.Value);
