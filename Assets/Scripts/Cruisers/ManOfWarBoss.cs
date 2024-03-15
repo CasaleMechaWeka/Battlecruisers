@@ -2,9 +2,8 @@ using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers
 {
@@ -15,7 +14,6 @@ namespace BattleCruisers.Cruisers
         public HealthBarController healthBar;
         bool started = false;
         public SpriteRenderer spriteRenderer;
-        public LaserTurretStats laserTurretStats;
         public override void Initialise(ICruiserArgs args)
         {
             isCruiser = false;
@@ -26,7 +24,6 @@ namespace BattleCruisers.Cruisers
             maxHealth = 0 + unit.maxHealth;
             _healthTracker.SetHealth(0 + unit.maxHealth);
             spriteRenderer.sprite = null;
-            Assert.IsNotNull(laserTurretStats);
         }
 
         public override void Update()
@@ -50,21 +47,15 @@ namespace BattleCruisers.Cruisers
             switch (AIDifficulty)
             {
                 case Difficulty.Normal:
-                    laserTurretStats.fireRatePerS *= .625f;
-                    laserTurretStats.damagePerS *= .75f;
-                    unit.maxHealth *= .2f;
+                    unit.maxHealth = 2000;
                     break;
 
                 case Difficulty.Hard:
-                    laserTurretStats.fireRatePerS *= .8f;
-                    laserTurretStats.damagePerS *= 1;
-                    unit.maxHealth *= .4f;
+                    unit.maxHealth = 4000;
                     break;
 
                 case Difficulty.Harder:
-                    laserTurretStats.fireRatePerS *= .1f;
-                    laserTurretStats.damagePerS *= 1;
-                    unit.maxHealth *= 1;
+                    unit.maxHealth = 8000;
                     break;
 
                 default:
