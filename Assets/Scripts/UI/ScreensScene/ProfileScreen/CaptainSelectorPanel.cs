@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             }
             visualOfCaptains.Clear();
         }
-        public async void DisplayOwnedCaptains()
+        public void DisplayOwnedCaptains()
         {
             CaptainSelectionItemController[] items = itemContainer.gameObject.GetComponentsInChildren<CaptainSelectionItemController>();
             foreach (CaptainSelectionItemController item in items)
@@ -90,7 +90,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     }
                     ii++;
 
-                    await Task.Delay(10);
                 }
             }
         }

@@ -128,7 +128,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 _comparingFamilyTracker);
 
             IList<IItemButton> itemButtons
-                = await itemPanels.Initialise(
+                = itemPanels.Initialise(
                     _itemDetailsManager,
                     ItemType.Hull,
                     _comparingFamilyTracker,

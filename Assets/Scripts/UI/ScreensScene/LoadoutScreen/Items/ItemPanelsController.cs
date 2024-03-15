@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public event EventHandler PotentialMatchChange;
 
-        public async Task<IList<IItemButton>> Initialise(
+        public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager,
             ItemType defaultItemTypeToShow,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             foreach (ItemsPanel panel in panels)
             {
-                IList<IItemButton> panelItemButtons = await panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
+                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                 allItemButtons.AddRange(panelItemButtons);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();

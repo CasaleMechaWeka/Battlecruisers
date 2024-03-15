@@ -203,7 +203,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             captainsContainer.visualOfCaptains.Clear();
         }
-        public async void InitialiseVariants()
+        public void InitialiseVariants()
         {
             captainsContainer.gameObject.SetActive(false);
             hecklesContainer.gameObject.SetActive(false);
@@ -218,7 +218,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             variantsContainer.btnBuy.SetActive(false);
             variantsContainer.ownFeedback.SetActive(false);
 
-            await Task.Delay(100);
             //    List<int> variantList = GeneratePseudoRandomList(12, 35, 6, 3); // 0,1,2 are Premium
             byte ii = 0;
             //    variantsItemContainer.gameObject.SetActive(false);
@@ -276,7 +275,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             variantsContainer.t_variantsMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("VariantsShopHelp");
         }
-        public async void InitialiseBodykits()
+        public void InitialiseBodykits()
         {
             captainsContainer.gameObject.SetActive(false);
             hecklesContainer.gameObject.SetActive(false);
@@ -291,14 +290,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.btnBuy.SetActive(false);
             bodykitsContainer.ownFeedback.SetActive(false);
 
-            await Task.Delay(100);
             //    List<int> bodykitList = GeneratePseudoRandomList(6, 11, 6, 1);
 
             byte ii = 0;
             // bodykitItemContainer.gameObject.SetActive(false);
             foreach (int index in bodykitList)
             {
-                GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer) as GameObject;
+                GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer);
                 Bodykit bodykit = bodykits[ii]/*await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index])*/;
                 bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, ii);
                 if (ii == 0)
@@ -332,7 +330,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             bodykitsContainer.t_bodykitsMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BodykitsShopHelp");
         }
-        public async void InitialiseHeckles()
+        public void InitialiseHeckles()
         {
             captainsContainer.gameObject.SetActive(false);
             hecklesContainer.gameObject.SetActive(true);
@@ -354,8 +352,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             CaptainExo captainExo = Instantiate(charliePrefab, captainCamContainer);
             captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
             captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
-
-            await Task.Delay(100);
 
             List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Heckles.Count - 1, 10);
 #if UNITY_EDITOR
@@ -400,7 +396,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             base.OnDismissing();
             RemoveAllCaptainsFromRenderCamera();
         }
-        public async void InitiaiseCaptains()
+        public void InitiaiseCaptains()
         {
             captainsContainer.gameObject.SetActive(true);
             hecklesContainer.gameObject.SetActive(false);
@@ -416,7 +412,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             captainsContainer.btnBuy.SetActive(false);
             captainsContainer.ownFeedback.SetActive(false);
-            await Task.Delay(100);
 
 
             RemoveAllCaptainsFromRenderCamera();
