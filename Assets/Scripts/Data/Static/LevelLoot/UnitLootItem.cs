@@ -24,8 +24,11 @@ namespace BattleCruisers.Data.Static.LevelLoot
 
         public override void UnlockItem(IGameModel gameModel)
         {
-            gameModel.AddUnlockedUnit(_itemKey);
-            gameModel.PlayerLoadout.AddUnit(_itemKey);
+            if (!gameModel.GetUnlockedUnits(_itemKey.UnitCategory).Contains(_itemKey))
+            {
+                gameModel.AddUnlockedUnit(_itemKey);
+                gameModel.PlayerLoadout.AddUnit(_itemKey);
+            }
         }
     }
 }
