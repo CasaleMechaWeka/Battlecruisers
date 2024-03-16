@@ -62,12 +62,8 @@ namespace BattleCruisers.Scenes
 
         void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Escape)
-                || Input.GetKeyUp(KeyCode.Space)
-                || Input.GetKeyUp(KeyCode.Return))
-            {
+            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return))
                 Done();
-            }
         }
 
         private void Done()
