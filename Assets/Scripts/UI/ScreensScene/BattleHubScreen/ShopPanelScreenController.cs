@@ -275,6 +275,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             variantsContainer.t_variantsMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("VariantsShopHelp");
         }
+
         public void InitialiseBodykits()
         {
             captainsContainer.gameObject.SetActive(false);

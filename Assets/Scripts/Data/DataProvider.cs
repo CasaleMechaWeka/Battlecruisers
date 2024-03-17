@@ -21,6 +21,7 @@ using BattleCruisers.Scenes;
 using Unity.Services.Authentication;
 using BattleCruisers.Utils.UGS.Samples;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
+using System.Collections;
 
 namespace BattleCruisers.Data
 {
@@ -164,10 +165,20 @@ namespace BattleCruisers.Data
 
         public async Task LoadBCData()
         {
-            await RefreshEconomyConfiguration();
-            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
-            RemoteConfigService.Instance.FetchConfigs(new UserAttributes(), new AppAttributes());
+            IEnumerator refreshEcoConfig = RefreshEconomyConfig();
+            while (refreshEcoConfig.MoveNext())
+            {
+                Debug.Log("ApplyRemoteSettings");
+                RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
+                RemoteConfigService.Instance.FetchConfigs(new UserAttributes(), new AppAttributes());
+            }
         }
+
+        IEnumerator RefreshEconomyConfig()
+        {
+            yield return RefreshEconomyConfiguration();
+        }
+
         async void ApplyRemoteSettings(ConfigResponse configResponse)
         {
             switch (configResponse.requestOrigin)
@@ -192,19 +203,20 @@ namespace BattleCruisers.Data
                     else
                     {
                         await SyncInventoryFromCloud();
-                        await MigrateInventory();
+                        MigrateInventory();
                         await SyncInventroyV2();
                         _gameModel.IsDoneMigration = true;
                         SaveGame();
                         await CloudSave();
                     }
+
                     GameModel.HasSyncdShop = true;
                     ScreensSceneGod.Instance.m_cancellationToken.Cancel();
                     break;
             }
         }
 
-        public async Task MigrateInventory()
+        public void MigrateInventory()
         {
             // captain exo
             for (int i = 0; i < _gameModel.Captains.Count; i++)
@@ -339,15 +351,13 @@ namespace BattleCruisers.Data
         {
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
-
 #if UNITY_EDITOR
             version = "EDITOR";
 #endif
-
             return version;
         }
 
-        public async Task<bool> RefreshPVPServerStatus()
+        public bool RefreshPVPServerStatus()
         {
             pvpServerAvailable = RemoteConfigService.Instance.appConfig.GetBool("PVP_SERVER_AVAILABLE");
             return pvpServerAvailable;

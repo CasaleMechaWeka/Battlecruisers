@@ -21,7 +21,7 @@ namespace BattleCruisers.Data
 
         List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }
- /*       public PvPConfig pvpConfig { get; set; }*/
+        /*       public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
         Task<string> GetPVPVersion();
         ILevel GetLevel(int levelNum);
@@ -33,8 +33,8 @@ namespace BattleCruisers.Data
         /// Designed for user playtests, so users can start with a clean slate.
         /// </summary>
         void Reset();
-/*        Task<int> GetCaptainCost(int index);
-        Task<int> GetHeckleCost(int index);*/
+        /*        Task<int> GetCaptainCost(int index);
+                Task<int> GetHeckleCost(int index);*/
         // Cloud Saving:
         Task CloudSave();
         Task CloudLoad();
@@ -43,7 +43,7 @@ namespace BattleCruisers.Data
         Task<bool> SyncInventoryFromCloud();
         Task<bool> SyncCoinsToCloud();
         Task<bool> SyncCreditsToCloud();
-        Task<bool> RefreshPVPServerStatus();
+        bool RefreshPVPServerStatus();
         Task SyncItemsCost();
         Task SyncItemsCostV2();
         Task SyncHecklesCost();
