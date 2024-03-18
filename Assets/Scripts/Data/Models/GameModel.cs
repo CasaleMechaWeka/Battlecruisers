@@ -968,7 +968,7 @@ namespace BattleCruisers.Data.Models
             // First time SideQuest has been completed
             if (_completedSideQuests == null)
                 _completedSideQuests = new List<CompletedLevel> { completedSideQuest };
-            else if (IsSideQuestCompleted(completedSideQuest.LevelNum))
+            else if (!IsSideQuestCompleted(completedSideQuest.LevelNum))
             {
                 _completedSideQuests.Add(completedSideQuest);
                 if (_completedSideQuestIDs == null)
