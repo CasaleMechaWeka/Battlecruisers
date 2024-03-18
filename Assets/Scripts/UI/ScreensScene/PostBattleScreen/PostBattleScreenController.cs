@@ -235,7 +235,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 if (applicationModel.Mode == GameMode.SideQuest)
                     trashTalkData = await sideQuestTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum, true);
                 else
-                    trashTalkData = await levelTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum + 1);
+                    trashTalkData = await levelTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
 
                 levelName.Initialise(BattleResult.LevelNum, trashTalkData);
                 if (_applicationModel.Mode == GameMode.SideQuest)
