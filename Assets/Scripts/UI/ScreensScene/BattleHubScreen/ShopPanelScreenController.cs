@@ -56,7 +56,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             INextLevelHelper nextLevelHelper,
             bool hasInternetonnection = false)
         {
-
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, captainsContainer, bodykitsContainer, variantsContainer);
             Helper.AssertIsNotNull(captainsButton, hecklesButton, bodykitButton, variantsButton);
