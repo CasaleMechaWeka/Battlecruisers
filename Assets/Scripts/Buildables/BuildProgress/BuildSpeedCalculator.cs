@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
@@ -28,10 +29,10 @@ namespace BattleCruisers.Buildables.BuildProgress
             }
         }
 
-        public float FindIncrementalAICruiserBuildSpeed(Difficulty difficulty, int levelNum)
+        public float FindIncrementalAICruiserBuildSpeed(Difficulty difficulty, int levelNum, bool isSideQuest = false)
         {
             float baseBuildSpeed = FindBaseBuildSpeedMultiplier(difficulty);
-            float levelBoost = FindLevelBoost(difficulty, levelNum);
+            float levelBoost = FindLevelBoost(difficulty, levelNum, isSideQuest);
             return baseBuildSpeed + levelBoost;
         }
 
@@ -53,10 +54,19 @@ namespace BattleCruisers.Buildables.BuildProgress
             }
         }
 
-        private float FindLevelBoost(Difficulty difficulty, int levelNum)
+        private float FindLevelBoost(Difficulty difficulty, int levelNum, bool isSideQuest = false)
         {
-            Assert.IsTrue(levelNum > 0);
-            Assert.IsTrue(levelNum <= StaticData.NUM_OF_LEVELS);
+            if (isSideQuest)
+            {
+                ++levelNum;
+                Assert.IsTrue(levelNum >= 0);
+                Assert.IsTrue(levelNum <= StaticData.NUM_OF_SIDEQUESTS);
+            }
+            else
+            {
+                Assert.IsTrue(levelNum > 0);
+                Assert.IsTrue(levelNum <= StaticData.NUM_OF_LEVELS);
+            }
 
             switch (difficulty)
             {

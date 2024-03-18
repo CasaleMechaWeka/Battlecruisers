@@ -87,7 +87,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
         {
-            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedLevel);
+            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedLevel, true);
         }
 
         protected virtual Difficulty FindDifficulty()

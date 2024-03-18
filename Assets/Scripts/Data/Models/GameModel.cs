@@ -978,7 +978,7 @@ namespace BattleCruisers.Data.Models
             }
             else
             {
-                // Level has been completed before
+                // SideQuest has been completed before
                 CompletedLevel currentSideQuest = _completedSideQuests[completedSideQuest.LevelNum];
 
                 if (completedSideQuest.HardestDifficulty > currentSideQuest.HardestDifficulty)
