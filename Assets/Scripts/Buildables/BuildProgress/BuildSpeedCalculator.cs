@@ -2,7 +2,6 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using System;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
