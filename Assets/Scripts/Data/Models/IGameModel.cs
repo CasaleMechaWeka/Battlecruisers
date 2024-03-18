@@ -72,6 +72,7 @@ namespace BattleCruisers.Data.Models
         void AddUnlockedUnit(UnitKey unit);
         void AddCompletedLevel(CompletedLevel completedLevel);
         void AddCompletedSideQuest(CompletedLevel completedSideQuest);
+        bool IsSideQuestCompleted(int sideQuestID);
 
         IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
         IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory);

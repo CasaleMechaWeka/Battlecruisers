@@ -4,35 +4,39 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
-using System.ComponentModel;
+using BattleCruisers.Data;
 
 public class SideQuestButtonController : ElementWithClickSound
 {
     private bool enabled;
     private IScreensSceneGod _screensSceneGod;
-    private int _sideQuestID;
+    private IStaticData _staticData;
+    public int sideQuestID;
     protected override ISoundKey ClickSound => SoundKeys.UI.Click;
     private GameObject checkmark;
     private GameObject sideQuestCompleted;
     private GameObject sideQuestIncomplete;
     private GameObject checkbox;
-    public int requiredLevel;
+    private int requiredLevel;
     private Transform buttonImages;
 
     public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        int sideQuestiD,
-        int numOfLevelUnlocked,
+        IDataProvider dataProvider,
+        int numOfLevelsUnlocked,
         bool completed)
     {
         //Most of side quest scripts will need to be modified once side quest manager is done
         _screensSceneGod = screensSceneGod;
+        _staticData = dataProvider.StaticData;
 
         base.Initialise(soundPlayer);
-        _sideQuestID = sideQuestiD;
-        Enabled = numOfLevelUnlocked >= requiredLevel;
-        enabled = numOfLevelUnlocked >= requiredLevel;
+        requiredLevel = _staticData.SideQuests[sideQuestID].UnlockRequirementLevel;
+        completed = dataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
+
+        Enabled = numOfLevelsUnlocked >= requiredLevel;
+        enabled = numOfLevelsUnlocked >= requiredLevel;
         checkmark = transform.Find("Checked").gameObject;
         checkmark.SetActive(completed && enabled);
         buttonImages = transform.Find("ButtonImages");
@@ -51,6 +55,6 @@ public class SideQuestButtonController : ElementWithClickSound
     protected override void OnClicked()
     {
         base.OnClicked();
-        _screensSceneGod.LoadBattleSceneSideQuest(_sideQuestID);
+        _screensSceneGod.LoadBattleSceneSideQuest(sideQuestID);
     }
 }

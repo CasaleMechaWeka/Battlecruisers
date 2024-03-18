@@ -55,15 +55,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         _selectedItem.Value = building;*/
         }
 
-        private async void ShowItemDetailsV2(IBuilding building)
+        private void ShowItemDetailsV2(IBuilding building)
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            if(building.Faction == Faction.Blues)
+            if (building.Faction == Faction.Blues)
             {
-                int index = await dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
+                int index = dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
                 if (index != -1)
                 {
-                    VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                    VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                     _buildingDetails.ShowItemDetails(staticBuilding, variant);
                     _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
@@ -84,7 +84,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 int index = building.variantIndex;
                 if (index != -1)
                 {
-                    VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                    VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                     _buildingDetails.ShowItemDetails(staticBuilding, variant);
                     _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
@@ -118,15 +118,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         _selectedItem.Value = unit;*/
         }
 
-        private async void ShowItemDetailsV2(IUnit unit)
+        private void ShowItemDetailsV2(IUnit unit)
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            if(unit.Faction == Faction.Blues)
+            if (unit.Faction == Faction.Blues)
             {
-                int index = await dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
+                int index = dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
                 if (index != -1)
                 {
-                    VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                    VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IUnit staticUnit = variant.GetUnit(_prefabFactory);
                     _unitDetails.ShowItemDetails(staticUnit, variant);
                     _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
@@ -147,7 +147,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 int index = unit.variantIndex;
                 if (index != -1)
                 {
-                    VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                    VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IUnit staticUnit = variant.GetUnit(_prefabFactory);
                     _unitDetails.ShowItemDetails(staticUnit, variant);
                     _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");

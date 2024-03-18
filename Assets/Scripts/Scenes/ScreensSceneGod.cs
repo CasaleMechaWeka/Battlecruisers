@@ -156,6 +156,7 @@ namespace BattleCruisers.Scenes
 
             bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
             float timeStamper = Time.time;
+
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
                 try
@@ -174,6 +175,7 @@ namespace BattleCruisers.Scenes
                             break;
                         }
                     }
+
                     // local transactions syncing:
                     if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
                         _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
@@ -192,6 +194,7 @@ namespace BattleCruisers.Scenes
                     }
 
                     // version check
+
                     requiredVer = await _dataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + Application.version);
                     Debug.Log("DataProvider Version: " + requiredVer);
@@ -234,6 +237,7 @@ namespace BattleCruisers.Scenes
                             Debug.Log("PVP Server Unavailable.");
                         }
                     }
+
                     await _applicationModel.DataProvider.SyncCurrencyFromCloud();
                 }
                 catch (Exception ex)
@@ -300,7 +304,7 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            await ShowCharlieOnMainMenu();
+            ShowCharlieOnMainMenu();
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
@@ -365,13 +369,9 @@ namespace BattleCruisers.Scenes
                 GotoHubScreen();
             }
             else if (levelToShowCutscene == 0)
-            {
                 GoToHomeScreen();
-            }
             else
-            {
                 GoToTrashScreen(levelToShowCutscene);
-            }
 
             // After potentially initialising post battle screen, because that can modify the data model.
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
@@ -386,29 +386,17 @@ namespace BattleCruisers.Scenes
             //GoToLoadoutScreen();
 
             if (testSettingsScreen)
-            {
                 GoToSettingsScreen();
-            }
             else if (testLevelsScreen)
-            {
                 GoToLevelsScreen();
-            }
             else if (testTrashTalkScreen)
-            {
                 GoToTrashScreen(levelNum: 1);
-            }
             else if (testDifficultyScreen)
-            {
                 GoToChooseDifficultyScreen();
-            }
             else if (testSkirmishScreen)
-            {
                 GoToSkirmishScreen();
-            }
             else if (testLoadoutScreen)
-            {
                 GoToLoadoutScreen();
-            }
 
             ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
 
@@ -480,14 +468,14 @@ namespace BattleCruisers.Scenes
                 GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
         }
 
-        async Task ShowCharlieOnMainMenu()
+        void ShowCharlieOnMainMenu()
         {
             if (charlie is not null)
             {
                 Destroy(charlie.gameObject);
                 charlie = null;
             }
-            CaptainExo charliePrefab = await _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             characterOfCharlie = charlie.gameObject;
@@ -510,10 +498,10 @@ namespace BattleCruisers.Scenes
             //<---
         }
 
-        public async void GoToHomeScreen()
+        public void GoToHomeScreen()
         {
             homeScreen.gameObject.SetActive(true);
-            await ShowCharlieOnMainMenu();
+            ShowCharlieOnMainMenu();
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
             characterOfCharlie.SetActive(true);
@@ -589,7 +577,8 @@ namespace BattleCruisers.Scenes
                 difficultySpritesProvider,
                 levelTrashDataList,
                 sideQuestTrashDataList,
-                nextLevelHelper);
+                nextLevelHelper,
+                _dataProvider);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
@@ -635,7 +624,7 @@ namespace BattleCruisers.Scenes
         }
 
         private static int levelToShowCutscene = 0;
-        public async void GoToTrashScreen(int levelNum)
+        public void GoToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
@@ -670,7 +659,7 @@ namespace BattleCruisers.Scenes
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
                 ILevel level = _applicationModel.DataProvider.Levels[levelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? await GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
                 //_applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
                 _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
@@ -681,7 +670,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        private async Task<int> GetRandomBodykitForAI(HullType hullType)
+        private int GetRandomBodykitForAI(HullType hullType)
         {
             int id_bodykit = -1;
             if (hullType != HullType.None)
@@ -689,7 +678,7 @@ namespace BattleCruisers.Scenes
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < /*12*/ _applicationModel.DataProvider.GameModel.Bodykits.Count; i++)
                 {
-                    if ((await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i))).cruiserType == hullType)
+                    if ((_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i))).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }
@@ -832,7 +821,7 @@ namespace BattleCruisers.Scenes
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
                 ILevel level = _applicationModel.DataProvider.Levels[sideQuestLevelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? await GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
                 _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
             }

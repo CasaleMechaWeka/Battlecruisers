@@ -216,20 +216,20 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 currentSideQuest = helper.GetSideQuest();
                 enemyName = await helper.GetEnemyNameAsync(currentSideQuest.SideLevelNum);
-                aiCaptainExoPrefab = await prefabFactory.GetCaptainExo(currentSideQuest.EnemyCaptainExo);
+                aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentSideQuest.EnemyCaptainExo);
             }
             else
             {
                 currentLevel = helper.GetLevel();
                 enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
-                aiCaptainExoPrefab = await prefabFactory.GetCaptainExo(currentLevel.Captains);
+                aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentLevel.Captains);
             }
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 
             //Setting up Captains
-            CaptainExo playerCaptainExoPrefab = await prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo playerCaptain = Instantiate(playerCaptainExoPrefab, playerCaptainContainer);
 
             CaptainExo AICaptain = Instantiate(aiCaptainExoPrefab, AICaptainContainer);

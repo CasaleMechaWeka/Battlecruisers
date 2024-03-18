@@ -19,14 +19,14 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public abstract class Factory : Building, IFactory, IDroneConsumerProvider
-	{
+    {
         private IUnitSpawnPositionFinder _unitSpawnPositionFinder;
         private IUnitSpawnDecider _unitSpawnDecider;
         private IPool<Unit, BuildableActivationArgs> _unitPool;
 
         public abstract UnitCategory UnitCategory { get; }
 
-		public event EventHandler<UnitStartedEventArgs> UnitStarted;
+        public event EventHandler<UnitStartedEventArgs> UnitStarted;
         public event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         public event EventHandler NewUnitChosen;
         public event EventHandler UnitUnderConstructionDestroyed;
@@ -43,26 +43,26 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         }
 
         private IBuildableWrapper<IUnit> _unitWrapper;
-		public IBuildableWrapper<IUnit> UnitWrapper 
-		{ 
-			private set	
-			{
-				Logging.Log(Tags.FACTORY, $"{_unitWrapper} > {value}");
-				Assert.AreEqual(BuildableState.Completed, BuildableState);
+        public IBuildableWrapper<IUnit> UnitWrapper
+        {
+            private set
+            {
+                Logging.Log(Tags.FACTORY, $"{_unitWrapper} > {value}");
+                Assert.AreEqual(BuildableState.Completed, BuildableState);
 
                 if (!ReferenceEquals(_unitWrapper, value))
                 {
-	                if (_unitWrapper != null)
-	                {
+                    if (_unitWrapper != null)
+                    {
                         CleanUpDroneConsumer();
-	                    DestroyUnitUnderConstruction();
+                        DestroyUnitUnderConstruction();
                         _isUnitPaused.Value = false;
                         _unitPool = null;
-	                }
+                    }
 
-	                _unitWrapper = value;
+                    _unitWrapper = value;
 
-	                if (_unitWrapper != null)
+                    if (_unitWrapper != null)
                     {
                         //    SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
                         ApplyVariantIfExist(_unitWrapper.Buildable);
@@ -72,15 +72,15 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                         NewUnitChosen?.Invoke(this, EventArgs.Empty);
                     }
                 }
-			}
-			get { return _unitWrapper; }
-		}
+            }
+            get { return _unitWrapper; }
+        }
 
-        private async void ApplyVariantIfExist(IUnit unit)
+        private void ApplyVariantIfExist(IUnit unit)
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            VariantPrefab variant = await dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
-            if(variant != null)
+            VariantPrefab variant = dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            if (variant != null)
             {
                 SetupDroneConsumer(unit.NumOfDronesRequired + variant.statVariant.drone_num, showDroneFeedback: false);
             }
@@ -129,35 +129,35 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected abstract IUnitSpawnPositionFinder CreateSpawnPositionFinder();
 
         protected override void OnSingleClick()
-		{
-			base.OnSingleClick();
+        {
+            base.OnSingleClick();
 
-			if (Faction == Faction.Blues)
-			{
-				_uiManager.ShowFactoryUnits(this);
-			}
-		}
+            if (Faction == Faction.Blues)
+            {
+                _uiManager.ShowFactoryUnits(this);
+            }
+        }
 
         // PERF  Don't need to do this every update :)
-		protected override void OnUpdate()
-		{
+        protected override void OnUpdate()
+        {
             Logging.Verbose(Tags.FACTORY, $"UnitWrapper: {UnitWrapper}  _isUnitPaused.Value: {_isUnitPaused.Value}  UnitUnderConstruction: {UnitUnderConstruction}");
             if (UnitWrapper != null)
             {
                 Logging.Verbose(Tags.FACTORY, $"Can spawn: {_unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable)}");
             }
 
-            if (UnitWrapper != null 
+            if (UnitWrapper != null
                 && !_isUnitPaused.Value
-				&& (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == BuildableState.Completed)
-				&& _unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable))
-			{
-				StartBuildingUnit();
-			}
-		}
+                && (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == BuildableState.Completed)
+                && _unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable))
+            {
+                StartBuildingUnit();
+            }
+        }
 
-		private void StartBuildingUnit()
-		{
+        private void StartBuildingUnit()
+        {
             Logging.LogMethod(Tags.FACTORY);
             if (EnemyCruiser == null || ParentCruiser == null)
             {
@@ -168,52 +168,53 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
             UnitUnderConstruction.DroneConsumerProvider = this;
 
-			Vector3 spawnPosition = _unitSpawnPositionFinder.FindSpawnPosition(UnitUnderConstruction);
+            Vector3 spawnPosition = _unitSpawnPositionFinder.FindSpawnPosition(UnitUnderConstruction);
             UnitUnderConstruction.Position = spawnPosition;
             UnitUnderConstruction.Rotation = transform.rotation;
 
-			UnitUnderConstruction.StartedConstruction += Unit_BuildingStarted;
-			UnitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
+            UnitUnderConstruction.StartedConstruction += Unit_BuildingStarted;
+            UnitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
             UnitUnderConstruction.Destroyed += UnitUnderConstruction_Destroyed;
 
             UnitUnderConstruction.AddBuildRateBoostProviders(_parentSlot.BoostProviders);
             UnitUnderConstruction.StartConstruction();
 
-            if (UnitUnderConstruction.ParentCruiser.IsPlayerCruiser) {
-                string logName = UnitUnderConstruction.PrefabName.ToUpper().Replace("(CLONE)","");
-/*#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-                try
-                {
-                    AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                    AnalyticsService.Instance.Flush();
-                }
-                catch (ConsentCheckException ex)
-                { 
-                    Debug.Log(ex.Message);
-                }*/
-               
+            if (UnitUnderConstruction.ParentCruiser.IsPlayerCruiser)
+            {
+                string logName = UnitUnderConstruction.PrefabName.ToUpper().Replace("(CLONE)", "");
+                /*#if LOG_ANALYTICS
+                    Debug.Log("Analytics: " + logName);
+                #endif
+                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                try
+                                {
+                                    AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.Flush();
+                                }
+                                catch (ConsentCheckException ex)
+                                { 
+                                    Debug.Log(ex.Message);
+                                }*/
+
             }
 
-		}
+        }
 
-		protected virtual void Unit_BuildingStarted(object sender, EventArgs e) 
-		{
+        protected virtual void Unit_BuildingStarted(object sender, EventArgs e)
+        {
             Logging.Log(Tags.FACTORY, sender.ToString());
 
             IUnit unit = sender.Parse<IUnit>();
             UnitStarted?.Invoke(this, new UnitStartedEventArgs(unit));
-		}
+        }
 
-		private void Unit_CompletedBuildable(object sender, EventArgs e)
-		{
+        private void Unit_CompletedBuildable(object sender, EventArgs e)
+        {
             Logging.Log(Tags.FACTORY, sender.ToString());
-			
+
             UnitCompleted?.Invoke(this, new UnitCompletedEventArgs(UnitUnderConstruction));
             CleanUpUnitUnderConstruction();
-		}
+        }
 
         private void UnitUnderConstruction_Destroyed(object sender, DestroyedEventArgs e)
         {
@@ -229,47 +230,47 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         /// on the factory's drone consumer.
         /// </summary>
         public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
-		{
+        {
             Logging.LogMethod(Tags.FACTORY);
 
-			Assert.IsNotNull(DroneConsumer);
+            Assert.IsNotNull(DroneConsumer);
             Assert.AreEqual(DroneConsumer.NumOfDronesRequired, numOfDronesRequired, "DroneConsumer.NumOfDronesRequired: " + DroneConsumer.NumOfDronesRequired + " != " + numOfDronesRequired);
-			return DroneConsumer;
-		}
+            return DroneConsumer;
+        }
 
         public void ActivateDroneConsumer(IDroneConsumer droneConsumer) { }
 
         public void ReleaseDroneConsumer(IDroneConsumer droneConsumer) { }
 
         protected override void OnDestroyed()
-		{
+        {
             Logging.LogMethod(Tags.FACTORY);
 
-			base.OnDestroyed();
-			DestroyUnitUnderConstruction();
-		}
+            base.OnDestroyed();
+            DestroyUnitUnderConstruction();
+        }
 
-		private void DestroyUnitUnderConstruction()
-		{
+        private void DestroyUnitUnderConstruction()
+        {
             Logging.LogMethod(Tags.FACTORY);
 
-			if (UnitUnderConstruction != null
+            if (UnitUnderConstruction != null
                 && !UnitUnderConstruction.IsDestroyed
                 && UnitUnderConstruction.BuildableState != BuildableState.Completed)
-			{
-				UnitUnderConstruction.Destroy();
-			}
-		}
+            {
+                UnitUnderConstruction.Destroy();
+            }
+        }
 
-		private void CleanUpUnitUnderConstruction()
-		{
+        private void CleanUpUnitUnderConstruction()
+        {
             Logging.LogMethod(Tags.FACTORY);
 
             UnitUnderConstruction.StartedConstruction -= Unit_BuildingStarted;
             UnitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
             UnitUnderConstruction.Destroyed -= UnitUnderConstruction_Destroyed;
-			UnitUnderConstruction = null;
-		}
+            UnitUnderConstruction = null;
+        }
 
         public void StartBuildingUnit(IBuildableWrapper<IUnit> unit)
         {

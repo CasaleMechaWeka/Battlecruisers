@@ -274,7 +274,8 @@ namespace BattleCruisers.Scenes
                 difficultySpritesProvider,
                 levelTrashDataList,
                 sideQuestTrashDataList,
-                nextLevelHelper);
+                nextLevelHelper,
+                _dataProvider);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
@@ -528,7 +529,7 @@ namespace BattleCruisers.Scenes
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < /*12*/ _applicationModel.DataProvider.GameModel.Bodykits.Count; i++)
                 {
-                    if ((await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i))).cruiserType == hullType)
+                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }

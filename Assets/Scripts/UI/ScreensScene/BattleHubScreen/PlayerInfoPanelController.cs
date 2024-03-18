@@ -24,12 +24,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public async void UpdateInfo(IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
-            CaptainExo captain = await prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captain = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
 
             _captainImage.sprite = captain.CaptainExoImage;
             _selectedCaptainImage.sprite = captain.CaptainExoImage;
             _coins.text = dataProvider.GameModel.Coins.ToString();
-            _credits.text = dataProvider.GameModel.Credits.ToString(); 
+            _credits.text = dataProvider.GameModel.Credits.ToString();
             _playerName.text = dataProvider.GameModel.PlayerName;
 
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);

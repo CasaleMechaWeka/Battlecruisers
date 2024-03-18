@@ -69,9 +69,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             CollectUnlockedBuildingVariant();
         }
-        private async void SetInitVariant()
+        private void SetInitVariant()
         {
-            _selectedVariant = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
+            _selectedVariant = _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
             if (_unlockedVariants.ContainsKey(_selectedBuilding))
             {
                 if (_unlockedVariants[_selectedBuilding].Count > 0)
@@ -134,13 +134,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _selectedVariant });
         }
-        private async void ShowVariantDetail(int index)
+        private void ShowVariantDetail(int index)
         {
             if (index < 0)
                 return;
             variantIcon.gameObject.SetActive(true);
             variantName.gameObject.SetActive(true);
-            VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+            VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
             variantName.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
             variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
@@ -154,10 +154,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             variantName.gameObject.SetActive(false);
             GetComponent<ComparableBuildingDetailsController>().ShowItemDetails();
         }
-        private async void LeftNavButton_OnClicked()
+        private void LeftNavButton_OnClicked()
         {
             --_index;
-            int current_index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
+            int current_index = _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
             if (_index <= -1)
             {
                 _index = -1;
@@ -180,10 +180,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ShowVariantDetail(_unlockedVariants[_selectedBuilding][_index]);
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedBuilding][_index] });
         }
-        private async void RightNavButton_OnClicked()
+        private void RightNavButton_OnClicked()
         {
             ++_index;
-            int current_index = await _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
+            int current_index = _dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, _selectedBuilding);
             if (_index >= _unlockedVariants[_selectedBuilding].Count - 1)
             {
                 _index = _unlockedVariants[_selectedBuilding].Count - 1;
@@ -202,12 +202,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedBuilding][_index] });
         }
 
-        public async void CollectUnlockedBuildingVariant()
+        public void CollectUnlockedBuildingVariant()
         {
             _unlockedVariants = new Dictionary<IBuilding, List<int>>();
             for (int i = 0; i < _dataProvider.GameModel.GetVariants().Count; i++)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.GetVariants()[i]));
+                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.GetVariants()[i]));
                 if (variant != null)
                 {
                     if (!variant.IsUnit())

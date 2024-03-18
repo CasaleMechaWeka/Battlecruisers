@@ -18,11 +18,11 @@ namespace BattleCruisers.Data.Models.PrefabKeys
             GenerateNameKey(keys, prefabFactory);
         }
 
-        private async void GenerateNameKey(IList<IPrefabKey> keys, IPrefabFactory prefabFactory)
+        private void GenerateNameKey(IList<IPrefabKey> keys, IPrefabFactory prefabFactory)
         {
             foreach (CaptainExoKey key in keys)
             {
-                CaptainExo captainPrefab = await prefabFactory.GetCaptainExo(key);
+                CaptainExo captainPrefab = prefabFactory.GetCaptainExo(key);
                 _captainKey.Add(captainPrefab.captainName, key);
             }
         }

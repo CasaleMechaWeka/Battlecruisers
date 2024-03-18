@@ -61,7 +61,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
-            await VariantsForOwnedItems();
 
             //Initialise each button with its function
             backButton.Initialise(_soundPlayer, GoHome, this);
@@ -99,14 +98,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 #endif
             foreach (int index in exoBaseList)
             {
-                CaptainExo captainExo = await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
+                CaptainExo captainExo = _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
                 captains.Add(captainExo);
             }
 
-            variantList = await VariantsForOwnedItems();
+            variantList = VariantsForOwnedItems();
             foreach (int index in variantList)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 variants.Add(variant);
             }
 
@@ -116,7 +115,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 #endif
             foreach (int index in bodykitList)
             {
-                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
+                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
                 bodykits.Add(bodykit);
             }
         }
@@ -351,7 +350,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             hecklesContainer.btnBuy.SetActive(false);
             hecklesContainer.ownFeedback.SetActive(false);
-            CaptainExo charliePrefab = await _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo captainExo = Instantiate(charliePrefab, captainCamContainer);
             captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
             captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
@@ -480,7 +479,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             return randomList;
         }
 
-        async Task<List<int>> VariantsForOwnedItems()
+        List<int> VariantsForOwnedItems()
         {
             List<int> variantsList = new List<int>();
             IList<BuildingKey> buildingKeys = _dataProvider.GameModel.PlayerLoadout.GetAllBuildings();
@@ -496,7 +495,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             for (int i = 0; i < _dataProvider.GameModel.Variants.Count; i++)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
+                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
 
                 for (int j = 0; j < buildablePrefabNames.Count; j++)
                     if (variant.parent.ToString() == buildablePrefabNames[j])

@@ -192,7 +192,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitA = _dataProvider.GameModel.PlayerLoadout.SelectedBodykit;
             if (id_bodykitA != -1)
             {
-                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
+                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull.PrefabName))
                 {
                     leftCruiserName.text = _commonStrings.GetString(dataProvider.GameModel.Bodykits[id_bodykitA].NameStringKeyBase);
@@ -209,7 +209,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             FoundOpponentText.text = _commonStrings.GetString("FoundOpponent");
 
 
-            CaptainExo charliePrefab = await _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.4f;
             characterOfCharlie = charlie.gameObject;
@@ -458,7 +458,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitA = SynchedServerData.Instance.playerABodykit.Value;
             if (id_bodykitA != -1)
             {
-                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
+                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
                 {
                     leftCruiserName.text = _commonStrings.GetString(dataProvider.GameModel.Bodykits[id_bodykitA].NameStringKeyBase);
@@ -474,7 +474,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitB = SynchedServerData.Instance.playerBBodykit.Value;
             if (id_bodykitB != -1)
             {
-                Bodykit bodykit = await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
+                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerBPrefabName.Value))
                 {
                     rightCruiserName.text = _commonStrings.GetString(dataProvider.GameModel.Bodykits[id_bodykitB].NameStringKeyBase);

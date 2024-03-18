@@ -376,6 +376,7 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
         private List<CompletedLevel> _completedSideQuests;
+        private List<int> _completedSideQuestIDs;
 
         [SerializeField]
         private long _lifetimeDestructionScore;
@@ -967,8 +968,14 @@ namespace BattleCruisers.Data.Models
             // First time SideQuest has been completed
             if (_completedSideQuests == null)
                 _completedSideQuests = new List<CompletedLevel> { completedSideQuest };
-            else if (completedSideQuest.LevelNum + 1 > _completedSideQuests.Count)
+            else if (IsSideQuestCompleted(completedSideQuest.LevelNum))
+            {
                 _completedSideQuests.Add(completedSideQuest);
+                if (_completedSideQuestIDs == null)
+                    _completedSideQuestIDs = new List<int> { completedSideQuest.LevelNum };
+                else
+                    _completedSideQuestIDs.Add(completedSideQuest.LevelNum);
+            }
             else
             {
                 // Level has been completed before
@@ -977,6 +984,14 @@ namespace BattleCruisers.Data.Models
                 if (completedSideQuest.HardestDifficulty > currentSideQuest.HardestDifficulty)
                     currentSideQuest.HardestDifficulty = completedSideQuest.HardestDifficulty;
             }
+        }
+
+        public bool IsSideQuestCompleted(int sideQuestID)
+        {
+            if (_completedSideQuestIDs == null)
+                return false;
+            else
+                return _completedSideQuestIDs.Contains(sideQuestID);
         }
 
         public IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory)

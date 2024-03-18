@@ -21,35 +21,38 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly IMultiCache<Cruiser> _cruisers;
         private readonly IMultiCache<ExplosionController> _explosions;
         private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
-/*        private readonly IMultiCache<CaptainExo> _captains;*/
-  /*      private readonly IMultiCache<Bodykit> _bodykits;*/
+        private readonly IMultiCache<CaptainExo> _captains;
+        private readonly IMultiCache<Bodykit> _bodykits;
+        private readonly IMultiCache<VariantPrefab> _variants;
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
         public DroneController Drone { get; }
         public AudioSourceInitialiser AudioSource { get; }
 
         public PrefabCache(
-            IMultiCache<BuildableWrapper<IBuilding>> buildings, 
-            IMultiCache<BuildableWrapper<IUnit>> units, 
-            IMultiCache<Cruiser> cruisers, 
-            IMultiCache<ExplosionController> explosions, 
+            IMultiCache<BuildableWrapper<IBuilding>> buildings,
+            IMultiCache<BuildableWrapper<IUnit>> units,
+            IMultiCache<Cruiser> cruisers,
+            IMultiCache<ExplosionController> explosions,
             IMultiCache<ShipDeathInitialiser> shipDeaths,
-/*            IMultiCache<CaptainExo> captains,*/
-/*            IMultiCache <Bodykit> bodykits,*/
-            IUntypedMultiCache<Projectile> projectiles, 
+            IMultiCache<CaptainExo> captains,
+            IMultiCache<Bodykit> bodykits,
+            IMultiCache<VariantPrefab> variants,
+            IUntypedMultiCache<Projectile> projectiles,
             DroneController drone,
             AudioSourceInitialiser audioSource)
         {
-            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource/*, captains, bodykits*/);
+            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource, captains, bodykits, variants);
 
             _buildings = buildings;
             _units = units;
             _cruisers = cruisers;
             _explosions = explosions;
             _shipDeaths = shipDeaths;
-/*            _captains = captains;*/
+            _captains = captains;
             _projectiles = projectiles;
-/*            _bodykits = bodykits;*/
+            _bodykits = bodykits;
+            _variants = variants;
             Drone = drone;
             AudioSource = audioSource;
         }
@@ -84,14 +87,19 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             return _projectiles.GetPrefab<TProjectile>(prefabKey);
         }
 
-/*        public CaptainExo GetCaptainExo(IPrefabKey key)
+        public CaptainExo GetCaptainExo(IPrefabKey key)
         {
             return _captains.GetPrefab(key);
-        }*/
+        }
 
-/*        public Bodykit GetBodykit(IPrefabKey key)
+        public Bodykit GetBodykit(IPrefabKey key)
         {
             return _bodykits.GetPrefab(key);
-        }*/
+        }
+
+        public VariantPrefab GetVariant(IPrefabKey key)
+        {
+            return _variants.GetPrefab(key);
+        }
     }
 }

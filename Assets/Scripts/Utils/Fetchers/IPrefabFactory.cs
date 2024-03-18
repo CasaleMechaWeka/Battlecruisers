@@ -19,19 +19,19 @@ using System.Threading.Tasks;
 namespace BattleCruisers.Utils.Fetchers
 {
     public interface IPrefabFactory
-	{
+    {
         IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey);
-		IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab, IUIManager uiManager, IFactoryProvider factoryProvider);
+        IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab, IUIManager uiManager, IFactoryProvider factoryProvider);
 
-		IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey);
+        IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey);
         IUnit CreateUnit(IBuildableWrapper<IUnit> unitWrapperPrefab, IUIManager uiManager, IFactoryProvider factoryProvider);
 
-		Cruiser GetCruiserPrefab(IPrefabKey hullKey);
-		Cruiser CreateCruiser(Cruiser cruiserPrefab);
+        Cruiser GetCruiserPrefab(IPrefabKey hullKey);
+        Cruiser CreateCruiser(Cruiser cruiserPrefab);
 
-        Task<CaptainExo> GetCaptainExo(IPrefabKey captainKey);
-        Task<Bodykit> GetBodykit(IPrefabKey bodykitKey);
-        Task<VariantPrefab> GetVariant(IPrefabKey variantKey);
+        CaptainExo GetCaptainExo(IPrefabKey captainKey);
+        Bodykit GetBodykit(IPrefabKey bodykitKey);
+        VariantPrefab GetVariant(IPrefabKey variantKey);
         IExplosion CreateExplosion(ExplosionKey explosionKey);
         IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
 

@@ -209,7 +209,7 @@ namespace BattleCruisers.Cruisers
                 int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
                 if (id_bodykit != -1)
                 {
-                    Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
+                    Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
                     if (bodykit.cruiserType == hullType)
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
@@ -243,7 +243,7 @@ namespace BattleCruisers.Cruisers
                     Debug.Log(id_bodykit);
                     if (id_bodykit != -1)
                     {
-                        Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
+                        Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
                         if (bodykit.cruiserType == hullType)
                         {
                             GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;

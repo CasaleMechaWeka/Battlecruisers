@@ -105,11 +105,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
 
-        private async void ApplyVariantStats()
+        private void ApplyVariantStats()
         {
             if (variantIndex != -1)
             {
-                VariantPrefab variant = await BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
             }
             _bombStats = GetComponent<ProjectileStats>();

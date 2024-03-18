@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public Button toggleSelectionButton;
         public Image variantIcon;
 
-        public async void Initialise(
+        public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             UpdateSelectedFeedback();
 
             // show variant icon in item button when init load
-            VariantPrefab variant = await _gameModel.PlayerLoadout.GetSelectedBuildingVariant(ScreensSceneGod.Instance._prefabFactory, _buildingPrefab.Buildable);
+            VariantPrefab variant = _gameModel.PlayerLoadout.GetSelectedBuildingVariant(ScreensSceneGod.Instance._prefabFactory, _buildingPrefab.Buildable);
             if (variant != null)
             {
                 variantIcon.gameObject.SetActive(true);
@@ -70,12 +70,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             variantChanged += OnVariantChanged;
         }
 
-        private async void OnVariantChanged(object sender, VariantChangeEventArgs args)
+        private void OnVariantChanged(object sender, VariantChangeEventArgs args)
         {
             int index = args.Index;
             if (index != -1)
             {
-                VariantPrefab variant = await ScreensSceneGod.Instance._prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = ScreensSceneGod.Instance._prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     variantIcon.gameObject.SetActive(true);

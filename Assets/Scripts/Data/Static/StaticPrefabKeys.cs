@@ -209,6 +209,67 @@ namespace BattleCruisers.Data.Static
             { "CAPTAINEXO030", 30},{ "CAPTAINEXO031", 31},{ "CAPTAINEXO032", 32},{ "CAPTAINEXO033", 33},{ "CAPTAINEXO034", 34},{ "CAPTAINEXO035", 35},{ "CAPTAINEXO036", 36},{ "CAPTAINEXO037", 37},{ "CAPTAINEXO038", 38},{ "CAPTAINEXO039", 39},{ "CAPTAINEXO040", 40},
         };
 
+        public static class CaptainExo
+        {
+            public static CaptainExoKey CaptainExo000 { get; } = new CaptainExoKey("CaptainExo000");
+            public static CaptainExoKey CaptainExo001 { get; } = new CaptainExoKey("CaptainExo001");
+            public static CaptainExoKey CaptainExo002 { get; } = new CaptainExoKey("CaptainExo002");
+            public static CaptainExoKey CaptainExo003 { get; } = new CaptainExoKey("CaptainExo003");
+            public static CaptainExoKey CaptainExo004 { get; } = new CaptainExoKey("CaptainExo004");
+            public static CaptainExoKey CaptainExo005 { get; } = new CaptainExoKey("CaptainExo005");
+            public static CaptainExoKey CaptainExo006 { get; } = new CaptainExoKey("CaptainExo006");
+            public static CaptainExoKey CaptainExo007 { get; } = new CaptainExoKey("CaptainExo007");
+            public static CaptainExoKey CaptainExo008 { get; } = new CaptainExoKey("CaptainExo008");
+            public static CaptainExoKey CaptainExo009 { get; } = new CaptainExoKey("CaptainExo009");
+            public static CaptainExoKey CaptainExo010 { get; } = new CaptainExoKey("CaptainExo010");
+            public static CaptainExoKey CaptainExo011 { get; } = new CaptainExoKey("CaptainExo011");
+            public static CaptainExoKey CaptainExo012 { get; } = new CaptainExoKey("CaptainExo012");
+            public static CaptainExoKey CaptainExo013 { get; } = new CaptainExoKey("CaptainExo013");
+            public static CaptainExoKey CaptainExo014 { get; } = new CaptainExoKey("CaptainExo014");
+            public static CaptainExoKey CaptainExo015 { get; } = new CaptainExoKey("CaptainExo015");
+            public static CaptainExoKey CaptainExo016 { get; } = new CaptainExoKey("CaptainExo016");
+            public static CaptainExoKey CaptainExo017 { get; } = new CaptainExoKey("CaptainExo017");
+            public static CaptainExoKey CaptainExo018 { get; } = new CaptainExoKey("CaptainExo018");
+            public static CaptainExoKey CaptainExo019 { get; } = new CaptainExoKey("CaptainExo019");
+            public static CaptainExoKey CaptainExo020 { get; } = new CaptainExoKey("CaptainExo020");
+            public static CaptainExoKey CaptainExo021 { get; } = new CaptainExoKey("CaptainExo021");
+            public static CaptainExoKey CaptainExo022 { get; } = new CaptainExoKey("CaptainExo022");
+            public static CaptainExoKey CaptainExo023 { get; } = new CaptainExoKey("CaptainExo023");
+            public static CaptainExoKey CaptainExo024 { get; } = new CaptainExoKey("CaptainExo024");
+            public static CaptainExoKey CaptainExo025 { get; } = new CaptainExoKey("CaptainExo025");
+            public static CaptainExoKey CaptainExo026 { get; } = new CaptainExoKey("CaptainExo026");
+            public static CaptainExoKey CaptainExo027 { get; } = new CaptainExoKey("CaptainExo027");
+            public static CaptainExoKey CaptainExo028 { get; } = new CaptainExoKey("CaptainExo028");
+            public static CaptainExoKey CaptainExo029 { get; } = new CaptainExoKey("CaptainExo029");
+            public static CaptainExoKey CaptainExo030 { get; } = new CaptainExoKey("CaptainExo030");
+            public static CaptainExoKey CaptainExo031 { get; } = new CaptainExoKey("CaptainExo031");
+            public static CaptainExoKey CaptainExo032 { get; } = new CaptainExoKey("CaptainExo032");
+            public static CaptainExoKey CaptainExo033 { get; } = new CaptainExoKey("CaptainExo033");
+            public static CaptainExoKey CaptainExo034 { get; } = new CaptainExoKey("CaptainExo034");
+            public static CaptainExoKey CaptainExo035 { get; } = new CaptainExoKey("CaptainExo035");
+            public static CaptainExoKey CaptainExo036 { get; } = new CaptainExoKey("CaptainExo036");
+            public static CaptainExoKey CaptainExo037 { get; } = new CaptainExoKey("CaptainExo037");
+            public static CaptainExoKey CaptainExo038 { get; } = new CaptainExoKey("CaptainExo038");
+            public static CaptainExoKey CaptainExo039 { get; } = new CaptainExoKey("CaptainExo039");
+            public static CaptainExoKey CaptainExo040 { get; } = new CaptainExoKey("CaptainExo040");
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        CaptainExo000,CaptainExo001, CaptainExo002, CaptainExo003, CaptainExo004, CaptainExo005, CaptainExo006, CaptainExo007, CaptainExo008, CaptainExo009,
+                        CaptainExo010,CaptainExo011, CaptainExo012, CaptainExo013, CaptainExo014, CaptainExo015, CaptainExo016, CaptainExo017, CaptainExo018, CaptainExo019,
+                        CaptainExo020,CaptainExo021, CaptainExo022, CaptainExo023, CaptainExo024, CaptainExo025, CaptainExo026, CaptainExo027, CaptainExo028, CaptainExo029,
+                        CaptainExo030,CaptainExo031, CaptainExo032, CaptainExo033, CaptainExo034, CaptainExo035, CaptainExo036, CaptainExo037, CaptainExo038, CaptainExo039,
+                        CaptainExo040
+                    };
+                }
+            }
+        }
+
+
         public static Dictionary<string, int> HeckleItems = new Dictionary<string, int>
         {
             { "HECKLE000", 0},
@@ -516,6 +577,21 @@ namespace BattleCruisers.Data.Static
             {
                 return ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Captains.Count;
             }
+
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    List<IPrefabKey> exoKeys = new List<IPrefabKey>();
+                    int exoCount = CaptainExoCount();
+
+                    for (int i = 0; i < exoCount; i++)
+                        exoKeys.Add(GetCaptainExoKey(i));
+
+                    return exoKeys;
+                }
+            }
         }
 
         public static class BodyKits
@@ -524,6 +600,20 @@ namespace BattleCruisers.Data.Static
             {
                 return new BodykitKey("Bodykit" + index.ToString("000"));
             }
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    List<IPrefabKey> bodykitKeys = new List<IPrefabKey>();
+                    int bodykitCount = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits.Count;
+
+                    for (int i = 0; i < bodykitCount; i++)
+                        bodykitKeys.Add(GetBodykitKey(i));
+
+                    return bodykitKeys;
+                }
+            }
         }
 
         public static class Variants
@@ -531,6 +621,20 @@ namespace BattleCruisers.Data.Static
             public static VariantKey GetVariantKey(int index)
             {
                 return new VariantKey("Variant" + index.ToString("000"));
+            }
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    List<IPrefabKey> variantKeys = new List<IPrefabKey>();
+                    int variantCount = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Variants.Count;
+
+                    for (int i = 0; i < variantCount; i++)
+                        variantKeys.Add(GetVariantKey(i));
+
+                    return variantKeys;
+                }
             }
         }
         public static class Effects
