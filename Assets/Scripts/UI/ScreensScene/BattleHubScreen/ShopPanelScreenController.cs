@@ -53,8 +53,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
             IDataProvider dataProvider,
-            INextLevelHelper nextLevelHelper)
+            INextLevelHelper nextLevelHelper,
+            bool hasInternetonnection = false)
         {
+
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, captainsContainer, bodykitsContainer, variantsContainer);
             Helper.AssertIsNotNull(captainsButton, hecklesButton, bodykitButton, variantsButton);
@@ -77,11 +79,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             variantsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
             variantsContainer.itemDetailsPanel.SetActive(false);
             bodykitsContainer.itemDetailsPanel.SetActive(false);
-            captainsContainer.itemDetailsPanel.SetActive(false); // this keeps the details panels from popping in for a frame on changing shop tabs
+            captainsContainer.itemDetailsPanel.SetActive(false);
+            // this keeps the details panels from popping in for a frame on changing shop tabs
             commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
 
-            InternetConnection = await LandingSceneGod.CheckForInternetConnection();
+            InternetConnection = hasInternetonnection;
             if (UnityServices.State != ServicesInitializationState.Uninitialized && InternetConnection)
             {
                 // Only make cash shop available if there's an internet connection

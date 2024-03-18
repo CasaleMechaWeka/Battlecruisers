@@ -298,30 +298,27 @@ namespace BattleCruisers.Scenes
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
-            IEnumerator initialiseShop = InitialiseShop(nextLevelHelper);
 
-            while (initialiseShop.MoveNext())
-            {
-                homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-                hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
-                settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
-                trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
-                chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-                skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
-                blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
-                captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
-                messageBox.gameObject.SetActive(true);
-                messageBox.Initialize(_dataProvider, _soundPlayer);
-                messageBox.HideMessage();
-                messageBoxBig.gameObject.SetActive(true);
-                messageBoxBig.Initialize(_dataProvider, _soundPlayer);
-                messageBoxBig.HideMessage();
-                newsButton.Initialise(_soundPlayer, ShowNewsPanel);
+            homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
+            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
+            await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
+            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
+            captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
+            messageBox.gameObject.SetActive(true);
+            messageBox.Initialize(_dataProvider, _soundPlayer);
+            messageBox.HideMessage();
+            messageBoxBig.gameObject.SetActive(true);
+            messageBoxBig.Initialize(_dataProvider, _soundPlayer);
+            messageBoxBig.HideMessage();
+            newsButton.Initialise(_soundPlayer, ShowNewsPanel);
 
-                characterOfShop.SetActive(false);
-                characterOfBlackmarket.SetActive(false);
-                processingPanel.SetActive(false);
-            }
+            characterOfShop.SetActive(false);
+            characterOfBlackmarket.SetActive(false);
+            processingPanel.SetActive(false);
 
             processingPanel.GetComponentInChildren<Text>().text = screensSceneStrings.GetString("Processing");
             Debug.Log(_applicationModel.Mode);
@@ -910,11 +907,6 @@ namespace BattleCruisers.Scenes
                 version = version.Remove(version.IndexOf('.'), 1);
 
             return int.Parse(version);
-        }
-
-        IEnumerator InitialiseShop(INextLevelHelper nextLevelHelper)
-        {
-            yield return shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
         }
 
         IEnumerator GetPvPVersion()
