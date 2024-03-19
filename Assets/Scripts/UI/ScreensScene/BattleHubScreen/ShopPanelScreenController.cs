@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Services.Core;
 using BattleCruisers.Data.Models.PrefabKeys;
+using System.Collections;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -220,54 +221,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             variantsContainer.btnBuy.SetActive(false);
             variantsContainer.ownFeedback.SetActive(false);
 
-            //    List<int> variantList = GeneratePseudoRandomList(12, 35, 6, 3); // 0,1,2 are Premium
-            byte ii = 0;
-            //    variantsItemContainer.gameObject.SetActive(false);
-            foreach (int index in variantList)
-            {
-                GameObject variantItem = Instantiate(variantItemPrefab, variantsItemContainer) as GameObject;
-                VariantPrefab variant = variants[ii];/*await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.AllKeys[index]);*/
-                Sprite parentSprite = variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).Sprite : variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory).Sprite;
-                variantItem.GetComponent<VariantItemController>().StaticInitialise(_soundPlayer, parentSprite, variant.variantSprite, variant.GetParentName(ScreensSceneGod.Instance._prefabFactory), _dataProvider.GameModel.Variants[index], variantsContainer, variant, ii);
-                if (ii == 0)
-                {
-                    variantItem.GetComponent<VariantItemController>()._clickedFeedback.SetActive(true);
-                    variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color = new Color(variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.r, variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.g, variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.b, 1f);
-                    variantsContainer.currentItem = variantItem.GetComponent<VariantItemController>();
-                    variantsContainer.ParentImage.sprite = parentSprite;
-                    variantsContainer.VariantPrice.text = _dataProvider.GameModel.Variants[index].variantCredits.ToString();
-                    variantsContainer.variantIcon.sprite = variant.variantSprite;
-                    variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase);
-                    variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
-                    variantsContainer.ParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-                    variantsContainer.currentVariantData = _dataProvider.GameModel.Variants[index];
-
-                    if (variant.IsUnit())
-                    {
-                        variantsContainer.buildingStatsController.gameObject.SetActive(false);
-                        variantsContainer.unitStatsController.gameObject.SetActive(true);
-                        variantsContainer.unitStatsController.ShowStatsOfVariant(variant.GetUnit(ScreensSceneGod.Instance._prefabFactory), variant);
-                    }
-                    else
-                    {
-                        variantsContainer.buildingStatsController.gameObject.SetActive(true);
-                        variantsContainer.unitStatsController.gameObject.SetActive(false);
-                        variantsContainer.buildingStatsController.ShowStatsOfVariant(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), variant);
-                    }
-
-                    if (_dataProvider.GameModel.Variants[index].isOwned)
-                    {
-                        variantsContainer.btnBuy.SetActive(false);
-                        variantsContainer.ownFeedback.SetActive(true);
-                    }
-                    else
-                    {
-                        variantsContainer.btnBuy.SetActive(true);
-                        variantsContainer.ownFeedback.SetActive(false);
-                    }
-                }
-                ii++;
-            }
+            StopAllCoroutines();
+            IEnumerator initialiseVariantsItemPanel = InitialiseVariantsItemPanel();
+            StartCoroutine(initialiseVariantsItemPanel);
             // Show the message panel and hide the item details initially
             variantsContainer.variantMessagePanel.SetActive(true);
             variantsContainer.itemDetailsPanel.SetActive(false);
@@ -510,6 +466,63 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 fullList.Add(i);
 
             return fullList;
+        }
+
+        IEnumerator InitialiseVariantsItemPanel()
+        {
+            int completedVariants = 0;
+            int variantsPerFrame = 15;
+            byte ii = 0;
+            while (completedVariants < variantList.Count)
+            {
+                for (int i = completedVariants; i < Mathf.Min(completedVariants + variantsPerFrame, variantList.Count); i++)
+                {
+                    GameObject variantItem = Instantiate(variantItemPrefab, variantsItemContainer) as GameObject;
+                    VariantPrefab variant = variants[ii];/*await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.AllKeys[index]);*/
+                    Sprite parentSprite = variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).Sprite : variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory).Sprite;
+                    variantItem.GetComponent<VariantItemController>().StaticInitialise(_soundPlayer, parentSprite, variant.variantSprite, variant.GetParentName(ScreensSceneGod.Instance._prefabFactory), _dataProvider.GameModel.Variants[i], variantsContainer, variant, ii);
+                    if (ii == 0)
+                    {
+                        variantItem.GetComponent<VariantItemController>()._clickedFeedback.SetActive(true);
+                        variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color = new Color(variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.r, variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.g, variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.b, 1f);
+                        variantsContainer.currentItem = variantItem.GetComponent<VariantItemController>();
+                        variantsContainer.ParentImage.sprite = parentSprite;
+                        variantsContainer.VariantPrice.text = _dataProvider.GameModel.Variants[i].variantCredits.ToString();
+                        variantsContainer.variantIcon.sprite = variant.variantSprite;
+                        variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.GameModel.Variants[i].variantNameStringKeyBase);
+                        variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.GameModel.Variants[i].variantDescriptionStringKeyBase);
+                        variantsContainer.ParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
+                        variantsContainer.currentVariantData = _dataProvider.GameModel.Variants[i];
+
+                        if (variant.IsUnit())
+                        {
+                            variantsContainer.buildingStatsController.gameObject.SetActive(false);
+                            variantsContainer.unitStatsController.gameObject.SetActive(true);
+                            variantsContainer.unitStatsController.ShowStatsOfVariant(variant.GetUnit(ScreensSceneGod.Instance._prefabFactory), variant);
+                        }
+                        else
+                        {
+                            variantsContainer.buildingStatsController.gameObject.SetActive(true);
+                            variantsContainer.unitStatsController.gameObject.SetActive(false);
+                            variantsContainer.buildingStatsController.ShowStatsOfVariant(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), variant);
+                        }
+
+                        if (_dataProvider.GameModel.Variants[i].isOwned)
+                        {
+                            variantsContainer.btnBuy.SetActive(false);
+                            variantsContainer.ownFeedback.SetActive(true);
+                        }
+                        else
+                        {
+                            variantsContainer.btnBuy.SetActive(true);
+                            variantsContainer.ownFeedback.SetActive(false);
+                        }
+                    }
+                    ii++;
+                }
+                completedVariants += Mathf.Min(variantsPerFrame, variantList.Count);
+                yield return 0;
+            }
         }
     }
 }
