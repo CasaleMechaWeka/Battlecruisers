@@ -1,10 +1,6 @@
 using BattleCruisers.UI.ScreensScene.ShopScreen;
-using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.UI;
 using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
