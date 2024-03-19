@@ -55,6 +55,6 @@ public class SideQuestButtonController : ElementWithClickSound
     protected override void OnClicked()
     {
         base.OnClicked();
-        _screensSceneGod.LoadBattleSceneSideQuest(sideQuestID);
+        _screensSceneGod.GoToSideQuestTrashScreen(sideQuestID);
     }
 }

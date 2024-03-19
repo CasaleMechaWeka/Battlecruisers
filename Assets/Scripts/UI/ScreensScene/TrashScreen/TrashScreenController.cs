@@ -77,8 +77,13 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             int levelIndex = _appModel.SelectedLevel - 1;
             ILevel level = _appModel.DataProvider.Levels[levelIndex];
+            ITrashTalkData trashTalkData;
 
-            ITrashTalkData trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
+            if (_appModel.Mode == GameMode.SideQuest)
+                trashTalkData = await _sideQuestTrashDataList.GetTrashTalkAsync(_appModel.SelectedSideQuestID + 1);
+            else
+                trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
+
             trashTalkBubbles.Initialise(trashTalkData, _commonStrings, _storyStrings);
             SetupEnemyCharacter(trashTalkData);
 

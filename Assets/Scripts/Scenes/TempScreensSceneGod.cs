@@ -479,7 +479,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        public async Task GoToSideQuestTrashScreenAsync(int sideQuestLevelNum)
+        public void GoToSideQuestTrashScreen(int sideQuestLevelNum)
         {
             // Implementation similar to GoToTrashScreen method, but for side quest levels
             AdvertisingBanner.stopAdvert();
@@ -512,7 +512,7 @@ namespace BattleCruisers.Scenes
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
                 ILevel level = _applicationModel.DataProvider.Levels[sideQuestLevelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? await GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
                 _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
             }
@@ -521,7 +521,7 @@ namespace BattleCruisers.Scenes
                 LoadBattleScene();
             }
         }
-        private async Task<int> GetRandomBodykitForAI(HullType hullType)
+        private int GetRandomBodykitForAI(HullType hullType)
         {
             int id_bodykit = -1;
             if (hullType != HullType.None)

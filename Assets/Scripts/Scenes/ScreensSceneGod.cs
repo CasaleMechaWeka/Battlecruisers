@@ -788,47 +788,18 @@ namespace BattleCruisers.Scenes
         }
 
 
-        public async Task GoToSideQuestTrashScreenAsync(int sideQuestLevelNum)
+        public void GoToSideQuestTrashScreen(int sideQuestLevelNum)
         {
             // Implementation similar to GoToTrashScreen method, but for side quest levels
             AdvertisingBanner.stopAdvert();
-            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {sideQuestLevelNum}");
-            Assert.IsTrue(
-                sideQuestLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
-                "levelNum: " + sideQuestLevelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+            _applicationModel.Mode = GameMode.SideQuest;
 
-            _applicationModel.SelectedLevel = sideQuestLevelNum;
+            _applicationModel.SelectedSideQuestID = sideQuestLevelNum;
 
-            if (_applicationModel.Mode == GameMode.Campaign)
-            {
-                if (LevelStages.STAGE_STARTS.Contains(sideQuestLevelNum - 1) && levelToShowCutscene != sideQuestLevelNum)
-                {
-                    levelToShowCutscene = sideQuestLevelNum;
-                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
-                    _applicationModel.DataProvider.SaveGame();
-                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
-                }
-                else
-                {
-                    levelToShowCutscene = 0;
-                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
-                    _applicationModel.DataProvider.SaveGame();
-                    GoToScreen(trashScreen, playDefaultMusic: false);
-                }
-            }
-            else if (_applicationModel.Mode == GameMode.CoinBattle)
-            {
-                levelToShowCutscene = 0;
-                // Random bodykits for AIBot
-                ILevel level = _applicationModel.DataProvider.Levels[sideQuestLevelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
-                _applicationModel.DataProvider.SaveGame();
-                GoToScreen(trashScreen, playDefaultMusic: false);
-            }
-            else
-            {
-                LoadBattleScene();
-            }
+            levelToShowCutscene = 0;
+            _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+            _applicationModel.DataProvider.SaveGame();
+            GoToScreen(trashScreen, playDefaultMusic: false);
         }
 
         public void GoToChooseDifficultyScreen()

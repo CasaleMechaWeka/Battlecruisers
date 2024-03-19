@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes
         void LoadBattle1v1Mode();
         void GotoShopScreen();
         public void GotoBlackMarketScreen();
-        Task GoToSideQuestTrashScreenAsync(int sideQuestID);
+        void GoToSideQuestTrashScreen(int sideQuestID);
         void SomeMethodUsingBattleSceneHelper();
     }
 }
