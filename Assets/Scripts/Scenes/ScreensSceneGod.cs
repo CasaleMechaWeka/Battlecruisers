@@ -134,13 +134,13 @@ namespace BattleCruisers.Scenes
             _gameModel = _dataProvider.GameModel;
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
+            Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
+            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.Instance.LoadScreensSceneTableAsync();
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            _prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            Task<IPrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             // Interacting with Cloud
@@ -157,6 +157,7 @@ namespace BattleCruisers.Scenes
                         await _dataProvider.CloudLoad();
                         IsFirstTimeLoad = false;
                     }
+
                     await _dataProvider.LoadBCData();
 
                     // version check
@@ -273,18 +274,25 @@ namespace BattleCruisers.Scenes
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));
 
-            _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager, commonStrings);
-            trashDataList.Initialise(storyStrings);
-            _isPlaying = false;
+            while (!loadStoryStrings.IsCompleted)
+                await Task.Delay(10);
 
-            // TEMP  For showing PostBattleScreen :)
-            if (goToPostBattleScreen)
-            {
-                _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
-                //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
-                _applicationModel.ShowPostBattleScreen = true;
-                //_applicationModel.IsTutorial = true;
-            }
+            ILocTable storyStrings = await loadStoryStrings;
+            trashDataList.Initialise(storyStrings);
+
+            SpriteFetcher spriteFetcher = new SpriteFetcher();
+            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
+            INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
+
+            while (!loadScreensSceneStrings.IsCompleted)
+                await Task.Delay(10);
+
+            ILocTable screensSceneStrings = await loadScreensSceneStrings;
+
+            homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
+
 
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
@@ -293,21 +301,6 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            ShowCharlieOnMainMenu();
-
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
-            INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
-
-            homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
-            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
-            await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
-            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
-            captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize(_dataProvider, _soundPlayer);
             messageBox.HideMessage();
@@ -324,6 +317,34 @@ namespace BattleCruisers.Scenes
             Debug.Log(_applicationModel.Mode);
 
             _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+
+
+            while (!loadPrefabCache.IsCompleted)
+                await Task.Delay(1);
+
+            _prefabCache = await loadPrefabCache;
+
+            _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager, commonStrings);
+            _isPlaying = false;
+
+            // TEMP  For showing PostBattleScreen :)
+            if (goToPostBattleScreen)
+            {
+                _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
+                //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
+                _applicationModel.ShowPostBattleScreen = true;
+                //_applicationModel.IsTutorial = true;
+            }
+
+            ShowCharlieOnMainMenu();
+
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
+            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
+            await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
+            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
+            captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
+
             _applicationModel.DataProvider.SaveGame();
 
             if (_applicationModel.ShowPostBattleScreen)
@@ -388,7 +409,6 @@ namespace BattleCruisers.Scenes
             else if (testLoadoutScreen)
                 GoToLoadoutScreen();
 
-
             ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
 
             if (_gameModel.PremiumEdition)
@@ -398,7 +418,6 @@ namespace BattleCruisers.Scenes
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
-
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
 
