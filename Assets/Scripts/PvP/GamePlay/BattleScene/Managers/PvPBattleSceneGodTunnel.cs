@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -11,9 +10,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using System.Linq;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.PostBattleScreen;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data;
 
@@ -249,7 +246,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 Debug.Log($"CRUISERS DESTROYED LEFT: {_totalDestroyed[2]}");
 
                 battleCompletionHandler?.CompleteBattle(wasPlayerVictory, retryLevel, destructionScore);
-              
+
                 //handle client stats
                 float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
                 long aircraftVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();

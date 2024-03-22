@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BattleCruisers.Data;
 using BattleCruisers.Utils.Localisation;
@@ -21,7 +19,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
-using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -53,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
 
 
-        public string[] PvPHullNames => new string[] 
+        public string[] PvPHullNames => new string[]
             {
             "BlackRig",
             "Bullshark",
@@ -89,11 +86,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public virtual IPvPLevel GetPvPLevel()
         {
-/*#if UNITY_EDITOR*/
+            /*#if UNITY_EDITOR*/
             return _appModel.DataProvider.GetPvPLevel((Map)_appModel.DataProvider.GameModel.GameMap);
-/*#else
-            return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
-#endif*/
+            /*#else
+                        return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
+            #endif*/
             // return _appModel.DataProvider.GetPvPLevel();
         }
 

@@ -12,7 +12,6 @@ using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {

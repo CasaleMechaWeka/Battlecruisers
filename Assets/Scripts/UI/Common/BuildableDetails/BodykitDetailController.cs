@@ -1,8 +1,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.UI;
-using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -10,7 +8,6 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Properties;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

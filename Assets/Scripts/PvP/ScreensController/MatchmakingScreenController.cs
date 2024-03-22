@@ -24,9 +24,7 @@ using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
-using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController;
 using BattleCruisers.Network.Multiplay.UnityServices;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen

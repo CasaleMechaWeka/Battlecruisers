@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -14,7 +13,6 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using System.CodeDom;
 using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
