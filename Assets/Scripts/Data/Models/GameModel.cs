@@ -634,6 +634,8 @@ namespace BattleCruisers.Data.Models
                     new BodykitData(nameBase: "Bodykit033", descriptionBase : "BodykitDescription033", cost: 358, owned : false, id: 33),
                     new BodykitData(nameBase: "Bodykit034", descriptionBase : "BodykitDescription034", cost: 741, owned : false, id: 34),
                     new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 521, owned : false, id: 35),
+                    new BodykitData(nameBase: "Bodykit036", descriptionBase : "BodykitDescription036", cost: 521, owned : false, id: 36),
+                    new BodykitData(nameBase: "Bodykit037", descriptionBase : "BodykitDescription037", cost: 521, owned : false, id: 37),
             };
 
             _variants = new List<VariantData>

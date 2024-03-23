@@ -39,9 +39,9 @@ namespace BattleCruisers.Effects.Explosions
             BODYKIT_TYPE bodykit_type = (BODYKIT_TYPE)id_bodykit;
             foreach (BodykitWreck wreck in wrecks)
             {
-                if(wreck.type == bodykit_type)
+                if (wreck.type == bodykit_type)
                 {
-                    for(int i = 0; i < wreckRenders.Length; i ++)
+                    for (int i = 0; i < wreckRenders.Length; i++)
                     {
                         wreckRenders[i].sprite = wreck.sprites[i];
                     }
@@ -59,7 +59,7 @@ namespace BattleCruisers.Effects.Explosions
         BODYKIT020, BODYKIT021, BODYKIT022, BODYKIT023, BODYKIT024,
         BODYKIT025, BODYKIT026, BODYKIT027, BODYKIT028, BODYKIT029,
         BODYKIT030, BODYKIT031, BODYKIT032, BODYKIT033, BODYKIT034,
-        BODYKIT035
+        BODYKIT035, BODYKIT036, BODYKIT037
     }
     [Serializable]
     public class BodykitWreck

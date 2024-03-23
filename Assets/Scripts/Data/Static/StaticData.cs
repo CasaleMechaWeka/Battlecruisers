@@ -88,6 +88,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Hulls.Raptor,
                 StaticPrefabKeys.Hulls.Rockjaw,
                 StaticPrefabKeys.Hulls.Eagle,
+                StaticPrefabKeys.Hulls.Flea,
                 StaticPrefabKeys.Hulls.Hammerhead,
                 StaticPrefabKeys.Hulls.Longbow,
                 StaticPrefabKeys.Hulls.Megalodon,
@@ -476,7 +477,8 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Rickshaw, 34 },
                 { StaticPrefabKeys.Hulls.TasDevil, 35 },
                 { StaticPrefabKeys.Hulls.BlackRig, 37 },
-                { StaticPrefabKeys.Hulls.Yeti, 40 }
+                { StaticPrefabKeys.Hulls.Yeti, 40 },
+                { StaticPrefabKeys.Hulls.Flea, 45 }
             };
         }
 
