@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 // m_lobbyServiceFacade.EndTracking();
             }
             MatchmakingScreenController.Instance.SetFoundVictimString();
-            MatchmakingScreenController.Instance.fleeButton.SetActive(true);
+            MatchmakingScreenController.Instance.fleeButton.SetActive(false);
             MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
 
             PvPBattleSceneGodTunnel._playerACruiserVal = 3500;  // in case of worse state
