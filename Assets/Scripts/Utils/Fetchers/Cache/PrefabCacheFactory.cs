@@ -10,12 +10,12 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
@@ -43,46 +43,51 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
         public async Task<IPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             Assert.IsNotNull(prefabFetcher);
 
             IList<Task> retrievePrefabsTasks = new List<Task>();
 
+            IDictionary<IPrefabKey, VariantPrefab> keyToVariants = new ConcurrentDictionary<IPrefabKey, VariantPrefab>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Variants.AllKeys, keyToVariants));
+
             IDictionary<IPrefabKey, BuildableWrapper<IBuilding>> keyToBuilding = new ConcurrentDictionary<IPrefabKey, BuildableWrapper<IBuilding>>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Buildings.AllKeys, keyToBuilding));
-
-            IDictionary<IPrefabKey, BuildableWrapper<IUnit>> keyToUnit = new ConcurrentDictionary<IPrefabKey, BuildableWrapper<IUnit>>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Units.AllKeys, keyToUnit));
-
-            IDictionary<IPrefabKey, Cruiser> keyToCruiser = new ConcurrentDictionary<IPrefabKey, Cruiser>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Hulls.AllKeys, keyToCruiser));
-
-            IDictionary<IPrefabKey, ExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, ExplosionController>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Explosions.AllKeys, keyToExplosion));
-
-            IDictionary<IPrefabKey, ShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, ShipDeathInitialiser>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.ShipDeaths.AllKeys, keyToDeath));
-
-            IDictionary<IPrefabKey, Projectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Projectile>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
 
             IDictionary<IPrefabKey, CaptainExo> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.CaptainExos.AllKeys, keyToCaptains));
 
+            IDictionary<IPrefabKey, Cruiser> keyToCruiser = new ConcurrentDictionary<IPrefabKey, Cruiser>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Hulls.AllKeys, keyToCruiser));
+
             IDictionary<IPrefabKey, Bodykit> keyToBodykits = new ConcurrentDictionary<IPrefabKey, Bodykit>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.BodyKits.AllKeys, keyToBodykits));
 
-            IDictionary<IPrefabKey, VariantPrefab> keyToVariants = new ConcurrentDictionary<IPrefabKey, VariantPrefab>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Variants.AllKeys, keyToVariants));
+            IDictionary<IPrefabKey, ShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, ShipDeathInitialiser>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.ShipDeaths.AllKeys, keyToDeath));
 
-            Container<DroneController> droneContainer = new Container<DroneController>();
-            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));
+            IDictionary<IPrefabKey, BuildableWrapper<IUnit>> keyToUnit = new ConcurrentDictionary<IPrefabKey, BuildableWrapper<IUnit>>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Units.AllKeys, keyToUnit));
 
-            Container<AudioSourceInitialiser> audioSourceContainer = new Container<AudioSourceInitialiser>();
-            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.AudioSource, audioSourceContainer));
+            IDictionary<IPrefabKey, Projectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Projectile>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
+
+            IDictionary<IPrefabKey, ExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, ExplosionController>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Explosions.AllKeys, keyToExplosion));
+
+            Container<DroneController> DroneContainer = new Container<DroneController>();
+            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, DroneContainer));
+
+            Container<AudioSourceInitialiser> AudioSourceContainer = new Container<AudioSourceInitialiser>();
+            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.AudioSource, AudioSourceContainer));
 
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After retrieve all prefabs task");
+
+            UnityEngine.Debug.Log(stopwatch.Elapsed.TotalMilliseconds + " ms");
+            stopwatch.Stop();
 
             return
                 new PrefabCache(
@@ -95,8 +100,8 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<Bodykit>(keyToBodykits),
                     new MultiCache<VariantPrefab>(keyToVariants),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
-                    droneContainer.Value,
-                    audioSourceContainer.Value);
+                    DroneContainer.Value,
+                    AudioSourceContainer.Value);
         }
 
 
