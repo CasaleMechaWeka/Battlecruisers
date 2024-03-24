@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.Loading
         public Canvas root;
         public Text loadingText;
         public Text SubTitle;
+        public Text onscreenLogging;
 
         private string _defaultLoadingText;
         private string startingText;
@@ -60,6 +61,11 @@ namespace BattleCruisers.UI.Loading
             }
         }
 
+        public void LogToScreen(string log)
+        {
+            onscreenLogging.text = log;
+        }
+
 
         void Update()
         {
@@ -82,14 +88,14 @@ namespace BattleCruisers.UI.Loading
 
         private string FindLoadingText()
         {
-/*            if (IsFirstTime)
-            {
-                return startingText;
-            }
-            else
-            {*/
-                return LandingSceneGod.LoadingScreenHint ?? startingText;
-   //         }
+            /*            if (IsFirstTime)
+                        {
+                            return startingText;
+                        }
+                        else
+                        {*/
+            return LandingSceneGod.LoadingScreenHint ?? startingText;
+            //         }
         }
 
         public void Destroy()
