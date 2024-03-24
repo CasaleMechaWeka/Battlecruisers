@@ -15,7 +15,6 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
@@ -43,8 +42,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
         public async Task<IPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             Assert.IsNotNull(prefabFetcher);
 
             IList<Task> retrievePrefabsTasks = new List<Task>();
@@ -85,9 +82,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After retrieve all prefabs task");
-
-            UnityEngine.Debug.Log(stopwatch.Elapsed.TotalMilliseconds + " ms");
-            stopwatch.Stop();
 
             return
                 new PrefabCache(
