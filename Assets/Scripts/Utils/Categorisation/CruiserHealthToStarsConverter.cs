@@ -4,12 +4,16 @@
     {
         private static readonly float[] CATEGORY_THRESHOLDS =
         {
-            1,   // Raptor
+            1,      // 
+                    // 1500, Raptor, Rickshaw
             2400,   // Eagle
-            // 3000, Trident
-            3600,   // Bullshark, Hammerhead
-            4000,   // Rockjaw
-            6000    // Longbow, Megalodon
+                    // 3000, Trident
+            3600,   // Rockjaw
+                    // 3800, Bullshark
+                    // 3900, Hammerhead
+            4000,   //
+                    // 4800, Longbow, Megalodon
+            6000    // BlackRig, TasDevil, Yeti
         };
 
         public CruiserHealthToStarsConverter() : base(CATEGORY_THRESHOLDS)
