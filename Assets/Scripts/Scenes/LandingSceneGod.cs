@@ -25,7 +25,6 @@ using Unity.Services.Core;
 using System.Net;
 using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
-using System.IO;
 using UnityEngine.UI;
 using TMPro;
 
@@ -41,9 +40,7 @@ using AppleAuth.Extensions;
 using AppleAuth.Interfaces;
 using AppleAuth.Native;
 #endif
-using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
-using System.Media;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
