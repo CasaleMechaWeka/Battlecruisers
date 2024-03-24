@@ -133,9 +133,9 @@ namespace BattleCruisers.Scenes
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
 
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
+            ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
             Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
-            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.Instance.LoadScreensSceneTableAsync();
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
 
@@ -284,11 +284,6 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
 
-            while (!loadScreensSceneStrings.IsCompleted)
-                await Task.Delay(10);
-
-            ILocTable screensSceneStrings = await loadScreensSceneStrings;
-
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
@@ -320,7 +315,7 @@ namespace BattleCruisers.Scenes
 
 
             while (!loadPrefabCache.IsCompleted)
-                await Task.Delay(1);
+                await Task.Delay(2);
 
             _prefabCache = await loadPrefabCache;
 
@@ -683,7 +678,7 @@ namespace BattleCruisers.Scenes
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < /*12*/ _applicationModel.DataProvider.GameModel.Bodykits.Count; i++)
                 {
-                    if ((_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i))).cruiserType == hullType)
+                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }
@@ -841,22 +836,14 @@ namespace BattleCruisers.Scenes
             }
             //Only called via Unity Button event when clicking the close button on a FullScreenAd
             if (_gameModel.HasAttemptedTutorial && _gameModel.FirstNonTutorialBattle)
-            {
                 _musicPlayer.PlayVictoryMusic();
-            }
 
             else if (_gameModel.LastBattleResult.WasVictory)
-            {
                 _musicPlayer.PlayVictoryMusic();
-            }
             else if (!_gameModel.LastBattleResult.WasVictory)
-            {
                 _musicPlayer.PlayDefeatMusic();
-            }
             else
-            {
                 _musicPlayer.PlayScreensSceneMusic();
-            }
         }
 
         public CaptainExo GetCaptainExoData(CaptainExoKey key)
@@ -871,9 +858,8 @@ namespace BattleCruisers.Scenes
 
             var data = prefab.GetComponent<CaptainExo>();
             if (data == null)
-            {
                 Debug.LogError($"No CaptainExoData component attached to prefab at path: {prefabPath}");
-            }
+
             return data;
         }
 
@@ -885,20 +871,12 @@ namespace BattleCruisers.Scenes
         void Update()
         {
             if (Input.GetKeyUp(KeyCode.Escape))
-            {
                 _currentScreen?.Cancel();
-            }
 
             if (_gameModel != null)
-            {
                 if (_gameModel.PremiumEdition)
-                {
                     if (!_isPlaying)
-                    {
                         thankYouPlane.SetTrigger("Play");
-                    }
-                }
-            }
         }
 
         void OnApplicationQuit()
