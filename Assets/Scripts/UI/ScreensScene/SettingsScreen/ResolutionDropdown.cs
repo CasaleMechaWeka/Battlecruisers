@@ -38,12 +38,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 currentIndex = resolutions.Count - 1;
             }
 
-            Vector2 nativeResolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
+            Vector2 nativeResolution = new Vector2(Display.main.systemHeight, Display.main.systemHeight);
             Dropdown.OptionData nativeResOption = new Dropdown.OptionData(nativeResolution.x + "x" + nativeResolution.y);
 
             if (!resolutions.Contains(nativeResolution))
                 for (int i = 1; i < resolutions.Count; i++)
-                    if (i == resolutions.Count || nativeResolution.x >= resolutions[i - 1].x && nativeResolution.y > resolutions[i - 1].y)
+                    if (i == resolutions.Count || nativeResolution.x >= resolutions[i - 1].x && nativeResolution.y >= resolutions[i - 1].y)
                     {
                         options.Insert(i - 1, nativeResOption);
                         break;
