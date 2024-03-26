@@ -11,7 +11,7 @@ namespace BattleCruisers.Cruisers
     /// </summary>
     public class Shepherd : Cruiser
     {
-        public float buildablesFireRateBoost;
+        public float buildingFireRateBoost;
 
         public override void Initialise(ICruiserArgs args)
         {
@@ -19,14 +19,15 @@ namespace BattleCruisers.Cruisers
             if (applicationModel.SelectedLevel == 58) //This is where UltraCruiser Level is designated
             {
                 SetUltraCruiserHealth(args);
-                buildablesFireRateBoost = SetUltraCruiserUtility(args, buildablesFireRateBoost);
+                buildingFireRateBoost = SetUltraCruiserUtility(args, buildingFireRateBoost);
             }
             base.Initialise(args);
 
-            Assert.IsTrue(buildablesFireRateBoost > 0);
+            Assert.IsTrue(buildingFireRateBoost > 0);
 
-            IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildablesFireRateBoost);
+            IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingFireRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
+            CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.Add(fireRateBoostProvider);
         }
     }
 }
