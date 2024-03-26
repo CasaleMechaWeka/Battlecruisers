@@ -136,9 +136,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public Sprite Longbow;
         public Sprite ManOfWarBoss;
         public Sprite Megalodon;
+        public Sprite Microlodon;
         public Sprite Raptor;
         public Sprite Rickshaw;
         public Sprite Rockjaw;
+        public Sprite Shepherd;
         public Sprite TasDevil;
         public Sprite Trident;
         public Sprite Yeti;
@@ -269,6 +271,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 case "Megalodon":
                     destructionCards[2].image.sprite = Megalodon;
                     break;
+                case "Microlodon":
+                    destructionCards[2].image.sprite = Microlodon;
+                    break;
                 case "Raptor":
                     destructionCards[2].image.sprite = Raptor;
                     break;
@@ -277,6 +282,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     break;
                 case "Rockjaw":
                     destructionCards[2].image.sprite = Rockjaw;
+                    break;
+                case "Shepherd":
+                    destructionCards[2].image.sprite = Shepherd;
                     break;
                 case "TasDevil":
                     destructionCards[2].image.sprite = TasDevil;

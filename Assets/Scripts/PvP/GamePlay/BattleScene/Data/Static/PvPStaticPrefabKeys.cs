@@ -126,6 +126,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPHullKey PvPRickshaw { get; } = new PvPHullKey("PvPRickshaw");
             public static PvPHullKey PvPBlackRig { get; } = new PvPHullKey("PvPBlackRig");
             public static PvPHullKey PvPFlea { get; } = new PvPHullKey("PvPFlea");
+            public static PvPHullKey PvPShepherd { get; } = new PvPHullKey("PvPShepherd");
+            public static PvPHullKey PvPMicrolodon { get; } = new PvPHullKey("PvPMicrolodon");
 
 
             public static IList<IPvPPrefabKey> AllKeys
@@ -134,7 +136,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 {
                     return new List<IPvPPrefabKey>()
                     {
-                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea
+                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon
                     };
                 }
             }
@@ -145,7 +147,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 {
                     return new List<PvPHullKey>()
                     {
-                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea
+                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon
                     };
                 }
             }

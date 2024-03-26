@@ -216,12 +216,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     return HullType.Longbow;
                 case "Megalodon":
                     return HullType.Megalodon;
+                case "Microlodon":
+                    return HullType.Microlodon;
                 case "Raptor":
                     return HullType.Raptor;
                 case "Rickshaw":
                     return HullType.Rickshaw;
                 case "Rockjaw":
                     return HullType.Rockjaw;
+                case "Shepherd":
+                    return HullType.Shepherd;
                 case "TasDevil":
                     return HullType.TasDevil;
                 default:

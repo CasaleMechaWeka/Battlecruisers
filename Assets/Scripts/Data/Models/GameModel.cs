@@ -561,7 +561,7 @@ namespace BattleCruisers.Data.Models
                    new HeckleData("Heckle150",id: 150), new HeckleData("Heckle151",id: 151), new HeckleData("Heckle152",id: 152), new HeckleData("Heckle153",id: 153), new HeckleData("Heckle154",id: 154),
                    new HeckleData("Heckle155",id: 155), new HeckleData("Heckle156",id: 156), new HeckleData("Heckle157",id: 157), new HeckleData("Heckle158",id: 158), new HeckleData("Heckle159",id: 159),
                    new HeckleData("Heckle160",id: 160), new HeckleData("Heckle161",id: 161), new HeckleData("Heckle162",id: 162), new HeckleData("Heckle163",id: 163), new HeckleData("Heckle164",id: 164),
-                   new HeckleData("Heckle165",id: 165), new HeckleData("Heckle165",id: 165), new HeckleData("Heckle167",id: 167), new HeckleData("Heckle168",id: 168), new HeckleData("Heckle169",id: 169),
+                   new HeckleData("Heckle165",id: 165), new HeckleData("Heckle166",id: 166), new HeckleData("Heckle167",id: 167), new HeckleData("Heckle168",id: 168), new HeckleData("Heckle169",id: 169),
                    new HeckleData("Heckle170",id: 170), new HeckleData("Heckle171",id: 171), new HeckleData("Heckle172",id: 172), new HeckleData("Heckle173",id: 173), new HeckleData("Heckle174",id: 174),
                    new HeckleData("Heckle175",id: 175), new HeckleData("Heckle176",id: 176), new HeckleData("Heckle177",id: 177), new HeckleData("Heckle178",id: 178), new HeckleData("Heckle179",id: 179),
                    new HeckleData("Heckle180",id: 180), new HeckleData("Heckle181",id: 181), new HeckleData("Heckle182",id: 182), new HeckleData("Heckle183",id: 183), new HeckleData("Heckle184",id: 184),
@@ -583,7 +583,7 @@ namespace BattleCruisers.Data.Models
                    new HeckleData("Heckle260",id: 260), new HeckleData("Heckle261",id: 261), new HeckleData("Heckle262",id: 262), new HeckleData("Heckle263",id: 263), new HeckleData("Heckle264",id: 264),
                    new HeckleData("Heckle265",id: 265), new HeckleData("Heckle266",id: 266), new HeckleData("Heckle267",id: 267), new HeckleData("Heckle268",id: 268), new HeckleData("Heckle269",id: 269),
                    new HeckleData("Heckle270",id: 270), new HeckleData("Heckle271",id: 271), new HeckleData("Heckle272",id: 272), new HeckleData("Heckle273",id: 273), new HeckleData("Heckle274",id: 274),
-                   new HeckleData("Heckle035",id: 275), new HeckleData("Heckle276",id: 276), new HeckleData("Heckle277",id: 277), new HeckleData("Heckle278",id: 278), new HeckleData("Heckle279",id: 279),
+                   new HeckleData("Heckle275",id: 275), new HeckleData("Heckle276",id: 276), new HeckleData("Heckle277",id: 277), new HeckleData("Heckle278",id: 278), new HeckleData("Heckle279",id: 279),
                 };
 
             _captains = new List<CaptainData> {
@@ -633,9 +633,13 @@ namespace BattleCruisers.Data.Models
                     new BodykitData(nameBase: "Bodykit032", descriptionBase : "BodykitDescription032", cost: 369, owned : false, id: 32),
                     new BodykitData(nameBase: "Bodykit033", descriptionBase : "BodykitDescription033", cost: 358, owned : false, id: 33),
                     new BodykitData(nameBase: "Bodykit034", descriptionBase : "BodykitDescription034", cost: 741, owned : false, id: 34),
-                    new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 521, owned : false, id: 35),
-                    new BodykitData(nameBase: "Bodykit036", descriptionBase : "BodykitDescription036", cost: 521, owned : false, id: 36),
-                    new BodykitData(nameBase: "Bodykit037", descriptionBase : "BodykitDescription037", cost: 521, owned : false, id: 37),
+                    new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 867, owned : false, id: 35),
+                    new BodykitData(nameBase: "Bodykit036", descriptionBase : "BodykitDescription036", cost: 296, owned : false, id: 36),
+                    new BodykitData(nameBase: "Bodykit037", descriptionBase : "BodykitDescription037", cost: 466, owned : false, id: 37),
+                    new BodykitData(nameBase: "Bodykit038", descriptionBase : "BodykitDescription038", cost: 954, owned : false, id: 38),
+                    new BodykitData(nameBase: "Bodykit039", descriptionBase : "BodykitDescription039", cost: 234, owned : false, id: 39),
+                    new BodykitData(nameBase: "Bodykit040", descriptionBase : "BodykitDescription040", cost: 691, owned : false, id: 40),
+                    new BodykitData(nameBase: "Bodykit041", descriptionBase : "BodykitDescription041", cost: 165, owned : false, id: 41),
             };
 
             _variants = new List<VariantData>

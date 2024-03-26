@@ -62,9 +62,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             "Hammerhead",
             "Longbow",
             "Megalodon",
+            "Microlodon",
             "Raptor",
             "Rickshaw",
             "Rockjaw",
+            "Shepherd",
             "TasDevil",
             "Trident",
             "Yeti"
