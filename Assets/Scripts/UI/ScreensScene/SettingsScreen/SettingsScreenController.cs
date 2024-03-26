@@ -13,6 +13,7 @@ using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -50,13 +51,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ISingleSoundPlayer soundPlayer,
             ISettingsManager settingsManager,
             IHotkeysModel hotkeysModel,
-            ILocTable commonLocTable)
+            ILocTable commonLocTable,
+            ILocTable screensSceneTable)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
-            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable);
+            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable, screensSceneTable);
 
             _settingsManager = settingsManager;
 
@@ -156,6 +158,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             deleteCloudDataButton.Initialise(soundPlayer, DeleteCloudData, this);
 
             DisplayUserID();
+            iapRefreshButton.GetComponentInChildren<Text>().text = screensSceneTable.GetString("RefreshPurchasesButtonLabel");
+            deleteCloudDataButton.GetComponentInChildren<Text>().text = screensSceneTable.GetString("UI/SettingsScreen/DeleteCloudData");
 
             // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if THIRD_PARTY_PUBLISHER
@@ -164,15 +168,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 #elif (UNITY_ANDROID || UNITY_IOS)
             premiumButton.gameObject.SetActive(false);
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
-            {
                 premiumButton.gameObject.SetActive(true);
-            }
 #elif UNITY_EDITOR
             premiumButton.gameObject.SetActive(false);
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
-            {
                 premiumButton.gameObject.SetActive(true);
-            }
 #endif
         }
 

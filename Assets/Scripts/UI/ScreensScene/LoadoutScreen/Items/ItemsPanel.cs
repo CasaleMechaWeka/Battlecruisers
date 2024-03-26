@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        public async Task<IList<IItemButton>> Initialise(
+        public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
@@ -82,7 +82,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _soundPlayer = soundPlayer;
             _prefabFactory = prefabFactory;
 
-            await Task.Delay(10);
             if (this == null)
                 return null;
             if (itemType == ItemType.Heckle)

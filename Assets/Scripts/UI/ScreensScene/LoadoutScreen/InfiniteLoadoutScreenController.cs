@@ -128,7 +128,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 _comparingFamilyTracker);
 
             IList<IItemButton> itemButtons
-                = await itemPanels.Initialise(
+                = itemPanels.Initialise(
                     _itemDetailsManager,
                     ItemType.Hull,
                     _comparingFamilyTracker,
@@ -198,6 +198,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     return HullType.Bullshark;
                 case "Eagle":
                     return HullType.Eagle;
+                case "Flea":
+                    return HullType.Flea;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":

@@ -46,6 +46,7 @@ using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Tutorial;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene.Navigation;
+using System.Collections;
 
 namespace BattleCruisers.Scenes
 {
@@ -125,6 +126,8 @@ namespace BattleCruisers.Scenes
         public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
         public string requiredVer; // App version from Cloud;
         private static bool IsFirstTimeLoad = true;
+        IPrefabCache _prefabCache;
+
         async void Start()
         {
             if (Instance == null)
@@ -142,14 +145,14 @@ namespace BattleCruisers.Scenes
             //components = GetComponent<ScreensSceneGodCompoments>();
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
+            Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
+            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.Instance.LoadScreensSceneTableAsync();
+
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
             IPrefabFetcher prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
+            Task<IPrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             // Interacting with Cloud
@@ -166,36 +169,39 @@ namespace BattleCruisers.Scenes
                         await _dataProvider.CloudLoad();
                         IsFirstTimeLoad = false;
                     }
-                    await _dataProvider.LoadBCData();
-                    while (!m_cancellationToken.IsCancellationRequested)
-                    {
-                        await Task.Delay(10);
-                        if (Time.time - timeStamper > 15f)// for escape safty 
-                        {
-                            break;
-                        }
-                    }
 
-                    // local transactions syncing:
-                    if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
-                        _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
-                        _dataProvider.GameModel.OutstandingHeckleTransactions != null &&
-                        _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
-                        _dataProvider.GameModel.OutstandingBodykitTransactions != null &&
-                        _dataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
-                        _dataProvider.GameModel.OutstandingVariantTransactions != null &&
-                        _dataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
-                        _dataProvider.GameModel.CoinsChange > 0 ||
-                        _dataProvider.GameModel.CreditsChange > 0)
-                    {
-                        Debug.Log("Processing offline shop purchases and currency changes.");
-                        await _dataProvider.ProcessOfflineTransactions();
-                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
-                    }
+                    await _dataProvider.LoadBCData();
 
                     // version check
 
-                    requiredVer = await _dataProvider.GetPVPVersion();
+                    IEnumerator getPvPVersion = GetPvPVersion();
+                    while (getPvPVersion.MoveNext())
+                    {
+                        while (!m_cancellationToken.IsCancellationRequested)
+                        {
+                            await Task.Delay(10);
+                            if (Time.time - timeStamper > 15f)// for escape safty 
+                                break;
+                        }
+
+                        // local transactions syncing:
+                        if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
+                            _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
+                            _dataProvider.GameModel.OutstandingHeckleTransactions != null &&
+                            _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
+                            _dataProvider.GameModel.OutstandingBodykitTransactions != null &&
+                            _dataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
+                            _dataProvider.GameModel.OutstandingVariantTransactions != null &&
+                            _dataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
+                            _dataProvider.GameModel.CoinsChange > 0 ||
+                            _dataProvider.GameModel.CreditsChange > 0)
+                        {
+                            Debug.Log("Processing offline shop purchases and currency changes.");
+                            await _dataProvider.ProcessOfflineTransactions();
+                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        }
+                    }
+
                     Debug.Log("Application Version: " + Application.version);
                     Debug.Log("DataProvider Version: " + requiredVer);
                     string currentVersion = Application.version;
@@ -213,7 +219,7 @@ namespace BattleCruisers.Scenes
                     else
                     {
                         // set pvp status in Battle Hub
-                        serverStatus = await _dataProvider.RefreshPVPServerStatus();
+                        serverStatus = _dataProvider.RefreshPVPServerStatus();
                         if (serverStatus)
                         {
                             // server available
@@ -237,8 +243,6 @@ namespace BattleCruisers.Scenes
                             Debug.Log("PVP Server Unavailable.");
                         }
                     }
-
-                    await _applicationModel.DataProvider.SyncCurrencyFromCloud();
                 }
                 catch (Exception ex)
                 {
@@ -270,7 +274,6 @@ namespace BattleCruisers.Scenes
                 // if not Internet Connection or Sign in, we will use local data.
             }
 
-
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             if (this == null)
@@ -283,9 +286,58 @@ namespace BattleCruisers.Scenes
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));
 
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
+            while (!loadStoryStrings.IsCompleted)
+                await Task.Delay(10);
+
+            ILocTable storyStrings = await loadStoryStrings;
             levelTrashDataList.Initialise(storyStrings);
             sideQuestTrashDataList.Initialise(storyStrings);
+
+            SpriteFetcher spriteFetcher = new SpriteFetcher();
+            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
+            INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
+
+            while (!loadScreensSceneStrings.IsCompleted)
+                await Task.Delay(10);
+
+            ILocTable screensSceneStrings = await loadScreensSceneStrings;
+
+            homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
+
+
+            // TEMP  For when not coming from LandingScene :)
+            if (_musicPlayer == null)
+            {
+                _musicPlayer = Substitute.For<IMusicPlayer>();
+                _sceneNavigator = Substitute.For<ISceneNavigator>();
+            }
+
+            messageBox.gameObject.SetActive(true);
+            messageBox.Initialize(_dataProvider, _soundPlayer);
+            messageBox.HideMessage();
+            messageBoxBig.gameObject.SetActive(true);
+            messageBoxBig.Initialize(_dataProvider, _soundPlayer);
+            messageBoxBig.HideMessage();
+            newsButton.Initialise(_soundPlayer, ShowNewsPanel);
+
+            characterOfShop.SetActive(false);
+            characterOfBlackmarket.SetActive(false);
+            processingPanel.SetActive(false);
+
+            processingPanel.GetComponentInChildren<Text>().text = screensSceneStrings.GetString("Processing");
+            Debug.Log(_applicationModel.Mode);
+
+            _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+
+
+            while (!loadPrefabCache.IsCompleted)
+                await Task.Delay(1);
+
+            _prefabCache = await loadPrefabCache;
+
+            _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager, commonStrings);
             _isPlaying = false;
 
             // TEMP  For showing PostBattleScreen :)
@@ -297,45 +349,18 @@ namespace BattleCruisers.Scenes
                 //_applicationModel.IsTutorial = true;
             }
 
-            // TEMP  For when not coming from LandingScene :)
-            if (_musicPlayer == null)
-            {
-                _musicPlayer = Substitute.For<IMusicPlayer>();
-                _sceneNavigator = Substitute.For<ISceneNavigator>();
-            }
-
             ShowCharlieOnMainMenu();
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
-            INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
-            homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
-            await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
+            await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
-            messageBox.gameObject.SetActive(true);
-            messageBox.Initialize(_dataProvider, _soundPlayer);
-            messageBox.HideMessage();
-            messageBoxBig.gameObject.SetActive(true);
-            messageBoxBig.Initialize(_dataProvider, _soundPlayer);
-            messageBoxBig.HideMessage();
 
-            newsButton.Initialise(_soundPlayer, ShowNewsPanel);
-
-            characterOfShop.SetActive(false);
-            characterOfBlackmarket.SetActive(false);
-            processingPanel.SetActive(false);
-
-            processingPanel.GetComponentInChildren<Text>().text = screensSceneStrings.GetString("Processing");
-            Debug.Log(_applicationModel.Mode);
-
-            _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
             _applicationModel.DataProvider.SaveGame();
+
             if (_applicationModel.ShowPostBattleScreen)
             {
                 _applicationModel.ShowPostBattleScreen = false;
@@ -410,8 +435,8 @@ namespace BattleCruisers.Scenes
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
 
-            bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) == 0 ? false : true;
-            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) == 0 ? false : true;
+            bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) != 0;
+            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) != 0;
             if (!isPlayed)
             {
                 try
@@ -703,6 +728,8 @@ namespace BattleCruisers.Scenes
                     return HullType.Bullshark;
                 case "Eagle":
                     return HullType.Eagle;
+                case "Flea":
+                    return HullType.Flea;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -988,6 +1015,14 @@ namespace BattleCruisers.Scenes
                 version = version.Remove(version.IndexOf('.'), 1);
 
             return int.Parse(version);
+        }
+
+        IEnumerator GetPvPVersion()
+        {
+            Task<string> getPvPVersion = _dataProvider.GetPVPVersion();
+            yield return getPvPVersion;
+            requiredVer = getPvPVersion.Result;
+            Debug.Log(requiredVer);
         }
     }
 

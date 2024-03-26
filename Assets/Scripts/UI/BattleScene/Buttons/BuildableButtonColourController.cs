@@ -52,7 +52,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _buildableToButton = new Dictionary<ITarget, IBuildableButton>();
             foreach (IBuildableButton button in buttons)
             {
-                _buildableToButton.Add(button.Buildable, button);
+                if (!_buildableToButton.ContainsKey(button.Buildable))
+                    _buildableToButton.Add(button.Buildable, button);
+
             }
         }
 

@@ -123,6 +123,7 @@ namespace BattleCruisers.Data.Static
             public static HullKey Yeti { get; } = new HullKey("Yeti");
             public static HullKey Rickshaw { get; } = new HullKey("Rickshaw");
             public static HullKey BlackRig { get; } = new HullKey("BlackRig");
+            public static HullKey Flea { get; } = new HullKey("Flea");
 
 
 
@@ -132,7 +133,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss, BlackRig, Yeti, Rickshaw, TasDevil
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss, BlackRig, Yeti, Rickshaw, TasDevil, Flea
                     };
                 }
             }
@@ -143,7 +144,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<HullKey>()
                     {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil, Flea
                     };
                 }
             }
@@ -562,7 +563,8 @@ namespace BattleCruisers.Data.Static
             { "BODYKIT015", 15},{ "BODYKIT016", 16},{ "BODYKIT017", 17},{ "BODYKIT018", 18},{ "BODYKIT019", 19},
             { "BODYKIT020", 20},{ "BODYKIT021", 21},{ "BODYKIT022", 22},{ "BODYKIT023", 23},{ "BODYKIT024", 24},
             { "BODYKIT025", 25},{ "BODYKIT026", 26},{ "BODYKIT027", 27},{ "BODYKIT028", 28},{ "BODYKIT029", 29},
-            { "BODYKIT030", 30},{ "BODYKIT031", 31},{ "BODYKIT032", 32},{ "BODYKIT033", 33},{ "BODYKIT034", 34},{ "BODYKIT035", 35}
+            { "BODYKIT030", 30},{ "BODYKIT031", 31},{ "BODYKIT032", 32},{ "BODYKIT033", 33},{ "BODYKIT034", 34},
+            { "BODYKIT035", 35},{ "BODYKIT036", 36},{ "BODYKIT037", 37}
         };
         public static class CaptainExos
         {

@@ -53,11 +53,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
 
 
-        public string[] PvPHullNames => new string[] 
+        public string[] PvPHullNames => new string[]
             {
             "BlackRig",
             "Bullshark",
             "Eagle",
+            "Flea",
             "Hammerhead",
             "Longbow",
             "Megalodon",
@@ -89,11 +90,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public virtual IPvPLevel GetPvPLevel()
         {
-/*#if UNITY_EDITOR*/
+            /*#if UNITY_EDITOR*/
             return _appModel.DataProvider.GetPvPLevel((Map)_appModel.DataProvider.GameModel.GameMap);
-/*#else
-            return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
-#endif*/
+            /*#else
+                        return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
+            #endif*/
             // return _appModel.DataProvider.GetPvPLevel();
         }
 
