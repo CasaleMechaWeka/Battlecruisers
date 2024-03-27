@@ -6,8 +6,7 @@ namespace BattleCruisers.Cruisers
 {
     /// <summary>
     /// Perks:
-    /// + Increases offensives (and broadsides) build rate
-    /// + Increases offensives (and broadsides) fire rate
+    /// + Increases offensives and defensive fire rate
     /// </summary>
     public class Shepherd : Cruiser
     {
