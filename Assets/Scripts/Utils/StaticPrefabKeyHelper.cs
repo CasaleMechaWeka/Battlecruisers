@@ -27,6 +27,8 @@ namespace BattleCruisers.Utils
         Hull_Flea,
         Hull_Shepherd,
         Hull_Microlodon,
+        Hull_Pistol,
+        Hull_Goatherd,
 
         // === Buildings ===
         // Factories

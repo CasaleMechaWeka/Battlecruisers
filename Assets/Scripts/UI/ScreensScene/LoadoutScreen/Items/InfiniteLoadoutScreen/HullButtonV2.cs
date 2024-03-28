@@ -108,6 +108,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     return HullType.Eagle;
                 case "Flea":
                     return HullType.Flea;
+                case "Goatherd":
+                    return HullType.Goatherd;  
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -122,6 +124,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     return HullType.Rickshaw;
                 case "Rockjaw":
                     return HullType.Rockjaw;
+                case "Pistol":
+                    return HullType.Pistol;
                 case "Shepherd":
                     return HullType.Shepherd;
                 case "TasDevil":

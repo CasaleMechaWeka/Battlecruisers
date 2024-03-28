@@ -131,6 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public Sprite Bullshark;
         public Sprite Eagle;
         public Sprite Flea;
+        public Sprite Goatherd;
         public Sprite Hammerhead;
         public Sprite HuntressBoss;
         public Sprite Longbow;
@@ -140,6 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public Sprite Raptor;
         public Sprite Rickshaw;
         public Sprite Rockjaw;
+        public Sprite Pistol;
         public Sprite Shepherd;
         public Sprite TasDevil;
         public Sprite Trident;
@@ -256,6 +258,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 case "Flea":
                     destructionCards[2].image.sprite = Flea;
                     break;
+                case "Goatherd":
+                    destructionCards[2].image.sprite = Goatherd;
+                    break;
                 case "Hammerhead":
                     destructionCards[2].image.sprite = Hammerhead;
                     break;
@@ -282,6 +287,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     break;
                 case "Rockjaw":
                     destructionCards[2].image.sprite = Rockjaw;
+                    break;
+                case "Pistol":
+                    destructionCards[2].image.sprite = Pistol;
                     break;
                 case "Shepherd":
                     destructionCards[2].image.sprite = Shepherd;

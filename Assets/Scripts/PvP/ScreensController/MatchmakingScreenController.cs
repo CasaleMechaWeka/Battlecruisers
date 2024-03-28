@@ -74,6 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite Bullshark;
         public Sprite Eagle;
         public Sprite Flea;
+        public Sprite Goatherd;
         public Sprite Hammerhead;
         public Sprite HuntressBoss;
         public Sprite Longbow;
@@ -83,6 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite Raptor;
         public Sprite Rickshaw;
         public Sprite Rockjaw;
+        public Sprite Pistol;
         public Sprite Shepherd;
         public Sprite TasDevil;
         public Sprite Trident;
@@ -166,6 +168,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("Bullshark", Bullshark);
             sprites.Add("Eagle", Eagle);
             sprites.Add("Flea", Flea);
+            sprites.Add("Goatherd", Goatherd);
             sprites.Add("Hammerhead", Hammerhead);
             sprites.Add("HuntressBoss", HuntressBoss);
             sprites.Add("Longbow", Longbow);
@@ -175,6 +178,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("Raptor", Raptor);
             sprites.Add("Rickshaw", Rickshaw);
             sprites.Add("Rockjaw", Rockjaw);
+            sprites.Add("Pistol", Pistol);
             sprites.Add("Shepherd", Shepherd);
             sprites.Add("TasDevil", TasDevil);
             sprites.Add("Trident", Trident);
@@ -275,6 +279,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     return HullType.Eagle;
                 case "Flea":
                     return HullType.Flea;
+                case "Goatherd":
+                    return HullType.Goatherd;  
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -289,6 +295,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     return HullType.Rickshaw;
                 case "Rockjaw":
                     return HullType.Rockjaw;
+                case "Pistol":
+                    return HullType.Pistol;    
                 case "Shepherd":
                     return HullType.Shepherd;
                 case "TasDevil":
