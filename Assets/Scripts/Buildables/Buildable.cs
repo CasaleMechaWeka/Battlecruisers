@@ -25,9 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Assertions;
-//using Unity.Tutorials.Core.Editor;
 
 namespace BattleCruisers.Buildables
 {
