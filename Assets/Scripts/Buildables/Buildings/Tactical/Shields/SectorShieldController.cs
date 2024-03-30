@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -32,12 +33,14 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private int shieldUpdateCnt = 0;
 
+        public UnityEvent onShieldDepleted;
+
         public override void StaticInitialise(ILocTable commonStrings)
         {
 
             base.StaticInitialise(commonStrings);
 
-            Helper.AssertIsNotNull(visuals, polygonCollider, healthBar);
+            Helper.AssertIsNotNull(polygonCollider, healthBar);
 
             Stats = GetComponent<IShieldStats>();
             Assert.IsNotNull(Stats);
@@ -96,6 +99,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         protected override void OnHealthGone()
         {
+            onShieldDepleted.Invoke();
             DisableShield();
             InvokeDestroyedEvent();
             _timeSinceDamageInS = 0;
@@ -128,14 +132,16 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private void EnableShield()
         {
-            visuals.SetActive(true);
+            if (visuals != null)
+                visuals.SetActive(true);
             polygonCollider.enabled = true;
             UpdateBuildingImmunity(true);
         }
 
         private void DisableShield()
         {
-            visuals.SetActive(false);
+            if (visuals != null)
+                visuals.SetActive(false);
             polygonCollider.enabled = false;
             _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
             UpdateBuildingImmunity(false);
