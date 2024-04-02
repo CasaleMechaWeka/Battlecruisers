@@ -78,26 +78,9 @@ namespace BattleCruisers.Utils
         Unit_AttackBoat,
         Unit_Frigate,
         Unit_Destroyer,
+        Unit_SiegeDestroyer,
         Unit_ArchonBattleship,
         Unit_AttackRIB,
-
-        // CaptainExos
-        CaptainExo_000,
-        CaptainExo_001,
-        CaptainExo_002,
-        CaptainExo_003,
-        CaptainExo_004,
-        CaptainExo_005,
-        CaptainExo_006,
-        CaptainExo_007,
-        CaptainExo_008,
-        CaptainExo_009,
-        CaptainExo_010,
-        CaptainExo_011,
-        CaptainExo_012,
-        CaptainExo_013,
-        CaptainExo_014,
-        CaptainExo_015,
     }
 
     public static class StaticPrefabKeyHelper

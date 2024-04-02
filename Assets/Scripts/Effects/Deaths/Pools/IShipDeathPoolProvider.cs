@@ -9,6 +9,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
         IPool<IShipDeath, Vector3> AttackRIBPool { get; }
         IPool<IShipDeath, Vector3> FrigatePool { get; }
         IPool<IShipDeath, Vector3> DestroyerPool { get; }
+        IPool<IShipDeath, Vector3> SiegeDestroyerPool { get; }
         IPool<IShipDeath, Vector3> ArchonPool { get; }
     }
 }

@@ -7,5 +7,6 @@
         public const int FRIGATE = 1;
         public const int DESTROYFER = 1;
         public const int ARCHON = 1;
+        public const int SIEGEDESTROYER = 1;
     }
 }

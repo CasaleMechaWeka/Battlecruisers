@@ -70,6 +70,9 @@ namespace BattleCruisers.Buildables.Pools
 
                 case "Destroyer":
                     return _unitPoolProvider.DestroyerPool;
+                
+                case "SiegeDestroyer":
+                    return _unitPoolProvider.SiegeDestroyerPool;
 
                 case "ArchonBattleship":
                     return _unitPoolProvider.ArchonPool;
