@@ -278,13 +278,23 @@ namespace BattleCruisers.Data
             }
 
             // bodykits
-            for (int i = 0; i < _gameModel.GetBodykits().Count; i++)
+            try
             {
-                int index = _gameModel.GetBodykits()[i];
-                if (!_gameModel.Bodykits[index].IsOwned)
+                for (int i = 0; i < _gameModel.GetBodykits().Count; i++)
                 {
-                    _gameModel.Bodykits[index].isOwned = true;
+                    int index = _gameModel.GetBodykits()[i];
+                    if (index < _gameModel.Bodykits.Count)
+                    {
+                        if (!_gameModel.Bodykits[index].IsOwned)
+                            _gameModel.Bodykits[index].isOwned = true;
+                    }
+                    else
+                        throw new Exception("Not all bodykits could be loaded. " + index.ToString() + " Bodykits were loaded successfully.");
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.Message);
             }
 
             // variants
@@ -292,9 +302,8 @@ namespace BattleCruisers.Data
             {
                 int index = _gameModel.GetVariants()[i];
                 if (!_gameModel.Variants[index].isOwned)
-                {
                     _gameModel.Variants[index].isOwned = true;
-                }
+
             }
             await Task.CompletedTask;
         }

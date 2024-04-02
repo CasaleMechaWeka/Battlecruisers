@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -23,20 +24,23 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         public PolygonCollider2D polygonCollider;
         public HealthBarController healthBar;
         private List<Collider2D> protectedColliders;
-
         public IShieldStats Stats { get; private set; }
-        public override TargetType TargetType => TargetType.Buildings;
+        private TargetType _targetType;
+        public override TargetType TargetType => _targetType;
 
         private Vector2 _size;
         public override Vector2 Size => _size;
 
         private int shieldUpdateCnt = 0;
 
+        public UnityEvent onShieldDepleted;
+
         public override void StaticInitialise(ILocTable commonStrings)
         {
+
             base.StaticInitialise(commonStrings);
 
-            Helper.AssertIsNotNull(visuals, polygonCollider, healthBar);
+            Helper.AssertIsNotNull(polygonCollider, healthBar);
 
             Stats = GetComponent<IShieldStats>();
             Assert.IsNotNull(Stats);
@@ -47,8 +51,14 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(Faction faction, ISoundPlayer soundPlayer)
+        public void Initialise(Faction faction, ISoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
         {
+            _targetType = targetType;
+
+            //otherwise the shield won't recharge / reactivate when used on units
+            if (_targetType != TargetType.Buildings)
+                Stats.BoostMultiplier = 1f;
+
             Faction = faction;
 
             _soundPlayer = soundPlayer;
@@ -59,7 +69,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private void SetupHealthBar()
         {
-            healthBar.Initialise(this);
+            healthBar.Initialise(this, true);
 
             // Adjust the health bar position and size manually in the Unity Editor as needed
             // Since the resizing logic related to the shield's radius is removed
@@ -74,28 +84,22 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
                 if (_timeSinceDamageInS >= Stats.ShieldRechargeDelayInS)
                 {
                     if (IsDestroyed)
-                    {
                         EnableShield();
-                    }
-
                     RepairCommandExecute(Stats.ShieldRechargeRatePerS * _time.DeltaTime);
 
                     if (Health == maxHealth)
-                    {
                         _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
-                    }
                 }
             }
             shieldUpdateCnt++;
             shieldUpdateCnt %= 100;
             if (shieldUpdateCnt == 0)
-            {
                 UpdateBuildingImmunity(polygonCollider.enabled);
-            }
         }
 
         protected override void OnHealthGone()
         {
+            onShieldDepleted.Invoke();
             DisableShield();
             InvokeDestroyedEvent();
             _timeSinceDamageInS = 0;
@@ -128,14 +132,16 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private void EnableShield()
         {
-            visuals.SetActive(true);
+            if (visuals != null)
+                visuals.SetActive(true);
             polygonCollider.enabled = true;
             UpdateBuildingImmunity(true);
         }
 
         private void DisableShield()
         {
-            visuals.SetActive(false);
+            if (visuals != null)
+                visuals.SetActive(false);
             polygonCollider.enabled = false;
             _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
             UpdateBuildingImmunity(false);
