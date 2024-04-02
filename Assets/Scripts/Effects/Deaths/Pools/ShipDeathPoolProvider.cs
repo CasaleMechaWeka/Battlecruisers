@@ -14,6 +14,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
         public IPool<IShipDeath, Vector3> AttackRIBPool { get; }
         public IPool<IShipDeath, Vector3> FrigatePool { get; }
         public IPool<IShipDeath, Vector3> DestroyerPool { get; }
+        public IPool<IShipDeath, Vector3> SiegeDestroyerPool { get; }
 
         public ShipDeathPoolProvider(IPrefabFactory prefabFactory)
         {
@@ -23,6 +24,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
             AttackRIBPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.AttackRIB);
             FrigatePool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Frigate);
             DestroyerPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Destroyer);
+            SiegeDestroyerPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.SiegeDestroyer);
             ArchonPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Archon);
         }
 
@@ -41,6 +43,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
             AttackRIBPool.AddCapacity(InitialCapacity.ATTACK_RIB);
             FrigatePool.AddCapacity(InitialCapacity.FRIGATE);
             DestroyerPool.AddCapacity(InitialCapacity.DESTROYFER);
+            SiegeDestroyerPool.AddCapacity(InitialCapacity.SIEGEDESTROYER);
             ArchonPool.AddCapacity(InitialCapacity.ARCHON);
         }
     }

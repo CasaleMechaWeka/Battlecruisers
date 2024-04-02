@@ -181,6 +181,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Units.AttackBoat,
                 StaticPrefabKeys.Units.Frigate,
                 StaticPrefabKeys.Units.Destroyer,
+                StaticPrefabKeys.Units.SiegeDestroyer,
                 StaticPrefabKeys.Units.ArchonBattleship,
                 StaticPrefabKeys.Units.AttackRIB
             };
@@ -456,6 +457,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
                 { StaticPrefabKeys.Units.Frigate, 3 },
                 { StaticPrefabKeys.Units.Destroyer, 13 },
+                { StaticPrefabKeys.Units.SiegeDestroyer, 95 },
                 { StaticPrefabKeys.Units.ArchonBattleship, 16 },
                 { StaticPrefabKeys.Units.AttackRIB, 30 }
             };
