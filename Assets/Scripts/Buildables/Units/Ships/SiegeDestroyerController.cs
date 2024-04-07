@@ -35,7 +35,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
 
             // Mortar
-            _mortar = transform.FindNamedComponent<IBarrelWrapper>("GatMortar");
+            _mortar = transform.FindNamedComponent<IBarrelWrapper>("PrimaryWeapon");
             turrets.Add(_mortar);
 
             return turrets;
