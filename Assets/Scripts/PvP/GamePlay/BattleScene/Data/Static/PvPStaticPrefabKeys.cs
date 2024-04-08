@@ -88,6 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPAttackRIB { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackRIB");
             public static PvPUnitKey PvPFrigate { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPFrigate");
             public static PvPUnitKey PvPDestroyer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPDestroyer");
+            public static PvPUnitKey PvPSiegeDestroyer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPSiegeDestroyer");
             public static PvPUnitKey PvPArchonBattleship { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPArchonBattleship");
 
             public static IList<IPvPPrefabKey> AllKeys
@@ -99,7 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         // Aircraft
                         PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPTestAircraft,PvPSpySatellite,PvPDeathstar,
                         // Ships
-                        PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPArchonBattleship
+                        PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship
                     };
                 }
             }
@@ -217,6 +218,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPShipDeathKey PvPAttackRIB { get; } = new PvPShipDeathKey("PvPAttackRIB");
             public static PvPShipDeathKey PvPFrigate { get; } = new PvPShipDeathKey("PvPFrigate");
             public static PvPShipDeathKey PvPDestroyer { get; } = new PvPShipDeathKey("PvPDestroyer");
+            public static PvPShipDeathKey PvPSiegeDestroyer { get; } = new PvPShipDeathKey("PvPSiegeDestroyer");
             public static PvPShipDeathKey PvPArchon { get; } = new PvPShipDeathKey("PvPArchon");
 
             public static IList<IPvPPrefabKey> AllKeys
@@ -229,7 +231,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPFrigate,
                         PvPDestroyer,
                         PvPArchon,
-                        PvPAttackRIB
+                        PvPAttackRIB,
+                        PvPSiegeDestroyer
                     };
                 }
             }

@@ -141,6 +141,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new UnitKey(UnitCategory.Naval, "Frigate");
                 case ParentBuildable.Destroyer:
                     return new UnitKey(UnitCategory.Naval, "Destroyer");
+                case ParentBuildable.SiegeDestroyer:
+                    return new UnitKey(UnitCategory.Naval, "SiegeDestroyer");
                 case ParentBuildable.ArchonBattleship:
                     return new UnitKey(UnitCategory.Naval, "ArchonBattleship");
             }
@@ -216,6 +218,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPFrigate");
                 case ParentBuildable.Destroyer:
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPDestroyer");
+                case ParentBuildable.SiegeDestroyer:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPSiegeDestroyer");
                 case ParentBuildable.ArchonBattleship:
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPArchonBattleship");
             }
@@ -320,6 +324,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = true;
                     break;
                 case ParentBuildable.Destroyer:
+                    ret = true;
+                    break;
+                case ParentBuildable.SiegeDestroyer:
                     ret = true;
                     break;
                 case ParentBuildable.ArchonBattleship:

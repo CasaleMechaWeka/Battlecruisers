@@ -34,6 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> AttackRIBPool { get; }
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> FrigatePool { get; }
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> DestroyerPool { get; }
+        public IPvPPool<PvPUnit, PvPBuildableActivationArgs> SiegeDestroyerPool { get; }
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> ArchonPool { get; }
 
         public PvPUnitPoolProvider(IPvPFactoryProvider factoryProvider)
@@ -58,6 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AttackRIBPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPAttackRIB);
             FrigatePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFrigate);
             DestroyerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPDestroyer);
+            SiegeDestroyerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSiegeDestroyer);
             ArchonPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPArchonBattleship);
         }
 
@@ -83,6 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AttackRIBPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPAttackRIB);
             FrigatePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFrigate);
             DestroyerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPDestroyer);
+            SiegeDestroyerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSiegeDestroyer);
             ArchonPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPArchonBattleship);
         }
 

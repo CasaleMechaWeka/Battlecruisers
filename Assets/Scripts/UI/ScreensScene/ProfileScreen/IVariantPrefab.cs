@@ -49,6 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         AttackRIB,
         Frigate,
         Destroyer,
+        SiegeDestroyer,
         ArchonBattleship
     }
 }

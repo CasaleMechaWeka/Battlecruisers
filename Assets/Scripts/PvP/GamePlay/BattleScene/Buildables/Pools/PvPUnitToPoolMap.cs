@@ -71,6 +71,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 case "PvPDestroyer":
                     return _unitPoolProvider.DestroyerPool;
 
+                case "PvPSiegeDestroyer":
+                    return _unitPoolProvider.SiegeDestroyerPool;
+
                 case "PvPArchonBattleship":
                     return _unitPoolProvider.ArchonPool;
 
