@@ -80,6 +80,9 @@ namespace BattleCruisers.Buildables.Pools
                 case "AttackRIB":
                     return _unitPoolProvider.AttackRIBPool;
 
+                case "GlassCannoneer":
+                    return _unitPoolProvider.GlassCannoneerPool;
+
                 default:
                     throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");
             }

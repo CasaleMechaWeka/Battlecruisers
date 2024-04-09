@@ -90,6 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPDestroyer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPDestroyer");
             public static PvPUnitKey PvPSiegeDestroyer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPSiegeDestroyer");
             public static PvPUnitKey PvPArchonBattleship { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPArchonBattleship");
+            public static PvPUnitKey PvPGlassCannoneer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPGlassCannoneer");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -100,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         // Aircraft
                         PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPTestAircraft,PvPSpySatellite,PvPDeathstar,
                         // Ships
-                        PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship
+                        PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship, PvPGlassCannoneer
                     };
                 }
             }
@@ -220,6 +221,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPShipDeathKey PvPDestroyer { get; } = new PvPShipDeathKey("PvPDestroyer");
             public static PvPShipDeathKey PvPSiegeDestroyer { get; } = new PvPShipDeathKey("PvPSiegeDestroyer");
             public static PvPShipDeathKey PvPArchon { get; } = new PvPShipDeathKey("PvPArchon");
+            public static PvPShipDeathKey PvPGlassCannoneer { get; } = new PvPShipDeathKey("PvPGlassCannoneer");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -232,7 +234,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPDestroyer,
                         PvPArchon,
                         PvPAttackRIB,
-                        PvPSiegeDestroyer
+                        PvPSiegeDestroyer,
+                        PvPGlassCannoneer
                     };
                 }
             }

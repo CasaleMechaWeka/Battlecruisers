@@ -81,6 +81,7 @@ namespace BattleCruisers.Utils
         Unit_SiegeDestroyer,
         Unit_ArchonBattleship,
         Unit_AttackRIB,
+        Unit_GlassCannoneer,
     }
 
     public static class StaticPrefabKeyHelper

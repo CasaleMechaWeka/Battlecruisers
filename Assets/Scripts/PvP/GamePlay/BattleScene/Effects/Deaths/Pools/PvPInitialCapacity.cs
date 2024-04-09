@@ -8,5 +8,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public const int DESTROYFER = 1;
         public const int SIEGEDESTROYER = 1;
         public const int ARCHON = 1;
+        public const int GLASSCANNONEER = 1;
     }
 }

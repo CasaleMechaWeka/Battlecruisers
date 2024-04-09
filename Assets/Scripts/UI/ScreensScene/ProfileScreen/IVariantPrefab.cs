@@ -50,6 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Frigate,
         Destroyer,
         SiegeDestroyer,
-        ArchonBattleship
+        ArchonBattleship,
+        GlassCannoneer
     }
 }

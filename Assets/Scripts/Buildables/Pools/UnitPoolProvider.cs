@@ -35,6 +35,7 @@ namespace BattleCruisers.Buildables.Pools
         public IPool<Unit, BuildableActivationArgs> DestroyerPool { get; }
         public IPool<Unit, BuildableActivationArgs> SiegeDestroyerPool { get; }
         public IPool<Unit, BuildableActivationArgs> ArchonPool { get; }
+        public IPool<Unit, BuildableActivationArgs> GlassCannoneerPool { get; }
 
         public UnitPoolProvider(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
@@ -59,6 +60,7 @@ namespace BattleCruisers.Buildables.Pools
             DestroyerPool = CreatePool(StaticPrefabKeys.Units.Destroyer);
             SiegeDestroyerPool = CreatePool(StaticPrefabKeys.Units.SiegeDestroyer);
             ArchonPool = CreatePool(StaticPrefabKeys.Units.ArchonBattleship);
+            GlassCannoneerPool = CreatePool(StaticPrefabKeys.Units.GlassCannoneer);
         }
 
         private IPool<Unit, BuildableActivationArgs> CreatePool(IPrefabKey unitKey)
