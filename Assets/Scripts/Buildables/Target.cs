@@ -86,7 +86,7 @@ namespace BattleCruisers.Buildables
             base.StaticInitialise(commonStrings);
 
             _healthTracker = new HealthTracker(maxHealth);
-            _healthTracker.HealthGone += _health_HealthGone;           
+            _healthTracker.HealthGone += _health_HealthGone;
 
             _time = TimeBC.Instance;
             _attackCapabilities = new List<TargetType>();
@@ -131,9 +131,9 @@ namespace BattleCruisers.Buildables
             Destroyed?.Invoke(this, new DestroyedEventArgs(this));
         }
 
-        public void TakeDamage(float damageAmount, ITarget damageSource)
+        public void TakeDamage(float damageAmount, ITarget damageSource, bool ignoreImmuneStatus = false)
         {
-            if (IsBuildingImmune())
+            if (IsBuildingImmune() && !ignoreImmuneStatus)
             {
                 return;
             }
