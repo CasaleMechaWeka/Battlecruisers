@@ -24,7 +24,6 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
-using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -36,9 +35,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using UnityEngine.UI;
-using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 
@@ -233,7 +230,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // apply bodykit here
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
-                int id_bodykit = IsOwner ? SynchedServerData.Instance.playerABodykit.Value : SynchedServerData.Instance.playerBBodykit.Value; 
+                int id_bodykit = IsOwner ? SynchedServerData.Instance.playerABodykit.Value : SynchedServerData.Instance.playerBBodykit.Value;
                 if (id_bodykit != -1)
                 {
                     await LoadBodykit(id_bodykit);
