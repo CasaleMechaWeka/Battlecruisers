@@ -15,6 +15,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
 
+        public GameObject BaseSprite;
+
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
@@ -50,6 +52,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.OnBuildableCompleted();
             _mortar.ApplyVariantStats(this);
+            BaseSprite.SetActive(true);
         }
     }
 }
