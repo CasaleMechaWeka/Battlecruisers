@@ -14,7 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IPvPBuildableButton bomberButton,
             IPvPBuildableButton gunhsipButton,
             IPvPBuildableButton fighterButton,
-            IPvPBuildableButton steamCopterButton)
+            IPvPBuildableButton steamCopterButton,
+            IPvPBuildableButton broadsowrdButton)
             : base(hotkeyDetector)
         {
             PvPHelper.AssertIsNotNull(bomberButton, gunhsipButton, fighterButton);
@@ -23,6 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _gunshipButton = gunhsipButton;
             _fighterButton = fighterButton;
             _steamCopterButton = steamCopterButton;
+            _broadswordButton = broadsowrdButton;
 
             _hotkeyDetector.AircraftButton1 += _hotkeyDetector_Bomber;
             _hotkeyDetector.AircraftButton2 += _hotkeyDetector_Gunship;

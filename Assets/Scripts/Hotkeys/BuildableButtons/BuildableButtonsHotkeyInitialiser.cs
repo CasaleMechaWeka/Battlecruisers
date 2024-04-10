@@ -10,12 +10,13 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
         private DummyBuildableButton _nullButton;
 
         // Keep references to avoid garbage collection
+        // all buttons are assigned in the editor (Battlescene -> BattleSceneGod -> Hotkeys)
         private IManagedDisposable _factoriesListener, _defensivesListener, _offensivesListener, _tacticalsListener, _ultrasListener, _aircraftListener, _shipsListener;
 
         [Header("Factories")]
         public BuildingButtonController droneStationButton;
         public BuildingButtonController airFactoryButton, navalFactoryButton, droneStation4Button, droneStation8Button;
-        
+
         [Header("Defensives")]
         public BuildingButtonController shipTurretButton;
         public BuildingButtonController airTurretButton, mortarButton, samSiteButton, teslaCoilButton;
@@ -61,52 +62,52 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _factoriesListener = new FactoryButtonsHotkeyListener(hotkeyDetector, droneStationButton, airFactoryButton, navalFactoryButton,
             UseNullButtonIfNeeded(droneStation4Button),
             UseNullButtonIfNeeded(droneStation8Button));
-            _defensivesListener 
+            _defensivesListener
                 = new DefensiveButtonsHotkeyListener(
-                    hotkeyDetector, 
+                    hotkeyDetector,
                     UseNullButtonIfNeeded(shipTurretButton), // always unlocked
                     UseNullButtonIfNeeded(airTurretButton), // always unlocked
                     UseNullButtonIfNeeded(mortarButton),
                     UseNullButtonIfNeeded(samSiteButton),
                     UseNullButtonIfNeeded(teslaCoilButton));
-            _offensivesListener 
+            _offensivesListener
                 = new OffensiveButtonsHotkeyListener(
-                    hotkeyDetector, 
+                    hotkeyDetector,
                     UseNullButtonIfNeeded(artilleryButton), // always unlocked
                     UseNullButtonIfNeeded(railgunButton),
                     UseNullButtonIfNeeded(rocketLauncherButton),
                     UseNullButtonIfNeeded(MLRSButton),
                     UseNullButtonIfNeeded(gatlingMortarButton));
-            _tacticalsListener 
+            _tacticalsListener
                 = new TacticalButtonsHotkeyListener(
                     hotkeyDetector,
-                    UseNullButtonIfNeeded(shieldButton), 
-                    UseNullButtonIfNeeded(boosterButton), 
-                    UseNullButtonIfNeeded(stealthGeneratorButton), 
+                    UseNullButtonIfNeeded(shieldButton),
+                    UseNullButtonIfNeeded(boosterButton),
+                    UseNullButtonIfNeeded(stealthGeneratorButton),
                     UseNullButtonIfNeeded(spySatelliteButton),
                     UseNullButtonIfNeeded(controlTowerButton));
-            _ultrasListener 
+            _ultrasListener
                 = new UltraButtonsHotkeyListener(
                     hotkeyDetector,
-                    UseNullButtonIfNeeded(deathstarButton), 
-                    UseNullButtonIfNeeded(nukeLauncherButton), 
-                    UseNullButtonIfNeeded(ultraliskButton), 
+                    UseNullButtonIfNeeded(deathstarButton),
+                    UseNullButtonIfNeeded(nukeLauncherButton),
+                    UseNullButtonIfNeeded(ultraliskButton),
                     UseNullButtonIfNeeded(kamikazeSignalButton),
                     UseNullButtonIfNeeded(broadsidesButton));
-            _aircraftListener 
+            _aircraftListener
                 = new AircraftButtonsHotkeyListener(
-                    hotkeyDetector, 
+                    hotkeyDetector,
                     bomberButton, // always unlocked
                     UseNullButtonIfNeeded(gunshipButton),
                     UseNullButtonIfNeeded(fighterButton),
                     UseNullButtonIfNeeded(steamCopterButton),
                     UseNullButtonIfNeeded(broadsword));
-            _shipsListener 
+            _shipsListener
                 = new ShipButtonsHotkeyListener(
-                    hotkeyDetector, 
+                    hotkeyDetector,
                     attackBoatButton, // always unlocked
-                    UseNullButtonIfNeeded(frigateButton), 
-                    UseNullButtonIfNeeded(destroyerButton), 
+                    UseNullButtonIfNeeded(frigateButton),
+                    UseNullButtonIfNeeded(destroyerButton),
                     UseNullButtonIfNeeded(archonButton),
                     UseNullButtonIfNeeded(attackRIBButton));
         }

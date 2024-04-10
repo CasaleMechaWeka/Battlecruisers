@@ -11,6 +11,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private PvPDummyBuildableButton _nullButton;
 
         // Keep references to avoid garbage collection
+        // all buttons are assigned in the editor (PvPBattlescene -> PvPBattleSceneGod -> Hotkeys)
+
         private IPvPManagedDisposable _factoriesListener, _defensivesListener, _offensivesListener, _tacticalsListener, _ultrasListener, _aircraftListener, _shipsListener;
 
         [Header("Factories")]
@@ -35,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         [Header("Aircraft")]
         public PvPUnitButtonController bomberButton;
-        public PvPUnitButtonController gunshipButton, fighterButton, steamCopterButton;
+        public PvPUnitButtonController gunshipButton, fighterButton, steamCopterButton, broadswordButton;
 
         [Header("Ships")]
         public PvPUnitButtonController attackBoatButton;
@@ -100,7 +102,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
                     bomberButton, // always unlocked
                     UseNullButtonIfNeeded(gunshipButton),
                     UseNullButtonIfNeeded(fighterButton),
-                    UseNullButtonIfNeeded(steamCopterButton));
+                    UseNullButtonIfNeeded(steamCopterButton),
+                    UseNullButtonIfNeeded(broadswordButton));
             _shipsListener
                 = new PvPShipButtonsHotkeyListener(
                     hotkeyDetector,
