@@ -7,7 +7,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
-using System.Diagnostics;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
@@ -75,8 +74,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public override void OnPresenting(object activationParameter)
         {
-            
-            CurrentFactory = activationParameter.Parse<IPvPFactory>();           
+
+            CurrentFactory = activationParameter.Parse<IPvPFactory>();
             TriggerPotentialMatchChange();
 
             // Usually have this at the start of the overriding method, but 

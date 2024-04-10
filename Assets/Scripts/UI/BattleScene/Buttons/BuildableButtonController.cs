@@ -41,9 +41,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public GameObject upgradeIconImage5Object;
         public GameObject warheadIconImageObject;
 
-
-
-
         public Image redGlowImage;
 
 
