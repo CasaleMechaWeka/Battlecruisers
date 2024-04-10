@@ -43,8 +43,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public Image redGlowImage;
 
-
-
         public Image buildableImageOutline;//modified
 
         public Image buildableButton;
