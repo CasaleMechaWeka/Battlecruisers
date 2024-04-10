@@ -18,6 +18,7 @@ public class SideQuestButtonController : ElementWithClickSound
     private GameObject sideQuestIncomplete;
     private GameObject checkbox;
     private int requiredLevel;
+    private int requiredSideQuestID;
     private Transform buttonImages;
 
     public void Initialise(
@@ -33,10 +34,16 @@ public class SideQuestButtonController : ElementWithClickSound
 
         base.Initialise(soundPlayer);
         requiredLevel = _staticData.SideQuests[sideQuestID].UnlockRequirementLevel;
+        requiredSideQuestID = _staticData.SideQuests[sideQuestID].RequiredSideQuestID;
+
         completed = dataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
 
-        Enabled = numOfLevelsUnlocked >= requiredLevel;
-        enabled = numOfLevelsUnlocked >= requiredLevel;
+        if (requiredSideQuestID != -1)
+            enabled = (numOfLevelsUnlocked >= requiredLevel) && dataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
+        else
+            enabled = numOfLevelsUnlocked >= requiredLevel;
+
+        Enabled = enabled;
         checkmark = transform.Find("Checked").gameObject;
         checkmark.SetActive(completed && enabled);
         buttonImages = transform.Find("ButtonImages");

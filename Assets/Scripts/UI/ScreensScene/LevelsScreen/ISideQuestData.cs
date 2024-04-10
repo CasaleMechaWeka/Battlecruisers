@@ -8,7 +8,7 @@ namespace BattleCruisers.Data
         bool PlayerTalksFirst { get; }
         IPrefabKey EnemyCaptainExo { get; }
         int UnlockRequirementLevel { get; }
-        string UnlockRequirementQuestID { get; }
+        int RequiredSideQuestID { get; }
         // RewardKey StaticPrefabKeys { get; }
         // EnemyHull Hull { get; }
         PrefabKey Hull { get; }
