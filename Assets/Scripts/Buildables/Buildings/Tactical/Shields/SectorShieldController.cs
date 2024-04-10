@@ -33,7 +33,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private int shieldUpdateCnt = 0;
 
-        public UnityEvent onShieldDepleted;
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -99,7 +98,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         protected override void OnHealthGone()
         {
-            onShieldDepleted.Invoke();
             DisableShield();
             InvokeDestroyedEvent();
             _timeSinceDamageInS = 0;

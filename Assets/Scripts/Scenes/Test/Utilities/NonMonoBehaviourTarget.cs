@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             throw new NotImplementedException();
         }
 
-        public void TakeDamage(float damageAmount, ITarget damageSource)
+        public void TakeDamage(float damageAmount, ITarget damageSource, bool ignoreImmuneStatus = false)
         {
             throw new NotImplementedException();
         }
@@ -61,7 +61,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public virtual void SetBuildingImmunity(bool boo)
         {
-            
+
         }
 
         public virtual bool IsBuildingImmune()

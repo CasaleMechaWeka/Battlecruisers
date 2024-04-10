@@ -2,7 +2,6 @@ using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using System;
 
@@ -41,7 +40,7 @@ namespace BattleCruisers.Cruisers
                     _healthTracker.SetHealth(0 + unit.Health);
                 }
                 //Debug.Log(unit.Health);
-                
+
             }
         }
 
@@ -83,7 +82,7 @@ namespace BattleCruisers.Cruisers
 
         private void _RearingStarted(object sender, EventArgs e)
         {
-            shipBlocker.transform.Translate(new Vector3(-6.5f,0,0));
+            shipBlocker.transform.Translate(new Vector3(-6.5f, 0, 0));
             //Debug.Log("Moved ship blocker: " + shipBlocker.transform.localPosition);
         }
     }

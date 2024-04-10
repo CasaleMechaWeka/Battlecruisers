@@ -2,7 +2,6 @@ using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Data.Settings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
@@ -38,29 +37,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 //Debug.Log(unit.Health);
             }
             base.Update();
-/*            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
-            {
-                if (IsServer)
-                {
-                    if (Faction == PvPFaction.Blues)
-                    {
-                        PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);                    
-                    }
-                    else
-                    {
-                        PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);                       
-                    }
-                }
+            /*            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
+                        {
+                            if (IsServer)
+                            {
+                                if (Faction == PvPFaction.Blues)
+                                {
+                                    PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);                    
+                                }
+                                else
+                                {
+                                    PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, _time.DeltaTime);                       
+                                }
+                            }
 
-                if (Faction == PvPFaction.Blues)
-                {
-                    PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += _time.DeltaTime;
-                }
-                if (Faction == PvPFaction.Reds)
-                {
-                    PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += _time.DeltaTime;
-                }
-            }*/
+                            if (Faction == PvPFaction.Blues)
+                            {
+                                PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += _time.DeltaTime;
+                            }
+                            if (Faction == PvPFaction.Reds)
+                            {
+                                PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += _time.DeltaTime;
+                            }
+                        }*/
         }
 
         public override void StaticInitialise(ILocTable commonStrings)

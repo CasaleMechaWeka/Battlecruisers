@@ -11,7 +11,6 @@ using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
@@ -28,8 +27,6 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
-using System.Collections.Generic;
-using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 
