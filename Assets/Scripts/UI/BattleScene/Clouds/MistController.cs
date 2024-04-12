@@ -7,13 +7,21 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class MistController : MonoBehaviour
     {
+        private const float NarrowAspectRatioThreshold = 1.0f; // Threshold for aspect ratio narrower than 1:1
+        private const float NarrowMistYPosition = -120.0f; // Set this to whatever fixed Y position you want for narrow aspect ratios
+
         public void Initialise(ICloudStats cloudStats)
         {
             Assert.IsNotNull(cloudStats);
 
             SetColour(cloudStats.MistColour);
             RandomiseAnimationStartingPosition();
-            transform.position = new Vector3(transform.position.x, cloudStats.MistYPosition, cloudStats.MistZPosition);
+
+            // Determine the appropriate Y position based on the aspect ratio
+            float currentAspectRatio = Camera.main.aspect;
+            float mistYPosition = currentAspectRatio < NarrowAspectRatioThreshold ? NarrowMistYPosition : cloudStats.MistYPosition;
+
+            transform.position = new Vector3(transform.position.x, mistYPosition, cloudStats.MistZPosition);
         }
 
         private void SetColour(Color mistColour)
