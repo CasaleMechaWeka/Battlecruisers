@@ -21,6 +21,7 @@ namespace BattleCruisers.Data.Static
         bool HasAsserts { get; }
         GameModel InitialGameModel { get; }
         ReadOnlyCollection<ILevel> Levels { get; }
+        ReadOnlyCollection<ISideQuestData> SideQuests { get; }
         ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; }
         ReadOnlyCollection<HullKey> HullKeys { get; }
         ReadOnlyCollection<UnitKey> UnitKeys { get; }
@@ -28,11 +29,13 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
+        ILevelStrategies SideQuestStrategies { get; }
         IPvPLevelStrategies PvPStrategies { get; }
 
         ILoot GetLevelLoot(int levelCompleted);
-        int LevelFirstAvailableIn(UnitKey unitKey);
-        int LevelFirstAvailableIn(BuildingKey buildingKey);
+        ILoot GetSideQuestLoot(int sideQuestID);
+        int UnitUnlockLevel(UnitKey unitKey);
+        int BuildingUnlockLevel(BuildingKey buildingKey);
 
     }
 }

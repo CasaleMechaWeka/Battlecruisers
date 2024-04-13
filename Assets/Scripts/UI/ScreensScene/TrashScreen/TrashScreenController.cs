@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private IApplicationModel _appModel;
         private IPrefabFactory _prefabFactory;
         private ISpriteFetcher _spriteFetcher;
-        private ITrashTalkProvider _trashDataList;
+        private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
         private ILocTable _commonStrings;
         private ILocTable _storyStrings;
@@ -45,20 +45,22 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
             ISpriteFetcher spriteFetcher,
-            ITrashTalkProvider trashDataList,
+            ITrashTalkProvider levelTrashDataList,
+            ITrashTalkProvider sideQuestTrashDataList,
             IMusicPlayer musicPlayer,
             ILocTable commonStrings,
             ILocTable storyStrings)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, trashDataList, homeButton);
-            Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, trashDataList, musicPlayer, commonStrings);
+            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, levelTrashDataList, homeButton);
+            Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, levelTrashDataList, musicPlayer, commonStrings);
 
             _appModel = appModel;
             _prefabFactory = prefabFactory;
             _spriteFetcher = spriteFetcher;
-            _trashDataList = trashDataList;
+            _levelTrashDataList = levelTrashDataList;
+            _sideQuestTrashDataList = sideQuestTrashDataList;
             _musicPlayer = musicPlayer;
             _commonStrings = commonStrings;
             _storyStrings = storyStrings;
@@ -73,20 +75,36 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             containerCharlie.GetChild(0).gameObject.SetActive(true);
             base.OnPresenting(activationParameter);
 
-            int levelIndex = _appModel.SelectedLevel - 1;
-            ILevel level = _appModel.DataProvider.Levels[levelIndex];
+            ITrashTalkData trashTalkData;
+            ICruiser enemyCruiserPrefab;
+            string skyPath;
+            if (_appModel.Mode == GameMode.SideQuest)
+            {
+                int sideQuestID = _appModel.SelectedSideQuestID;
+                ISideQuestData sideQuestData = _appModel.DataProvider.SideQuests[sideQuestID];
+                enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(sideQuestData.Hull);
+                skyPath = SKY_SPRITE_ROOT_PATH + sideQuestData.SkyMaterial + SPRITES_FILE_EXTENSION;
 
-            ITrashTalkData trashTalkData = await _trashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
+                trashTalkData = await _sideQuestTrashDataList.GetTrashTalkAsync(_appModel.SelectedSideQuestID + 1);
+            }
+            else
+            {
+                int levelIndex = _appModel.SelectedLevel - 1;
+                ILevel level = _appModel.DataProvider.Levels[levelIndex];
+                enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(level.Hull);
+                skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
+
+                trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
+            }
+
             trashTalkBubbles.Initialise(trashTalkData, _commonStrings, _storyStrings);
             SetupEnemyCharacter(trashTalkData);
 
             // Cruisers
             ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_appModel.DataProvider.GameModel.PlayerLoadout.Hull);
-            ICruiser enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(level.Hull);
             cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky
-            string skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
             ISpriteWrapper skySprite = await _spriteFetcher.GetSpriteAsync(skyPath);
             sky.sprite = skySprite.Sprite;
 

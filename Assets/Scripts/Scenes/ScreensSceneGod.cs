@@ -65,7 +65,8 @@ namespace BattleCruisers.Scenes
         public SettingsScreenController settingsScreen;
         public BattleHubScreensController hubScreen;
         public TrashScreenController trashScreen;
-        public TrashTalkDataList trashDataList;
+        public TrashTalkDataList levelTrashDataList;
+        public TrashTalkDataList sideQuestTrashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
         public SkirmishScreenController skirmishScreen;
         public AdvertisingBannerScrollingText AdvertisingBanner;
@@ -124,7 +125,7 @@ namespace BattleCruisers.Scenes
                 Instance = this;
 
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, levelTrashDataList, sideQuestTrashDataList, _uiAudioSource);
             Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
@@ -132,12 +133,14 @@ namespace BattleCruisers.Scenes
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
+            //components = GetComponent<ScreensSceneGodCompoments>();
 
             ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
             ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
             Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
+            IPrefabFetcher prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             Task<IPrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
@@ -278,7 +281,8 @@ namespace BattleCruisers.Scenes
                 await Task.Delay(10);
 
             ILocTable storyStrings = await loadStoryStrings;
-            trashDataList.Initialise(storyStrings);
+            levelTrashDataList.Initialise(storyStrings);
+            sideQuestTrashDataList.Initialise(storyStrings);
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
@@ -334,7 +338,8 @@ namespace BattleCruisers.Scenes
             ShowCharlieOnMainMenu();
 
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
@@ -486,9 +491,8 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, levelTrashDataList, sideQuestTrashDataList, screensSceneStrings);
             //--->CODE CHANGED BY ANUJ
-            Debug.Log("GameMode: " + _applicationModel.Mode);
             if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
                 GoToScreen(hubScreen);
@@ -500,7 +504,7 @@ namespace BattleCruisers.Scenes
             //<---
         }
 
-        public async void GoToHomeScreen()
+        public void GoToHomeScreen()
         {
             homeScreen.gameObject.SetActive(true);
             ShowCharlieOnMainMenu();
@@ -577,8 +581,10 @@ namespace BattleCruisers.Scenes
                 levels,
                 testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
                 difficultySpritesProvider,
-                trashDataList,
-                nextLevelHelper);
+                levelTrashDataList,
+                sideQuestTrashDataList,
+                nextLevelHelper,
+                _dataProvider);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
@@ -624,7 +630,7 @@ namespace BattleCruisers.Scenes
         }
 
         private static int levelToShowCutscene = 0;
-        public async void GoToTrashScreen(int levelNum)
+        public void GoToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
@@ -703,6 +709,8 @@ namespace BattleCruisers.Scenes
                     return HullType.Bullshark;
                 case "Eagle":
                     return HullType.Eagle;
+                case "Flea":
+                    return HullType.Flea;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -744,6 +752,20 @@ namespace BattleCruisers.Scenes
             }
         }
 
+
+        public void GoToSideQuestTrashScreen(int sideQuestLevelNum)
+        {
+            // Implementation similar to GoToTrashScreen method, but for side quest levels
+            AdvertisingBanner.stopAdvert();
+            _applicationModel.Mode = GameMode.SideQuest;
+
+            _applicationModel.SelectedSideQuestID = sideQuestLevelNum;
+            levelToShowCutscene = 0;
+            _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+            _applicationModel.DataProvider.SaveGame();
+            GoToScreen(trashScreen, playDefaultMusic: false);
+        }
+
         public void GoToChooseDifficultyScreen()
         {
             GoToScreen(chooseDifficultyScreen);
@@ -777,6 +799,15 @@ namespace BattleCruisers.Scenes
             {
                 _musicPlayer.PlayScreensSceneMusic();
             }
+        }
+
+        public void LoadBattleSceneSideQuest(int sideQuestID)
+        {
+            _applicationModel.SelectedSideQuestID = sideQuestID;
+            _applicationModel.Mode = GameMode.SideQuest;
+            AdvertisingBanner.stopAdvert();
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            CleanUp();
         }
 
         public void LoadBattleScene()

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.AI;
+using BattleCruisers.AI;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
@@ -10,6 +10,7 @@ using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Filters;
@@ -20,12 +21,14 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
+using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
-    public class NormalHelper : BattleSceneHelper
+    public class SideQuestHelper : BattleSceneHelper
     {
+        private readonly ISideQuestData _sideQuest;
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
 
@@ -37,7 +40,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
-        public NormalHelper(
+        public SideQuestHelper(
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
@@ -64,6 +67,11 @@ namespace BattleCruisers.Scenes.BattleScene
             return DataProvider.GameModel.PlayerLoadout;
         }
 
+        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        {
+            return await _backgroundStatsProvider.GetStatsAsyncSideQuest(_appModel.SelectedSideQuestID);
+        }
+
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
         {
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
@@ -79,7 +87,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
         {
-            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedLevel, false);
+            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedSideQuestID, true);
         }
 
         protected virtual Difficulty FindDifficulty()
@@ -135,6 +143,14 @@ namespace BattleCruisers.Scenes.BattleScene
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
             _uiManager.Initialise(args);
         }
+
+        /*
+        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        {
+            return await _backgroundStatsProvider.GetStatsAsync(_skirmish.BackgroundLevelNum);
+        }
+        */
+
 
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,

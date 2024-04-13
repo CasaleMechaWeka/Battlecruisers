@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Threading.Tasks;
 using Unity.Services.Economy.Model;
-using JetBrains.Annotations;
 
 namespace BattleCruisers.Data
 {
@@ -14,6 +13,7 @@ namespace BattleCruisers.Data
     {
         // Local Saving:
         IList<ILevel> Levels { get; }
+        IList<ISideQuestData> SideQuests { get; }
         IGameModel GameModel { get; }
         ILockedInformation LockedInfo { get; }
         IStaticData StaticData { get; }
@@ -25,6 +25,7 @@ namespace BattleCruisers.Data
         public bool pvpServerAvailable { get; set; }
         Task<string> GetPVPVersion();
         ILevel GetLevel(int levelNum);
+        ISideQuestData GetSideQuest(int sideQuestID);
         IPvPLevel GetPvPLevel(Map map);
         void SaveGame();
 

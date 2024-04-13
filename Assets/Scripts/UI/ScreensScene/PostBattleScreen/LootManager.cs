@@ -15,8 +15,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         public LootManager(
-            IDataProvider dataProvider, 
-            IPrefabFactory prefabFactory, 
+            IDataProvider dataProvider,
+            IPrefabFactory prefabFactory,
             IItemDetailsGroup middleDetailsGroup,
             IItemDetailsGroup leftDetailsGroup,
             IItemDetailsGroup rightDetailsGroup)
@@ -30,16 +30,36 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _rightDetailsGroup = rightDetailsGroup;
         }
 
-        public bool ShouldShowLoot(int levelCompleted)
+        public bool ShouldShowLevelLoot(int levelCompleted)
         {
-            return 
+            return
                 levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
                 && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
         }
 
-        public ILoot UnlockLoot(int levelCompleted)
+
+        //have to do when SideQuest data is stored in StaticData
+        public bool ShouldShowSideQuestLoot(int sideQuestCompleted)
+        {
+            return sideQuestCompleted > _dataProvider.GameModel.NumOfSideQuestsCompleted;
+        }
+
+        public ILoot UnlockLevelLoot(int levelCompleted)
         {
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
+
+            if (unlockedLoot.Items.Count != 0)
+            {
+                UnlockLootItems(unlockedLoot);
+                _dataProvider.SaveGame();
+            }
+
+            return unlockedLoot;
+        }
+
+        public ILoot UnlockSideQuestLoot(int sideQuestID)
+        {
+            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
 
             if (unlockedLoot.Items.Count != 0)
             {
@@ -68,13 +88,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     // Show item details in middle of screen
                     unlockedLoot.Items[0].ShowItemDetails(_prefabFactory, _middleDetailsGroup);
                     break;
-                
+
                 case 2:
                     // Show item details to left and right sides of screen
                     unlockedLoot.Items[0].ShowItemDetails(_prefabFactory, _leftDetailsGroup);
                     unlockedLoot.Items[1].ShowItemDetails(_prefabFactory, _rightDetailsGroup);
                     break;
-                
+
                 default:
                     throw new ArgumentException();
             }

@@ -55,6 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             "BlackRig",
             "Bullshark",
             "Eagle",
+            "Flea",
             "Hammerhead",
             "Longbow",
             "Megalodon",

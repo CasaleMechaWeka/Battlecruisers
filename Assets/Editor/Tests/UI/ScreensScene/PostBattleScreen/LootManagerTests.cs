@@ -53,7 +53,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             int levelCompleted = 7;
             _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted);
 
-            Assert.IsFalse(_lootManager.ShouldShowLoot(levelCompleted));
+            Assert.IsFalse(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
             _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted - 1);
 
-            Assert.IsFalse(_lootManager.ShouldShowLoot(levelCompleted));
+            Assert.IsFalse(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
             _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
-            Assert.IsTrue(_lootManager.ShouldShowLoot(levelCompleted));
+            Assert.IsTrue(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
         #endregion ShouldShowLoot
 
@@ -130,7 +130,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
             _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
-            _lootManager.UnlockLoot(levelCompleted);
+            _lootManager.UnlockLevelLoot(levelCompleted);
         }
     }
 }

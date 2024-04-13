@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.BattleScene
         public event EventHandler BattleCompleted;
 
         public BattleCompletionHandler(
-            IApplicationModel applicationModel, 
+            IApplicationModel applicationModel,
             ISceneNavigator sceneNavigator)
         {
             Helper.AssertIsNotNull(applicationModel, sceneNavigator);
@@ -37,9 +37,14 @@ namespace BattleCruisers.Utils.BattleScene
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
+            Debug.Log(wasVictory);
 
             switch (_applicationModel.Mode)
             {
+                case GameMode.SideQuest:
+                    BattleResult sideQuestBattleResult = new BattleResult(_applicationModel.SelectedSideQuestID, wasVictory);
+                    _applicationModel.DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
+                    break;
                 case GameMode.Campaign:
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
@@ -57,7 +62,7 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
             }
 
-            
+
             _applicationModel.DataProvider.SaveGame();
 
             if (_applicationModel.Mode == GameMode.CoinBattle)
@@ -93,6 +98,11 @@ namespace BattleCruisers.Utils.BattleScene
 
             switch (_applicationModel.Mode)
             {
+                case GameMode.SideQuest:
+                    BattleResult sideQuestBattleResult = new BattleResult(_applicationModel.SelectedSideQuestID, wasVictory);
+                    _applicationModel.DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
+                    break;
+
                 case GameMode.Campaign:
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
@@ -110,9 +120,9 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
             }
 
-            
+
             //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-            if(_applicationModel.Mode == GameMode.CoinBattle)
+            if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.ShowPostBattleScreen = false;
             }
@@ -120,7 +130,7 @@ namespace BattleCruisers.Utils.BattleScene
             {
                 _applicationModel.ShowPostBattleScreen = true;
             }
-            
+
             TimeBC.Instance.TimeScale = 1;
 
             if (retryLevel)
@@ -138,9 +148,10 @@ namespace BattleCruisers.Utils.BattleScene
                 }
                 _applicationModel.DataProvider.SaveGame();
                 _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
-                
+
             }
-            else{
+            else
+            {
                 _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }

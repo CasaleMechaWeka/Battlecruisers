@@ -11,7 +11,6 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.SkirmishScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
@@ -31,6 +30,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Tutorial;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Scenes
 {
@@ -45,6 +48,13 @@ namespace BattleCruisers.Scenes
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
+        private readonly IBattleSceneHelper _battleSceneHelper;
+        private ITutorialProvider _tutorialProvider;
+        private IApplicationModel applicationModel;
+        private IDataProvider dataProvider;
+        private BattleSceneGodComponents components;
+        private NavigationPermitters navigationPermitters;
+        private IBattleSceneHelper helper;
 
         public HomeScreenController homeScreen;
         public LevelsScreenController levelsScreen;
@@ -53,7 +63,7 @@ namespace BattleCruisers.Scenes
         public SettingsScreenController settingsScreen;
         public BattleHubScreensController hubScreen;
         public TrashScreenController trashScreen;
-        public TrashTalkDataList trashDataList;
+        public TrashTalkDataList levelTrashDataList, sideQuestTrashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
         public SkirmishScreenController skirmishScreen;
         public AdvertisingBannerScrollingText AdvertisingBanner;
@@ -87,7 +97,7 @@ namespace BattleCruisers.Scenes
         async void Start()
         {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, levelTrashDataList, sideQuestTrashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -112,7 +122,8 @@ namespace BattleCruisers.Scenes
                         _dataProvider.SettingsManager, 1));
 
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
-            trashDataList.Initialise(storyStrings);
+            levelTrashDataList.Initialise(storyStrings);
+            sideQuestTrashDataList.Initialise(storyStrings);
 
             // TEMP  For showing PostBattleScreen :)
             if (goToPostBattleScreen)
@@ -136,7 +147,7 @@ namespace BattleCruisers.Scenes
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
@@ -218,7 +229,7 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, levelTrashDataList, sideQuestTrashDataList, screensSceneStrings);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
@@ -261,8 +272,10 @@ namespace BattleCruisers.Scenes
                 levels,
                 testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
                 difficultySpritesProvider,
-                trashDataList,
-                nextLevelHelper);
+                levelTrashDataList,
+                sideQuestTrashDataList,
+                nextLevelHelper,
+                _dataProvider);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
@@ -388,6 +401,15 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        public void LoadBattleSceneSideQuest(int sideQuestID)
+        {
+            _applicationModel.SelectedSideQuestID = sideQuestID;
+            _applicationModel.Mode = GameMode.SideQuest;
+            AdvertisingBanner.stopAdvert();
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            CleanUp();
+        }
+
         public void LoadBattleScene()
         {
             AdvertisingBanner.stopAdvert();
@@ -440,6 +462,115 @@ namespace BattleCruisers.Scenes
                     }
                 }
             }
+        }
+        public void SomeMethodUsingBattleSceneHelper()
+        {
+            if (_battleSceneHelper != null)
+            {
+                // Here you can use methods from IBattleSceneHelper
+                ILevel currentLevel = helper.GetLevel();
+
+                // Example usage:
+                Debug.Log($"Current level: {currentLevel}");
+            }
+            else
+            {
+                Debug.LogWarning("BattleSceneHelper is not set!");
+            }
+        }
+
+        public void GoToSideQuestTrashScreen(int sideQuestLevelNum)
+        {
+            // Implementation similar to GoToTrashScreen method, but for side quest levels
+            AdvertisingBanner.stopAdvert();
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {sideQuestLevelNum}");
+            Assert.IsTrue(
+                sideQuestLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + sideQuestLevelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+
+            _applicationModel.SelectedLevel = sideQuestLevelNum;
+
+            if (_applicationModel.Mode == GameMode.Campaign)
+            {
+                if (LevelStages.STAGE_STARTS.Contains(sideQuestLevelNum - 1) && levelToShowCutscene != sideQuestLevelNum)
+                {
+                    levelToShowCutscene = sideQuestLevelNum;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
+                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                }
+                else
+                {
+                    levelToShowCutscene = 0;
+                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    _applicationModel.DataProvider.SaveGame();
+                    GoToScreen(trashScreen, playDefaultMusic: false);
+                }
+            }
+            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            {
+                levelToShowCutscene = 0;
+                // Random bodykits for AIBot
+                ILevel level = _applicationModel.DataProvider.Levels[sideQuestLevelNum - 1];
+                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                _applicationModel.DataProvider.SaveGame();
+                GoToScreen(trashScreen, playDefaultMusic: false);
+            }
+            else
+            {
+                LoadBattleScene();
+            }
+        }
+        private int GetRandomBodykitForAI(HullType hullType)
+        {
+            int id_bodykit = -1;
+            if (hullType != HullType.None)
+            {
+                List<int> bodykits = new List<int>();
+                for (int i = 0; i < /*12*/ _applicationModel.DataProvider.GameModel.Bodykits.Count; i++)
+                {
+                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
+                    {
+                        bodykits.Add(i);
+                    }
+                }
+                if (bodykits.Count == 0)
+                    id_bodykit = -1;
+                else
+                    id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
+            }
+            return id_bodykit;
+        }
+        private HullType GetHullType(string hullName)
+        {
+            switch (hullName)
+            {
+                case "Trident":
+                    return HullType.Trident;
+                case "BlackRig":
+                    return HullType.BlackRig;
+                case "Bullshark":
+                    return HullType.Bullshark;
+                case "Eagle":
+                    return HullType.Eagle;
+                case "Hammerhead":
+                    return HullType.Hammerhead;
+                case "Longbow":
+                    return HullType.Longbow;
+                case "Megalodon":
+                    return HullType.Megalodon;
+                case "Raptor":
+                    return HullType.Raptor;
+                case "Rickshaw":
+                    return HullType.Rickshaw;
+                case "Rockjaw":
+                    return HullType.Rockjaw;
+                case "TasDevil":
+                    return HullType.TasDevil;
+                case "Yeti":
+                    return HullType.Yeti;
+            }
+            return HullType.None;
         }
     }
 }

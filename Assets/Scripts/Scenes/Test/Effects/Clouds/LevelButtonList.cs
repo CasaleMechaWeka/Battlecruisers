@@ -14,11 +14,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         public Camera mainCamera;
 
         public async Task InitialiseAsync(
-            SkyStatsGroup skyStatsGroup, 
-            ISkySetter skySetter, 
-            BackgroundStatsList backgroundStatsList, 
+            SkyStatsGroup skyStatsGroup,
+            ISkySetter skySetter,
+            BackgroundStatsList backgroundStatsList,
             BackgroundImageController backgroundImage,
-            IStaticData staticData, 
+            IStaticData staticData,
             int startingLevelNum)
         {
             Assert.IsNotNull(mainCamera);
@@ -35,8 +35,8 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
                 ILevel level = staticData.Levels[levelNum - 1];
                 ISkyStats skyStats = skyStatsGroup.GetSkyStats(level.SkyMaterialName);
-                IPrefabContainer<BackgroundImageStats> backgroundStats = await backgroundStatsList.GetStatsAsync(levelNum);
-                
+                IPrefabContainer<BackgroundImageStats> backgroundStats = await backgroundStatsList.GetStatsAsyncLevel(levelNum);
+
                 CloudLevelButtonController button = buttons[i];
                 button.Initialise(levelNum, skyStats, skySetter, backgroundStats, backgroundImage, mainCamera.aspect, calculator);
 

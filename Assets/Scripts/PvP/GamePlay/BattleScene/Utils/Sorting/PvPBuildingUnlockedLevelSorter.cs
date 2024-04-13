@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return
                 buildings
                     // .OrderBy(building => _staticData.LevelFirstAvailableIn(_keyFactory.CreateBuildingKey(building.Buildable)))
-                    .OrderBy(building => _staticData.LevelFirstAvailableIn(new BattleCruisers.Data.Models.PrefabKeys.BuildingKey(convertToPvP(building.Buildable.Category), convertToPvP(building.Buildable.PrefabName))))
+                    .OrderBy(building => _staticData.BuildingUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.BuildingKey(convertToPvP(building.Buildable.Category), convertToPvP(building.Buildable.PrefabName))))
                     // So drone station comes before air and naval factories :P
                     .ThenByDescending(building => building.Buildable.BuildTimeInS)
                     .ToList();

@@ -375,6 +375,8 @@ namespace BattleCruisers.Data.Models
 
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
+        private List<CompletedLevel> _completedSideQuests;
+        private List<int> _completedSideQuestIDs;
 
         [SerializeField]
         private long _lifetimeDestructionScore;
@@ -408,10 +410,16 @@ namespace BattleCruisers.Data.Models
         private int _selectedPvPLevel;
 
         [SerializeField]
+        private int _selectedSideQuestID;
+
+        [SerializeField]
         private SkirmishModel _skirmish;
 
         [SerializeField]
         private CoinBattleModel _coinBattle;
+
+        [SerializeField]
+        private SideQuestData _sideQuest;
 
         [SerializeField]
         private HotkeysModel _hotkeys;
@@ -426,6 +434,16 @@ namespace BattleCruisers.Data.Models
         }
 
         public int NumOfLevelsCompleted => _completedLevels.Count;
+        public int NumOfSideQuestsCompleted
+        {
+            get
+            {
+                if (_completedSideQuests == null)
+                    return 0;
+                else
+                    return _completedSideQuests.Count;
+            }
+        }
         public int ID_Bodykit_AIbot { get; set; }
         public bool HasAttemptedTutorial
         {
@@ -479,6 +497,18 @@ namespace BattleCruisers.Data.Models
             }
         }
 
+        public int SelectedSideQuestID
+        {
+            get { return _selectedSideQuestID; }
+            set
+            {
+
+                if (value < 0) { _selectedSideQuestID = 0; return; }
+                if (value >= StaticData.NUM_OF_SIDEQUESTS) { _selectedSideQuestID = StaticData.NUM_OF_SIDEQUESTS - 1; return; }
+                _selectedSideQuestID = value;
+            }
+        }
+
         public SkirmishModel Skirmish
         {
             get { return _skirmish; }
@@ -491,10 +521,17 @@ namespace BattleCruisers.Data.Models
             set { _coinBattle = value; }
         }
 
+        public SideQuestData SideQuest
+        {
+            get { return _sideQuest; }
+            set { _sideQuest = value; }
+        }
+
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
+        public ReadOnlyCollection<CompletedLevel> CompletedSideQuests { get; }
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
@@ -513,7 +550,9 @@ namespace BattleCruisers.Data.Models
             UnlockedUnits = _unlockedUnits.AsReadOnly();
 
             _completedLevels = new List<CompletedLevel>();
+            _completedSideQuests = new List<CompletedLevel>();
             CompletedLevels = _completedLevels.AsReadOnly();
+            CompletedSideQuests = _completedSideQuests.AsReadOnly();
 
             NewHulls = new NewItems<HullKey>();
             NewBuildings = new NewItems<BuildingKey>();
@@ -523,6 +562,7 @@ namespace BattleCruisers.Data.Models
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
+            _sideQuest = null;
 
             _captainExoList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
@@ -634,6 +674,8 @@ namespace BattleCruisers.Data.Models
                     new BodykitData(nameBase: "Bodykit033", descriptionBase : "BodykitDescription033", cost: 358, owned : false, id: 33),
                     new BodykitData(nameBase: "Bodykit034", descriptionBase : "BodykitDescription034", cost: 741, owned : false, id: 34),
                     new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 521, owned : false, id: 35),
+                    new BodykitData(nameBase: "Bodykit036", descriptionBase : "BodykitDescription036", cost: 521, owned : false, id: 36),
+                    new BodykitData(nameBase: "Bodykit037", descriptionBase : "BodykitDescription037", cost: 521, owned : false, id: 37),
             };
 
             _variants = new List<VariantData>
@@ -918,6 +960,40 @@ namespace BattleCruisers.Data.Models
                     currentLevel.HardestDifficulty = completedLevel.HardestDifficulty;
                 }
             }
+        }
+
+        public void AddCompletedSideQuest(CompletedLevel completedSideQuest)
+        {
+            Assert.IsTrue(completedSideQuest.LevelNum <= StaticData.NUM_OF_SIDEQUESTS, "Have not completed preceeding level :/");
+            Assert.IsTrue(completedSideQuest.LevelNum >= 0);
+
+            // First time SideQuest has been completed
+            if (_completedSideQuests == null)
+                _completedSideQuests = new List<CompletedLevel> { completedSideQuest };
+            else if (!IsSideQuestCompleted(completedSideQuest.LevelNum))
+            {
+                _completedSideQuests.Add(completedSideQuest);
+                if (_completedSideQuestIDs == null)
+                    _completedSideQuestIDs = new List<int> { completedSideQuest.LevelNum };
+                else
+                    _completedSideQuestIDs.Add(completedSideQuest.LevelNum);
+            }
+            else
+            {
+                // SideQuest has been completed before
+                CompletedLevel currentSideQuest = _completedSideQuests[completedSideQuest.LevelNum];
+
+                if (completedSideQuest.HardestDifficulty > currentSideQuest.HardestDifficulty)
+                    currentSideQuest.HardestDifficulty = completedSideQuest.HardestDifficulty;
+            }
+        }
+
+        public bool IsSideQuestCompleted(int sideQuestID)
+        {
+            if (_completedSideQuestIDs == null)
+                return false;
+            else
+                return _completedSideQuestIDs.Contains(sideQuestID);
         }
 
         public IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory)

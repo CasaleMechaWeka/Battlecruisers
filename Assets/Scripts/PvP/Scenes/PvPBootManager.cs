@@ -217,7 +217,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     break;
                                 }
                                 int iHostLatency = 0;
-                                int.TryParse(HostLatency, out iHostLatency); 
+                                int.TryParse(HostLatency, out iHostLatency);
                                 if ((iHostLatency + ClientLatency) > ConnectionManager.LatencyLimit)
                                 {
                                     continue;
@@ -389,7 +389,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
                         ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
-                        ["Score"] = new DataObject(DataObject.VisibilityOptions.Public,Mathf.FloorToInt(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore).ToString(), DataObject.IndexOptions.N1),
+                        ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, Mathf.FloorToInt(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore).ToString(), DataObject.IndexOptions.N1),
                     };
                     MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
@@ -433,8 +433,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.HIGH;
                 return;
             }
-                
-            if(latency < 100)
+
+            if (latency < 100)
             {
                 MatchmakingScreenController.Instance.Connection_Quality = MatchmakingScreenController.ConnectionQuality.MID;
                 return;

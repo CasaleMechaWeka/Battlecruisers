@@ -313,7 +313,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             IPrefabContainer<BackgroundImageStats> backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
-            await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
+            await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel.SkyMaterialName);
 
 
 

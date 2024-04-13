@@ -6,7 +6,8 @@
         Tutorial = 2,
         Skirmish = 3,
         PvP_1VS1 = 4,
-        CoinBattle = 5
+        CoinBattle = 5,
+        SideQuest = 6
 
         //Voyage = 5
     }
@@ -16,6 +17,7 @@
 
         int SelectedLevel { get; set; }
         int SelectedPvPLevel { get; set; }
+        int SelectedSideQuestID { get; set; }
         bool ShowPostBattleScreen { get; set; }
         bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }

@@ -3,19 +3,27 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
-    public class TrashTalkKey : PrefabKey
+    public class LevelTrashTalkKey : PrefabKey
     {
         protected override string PrefabPathPrefix => "Prefabs/ScreensScene/TrashScreen/";
 
-        public TrashTalkKey(int levelNum)
-            : base(CreatePrefabName(levelNum)) { }
+        public LevelTrashTalkKey(int levelNum, bool isSideQuest = false)
+            : base(CreatePrefabName(levelNum, isSideQuest)) { }
 
-        private static string CreatePrefabName(int levelNum)
+        private static string CreatePrefabName(int levelNum, bool isSideQuest)
         {
-            Assert.IsTrue(levelNum > 0);
-            Assert.IsTrue(levelNum <= StaticData.NUM_OF_LEVELS);
-
-            return $"TrashTalkData ({levelNum}) Variant";
+            if (isSideQuest)
+            {
+                Assert.IsTrue(levelNum >= 0);
+                Assert.IsTrue(levelNum <= StaticData.NUM_OF_SIDEQUESTS);
+                return $"SideQuestTrashTalkData ({levelNum}) Variant";
+            }
+            else
+            {
+                Assert.IsTrue(levelNum > 0);
+                Assert.IsTrue(levelNum <= StaticData.NUM_OF_LEVELS);
+                return $"TrashTalkData ({levelNum}) Variant";
+            }
         }
     }
 }

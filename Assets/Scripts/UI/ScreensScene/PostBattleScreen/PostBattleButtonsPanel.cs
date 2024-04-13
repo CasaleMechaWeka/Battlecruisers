@@ -12,8 +12,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public ButtonController nextButton, clockedGameButton;
 
         public void Initialise(
-            IPostBattleScreen postBattleScreen, 
-            ICommand nextCommand, 
+            IPostBattleScreen postBattleScreen,
+            ICommand nextCommand,
             ICommand clockedGameCommand,
             ISingleSoundPlayer soundPlayer,
             bool wasVictory,
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             nextButton.Initialise(soundPlayer, nextCommand);
-            if(dataProvider.GameModel.SelectedLevel >= 32)
+            if (dataProvider.GameModel.SelectedLevel >= 32 || ApplicationModelProvider.ApplicationModel.Mode == GameMode.SideQuest)
             {
                 Destroy(nextButton.gameObject);
             }

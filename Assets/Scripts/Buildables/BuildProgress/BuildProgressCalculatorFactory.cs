@@ -39,14 +39,14 @@ namespace BattleCruisers.Buildables.BuildProgress
             return new LinearCalculator(_buildSpeedCalculator.FindAIBuildSpeed(difficulty));
         }
 
-        public IBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)
+        public IBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum, bool isSideQuest)
         {
 #if ENABLE_CHEATS
-            CompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
+            CompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum, isSideQuest));
             aiBuildSpeed = calculator;
             return calculator;
 #endif
-            return new LinearCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
+            return new LinearCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum, isSideQuest));
         }
 
         private CompositeCalculator CreateCompositeCalculator(float defaultBuildSpeedMultiplier)

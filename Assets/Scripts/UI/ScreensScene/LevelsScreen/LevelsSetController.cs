@@ -1,9 +1,11 @@
-﻿using BattleCruisers.Scenes;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
@@ -12,7 +14,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelsSetController : MonoBehaviourWrapper
     {
         private int _numOfLevels;
-
         public int firstLevelIndex;
         public NavigationFeedbackButton navigationFeedbackButton;
 
@@ -22,9 +23,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
             LevelsScreenController levelsScreen,
-            IList<LevelInfo> allLevels, 
-            int numOfLevelsUnlocked, 
+            IList<LevelInfo> allLevels,
+            int numOfLevelsUnlocked,
             ISingleSoundPlayer soundPlayer,
+            IDataProvider dataProvider,
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider trashDataList,
             int setIndex)
@@ -55,15 +57,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             // Set up Secret levels
             SecretLevelButtonController[] secretLevelButton = GetComponentsInChildren<SecretLevelButtonController>();
             int secretLevelNum = secretLevelButton.Length;
-            if(secretLevelButton != null)
+            if (secretLevelButton != null)
             {
-                for(int i= 0; i < secretLevelNum; ++i)
+                for (int i = 0; i < secretLevelNum; ++i)
                 {
                     secretLevelButton[i].Initialise(screensSceneGod, soundPlayer, numOfLevelsUnlocked);
                 }
             }
-            
-            
+
+            SideQuestButtonController[] sideQuestButtons = GetComponentsInChildren<SideQuestButtonController>();
+            for (int i = 0; i < sideQuestButtons.Count(); i++)
+                sideQuestButtons[i].Initialise(screensSceneGod, soundPlayer, dataProvider, numOfLevelsUnlocked, true);
 
             // Set up trails
             TrailController[] trails = GetComponentsInChildren<TrailController>();
@@ -79,6 +83,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             // Setup navigation feedback button
             bool hasUnlockedLevels = numOfLevelsUnlocked > firstLevelIndex;
             navigationFeedbackButton.Initialise(levelsScreen, setIndex, hasUnlockedLevels);
+
+            //Set up Side Quest levels
+
+
         }
 
         public bool ContainsLevel(int levelNum)
@@ -87,5 +95,5 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelNum > firstLevelIndex
                 && levelNum <= firstLevelIndex + _numOfLevels;
         }
-	}
+    }
 }

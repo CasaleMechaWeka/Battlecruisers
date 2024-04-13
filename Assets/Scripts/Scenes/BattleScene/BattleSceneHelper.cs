@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _prefabFetcher = prefabFetcher;
             _storyStrings = storyStrings;
             _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
-            _calculatorFactory 
+            _calculatorFactory
                 = new BuildProgressCalculatorFactory(
                     new BuildSpeedCalculator());
         }
@@ -66,21 +66,35 @@ namespace BattleCruisers.Scenes.BattleScene
             return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel);
         }
 
+        public virtual ISideQuestData GetSideQuest()
+        {
+            return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID);
+        }
+
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
+            ITrashTalkData levelTrashTalkData = new TrashTalkData();
             ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher, _storyStrings);
-            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
+
+            if (_appModel.Mode == GameMode.SideQuest)
+                levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum, true);
+            else
+                levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
+
             return levelTrashTalkData.EnemyName.ToUpper();
         }
 
         public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsync(levelNum);
+            return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
         }
 
         public virtual IPrefabKey GetAiCruiserKey()
         {
-            return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel).Hull;
+            if (_appModel.Mode == GameMode.SideQuest)
+                return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID).Hull;
+            else
+                return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel).Hull;
         }
     }
 }

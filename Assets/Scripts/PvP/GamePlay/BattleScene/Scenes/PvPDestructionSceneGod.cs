@@ -130,6 +130,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public Sprite BlackRig;
         public Sprite Bullshark;
         public Sprite Eagle;
+        public Sprite Flea;
         public Sprite Hammerhead;
         public Sprite HuntressBoss;
         public Sprite Longbow;
@@ -249,6 +250,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     break;
                 case "Eagle":
                     destructionCards[2].image.sprite = Eagle;
+                    break;
+                case "Flea":
+                    destructionCards[2].image.sprite = Flea;
                     break;
                 case "Hammerhead":
                     destructionCards[2].image.sprite = Hammerhead;

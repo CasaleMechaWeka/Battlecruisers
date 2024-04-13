@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI.ScreensScene;
-namespace BattleCruisers.Scenes
+﻿namespace BattleCruisers.Scenes
 {
     public interface IScreensSceneGod
     {
@@ -12,6 +11,7 @@ namespace BattleCruisers.Scenes
         void GoToSkirmishScreen();
         void GoToTrashScreen(int levelNum);
         void GoStraightToTrashScreen(int levelNum);
+        void LoadBattleSceneSideQuest(int sideQuestID);
         void LoadBattleScene();
         void LoadCreditsScene();
         void LoadCutsceneScene();
@@ -19,5 +19,6 @@ namespace BattleCruisers.Scenes
         void LoadBattle1v1Mode();
         void GotoShopScreen();
         public void GotoBlackMarketScreen();
+        void GoToSideQuestTrashScreen(int sideQuestID);
     }
 }

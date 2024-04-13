@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.Sorting
         {
             return
                 buildings
-                    .OrderBy(building => _staticData.LevelFirstAvailableIn(_keyFactory.CreateBuildingKey(building.Buildable)))
+                    .OrderBy(building => _staticData.BuildingUnlockLevel(_keyFactory.CreateBuildingKey(building.Buildable)))
                     // So drone station comes before air and naval factories :P
                     .ThenByDescending(building => building.Buildable.BuildTimeInS)
                     .ToList();

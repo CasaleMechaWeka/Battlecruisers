@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
-    public class BackgroundImageStatsKey : PrefabKey
+    public class LevelBackgroundImageStatsKey : PrefabKey
     {
         private const string BACKGROUND_PATH = "Clouds/Background";
 
@@ -15,7 +15,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys
             }
         }
 
-        public BackgroundImageStatsKey(int levelNum)
+        public LevelBackgroundImageStatsKey(int levelNum)
             : base(CreatePrefabName(levelNum)) { }
 
         private static string CreatePrefabName(int levelNum)

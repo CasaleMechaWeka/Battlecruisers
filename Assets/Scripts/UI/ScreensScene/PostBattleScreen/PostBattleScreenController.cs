@@ -16,10 +16,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.Services.Analytics;
-using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -36,7 +33,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         Victory_DemoCompleted,
         Victory_GameCompleted,
         Victory_Skirmish,
-        Defeat_Skirmish
+        Defeat_Skirmish,
+        Victory_SideQuest_LootUnlocked,
+        Victory_SideQuest_NoNewLoot,
+        Defeat_SideQuest
     }
 
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
@@ -72,7 +72,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IPrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkProvider trashTalkList,
+            ITrashTalkProvider levelTrashTalkList,
+            ITrashTalkProvider sideQuestTrashTalkList,
             ILocTable screensSceneStrings)
         {
             base.Initialise(screensSceneGod);
@@ -86,7 +87,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 levelName,
                 completedDifficultySymbol,
                 demoHomeButton,
-                trashTalkList,
+                levelTrashTalkList,
+                sideQuestTrashTalkList,
                 postTutorialButtonsPanel,
                 postBattleButtonsPanel,
                 postSkirmishButtonsPanel,
@@ -98,9 +100,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
             if (desiredBehaviour != PostBattleScreenBehaviour.Default)
-            {
                 SetupBattleResult();
-            }
 
             IPostBattleState postBattleState = null;
             Debug.Log(desiredBehaviour);
@@ -230,11 +230,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
-                ITrashTalkData levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
-                levelName.Initialise(BattleResult.LevelNum, levelTrashTalkData);
+                ITrashTalkData trashTalkData;
+
+                if (applicationModel.Mode == GameMode.SideQuest)
+                    trashTalkData = await sideQuestTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum, true);
+                else
+                    trashTalkData = await levelTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
+
+                levelName.Initialise(BattleResult.LevelNum, trashTalkData);
+                if (_applicationModel.Mode == GameMode.SideQuest)
+                    levelName.gameObject.SetActive(false);
+
                 unlockedItemSection.Initialise();
-                if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
-                    || !BattleResult.WasVictory)
+                if (desiredBehaviour == PostBattleScreenBehaviour.Defeat || !BattleResult.WasVictory)
                 {
                     postBattleState = new DefeatState(this, _applicationModel, musicPlayer, screensSceneStrings);
                     title.color = Color.white; // Set title text to white for defeat
@@ -249,13 +257,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             screensSceneStrings,
                             soundPlayer,
                             _lootManager,
-                            levelTrashTalkData,
+                            trashTalkData,
                             desiredBehaviour);
 
                     title.color = Color.black; // Set title text to black for victory
                 }
 
-                await SetupAppraisalButtonsAsync(soundPlayer, trashTalkList);
+                await SetupAppraisalButtonsAsync(soundPlayer, levelTrashTalkList);
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
@@ -297,17 +305,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 bool wasVicotry = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
 
                 if (BattleResult == null)
-                {
                     _dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum, wasVicotry);
-                }
 
                 BattleResult.LevelNum = levelNum;
                 BattleResult.WasVictory = wasVicotry;
 
                 if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted)
-                {
                     BattleResult.LevelNum = StaticData.NUM_OF_LEVELS;
-                }
             }
 
         }
@@ -350,9 +354,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 appraisalButtonsPanel.gameObject.SetActive(true);
             }
             else
-            {
                 Destroy(appraisalButtonsPanel.gameObject);
-            }
         }
 
         public void Retry()
@@ -401,14 +403,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             // If this was the final campaign level, NEXT should not be displayed.
             // All subsequent levels are bonuses that users can find on their own:
             if (BattleResult.LevelNum == StaticData.NUM_OF_STANDARD_LEVELS)
-            {
                 return false;
-            }
             // The rest of the time we do the normal thing:
             else
-            {
                 return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked;
-            }
         }
 
         private void ClockedGameCommandExecute()

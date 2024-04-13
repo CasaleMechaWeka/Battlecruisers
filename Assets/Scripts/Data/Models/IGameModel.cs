@@ -3,9 +3,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
-using Newtonsoft.Json;
 
 namespace BattleCruisers.Data.Models
 {
@@ -37,6 +35,7 @@ namespace BattleCruisers.Data.Models
         List<VariantData> OutstandingVariantTransactions { get; set; }
         bool HasSyncdShop { get; set; }
         int NumOfLevelsCompleted { get; }
+        int NumOfSideQuestsCompleted { get; }
         int ID_Bodykit_AIbot { get; set; }
         long LifetimeDestructionScore { get; set; }
         long BestDestructionScore { get; set; }
@@ -49,6 +48,7 @@ namespace BattleCruisers.Data.Models
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }
         int SelectedPvPLevel { get; set; }
+        int SelectedSideQuestID { get; set; }
         HotkeysModel Hotkeys { get; }
         SkirmishModel Skirmish { get; set; }
         CoinBattleModel CoinBattle { get; set; }
@@ -57,6 +57,7 @@ namespace BattleCruisers.Data.Models
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
+        ReadOnlyCollection<CompletedLevel> CompletedSideQuests { get; }
         //ReadOnlyCollection<CaptainExoKey> UnlockedCaptainExos { get; }
 
         NewItems<HullKey> NewHulls { get; }
@@ -70,6 +71,8 @@ namespace BattleCruisers.Data.Models
         void AddUnlockedBuilding(BuildingKey building);
         void AddUnlockedUnit(UnitKey unit);
         void AddCompletedLevel(CompletedLevel completedLevel);
+        void AddCompletedSideQuest(CompletedLevel completedSideQuest);
+        bool IsSideQuestCompleted(int sideQuestID);
 
         IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
         IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory);

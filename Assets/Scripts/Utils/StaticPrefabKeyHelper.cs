@@ -24,6 +24,7 @@ namespace BattleCruisers.Utils
         Hull_Yeti,
         Hull_Rickshaw,
         Hull_BlackRig,
+        Hull_Flea,
 
         // === Buildings ===
         // Factories

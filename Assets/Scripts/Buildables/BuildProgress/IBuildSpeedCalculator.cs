@@ -5,6 +5,6 @@ namespace BattleCruisers.Buildables.BuildProgress
     public interface IBuildSpeedCalculator
     {
         float FindAIBuildSpeed(Difficulty difficulty);
-        float FindIncrementalAICruiserBuildSpeed(Difficulty difficulty, int levelNum);
+        float FindIncrementalAICruiserBuildSpeed(Difficulty difficulty, int levelNum, bool isSideQuest = false);
     }
 }

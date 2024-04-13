@@ -1,4 +1,4 @@
-﻿using BattleCruisers.AI;
+using BattleCruisers.AI;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
@@ -208,8 +208,22 @@ namespace BattleCruisers.Scenes.BattleScene
             // UI
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
-            ILevel currentLevel = helper.GetLevel();
-            string enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
+            ILevel currentLevel = null;
+            ISideQuestData currentSideQuest = null;
+            string enemyName;
+            CaptainExo aiCaptainExoPrefab;
+            if (applicationModel.Mode == GameMode.SideQuest)
+            {
+                currentSideQuest = helper.GetSideQuest();
+                enemyName = await helper.GetEnemyNameAsync(currentSideQuest.SideLevelNum);
+                aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentSideQuest.EnemyCaptainExo);
+            }
+            else
+            {
+                currentLevel = helper.GetLevel();
+                enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
+                aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentLevel.Captains);
+            }
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
@@ -218,16 +232,13 @@ namespace BattleCruisers.Scenes.BattleScene
             CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo playerCaptain = Instantiate(playerCaptainExoPrefab, playerCaptainContainer);
 
-            CaptainExo aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentLevel.Captains);
             CaptainExo AICaptain = Instantiate(aiCaptainExoPrefab, AICaptainContainer);
             foreach (SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
-            {
                 spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
-            }
+
             foreach (SpriteRenderer spriteRenderer in AICaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
-            {
                 spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
-            }
+
             playerCaptain.gameObject.transform.localScale = Vector3.one;
             AICaptain.gameObject.transform.localScale = Vector3.one;
             PlayerCaptain = playerCaptain.gameObject;
@@ -295,8 +306,14 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Audio
             Logging.Log(Tags.BATTLE_SCENE, "Audio setup");
-            ILayeredMusicPlayer layeredMusicPlayer
-                = await components.MusicPlayerInitialiser.CreatePlayerAsync(
+            ILayeredMusicPlayer layeredMusicPlayer;
+            if (applicationModel.Mode == GameMode.SideQuest)
+                layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
+                    factoryProvider.Sound.SoundFetcher,
+                    currentSideQuest.MusicBackgroundKey,
+                    dataProvider.SettingsManager);
+            else
+                layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager);
@@ -328,10 +345,22 @@ namespace BattleCruisers.Scenes.BattleScene
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
-            IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
-            IPrefabContainer<BackgroundImageStats> backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
-            components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
-            await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
+            IPrefabContainer<BackgroundImageStats> backgroundStats;
+            IArtificialIntelligence ai;
+            if (applicationModel.Mode != GameMode.SideQuest)
+            {
+                ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
+                backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
+                components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
+                await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel.SkyMaterialName);
+            }
+            else
+            {
+                ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedSideQuestID);
+                backgroundStats = await helper.GetBackgroundStatsAsync(applicationModel.SelectedSideQuestID);
+                components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
+                await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentSideQuest.SkyMaterial);
+            }
             components.HotkeyInitialiser.Initialise(
                 dataProvider.GameModel.Hotkeys,
                 InputBC.Instance,
@@ -485,6 +514,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
                 case GameMode.CoinBattle:
                     return new CoinBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+
+                case GameMode.SideQuest:
+                    return new SideQuestHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");

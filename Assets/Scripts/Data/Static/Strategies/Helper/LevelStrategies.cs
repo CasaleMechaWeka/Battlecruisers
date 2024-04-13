@@ -13,7 +13,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         {
             IList<IBaseStrategy> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
             IList<IBaseStrategy> basicBaseStrategies = CreateBasicBaseStrategies();
-			IList<IOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
+            IList<IOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
             _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
@@ -97,19 +97,19 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             };
         }
 
-		private IList<IBaseStrategy> CreateBasicBaseStrategies()
-		{
-			return new List<IBaseStrategy>()
-			{
+        private IList<IBaseStrategy> CreateBasicBaseStrategies()
+        {
+            return new List<IBaseStrategy>()
+            {
                 // Set 1:  Levels 1 - 3
                 new BasicTurtleStrategy(),
-				new BasicTurtleStrategy(),
+                new BasicTurtleStrategy(),
                 new BasicRushStrategy(),
 
                 // Set 2:  Levels 4 - 7
                 new BasicBoomDefensiveStrategy(),
                 new BasicBoomAggressiveStrategy(),
-				new BasicRushStrategy(),
+                new BasicRushStrategy(),
                 new BasicBalancedStrategy(),
 				
 				// Set 3:  Levels 8 - 10
@@ -128,14 +128,14 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
                 // Set 5:  Levels 16 - 18
 				new BasicRushStrategy(),
-				new BasicBoomDefensiveStrategy(),
-				new BasicBoomAggressiveStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicBoomAggressiveStrategy(),
 
                 // Set 6:  Levels 19 - 22
 				new BasicBalancedStrategy(),
-				new BasicRushStrategy(),
-				new BasicBoomAggressiveStrategy(),
-				new BasicBalancedStrategy(),
+                new BasicRushStrategy(),
+                new BasicBoomAggressiveStrategy(),
+                new BasicBalancedStrategy(),
 
                 // Set 7: Levels 23 - 26
                 new BasicTurtleStrategy(),
@@ -161,7 +161,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicRushStrategy(),
                 new BasicTurtleStrategy()
             };
-		}
+        }
 
         private IList<IOffensiveRequest[]> CreateOffensiveRequests()
         {
@@ -255,44 +255,44 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 // Set 5:  Levels 15 - 17
                 new IOffensiveRequest[]
                 {
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-				new IOffensiveRequest[]
-				{
+                new IOffensiveRequest[]
+                {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-				},
-				new IOffensiveRequest[]
-				{
+                },
+                new IOffensiveRequest[]
+                {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-				},
+                },
 
                 // Set 6:  Levels 18 - 21
 				new IOffensiveRequest[]
-				{
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
-				},
-				new IOffensiveRequest[]
-				{
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-				},
-				new IOffensiveRequest[]
-				{
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
-				},
-				new IOffensiveRequest[]
-				{
-					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-				},
+                },
 
                 // Set 7:  Levels 22 - 25
                 new IOffensiveRequest[]
@@ -427,9 +427,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             IList<IStrategy> strategies = new List<IStrategy>();
 
             for (int i = 0; i < baseStrategies.Count; ++i)
-            {
                 strategies.Add(new Strategy(baseStrategies[i], offensiveRequests[i]));
-            }
 
             return strategies;
         }

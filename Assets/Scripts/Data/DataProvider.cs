@@ -32,6 +32,7 @@ namespace BattleCruisers.Data
 
         public IStaticData StaticData { get; }
         public IList<ILevel> Levels => StaticData.Levels;
+        public IList<ISideQuestData> SideQuests => StaticData.SideQuests;
         public IDictionary<Map, IPvPLevel> PvPLevels => StaticData.PvPLevels;
         public ISettingsManager SettingsManager { get; }
         public ILockedInformation LockedInfo { get; }
@@ -81,6 +82,12 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(levelNum > 0 && levelNum <= Levels.Count);
             return Levels[levelNum - 1];
+        }
+
+        public ISideQuestData GetSideQuest(int sideQuestID)
+        {
+            Assert.IsTrue(sideQuestID >= 0 && sideQuestID <= SideQuests.Count);
+            return SideQuests[sideQuestID];
         }
 
         public IPvPLevel GetPvPLevel(Map map)

@@ -24,6 +24,16 @@ namespace BattleCruisers.Data
             }
         }
 
+        public int SelectedSideQuestID
+        {
+            get => DataProvider.GameModel.SelectedSideQuestID;
+            set
+            {
+                DataProvider.GameModel.SelectedSideQuestID = value;
+                DataProvider.SaveGame();
+            }
+        }
+
         public bool ShowPostBattleScreen { get; set; }
         public GameMode Mode { get; set; }
         public bool IsTutorial => Mode == GameMode.Tutorial;

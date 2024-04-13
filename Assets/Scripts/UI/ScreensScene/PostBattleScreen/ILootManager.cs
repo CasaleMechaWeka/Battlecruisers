@@ -4,14 +4,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public interface ILootManager
     {
-        bool ShouldShowLoot(int levelNum);
+        bool ShouldShowLevelLoot(int levelNum);
+        bool ShouldShowSideQuestLoot(int sideQuestID);
 
         /// <summary>
         /// Adds these items to the:
         ///     a) Game model unlocked items
         ///     b) User's loadout
         /// </summary>
-        ILoot UnlockLoot(int levelNum);
+        ILoot UnlockLevelLoot(int levelNum);
+        ILoot UnlockSideQuestLoot(int sideQuestID);
 
         void ShowLoot(ILoot unlockedLoot);
     }

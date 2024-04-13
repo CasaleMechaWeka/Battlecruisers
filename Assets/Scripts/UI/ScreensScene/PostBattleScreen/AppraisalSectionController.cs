@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void Initialise(
             string appraisalText,
-            ISingleSoundPlayer soundPlayer, 
+            ISingleSoundPlayer soundPlayer,
             Action lootButtonAction = null)
         {
             Helper.AssertIsNotNull(appraisalDroneText, lootButton);
@@ -23,13 +23,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             appraisalDroneText.text = appraisalText;
 
             if (lootButtonAction != null)
-            {
                 lootButton.Initialise(soundPlayer, lootButtonAction);
-            }
             else
-            {
                 lootButton.gameObject.SetActive(false);
-            }
 
             gameObject.SetActive(true);
         }
