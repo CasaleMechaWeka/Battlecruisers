@@ -711,18 +711,26 @@ namespace BattleCruisers.Scenes
                     return HullType.Eagle;
                 case "Flea":
                     return HullType.Flea;
+                case "Goatherd":
+                    return HullType.Goatherd;  
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
                     return HullType.Longbow;
                 case "Megalodon":
                     return HullType.Megalodon;
+                case "Microlodon":
+                    return HullType.Microlodon;
                 case "Raptor":
                     return HullType.Raptor;
                 case "Rickshaw":
                     return HullType.Rickshaw;
                 case "Rockjaw":
                     return HullType.Rockjaw;
+                case "Pistol":
+                    return HullType.Pistol;
+                case "Shepherd":
+                    return HullType.Shepherd;
                 case "TasDevil":
                     return HullType.TasDevil;
                 case "Yeti":

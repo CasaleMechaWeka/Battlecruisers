@@ -72,14 +72,18 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite Bullshark;
         public Sprite Eagle;
         public Sprite Flea;
+        public Sprite Goatherd;
         public Sprite Hammerhead;
         public Sprite HuntressBoss;
         public Sprite Longbow;
         public Sprite ManOfWarBoss;
         public Sprite Megalodon;
+        public Sprite Microlodon;
         public Sprite Raptor;
         public Sprite Rickshaw;
         public Sprite Rockjaw;
+        public Sprite Pistol;
+        public Sprite Shepherd;
         public Sprite TasDevil;
         public Sprite Trident;
         public Sprite Yeti;
@@ -162,14 +166,18 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("Bullshark", Bullshark);
             sprites.Add("Eagle", Eagle);
             sprites.Add("Flea", Flea);
+            sprites.Add("Goatherd", Goatherd);
             sprites.Add("Hammerhead", Hammerhead);
             sprites.Add("HuntressBoss", HuntressBoss);
             sprites.Add("Longbow", Longbow);
             sprites.Add("ManOfWarBoss", ManOfWarBoss);
             sprites.Add("Megalodon", Megalodon);
+            sprites.Add("Microlodon", Microlodon);
             sprites.Add("Raptor", Raptor);
             sprites.Add("Rickshaw", Rickshaw);
             sprites.Add("Rockjaw", Rockjaw);
+            sprites.Add("Pistol", Pistol);
+            sprites.Add("Shepherd", Shepherd);
             sprites.Add("TasDevil", TasDevil);
             sprites.Add("Trident", Trident);
             sprites.Add("Yeti", Yeti);
@@ -269,18 +277,26 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     return HullType.Eagle;
                 case "Flea":
                     return HullType.Flea;
+                case "Goatherd":
+                    return HullType.Goatherd;  
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
                     return HullType.Longbow;
                 case "Megalodon":
                     return HullType.Megalodon;
+                case "Microlodon":
+                    return HullType.Microlodon;
                 case "Raptor":
                     return HullType.Raptor;
                 case "Rickshaw":
                     return HullType.Rickshaw;
                 case "Rockjaw":
                     return HullType.Rockjaw;
+                case "Pistol":
+                    return HullType.Pistol;    
+                case "Shepherd":
+                    return HullType.Shepherd;
                 case "TasDevil":
                     return HullType.TasDevil;
                 case "Yeti":

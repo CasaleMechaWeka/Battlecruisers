@@ -29,8 +29,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
 
         protected override ItemButton InitialiseItemButton(
-            IItemDetailsManager itemDetailsManager, 
-            IComparingItemFamilyTracker comparingFamilyTracker, 
+            IItemDetailsManager itemDetailsManager,
+            IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             Cruiser cruiserPrefab = prefabFactory.GetCruiserPrefab(HullKey);
             HullButtonV2 hullButton = GetComponentInChildren<HullButtonV2>(includeInactive: true);
             Assert.IsNotNull(hullButton);
-            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull,hullKeyName);
+            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull, hullKeyName);
             return hullButton;
         }
 
