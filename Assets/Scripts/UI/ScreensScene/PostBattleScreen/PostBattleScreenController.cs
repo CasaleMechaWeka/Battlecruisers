@@ -64,6 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public bool showAppraisalButtons = false;
 
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
+        private GameMode _gameMode;
 
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
@@ -99,6 +100,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
+            _gameMode = _applicationModel.Mode;
+            Debug.Log(_gameMode);
+
             if (desiredBehaviour != PostBattleScreenBehaviour.Default)
                 SetupBattleResult();
 
@@ -359,7 +363,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void Retry()
         {
-            _screensSceneGod.GoStraightToTrashScreen(BattleResult.LevelNum);
+            _applicationModel.Mode = _gameMode;
+
+            if (_applicationModel.Mode != GameMode.SideQuest)
+                _screensSceneGod.GoStraightToTrashScreen(BattleResult.LevelNum);
+            else
+                _screensSceneGod.GoToSideQuestTrashScreen(BattleResult.LevelNum);
+
             string logName = "Battle_Retry_Level";
             /*
 #if LOG_ANALYTICS
@@ -383,6 +393,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void GoToLoadoutScreen()
         {
+            _applicationModel.Mode = GameMode.SideQuest;
             _screensSceneGod.GoToLoadoutScreen();
         }
 
@@ -406,7 +417,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 return false;
             // The rest of the time we do the normal thing:
             else
-                return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked;
+                return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked && _gameMode == GameMode.Campaign;
         }
 
         private void ClockedGameCommandExecute()
