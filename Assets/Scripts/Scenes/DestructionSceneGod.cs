@@ -1,30 +1,18 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.PostBattleScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI;
-using BattleCruisers.UI.Loading;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using BattleCruisers.Data.Models;
-using Unity.Services.CloudCode;
-using Unity.Services.Leaderboards;
-using BattleCruisers.Utils.Network;
 
 namespace BattleCruisers.Scenes
 {
@@ -164,7 +152,7 @@ namespace BattleCruisers.Scenes
             if (BattleSceneGod.deadBuildables != null)
             {
                 // real values:
-                
+
                 applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
                 applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditdivider", out creditDivider);
                 applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
@@ -179,7 +167,7 @@ namespace BattleCruisers.Scenes
             else
             {
                 // fake values if the screen is being launched for testing purposes:
-                
+
                 scoreDivider = 10;
                 creditDivider = 100;
                 coin1Threshold = 1000;

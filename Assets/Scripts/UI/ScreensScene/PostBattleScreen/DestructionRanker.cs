@@ -1,19 +1,6 @@
-using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Loading;
-using BattleCruisers.UI.Music;
-using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace BattleCruisers.PostBattleScreen
 {
@@ -39,10 +26,10 @@ namespace BattleCruisers.PostBattleScreen
 
         public int CalculateRank(long score)
         {
-            
-            for(int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
+
+            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
-                long x = 2500 + 2500*i*i;
+                long x = 2500 + 2500 * i * i;
                 //Debug.Log(x);
                 if (score < x)
                 {
@@ -76,8 +63,8 @@ namespace BattleCruisers.PostBattleScreen
             long nextRankThreshold = 2500 + 2500 * (currentRank + 1) * (currentRank + 1);
 
             long scoreDifference = nextRankThreshold - currentRankThreshold;
-            long scoreRemainder =  currentRankThreshold - score;
-            if(scoreRemainder < 0)
+            long scoreRemainder = currentRankThreshold - score;
+            if (scoreRemainder < 0)
             {
                 scoreRemainder = 0;
             }
