@@ -87,6 +87,7 @@ namespace BattleCruisers.Utils
         Unit_ArchonBattleship = 0704,
         Unit_AttackRIB = 0705,
         Unit_GlassCannoneer = 0706,
+        Unit_GunBoat = 0707,
     }
 
     public static class StaticPrefabKeyHelper

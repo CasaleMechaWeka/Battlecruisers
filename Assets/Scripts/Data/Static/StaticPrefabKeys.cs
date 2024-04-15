@@ -91,6 +91,7 @@ namespace BattleCruisers.Data.Static
             public static UnitKey SiegeDestroyer { get; } = new UnitKey(UnitCategory.Naval, "SiegeDestroyer");
             public static UnitKey ArchonBattleship { get; } = new UnitKey(UnitCategory.Naval, "ArchonBattleship");
             public static UnitKey GlassCannoneer { get; } = new UnitKey(UnitCategory.Naval, "GlassCannoneer");
+            public static UnitKey GunBoat { get; } = new UnitKey(UnitCategory.Naval, "GunBoat");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -101,7 +102,7 @@ namespace BattleCruisers.Data.Static
                         // Aircraft
                         Bomber, Fighter, Gunship, SteamCopter, Broadsword, TestAircraft,
                         // Ships
-                        AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, ArchonBattleship, GlassCannoneer
+                        AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, ArchonBattleship, GlassCannoneer, GunBoat
                     };
                 }
             }
@@ -719,6 +720,7 @@ namespace BattleCruisers.Data.Static
             public static ShipDeathKey SiegeDestroyer { get; } = new ShipDeathKey("SiegeDestroyer");
             public static ShipDeathKey Archon { get; } = new ShipDeathKey("Archon");
             public static ShipDeathKey GlassCannoneer { get; } = new ShipDeathKey("GlassCannoneer");
+            public static ShipDeathKey GunBoat { get; } = new ShipDeathKey("GunBoat");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -732,7 +734,8 @@ namespace BattleCruisers.Data.Static
                         SiegeDestroyer,
                         Archon,
                         AttackRIB,
-                        GlassCannoneer
+                        GlassCannoneer,
+                        GunBoat
                     };
                 }
             }

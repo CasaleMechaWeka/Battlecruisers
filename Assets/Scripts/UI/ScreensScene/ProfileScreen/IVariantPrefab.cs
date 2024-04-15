@@ -51,6 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Destroyer,
         SiegeDestroyer,
         ArchonBattleship,
-        GlassCannoneer
+        GlassCannoneer,
+        GunBoat
     }
 }

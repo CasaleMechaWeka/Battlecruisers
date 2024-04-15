@@ -21,5 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPPool<PvPUnit, PvPBuildableActivationArgs> SiegeDestroyerPool { get; }
         IPvPPool<PvPUnit, PvPBuildableActivationArgs> ArchonPool { get; }
         IPvPPool<PvPUnit, PvPBuildableActivationArgs> GlassCannoneerPool { get; }
+        IPvPPool<PvPUnit, PvPBuildableActivationArgs> GunBoatPool { get; }
     }
 }

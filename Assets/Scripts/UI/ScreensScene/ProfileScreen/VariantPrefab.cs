@@ -147,6 +147,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new UnitKey(UnitCategory.Naval, "ArchonBattleship");
                 case ParentBuildable.GlassCannoneer:
                     return new UnitKey(UnitCategory.Naval, "GlassCannoneer");
+                case ParentBuildable.GunBoat:
+                    return new UnitKey(UnitCategory.Naval, "GunBoat");
             }
             return null;
         }
@@ -226,6 +228,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPArchonBattleship");
                 case ParentBuildable.GlassCannoneer:
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPGlassCannoneer");
+                case ParentBuildable.GunBoat:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPGunBoat");
             }
             return null;
         }
@@ -337,6 +341,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = true;
                     break;
                 case ParentBuildable.GlassCannoneer:
+                    ret = true;
+                    break;
+                case ParentBuildable.GunBoat:
                     ret = true;
                     break;
             }
