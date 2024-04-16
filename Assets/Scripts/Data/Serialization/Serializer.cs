@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 using BattleCruisers.Data.Models;
@@ -13,6 +13,8 @@ using Unity.Services.Economy.Model;
 using BattleCruisers.Utils.UGS.Samples;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Models.PrefabKeys;
+using System.Linq;
+
 
 namespace BattleCruisers.Data.Serialization
 {
@@ -58,7 +60,7 @@ namespace BattleCruisers.Data.Serialization
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || ((GameModel)output).Variants.Count < 131)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || ((GameModel)output).Variants.Count < 131 || ((GameModel)output).NumOfLevelsCompleted > 31)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -165,11 +167,40 @@ namespace BattleCruisers.Data.Serialization
                 compatibleGameModel.PlayerName = _playerName;
             }
 
+            IReadOnlyCollection<CompletedLevel> completedLevels = gameData.GetType().GetProperty("CompletedLevels").GetValue(gameData) as IReadOnlyCollection<CompletedLevel>;
+
+            int completedLevelsCount = Mathf.Min(StaticData.NUM_OF_LEVELS, completedLevels.Count);
+
             // What levels have been completed, and at what difficulty
-            foreach (var level in gameData.GetType().GetProperty("CompletedLevels").GetValue(gameData) as IReadOnlyCollection<CompletedLevel>)
+            for (int i = 0; i < completedLevelsCount; i++)
             {
-                compatibleGameModel.AddCompletedLevel(level);
+                compatibleGameModel.AddCompletedLevel(completedLevels.ElementAt(i));
             }
+
+            List<int> completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
+
+            //needs to be hardcoded since otherwise access to StaticData.cs would be required
+            //update this whenever loot unlock requirements are modified 
+
+            if (_unlockedBuildings.Contains(StaticPrefabKeys.Buildings.NovaArtillery) && !completedSideQuestIDs.Contains(0))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(0, Settings.Difficulty.Hard));
+            if (_unlockedHulls.Contains(StaticPrefabKeys.Hulls.Rickshaw) && !completedSideQuestIDs.Contains(1))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(1, Settings.Difficulty.Hard));
+            if (_unlockedHulls.Contains(StaticPrefabKeys.Hulls.TasDevil) && !completedSideQuestIDs.Contains(2))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(2, Settings.Difficulty.Hard));
+            if (_unlockedBuildings.Contains(StaticPrefabKeys.Buildings.MissilePod) && !completedSideQuestIDs.Contains(3))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(3, Settings.Difficulty.Hard));
+            if (_unlockedHulls.Contains(StaticPrefabKeys.Hulls.BlackRig) && !completedSideQuestIDs.Contains(4))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(4, Settings.Difficulty.Hard));
+            if (_unlockedBuildings.Contains(StaticPrefabKeys.Buildings.IonCannon) && !completedSideQuestIDs.Contains(5))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(5, Settings.Difficulty.Hard));
+            if (_unlockedBuildings.Contains(StaticPrefabKeys.Buildings.Coastguard) && !completedSideQuestIDs.Contains(6))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(6, Settings.Difficulty.Hard));
+            if (_unlockedHulls.Contains(StaticPrefabKeys.Hulls.Yeti) && !completedSideQuestIDs.Contains(7))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(7, Settings.Difficulty.Hard));
+            if (_unlockedUnits.Contains(StaticPrefabKeys.Units.Broadsword) && !completedSideQuestIDs.Contains(8))
+                compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(8, Settings.Difficulty.Hard));
+
             if (compatibleGameModel.CompletedLevels != null && compatibleGameModel.CompletedLevels.Count > 0)
             {
                 compatibleGameModel.HasAttemptedTutorial = true;
