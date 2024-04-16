@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         private readonly IFillableImage _healthDialImage;
         private readonly IFilter<TDamagable> _visibilityFilter;
         private DamageTakenIndicator _damageTakenIndicator;
-        
+
         private float previousHealthProportion;
 
         private TDamagable _damagable;
@@ -46,7 +46,6 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             _healthDialImage.IsVisible = false;
 
             _damageTakenIndicator = damageTakenIndicator;
-            _damageTakenIndicator.initialise();
             previousHealthProportion = 1.0f;
         }
 
@@ -71,7 +70,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             _healthDialImage.FillAmount = proportionOfMaxHealth;
             if (proportionOfMaxHealth < previousHealthProportion && _damageTakenIndicator != null)
             {
-                _damageTakenIndicator.updateDamageTakenIndicator();
+                _damageTakenIndicator.UpdateDamageTakenIndicator();
             }
             previousHealthProportion = proportionOfMaxHealth;
         }
