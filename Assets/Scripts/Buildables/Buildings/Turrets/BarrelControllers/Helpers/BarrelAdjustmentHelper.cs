@@ -73,6 +73,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                     _barrelController.IsSourceMirrored);
 
             float limitedDesiredAngle = _angleLimiter.LimitAngle(desiredAngleInDegrees);
+            _rotationMovementController.AdjustRotation(limitedDesiredAngle);
 
             bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
             if (isOnTarget)
@@ -81,7 +82,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 return new BarrelAdjustmentResult(isOnTarget, limitedDesiredAngle, predictedTargetPosition);
             }
 
-            _rotationMovementController.AdjustRotation(limitedDesiredAngle);
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Not on target, but adjusted barrel rotation :)");
             return new BarrelAdjustmentResult(isOnTarget: false);
         }

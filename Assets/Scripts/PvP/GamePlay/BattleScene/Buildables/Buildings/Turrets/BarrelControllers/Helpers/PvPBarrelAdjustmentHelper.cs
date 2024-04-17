@@ -73,6 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _barrelController.IsSourceMirrored);
 
             float limitedDesiredAngle = _angleLimiter.LimitAngle(desiredAngleInDegrees);
+            _rotationMovementController.AdjustRotation(limitedDesiredAngle);
 
             bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
             if (isOnTarget)
@@ -81,7 +82,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return new PvPBarrelAdjustmentResult(isOnTarget, limitedDesiredAngle, predictedTargetPosition);
             }
 
-            _rotationMovementController.AdjustRotation(limitedDesiredAngle);
             // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Not on target, but adjusted barrel rotation :)");
             return new PvPBarrelAdjustmentResult(isOnTarget: false);
         }
