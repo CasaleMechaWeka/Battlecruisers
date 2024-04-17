@@ -41,6 +41,7 @@ namespace BattleCruisers.Data.Models
         // What levels have been completed
         // What difficulty those levels have been completed at.
         public Dictionary<int, int> _levelsCompleted;                          // int levelNum, enum (as int) hardestDifficulty
+        public Dictionary<int, int> _sideQuestsCompleted;                          // int SideQuest, enum (as int) hardestDifficulty
 
         // Assets unlocked
         public List<string> _unlockedHulls;                            // prefab filenames
@@ -80,10 +81,11 @@ namespace BattleCruisers.Data.Models
             // GameModel fields:
             _lifetimeDestructionScore = game.LifetimeDestructionScore;
             _playerName = game.PlayerName;
-            _levelsCompleted = computeCompletedLevels(game.CompletedLevels);
-            _unlockedHulls = computeUnlockedHulls(game.UnlockedHulls);
-            _unlockedBuildings = computeUnlockedBuildings(game.UnlockedBuildings);
-            _unlockedUnits = computeUnlockedUnits(game.UnlockedUnits);
+            _levelsCompleted = ComputeCompletedLevels(game.CompletedLevels);
+            _sideQuestsCompleted = ComputeCompletedSideQuests(game.CompletedSideQuests);
+            _unlockedHulls = ComputeUnlockedHulls(game.UnlockedHulls);
+            _unlockedBuildings = ComputeUnlockedBuildings(game.UnlockedBuildings);
+            _unlockedUnits = ComputeUnlockedUnits(game.UnlockedUnits);
 
             // IAPs:
             _purchasedExos = game.GetExos().Distinct().ToList();
@@ -93,12 +95,12 @@ namespace BattleCruisers.Data.Models
 
             // Loadout fields:
             _currentHullKey = game.PlayerLoadout.Hull.PrefabName;
-            _currentBuildings = computeLoadoutBuildings(game.PlayerLoadout);
-            _currentUnits = computeLoadoutUnits(game.PlayerLoadout);
+            _currentBuildings = ComputeLoadoutBuildings(game.PlayerLoadout);
+            _currentUnits = ComputeLoadoutUnits(game.PlayerLoadout);
             _currentHeckles = game.PlayerLoadout.CurrentHeckles;
             _currentCaptain = game.PlayerLoadout.CurrentCaptain.PrefabName;
-            _buildLimits = computeBuildLimits(game.PlayerLoadout.GetBuildLimits());
-            _unitLimits = computeUnitLimits(game.PlayerLoadout.GetUnitLimits());
+            _buildLimits = ComputeBuildLimits(game.PlayerLoadout.GetBuildLimits());
+            _unitLimits = ComputeUnitLimits(game.PlayerLoadout.GetUnitLimits());
             _currentBodykit = game.PlayerLoadout.SelectedBodykit;
             _selectedVariants = game.PlayerLoadout.SelectedVariants;
 
@@ -227,6 +229,12 @@ namespace BattleCruisers.Data.Models
                 game.AddCompletedLevel(cLevel);
             }
 
+            foreach (var sideQuest in _sideQuestsCompleted)
+            {
+                CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key, (Settings.Difficulty)sideQuest.Value);
+                game.AddCompletedSideQuest(cSideQuest);
+            }
+
             // unlocked hulls
             foreach (var hull in _unlockedHulls)
             {
@@ -349,7 +357,7 @@ namespace BattleCruisers.Data.Models
             }
             else
             {
-                game.PlayerLoadout.CurrentHeckles = computeUnlockedHeckles(game);
+                game.PlayerLoadout.CurrentHeckles = ComputeUnlockedHeckles(game);
             }
 
             // current captain
@@ -373,7 +381,7 @@ namespace BattleCruisers.Data.Models
             }
         }
 
-        private Dictionary<int, int> computeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
+        private Dictionary<int, int> ComputeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
         {
             var result = new Dictionary<int, int>();
             if (levels == null)
@@ -385,13 +393,31 @@ namespace BattleCruisers.Data.Models
             {
                 foreach (var level in levels)
                 {
-                    result.Add(level.LevelNum, ((int)level.HardestDifficulty));
+                    result.Add(level.LevelNum, (int)level.HardestDifficulty);
                 }
             }
             return result;
         }
 
-        private List<int> computeUnlockedHeckles(GameModel game)
+        private Dictionary<int, int> ComputeCompletedSideQuests(IReadOnlyCollection<CompletedLevel> sideQuests)
+        {
+            var result = new Dictionary<int, int>();
+            if (sideQuests == null)
+            {
+                Debug.LogWarning("computeCompletedSideQuests returned null in SaveGameModel");
+                return null;
+            }
+            else
+            {
+                foreach (var sideQuest in sideQuests)
+                {
+                    result.Add(sideQuest.LevelNum, (int)sideQuest.HardestDifficulty);
+                }
+            }
+            return result;
+        }
+
+        private List<int> ComputeUnlockedHeckles(GameModel game)
         {
             List<int> unlockedHeckles = new List<int>();
             int numHecklesUnlocked = 3;
@@ -407,7 +433,7 @@ namespace BattleCruisers.Data.Models
             return unlockedHeckles;
         }
 
-        private List<string> computeUnlockedHulls(IReadOnlyCollection<PrefabKeys.HullKey> hulls)
+        private List<string> ComputeUnlockedHulls(IReadOnlyCollection<PrefabKeys.HullKey> hulls)
         {
             var result = new List<string>();
             if (hulls == null)
@@ -425,7 +451,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private Dictionary<string, string> computeUnlockedBuildings(IReadOnlyCollection<PrefabKeys.BuildingKey> buildings)
+        private Dictionary<string, string> ComputeUnlockedBuildings(IReadOnlyCollection<PrefabKeys.BuildingKey> buildings)
         {
             var result = new Dictionary<string, string>();
             if (buildings == null)
@@ -446,7 +472,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private Dictionary<string, string> computeUnlockedUnits(IReadOnlyCollection<PrefabKeys.UnitKey> units)
+        private Dictionary<string, string> ComputeUnlockedUnits(IReadOnlyCollection<PrefabKeys.UnitKey> units)
         {
             var result = new Dictionary<string, string>();
             if (units == null)
@@ -467,7 +493,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private Dictionary<string, string> computeLoadoutBuildings(Loadout loadout)
+        private Dictionary<string, string> ComputeLoadoutBuildings(Loadout loadout)
         {
             var result = new Dictionary<string, string>();
 
@@ -514,7 +540,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private Dictionary<string, string> computeLoadoutUnits(Loadout loadout)
+        private Dictionary<string, string> ComputeLoadoutUnits(Loadout loadout)
         {
             var result = new Dictionary<string, string>();
 
@@ -537,7 +563,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private Dictionary<string, Dictionary<string, string>> computeBuildLimits(Dictionary<BuildingCategory, List<BuildingKey>> buildLimits)
+        private Dictionary<string, Dictionary<string, string>> ComputeBuildLimits(Dictionary<BuildingCategory, List<BuildingKey>> buildLimits)
         {
             var result = new Dictionary<string, Dictionary<string, string>>();
 
@@ -561,7 +587,7 @@ namespace BattleCruisers.Data.Models
             return result;
         }
 
-        private Dictionary<string, Dictionary<string, string>> computeUnitLimits(Dictionary<UnitCategory, List<UnitKey>> unitLimits)
+        private Dictionary<string, Dictionary<string, string>> ComputeUnitLimits(Dictionary<UnitCategory, List<UnitKey>> unitLimits)
         {
             var result = new Dictionary<string, Dictionary<string, string>>();
 
