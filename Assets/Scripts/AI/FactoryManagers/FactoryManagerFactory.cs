@@ -25,6 +25,7 @@ namespace BattleCruisers.AI.FactoryManagers
         private readonly static UnitKey ANTI_AIR_PLANE_KEY = StaticPrefabKeys.Units.Fighter;
         private readonly static UnitKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
         private readonly static UnitKey BROADSWROD_GUNSHIP_KEY = StaticPrefabKeys.Units.Broadsword;
+        private readonly static UnitKey STRATBOMBER_KEY = StaticPrefabKeys.Units.StratBomber;
 
         public FactoryManagerFactory(IGameModel gameModel, IPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
         {

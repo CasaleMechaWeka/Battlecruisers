@@ -35,7 +35,7 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         [Header("Aircraft")]
         public UnitButtonController bomberButton;
-        public UnitButtonController gunshipButton, fighterButton, steamCopterButton, broadsword;
+        public UnitButtonController gunshipButton, fighterButton, steamCopterButton, broadswordButton;
 
         [Header("Ships")]
         public UnitButtonController attackBoatButton;
@@ -101,7 +101,7 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
                     UseNullButtonIfNeeded(gunshipButton),
                     UseNullButtonIfNeeded(fighterButton),
                     UseNullButtonIfNeeded(steamCopterButton),
-                    UseNullButtonIfNeeded(broadsword));
+                    UseNullButtonIfNeeded(broadswordButton));
             _shipsListener
                 = new ShipButtonsHotkeyListener(
                     hotkeyDetector,

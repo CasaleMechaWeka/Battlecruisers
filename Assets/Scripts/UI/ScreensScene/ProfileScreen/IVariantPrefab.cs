@@ -46,6 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Gunship,
         SteamCopter,
         Broadsword,
+        StratBomber,
         AttackBoat,
         AttackRIB,
         Frigate,

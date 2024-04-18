@@ -138,6 +138,29 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
             };
         }
 
+        public IList<Vector2> FindStratBomberPatrolPoints(float cruisingAltitudeInM)
+        {
+            
+            {
+                // Only let bombers fuzz downwards, so:
+                // 1. They will always be in range of AA guns
+                // 2. The don't cover the tutorial explanation text :)
+                cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM, onlyDownwards: true);
+            }
+
+            float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
+            float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
+
+            float enemyCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? -BOMBER_PATROL_MARGIN : BOMBER_PATROL_MARGIN;
+            float enemyCruiserpatrolPointX = _enemyCruiserPosition.x + enemyCruiserPatrolPointAdjustmentX;
+
+            return new List<Vector2>()
+            {
+                new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM),
+                new Vector2(enemyCruiserpatrolPointX, cruisingAltitudeInM)
+            };
+        }
+
         public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM)
 		{
             cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);

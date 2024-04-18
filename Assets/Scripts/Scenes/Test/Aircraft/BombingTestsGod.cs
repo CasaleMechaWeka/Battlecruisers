@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 	{
         private AirFactory _factory;
 
-        public BomberController bomberToLeft, bomberToRight;
+        public AircraftController bomberToLeft, bomberToRight;
 		public List<Vector2> leftPatrolPoints, rightPatrolPoints;
 
         protected override List<GameObject> GetGameObjects()

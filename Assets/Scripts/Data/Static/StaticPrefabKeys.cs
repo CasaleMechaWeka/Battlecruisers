@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System.Collections.Generic;
@@ -81,6 +82,7 @@ namespace BattleCruisers.Data.Static
             public static UnitKey Gunship { get; } = new UnitKey(UnitCategory.Aircraft, "Gunship");
             public static UnitKey SteamCopter { get; } = new UnitKey(UnitCategory.Aircraft, "SteamCopter");
             public static UnitKey Broadsword { get; } = new UnitKey(UnitCategory.Aircraft, "Broadsword");
+            public static UnitKey StratBomber { get; } = new UnitKey(UnitCategory.Aircraft, "StratBomber");
 
             public static UnitKey TestAircraft { get; } = new UnitKey(UnitCategory.Aircraft, "TestAircraft");
 
@@ -101,7 +103,7 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         // Aircraft
-                        Bomber, Fighter, Gunship, SteamCopter, Broadsword, TestAircraft,
+                        Bomber, Fighter, Gunship, SteamCopter, Broadsword, StratBomber, TestAircraft,
                         // Ships
                         AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, ArchonBattleship, GlassCannoneer, GunBoat
                     };
