@@ -31,6 +31,7 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey SamSite { get; } = new BuildingKey(BuildingCategory.Defence, "SamSite");
             public static BuildingKey TeslaCoil { get; } = new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
             public static BuildingKey Coastguard { get; } = new BuildingKey(BuildingCategory.Defence, "Coastguard");//new
+            public static BuildingKey FlakTurret { get; } = new BuildingKey(BuildingCategory.Defence, "FlakTurret");//new
 
             // Offence
             public static BuildingKey Artillery { get; } = new BuildingKey(BuildingCategory.Offence, "Artillery");
@@ -61,7 +62,7 @@ namespace BattleCruisers.Data.Static
                         // Tactical
                         ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower,
                         // Defence
-                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard,
+                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret,
                         // Offence
                         Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, //railgun = LasCannon! 
                         // Ultras

@@ -52,6 +52,7 @@ namespace BattleCruisers.Utils
         Building_SamSite = 0303,
         Building_TeslaCoil = 0304,
         Building_Coastguard = 0305,
+        Building_FlakTurret = 0306,
 
         // Offence
         Building_Artillery = 0400,

@@ -33,6 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         SamSite,
         TeslaCoil,
         Coastguard,
+        FlakTurret,
         Artillery,
         RocketLauncher,
         Railgun,

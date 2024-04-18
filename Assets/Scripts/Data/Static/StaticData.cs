@@ -144,6 +144,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Buildings.SamSite,
                 StaticPrefabKeys.Buildings.TeslaCoil,
                 StaticPrefabKeys.Buildings.Coastguard,//new
+                StaticPrefabKeys.Buildings.FlakTurret,//new
 
                 // Offence
                 StaticPrefabKeys.Buildings.Artillery,
@@ -463,6 +464,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
                 { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
                 { StaticPrefabKeys.Buildings.Coastguard, 39 },
+                { StaticPrefabKeys.Buildings.FlakTurret, 95 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
@@ -518,7 +520,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Hammerhead, 19 },
                 { StaticPrefabKeys.Hulls.Longbow, 23 },
                 { StaticPrefabKeys.Hulls.Megalodon, 26 },
-                                { StaticPrefabKeys.Hulls.Rickshaw, 34 },
+                { StaticPrefabKeys.Hulls.Rickshaw, 34 },
                 { StaticPrefabKeys.Hulls.TasDevil, 35 },
                 { StaticPrefabKeys.Hulls.BlackRig, 37 },
                 { StaticPrefabKeys.Hulls.Yeti, 40 }

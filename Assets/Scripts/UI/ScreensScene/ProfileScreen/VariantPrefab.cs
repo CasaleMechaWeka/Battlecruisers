@@ -109,6 +109,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
                 case ParentBuildable.Coastguard:
                     return new BuildingKey(BuildingCategory.Defence, "Coastguard");
+                case ParentBuildable.FlakTurret:
+                    return new BuildingKey(BuildingCategory.Defence, "FlakTurret");
                 case ParentBuildable.Artillery:
                     return new BuildingKey(BuildingCategory.Offence, "Artillery");
                 case ParentBuildable.RocketLauncher:
@@ -190,6 +192,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPTeslaCoil");
                 case ParentBuildable.Coastguard:
                     return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPCoastguard");
+                case ParentBuildable.FlakTurret:
+                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPFlakTurret");
                 case ParentBuildable.Artillery:
                     return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPArtillery");
                 case ParentBuildable.RocketLauncher:
@@ -284,6 +288,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = false;
                     break;
                 case ParentBuildable.Coastguard:
+                    ret = false;
+                    break;
+                case ParentBuildable.FlakTurret:
                     ret = false;
                     break;
                 case ParentBuildable.Artillery:
