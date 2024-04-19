@@ -24,7 +24,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         {
             return new List<IBaseStrategy>()
             {
-                //Temp Set 9, Please change accordingly
+                // Set 0: SideQuests 0 - 8
                 new BalancedStrategy(),
                 new BoomStrategy(),
                 new RushStrategy(),
@@ -33,7 +33,10 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BoomStrategy(),
                 new BoomStrategy(),
                 new RushStrategy(),
-                new BalancedStrategy()
+                new BalancedStrategy(),
+
+                // Set 1: SideQuests 9 - ???
+                new BoomStrategy()
             };
         }
 
@@ -41,7 +44,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         {
             return new List<IBaseStrategy>()
             {
-                // Set 9: Levels 32-40
+                // Set 0: SideQuests 0 - 8
                 new BasicTurtleStrategy(),
                 new BasicBoomDefensiveStrategy(),
                 new BasicRushStrategy(),
@@ -50,7 +53,10 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicBoomAggressiveStrategy(),
                 new BasicBoomDefensiveStrategy(),
                 new BasicRushStrategy(),
-                new BasicTurtleStrategy()
+                new BasicTurtleStrategy(),
+
+                // Set 1: SideQuests 9 - ???
+                new BasicBoomAggressiveStrategy()
             };
         }
 
@@ -58,7 +64,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         {
             return new List<IOffensiveRequest[]>()
             {
-                // Enemies for levels 32 - 40
+                // Set 0: SIdeQuests 0 - 8
 
                 new IOffensiveRequest[]
                 {
@@ -119,6 +125,17 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+
+                // Set 1: SideQuests 9 - ???
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 }
             };

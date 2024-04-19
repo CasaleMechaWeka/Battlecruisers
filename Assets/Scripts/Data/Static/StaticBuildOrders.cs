@@ -28,9 +28,9 @@ namespace BattleCruisers.Data.Static
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
                         new OffensivePrefabKeyWrapper(),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation)
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4)
                     };
                 }
             }
@@ -50,10 +50,10 @@ namespace BattleCruisers.Data.Static
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
                         new OffensivePrefabKeyWrapper(),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
                         new OffensivePrefabKeyWrapper(),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
                         new OffensivePrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),

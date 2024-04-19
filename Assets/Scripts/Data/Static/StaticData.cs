@@ -408,10 +408,10 @@ namespace BattleCruisers.Data.Static
                 new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(37), 32, 4, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday, false, 5),
                 new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(38), 32, 5, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, false, 6),
                 new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(39), 32, 6, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise, false, 7),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(40), 32, 7, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, false, 8)
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(40), 32, 7, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, false, 8),
 
 
-               // new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(41), 32, null, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Purple, false, 8)
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(41), 8, -1, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Purple, false, 9)
             };
         }
 
