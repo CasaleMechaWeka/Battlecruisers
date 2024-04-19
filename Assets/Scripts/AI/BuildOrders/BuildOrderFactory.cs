@@ -10,14 +10,12 @@ using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using UnityEngine;
 
 namespace BattleCruisers.AI.BuildOrders
 {
     public class BuildOrderFactory : IBuildOrderFactory
-	{
+    {
         private readonly ISlotAssigner _slotAssigner;
         private readonly IStaticData _staticData;
         private readonly IGameModel _gameModel;
@@ -28,38 +26,38 @@ namespace BattleCruisers.AI.BuildOrders
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel, IStrategyFactory strategyFactory)
-		{
+        public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel, IStrategyFactory strategyFactory)
+        {
             Helper.AssertIsNotNull(slotAssigner, staticData, gameModel, strategyFactory);
 
             _slotAssigner = slotAssigner;
             _staticData = staticData;
             _gameModel = gameModel;
             _strategyFactory = strategyFactory;
-		}
+        }
 
-		/// <summary>
-		/// Gets the basic build order, which contains counters to threats.
-		/// </summary>
+        /// <summary>
+        /// Gets the basic build order, which contains counters to threats.
+        /// </summary>
         public IDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo)
-		{
+        {
             IStrategy strategy = _strategyFactory.GetBasicStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
-		}
+        }
 
-		/// <summary>
-		/// Build orders do NOT contain counters to threats.  These counters
-		/// get created on the fly in response to threats.
-		/// </summary>
+        /// <summary>
+        /// Build orders do NOT contain counters to threats.  These counters
+        /// get created on the fly in response to threats.
+        /// </summary>
         public IDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo)
-		{
+        {
             IStrategy strategy = _strategyFactory.GetAdaptiveStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
-		}
+        }
 
         private IDynamicBuildOrder GetBuildOrder(IStrategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
-		{
-			// Create offensive build order
+        {
+            // Create offensive build order
             //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
 
             int numOfOffensiveSlots = FindNumOfOffensiveSlots(levelInfo);
@@ -74,18 +72,18 @@ namespace BattleCruisers.AI.BuildOrders
             IDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
             IDynamicBuildOrder antiNavalBuildOrder = hasDefensivePlaceholders ? CreateAntiNavalBuildOrder(levelInfo) : null;
 
-			IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
+            IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
 
-			IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
+            IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
 
             foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
-			{
-				keyWrapper.Initialise(buildOrders);
-			}
+            {
+                keyWrapper.Initialise(buildOrders);
+            }
 
             return new StrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);
-		}
-        
+        }
+
         // TODO: Find a better class to move this to. Make the method public to add unit test!
         private int FindNumOfOffensiveSlots(ILevelInfo levelInfo)
         {
@@ -95,12 +93,12 @@ namespace BattleCruisers.AI.BuildOrders
             ISlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
             int numOfOffensiveSlots = slotAccessor.GetSlotCount(SlotType.Platform);
 
-            if(levelInfo.HasMastOffensive())
+            if (levelInfo.HasMastOffensive())
             {
                 numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Mast) - numOfMastSlotsToReserve;
             }
 
-            if(levelInfo.HasBowOffensive()) 
+            if (levelInfo.HasBowOffensive())
             {
                 numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Bow);
             }
@@ -114,29 +112,29 @@ namespace BattleCruisers.AI.BuildOrders
         /// those objects were lost!!!
         /// </summary>
         private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots, ILevelInfo levelInfo)
-		{            
-			AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
+        {
+            AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
-			// Create individual build orders
-			IList<IDynamicBuildOrder> buildOrders = new List<IDynamicBuildOrder>();
-			foreach (IOffensiveRequest request in requests)
-			{
+            // Create individual build orders
+            IList<IDynamicBuildOrder> buildOrders = new List<IDynamicBuildOrder>();
+            foreach (IOffensiveRequest request in requests)
+            {
                 UnityEngine.Debug.Log(request);
                 buildOrders.Add(CreateBuildOrder(request, levelInfo));
-			}
+            }
 
-			// Create combined build order
-			return new CombinedBuildOrders(buildOrders);
-		}
+            // Create combined build order
+            return new CombinedBuildOrders(buildOrders);
+        }
 
-		private void AssignSlots(ISlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
-		{
-			// Should have a single naval request at most
-			IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
-			if (navalRequest != null)
-			{
-				navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
-			}
+        private void AssignSlots(ISlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
+        {
+            // Should have a single naval request at most
+            IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
+            if (navalRequest != null)
+            {
+                navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
+            }
 
             // Should have a single air request at most
             IOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Air);
@@ -150,29 +148,29 @@ namespace BattleCruisers.AI.BuildOrders
             IEnumerable<IOffensiveRequest> platformRequests = requests.Where
                 (request => request.Type != OffensiveType.Naval && request.Type != OffensiveType.Air);
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
-		}
+        }
 
         private IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request, ILevelInfo levelInfo)
         {
             Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 
             switch (request.Type)
-			{
-				case OffensiveType.Air:
+            {
+                case OffensiveType.Air:
                     return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.AirFactory, request.NumOfSlotsToUse);
-					
-				case OffensiveType.Naval:
+
+                case OffensiveType.Naval:
                     return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.NavalFactory, request.NumOfSlotsToUse);
-					
-				case OffensiveType.Buildings:
+
+                case OffensiveType.Buildings:
                     return CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
-					
-				case OffensiveType.Ultras:
+
+                case OffensiveType.Ultras:
                     return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, _staticData.AIBannedUltrakeys);
-					
-				default:
-					throw new ArgumentException();
-			}
+
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         public IDynamicBuildOrder CreateAntiAirBuildOrder(ILevelInfo levelInfo)
@@ -188,19 +186,19 @@ namespace BattleCruisers.AI.BuildOrders
                     numOfSlotsToUse: numOfSlotsToUse);
         }
 
-		public IDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo)
-		{
+        public IDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo)
+        {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
 
-			return
-				new AntiUnitBuildOrder(
+            return
+                new AntiUnitBuildOrder(
                     basicDefenceKey: StaticPrefabKeys.Buildings.AntiShipTurret,
                     advancedDefenceKey: StaticPrefabKeys.Buildings.Mortar,
                     levelInfo: levelInfo,
-					numOfSlotsToUse: numOfSlotsToUse);
-		}
-		
+                    numOfSlotsToUse: numOfSlotsToUse);
+        }
+
         public bool IsAntiRocketBuildOrderAvailable()
         {
             return _gameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.TeslaCoil);
@@ -210,11 +208,11 @@ namespace BattleCruisers.AI.BuildOrders
         {
             return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.TeslaCoil, size: 1);
         }
-		
-		public bool IsAntiStealthBuildOrderAvailable()
-		{
+
+        public bool IsAntiStealthBuildOrderAvailable()
+        {
             return _gameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.SpySatelliteLauncher);
-		}
+        }
 
         public IDynamicBuildOrder CreateAntiStealthBuildOrder()
         {
@@ -230,8 +228,8 @@ namespace BattleCruisers.AI.BuildOrders
         }
 
         private IDynamicBuildOrder CreateDynamicBuildOrder(
-            BuildingCategory buildingCategory, 
-            int size, 
+            BuildingCategory buildingCategory,
+            int size,
             ILevelInfo levelInfo,
             IList<BuildingKey> bannedBuildings = null)
         {
