@@ -60,7 +60,7 @@ namespace BattleCruisers.Data.Serialization
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || ((GameModel)output).Variants.Count < 131 || ((GameModel)output).NumOfLevelsCompleted > 31)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || ((GameModel)output).Variants.Count < 131 || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
