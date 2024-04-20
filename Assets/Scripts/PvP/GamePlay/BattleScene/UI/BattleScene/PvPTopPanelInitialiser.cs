@@ -53,7 +53,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 playerRightCruiserHealthBar = playerRightHealthInitialiser.Initialise(playerCruiser);
             }
 
-
             return new PvPTopPanelComponents(playerLeftCruiserHealthBar, playerRightCruiserHealthBar);
         }
     }

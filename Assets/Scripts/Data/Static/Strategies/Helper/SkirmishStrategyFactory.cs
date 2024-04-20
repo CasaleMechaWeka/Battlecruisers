@@ -68,7 +68,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                         return new BasicBoomAggressiveStrategy();
                     }
                     else
-                    { 
+                    {
                         return new BasicBoomDefensiveStrategy();
                     }
 
@@ -90,7 +90,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 allOptions = GetOffensiveRequestsListNoUltras(strategyType);
             }
 
-            return _random.RandomItem(allOptions); 
+            return _random.RandomItem(allOptions);
         }
 
         private IList<IOffensiveRequest[]> GetOffensiveRequestsList(StrategyType strategyType)
@@ -105,7 +105,6 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
                 case StrategyType.Boom:
                     return OffensiveRequestsProvider.Boom.All;
-
                 default:
                     throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
             }
