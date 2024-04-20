@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(
                 applicationModel,
                 uiManager,
-                playerCruiser, 
+                playerCruiser,
                 userChosenTargetHelper,
                 buttonVisibilityFilters,
                 perFrameUpdater,
@@ -62,18 +62,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, perFrameUpdater, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             heckleController.Initialise(applicationModel.DataProvider, soundPlayer, uiManager);
             uiManager.SetHecklePanel(heckleController);
-        //    PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
+            //    PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
-            makeRightBackgroundPanelFit();
+            MakeRightBackgroundPanelFit();
             return
                 new PvPRightPanelComponents(
                     informator,
                     mainMenuManager,
                     modalMenu,
                     heckleController,
-                  //  speedComponents,
+                    //  speedComponents,
                     helpButton);
         }
 
@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
         }
 
-        public void makeRightBackgroundPanelFit()
+        public void MakeRightBackgroundPanelFit()
         {
             if ((double)Screen.width / Screen.height <= 13.0 / 8)
             {

@@ -10,9 +10,6 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -99,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 foreach (PvPBuildingKey buildingKey in pvp_buildingKeys)
                 {
                     IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
-                //    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
+                    //    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
                     categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
                 }
             }
@@ -129,7 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
 
-        private PvPUnitKey convertToPvP(UnitKey uKey)
+        private PvPUnitKey ConvertToPvP(UnitKey uKey)
         {
             switch (uKey.UnitCategory)
             {
@@ -144,7 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        private PvPUnitCategory convertToPvP(UnitCategory category)
+        private PvPUnitCategory ConvertToPvP(UnitCategory category)
         {
             switch (category)
             {
@@ -170,13 +167,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 IList<PvPUnitKey> pvp_unitKeys = new List<PvPUnitKey>();
                 foreach (UnitKey uKey in unitKeys)
                 {
-                    PvPUnitKey _uKey = convertToPvP(uKey);
+                    PvPUnitKey _uKey = ConvertToPvP(uKey);
                     pvp_unitKeys.Add(_uKey);
                 }
 
                 if (pvp_unitKeys.Count != 0)
                 {
-                    categoryToUnits[convertToPvP(unitCategory)] = GetUnits(pvp_unitKeys, _prefabFactory);
+                    categoryToUnits[ConvertToPvP(unitCategory)] = GetUnits(pvp_unitKeys, _prefabFactory);
                 }
             }
 
@@ -192,7 +189,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 IPvPBuildableWrapper<IPvPUnit> unitWrapper = prefabFactory.GetUnitWrapperPrefab(unitKey);
                 unitWrappers.Add(unitWrapper);
             }
-
 
             return unitWrappers;
         }

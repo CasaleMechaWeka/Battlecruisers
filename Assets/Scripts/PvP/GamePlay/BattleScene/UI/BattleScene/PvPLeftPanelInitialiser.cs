@@ -3,17 +3,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
@@ -24,7 +21,6 @@ using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -41,8 +37,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public GameObject popLimitReachedFeedback;
 
         public RectTransform rectTransformThis;
-
-
 
         /*        public async Task<PvPLeftPanelComponents> Initialise(
                     IPvPDroneManager droneManager,
@@ -93,7 +87,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
                 }*/
 
-
         public PvPLeftPanelComponents Initialise(
             PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
@@ -138,7 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     staticData,
                     flipClickAndDragIcon);
 
-            makeLeftBackgroundPanelFit();
+            MakeLeftBackgroundPanelFit();
 
             return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
         }
@@ -194,11 +187,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         //Scales the LeftBackgroundPanel to a smaller size if the aspect ratio is 13.0/8 or lower
         //Warning: This is only called on initialisation, not on screen resize. Currently not a problem, but if screen resizing becomes a thing during a match, then this will need to be called.
-        public void makeLeftBackgroundPanelFit()
+        public void MakeLeftBackgroundPanelFit()
         {
             if ((double)Screen.width / Screen.height <= 13.0 / 8)
             {
-                float scaleAmount = (float)(((double)Screen.width / Screen.height) / 1.667);
+                float scaleAmount = (float)((double)Screen.width / Screen.height / 1.667);
                 //Debug.Log(scaleAmount);
                 rectTransformThis.localScale = new Vector2(scaleAmount, scaleAmount);
             }
