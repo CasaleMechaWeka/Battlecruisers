@@ -145,8 +145,8 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 }
             };
         }
