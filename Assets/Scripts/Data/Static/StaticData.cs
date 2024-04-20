@@ -411,7 +411,8 @@ namespace BattleCruisers.Data.Static
                 new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(40), 32, 7, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, false, 8),
 
 
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(41), 8, -1, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Purple, false, 9)
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(41), 8, -1, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Purple, false, 9),
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(42), 11, -1, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, false, 10)
             };
         }
 

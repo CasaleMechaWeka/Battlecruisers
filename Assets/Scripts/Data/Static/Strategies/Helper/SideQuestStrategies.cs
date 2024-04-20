@@ -36,6 +36,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BalancedStrategy(),
 
                 // Set 1: SideQuests 9 - ???
+                new BoomStrategy(),
                 new BoomStrategy()
             };
         }
@@ -56,7 +57,8 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicTurtleStrategy(),
 
                 // Set 1: SideQuests 9 - ???
-                new BasicBoomAggressiveStrategy()
+                new BasicBoomAggressiveStrategy(),
+                new BasicBoomDefensiveStrategy()
             };
         }
 
@@ -137,6 +139,15 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+
                 }
             };
         }
