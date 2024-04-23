@@ -47,6 +47,8 @@ namespace BattleCruisers.Projectiles
         public event EventHandler Deactivated;
 
         private IMovementController _movementController;
+        public float autoDetonationTimer = 0f;
+        private float lifeTime = 0f;
         protected IMovementController MovementController
         {
             get { return _movementController; }
@@ -91,6 +93,7 @@ namespace BattleCruisers.Projectiles
 
         public virtual void Activate(TActivationArgs activationArgs)
         {
+            lifeTime = 0f;
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
             gameObject.SetActive(true);
@@ -113,6 +116,7 @@ namespace BattleCruisers.Projectiles
 
         public void Activate(TActivationArgs activationArgs, Faction faction)
         {
+
         }
 
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
@@ -150,6 +154,15 @@ namespace BattleCruisers.Projectiles
             AdjustGameObjectDirection();
 
             PositionChanged?.Invoke(this, EventArgs.Empty);
+
+            if (autoDetonationTimer > 0f)
+            {
+                if (lifeTime >= UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f))
+                {
+                    DestroyProjectile();
+                }
+                lifeTime += Time.fixedDeltaTime;
+            }
         }
 
         void OnTriggerEnter2D(Collider2D collider)
