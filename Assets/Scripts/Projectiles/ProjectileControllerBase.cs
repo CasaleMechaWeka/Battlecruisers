@@ -12,7 +12,6 @@ using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Utils.Threading;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -114,6 +113,7 @@ namespace BattleCruisers.Projectiles
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
+
             if (autoDetonationTimer > 0f)
             {
                 IEnumerator timedSelfDestroy = TimedSelfDestroy();
