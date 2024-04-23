@@ -13,6 +13,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
@@ -170,11 +171,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             if (autoDetonationTimer > 0f)
             {
-                if (lifeTime >= UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f))
-                {
-                    DestroyProjectile();
-                }
-                lifeTime += Time.fixedDeltaTime;
+                IEnumerator timedSelfDestroy = TimedSelfDestroy();
+                StartCoroutine(timedSelfDestroy);
             }
         }
 
@@ -257,6 +255,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected virtual void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
         {
 
+        }
+
+        IEnumerator TimedSelfDestroy()
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f));
+            DestroyProjectile();
         }
     }
 }

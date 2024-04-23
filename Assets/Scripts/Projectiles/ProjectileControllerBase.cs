@@ -12,7 +12,9 @@ using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.Threading;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -112,6 +114,11 @@ namespace BattleCruisers.Projectiles
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
+            if (autoDetonationTimer > 0f)
+            {
+                IEnumerator timedSelfDestroy = TimedSelfDestroy();
+                StartCoroutine(timedSelfDestroy);
+            }
         }
 
         public void Activate(TActivationArgs activationArgs, Faction faction)
@@ -154,15 +161,6 @@ namespace BattleCruisers.Projectiles
             AdjustGameObjectDirection();
 
             PositionChanged?.Invoke(this, EventArgs.Empty);
-
-            if (autoDetonationTimer > 0f)
-            {
-                if (lifeTime >= UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f))
-                {
-                    DestroyProjectile();
-                }
-                lifeTime += Time.fixedDeltaTime;
-            }
         }
 
         void OnTriggerEnter2D(Collider2D collider)
@@ -227,6 +225,12 @@ namespace BattleCruisers.Projectiles
         protected void InvokeDeactivated()
         {
             Deactivated?.Invoke(this, EventArgs.Empty);
+        }
+
+        IEnumerator TimedSelfDestroy()
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f));
+            DestroyProjectile();
         }
     }
 }
