@@ -259,7 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         IEnumerator TimedSelfDestroy()
         {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .8f, autoDetonationTimer * 1.6f));
             DestroyProjectile();
         }
     }
