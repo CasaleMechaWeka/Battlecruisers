@@ -22,7 +22,7 @@ using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class StratBomberController : AircraftController, ITargetConsumer   //LITERALLY a duplicate of bomberController :/
+    public class StratBomberController : AircraftController, ITargetConsumer  
     {
         private BombSpawner _bombSpawner;
         private IProjectileStats _bombStats;
