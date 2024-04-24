@@ -49,6 +49,11 @@ namespace BattleCruisers.Utils.Debugging
                 dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
             }
 
+            foreach (ISideQuestData sideQuest in dataProvider.SideQuests)
+            {
+                dataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
+            }
+
             // Hulls
             foreach (HullKey hull in dataProvider.StaticData.HullKeys)
             {
@@ -64,7 +69,7 @@ namespace BattleCruisers.Utils.Debugging
                 if (!dataProvider.GameModel.UnlockedBuildings.Contains(building))
                 {
                     dataProvider.GameModel.AddUnlockedBuilding(building);
-                //    dataProvider.GameModel.PlayerLoadout.AddBuilding(building);
+                    //    dataProvider.GameModel.PlayerLoadout.AddBuilding(building);
                 }
             }
 
@@ -74,7 +79,7 @@ namespace BattleCruisers.Utils.Debugging
                 if (!dataProvider.GameModel.UnlockedUnits.Contains(unit))
                 {
                     dataProvider.GameModel.AddUnlockedUnit(unit);
-                //    dataProvider.GameModel.PlayerLoadout.AddUnit(unit);
+                    //    dataProvider.GameModel.PlayerLoadout.AddUnit(unit);
                 }
             }
 
@@ -171,7 +176,7 @@ namespace BattleCruisers.Utils.Debugging
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             dataProvider.GameModel.Coins -= 1000;
-            if(dataProvider.GameModel.Coins < 0)
+            if (dataProvider.GameModel.Coins < 0)
             {
                 dataProvider.GameModel.Coins = 0;
             }
