@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.U2D;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {

@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using System.Threading.Tasks;
 using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Buildables.Buildings
