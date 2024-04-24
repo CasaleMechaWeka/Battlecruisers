@@ -412,7 +412,8 @@ namespace BattleCruisers.Data.Static
 
 
                 new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(41), 8, -1, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Purple, false, 9),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(42), 11, -1, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, false, 10)
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(42), 11, -1, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, false, 10),
+                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(2), 16, -1, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Againagain, SkyMaterials.Cold, false, 11)
             };
         }
 
@@ -539,11 +540,11 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<BuildingKey, int>()
             {
                 // Defence
-                { StaticPrefabKeys.Buildings.MissilePod, 36 },
-                { StaticPrefabKeys.Buildings.Coastguard, 39 },
+                { StaticPrefabKeys.Buildings.MissilePod, 3 },
+                { StaticPrefabKeys.Buildings.Coastguard, 6 },
 
                 // Offence
-                { StaticPrefabKeys.Buildings.IonCannon, 38 },
+                { StaticPrefabKeys.Buildings.IonCannon, 5 },
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.NovaArtillery, 0 }
@@ -558,7 +559,7 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<UnitKey, int>()
             {
                 // Aircraft
-                { StaticPrefabKeys.Units.Broadsword, 41 },
+                { StaticPrefabKeys.Units.Broadsword, 8 },
                 
                 // Ships
             };
@@ -571,10 +572,10 @@ namespace BattleCruisers.Data.Static
 
             return new Dictionary<HullKey, int>()
             {
-                { StaticPrefabKeys.Hulls.Rickshaw, 34 },
-                { StaticPrefabKeys.Hulls.TasDevil, 35 },
-                { StaticPrefabKeys.Hulls.BlackRig, 37 },
-                { StaticPrefabKeys.Hulls.Yeti, 40 },
+                { StaticPrefabKeys.Hulls.Rickshaw, 1 },
+                { StaticPrefabKeys.Hulls.TasDevil, 2 },
+                { StaticPrefabKeys.Hulls.BlackRig, 4 },
+                { StaticPrefabKeys.Hulls.Yeti, 7 },
                 { StaticPrefabKeys.Hulls.Flea, 45 },
                 { StaticPrefabKeys.Hulls.Shepherd, 45},
                 { StaticPrefabKeys.Hulls.Microlodon, 45},
