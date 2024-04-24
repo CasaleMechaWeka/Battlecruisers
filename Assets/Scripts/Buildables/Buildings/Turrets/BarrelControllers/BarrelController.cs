@@ -15,7 +15,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Data;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
 
