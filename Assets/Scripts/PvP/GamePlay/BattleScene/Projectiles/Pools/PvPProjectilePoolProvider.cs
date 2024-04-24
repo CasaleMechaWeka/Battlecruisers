@@ -22,6 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> RocketShellPool { get; }
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> ShellsSmallPool { get; }
         public IPvPPool<PvPBombController, PvPProjectileActivationArgs<IPvPProjectileStats>> BombsPool { get; }
+        public IPvPPool<PvPBombController, PvPProjectileActivationArgs<IPvPProjectileStats>> StratBombsPool { get; }
         public IPvPPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> RocketsPool { get; }
         public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesSmallPool { get; }
         public IPvPPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> RocketsSmallPool { get; }
@@ -88,6 +89,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPStaticPrefabKeys.PvPProjectiles.PvPBomb,
                     PvPInitialCapacity.BOMB);
 
+
+            StratBombsPool
+                = CreatePool<PvPBombController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
+                    factoryProvider,
+                    PvPStaticPrefabKeys.PvPProjectiles.PvPStratBomb,
+                    PvPInitialCapacity.BOMB);
+
             RocketsPool
                 = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>(
                     factoryProvider,
@@ -150,6 +158,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await NovaShellPool.AddCapacity(1);
             await RocketShellPool.AddCapacity(1);
             await BombsPool.AddCapacity(1);
+            await StratBombsPool.AddCapacity(1);
             await RocketsPool.AddCapacity(1);
             await RocketsSmallPool.AddCapacity(1);
             await MissilesSmallPool.AddCapacity(1);
@@ -169,6 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await NovaShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
             await RocketShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
             await BombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
+            await StratBombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
             await RocketsPool.AddCapacity(PvPInitialCapacity.ROCKET - 1);
             await RocketsSmallPool.AddCapacity(PvPInitialCapacity.ROCKET - 1);
             await MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL - 1);

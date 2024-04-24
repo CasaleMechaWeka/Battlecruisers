@@ -203,6 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPProjectileKey PvPMissileSmart { get; } = new PvPProjectileKey("PvPMissileSmart");
 
             public static PvPProjectileKey PvPBomb { get; } = new PvPProjectileKey("PvPBomb");
+            public static PvPProjectileKey PvPStratBomb { get; } = new PvPProjectileKey("PvPStratBomb");
             public static PvPProjectileKey PvPNuke { get; } = new PvPProjectileKey("PvPNuke");
             public static PvPProjectileKey PvPRocket { get; } = new PvPProjectileKey("PvPRocket");
             public static PvPProjectileKey PvPRocketSmall { get; } = new PvPProjectileKey("PvPRocketSmall");
@@ -215,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     {
                         PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPRocketShell,
                         PvPMissileSmall, PvPMissileMedium, PvPMissileLarge, PvPMissileSmart,
-                        PvPBomb, PvPNuke, PvPRocket, PvPRocketSmall
+                        PvPBomb, PvPStratBomb, PvPNuke, PvPRocket, PvPRocketSmall
                     };
                 }
             }

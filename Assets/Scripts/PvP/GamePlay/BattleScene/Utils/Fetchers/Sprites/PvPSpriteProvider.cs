@@ -20,6 +20,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const int NUM_OF_STEAMCOPTER_SPRITES = 7;
         private const string SPYPLANE_SPRITE_NAME = "SpyPlane";
         private const int NUM_OF_SPYPLANE_SPRITES = 12;
+        private const string STRATBOMBER_SPRITE_NAME = "StratBomber";
+        private const int NUM_OF_STRATBOMBER_SPRITES = 12;
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";
 
@@ -52,6 +54,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task<IList<IPvPSpriteWrapper>> GetSpyPlaneSpritesAsync()
         {
             return await GetAircraftSpritesAsync(GetSpritePath(SPYPLANE_SPRITE_NAME), NUM_OF_SPYPLANE_SPRITES);
+        }
+
+        public async Task<IList<IPvPSpriteWrapper>> GetStratBomberSpritesAsync()
+        {
+            return await GetAircraftSpritesAsync(GetSpritePath(STRATBOMBER_SPRITE_NAME), NUM_OF_STRATBOMBER_SPRITES);
         }
 
 

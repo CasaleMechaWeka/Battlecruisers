@@ -21,6 +21,7 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
         public IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
+        public IPool<BombController, ProjectileActivationArgs<IProjectileStats>> StratBombsPool { get; }
         public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
         public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
@@ -87,6 +88,12 @@ namespace BattleCruisers.Projectiles.Pools
                     StaticPrefabKeys.Projectiles.Bomb,
                     InitialCapacity.BOMB);
 
+            StratBombsPool
+                = CreatePool<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
+                    factoryProvider,
+                    StaticPrefabKeys.Projectiles.StratBomb,
+                    InitialCapacity.BOMB);
+
             RocketsPool
                 = CreatePool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
                     factoryProvider,
@@ -149,6 +156,7 @@ namespace BattleCruisers.Projectiles.Pools
             NovaShellPool.AddCapacity(InitialCapacity.SHELL_LARGE);
             RocketShellPool.AddCapacity(InitialCapacity.SHELL_LARGE);
             BombsPool.AddCapacity(InitialCapacity.BOMB);
+            StratBombsPool.AddCapacity(InitialCapacity.BOMB);
             RocketsPool.AddCapacity(InitialCapacity.ROCKET);
             RocketsSmallPool.AddCapacity(InitialCapacity.ROCKET);
             MissilesSmallPool.AddCapacity(InitialCapacity.MISSILE_SMALL);

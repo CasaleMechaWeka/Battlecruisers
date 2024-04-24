@@ -696,6 +696,7 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey MissileSmart { get; } = new ProjectileKey("MissileSmart");
 
             public static ProjectileKey Bomb { get; } = new ProjectileKey("Bomb");
+            public static ProjectileKey StratBomb { get; } = new ProjectileKey("StratBomb");
             public static ProjectileKey Nuke { get; } = new ProjectileKey("Nuke");
             public static ProjectileKey Rocket { get; } = new ProjectileKey("Rocket");
             public static ProjectileKey RocketSmall { get; } = new ProjectileKey("RocketSmall");
@@ -708,7 +709,7 @@ namespace BattleCruisers.Data.Static
                     {
                         Bullet, HighCalibreBullet, TinyBullet, FlakBullet, ShellSmall, ShellLarge, NovaShell, RocketShell,
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart,
-                        Bomb, Nuke, Rocket, RocketSmall
+                        Bomb, StratBomb, Nuke, Rocket, RocketSmall
                     };
                 }
             }
