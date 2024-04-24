@@ -13,6 +13,7 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -47,6 +48,8 @@ namespace BattleCruisers.Projectiles
         public event EventHandler Deactivated;
 
         private IMovementController _movementController;
+        public float autoDetonationTimer = 0f;
+        private float lifeTime = 0f;
         protected IMovementController MovementController
         {
             get { return _movementController; }
@@ -91,6 +94,7 @@ namespace BattleCruisers.Projectiles
 
         public virtual void Activate(TActivationArgs activationArgs)
         {
+            lifeTime = 0f;
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
             gameObject.SetActive(true);
@@ -109,10 +113,17 @@ namespace BattleCruisers.Projectiles
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
+
+            if (autoDetonationTimer > 0f)
+            {
+                IEnumerator timedSelfDestroy = TimedSelfDestroy();
+                StartCoroutine(timedSelfDestroy);
+            }
         }
 
         public void Activate(TActivationArgs activationArgs, Faction faction)
         {
+
         }
 
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
@@ -214,6 +225,12 @@ namespace BattleCruisers.Projectiles
         protected void InvokeDeactivated()
         {
             Deactivated?.Invoke(this, EventArgs.Empty);
+        }
+
+        IEnumerator TimedSelfDestroy()
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f));
+            DestroyProjectile();
         }
     }
 }

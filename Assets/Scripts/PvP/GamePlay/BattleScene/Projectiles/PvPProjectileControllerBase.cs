@@ -13,6 +13,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
@@ -48,6 +49,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public event EventHandler Destroyed;
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
+        public float autoDetonationTimer = 0f;
+        private float lifeTime = 0f;
 
         private IPvPMovementController _movementController;
         protected IPvPMovementController MovementController
@@ -107,6 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public virtual void Activate(TPvPActivationArgs activationArgs)
         {
+            lifeTime = 0f;
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
             gameObject.SetActive(true);
@@ -164,6 +168,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
             AdjustGameObjectDirection();
             PositionChanged?.Invoke(this, EventArgs.Empty);
+
+            if (autoDetonationTimer > 0f)
+            {
+                IEnumerator timedSelfDestroy = TimedSelfDestroy();
+                StartCoroutine(timedSelfDestroy);
+            }
         }
 
         void OnTriggerEnter2D(Collider2D collider)
@@ -245,6 +255,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected virtual void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
         {
 
+        }
+
+        IEnumerator TimedSelfDestroy()
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .7f, autoDetonationTimer * 1.5f));
+            DestroyProjectile();
         }
     }
 }

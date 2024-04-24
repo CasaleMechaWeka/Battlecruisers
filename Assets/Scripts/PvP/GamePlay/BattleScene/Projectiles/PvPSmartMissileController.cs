@@ -20,7 +20,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
-using BattleCruisers.Projectiles;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -284,14 +283,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void iSetActive_Rigidbody()
         {
             gameObject.SetActive(true);
-/*            _rigidBody.velocity = temp_velocity;
-            _rigidBody.gravityScale = temp_gravityScale;
-            _isActiveAndAlive = temp_isAlive;
+            /*            _rigidBody.velocity = temp_velocity;
+                        _rigidBody.gravityScale = temp_gravityScale;
+                        _isActiveAndAlive = temp_isAlive;
 
-            if (_rigidBody.velocity != Vector2.zero)
-            {
-                transform.right = _rigidBody.velocity;
-            }*/
+                        if (_rigidBody.velocity != Vector2.zero)
+                        {
+                            transform.right = _rigidBody.velocity;
+                        }*/
         }
         //----------------------------- Rpcs -----------------------------
 
