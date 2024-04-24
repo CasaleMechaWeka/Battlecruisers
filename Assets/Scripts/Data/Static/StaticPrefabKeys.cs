@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System.Collections.Generic;
