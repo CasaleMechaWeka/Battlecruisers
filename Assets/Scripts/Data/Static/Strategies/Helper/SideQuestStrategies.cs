@@ -124,7 +124,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
 
-                new IOffensiveRequest[] //Broadsword
+                new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
