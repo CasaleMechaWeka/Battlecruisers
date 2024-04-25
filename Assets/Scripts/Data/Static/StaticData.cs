@@ -560,6 +560,7 @@ namespace BattleCruisers.Data.Static
             {
                 // Aircraft
                 { StaticPrefabKeys.Units.Broadsword, 8 },
+                { StaticPrefabKeys.Units.StratBomber, 9 },
                 
                 // Ships
             };

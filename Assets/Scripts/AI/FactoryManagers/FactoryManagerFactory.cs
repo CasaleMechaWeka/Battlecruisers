@@ -10,7 +10,6 @@ using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Cruisers;
-using UnityEngine;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
@@ -81,6 +80,11 @@ namespace BattleCruisers.AI.FactoryManagers
             _prefabFactory.GetUnitWrapperPrefab(BROADSWROD_GUNSHIP_KEY) :
             lategamePlane;
 
+            IBuildableWrapper<IUnit> stratBomber =
+            _gameModel.IsUnitUnlocked(STRATBOMBER_KEY) ?
+            _prefabFactory.GetUnitWrapperPrefab(STRATBOMBER_KEY) :
+            lategamePlane;
+
             IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
             IThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
 
@@ -91,6 +95,7 @@ namespace BattleCruisers.AI.FactoryManagers
                     antiAirPlane,
                     antiNavalPlane,
                     broadswordGunship,
+                    stratBomber,
                     aiCruiser.DroneManager,
                     airThreatMonitor,
                     navalThreatMonitor,

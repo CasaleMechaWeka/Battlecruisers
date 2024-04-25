@@ -4,7 +4,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
@@ -18,7 +17,7 @@ namespace BattleCruisers.AI.FactoryManagers
     /// </summary>
     public class AircraftUnitChooser : UnitChooser
     {
-        private readonly IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship;
+        private readonly IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber;
         private readonly IDroneManager _droneManager;
         private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
         private readonly ThreatLevel _threatLevelThreshold;
@@ -29,18 +28,20 @@ namespace BattleCruisers.AI.FactoryManagers
             IBuildableWrapper<IUnit> antiAirPlane,
             IBuildableWrapper<IUnit> antiNavalPlane,
             IBuildableWrapper<IUnit> broadswordGunship,
+            IBuildableWrapper<IUnit> stratBomber,
             IDroneManager droneManager,
             IThreatMonitor airThreatMonitor,
             IThreatMonitor navalThreatMonitor,
             ThreatLevel threatLevelThreshold)
         {
-            Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, broadswordGunship, droneManager, airThreatMonitor, navalThreatMonitor);
+            Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, broadswordGunship, stratBomber, droneManager, airThreatMonitor, navalThreatMonitor);
 
             _defaultPlane = defaultPlane;
             _lategamePlane = lategamePlane;
             _antiAirPlane = antiAirPlane;
             _antiNavalPlane = antiNavalPlane;
             _broadswordGunship = broadswordGunship;
+            _stratBomber = stratBomber;
             _droneManager = droneManager;
             _airThreatMonitor = airThreatMonitor;
             _navalThreatMonitor = navalThreatMonitor;
@@ -92,7 +93,17 @@ namespace BattleCruisers.AI.FactoryManagers
             }
             else
             {
-                return UnityEngine.Random.Range(0, 20) < 19 ? _lategamePlane : _broadswordGunship;
+                int randInt = UnityEngine.Random.Range(0, 20);
+                IBuildableWrapper<IUnit> lateGamePlane;
+
+                if (randInt > 18)
+                    lateGamePlane = _broadswordGunship;
+                else if (randInt > 12)
+                    lateGamePlane = _stratBomber;
+                else
+                    lateGamePlane = _lategamePlane;
+
+                return lateGamePlane;
             }
         }
 
