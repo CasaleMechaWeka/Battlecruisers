@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -9,7 +7,7 @@ public class XPBar : MonoBehaviour
 
     private void OnEnable()
     {
-        if(levelBar == null)
+        if (levelBar == null)
         {
             levelBar = GetComponentInChildren<Slider>();
         }
