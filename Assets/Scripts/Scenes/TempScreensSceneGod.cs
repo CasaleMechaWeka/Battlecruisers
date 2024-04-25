@@ -479,7 +479,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        public void GoToSideQuestTrashScreen(int sideQuestLevelNum)
+        public void GoToSideQuestTrashScreen(int sideQuestLevelNum, int firstLevelOfStage = -1)
         {
             // Implementation similar to GoToTrashScreen method, but for side quest levels
             AdvertisingBanner.stopAdvert();

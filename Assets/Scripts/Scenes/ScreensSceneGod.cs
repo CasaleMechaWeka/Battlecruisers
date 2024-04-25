@@ -712,7 +712,7 @@ namespace BattleCruisers.Scenes
                 case "Flea":
                     return HullType.Flea;
                 case "Goatherd":
-                    return HullType.Goatherd;  
+                    return HullType.Goatherd;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -761,10 +761,12 @@ namespace BattleCruisers.Scenes
         }
 
 
-        public void GoToSideQuestTrashScreen(int sideQuestLevelNum)
+        public void GoToSideQuestTrashScreen(int sideQuestLevelNum, int firstLevelOfStage = -1)
         {
             // Implementation similar to GoToTrashScreen method, but for side quest levels
             AdvertisingBanner.stopAdvert();
+            if (firstLevelOfStage > -1)
+                _applicationModel.SelectedLevel = firstLevelOfStage + 1;
             _applicationModel.Mode = GameMode.SideQuest;
 
             _applicationModel.SelectedSideQuestID = sideQuestLevelNum;

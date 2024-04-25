@@ -5,6 +5,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
 using BattleCruisers.Data;
+using BattleCruisers.UI.ScreensScene.LevelsScreen;
 
 public class SideQuestButtonController : ElementWithClickSound
 {
@@ -21,6 +22,8 @@ public class SideQuestButtonController : ElementWithClickSound
     private int requiredSideQuestID;
     private Transform buttonImages;
 
+    private LevelsSetController levelsSetController;
+
     public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
@@ -31,6 +34,10 @@ public class SideQuestButtonController : ElementWithClickSound
         //Most of side quest scripts will need to be modified once side quest manager is done
         _screensSceneGod = screensSceneGod;
         _staticData = dataProvider.StaticData;
+        levelsSetController = transform.parent.GetComponent<LevelsSetController>();
+
+        if (levelsSetController == null)
+            Debug.LogError("LevelsSetController component was not found");
 
         base.Initialise(soundPlayer);
         requiredLevel = _staticData.SideQuests[sideQuestID].UnlockRequirementLevel;
@@ -62,6 +69,10 @@ public class SideQuestButtonController : ElementWithClickSound
     protected override void OnClicked()
     {
         base.OnClicked();
-        _screensSceneGod.GoToSideQuestTrashScreen(sideQuestID);
+
+        int firstLevelOfStage = -1;
+        if (levelsSetController != null)
+            firstLevelOfStage = levelsSetController.firstLevelIndex;
+        _screensSceneGod.GoToSideQuestTrashScreen(sideQuestID, firstLevelOfStage);
     }
 }
