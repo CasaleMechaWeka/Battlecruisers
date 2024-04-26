@@ -38,7 +38,8 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 // Set 1: SideQuests 9 - ???
                 new BoomStrategy(),
                 new BoomStrategy(),
-                new BalancedStrategy()
+                new BalancedStrategy(),
+                new BoomStrategy()
             };
         }
 
@@ -60,7 +61,8 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 // Set 1: SideQuests 9 - ???
                 new BasicBoomAggressiveStrategy(),
                 new BasicBoomDefensiveStrategy(),
-                new BasicBalancedStrategy()
+                new BasicBalancedStrategy(),
+                new BasicTurtleStrategy()
             };
         }
 
@@ -155,7 +157,15 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
                 }
             };
         }
@@ -184,7 +194,6 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
         private IStrategy GetStrategy(IList<IStrategy> strategies, int levelNum)
         {
-            Debug.Log(levelNum);
             int levelIndex = levelNum;
             Assert.IsTrue(levelIndex < strategies.Count);
 
