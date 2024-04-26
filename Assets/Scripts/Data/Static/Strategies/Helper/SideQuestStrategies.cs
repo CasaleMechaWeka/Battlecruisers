@@ -39,7 +39,8 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BoomStrategy(),
                 new BoomStrategy(),
                 new BalancedStrategy(),
-                new BoomStrategy()
+                new BoomStrategy(),
+                new BalancedStrategy()
             };
         }
 
@@ -62,7 +63,8 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicBoomAggressiveStrategy(),
                 new BasicBoomDefensiveStrategy(),
                 new BasicBalancedStrategy(),
-                new BasicTurtleStrategy()
+                new BasicTurtleStrategy(),
+                new BasicBalancedStrategy()
             };
         }
 
@@ -163,6 +165,15 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
+                },
+
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
