@@ -2,6 +2,11 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using Buildings = BattleCruisers.Data.Static.StaticPrefabKeys.Buildings;
+using Units = BattleCruisers.Data.Static.StaticPrefabKeys.Units;
+using Hulls = BattleCruisers.Data.Static.StaticPrefabKeys.Hulls;
+using Exos = BattleCruisers.Data.Static.StaticPrefabKeys.CaptainExos;
+using BackgroundMusic = BattleCruisers.Data.Static.SoundKeys.Music.Background;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
@@ -97,23 +102,23 @@ namespace BattleCruisers.Data.Static
             // screen order is nice :)
             return new List<HullKey>()
             {
-                StaticPrefabKeys.Hulls.Trident,
-                StaticPrefabKeys.Hulls.Bullshark,
-                StaticPrefabKeys.Hulls.Raptor,
-                StaticPrefabKeys.Hulls.Rockjaw,
-                StaticPrefabKeys.Hulls.Eagle,
-                StaticPrefabKeys.Hulls.Flea,
-                StaticPrefabKeys.Hulls.Goatherd,
-                StaticPrefabKeys.Hulls.Hammerhead,
-                StaticPrefabKeys.Hulls.Longbow,
-                StaticPrefabKeys.Hulls.Megalodon,
-                StaticPrefabKeys.Hulls.Microlodon,
-                StaticPrefabKeys.Hulls.BlackRig,
-                StaticPrefabKeys.Hulls.Pistol,
-                StaticPrefabKeys.Hulls.Rickshaw,
-                StaticPrefabKeys.Hulls.Shepherd,
-                StaticPrefabKeys.Hulls.TasDevil,
-                StaticPrefabKeys.Hulls.Yeti
+                Hulls.Trident,
+                Hulls.Bullshark,
+                Hulls.Raptor,
+                Hulls.Rockjaw,
+                Hulls.Eagle,
+                Hulls.Flea,
+                Hulls.Goatherd,
+                Hulls.Hammerhead,
+                Hulls.Longbow,
+                Hulls.Megalodon,
+                Hulls.Microlodon,
+                Hulls.BlackRig,
+                Hulls.Pistol,
+                Hulls.Rickshaw,
+                Hulls.Shepherd,
+                Hulls.TasDevil,
+                Hulls.Yeti
             };
         }
 
@@ -124,44 +129,44 @@ namespace BattleCruisers.Data.Static
             return new List<BuildingKey>()
             {
                 // Factories
-                StaticPrefabKeys.Buildings.AirFactory,
-                StaticPrefabKeys.Buildings.NavalFactory,
-                StaticPrefabKeys.Buildings.DroneStation,
-                StaticPrefabKeys.Buildings.DroneStation4,
-                StaticPrefabKeys.Buildings.DroneStation8,
+                Buildings.AirFactory,
+                Buildings.NavalFactory,
+                Buildings.DroneStation,
+                Buildings.DroneStation4,
+                Buildings.DroneStation8,
 
                 // Tactical
-                StaticPrefabKeys.Buildings.ShieldGenerator,
-                StaticPrefabKeys.Buildings.LocalBooster,
-                StaticPrefabKeys.Buildings.ControlTower,
-                StaticPrefabKeys.Buildings.StealthGenerator,
-                StaticPrefabKeys.Buildings.SpySatelliteLauncher,
+                Buildings.ShieldGenerator,
+                Buildings.LocalBooster,
+                Buildings.ControlTower,
+                Buildings.StealthGenerator,
+                Buildings.SpySatelliteLauncher,
 
                 // Defence
-                StaticPrefabKeys.Buildings.AntiShipTurret,
-                StaticPrefabKeys.Buildings.AntiAirTurret,
-                StaticPrefabKeys.Buildings.Mortar,
-                StaticPrefabKeys.Buildings.SamSite,
-                StaticPrefabKeys.Buildings.TeslaCoil,
-                StaticPrefabKeys.Buildings.Coastguard,//new
-                StaticPrefabKeys.Buildings.FlakTurret,//new
+                Buildings.AntiShipTurret,
+                Buildings.AntiAirTurret,
+                Buildings.Mortar,
+                Buildings.SamSite,
+                Buildings.TeslaCoil,
+                Buildings.Coastguard,//new
+                Buildings.FlakTurret,//new
 
                 // Offence
-                StaticPrefabKeys.Buildings.Artillery,
-                StaticPrefabKeys.Buildings.Railgun,
-                StaticPrefabKeys.Buildings.RocketLauncher,
-                StaticPrefabKeys.Buildings.MLRS,
-                StaticPrefabKeys.Buildings.GatlingMortar,
-                StaticPrefabKeys.Buildings.IonCannon,//new
-                StaticPrefabKeys.Buildings.MissilePod,//new
+                Buildings.Artillery,
+                Buildings.Railgun,
+                Buildings.RocketLauncher,
+                Buildings.MLRS,
+                Buildings.GatlingMortar,
+                Buildings.IonCannon,//new
+                Buildings.MissilePod,//new
 
                 // Ultras
-                StaticPrefabKeys.Buildings.DeathstarLauncher,
-                StaticPrefabKeys.Buildings.NukeLauncher,
-                StaticPrefabKeys.Buildings.Ultralisk,
-                StaticPrefabKeys.Buildings.KamikazeSignal,
-                StaticPrefabKeys.Buildings.Broadsides,
-                StaticPrefabKeys.Buildings.NovaArtillery//new
+                Buildings.DeathstarLauncher,
+                Buildings.NukeLauncher,
+                Buildings.Ultralisk,
+                Buildings.KamikazeSignal,
+                Buildings.Broadsides,
+                Buildings.NovaArtillery//new
 			};
         }
 
@@ -172,7 +177,7 @@ namespace BattleCruisers.Data.Static
                 // Don't want AI to try and build a kamikaze signal as an ultra,
                 // as it is only effective if there are a certain number of planes.
                 // Simpler to make the AI only build ultras that are always effective.
-                StaticPrefabKeys.Buildings.KamikazeSignal,
+                Buildings.KamikazeSignal,
 
                 // Don't want AI to try and build an ultralisk as an ultra,
                 // because it is only super effective if building something else
@@ -180,7 +185,7 @@ namespace BattleCruisers.Data.Static
                 // strategy may be to win with a fast ultra (after which the AI
                 // may do nothing), again only let the AI build ultras that
                 // are always effective.
-                StaticPrefabKeys.Buildings.Ultralisk
+                Buildings.Ultralisk
             };
         }
 
@@ -191,22 +196,22 @@ namespace BattleCruisers.Data.Static
             return new List<UnitKey>()
             {
                 // Aircraft
-                StaticPrefabKeys.Units.Bomber,
-                StaticPrefabKeys.Units.Gunship,
-                StaticPrefabKeys.Units.Fighter,
-                StaticPrefabKeys.Units.SteamCopter,
-                StaticPrefabKeys.Units.Broadsword,
-                StaticPrefabKeys.Units.StratBomber,
+                Units.Bomber,
+                Units.Gunship,
+                Units.Fighter,
+                Units.SteamCopter,
+                Units.Broadsword,
+                Units.StratBomber,
 
                 // Ships
-                StaticPrefabKeys.Units.AttackBoat,
-                StaticPrefabKeys.Units.Frigate,
-                StaticPrefabKeys.Units.Destroyer,
-                StaticPrefabKeys.Units.SiegeDestroyer,
-                StaticPrefabKeys.Units.GunBoat,
-                StaticPrefabKeys.Units.ArchonBattleship,
-                StaticPrefabKeys.Units.AttackRIB,
-                StaticPrefabKeys.Units.GlassCannoneer
+                Units.AttackBoat,
+                Units.Frigate,
+                Units.Destroyer,
+                Units.SiegeDestroyer,
+                Units.GunBoat,
+                Units.ArchonBattleship,
+                Units.AttackRIB,
+                Units.GlassCannoneer
             };
         }
 
@@ -318,7 +323,7 @@ namespace BattleCruisers.Data.Static
         }
         private HullKey GetInitialHull()
         {
-            return StaticPrefabKeys.Hulls.Trident;
+            return Hulls.Trident;
         }
 
         private List<BuildingKey> GetInitialBuildings()
@@ -336,62 +341,62 @@ namespace BattleCruisers.Data.Static
             return new List<ILevel>()
             {
                 // Set 1:  Raptor
-                new Level(1, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(1)),
-                new Level(2, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(2)),
-                new Level(3, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(3)),
+                new Level(1, Hulls.Raptor, BackgroundMusic.Bobby, SkyMaterials.Morning, Exos.GetCaptainExoKey(1)),
+                new Level(2, Hulls.Bullshark, BackgroundMusic.Juggernaut, SkyMaterials.Purple, Exos.GetCaptainExoKey(2)),
+                new Level(3, Hulls.Raptor, BackgroundMusic.Experimental, SkyMaterials.Dusk, Exos.GetCaptainExoKey(3)),
                 
                 // Set 2:  Bullshark
-                new Level(4, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(4)),
-                new Level(5, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(5)),
-                new Level(6, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(6)),
-                new Level(7, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(7)),
+                new Level(4, Hulls.Rockjaw, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(4)),
+                new Level(5, Hulls.Bullshark, BackgroundMusic.Confusion, SkyMaterials.Midday, Exos.GetCaptainExoKey(5)),
+                new Level(6, Hulls.Raptor, BackgroundMusic.Sleeper, SkyMaterials.Midnight, Exos.GetCaptainExoKey(6)),
+                new Level(7, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(7)),
 
                 // Set 3:  Rockjaw
-                new Level(8, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(8)),
-                new Level(9, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(9)),
-                new Level(10, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(10)),
+                new Level(8, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(8)),
+                new Level(9, Hulls.Eagle, BackgroundMusic.Juggernaut, SkyMaterials.Morning, Exos.GetCaptainExoKey(9)),
+                new Level(10, Hulls.Rockjaw, BackgroundMusic.Againagain, SkyMaterials.Purple, Exos.GetCaptainExoKey(10)),
 
                 // Set 4:  Eagle
-                new Level(11, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(11)),
-                new Level(12, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(12)),
-                new Level(13, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(13)),
-                new Level(14, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(14)),
-                new Level(15, StaticPrefabKeys.Hulls.ManOfWarBoss, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(15)),
+                new Level(11, Hulls.Longbow, BackgroundMusic.Sleeper, SkyMaterials.Midnight, Exos.GetCaptainExoKey(11)),
+                new Level(12, Hulls.Bullshark, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(12)),
+                new Level(13, Hulls.Rockjaw, BackgroundMusic.Confusion, SkyMaterials.Dusk, Exos.GetCaptainExoKey(13)),
+                new Level(14, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(14)),
+                new Level(15, Hulls.ManOfWarBoss, BackgroundMusic.Juggernaut, SkyMaterials.Midnight, Exos.GetCaptainExoKey(15)),
 
                 // Set 5:  Hammerhead
-                new Level(16, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Experimental, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(16)),
-                new Level(17, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(17)),
-                new Level(18, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(18)),
+                new Level(16, Hulls.Longbow, BackgroundMusic.Experimental, SkyMaterials.Morning, Exos.GetCaptainExoKey(16)),
+                new Level(17, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(17)),
+                new Level(18, Hulls.Rickshaw, BackgroundMusic.Juggernaut, SkyMaterials.Dusk, Exos.GetCaptainExoKey(18)),
 
                 // Set 6:  Longbow
-                new Level(19, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(19)),
-                new Level(20, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(20)),
-                new Level(21, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(21)),
-                new Level(22, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(22)),
+                new Level(19, Hulls.Eagle, BackgroundMusic.Sleeper, SkyMaterials.Purple, Exos.GetCaptainExoKey(19)),
+                new Level(20, Hulls.Rockjaw, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(20)),
+                new Level(21, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(21)),
+                new Level(22, Hulls.Longbow, BackgroundMusic.Confusion, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(22)),
 
                 // Set 7:  Megalodon
-                new Level(23, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(23)),
-                new Level(24, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(24)),
-                new Level(25, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(25)),
-                new Level(26, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(26)),
+                new Level(23, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Dusk, Exos.GetCaptainExoKey(23)),
+                new Level(24, Hulls.Longbow, BackgroundMusic.Juggernaut, SkyMaterials.Midnight, Exos.GetCaptainExoKey(24)),
+                new Level(25, Hulls.Raptor, BackgroundMusic.Nothing, SkyMaterials.Morning, Exos.GetCaptainExoKey(25)),
+                new Level(26, Hulls.Megalodon, BackgroundMusic.Confusion, SkyMaterials.Midday, Exos.GetCaptainExoKey(26)),
 				
 			     // Set 8:  Huntress Prime
-                new Level(27, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(27)),
-                new Level(28, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(28)),
-                new Level(29, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(29)),
-                new Level(30, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(30)),
-                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(31)), //HUNTRESS PRIME
+                new Level(27, Hulls.TasDevil, BackgroundMusic.Experimental, SkyMaterials.Purple, Exos.GetCaptainExoKey(27)),
+                new Level(28, Hulls.BlackRig, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(28)),
+                new Level(29, Hulls.Rickshaw, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(29)),
+                new Level(30, Hulls.Yeti, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(30)),
+                new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31)), //HUNTRESS PRIME
 
                  // Set 9:  Secret Levels
-                new Level(32, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(32)),
-                new Level(33, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(33)),
-                new Level(34, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(34)),
-                new Level(35, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(35)),
-                new Level(36, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(36)),
-                new Level(37, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(37)),
-                new Level(38, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(38)),
-                new Level(39, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(39)),
-                new Level(40, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(40)) //TODO: Change to new boss broadsword
+                new Level(32, Hulls.Trident, BackgroundMusic.Experimental, SkyMaterials.Purple, Exos.GetCaptainExoKey(32)),
+                new Level(33, Hulls.Raptor, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(33)),
+                new Level(34, Hulls.Bullshark, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(34)),
+                new Level(35, Hulls.Rockjaw, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(35)),
+                new Level(36, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(36)),
+                new Level(37, Hulls.Hammerhead, BackgroundMusic.Sleeper, SkyMaterials.Midday, Exos.GetCaptainExoKey(37)),
+                new Level(38, Hulls.Longbow, BackgroundMusic.Nothing, SkyMaterials.Morning, Exos.GetCaptainExoKey(38)),
+                new Level(39, Hulls.Megalodon, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(39)),
+                new Level(40, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(40)) //TODO: Change to new boss broadsword
             };
         }
 
@@ -400,22 +405,22 @@ namespace BattleCruisers.Data.Static
             return new List<ISideQuestData>()
             {
                 //Original Secret Levels
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(32), 32, -1, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple, false, 0),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(33), 32, 0, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold, false, 1),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(34), 32, 1, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk, false, 2),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(35), 32, 2, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, false, 3),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(36), 32, 3, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise, false, 4),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(37), 32, 4, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday, false, 5),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(38), 32, 5, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning, false, 6),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(39), 32, 6, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise, false, 7),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(40), 32, 7, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight, false, 8),
+                new SideQuestData(false, Exos.GetCaptainExoKey(32), 32, -1, Hulls.Trident, BackgroundMusic.Experimental, SkyMaterials.Purple, false, 0),
+                new SideQuestData(false, Exos.GetCaptainExoKey(33), 32, 0, Hulls.Raptor, BackgroundMusic.Juggernaut, SkyMaterials.Cold, false, 1),
+                new SideQuestData(false, Exos.GetCaptainExoKey(34), 32, 1, Hulls.Bullshark, BackgroundMusic.Againagain, SkyMaterials.Dusk, false, 2),
+                new SideQuestData(false, Exos.GetCaptainExoKey(35), 32, 2, Hulls.Rockjaw, BackgroundMusic.Confusion, SkyMaterials.Midnight, false, 3),
+                new SideQuestData(false, Exos.GetCaptainExoKey(36), 32, 3, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Sunrise, false, 4),
+                new SideQuestData(false, Exos.GetCaptainExoKey(37), 32, 4, Hulls.Hammerhead, BackgroundMusic.Sleeper, SkyMaterials.Midday, false, 5),
+                new SideQuestData(false, Exos.GetCaptainExoKey(38), 32, 5, Hulls.Longbow, BackgroundMusic.Nothing, SkyMaterials.Morning, false, 6),
+                new SideQuestData(false, Exos.GetCaptainExoKey(39), 32, 6, Hulls.Megalodon, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, false, 7),
+                new SideQuestData(false, Exos.GetCaptainExoKey(40), 32, 7, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, false, 8),
 
-
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(41), 8, -1, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Purple, false, 9),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(42), 11, -1, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight, false, 10),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(2), 16, -1, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Againagain, SkyMaterials.Cold, false, 11),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(8), 19, -1, StaticPrefabKeys.Hulls.Microlodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Dusk, false, 12),
-                new SideQuestData(false, StaticPrefabKeys.CaptainExos.GetCaptainExoKey(15), 0, 3, StaticPrefabKeys.Hulls.Flea, SoundKeys.Music.Background.Sleeper, SkyMaterials.Sunrise, false, 13)
+                //new SideQuests of BC v6.3
+                new SideQuestData(false, Exos.GetCaptainExoKey(41), 8, -1, Hulls.Rickshaw, BackgroundMusic.Bobby, SkyMaterials.Purple, false, 9),
+                new SideQuestData(false, Exos.GetCaptainExoKey(42), 11, -1, Hulls.BlackRig, BackgroundMusic.Confusion, SkyMaterials.Midnight, false, 10),
+                new SideQuestData(false, Exos.GetCaptainExoKey(2), 16, -1, Hulls.Longbow, BackgroundMusic.Againagain, SkyMaterials.Cold, false, 11),
+                new SideQuestData(false, Exos.GetCaptainExoKey(8), 19, -1, Hulls.Microlodon, BackgroundMusic.Nothing, SkyMaterials.Dusk, false, 12),
+                new SideQuestData(false, Exos.GetCaptainExoKey(15), 0, 3, Hulls.Flea, BackgroundMusic.Sleeper, SkyMaterials.Sunrise, false, 13)
             };
         }
 
@@ -449,44 +454,44 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<BuildingKey, int>()
             {
                 // Factories
-                { StaticPrefabKeys.Buildings.AirFactory, 1 },  //The number represents the first level you get this item, so it unlocks when you win the previous level.
-                { StaticPrefabKeys.Buildings.NavalFactory, 1 },
-                { StaticPrefabKeys.Buildings.DroneStation, 1 },
-                { StaticPrefabKeys.Buildings.DroneStation4, 27 },
-                { StaticPrefabKeys.Buildings.DroneStation8, 31 },
+                { Buildings.AirFactory, 1 },  //The number represents the first level you get this item, so it unlocks when you win the previous level.
+                { Buildings.NavalFactory, 1 },
+                { Buildings.DroneStation, 1 },
+                { Buildings.DroneStation4, 27 },
+                { Buildings.DroneStation8, 31 },
 
                 // Tactical
-                { StaticPrefabKeys.Buildings.ShieldGenerator, 2 },
-                { StaticPrefabKeys.Buildings.LocalBooster, 9 },
-                { StaticPrefabKeys.Buildings.StealthGenerator, 17 },
-                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 18 },
-                { StaticPrefabKeys.Buildings.ControlTower, 24 },
+                { Buildings.ShieldGenerator, 2 },
+                { Buildings.LocalBooster, 9 },
+                { Buildings.StealthGenerator, 17 },
+                { Buildings.SpySatelliteLauncher, 18 },
+                { Buildings.ControlTower, 24 },
 
                 // Defence
-                { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
-                { StaticPrefabKeys.Buildings.AntiAirTurret, 1 },
-                { StaticPrefabKeys.Buildings.Mortar, 3 },
-                { StaticPrefabKeys.Buildings.SamSite, 5 },
-                { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
-                { StaticPrefabKeys.Buildings.Coastguard, 39 },
-                { StaticPrefabKeys.Buildings.FlakTurret, 95 },
+                { Buildings.AntiShipTurret, 1 },
+                { Buildings.AntiAirTurret, 1 },
+                { Buildings.Mortar, 3 },
+                { Buildings.SamSite, 5 },
+                { Buildings.TeslaCoil, 21 },
+                { Buildings.Coastguard, 39 },
+                { Buildings.FlakTurret, 95 },
 
                 // Offence
-                { StaticPrefabKeys.Buildings.Artillery, 1 },
-                { StaticPrefabKeys.Buildings.RocketLauncher, 20 },
-                { StaticPrefabKeys.Buildings.Railgun, 6 },
-                { StaticPrefabKeys.Buildings.MLRS, 29},
-                { StaticPrefabKeys.Buildings.GatlingMortar, 32},
-                { StaticPrefabKeys.Buildings.MissilePod, 36 },
-                { StaticPrefabKeys.Buildings.IonCannon, 38 },
+                { Buildings.Artillery, 1 },
+                { Buildings.RocketLauncher, 20 },
+                { Buildings.Railgun, 6 },
+                { Buildings.MLRS, 29},
+                { Buildings.GatlingMortar, 32},
+                { Buildings.MissilePod, 36 },
+                { Buildings.IonCannon, 38 },
 
                 // Ultras
-                { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
-                { StaticPrefabKeys.Buildings.NukeLauncher, 10 },
-                { StaticPrefabKeys.Buildings.Ultralisk, 14 },
-                { StaticPrefabKeys.Buildings.KamikazeSignal, 22 },
-                { StaticPrefabKeys.Buildings.Broadsides, 25 },
-                { StaticPrefabKeys.Buildings.NovaArtillery, 33 }
+                { Buildings.DeathstarLauncher, 7 },
+                { Buildings.NukeLauncher, 10 },
+                { Buildings.Ultralisk, 14 },
+                { Buildings.KamikazeSignal, 22 },
+                { Buildings.Broadsides, 25 },
+                { Buildings.NovaArtillery, 33 }
             };
         }
 
@@ -495,23 +500,23 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<UnitKey, int>()
             {
                 // Aircraft
-                { StaticPrefabKeys.Units.Bomber, 1 },
-                { StaticPrefabKeys.Units.Gunship, 5 },
-                { StaticPrefabKeys.Units.Fighter, 12 },
-                { StaticPrefabKeys.Units.SteamCopter, 28 },
-                { StaticPrefabKeys.Units.Broadsword, 41 },
-                { StaticPrefabKeys.Units.StratBomber, 95 },
+                { Units.Bomber, 1 },
+                { Units.Gunship, 5 },
+                { Units.Fighter, 12 },
+                { Units.SteamCopter, 28 },
+                { Units.Broadsword, 41 },
+                { Units.StratBomber, 95 },
                 
                 
                 // Ships
-                { StaticPrefabKeys.Units.AttackBoat, 1 },
-                { StaticPrefabKeys.Units.Frigate, 3 },
-                { StaticPrefabKeys.Units.Destroyer, 13 },
-                { StaticPrefabKeys.Units.SiegeDestroyer, 95 },
-                { StaticPrefabKeys.Units.GlassCannoneer, 95 },
-                { StaticPrefabKeys.Units.GunBoat, 95 },
-                { StaticPrefabKeys.Units.ArchonBattleship, 16 },
-                { StaticPrefabKeys.Units.AttackRIB, 30 }
+                { Units.AttackBoat, 1 },
+                { Units.Frigate, 3 },
+                { Units.Destroyer, 13 },
+                { Units.SiegeDestroyer, 95 },
+                { Units.GlassCannoneer, 95 },
+                { Units.GunBoat, 95 },
+                { Units.ArchonBattleship, 16 },
+                { Units.AttackRIB, 30 }
             };
         }
 
@@ -519,18 +524,18 @@ namespace BattleCruisers.Data.Static
         {
             return new Dictionary<HullKey, int>()
             {
-                { StaticPrefabKeys.Hulls.Trident, 1 },
-                { StaticPrefabKeys.Hulls.Raptor, 4 },
-                { StaticPrefabKeys.Hulls.Bullshark, 8 },
-                { StaticPrefabKeys.Hulls.Rockjaw, 11},
-                { StaticPrefabKeys.Hulls.Eagle, 15 },
-                { StaticPrefabKeys.Hulls.Hammerhead, 19 },
-                { StaticPrefabKeys.Hulls.Longbow, 23 },
-                { StaticPrefabKeys.Hulls.Megalodon, 26 },
-                { StaticPrefabKeys.Hulls.Rickshaw, 34 },
-                { StaticPrefabKeys.Hulls.TasDevil, 35 },
-                { StaticPrefabKeys.Hulls.BlackRig, 37 },
-                { StaticPrefabKeys.Hulls.Yeti, 40 }
+                { Hulls.Trident, 1 },
+                { Hulls.Raptor, 4 },
+                { Hulls.Bullshark, 8 },
+                { Hulls.Rockjaw, 11},
+                { Hulls.Eagle, 15 },
+                { Hulls.Hammerhead, 19 },
+                { Hulls.Longbow, 23 },
+                { Hulls.Megalodon, 26 },
+                { Hulls.Rickshaw, 34 },
+                { Hulls.TasDevil, 35 },
+                { Hulls.BlackRig, 37 },
+                { Hulls.Yeti, 40 }
             };
         }
 
@@ -542,14 +547,14 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<BuildingKey, int>()
             {
                 // Defence
-                { StaticPrefabKeys.Buildings.MissilePod, 3 },
-                { StaticPrefabKeys.Buildings.Coastguard, 6 },
+                { Buildings.MissilePod, 3 },
+                { Buildings.Coastguard, 6 },
 
                 // Offence
-                { StaticPrefabKeys.Buildings.IonCannon, 5 },
+                { Buildings.IonCannon, 5 },
 
                 // Ultras
-                { StaticPrefabKeys.Buildings.NovaArtillery, 0 }
+                { Buildings.NovaArtillery, 0 }
             };
         }
 
@@ -561,8 +566,8 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<UnitKey, int>()
             {
                 // Aircraft
-                { StaticPrefabKeys.Units.Broadsword, 8 },
-                { StaticPrefabKeys.Units.StratBomber, 9 },
+                { Units.Broadsword, 8 },
+                { Units.StratBomber, 9 },
                 
                 // Ships
             };
@@ -575,15 +580,15 @@ namespace BattleCruisers.Data.Static
 
             return new Dictionary<HullKey, int>()
             {
-                { StaticPrefabKeys.Hulls.Rickshaw, 1 },
-                { StaticPrefabKeys.Hulls.TasDevil, 2 },
-                { StaticPrefabKeys.Hulls.BlackRig, 4 },
-                { StaticPrefabKeys.Hulls.Yeti, 7 },
-                { StaticPrefabKeys.Hulls.Flea, 45 },
-                { StaticPrefabKeys.Hulls.Shepherd, 45},
-                { StaticPrefabKeys.Hulls.Microlodon, 45},
-                { StaticPrefabKeys.Hulls.Pistol, 45},
-                { StaticPrefabKeys.Hulls.Goatherd, 45}
+                { Hulls.Rickshaw, 1 },
+                { Hulls.TasDevil, 2 },
+                { Hulls.BlackRig, 4 },
+                { Hulls.Yeti, 7 },
+                { Hulls.Flea, 45 },
+                { Hulls.Shepherd, 45},
+                { Hulls.Microlodon, 45},
+                { Hulls.Pistol, 45},
+                { Hulls.Goatherd, 45}
             };
         }
 
