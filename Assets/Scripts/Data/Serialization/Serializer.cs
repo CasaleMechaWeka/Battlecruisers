@@ -22,6 +22,8 @@ namespace BattleCruisers.Data.Serialization
     {
         private readonly IModelFilePathProvider _modelFilePathProvider;
         private readonly BinaryFormatter _binaryFormatter;
+        private const int NUM_OF_CAPTAINS = 51;
+        private const int NUM_OF_VARIANTS = 131;
 
         public Serializer(IModelFilePathProvider modelFilePathProvider)
         {
@@ -60,7 +62,9 @@ namespace BattleCruisers.Data.Serialization
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || ((GameModel)output).Variants.Count < 131 || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null ||
+            ((GameModel)output).Variants.Count < NUM_OF_VARIANTS || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
+            ((GameModel)output).Captains.Count < NUM_OF_CAPTAINS)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);

@@ -34,11 +34,11 @@ namespace BattleCruisers.Data.Static
         private readonly IList<UnitKey> _allUnits;
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
-        public const int NUM_OF_LEVELS = 40;
+        public const int NUM_OF_LEVELS = 31;
         public const int NUM_OF_PvPLEVELS = 9;
         public const int NUM_OF_STANDARD_LEVELS = 31;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
-        public const int NUM_OF_SIDEQUESTS = 40;
+        public const int NUM_OF_SIDEQUESTS = 24;
 
 
 #if IS_DEMO
