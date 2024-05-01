@@ -50,6 +50,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BoomStrategy(),
                 new BalancedStrategy(),
                 new BoomStrategy(),
+                new FortressPrimeStrategy()
             };
         }
 
@@ -83,6 +84,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicTurtleStrategy(),
                 new BasicBalancedStrategy(),
                 new BasicBOOMStrategy(),
+                new BasicFortressPrimeStrategy()
             };
         }
 
@@ -272,6 +274,21 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                },
+                //SQ23 Fortress Prime
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                 },
             };
         }

@@ -65,6 +65,40 @@ namespace BattleCruisers.Data.Static
                 }
             }
 
+            public static IList<IPrefabKeyWrapper> FortressPrime
+            {
+                get
+                {
+                    return new List<IPrefabKeyWrapper>()
+                    {
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
+                    };
+                }
+            }
+
             public static IList<IPrefabKeyWrapper> Rush
             {
                 get
@@ -275,6 +309,54 @@ namespace BattleCruisers.Data.Static
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
                         new OffensivePrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper()
+                    };
+                }
+            }
+
+            public static List<IPrefabKeyWrapper> FortressPrime
+            {
+                get
+                {
+                    return new List<IPrefabKeyWrapper>()
+                    {
+                        new AntiAirPrefabKeyWrapper(),
+                        new AntiNavalPrefabKeyWrapper(),
+                        new AntiAirPrefabKeyWrapper(),
+                        new AntiNavalPrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
+                        new AntiAirPrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.TeslaCoil),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new OffensivePrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
+                        new OffensivePrefabKeyWrapper(),
                         new OffensivePrefabKeyWrapper()
                     };
                 }

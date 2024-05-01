@@ -118,7 +118,8 @@ namespace BattleCruisers.Data.Static
                 Hulls.Rickshaw,
                 Hulls.Shepherd,
                 Hulls.TasDevil,
-                Hulls.Yeti
+                Hulls.Yeti,
+                Hulls.FortressPrime
             };
         }
 
@@ -429,7 +430,8 @@ namespace BattleCruisers.Data.Static
                 new SideQuestData(false, Exos.GetCaptainExoKey(8), 27, -1 , Hulls.TasDevil, BackgroundMusic.Nothing, SkyMaterials.Cold, false, 19),
                 new SideQuestData(false, Exos.GetCaptainExoKey(46), 32, -1 , Hulls.TasDevil, BackgroundMusic.Sleeper, SkyMaterials.Sunrise, false, 20),
                 new SideQuestData(false, Exos.GetCaptainExoKey(47), 32, 20 , Hulls.Megalodon, BackgroundMusic.Experimental, SkyMaterials.Morning, false, 21),
-                new SideQuestData(false, Exos.GetCaptainExoKey(48), 32, 21 , Hulls.Yeti, BackgroundMusic.Juggernaut, SkyMaterials.Midday, false, 22)
+                new SideQuestData(false, Exos.GetCaptainExoKey(48), 32, 21 , Hulls.Yeti, BackgroundMusic.Juggernaut, SkyMaterials.Midday, false, 22),
+                new SideQuestData(false, Exos.GetCaptainExoKey(48), 32, 22 , Hulls.FortressPrime, BackgroundMusic.Bobby, SkyMaterials.Midnight, false, 23)
             };
         }
 
