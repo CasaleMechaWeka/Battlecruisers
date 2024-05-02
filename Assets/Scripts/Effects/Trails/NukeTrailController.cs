@@ -8,16 +8,15 @@ namespace BattleCruisers.Effects.Trails
     public class NukeTrailController : MonoBehaviour, IProjectileTrail
     {
         private IList<BroadcastingParticleSystem> _effects;
-        public BroadcastingParticleSystem pulsingGlow, fireExhaust, smoke;
-        public SpriteRenderer constantGlow;
+        public BroadcastingParticleSystem fireExhaust, smoke;
+        public SpriteRenderer constantGlow, fireJet;
 
         public void Initialise()
         {
-            Helper.AssertIsNotNull(pulsingGlow, fireExhaust, smoke, constantGlow);
+            Helper.AssertIsNotNull( fireExhaust, smoke, constantGlow);
 
             _effects = new List<BroadcastingParticleSystem>()
             {
-                pulsingGlow,
                 fireExhaust,
                 smoke
             };
@@ -35,6 +34,7 @@ namespace BattleCruisers.Effects.Trails
             }
 
             constantGlow.enabled = true;
+            fireJet.enabled = true;
         }
 
         public void HideEffects()
@@ -45,6 +45,7 @@ namespace BattleCruisers.Effects.Trails
             }
 
             constantGlow.enabled = false;
+            fireJet.enabled = false;
         }
     }
 }
