@@ -36,6 +36,7 @@ namespace BattleCruisers.Utils
         Building_NavalFactory = 0101,
         Building_DroneStation = 0102,
         Building_DroneStation4 = 0103,
+        Building_DroneStation6 = 0105,
         Building_DroneStation8 = 0104,
 
         // Tactical

@@ -134,6 +134,7 @@ namespace BattleCruisers.Data.Static
                 Buildings.NavalFactory,
                 Buildings.DroneStation,
                 Buildings.DroneStation4,
+                Buildings.DroneStation6,
                 Buildings.DroneStation8,
 
                 // Tactical
@@ -469,6 +470,7 @@ namespace BattleCruisers.Data.Static
                 { Buildings.NavalFactory, 1 },
                 { Buildings.DroneStation, 1 },
                 { Buildings.DroneStation4, 27 },
+                { Buildings.DroneStation6, 95 },
                 { Buildings.DroneStation8, 31 },
 
                 // Tactical
