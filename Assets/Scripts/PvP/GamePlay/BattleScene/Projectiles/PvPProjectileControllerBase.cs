@@ -50,7 +50,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
         public float autoDetonationTimer = 0f;
-        private float lifeTime = 0f;
 
         private IPvPMovementController _movementController;
         protected IPvPMovementController MovementController
@@ -110,7 +109,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public virtual void Activate(TPvPActivationArgs activationArgs)
         {
-            lifeTime = 0f;
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
             gameObject.SetActive(true);
@@ -169,7 +167,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             AdjustGameObjectDirection();
             PositionChanged?.Invoke(this, EventArgs.Empty);
 
-            if (autoDetonationTimer > 0f)
+            if (gameObject.activeInHierarchy && autoDetonationTimer > 0f)
             {
                 IEnumerator timedSelfDestroy = TimedSelfDestroy();
                 StartCoroutine(timedSelfDestroy);
@@ -259,7 +257,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         IEnumerator TimedSelfDestroy()
         {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .8f, autoDetonationTimer * 1.6f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer * .85f, autoDetonationTimer * 1.7f));
             DestroyProjectile();
         }
     }
