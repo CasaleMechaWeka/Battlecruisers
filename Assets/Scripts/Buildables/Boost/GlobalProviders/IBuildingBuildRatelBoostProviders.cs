@@ -11,6 +11,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         ObservableCollection<IBoostProvider> UltrasProviders { get; }
         ObservableCollection<IBoostProvider> AirFactoryProviders { get; }
         ObservableCollection<IBoostProvider> NavalFactoryProviders { get; }
+        ObservableCollection<IBoostProvider> RocketBuildingsProviders { get; }
         // Drone stations and Ultralisks
         ObservableCollection<IBoostProvider> DroneBuildingsProviders { get; }
         ObservableCollection<IBoostProvider> AllBuildingsProviders { get; }

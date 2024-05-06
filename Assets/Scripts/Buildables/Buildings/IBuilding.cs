@@ -46,4 +46,10 @@ namespace BattleCruisers.Buildables.Buildings
         int variantIndex { get; set; }
         void ApplyVariantStats(StatVariant statVariant);
     }
+    public enum ProjectileType 
+    {
+        Laser = 0,
+        Shell =  1,
+        Rocket = 2 
+    }
 }

@@ -10,7 +10,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPPistol : PvPCruiser
     {
         public float fireRateRocketBonus;
-        public float damageRocketBonus;
         public float buildSpeedForRocketBuildings;
 
         public override void Initialise(IPvPCruiserArgs args)
@@ -18,17 +17,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             base.Initialise(args);
 
             Assert.IsTrue(fireRateRocketBonus > 0);
-            Assert.IsTrue(damageRocketBonus > 0);
             Assert.IsTrue(buildSpeedForRocketBuildings > 0);
 
             IPvPBoostProvider rocketFireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(fireRateRocketBonus);
-            //CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.RocketTypeBulletBuildings.Add(rocketFireRateBoostProvider);
-            
-            IPvPBoostProvider rocketDamageBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(damageRocketBonus);
-            //CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.RocketTypeBulletBuildings.Add(rocketDamageBoostProvider);
+            CruiserSpecificFactories.GlobalBoostProviders.RocketBuildingsFireRateBoostProviders.Add(rocketFireRateBoostProvider);
 
             IPvPBoostProvider buildSpeedForRocketProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildSpeedForRocketBuildings);
-            //CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.RocketTypeBulletBuildings.Add(buildSpeedForRocketProvider);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders.Add(buildSpeedForRocketProvider);
         }
         protected override void Start()
         {

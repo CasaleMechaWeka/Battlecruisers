@@ -11,6 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ObservableCollection<IPvPBoostProvider> UltrasProviders { get; }
         public ObservableCollection<IPvPBoostProvider> AirFactoryProviders { get; }
         public ObservableCollection<IPvPBoostProvider> NavalFactoryProviders { get; }
+        public ObservableCollection<IPvPBoostProvider> RocketBuildingsProviders { get; }
         public ObservableCollection<IPvPBoostProvider> DroneBuildingsProviders { get; }
         public ObservableCollection<IPvPBoostProvider> AllBuildingsProviders { get; }
         public ObservableCollection<IPvPBoostProvider> TacticalUltrasProviders { get; }
@@ -24,6 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             UltrasProviders = new ObservableCollection<IPvPBoostProvider>();
             AirFactoryProviders = new ObservableCollection<IPvPBoostProvider>();
             NavalFactoryProviders = new ObservableCollection<IPvPBoostProvider>();
+            RocketBuildingsProviders = new ObservableCollection<IPvPBoostProvider>();
             DroneBuildingsProviders = new ObservableCollection<IPvPBoostProvider>();
             AllBuildingsProviders = new ObservableCollection<IPvPBoostProvider>();
             TacticalUltrasProviders = new ObservableCollection<IPvPBoostProvider>();

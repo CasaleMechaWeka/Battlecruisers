@@ -16,6 +16,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ObservableCollection<IPvPBoostProvider> OffenseFireRateBoostProviders { get; }
 
         public ObservableCollection<IPvPBoostProvider> ShieldRechargeRateBoostProviders { get; }
+        public ObservableCollection<IPvPBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
+        public ObservableCollection<IPvPBoostProvider> RocketBuildingsDamageBoostProviders { get; }
 
         public IPvPBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         public IPvPUnitBuildRatelBoostProviders UnitBuildRate { get; }
@@ -29,6 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             TurretAccuracyBoostProviders = new ObservableCollection<IPvPBoostProvider>();
 
             ShieldRechargeRateBoostProviders = new ObservableCollection<IPvPBoostProvider>();
+
+            RocketBuildingsFireRateBoostProviders = new ObservableCollection<IPvPBoostProvider>();
 
             BuildingBuildRate = new PvPBuildingBuildRatelBoostProviders();
             UnitBuildRate = new PvPUnitBuildRatelBoostProviders();
