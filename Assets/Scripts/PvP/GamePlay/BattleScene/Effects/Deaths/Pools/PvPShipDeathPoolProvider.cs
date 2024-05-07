@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await ArchonPool.AddCapacity(PvPInitialCapacity.ARCHON);
             await GlassCannoneerPool.AddCapacity(PvPInitialCapacity.GLASSCANNONEER);
             await GunBoatPool.AddCapacity(PvPInitialCapacity.GUNBOAT);
-            await RocketTurtlePool.AddCapacity(PvPInitialCapacity.ROCKET_TURTLE);
+            //await RocketTurtlePool.AddCapacity(PvPInitialCapacity.ROCKET_TURTLE);
         }
     }
 }
