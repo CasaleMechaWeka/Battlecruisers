@@ -49,5 +49,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             _missileLauncher.ApplyVariantStats(this);
             _shieldController.gameObject.SetActive(true);
         }
+
+        public override void StopMoving()
+        {
+            base.StopMoving();
+
+            //Shield swings backwards animation 
+        }
     }
 }

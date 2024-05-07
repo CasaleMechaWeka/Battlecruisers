@@ -138,7 +138,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         }
 
         protected override void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders, 
+            IGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
@@ -153,7 +153,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             IList<TargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();
             targetProcessorTargetTypes.Remove(TargetType.Aircraft);
 
-            ITargetProcessorArgs args 
+            ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
                     _factoryProvider.Targets,
@@ -162,7 +162,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     OptimalArmamentRangeInM,
                     parentTarget: this);
 
-			return _targetProcessorWrapper.CreateTargetProcessor(args);
+            return _targetProcessorWrapper.CreateTargetProcessor(args);
         }
 
         private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
@@ -189,22 +189,22 @@ namespace BattleCruisers.Buildables.Units.Ships
                     _targetFactories.HelperFactory.CreateShipRangeHelper(this));
         }
 
-		public void StartMoving()
-		{
-			Logging.LogMethod(Tags.SHIPS);
-			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
+        public void StartMoving()
+        {
+            Logging.LogMethod(Tags.SHIPS);
+            rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
             StartMovementEffects();
-		}
+        }
 
         protected virtual void StartMovementEffects() { }
 
-		public void StopMoving()
-		{
+        public virtual void StopMoving()
+        {
             Logging.LogMethod(Tags.SHIPS);
-			rigidBody.velocity = new Vector2(0, 0);
+            rigidBody.velocity = new Vector2(0, 0);
             StopMovementEffects();
-		}
-        
+        }
+
         protected virtual void StopMovementEffects() { }
 
         protected override void OnDestroyed()
