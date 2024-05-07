@@ -8,16 +8,17 @@ namespace BattleCruisers.Effects.Trails
     public class NukeTrailController : MonoBehaviour, IProjectileTrail
     {
         private IList<BroadcastingParticleSystem> _effects;
-        public BroadcastingParticleSystem fireExhaust, smoke;
+        public BroadcastingParticleSystem fireExhaust, smoke, flame;
         public SpriteRenderer constantGlow, fireJet;
 
         public void Initialise()
         {
-            Helper.AssertIsNotNull( fireExhaust, smoke, constantGlow);
+            Helper.AssertIsNotNull( fireExhaust, smoke, flame);
 
             _effects = new List<BroadcastingParticleSystem>()
             {
                 fireExhaust,
+                flame,
                 smoke
             };
             foreach (BroadcastingParticleSystem effect in _effects)

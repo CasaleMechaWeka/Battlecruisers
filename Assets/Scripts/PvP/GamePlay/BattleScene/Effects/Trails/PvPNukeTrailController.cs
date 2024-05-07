@@ -8,17 +8,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPNukeTrailController : MonoBehaviour, IPvPProjectileTrail
     {
         private IList<PvPBroadcastingParticleSystem> _effects;
-        public PvPBroadcastingParticleSystem pulsingGlow, fireExhaust, smoke;
-        public SpriteRenderer constantGlow;
+        public PvPBroadcastingParticleSystem fireExhaust, smoke, flame;
+        public SpriteRenderer constantGlow, fireJet;
 
         public void Initialise()
         {
-            PvPHelper.AssertIsNotNull(pulsingGlow, fireExhaust, smoke, constantGlow);
+            PvPHelper.AssertIsNotNull( fireExhaust, smoke, flame);
 
             _effects = new List<PvPBroadcastingParticleSystem>()
             {
-                pulsingGlow,
                 fireExhaust,
+                flame,
                 smoke
             };
             foreach (PvPBroadcastingParticleSystem effect in _effects)
@@ -35,6 +35,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
 
             constantGlow.enabled = true;
+
+            fireJet.enabled = true;
         }
 
         public void HideEffects()
@@ -44,6 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 effect.Stop();
             }
             constantGlow.enabled = false;
+
+            fireJet.enabled = false;
         }
 
         public void SetVisibleTrail(bool isVisible)
