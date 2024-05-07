@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ArchonPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPArchonBattleship);
             GlassCannoneerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGlassCannoneer);
             GunBoatPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGunBoat);
-            RocketTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPRocketTurtle);
+            //RocketTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPRocketTurtle);
         }
 
 
@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ArchonPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPArchonBattleship);
             GlassCannoneerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGlassCannoneer);
             GunBoatPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGunBoat);
-            RocketTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPRocketTurtle);
+            //RocketTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPRocketTurtle);
         }
 
         private IPvPPool<PvPUnit, PvPBuildableActivationArgs> CreatePool(IPvPPrefabKey unitKey)
