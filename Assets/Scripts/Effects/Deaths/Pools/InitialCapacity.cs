@@ -10,5 +10,6 @@
         public const int SIEGEDESTROYER = 1;
         public const int GLASSCANNONEER = 1;
         public const int GUNBOAT = 1;
+        public const int ROCKET_TURTLE = 1;
     }
 }

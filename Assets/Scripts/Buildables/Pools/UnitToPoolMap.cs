@@ -74,7 +74,7 @@ namespace BattleCruisers.Buildables.Pools
 
                 case "Destroyer":
                     return _unitPoolProvider.DestroyerPool;
-                
+
                 case "SiegeDestroyer":
                     return _unitPoolProvider.SiegeDestroyerPool;
 
@@ -86,9 +86,13 @@ namespace BattleCruisers.Buildables.Pools
 
                 case "GlassCannoneer":
                     return _unitPoolProvider.GlassCannoneerPool;
-                
+
                 case "GunBoat":
                     return _unitPoolProvider.GunBoatPool;
+
+                case "RocketTurtle":
+                    return _unitPoolProvider.RocketTurtlePool;
+
 
                 default:
                     throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");

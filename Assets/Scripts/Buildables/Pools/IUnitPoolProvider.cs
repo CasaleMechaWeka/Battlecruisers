@@ -23,5 +23,6 @@ namespace BattleCruisers.Buildables.Pools
         IPool<Unit, BuildableActivationArgs> ArchonPool { get; }
         IPool<Unit, BuildableActivationArgs> GlassCannoneerPool { get; }
         IPool<Unit, BuildableActivationArgs> GunBoatPool { get; }
+        IPool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
     }
 }

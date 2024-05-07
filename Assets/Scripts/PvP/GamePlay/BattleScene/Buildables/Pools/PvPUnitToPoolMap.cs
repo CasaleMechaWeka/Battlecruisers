@@ -86,9 +86,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 case "PvPGlassCannoneer":
                     return _unitPoolProvider.GlassCannoneerPool;
-                    
+
                 case "PvPGunBoat":
                     return _unitPoolProvider.GunBoatPool;
+
+                case "PvPRocketTurtle":
+                    return _unitPoolProvider.RocketTurtlePool;
 
                 default:
                     throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");

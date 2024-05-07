@@ -13,5 +13,6 @@ namespace BattleCruisers.Effects.Deaths.Pools
         IPool<IShipDeath, Vector3> ArchonPool { get; }
         IPool<IShipDeath, Vector3> GlassCannoneerPool { get; }
         IPool<IShipDeath, Vector3> GunBoatPool { get; }
+        IPool<IShipDeath, Vector3> RocketTurtlePool { get; }
     }
 }

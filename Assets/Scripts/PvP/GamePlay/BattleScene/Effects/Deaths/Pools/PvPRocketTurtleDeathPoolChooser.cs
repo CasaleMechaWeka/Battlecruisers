@@ -2,7 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
-{ /*
+{
     public class PvPRocketTurtleDeathPoolChooser : MonoBehaviour, IPvPShipDeathPoolChooser
     {
         public IPvPPool<IPvPShipDeath, Vector3> ChoosePool(IPvPShipDeathPoolProvider shipDeathPoolProvider)
@@ -10,5 +10,4 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             return shipDeathPoolProvider.RocketTurtlePool;
         }
     }
-    */
 }
