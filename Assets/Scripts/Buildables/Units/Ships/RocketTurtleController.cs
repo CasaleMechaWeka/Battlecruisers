@@ -1,9 +1,7 @@
 using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using UnityEngine;
