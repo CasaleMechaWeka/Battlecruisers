@@ -152,6 +152,7 @@ namespace BattleCruisers.Data.Static
                 Buildings.TeslaCoil,
                 Buildings.Coastguard,//new
                 Buildings.FlakTurret,//new
+                Buildings.CIWS,//new
 
                 // Offence
                 Buildings.Artillery,
@@ -489,6 +490,7 @@ namespace BattleCruisers.Data.Static
                 { Buildings.TeslaCoil, 21 },
                 { Buildings.Coastguard, 39 },
                 { Buildings.FlakTurret, 95 },
+                { Buildings.CIWS, 95 },
 
                 // Offence
                 { Buildings.Artillery, 1 },

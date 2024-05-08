@@ -33,6 +33,7 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey TeslaCoil { get; } = new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
             public static BuildingKey Coastguard { get; } = new BuildingKey(BuildingCategory.Defence, "Coastguard");//new
             public static BuildingKey FlakTurret { get; } = new BuildingKey(BuildingCategory.Defence, "FlakTurret");//new
+            public static BuildingKey CIWS { get; } = new BuildingKey(BuildingCategory.Defence, "CIWS");//new
 
             // Offence
             public static BuildingKey Artillery { get; } = new BuildingKey(BuildingCategory.Offence, "Artillery");
@@ -42,7 +43,6 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey GatlingMortar { get; } = new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
             public static BuildingKey IonCannon { get; } = new BuildingKey(BuildingCategory.Offence, "IonCannon");//new
             public static BuildingKey MissilePod { get; } = new BuildingKey(BuildingCategory.Offence, "MissilePod");//new
-
 
             // Ultras
             public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
@@ -63,7 +63,7 @@ namespace BattleCruisers.Data.Static
                         // Tactical
                         ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower,
                         // Defence
-                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret,
+                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret, CIWS,
                         // Offence
                         Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, //railgun = LasCannon! 
                         // Ultras
