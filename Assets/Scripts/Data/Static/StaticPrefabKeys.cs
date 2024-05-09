@@ -44,7 +44,6 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey IonCannon { get; } = new BuildingKey(BuildingCategory.Offence, "IonCannon");//new
             public static BuildingKey MissilePod { get; } = new BuildingKey(BuildingCategory.Offence, "MissilePod");//new
 
-
             // Ultras
             public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
             public static BuildingKey NukeLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "NukeLauncher");
