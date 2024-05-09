@@ -34,6 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         TeslaCoil,
         Coastguard,
         FlakTurret,
+        CIWS,
         Artillery,
         RocketLauncher,
         Railgun,
