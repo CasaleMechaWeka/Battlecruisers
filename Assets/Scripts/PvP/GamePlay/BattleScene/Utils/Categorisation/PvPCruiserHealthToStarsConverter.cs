@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             2400,   // Eagle
             // 3000, Trident
             3600,   // Bullshark, Hammerhead
-            4000,   // Rockjaw
+            4800,   // Rockjaw
             6000    // Longbow, Megalodon
         };
 

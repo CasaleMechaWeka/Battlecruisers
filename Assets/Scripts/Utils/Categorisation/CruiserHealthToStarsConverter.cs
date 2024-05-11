@@ -11,7 +11,7 @@
             3600,   // Rockjaw
                     // 3800, Bullshark
                     // 3900, Hammerhead
-            4000,   //
+            4800,   //
                     // 4800, Longbow, Megalodon
             6000    // BlackRig, TasDevil, Yeti
         };
