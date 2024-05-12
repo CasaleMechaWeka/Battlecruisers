@@ -51,6 +51,7 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey KamikazeSignal { get; } = new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal");
             public static BuildingKey Broadsides { get; } = new BuildingKey(BuildingCategory.Ultra, "Broadsides");
             public static BuildingKey NovaArtillery { get; } = new BuildingKey(BuildingCategory.Ultra, "NovaArtillery");//new
+            public static BuildingKey UltraCIWS { get; } = new BuildingKey(BuildingCategory.Ultra, "UltraCIWS");//new
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -67,7 +68,7 @@ namespace BattleCruisers.Data.Static
                         // Offence
                         Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, //railgun = LasCannon! 
                         // Ultras
-                        DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery,
+                        DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery, UltraCIWS
                     };
                 }
             }

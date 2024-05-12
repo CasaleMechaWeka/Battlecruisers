@@ -72,6 +72,7 @@ namespace BattleCruisers.Utils
         Building_KamikazeSignal = 0503,
         Building_Broadsides = 0504,
         Building_NovaArtillery = 0505,
+        Building_UltraCIWS = 0506,
 
 
         // === Units ===

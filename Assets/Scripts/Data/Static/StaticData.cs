@@ -169,7 +169,8 @@ namespace BattleCruisers.Data.Static
                 Buildings.Ultralisk,
                 Buildings.KamikazeSignal,
                 Buildings.Broadsides,
-                Buildings.NovaArtillery//new
+                Buildings.NovaArtillery,//new
+                Buildings.UltraCIWS//new
 			};
         }
 
@@ -507,7 +508,8 @@ namespace BattleCruisers.Data.Static
                 { Buildings.Ultralisk, 14 },
                 { Buildings.KamikazeSignal, 22 },
                 { Buildings.Broadsides, 25 },
-                { Buildings.NovaArtillery, 33 }
+                { Buildings.NovaArtillery, 33 },
+                { Buildings.UltraCIWS, 95 }
             };
         }
 
@@ -571,7 +573,8 @@ namespace BattleCruisers.Data.Static
                 { Buildings.IonCannon, 5 },
 
                 // Ultras
-                { Buildings.NovaArtillery, 0 }
+                { Buildings.NovaArtillery, 0 },
+                { Buildings.UltraCIWS, 18 }
             };
         }
 
