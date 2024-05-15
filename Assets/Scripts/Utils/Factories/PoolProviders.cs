@@ -37,8 +37,8 @@ namespace BattleCruisers.Utils.Factories
         private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
         public PoolProviders(
-            IFactoryProvider factoryProvider, 
-            IUIManager uiManager, 
+            IFactoryProvider factoryProvider,
+            IUIManager uiManager,
             IDroneFactory droneFactory)
         {
             Helper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
@@ -51,19 +51,20 @@ namespace BattleCruisers.Utils.Factories
 
             IAudioSourcePoolableFactory audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new Pool<IAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
-            
+
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }
 
         // Not part of constructor, because ProjecilePoolProvider and UnitPollProvider depend on ExplosionPoolProvider :/
         public void SetInitialCapacities()
         {
-            _explosionPoolProvider.SetInitialCapacity();
+            /*
             _shipDeathPoolProvider.SetInitialCapacity();
             _projectilePoolProvider.SetInitialCapacity();
             _unitPoolProvider.SetInitialCapacity();
             _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
             _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
+            */
         }
     }
 }
