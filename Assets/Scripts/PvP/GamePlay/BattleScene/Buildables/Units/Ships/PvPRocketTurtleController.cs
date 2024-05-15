@@ -40,16 +40,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _missileLauncher.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.RocketLauncher);
         }
 
-        protected override List<SpriteRenderer> GetNonTurretRenderers()
-        {
-            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
-
-            SpriteRenderer wheelRenderer = transform.FindNamedComponent<SpriteRenderer>("WheelAnimation/Wheel");
-            renderers.Add(wheelRenderer);
-
-            return renderers;
-        }
-
         //------------------------------------ methods for sync, written by Sava ------------------------------//
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
