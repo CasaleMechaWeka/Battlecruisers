@@ -124,10 +124,16 @@ namespace BattleCruisers.Data.Static
                         new SoundKey(SoundType.Music, "sleeper-base"),
                         new SoundKey(SoundType.Music, "sleeper-danger"));
 
+                public static SoundKeyPair Fortress { get; }
+                    = new SoundKeyPair(
+                        new SoundKey(SoundType.Music, "fortress-base"),
+                        new SoundKey(SoundType.Music, "fortress-danger"));
+
+
                 public static SoundKeyPair Boss { get; }
                 = new SoundKeyPair(
-                    new SoundKey(SoundType.Music, "juggernaut-danger"),
-                    new SoundKey(SoundType.Music, "juggernaut-danger"));
+                    new SoundKey(SoundType.Music, "fortress-base"),
+                    new SoundKey(SoundType.Music, "fortress-danger"));
 
                 public static IList<SoundKeyPair> All = new List<SoundKeyPair>()
                 {
@@ -137,6 +143,7 @@ namespace BattleCruisers.Data.Static
                     Juggernaut,
                     Nothing,
                     Sleeper,
+                    Fortress,
                     Boss
                 };
             }

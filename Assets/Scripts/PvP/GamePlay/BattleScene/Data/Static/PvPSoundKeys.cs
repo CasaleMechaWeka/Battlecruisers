@@ -122,11 +122,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     = new PvPSoundKeyPair(
                         new PvPSoundKey(PvPSoundType.Music, "sleeper-base"),
                         new PvPSoundKey(PvPSoundType.Music, "sleeper-danger"));
+                
+                public static PvPSoundKeyPair Fortress { get; }
+                    = new PvPSoundKeyPair(
+                        new PvPSoundKey(PvPSoundType.Music, "fortress-base"),
+                        new PvPSoundKey(PvPSoundType.Music, "fortress-danger"));
 
                 public static PvPSoundKeyPair Boss { get; }
                 = new PvPSoundKeyPair(
-                    new PvPSoundKey(PvPSoundType.Music, "juggernaut-danger"),
-                    new PvPSoundKey(PvPSoundType.Music, "juggernaut-danger"));
+                        new PvPSoundKey(PvPSoundType.Music, "fortress-base"),
+                        new PvPSoundKey(PvPSoundType.Music, "fortress-danger"));
 
                 public static IList<PvPSoundKeyPair> All = new List<PvPSoundKeyPair>()
                 {
@@ -136,6 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     Juggernaut,
                     Nothing,
                     Sleeper,
+                    Fortress,
                     Boss
                 };
             }

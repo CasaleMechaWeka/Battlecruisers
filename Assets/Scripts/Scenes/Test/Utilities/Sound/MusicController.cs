@@ -34,7 +34,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 SoundKeys.Music.Background.Juggernaut,
                 SoundKeys.Music.Background.Nothing,
                 SoundKeys.Music.Background.Sleeper,
-                SoundKeys.Music.Background.Againagain
+                SoundKeys.Music.Background.Againagain,
+                SoundKeys.Music.Background.Fortress
             };
             _songs = new CircularList<SoundKeyPair>(songs)
             {
