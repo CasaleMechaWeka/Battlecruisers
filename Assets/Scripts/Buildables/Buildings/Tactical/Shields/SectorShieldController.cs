@@ -10,7 +10,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
-using UnityEngine.Events;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -62,16 +61,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
             _soundPlayer = soundPlayer;
             _timeSinceDamageInS = 1000;
+            SetHealthToMax();
 
-            SetupHealthBar();
-        }
-
-        private void SetupHealthBar()
-        {
             healthBar.Initialise(this, true);
-
-            // Adjust the health bar position and size manually in the Unity Editor as needed
-            // Since the resizing logic related to the shield's radius is removed
         }
 
         void Update()
