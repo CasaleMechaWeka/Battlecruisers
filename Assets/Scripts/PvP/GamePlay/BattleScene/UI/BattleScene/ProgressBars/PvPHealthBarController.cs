@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsTrue(damagable.Health > 0);
 
             _damagable = damagable;
-            _maxHealth = _damagable.Health;
+            _maxHealth = _damagable.MaxHealth;
             Offset = transform.position;
             _followDamagable = followDamagable;
 

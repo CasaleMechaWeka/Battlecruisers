@@ -61,7 +61,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
             _soundPlayer = soundPlayer;
             _timeSinceDamageInS = 1000;
-            SetHealthToMax();
 
             healthBar.Initialise(this, true);
         }
