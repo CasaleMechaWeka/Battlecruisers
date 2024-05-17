@@ -52,6 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPBroadsides { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPBroadsides");
             public static PvPBuildingKey PvPNovaArtillery { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPNovaArtillery");
             public static PvPBuildingKey PvPUltraCIWS { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPUltraCIWS");
+            public static PvPBuildingKey PvPGlobeShield { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPGlobeShield");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -68,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         // Offence
                         PvPArtillery, PvPRocketLauncher, PvPRailgun, PvPMLRS, PvPGatlingMortar,PvPIonCannon,PvPMissilePod,
                         // Ultras
-                        PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides, PvPNovaArtillery, PvPUltraCIWS
+                        PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides, PvPNovaArtillery, PvPUltraCIWS, PvPGlobeShield
                     };
                 }
             }
@@ -294,6 +295,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildableOutlineKey PvPFlakTurretOutline { get; } = new PvPBuildableOutlineKey("PvPFlakTurretOutline");
             public static PvPBuildableOutlineKey PvPCIWSOutline { get; } = new PvPBuildableOutlineKey("PvPCIWSOutline");
             public static PvPBuildableOutlineKey PvPUltraCIWSOutline { get; } = new PvPBuildableOutlineKey("PvPUltraCIWSOutline");
+            public static PvPBuildableOutlineKey PvPGlobeShieldOutline { get; } = new PvPBuildableOutlineKey("PvPGlobeShieldOutline");
             public static IList<IPvPPrefabKey> AllKeys
             {
                 get
@@ -331,7 +333,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPCoastguardOutline,
                         PvPFlakTurretOutline,
                         PvPCIWSOutline,
-                        PvPUltraCIWSOutline
+                        PvPUltraCIWSOutline,
+                        PvPGlobeShieldOutline,
+
                     };
                 }
             }

@@ -77,6 +77,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             switch (_parent)
             {
+                    // Buildings
+
                 case ParentBuildable.AirFactory:
                     return new BuildingKey(BuildingCategory.Factory, "AirFactory");
                 case ParentBuildable.NavalFactory:
@@ -127,6 +129,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new BuildingKey(BuildingCategory.Offence, "IonCannon");
                 case ParentBuildable.MissilePod:
                     return new BuildingKey(BuildingCategory.Offence, "MissilePod");
+
+                // Units
+
                 case ParentBuildable.Bomber:
                     return new UnitKey(UnitCategory.Aircraft, "Bomber");
                 case ParentBuildable.Fighter:
@@ -216,6 +221,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPIonCannon");
                 case ParentBuildable.MissilePod:
                     return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMissilePod");
+
                 case ParentBuildable.Bomber:
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBomber");
                 case ParentBuildable.Fighter:

@@ -170,7 +170,8 @@ namespace BattleCruisers.Data.Static
                 Buildings.KamikazeSignal,
                 Buildings.Broadsides,
                 Buildings.NovaArtillery,//new
-                Buildings.UltraCIWS//new
+                Buildings.UltraCIWS,//new
+                Buildings.GlobeShield//new
 			};
         }
 
@@ -509,7 +510,8 @@ namespace BattleCruisers.Data.Static
                 { Buildings.KamikazeSignal, 22 },
                 { Buildings.Broadsides, 25 },
                 { Buildings.NovaArtillery, 33 },
-                { Buildings.UltraCIWS, 95 }
+                { Buildings.UltraCIWS, 95 },
+                { Buildings.GlobeShield, 95 }
             };
         }
 

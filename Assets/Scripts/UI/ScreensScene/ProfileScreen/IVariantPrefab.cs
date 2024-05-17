@@ -56,6 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         ArchonBattleship,
         GlassCannoneer,
         GunBoat,
-        RocketTurtle
+        RocketTurtle,
+        GlobeShield,
     }
 }

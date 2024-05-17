@@ -45,6 +45,8 @@ namespace BattleCruisers.Utils
         Building_SpySatelliteLauncher = 0202,
         Building_LocalBooster = 0203,
         Building_ControlTower = 0204,
+        Building_GrapheneBarrier = 0205,
+        Building_SectorShield = 0206,
 
         // Defence
         Building_AntiShipTurret = 0300,
@@ -73,6 +75,7 @@ namespace BattleCruisers.Utils
         Building_Broadsides = 0504,
         Building_NovaArtillery = 0505,
         Building_UltraCIWS = 0506,
+        Building_GlobeShield = 0507,
 
 
         // === Units ===
