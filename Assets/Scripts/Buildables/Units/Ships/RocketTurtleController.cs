@@ -16,8 +16,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override float OptimalArmamentRangeInM => _missileLauncher.RangeInM;
 
-        public GameObject BaseSprite;
-
         protected override IList<IBarrelWrapper> GetTurrets()
         {
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
@@ -50,7 +48,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.OnBuildableCompleted();
             _missileLauncher.ApplyVariantStats(this);
             _shieldController.gameObject.SetActive(true);
-            BaseSprite.SetActive(true);
         }
 
         public override void StopMoving()
