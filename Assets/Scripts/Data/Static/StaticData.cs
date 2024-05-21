@@ -143,6 +143,7 @@ namespace BattleCruisers.Data.Static
                 Buildings.ControlTower,
                 Buildings.StealthGenerator,
                 Buildings.SpySatelliteLauncher,
+                Buildings.GrapheneBarrier,
 
                 // Defence
                 Buildings.AntiShipTurret,
@@ -483,6 +484,7 @@ namespace BattleCruisers.Data.Static
                 { Buildings.StealthGenerator, 17 },
                 { Buildings.SpySatelliteLauncher, 18 },
                 { Buildings.ControlTower, 24 },
+                { Buildings.GrapheneBarrier, 95 },
 
                 // Defence
                 { Buildings.AntiShipTurret, 1 },

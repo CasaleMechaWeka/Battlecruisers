@@ -46,7 +46,6 @@ namespace BattleCruisers.Utils
         Building_LocalBooster = 0203,
         Building_ControlTower = 0204,
         Building_GrapheneBarrier = 0205,
-        Building_SectorShield = 0206,
 
         // Defence
         Building_AntiShipTurret = 0300,
@@ -96,7 +95,7 @@ namespace BattleCruisers.Utils
         Unit_AttackRIB = 0705,
         Unit_GlassCannoneer = 0706,
         Unit_GunBoat = 0707,
-        Unit_RocketTurtle = 0708,
+        Unit_RocketTurtle = 0708
     }
 
     public static class StaticPrefabKeyHelper

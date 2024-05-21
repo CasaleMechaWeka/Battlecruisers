@@ -24,6 +24,7 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey SpySatelliteLauncher { get; } = new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher");
             public static BuildingKey LocalBooster { get; } = new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
             public static BuildingKey ControlTower { get; } = new BuildingKey(BuildingCategory.Tactical, "ControlTower");
+            public static BuildingKey GrapheneBarrier { get; } = new BuildingKey(BuildingCategory.Tactical, "GrapheneBarrier");//new
 
             // Defence
             public static BuildingKey AntiShipTurret { get; } = new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
@@ -63,7 +64,7 @@ namespace BattleCruisers.Data.Static
                         // Factories
                         AirFactory, NavalFactory, DroneStation, DroneStation4, DroneStation6, DroneStation8,
                         // Tactical
-                        ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower,
+                        ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower, GrapheneBarrier,
                         // Defence
                         AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret, CIWS,
                         // Offence

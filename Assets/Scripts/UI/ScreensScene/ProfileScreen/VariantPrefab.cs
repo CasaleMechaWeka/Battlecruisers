@@ -99,6 +99,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
                 case ParentBuildable.ControlTower:
                     return new BuildingKey(BuildingCategory.Tactical, "ControlTower");
+                case ParentBuildable.GrapheneBarrier:
+                    return new BuildingKey(BuildingCategory.Tactical, "GrapheneBarrier");
                 case ParentBuildable.AntiShipTurret:
                     return new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
                 case ParentBuildable.AntiAirTurret:
@@ -191,6 +193,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPLocalBooster");
                 case ParentBuildable.ControlTower:
                     return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPControlTower");
+                case ParentBuildable.GrapheneBarrier:
+                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPGrapheneBarrier");
                 case ParentBuildable.AntiShipTurret:
                     return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPAntiShipTurret");
                 case ParentBuildable.AntiAirTurret:
@@ -288,6 +292,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = false;
                     break;
                 case ParentBuildable.ControlTower:
+                    ret = false;
+                    break;
+                case ParentBuildable.GrapheneBarrier:
                     ret = false;
                     break;
                 case ParentBuildable.AntiShipTurret:
