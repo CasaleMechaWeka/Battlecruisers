@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Deaths.Pools
 {
-    public class RocketTurtleDeathPoolChooser : MonoBehaviour, IShipDeathPoolChooser
+    public class TurtleDeathPoolChooser : MonoBehaviour, IShipDeathPoolChooser
     {
         public IPool<IShipDeath, Vector3> ChoosePool(IShipDeathPoolProvider shipDeathPoolProvider)
         {
-            return shipDeathPoolProvider.RocketTurtlePool;
+            return shipDeathPoolProvider.TurtlePool;
         }
     }
 }

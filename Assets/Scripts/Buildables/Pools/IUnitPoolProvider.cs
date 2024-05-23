@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Buildables.Pools
@@ -24,5 +24,6 @@ namespace BattleCruisers.Buildables.Pools
         IPool<Unit, BuildableActivationArgs> GlassCannoneerPool { get; }
         IPool<Unit, BuildableActivationArgs> GunBoatPool { get; }
         IPool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
+        IPool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
     }
 }

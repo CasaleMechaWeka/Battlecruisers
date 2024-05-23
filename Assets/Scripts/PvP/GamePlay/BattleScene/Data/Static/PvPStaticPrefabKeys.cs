@@ -100,6 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPGlassCannoneer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPGlassCannoneer");
             public static PvPUnitKey PvPGunBoat { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPGunBoat");
             public static PvPUnitKey PvPRocketTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPRocketTurtle");
+            public static PvPUnitKey PvPFlakTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPFlakTurtle");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -110,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         // Aircraft
                         PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPStratBomber, PvPTestAircraft,PvPSpySatellite,PvPDeathstar,
                         // Ships
-                        PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship, PvPGlassCannoneer, PvPGunBoat, PvPRocketTurtle
+                        PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship, PvPGlassCannoneer, PvPGunBoat, PvPRocketTurtle, PvPFlakTurtle
                     };
                 }
             }
@@ -238,7 +239,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPShipDeathKey PvPArchon { get; } = new PvPShipDeathKey("PvPArchon");
             public static PvPShipDeathKey PvPGlassCannoneer { get; } = new PvPShipDeathKey("PvPGlassCannoneer");
             public static PvPShipDeathKey PvPGunBoat { get; } = new PvPShipDeathKey("PvPGunBoat");
-            public static PvPShipDeathKey PvPRocketTurtle { get; } = new PvPShipDeathKey("PvPRocketTurtle");
+            public static PvPShipDeathKey PvPTurtle { get; } = new PvPShipDeathKey("PvPTurtle");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -254,7 +255,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPSiegeDestroyer,
                         PvPGlassCannoneer,
                         PvPGunBoat,
-                        PvPRocketTurtle
+                        PvPTurtle
                     };
                 }
             }

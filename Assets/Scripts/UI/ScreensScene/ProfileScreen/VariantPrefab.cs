@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             switch (_parent)
             {
-                    // Buildings
+                // Buildings
 
                 case ParentBuildable.AirFactory:
                     return new BuildingKey(BuildingCategory.Factory, "AirFactory");
@@ -164,6 +164,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new UnitKey(UnitCategory.Naval, "GunBoat");
                 case ParentBuildable.RocketTurtle:
                     return new UnitKey(UnitCategory.Naval, "RocketTurtle");
+                case ParentBuildable.FlakTurtle:
+                    return new UnitKey(UnitCategory.Naval, "FlakTurtle");
             }
             return null;
         }
@@ -256,6 +258,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPGunBoat");
                 case ParentBuildable.RocketTurtle:
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPRocketTurtle");
+                case ParentBuildable.FlakTurtle:
+                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPFlakTurtle");
             }
             return null;
         }
@@ -385,6 +389,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = true;
                     break;
                 case ParentBuildable.RocketTurtle:
+                    ret = true;
+                    break;
+                case ParentBuildable.FlakTurtle:
                     ret = true;
                     break;
             }

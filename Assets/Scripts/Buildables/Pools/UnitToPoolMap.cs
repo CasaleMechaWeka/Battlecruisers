@@ -93,6 +93,8 @@ namespace BattleCruisers.Buildables.Pools
                 case "RocketTurtle":
                     return _unitPoolProvider.RocketTurtlePool;
 
+                case "FlakTurtle":
+                    return _unitPoolProvider.FlakTurtlePool;
 
                 default:
                     throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");

@@ -218,7 +218,8 @@ namespace BattleCruisers.Data.Static
                 Units.ArchonBattleship,
                 Units.AttackRIB,
                 Units.GlassCannoneer,
-                Units.RocketTurtle
+                Units.RocketTurtle,
+                Units.FlakTurtle
             };
         }
 
@@ -539,7 +540,8 @@ namespace BattleCruisers.Data.Static
                 { Units.GunBoat, 95 },
                 { Units.ArchonBattleship, 16 },
                 { Units.AttackRIB, 30 },
-                { Units.RocketTurtle, 95 }
+                { Units.RocketTurtle, 95 },
+                { Units.FlakTurtle, 95 }
             };
         }
 

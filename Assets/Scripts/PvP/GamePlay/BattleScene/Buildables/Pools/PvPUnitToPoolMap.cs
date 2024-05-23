@@ -93,6 +93,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 case "PvPRocketTurtle":
                     return _unitPoolProvider.RocketTurtlePool;
 
+                case "PvPRFlakTurtle":
+                    return _unitPoolProvider.FlakTurtlePool;
+
                 default:
                     throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");
             }

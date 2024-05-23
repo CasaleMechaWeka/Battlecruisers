@@ -17,7 +17,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
         public IPool<IShipDeath, Vector3> SiegeDestroyerPool { get; }
         public IPool<IShipDeath, Vector3> GlassCannoneerPool { get; }
         public IPool<IShipDeath, Vector3> GunBoatPool { get; }
-        public IPool<IShipDeath, Vector3> RocketTurtlePool { get; }
+        public IPool<IShipDeath, Vector3> TurtlePool { get; }
 
         public ShipDeathPoolProvider(IPrefabFactory prefabFactory)
         {
@@ -31,7 +31,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
             ArchonPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Archon);
             GlassCannoneerPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.GlassCannoneer);
             GunBoatPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.GunBoat);
-            RocketTurtlePool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.RocketTurtle);
+            TurtlePool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Turtle);
         }
 
         private IPool<IShipDeath, Vector3> CreateShipDeathPool(IPrefabFactory prefabFactory, ShipDeathKey shipDeathKey)
@@ -53,7 +53,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
             ArchonPool.AddCapacity(InitialCapacity.ARCHON);
             GlassCannoneerPool.AddCapacity(InitialCapacity.GLASSCANNONEER);
             GunBoatPool.AddCapacity(InitialCapacity.GUNBOAT);
-            RocketTurtlePool.AddCapacity(InitialCapacity.ROCKET_TURTLE);
+            TurtlePool.AddCapacity(InitialCapacity.TURTLE);
         }
     }
 }

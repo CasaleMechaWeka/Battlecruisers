@@ -13,6 +13,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         IPvPPool<IPvPShipDeath, Vector3> ArchonPool { get; }
         IPvPPool<IPvPShipDeath, Vector3> GlassCannoneerPool { get; }
         IPvPPool<IPvPShipDeath, Vector3> GunBoatPool { get; }
-        IPvPPool<IPvPShipDeath, Vector3> RocketTurtlePool { get; }
+        IPvPPool<IPvPShipDeath, Vector3> TurtlePool { get; }
     }
 }

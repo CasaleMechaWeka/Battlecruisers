@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public IPvPPool<IPvPShipDeath, Vector3> SiegeDestroyerPool { get; }
         public IPvPPool<IPvPShipDeath, Vector3> GlassCannoneerPool { get; }
         public IPvPPool<IPvPShipDeath, Vector3> GunBoatPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> RocketTurtlePool { get; }
+        public IPvPPool<IPvPShipDeath, Vector3> TurtlePool { get; }
 
         public PvPShipDeathPoolProvider(IPvPPrefabFactory prefabFactory)
         {
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             ArchonPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPArchon);
             GlassCannoneerPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPGlassCannoneer);
             GunBoatPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPGunBoat);
-            RocketTurtlePool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPRocketTurtle);
+            TurtlePool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPTurtle);
         }
 
         private IPvPPool<IPvPShipDeath, Vector3> CreateShipDeathPool(IPvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await ArchonPool.AddCapacity(PvPInitialCapacity.ARCHON);
             await GlassCannoneerPool.AddCapacity(PvPInitialCapacity.GLASSCANNONEER);
             await GunBoatPool.AddCapacity(PvPInitialCapacity.GUNBOAT);
-            await RocketTurtlePool.AddCapacity(PvPInitialCapacity.ROCKET_TURTLE);
+            await TurtlePool.AddCapacity(PvPInitialCapacity.TURTLE);
         }
     }
 }
