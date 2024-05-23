@@ -2,7 +2,6 @@
 
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
-using System.Diagnostics;
 using Unity.Netcode;
 using UnityEngine.Assertions;
 
