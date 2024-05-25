@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
 {
-    public class PvPRocketTurtleDeathPoolChooser : MonoBehaviour, IPvPShipDeathPoolChooser
+    public class PvPTurtleDeathPoolChooser : MonoBehaviour, IPvPShipDeathPoolChooser
     {
         public IPvPPool<IPvPShipDeath, Vector3> ChoosePool(IPvPShipDeathPoolProvider shipDeathPoolProvider)
         {
