@@ -28,8 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override IList<IPvPBarrelWrapper> GetTurrets()
         {
             IList<IPvPBarrelWrapper> turrets = new List<IPvPBarrelWrapper>();
-
-            _flakturret = transform.FindNamedComponent<IPvPBarrelWrapper>("FlakTurret");
+            
+            _flakturret = gameObject.GetComponentInChildren<IPvPBarrelWrapper>();
             turrets.Add(_flakturret);
 
             return turrets;
@@ -37,8 +37,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void InitialiseTurrets()
         {
-            _flakturret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.AntiAirTurret);
+            _flakturret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.AntiAir);
         }
+
 
         //------------------------------------ methods for sync, written by Sava ------------------------------//
 
@@ -214,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnBuildableCompleted();
-            _missileLauncher.ApplyVariantStats(this);
+            _flakturret.ApplyVariantStats(this);
         }
 
         [ClientRpc]
