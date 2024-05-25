@@ -93,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 case "PvPRocketTurtle":
                     return _unitPoolProvider.RocketTurtlePool;
 
-                case "PvPRFlakTurtle":
+                case "PvPFlakTurtle":
                     return _unitPoolProvider.FlakTurtlePool;
 
                 default:
