@@ -571,9 +571,18 @@ namespace BattleCruisers.Data.Static
 
             return new Dictionary<BuildingKey, int>()
             {
+                //Factories
+                { Buildings.DroneStation6, 22 },
+
                 // Defence
                 { Buildings.MissilePod, 3 },
                 { Buildings.Coastguard, 6 },
+                { Buildings.CIWS, 10 },
+                { Buildings.FlakTurret, 14 },
+
+                //Tactical
+                { Buildings.GrapheneBarrier, 11 },
+                { Buildings.GlobeShield, 23 },
 
                 // Offence
                 { Buildings.IonCannon, 5 },
@@ -596,6 +605,11 @@ namespace BattleCruisers.Data.Static
                 { Units.StratBomber, 9 },
                 
                 // Ships
+                { Units.GlassCannoneer, 16 },
+                { Units.SiegeDestroyer, 17 },
+                { Units.RocketTurtle, 19 },
+                { Units.GunBoat, 20 },
+                { Units.FlakTurtle, 21 },
             };
         }
 
@@ -610,9 +624,9 @@ namespace BattleCruisers.Data.Static
                 { Hulls.TasDevil, 2 },
                 { Hulls.BlackRig, 4 },
                 { Hulls.Yeti, 7 },
-                { Hulls.Flea, 45 },
-                { Hulls.Shepherd, 45},
-                { Hulls.Microlodon, 45},
+                { Hulls.Microlodon, 12},
+                { Hulls.Flea, 13 },
+                { Hulls.Shepherd, 15},
                 { Hulls.Pistol, 45},
                 { Hulls.Goatherd, 45}
             };
