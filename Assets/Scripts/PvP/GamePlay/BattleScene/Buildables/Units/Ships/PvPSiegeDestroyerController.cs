@@ -16,8 +16,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
 
-        public GameObject BaseSprite;
-
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
@@ -148,7 +146,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
-            BaseSprite.SetActive(true);
             if (IsServer)
             {
                 base.OnBuildableCompleted();
