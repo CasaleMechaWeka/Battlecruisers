@@ -30,5 +30,8 @@ namespace BattleCruisers.Buildables.Units
         void OverwriteComparableItem(string name, string description);
         int variantIndex { get; set; }
         void ApplyVariantStats(StatVariant statVariant);
+
+        float YSpawnOffset { get; }
+        
     }
 }

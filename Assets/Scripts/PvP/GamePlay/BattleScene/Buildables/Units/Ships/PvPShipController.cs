@@ -46,6 +46,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override PvPTargetType TargetType => PvPTargetType.Ships;
 
+        [SerializeField]
+        private float ySpawnOffset = -0.35f; // Default value, can be adjusted in the Inspector
+
+        public override float YSpawnOffset => ySpawnOffset;
+
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
         /// range of defence buildings.

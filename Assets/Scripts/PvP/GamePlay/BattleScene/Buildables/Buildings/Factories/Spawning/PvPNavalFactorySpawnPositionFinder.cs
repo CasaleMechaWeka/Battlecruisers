@@ -25,7 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Vector3 spawnPosition = _factory.Transform.Position + (direction * horizontalChange);
 
-            float yOffset = -0.35f; // Adjust this value based on your requirements
+            float yOffset = unitToSpawn.YSpawnOffset;
+
             spawnPosition.y += yOffset; // Apply the vertical offset
 
             return spawnPosition;

@@ -40,6 +40,9 @@ namespace BattleCruisers.Buildables.Units
 
         public int variantIndex { get; set; }
 
+        public virtual float YSpawnOffset => 0.0f; // Default value for non-ship units
+
+
         private Direction _facingDirection;
         public Direction FacingDirection
         {

@@ -30,5 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         int variantIndex { get; set; }
         void ApplyVariantStats(StatVariant statVariant);
+
+        float YSpawnOffset { get; }
     }
 }

@@ -39,6 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float maxVelocityInMPerS;
         public float MaxVelocityInMPerS => maxVelocityInMPerS;
 
+        public virtual float YSpawnOffset => 0.0f; // Default value for non-ship units
+
         private PvPDirection _facingDirection;
         public PvPDirection FacingDirection
         {

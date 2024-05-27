@@ -46,6 +46,13 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override TargetType TargetType => TargetType.Ships;
 
+        [SerializeField]
+        private float ySpawnOffset = -0.35f; // Default value, can be adjusted in the Inspector
+
+        public override float YSpawnOffset => ySpawnOffset;
+
+
+
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
         /// range of defence buildings.
