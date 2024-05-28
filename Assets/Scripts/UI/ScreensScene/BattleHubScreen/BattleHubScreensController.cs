@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public CoinBattleScreenController coinBattleController;
 
         public PlayerInfoPanelController playerInfoPanelController;
-        public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
+        public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton, coinBattleButton;
 
         public Text titleOfBattleButton;
 
@@ -86,6 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
             skirmishButton.Initialise(_soundPlayer, GoToSkirmishScreen);
             battleButton.Initialise(_soundPlayer, GotoPvPMode);
+            coinBattleButton.Initialise(_soundPlayer, GotoCoinBattle);
 
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
@@ -126,7 +127,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenBattleHub()
         {
             playerInfoPanelController.gameObject.SetActive(true);
-            //--->CODE CHANGED BY ANUJ
+          
             if (_applicationModel.Mode != GameMode.PvP_1VS1)
             {
                 if (ScreensSceneGod.Instance.cameraOfCaptains != null)
@@ -134,7 +135,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 if (ScreensSceneGod.Instance.cameraOfCharacter != null)
                     ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             }
-            //<---
+           
             GoToScreen(battlePanel);
             UnselectAll();
         }
@@ -246,6 +247,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     coinBattleController.BattleButtonClicked();
                 }
             }
+        }
+
+        public void GotoCoinBattle()
+        {
+
+             _applicationModel.Mode = GameMode.CoinBattle;
+             coinBattleController.BattleButtonClicked();
+
         }
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
