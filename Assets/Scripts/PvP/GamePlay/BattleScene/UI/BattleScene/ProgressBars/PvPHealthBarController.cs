@@ -15,6 +15,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPDamagable _damagable;
         private float _maxHealth;
         private bool _followDamagable;
+        
+        [SerializeField]
+        private bool manualOffsetOverride = false; // Checkbox to enable manual override
+
+        [SerializeField]
+        private Vector2 manualOffset = Vector2.zero; // Manual offset values
 
         private Vector2 _offset;
         public Action OffsetChanged;
@@ -89,11 +95,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private void UpdatePosition()
         {
             Vector3 parentPosition = _damagable.GameObject.transform.position;
-            transform.position
-                = new Vector3(
-                    parentPosition.x + Offset.x,
-                    parentPosition.y + Offset.y,
-                    transform.position.z);
+            Vector2 offsetToUse = manualOffsetOverride ? manualOffset : Offset;
+            
+            Vector3 newPosition = new Vector3(
+                parentPosition.x + offsetToUse.x,
+                parentPosition.y + offsetToUse.y,
+                transform.position.z);
+
+            transform.position = newPosition;
         }
     }
 }
