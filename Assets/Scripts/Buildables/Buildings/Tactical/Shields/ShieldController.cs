@@ -36,6 +36,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         public override Vector2 Size => _size;
         private int shieldUpdateCnt = 0;
 
+        // Serialized fields for manual offset override
+        [SerializeField]
+        private bool manualOffsetOverride = false; // Checkbox to enable manual override
+
+        [SerializeField]
+        private Vector2 manualOffset = Vector2.zero; // Manual offset values
+
         public override void StaticInitialise(ILocTable commonStrings)
         {
             base.StaticInitialise(commonStrings);
@@ -69,15 +76,18 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * Stats.ShieldRadiusInM;
             healthBar.Offset = new Vector2(0, yPos);
 
+            /*
+
             float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * Stats.ShieldRadiusInM;
             float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;
             healthBar.UpdateSize(width, height);
+
+            */
         }
 
         // PERF:  Don't need to do this every frame
         void Update()
         {
-
             // Eat into recharge delay
             if (Health < maxHealth)
             {
@@ -177,6 +187,22 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
                 Stats.shieldRechargeDelayModifier += statVariant.shield_recharge_delay;
                 Stats.shieldRechargeRateModifier += statVariant.shield_recharge_rate;
             }
+        }
+
+        // UpdatePosition method to adjust position based on offset
+        private void UpdatePosition()
+        {
+            Vector3 parentPosition = transform.position;
+            Vector2 offsetToUse = manualOffsetOverride ? manualOffset : healthBar.Offset;
+            
+            Vector3 newPosition = new Vector3(
+                parentPosition.x + offsetToUse.x,
+                parentPosition.y + offsetToUse.y,
+                transform.position.z);
+
+            Debug.Log($"UpdatePosition: {gameObject.name} ParentPosition: {parentPosition}, Offset: {offsetToUse}, NewPosition: {newPosition}");
+
+            healthBar.transform.position = newPosition;
         }
     }
 }

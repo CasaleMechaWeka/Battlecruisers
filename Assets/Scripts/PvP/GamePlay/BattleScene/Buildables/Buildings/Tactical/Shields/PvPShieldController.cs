@@ -74,9 +74,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * Stats.ShieldRadiusInM;
             healthBar.Offset = new Vector2(0, yPos);
 
+            /*
+
             float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * Stats.ShieldRadiusInM;
             float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;
             healthBar.UpdateSize(width, height);
+
+            */
         }
 
         // PERF:  Don't need to do this every frame
