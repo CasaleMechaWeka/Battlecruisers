@@ -51,6 +51,8 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override float YSpawnOffset => ySpawnOffset;
 
+        [SerializeField]
+        private List<GameObject> additionalRenderers = new List<GameObject>();
 
 
         /// <summary>
@@ -233,6 +235,15 @@ namespace BattleCruisers.Buildables.Units.Ships
             foreach (IBarrelWrapper turret in _turrets)
             {
                 renderers.AddRange(turret.Renderers);
+            }
+
+         foreach (GameObject obj in additionalRenderers)
+            {
+                if (obj != null)
+                {
+                    SpriteRenderer[] spriteRenderers = obj.GetComponentsInChildren<SpriteRenderer>();
+                    renderers.AddRange(spriteRenderers);
+                }
             }
 
             return renderers;

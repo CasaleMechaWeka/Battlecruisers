@@ -44,7 +44,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override void OnBuildableCompleted()
         {
             _shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer, TargetType.Ships);
-            _shieldController.gameObject.SetActive(false);
             base.OnBuildableCompleted();
             _missileLauncher.ApplyVariantStats(this);
             _shieldController.gameObject.SetActive(true);

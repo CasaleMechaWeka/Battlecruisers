@@ -51,6 +51,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override float YSpawnOffset => ySpawnOffset;
 
+        [SerializeField]
+        private List<GameObject> additionalRenderers = new List<GameObject>();
+
+
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
         /// range of defence buildings.
@@ -240,6 +244,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 renderers.AddRange(turret.Renderers);
             }
+
+             foreach (GameObject obj in additionalRenderers)
+                {
+                    if (obj != null)
+                    {
+                        SpriteRenderer[] spriteRenderers = obj.GetComponentsInChildren<SpriteRenderer>();
+                        renderers.AddRange(spriteRenderers);
+                    }
+                }
 
             return renderers;
         }
