@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
-            Buildable = GetComponentInChildren<TPvPBuildable>();
+            Buildable = GetComponentInChildren<TPvPBuildable>(includeInactive: true);
             Assert.IsNotNull(Buildable);
 
             PvPHealthBarController healthBar = GetComponentInChildren<PvPHealthBarController>();
