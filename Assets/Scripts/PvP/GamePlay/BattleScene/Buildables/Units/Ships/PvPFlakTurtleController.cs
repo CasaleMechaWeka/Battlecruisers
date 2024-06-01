@@ -224,5 +224,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 BuildableState = state;
         }
+
+        [ClientRpc]
+        private void OnEnableShieldClientRpc(bool enabled)
+        {
+            if (!IsHost)
+                _shieldController.gameObject.SetActive(enabled);
+        }
     }
 }
