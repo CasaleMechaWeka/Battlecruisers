@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             Assert.IsNotNull(prefabKey);
             if (!_prefabs.ContainsKey(prefabKey))
-                Debug.Log("PrefabKey ----------------> " + prefabKey.PrefabName);
+                Debug.LogWarning("PrefabKey ----------------> " + prefabKey.PrefabName + " is missing!");
             Assert.IsTrue(_prefabs.ContainsKey(prefabKey));
             return _prefabs[prefabKey];
         }
