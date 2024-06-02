@@ -88,12 +88,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _projectilePool.GetItem(projectileActivationArgs);
             if (_firingSound != null)
             {
-             //   _soundPlayer.OnProjectileFired();
+                _soundPlayer.OnProjectileFired();
                 OnProjectileFiredSound(_firingSound, _burstSize);
             }
             else
             {
-                Debug.Log("Warning, soundplayer was null when spawn projectile was called");
+                Debug.LogWarning("Warning, soundplayer was null when spawn projectile was called");
             }
         }
         protected virtual void OnProjectileFiredSound(IPvPSoundKey firingSound, int burstSize) { }
