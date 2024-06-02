@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using UnityEngine.Events;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
