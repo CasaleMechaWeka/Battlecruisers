@@ -14,8 +14,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPBarrelWrapper _missileLauncher;
         private PvPSectorShieldController _shieldController;
+        public float armamentRange;
 
-        public override float OptimalArmamentRangeInM => _missileLauncher.RangeInM;
+        public override float OptimalArmamentRangeInM => armamentRange;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
@@ -47,8 +48,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnShipCompleted()
         {
+            _shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer, PvPTargetType.Ships);
             if (IsServer)
                 base.OnShipCompleted();
+            _shieldController.gameObject.SetActive(true);
         }
         private void LateUpdate()
         {
