@@ -45,13 +45,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-
         protected override void OnShipCompleted()
         {
-            _shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer, PvPTargetType.Ships);
             if (IsServer)
                 base.OnShipCompleted();
-            _shieldController.gameObject.SetActive(true);
         }
         private void LateUpdate()
         {
@@ -144,6 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
+            _shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer, PvPTargetType.Ships);
             if (IsServer)
             {
                 base.OnBuildableCompleted();
@@ -151,6 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             else
                 OnBuildableCompleted_PvPClient();
+            _shieldController.gameObject.SetActive(true);
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
