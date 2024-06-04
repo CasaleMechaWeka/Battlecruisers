@@ -49,22 +49,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _enemyCruiser = args.EnempCruiser;
 
             IPvPProjectilePoolChooser<TPvPProjectile, TPvPProjectileArgs, TPvPStats> poolChooser = GetComponent<IPvPProjectilePoolChooser<TPvPProjectile, TPvPProjectileArgs, TPvPStats>>();
-      
+
             Assert.IsNotNull(poolChooser);
 
             _projectilePool = poolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ProjectilePoolProvider);
 
-            /*            IPvPProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IPvPProjectileSoundPlayerInitialiser>();
-                        Assert.IsNotNull(soundPlayerInitialiser);
-                        _soundPlayer
-                            = await soundPlayerInitialiser.CreateSoundPlayerAsync(
-                                args.FactoryProvider.Sound.SoundPlayerFactory,
-                                firingSound,
-                                args.BurstSize,
-                                args.FactoryProvider.SettingsManager);*/
+            IPvPProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IPvPProjectileSoundPlayerInitialiser>();
+            Assert.IsNotNull(soundPlayerInitialiser);
+            _soundPlayer
+                = await soundPlayerInitialiser.CreateSoundPlayerAsync(
+                    args.FactoryProvider.Sound.SoundPlayerFactory,
+                    firingSound,
+                    args.BurstSize,
+                    args.FactoryProvider.SettingsManager);
             _firingSound = firingSound;
             _burstSize = args.BurstSize;
-        
+
         }
 
         protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
@@ -86,7 +86,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsNotNull(projectileActivationArgs);
 
             _projectilePool.GetItem(projectileActivationArgs);
-            if (_firingSound != null)
+            if (_firingSound != null && _soundPlayer != null)
             {
                 _soundPlayer.OnProjectileFired();
                 OnProjectileFiredSound(_firingSound, _burstSize);
