@@ -31,14 +31,31 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public string StringKeyBase => stringKeyBase;
 
-        public void Initialise(ILocTable storyStrings, bool isSideQuest = false)
-        {
-            Assert.IsNotNull(storyStrings);
-            //Debug.Log(stringKeyBase);
-            PlayerText = storyStrings.GetString($"{stringKeyBase}/PlayerText");
-            EnemyText = storyStrings.GetString($"{stringKeyBase}/EnemyText");
-            AppraisalDroneText = storyStrings.GetString($"{stringKeyBase}/DroneText");
-            enemyName = storyStrings.GetString($"{stringKeyBase}/name");
-        }
+       public void Initialise(ILocTable storyStrings, bool isSideQuest = false)
+            {
+                Assert.IsNotNull(storyStrings);
+
+                string playerTextKey = $"{stringKeyBase}/PlayerText";
+                string enemyTextKey = $"{stringKeyBase}/EnemyText";
+                string droneTextKey = $"{stringKeyBase}/DroneText";
+                string enemyNameKey = $"{stringKeyBase}/name";
+
+                Debug.Log($"PlayerText key: {playerTextKey}");
+                Debug.Log($"EnemyText key: {enemyTextKey}");
+                Debug.Log($"DroneText key: {droneTextKey}");
+                Debug.Log($"EnemyName key: {enemyNameKey}");
+
+                PlayerText = storyStrings.GetString(playerTextKey);
+                EnemyText = storyStrings.GetString(enemyTextKey);
+                AppraisalDroneText = storyStrings.GetString(droneTextKey);
+                enemyName = storyStrings.GetString(enemyNameKey);
+
+                Debug.Log($"Resolved PlayerText: {PlayerText}");
+                Debug.Log($"Resolved EnemyText: {EnemyText}");
+                Debug.Log($"Resolved DroneText: {AppraisalDroneText}");
+                Debug.Log($"Resolved EnemyName: {enemyName}");
+            }
+
+
     }
 }

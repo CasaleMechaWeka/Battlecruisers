@@ -81,7 +81,7 @@ namespace BattleCruisers.Scenes.BattleScene
             else
                 levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
 
-            return levelTrashTalkData.EnemyName.ToUpper();
+            return levelTrashTalkData.EnemyName;
         }
 
         public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
