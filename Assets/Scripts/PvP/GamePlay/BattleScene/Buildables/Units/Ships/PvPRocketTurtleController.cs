@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -7,6 +8,7 @@ using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -20,10 +22,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
-            _shieldController = GetComponentInChildren<PvPSectorShieldController>(includeInactive: true);
-            _shieldController.gameObject.SetActive(false);
             base.StaticInitialise(parent, healthBar, commonStrings);
+
+            _shieldController = GetComponentInChildren<PvPSectorShieldController>(includeInactive: true);
+            Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
             _shieldController.StaticInitialise(commonStrings);
+        }
+
+        public override void Activate(PvPBuildableActivationArgs activationArgs)
+        {
+            base.Activate(activationArgs);
+
+            _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null);
+            _shieldController.gameObject.SetActive(false);
+            OnEnableShieldClientRpc(false);
+            _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
+            _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
         }
 
         protected override IList<IPvPBarrelWrapper> GetTurrets()
@@ -141,15 +155,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
-            _shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer, PvPTargetType.Ships);
             if (IsServer)
             {
                 base.OnBuildableCompleted();
+                _shieldController.gameObject.SetActive(true);
+                OnEnableShieldClientRpc(true);
                 OnBuildableCompletedClientRpc();
             }
             else
                 OnBuildableCompleted_PvPClient();
-            _shieldController.gameObject.SetActive(true);
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
@@ -209,6 +223,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnDestroyedEvent();
+        }
+
+        [ClientRpc]
+        private void OnEnableShieldClientRpc(bool enabled)
+        {
+            if (!IsHost)
+                _shieldController.gameObject.SetActive(enabled);
         }
 
         [ClientRpc]
