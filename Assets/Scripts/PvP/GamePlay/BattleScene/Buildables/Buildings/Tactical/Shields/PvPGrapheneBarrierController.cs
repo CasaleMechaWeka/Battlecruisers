@@ -43,13 +43,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             animator = GetComponent<Animator>();
             Assert.IsNotNull(animator, "Animator component could not be found.");
-            animator.enabled = false;
-            Assert.IsNotNull(_shieldController, "Shield controller could not be found.");
+            animator.enabled = false; // Ensure the animator is disabled by default
+
             _shieldController.onShieldDepleted.AddListener(OnShieldDepleted);
             _shieldController.onShieldDamaged.AddListener(OnShieldDamaged);
 
             HealthChanged += OnHealthChanged;
         }
+
 
         public override void Activate(PvPBuildingActivationArgs activationArgs)
         {
@@ -66,17 +67,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
             {
                 base.OnBuildableCompleted();
-                //start deploy animation
+                // Start deploy animation
                 animator.enabled = true;
 
                 _shieldController.gameObject.SetActive(true);
                 OnEnableShieldClientRpc(true);
+                EnableAnimatorClientRpc(); // Notify the client to enable the animator
                 OnBuildableCompletedClientRpc();
             }
             else
+            {
                 OnBuildableCompleted_PvPClient();
+            }
         }
-        
+
+
         private void OnShieldDepleted()
         {
             base.Destroy();
@@ -346,6 +351,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnDestroyedEvent();
+        }
+
+        [ClientRpc]
+        private void EnableAnimatorClientRpc()
+        {
+            animator.enabled = true;
         }
     }
 }
