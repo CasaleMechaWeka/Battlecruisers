@@ -67,6 +67,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private PausableAudioListener _pausableAudioListener;
 
         public int defaultLevel;
+        public int defaultSideQuest;
         public bool isTutorial = false;
 
         public CameraInitialiser cameraInitialiser;
@@ -119,7 +120,13 @@ namespace BattleCruisers.Scenes.BattleScene
             if (sceneNavigator == null)
             {
                 // TEMP  Force level I'm currently testing :)
-                applicationModel.SelectedLevel = defaultLevel;
+                if (defaultLevel >= 0)
+                    applicationModel.SelectedLevel = defaultLevel;
+                else
+                {
+                    applicationModel.Mode = GameMode.SideQuest;
+                    applicationModel.SelectedSideQuestID = defaultSideQuest;
+                }
                 //Debug.Log(applicationModel.SelectedLevel);
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
@@ -211,7 +218,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ILevel currentLevel = null;
             ISideQuestData currentSideQuest = null;
             string enemyName;
-            
+
             // Prior to setting up Captain Names
             CaptainExo aiCaptainExoPrefab;
             if (applicationModel.Mode == GameMode.SideQuest)
@@ -233,40 +240,40 @@ namespace BattleCruisers.Scenes.BattleScene
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 
-           // Setting up Captains
-                CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-                CaptainExo playerCaptain = Instantiate(playerCaptainExoPrefab, playerCaptainContainer);
+            // Setting up Captains
+            CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo playerCaptain = Instantiate(playerCaptainExoPrefab, playerCaptainContainer);
 
-                CaptainExo AICaptain = Instantiate(aiCaptainExoPrefab, AICaptainContainer);
-                AICaptain.captainName = enemyName; // Ensure this assignment
-                Debug.Log($"AI Captain name after instantiating and assigning: {AICaptain.captainName}");
+            CaptainExo AICaptain = Instantiate(aiCaptainExoPrefab, AICaptainContainer);
+            AICaptain.captainName = enemyName; // Ensure this assignment
+            Debug.Log($"AI Captain name after instantiating and assigning: {AICaptain.captainName}");
 
-                foreach (SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
-                    spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
+            foreach (SpriteRenderer spriteRenderer in playerCaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
+                spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
 
-                foreach (SpriteRenderer spriteRenderer in AICaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
-                    spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
+            foreach (SpriteRenderer spriteRenderer in AICaptain.gameObject.GetComponentsInChildren<SpriteRenderer>())
+                spriteRenderer.color = new Vector4(0.7607843f, 0.2313726f, 0.1294118f, 1f);
 
-                playerCaptain.gameObject.transform.localScale = Vector3.one;
-                AICaptain.gameObject.transform.localScale = Vector3.one;
-                PlayerCaptain = playerCaptain.gameObject;
-                EnemyCaptain = AICaptain.gameObject;
+            playerCaptain.gameObject.transform.localScale = Vector3.one;
+            AICaptain.gameObject.transform.localScale = Vector3.one;
+            PlayerCaptain = playerCaptain.gameObject;
+            EnemyCaptain = AICaptain.gameObject;
 
-                // Setting up Captain Names
-                Text playerName = PlayerName.gameObject.GetComponent<Text>();
-                playerName.text = dataProvider.GameModel.PlayerName;
+            // Setting up Captain Names
+            Text playerName = PlayerName.gameObject.GetComponent<Text>();
+            playerName.text = dataProvider.GameModel.PlayerName;
 
-                if (applicationModel.Mode == GameMode.PvP_1VS1)
-                {
-                    // Enemy player name
-                }
-                else
-                {
-                    Text AIName = EnemyName.gameObject.GetComponent<Text>();
-                    Debug.Log($"AI Captain resolved name: {AICaptain.captainName}");
-                    AIName.text = AICaptain.captainName; // Directly assign the resolved name
-                    Debug.Log($"Displayed AI Captain name: {AIName.text}");
-                }
+            if (applicationModel.Mode == GameMode.PvP_1VS1)
+            {
+                // Enemy player name
+            }
+            else
+            {
+                Text AIName = EnemyName.gameObject.GetComponent<Text>();
+                Debug.Log($"AI Captain resolved name: {AICaptain.captainName}");
+                AIName.text = AICaptain.captainName; // Directly assign the resolved name
+                Debug.Log($"Displayed AI Captain name: {AIName.text}");
+            }
 
 
 
