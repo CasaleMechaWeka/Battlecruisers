@@ -96,7 +96,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             Vector3 parentPosition = _damagable.GameObject.transform.position;
             Vector2 offsetToUse = manualOffsetOverride ? manualOffset : Offset;
-            
+
+            if (!IsHost)
+            {
+                offsetToUse.x = -offsetToUse.x;
+            }
+
             Vector3 newPosition = new Vector3(
                 parentPosition.x + offsetToUse.x,
                 parentPosition.y + offsetToUse.y,
