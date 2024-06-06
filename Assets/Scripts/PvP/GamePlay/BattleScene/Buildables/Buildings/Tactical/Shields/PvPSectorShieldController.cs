@@ -154,14 +154,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void EnableShield()
         {
-            visuals?.SetActive(true);
+            if (visuals != null)
+                visuals.SetActive(true);
             polygonCollider.enabled = true;
             UpdateBuildingImmunity(true);
         }
 
         private void DisableShield()
         {
-            visuals?.SetActive(false);
+            if (visuals != null)
+                visuals.SetActive(false);
             polygonCollider.enabled = false;
             // _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.FullyDepleted, Position);
             OnPlaySoundClientRpc(PvPSoundKeys.Shields.FullyDepleted.Type, PvPSoundKeys.Shields.FullyDepleted.Name, Position);

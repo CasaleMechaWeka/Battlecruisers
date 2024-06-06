@@ -121,14 +121,16 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private void EnableShield()
         {
-            visuals?.SetActive(true);
+            if (visuals != null)
+                visuals.SetActive(true);
             polygonCollider.enabled = true;
             UpdateBuildingImmunity(true);
         }
 
         private void DisableShield()
         {
-            visuals?.SetActive(false);
+            if (visuals != null)
+                visuals.SetActive(false);
             polygonCollider.enabled = false;
             _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
             UpdateBuildingImmunity(false);
