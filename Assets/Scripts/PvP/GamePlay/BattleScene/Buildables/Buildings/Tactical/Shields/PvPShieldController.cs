@@ -10,10 +10,7 @@ using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
@@ -215,7 +212,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ClientRpc]
         private void OnHealthRecoveredClientRpc()
         {
-            if(IsClient)
+            if (IsClient)
                 visuals.SetActive(true);
         }
 
