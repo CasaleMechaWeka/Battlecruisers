@@ -24,6 +24,8 @@ namespace BattleCruisers.Scenes
         private IGameModel _gameModel;
 
         public Text idTextBox;
+        public Text coinsTextBox;
+        public Text creditsTextBox;
         public CanvasGroupButton saveBtn, loadBtn;
 
         void Start()
@@ -51,7 +53,6 @@ namespace BattleCruisers.Scenes
 
             saveBtn.Initialise(soundPlayer, Save);
             loadBtn.Initialise(soundPlayer, Load);
-
         }
 
         public async void Save()
@@ -62,6 +63,7 @@ namespace BattleCruisers.Scenes
         public async void Load()
         {
             await _dataProvider.CloudLoad();
+            DisplayCurrency();
         }
 
         public async void login()
@@ -73,12 +75,20 @@ namespace BattleCruisers.Scenes
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                     idTextBox.text = AuthenticationService.Instance.PlayerId;
                     Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
+                    DisplayCurrency();
                 }
                 catch
                 {
                     Debug.LogError("Login broke.");
                 }
             }
+        }
+
+        private void DisplayCurrency()
+        {
+            // Update the UI with the player's coins and credits
+            coinsTextBox.text = "Coins: " + _gameModel.Coins;
+            creditsTextBox.text = "Credits: " + _gameModel.Credits;
         }
     }
 }
