@@ -89,6 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 if (ShouldPlayAnimation())
                     PlayAnimation();
+                    EnableAnimatorClientRpc();
             }
             else
             {
@@ -180,10 +181,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _shieldController.gameObject.SetActive(true);
                 OnEnableShieldClientRpc(true);
                 OnBuildableCompletedClientRpc();
-                if(!isCompleted)
-                    isCompleted = true;
-                if (ShouldPlayAnimation())
-                    PlayAnimation();
             }
             else
                 OnBuildableCompleted_PvPClient();
@@ -268,6 +265,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 _shieldController.gameObject.SetActive(enabled);
+        }
+        [ClientRpc]
+        private void EnableAnimatorClientRpc()
+        {
+            animator.enabled = true;
         }
     }
 }
