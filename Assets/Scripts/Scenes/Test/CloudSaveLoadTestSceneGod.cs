@@ -23,6 +23,7 @@ namespace BattleCruisers.Scenes
         private IDataProvider _dataProvider;
         private IGameModel _gameModel;
 
+        public InputField userIdInputField;
         public Text idTextBox;
         public Text coinsTextBox;
         public Text creditsTextBox;
@@ -63,6 +64,8 @@ namespace BattleCruisers.Scenes
         public async void Load()
         {
             await _dataProvider.CloudLoad();
+            // Adding logs to verify data load
+            Debug.Log($"Loaded Coins: {_gameModel.Coins}, Credits: {_gameModel.Credits}");
             DisplayCurrency();
         }
 
@@ -75,6 +78,8 @@ namespace BattleCruisers.Scenes
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                     idTextBox.text = AuthenticationService.Instance.PlayerId;
                     Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
+                    // Load player data after login
+                    await _dataProvider.CloudLoad();
                     DisplayCurrency();
                 }
                 catch
