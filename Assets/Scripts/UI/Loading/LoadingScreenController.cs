@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
+using TMPro;
 using UnityEngine;
+using Unity.Services.Authentication;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
+using Unity.Services.Core;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Loading
 {
@@ -21,6 +27,10 @@ namespace BattleCruisers.UI.Loading
         public static LoadingScreenController Instance { get; private set; }
         public IApplicationModel applicationModel;
         public GameObject logos;
+        public Button idButton;
+        public GameObject idHighlight;
+        public AnimationClip idAnim;
+        public TextMeshProUGUI idText;
 
         async void Start()
         {
@@ -47,6 +57,12 @@ namespace BattleCruisers.UI.Loading
             startingText = commonStrings.GetString("UI/LoadingScreen/StartingText");
             loadingText.text = FindLoadingText();
             Instance = this;
+
+            Assert.IsNotNull(idButton);
+            idButton.onClick.AddListener(CopyID);
+#if !THIRD_PARTY_PUBLISHER
+            DisplayUserID();
+#endif
 
             //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
@@ -119,6 +135,34 @@ namespace BattleCruisers.UI.Loading
             {
                 Debug.Log(ex);
             }
+        }
+
+        public void CopyID()
+        {
+            UniClipboard.SetText(AuthenticationService.Instance.PlayerId);
+            StartCoroutine(AnimateCopy());
+        }
+
+        IEnumerator AnimateCopy()
+        {
+            idHighlight.SetActive(true);
+            yield return new WaitForSeconds(idAnim.length);
+            idHighlight.SetActive(false);
+        }
+
+        private async void DisplayUserID()
+        {
+            await Task.Delay(10000);
+            if (idButton != null)
+                if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null)
+                {
+                    idButton.gameObject.SetActive(true);
+                    idText.text = "ID: " + AuthenticationService.Instance.PlayerId;
+                }
+                else
+                {
+                    idButton.gameObject.SetActive(false);
+                }
         }
     }
 }
