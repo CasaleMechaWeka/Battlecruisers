@@ -13,8 +13,9 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
         private IBarrelWrapper _flakturret;
         private SectorShieldController _shieldController;
+        public float armamentRange;
 
-        public override float OptimalArmamentRangeInM => _flakturret.RangeInM;
+        public override float OptimalArmamentRangeInM => armamentRange;
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {

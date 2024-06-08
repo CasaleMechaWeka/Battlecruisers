@@ -229,11 +229,12 @@ namespace BattleCruisers.Data.Models
                 game.AddCompletedLevel(cLevel);
             }
 
-            foreach (var sideQuest in _sideQuestsCompleted)
-            {
-                CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key, (Settings.Difficulty)sideQuest.Value);
-                game.AddCompletedSideQuest(cSideQuest);
-            }
+            if (_sideQuestsCompleted != null)
+                foreach (var sideQuest in _sideQuestsCompleted)
+                {
+                    CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key, (Settings.Difficulty)sideQuest.Value);
+                    game.AddCompletedSideQuest(cSideQuest);
+                }
 
             // unlocked hulls
             foreach (var hull in _unlockedHulls)

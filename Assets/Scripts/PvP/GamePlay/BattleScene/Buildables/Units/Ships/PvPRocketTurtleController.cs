@@ -17,6 +17,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelWrapper _missileLauncher;
         private PvPSectorShieldController _shieldController;
         public float armamentRange;
+        private bool isCompleted;
+        private Animator animator;
 
         public override float OptimalArmamentRangeInM => armamentRange;
 
@@ -26,6 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _shieldController = GetComponentInChildren<PvPSectorShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
+            animator = GetComponent<Animator>();
+            Assert.IsNotNull(animator, "Animator component could not be found.");
+            animator.enabled = false; // Ensure the animator is disabled by default
             _shieldController.StaticInitialise(commonStrings);
         }
 
@@ -54,6 +59,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             _missileLauncher.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.RocketLauncher);
         }
+        private void PlayAnimation()
+        {
+            if (!animator.enabled)
+            {
+                animator.enabled = true;
+            }
+        }
+        private bool ShouldPlayAnimation()
+        {
+            return isCompleted && !IsMoving;
+        }
 
         //------------------------------------ methods for sync, written by Sava ------------------------------//
 
@@ -63,6 +79,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsServer)
                 base.OnShipCompleted();
+                if(!isCompleted)
+                    isCompleted = true;
         }
         private void LateUpdate()
         {
@@ -70,6 +88,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 if (PvP_BuildProgress.Value != BuildProgress)
                     PvP_BuildProgress.Value = BuildProgress;
+                
+                if (ShouldPlayAnimation())
+                    PlayAnimation();
+                    EnableAnimatorClientRpc();
             }
             else
             {
@@ -245,6 +267,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 BuildableState = state;
+        }
+        
+        [ClientRpc]
+        private void EnableAnimatorClientRpc()
+        {
+            animator.enabled = true;
         }
     }
 }
