@@ -21,6 +21,7 @@ namespace BattleCruisers.Data.Models
 
         // Total historic destruction score.
         public long _lifetimeDestructionScore;
+        public float _battleWinScore;
 
         // My callsign.
         public string _playerName;
@@ -80,6 +81,7 @@ namespace BattleCruisers.Data.Models
 
             // GameModel fields:
             _lifetimeDestructionScore = game.LifetimeDestructionScore;
+            _battleWinScore = game.BattleWinScore;
             _playerName = game.PlayerName;
             _levelsCompleted = ComputeCompletedLevels(game.CompletedLevels);
             _sideQuestsCompleted = ComputeCompletedSideQuests(game.CompletedSideQuests);
@@ -113,6 +115,9 @@ namespace BattleCruisers.Data.Models
         public void AssignSaveToGameModel(GameModel game)
         {
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
+            if (_battleWinScore != null)
+                game.BattleWinScore = _battleWinScore;
+
             if (game.PlayerName == "Charlie")
             {
                 game.PlayerName = _playerName;
