@@ -1,7 +1,4 @@
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
@@ -22,15 +19,5 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         }
 
         public string NameKeyBase => captainName;
-
-        private void Awake()
-        {
-            Debug.Log($"CaptainExo Awake - captainName: {_captainName}");
-        }
-
-        private void Start()
-        {
-            Debug.Log($"CaptainExo Start - captainName: {_captainName}");
-        }
     }
 }
