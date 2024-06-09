@@ -75,6 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // PERF:  Don't need to do this every frame
         void Update()
         {
+            Debug.Log(IsDestroyed);
 
             // Eat into recharge delay
             if (Health < maxHealth)
@@ -200,14 +201,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnHealthGoneClientRpc()
         {
             if (IsClient)
-                visuals?.SetActive(false);
+                if (visuals != null)
+                    visuals.SetActive(false);
         }
 
         [ClientRpc]
         private void OnHealthRecoveredClientRpc()
         {
             if (IsClient)
-                visuals?.SetActive(true);
+                if (visuals != null)
+                    visuals.SetActive(true);
         }
 
     }
