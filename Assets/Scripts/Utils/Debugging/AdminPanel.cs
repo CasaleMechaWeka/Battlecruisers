@@ -39,7 +39,7 @@ namespace BattleCruisers.Utils.Debugging
             buttons.SetActive(false);
         }
 
-        public void UnlockEverything()
+         public void UnlockEverything()
         {
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
 
@@ -96,6 +96,32 @@ namespace BattleCruisers.Utils.Debugging
 
             Debug.Log("Everything unlocked :D  Restart game.");
         }
+
+        public void UnlockMainQuests()
+        {
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+
+            // Levels
+            foreach (ILevel level in dataProvider.Levels)
+            {
+                dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
+            }
+
+            dataProvider.GameModel.HasAttemptedTutorial = true;
+
+            // If never played a level, need to set last battle result, because levels should
+            // not be unlocked without a continue result.
+            if (dataProvider.GameModel.LastBattleResult == null)
+            {
+                dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
+            }
+
+            dataProvider.SaveGame();
+
+            Debug.Log("Levels unlocked :D  Restart game.");
+        }
+
+
 
         public void Reset()
         {
