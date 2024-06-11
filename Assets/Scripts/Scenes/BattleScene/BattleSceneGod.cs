@@ -120,7 +120,7 @@ namespace BattleCruisers.Scenes.BattleScene
             if (sceneNavigator == null)
             {
                 // TEMP  Force level I'm currently testing :)
-                if (defaultLevel >= 0)
+                if (defaultLevel >= 1)
                     applicationModel.SelectedLevel = defaultLevel;
                 else
                 {
