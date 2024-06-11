@@ -2,6 +2,8 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -11,6 +13,10 @@ namespace BattleCruisers.Utils.Debugging
     public class AdminPanel : CheaterBase, IPointerClickHandler
     {
         public GameObject buttons;
+
+        [SerializeField]
+        private int levelToUnlock = 1; // The highest level to unlock, adjustable in the Inspector
+
 
         void Start()
         {
@@ -97,20 +103,34 @@ namespace BattleCruisers.Utils.Debugging
             Debug.Log("Everything unlocked :D  Restart game.");
         }
 
-        public void UnlockMainQuests()
+        public void ResetToState()
         {
+            List<int> levelsToUnlock = Enumerable.Range(1, levelToUnlock).ToList();
+
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
 
-            // Levels
-            foreach (ILevel level in dataProvider.Levels)
-            {
-                dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
-            }
-
+            // Mark tutorial as complete
             dataProvider.GameModel.HasAttemptedTutorial = true;
 
-            // If never played a level, need to set last battle result, because levels should
-            // not be unlocked without a continue result.
+            // Unlock specified levels
+            foreach (int levelNum in levelsToUnlock)
+            {
+                ILevel level = dataProvider.Levels.FirstOrDefault(l => l.Num == levelNum);
+                if (level != null)
+                {
+                    dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
+                }
+                else
+                {
+                    ISideQuestData sideQuest = dataProvider.SideQuests.FirstOrDefault(sq => sq.SideLevelNum == levelNum);
+                    if (sideQuest != null)
+                    {
+                        dataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
+                    }
+                }
+            }
+
+            // Ensure last battle result is set
             if (dataProvider.GameModel.LastBattleResult == null)
             {
                 dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
@@ -118,9 +138,8 @@ namespace BattleCruisers.Utils.Debugging
 
             dataProvider.SaveGame();
 
-            Debug.Log("Levels unlocked :D  Restart game.");
+            Debug.Log($"Progress reset and levels up to {levelToUnlock} unlocked. Restart game.");
         }
-
 
 
         public void Reset()
