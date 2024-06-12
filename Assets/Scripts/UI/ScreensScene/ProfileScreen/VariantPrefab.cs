@@ -39,21 +39,55 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public IBuilding GetBuilding(IPrefabFactory prefabFactory)
         {
-            IBuilding building = null;
-            if (prefabFactory != null)
-                building = prefabFactory.GetBuildingWrapperPrefab(GetPrefabKey()).Buildable;
+            if (prefabFactory == null)
+            {
+                Debug.LogError("PrefabFactory is null");
+                return null;
+            }
 
-            return building;
+            IPrefabKey buildingKey = GetPrefabKey();
+            if (buildingKey == null)
+            {
+                Debug.LogError($"Building key is null for parent: {_parent}");
+                return null;
+            }
+
+            var buildingWrapperPrefab = prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            if (buildingWrapperPrefab == null)
+            {
+                Debug.LogError($"Building wrapper prefab is null for key: {buildingKey}");
+                return null;
+            }
+
+            return buildingWrapperPrefab.Buildable;
         }
+
 
         public IPvPBuilding GetBuilding(IPvPPrefabFactory prefabFactory)
         {
-            IPvPBuilding building = null;
-            if (prefabFactory != null)
-                building = prefabFactory.GetBuildingWrapperPrefab(GetPvPPrefabKey()).Buildable;
+            if (prefabFactory == null)
+            {
+                Debug.LogError("PrefabFactory is null");
+                return null;
+            }
 
-            return building;
+            IPvPPrefabKey buildingKey = GetPvPPrefabKey();
+            if (buildingKey == null)
+            {
+                Debug.LogError("PvP Building key is null");
+                return null;
+            }
+
+            var buildingWrapperPrefab = prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            if (buildingWrapperPrefab == null)
+            {
+                Debug.LogError($"PvP Building wrapper prefab is null for key: {buildingKey}");
+                return null;
+            }
+
+            return buildingWrapperPrefab.Buildable;
         }
+
 
         public IUnit GetUnit(IPrefabFactory prefabFactory)
         {
@@ -75,100 +109,148 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public IPrefabKey GetPrefabKey()
         {
+            IPrefabKey prefabKey = null;
             switch (_parent)
             {
                 // Buildings
-
                 case ParentBuildable.AirFactory:
-                    return new BuildingKey(BuildingCategory.Factory, "AirFactory");
+                    prefabKey = new BuildingKey(BuildingCategory.Factory, "AirFactory");
+                    break;
                 case ParentBuildable.NavalFactory:
-                    return new BuildingKey(BuildingCategory.Factory, "NavalFactory");
+                    prefabKey = new BuildingKey(BuildingCategory.Factory, "NavalFactory");
+                    break;
                 case ParentBuildable.EngineeringBay:
-                    return new BuildingKey(BuildingCategory.Factory, "EngineeringBay");
+                    prefabKey = new BuildingKey(BuildingCategory.Factory, "EngineeringBay");
+                    break;
                 case ParentBuildable.EngineeringBay4:
-                    return new BuildingKey(BuildingCategory.Factory, "EngineeringBay4");
+                    prefabKey = new BuildingKey(BuildingCategory.Factory, "EngineeringBay4");
+                    break;
                 case ParentBuildable.EngineeringBay8:
-                    return new BuildingKey(BuildingCategory.Factory, "EngineeringBay8");
+                    prefabKey = new BuildingKey(BuildingCategory.Factory, "EngineeringBay8");
+                    break;
                 case ParentBuildable.ShieldGenerator:
-                    return new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
+                    prefabKey = new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
+                    break;
                 case ParentBuildable.StealthGenerator:
-                    return new BuildingKey(BuildingCategory.Tactical, "StealthGenerator");
+                    prefabKey = new BuildingKey(BuildingCategory.Tactical, "StealthGenerator");
+                    break;
                 case ParentBuildable.SpySatelliteLauncher:
-                    return new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher");
+                    prefabKey = new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher");
+                    break;
                 case ParentBuildable.LocalBooster:
-                    return new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
+                    prefabKey = new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
+                    break;
                 case ParentBuildable.ControlTower:
-                    return new BuildingKey(BuildingCategory.Tactical, "ControlTower");
+                    prefabKey = new BuildingKey(BuildingCategory.Tactical, "ControlTower");
+                    break;
                 case ParentBuildable.GrapheneBarrier:
-                    return new BuildingKey(BuildingCategory.Tactical, "GrapheneBarrier");
+                    prefabKey = new BuildingKey(BuildingCategory.Tactical, "GrapheneBarrier");
+                    break;
                 case ParentBuildable.AntiShipTurret:
-                    return new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
+                    break;
                 case ParentBuildable.AntiAirTurret:
-                    return new BuildingKey(BuildingCategory.Defence, "AntiAirTurret");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "AntiAirTurret");
+                    break;
                 case ParentBuildable.Mortar:
-                    return new BuildingKey(BuildingCategory.Defence, "Mortar");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "Mortar");
+                    break;
                 case ParentBuildable.SamSite:
-                    return new BuildingKey(BuildingCategory.Defence, "SamSite");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "SamSite");
+                    break;
                 case ParentBuildable.TeslaCoil:
-                    return new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
+                    break;
                 case ParentBuildable.Coastguard:
-                    return new BuildingKey(BuildingCategory.Defence, "Coastguard");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "Coastguard");
+                    break;
                 case ParentBuildable.FlakTurret:
-                    return new BuildingKey(BuildingCategory.Defence, "FlakTurret");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "FlakTurret");
+                    break;
                 case ParentBuildable.CIWS:
-                    return new BuildingKey(BuildingCategory.Defence, "CIWS");
+                    prefabKey = new BuildingKey(BuildingCategory.Defence, "CIWS");
+                    break;
                 case ParentBuildable.Artillery:
-                    return new BuildingKey(BuildingCategory.Offence, "Artillery");
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "Artillery");
+                    break;
                 case ParentBuildable.RocketLauncher:
-                    return new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
+                    break;
                 case ParentBuildable.Railgun:
-                    return new BuildingKey(BuildingCategory.Offence, "Railgun");
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "Railgun");
+                    break;
                 case ParentBuildable.MLRS:
-                    return new BuildingKey(BuildingCategory.Offence, "MLRS");
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "MLRS");
+                    break;
                 case ParentBuildable.GatlingMortar:
-                    return new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
+                    break;
                 case ParentBuildable.IonCannon:
-                    return new BuildingKey(BuildingCategory.Offence, "IonCannon");
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "IonCannon");
+                    break;
                 case ParentBuildable.MissilePod:
-                    return new BuildingKey(BuildingCategory.Offence, "MissilePod");
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "MissilePod");
+                    break;
 
                 // Units
-
                 case ParentBuildable.Bomber:
-                    return new UnitKey(UnitCategory.Aircraft, "Bomber");
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "Bomber");
+                    break;
                 case ParentBuildable.Fighter:
-                    return new UnitKey(UnitCategory.Aircraft, "Fighter");
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "Fighter");
+                    break;
                 case ParentBuildable.Gunship:
-                    return new UnitKey(UnitCategory.Aircraft, "Gunship");
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "Gunship");
+                    break;
                 case ParentBuildable.SteamCopter:
-                    return new UnitKey(UnitCategory.Aircraft, "SteamCopter");
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "SteamCopter");
+                    break;
                 case ParentBuildable.Broadsword:
-                    return new UnitKey(UnitCategory.Aircraft, "Broadsword");
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "Broadsword");
+                    break;
                 case ParentBuildable.StratBomber:
-                    return new UnitKey(UnitCategory.Aircraft, "StratBomber");
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "StratBomber");
+                    break;
                 case ParentBuildable.AttackBoat:
-                    return new UnitKey(UnitCategory.Naval, "AttackBoat");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "AttackBoat");
+                    break;
                 case ParentBuildable.AttackRIB:
-                    return new UnitKey(UnitCategory.Naval, "AttackRIB");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "AttackRIB");
+                    break;
                 case ParentBuildable.Frigate:
-                    return new UnitKey(UnitCategory.Naval, "Frigate");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "Frigate");
+                    break;
                 case ParentBuildable.Destroyer:
-                    return new UnitKey(UnitCategory.Naval, "Destroyer");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "Destroyer");
+                    break;
                 case ParentBuildable.SiegeDestroyer:
-                    return new UnitKey(UnitCategory.Naval, "SiegeDestroyer");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "SiegeDestroyer");
+                    break;
                 case ParentBuildable.ArchonBattleship:
-                    return new UnitKey(UnitCategory.Naval, "ArchonBattleship");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "ArchonBattleship");
+                    break;
                 case ParentBuildable.GlassCannoneer:
-                    return new UnitKey(UnitCategory.Naval, "GlassCannoneer");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "GlassCannoneer");
+                    break;
                 case ParentBuildable.GunBoat:
-                    return new UnitKey(UnitCategory.Naval, "GunBoat");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "GunBoat");
+                    break;
                 case ParentBuildable.RocketTurtle:
-                    return new UnitKey(UnitCategory.Naval, "RocketTurtle");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "RocketTurtle");
+                    break;
                 case ParentBuildable.FlakTurtle:
-                    return new UnitKey(UnitCategory.Naval, "FlakTurtle");
+                    prefabKey = new UnitKey(UnitCategory.Naval, "FlakTurtle");
+                    break;
             }
-            return null;
+
+            if (prefabKey == null)
+            {
+                Debug.LogError($"Prefab key is null for parent: {_parent}");
+            }
+
+            return prefabKey;
         }
+
 
 
         public IPvPPrefabKey GetPvPPrefabKey()

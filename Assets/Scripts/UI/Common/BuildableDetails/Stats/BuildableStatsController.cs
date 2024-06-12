@@ -15,7 +15,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
         public NumberStatValue drones, buildTime;
         public StarsStatValue health, cruiserDamage, shipDamage, airDamage;
 
-
         public override void Initialise()
         {
             base.Initialise();
@@ -28,15 +27,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             cruiserDamage.Initialise();
             shipDamage.Initialise();
             airDamage.Initialise();
-
         }
 
         protected override void InternalShowStats(TItem item, TItem itemToCompareTo)
         {
-
             drones.ShowResult(item.NumOfDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
             buildTime.ShowResult((item.BuildTimeInS * item.NumOfDronesRequired * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS * item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
-            health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth), _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+
+            int healthStars = _buildableHealthConverter.ConvertValueToStars(item.MaxHealth);
+            Debug.Log($"Health Stars: {healthStars} for item.MaxHealth: {item.MaxHealth}");
+            health.ShowResult(healthStars, _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item), GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
             ShowDamageStat(shipDamage, GetAntiShipDamage(item), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
@@ -45,11 +45,42 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
         protected override void InternalShowStatsOfVariant(TItem item, VariantPrefab variant, TItem itemToCompareTo = null)
         {
-            drones.ShowResult((item.NumOfDronesRequired + variant.statVariant.drone_num).ToString() , _lowerIsBetterComparer.CompareStats(item.NumOfDronesRequired, itemToCompareTo.NumOfDronesRequired));
-            buildTime.ShowResult(((item.BuildTimeInS + variant.statVariant.build_time) * (item.NumOfDronesRequired + variant.statVariant.drone_num) * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats(((item.BuildTimeInS + variant.statVariant.build_time) * (item.NumOfDronesRequired + variant.statVariant.drone_num) * 0.5f), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
-            health.ShowResult(_buildableHealthConverter.ConvertValueToStars(item.MaxHealth + variant.statVariant.max_health), _higherIsBetterComparer.CompareStats(item.MaxHealth + variant.statVariant.max_health, itemToCompareTo.MaxHealth));
+            // Ensure itemToCompareTo is not null
+            if (itemToCompareTo == null)
+            {
+                itemToCompareTo = item;
+            }
 
-            ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item) , GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
+            // Calculate and log the new health value with variant
+            float baseHealth = item.MaxHealth;
+            float healthAdjustment = variant.statVariant.max_health;
+            float newMaxHealth = baseHealth + healthAdjustment;
+            Debug.Log($"Base Health: {baseHealth}, Health Adjustment: {healthAdjustment}, New Max Health: {newMaxHealth}");
+
+            // Ensure the new health value is clamped to a minimum of 1
+            if (newMaxHealth < 1)
+            {
+                Debug.LogWarning($"Calculated newMaxHealth ({newMaxHealth}) is less than 1. Clamping to 1.");
+                newMaxHealth = 1;
+            }
+
+            // Convert valid health value to stars
+            int healthStars = _buildableHealthConverter.ConvertValueToStars(newMaxHealth);
+            Debug.Log($"Health Stars: {healthStars} for newMaxHealth: {newMaxHealth}");
+            health.ShowResult(healthStars, _higherIsBetterComparer.CompareStats(newMaxHealth, itemToCompareTo.MaxHealth));
+
+            // Calculate and log drones required
+            int newDronesRequired = item.NumOfDronesRequired + variant.statVariant.drone_num;
+            Debug.Log($"Base Drones: {item.NumOfDronesRequired}, Drone Adjustment: {variant.statVariant.drone_num}, New Drones Required: {newDronesRequired}");
+            drones.ShowResult(newDronesRequired.ToString(), _lowerIsBetterComparer.CompareStats(newDronesRequired, itemToCompareTo.NumOfDronesRequired));
+
+            // Calculate and log build time
+            float newBuildTime = (item.BuildTimeInS + variant.statVariant.build_time) * newDronesRequired * 0.5f;
+            Debug.Log($"Base Build Time: {item.BuildTimeInS}, Build Time Adjustment: {variant.statVariant.build_time}, New Build Time: {newBuildTime}");
+            buildTime.ShowResult(newBuildTime.ToString(), _lowerIsBetterComparer.CompareStats(newBuildTime, itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired));
+
+            // Calculate and show damage stats
+            ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item), GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
             ShowDamageStat(shipDamage, GetAntiShipDamage(item) * (variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).AttackCapabilities.Contains(TargetType.Ships) ? variant.statVariant.damage : 0 : 0), GetAntiShipDamage(itemToCompareTo), _antiShipDamageConverter);
             ShowDamageStat(airDamage, GetAntiAirDamage(item) * (variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).AttackCapabilities.Contains(TargetType.Aircraft) ? variant.statVariant.damage : 0 : 0), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
         }
@@ -61,9 +92,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
             if (shouldShowRow)
             {
-                damageStatsRow.ShowResult(converter.ConvertValueToStars(damagePerS), _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
+                int damageStars = converter.ConvertValueToStars(damagePerS);
+                Debug.Log($"Damage Stars: {damageStars} for damagePerS: {damagePerS}");
+                damageStatsRow.ShowResult(damageStars, _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
             }
         }
+
+
+
 
         protected virtual float GetAntiAirDamage(TItem item)
         {
