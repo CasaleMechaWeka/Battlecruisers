@@ -4,6 +4,8 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
@@ -41,7 +43,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         //have to do when SideQuest data is stored in StaticData
         public bool ShouldShowSideQuestLoot(int sideQuestCompleted)
         {
-            return sideQuestCompleted > _dataProvider.GameModel.NumOfSideQuestsCompleted;
+            List<int> completedSideQuestIDs = _dataProvider.GameModel.CompletedSideQuests.Select(completedSQ
+            => completedSQ.LevelNum).ToList();
+            return !completedSideQuestIDs.Contains(sideQuestCompleted);
         }
 
         public ILoot UnlockLevelLoot(int levelCompleted)
