@@ -26,8 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             /*            CaptainNameToKey nameToKey = new CaptainNameToKey(StaticPrefabKeys.CaptainExos.AllKeys, prefabFactory);
                         IPrefabKey key = nameToKey.GetKey(captain);*/
-            string str_index = captain.ToUpper().Replace("CAPTAIN", "");
-            int index = 0;
+            string str_index = captain.ToUpper().Replace("CAPTAINEXO", "");
+            int index = 10;
             int.TryParse(str_index, out index);
             CaptainExo captainexo = prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
             Text name = PlayerName.gameObject.GetComponent<Text>();
