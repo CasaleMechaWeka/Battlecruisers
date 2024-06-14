@@ -273,6 +273,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildableOutlineKey PvPControlTowerOutline { get; } = new PvPBuildableOutlineKey("PvPControlTowerOutline");
             public static PvPBuildableOutlineKey PvPDeathstarLauncherOutline { get; } = new PvPBuildableOutlineKey("PvPDeathstarLauncherOutline");
             public static PvPBuildableOutlineKey PvPEngineeringBay4Outline { get; } = new PvPBuildableOutlineKey("PvPEngineeringBay4Outline");
+            public static PvPBuildableOutlineKey PvPEngineeringBay6Outline { get; } = new PvPBuildableOutlineKey("PvPEngineeringBay6Outline");
             public static PvPBuildableOutlineKey PvPEngineeringBay8Outline { get; } = new PvPBuildableOutlineKey("PvPEngineeringBay8Outline");
             public static PvPBuildableOutlineKey PvPEngineeringBayOutline { get; } = new PvPBuildableOutlineKey("PvPEngineeringBayOutline");
             public static PvPBuildableOutlineKey PvPGatlingMortarOutline { get; } = new PvPBuildableOutlineKey("PvPGatlingMortarOutline");
@@ -313,6 +314,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPControlTowerOutline,
                         PvPDeathstarLauncherOutline,
                         PvPEngineeringBay4Outline,
+                        PvPEngineeringBay6Outline,
                         PvPEngineeringBay8Outline,
                         PvPEngineeringBayOutline,
                         PvPGatlingMortarOutline,
