@@ -24,8 +24,13 @@ namespace BattleCruisers.Data.Static.LevelLoot
 
         public override void UnlockItem(IGameModel gameModel)
         {
-            if (!gameModel.UnlockedHulls.Contains(_itemKey))
+            if (!IsUnlocked(gameModel))
                 gameModel.AddUnlockedHull(_itemKey);
+        }
+
+        public override bool IsUnlocked(IGameModel gameModel)
+        {
+            return gameModel.UnlockedHulls.Contains(_itemKey);
         }
     }
 }

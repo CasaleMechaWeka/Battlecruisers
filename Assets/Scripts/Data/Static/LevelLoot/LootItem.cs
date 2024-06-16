@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
-    public abstract class LootItem<TItem, TKey> : ILootItem 
+    public abstract class LootItem<TItem, TKey> : ILootItem
         where TItem : IComparableItem
         where TKey : class, IPrefabKey
     {
@@ -42,6 +42,8 @@ namespace BattleCruisers.Data.Static.LevelLoot
                 other != null
                 && _itemKey.SmartEquals(other._itemKey);
         }
+
+        public abstract bool IsUnlocked(IGameModel gameModel);
 
         public override int GetHashCode()
         {
