@@ -34,9 +34,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool ShouldShowLevelLoot(int levelCompleted)
         {
+            ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
+            bool containsNewLoot = false;
+            if (unlockedLoot.Items.Count != 0)
+                for (int i = 0; i < unlockedLoot.Items.Count; i++)
+                    if (!unlockedLoot.Items[i].IsUnlocked(_dataProvider.GameModel))
+                        containsNewLoot = true;
+
             return
-                levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
-                && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
+                containsNewLoot || (levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
+                && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot);
         }
 
         //have to do when SideQuest data is stored in StaticData
