@@ -69,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsNotNull(feedbackWrapper);
             IPvPBuildProgressFeedback buildProgressFeedback = feedbackWrapper.CreateFeedback();
 
-            _unitBuildProgress = new PvPUnitBuildProgressTrigger(new PvPUnitBuildProgress(unitWrapper.Buildable.Name, buildProgressFeedback));
+            _unitBuildProgress = new PvPUnitBuildProgressTrigger(new PvPUnitBuildProgress(unitWrapper.Buildable.keyName, buildProgressFeedback));
         }
 
         public override void OnPresenting(object activationParameter)
