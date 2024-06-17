@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         // Frigate would have optimal range of 18.63 but target was at 18.6305.
         // Hence provide a tiny bit of leeway, so target is counted as in range.
-        private const float IN_RANGE_LEEWAY_IN_M = 0.01f;
+        private const float IN_RANGE_LEEWAY_IN_M = 0.2f;
 
         public PvPShipRangeHelper(IPvPShip ship)
         {
