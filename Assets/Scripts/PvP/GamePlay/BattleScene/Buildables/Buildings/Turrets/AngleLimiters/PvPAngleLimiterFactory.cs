@@ -26,5 +26,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             return new PvPGravityAffectedTurretAngleLimiter();
         }
+
+        public IPvPAngleLimiter CreateCIWSLimiter()
+        {
+            return new PvPCIWSAngleLimiter();
+        }
     }
 }
