@@ -3,7 +3,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPCIWSAngleLimiter : PvPAngleLimiter
     {
         public PvPCIWSAngleLimiter()
-            : base(minAngle: -30, maxAngle: 150)
+            : base(minAngle: -30, maxAngle: 180)
         {
         }
     }

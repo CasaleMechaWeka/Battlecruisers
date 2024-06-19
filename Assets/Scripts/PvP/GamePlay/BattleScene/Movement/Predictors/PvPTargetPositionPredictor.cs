@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     {
         public Vector2 PredictTargetPosition(Vector2 sourcePosition, Vector2 targetPositionToAttack, IPvPTarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
         {
-            float timeToTargetEstimate = EstimateTimeToTarget(sourcePosition, targetPositionToAttack, projectileVelocityInMPerS, currentAngleInRadians);
+            float timeToTargetEstimate = EstimateTimeToTarget(sourcePosition, targetPositionToAttack, projectileVelocityInMPerS, currentAngleInRadians, target);
 
             float projectedX = targetPositionToAttack.x + target.Velocity.x * timeToTargetEstimate;
             float projectedY = targetPositionToAttack.y + target.Velocity.y * timeToTargetEstimate;
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             return projectedPosition;
         }
 
-        protected virtual float EstimateTimeToTarget(Vector2 sourcePosition, Vector2 targetPositionToAttack, float projectileVelocityInMPerS, float currentAngleInRadians)
+        protected virtual float EstimateTimeToTarget(Vector2 sourcePosition, Vector2 targetPositionToAttack, float projectileVelocityInMPerS, float currentAngleInRadians, IPvPTarget target)
         {
             return 0;
         }

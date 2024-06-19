@@ -3,7 +3,7 @@
     public class CIWSAngleLimiter : AngleLimiter
     {
         public CIWSAngleLimiter()
-            : base(minAngle: -30, maxAngle: 150)
+            : base(minAngle: -30, maxAngle: 180)
         {
         }
     }
