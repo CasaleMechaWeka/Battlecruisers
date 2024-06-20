@@ -350,7 +350,7 @@ namespace BattleCruisers.Data.Static
             {
                 // Set 1:  Raptor
                 new Level(1, Hulls.Raptor, BackgroundMusic.Bobby, SkyMaterials.Morning, Exos.GetCaptainExoKey(1)),
-                new Level(2, Hulls.Bullshark, BackgroundMusic.Juggernaut, SkyMaterials.Purple, Exos.GetCaptainExoKey(2)),
+                new Level(2, Hulls.Hammerhead, BackgroundMusic.Juggernaut, SkyMaterials.Purple, Exos.GetCaptainExoKey(2)),
                 new Level(3, Hulls.Raptor, BackgroundMusic.Experimental, SkyMaterials.Dusk, Exos.GetCaptainExoKey(3)),
                 
                 // Set 2:  Bullshark
