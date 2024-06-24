@@ -9,9 +9,10 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class AttackRIBController : AnimatedShipController
     {
-		public BarrelWrapper ak1, ak2;
+        public BarrelWrapper ak1, ak2;
 
         public override float OptimalArmamentRangeInM => ak1.RangeInM - 6;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
 
 
@@ -40,7 +41,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             AddExtraFriendDetectionRange(1);
             ak1.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
             ak2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
-		}
+        }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()
         {

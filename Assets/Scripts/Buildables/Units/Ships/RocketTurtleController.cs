@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         public float armamentRange;
 
         public override float OptimalArmamentRangeInM => armamentRange;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {

@@ -9,18 +9,19 @@ using UnityEngine;
 namespace BattleCruisers.Buildables.Units.Ships
 {
     public class FrigateController : ShipController
-	{
+    {
         private IBarrelWrapper _directFireAntiSea, _mortar, _samSite;// _directFireAntiAir;
 
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
-		
+
         /// <summary>
         /// Enemy detector is in ship center, but longest range barrel (mortar) is behind
         /// ship center.  Want to only stop once barrel is in range, so make optimal 
@@ -51,7 +52,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             turrets.Add(_samSite);
 
             return turrets;
-		}
+        }
 
         protected override void InitialiseTurrets()
         {
@@ -59,7 +60,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             _mortar.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
             //_directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
             _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
-		}
+        }
 
         protected override void OnBuildableCompleted()
         {
@@ -68,5 +69,5 @@ namespace BattleCruisers.Buildables.Units.Ships
             _directFireAntiSea.ApplyVariantStats(this);
             _mortar.ApplyVariantStats(this);
         }
-	}
+    }
 }

@@ -48,6 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler RearingStarted;
 
         private IPvPDamageApplier _areaDamageApplier;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {

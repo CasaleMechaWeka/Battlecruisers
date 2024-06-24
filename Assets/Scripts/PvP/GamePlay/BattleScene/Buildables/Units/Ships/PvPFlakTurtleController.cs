@@ -17,13 +17,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPSectorShieldController _shieldController;
         public float armamentRange;
         public override float OptimalArmamentRangeInM => armamentRange;
+        public bool keepDistanceFromEnemyCruiser;
+        public override bool KeepDistanceFromEnemyCruiser => keepDistanceFromEnemyCruiser;
+
         private bool isCompleted;
         private Animator animator;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             _shieldController = GetComponentInChildren<PvPSectorShieldController>(includeInactive: true);
-            Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");        
+            Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
             animator = GetComponent<Animator>();
             Assert.IsNotNull(animator, "Animator component could not be found.");
             animator.enabled = false; // Ensure the animator is disabled by default
@@ -76,8 +79,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsServer)
                 base.OnShipCompleted();
-                if(!isCompleted)
-                    isCompleted = true;
+            if (!isCompleted)
+                isCompleted = true;
         }
 
         private void LateUpdate()
@@ -89,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 if (ShouldPlayAnimation())
                     PlayAnimation();
-                    EnableAnimatorClientRpc();
+                EnableAnimatorClientRpc();
             }
             else
             {

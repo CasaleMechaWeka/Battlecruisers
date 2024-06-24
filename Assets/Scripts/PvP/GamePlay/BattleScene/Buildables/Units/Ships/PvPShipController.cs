@@ -63,6 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// but can be less if we want multiple of the ships turrets to be in range.
         /// </summary>
         public abstract float OptimalArmamentRangeInM { get; }
+        public abstract bool KeepDistanceFromEnemyCruiser { get; }
 
         private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
@@ -145,10 +146,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected void SetupMovement()
         {
-                _directionMultiplier = FacingDirection == PvPDirection.Right ? 1 : -1;
-                _movementTargetProcessor = SetupTargetProcessorWrapper();
-                _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
-                _movementTargetProcessor.AddTargetConsumer(_movementDecider);
+            _directionMultiplier = FacingDirection == PvPDirection.Right ? 1 : -1;
+            _movementTargetProcessor = SetupTargetProcessorWrapper();
+            _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
+            _movementTargetProcessor.AddTargetConsumer(_movementDecider);
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -166,6 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Do not want to stop ship from moving if it encounters aircraft
             IList<PvPTargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();
             targetProcessorTargetTypes.Remove(PvPTargetType.Aircraft);
+            if (KeepDistanceFromEnemyCruiser)
+                targetProcessorTargetTypes.Add(PvPTargetType.Cruiser);
 
             IPvPTargetProcessorArgs args
                 = new PvPTargetProcessorArgs(
@@ -229,7 +232,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void ShowDeathEffects()
         {
-            if(IsHost)
+            if (IsHost)
             {
                 _deathPool.GetItem(Position, Faction);
                 Deactivate();
@@ -245,14 +248,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 renderers.AddRange(turret.Renderers);
             }
 
-             foreach (GameObject obj in additionalRenderers)
+            foreach (GameObject obj in additionalRenderers)
+            {
+                if (obj != null)
                 {
-                    if (obj != null)
-                    {
-                        SpriteRenderer[] spriteRenderers = obj.GetComponentsInChildren<SpriteRenderer>();
-                        renderers.AddRange(spriteRenderers);
-                    }
+                    SpriteRenderer[] spriteRenderers = obj.GetComponentsInChildren<SpriteRenderer>();
+                    renderers.AddRange(spriteRenderers);
                 }
+            }
 
             return renderers;
         }

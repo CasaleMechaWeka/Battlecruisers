@@ -9,9 +9,10 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class AttackBoatController : AnimatedShipController
     {
-		private IBarrelWrapper _antiSeaTurret;
+        private IBarrelWrapper _antiSeaTurret;
 
         public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         protected override Vector2 MaskHighlightableSize
         {
@@ -38,7 +39,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override void InitialiseTurrets()
         {
             _antiSeaTurret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
-		}
+        }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()
         {

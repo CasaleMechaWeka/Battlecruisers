@@ -37,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public Vector2 droneAreaPositionAdjustment;
         public override Vector2 DroneAreaPosition => FacingDirection == PvPDirection.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {

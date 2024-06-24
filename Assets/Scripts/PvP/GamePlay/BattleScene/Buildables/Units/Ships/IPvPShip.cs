@@ -5,6 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPShip : IPvPUnit, IPvPBasicMover
     {
         float OptimalArmamentRangeInM { get; }
+        bool KeepDistanceFromEnemyCruiser { get; }
 
         void DisableMovement();
     }

@@ -44,10 +44,11 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
         public Animator bonesAnimator;
         private float animationSpeed = 1.0f;
-        
+
         public event EventHandler RearingStarted;
 
         private IDamageApplier _areaDamageApplier;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -66,7 +67,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             {
                 targetProxy.Initialise(this);
             }
-            
+
         }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -108,16 +109,16 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void _unfurlAnimation_AnimationStarted(object sender, EventArgs e)
         {
-            Vector2 collisionPoint = new Vector2(0,0);
+            Vector2 collisionPoint = new Vector2(0, 0);
             IDamageStats damageStats = new DamageStats(2000, 25);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
 
             _areaDamageApplier = new AreaOfEffectDamageApplier(damageStats, targetFilter);
-                _areaDamageApplier
-                    .ApplyDamage(
-                    target: null,
-                    collisionPoint: collisionPoint,
-                    damageSource: null);
+            _areaDamageApplier
+                .ApplyDamage(
+                target: null,
+                collisionPoint: collisionPoint,
+                damageSource: null);
 
             RearingStarted?.Invoke(this, EventArgs.Empty);
         }
@@ -143,7 +144,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override IList<IBarrelWrapper> GetTurrets()
         {
             return new List<IBarrelWrapper>()
-            { 
+            {
                 minigun, _samSite
             };
         }
@@ -178,7 +179,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.Deactivate();
             bones.SetActive(false);
         }
-        
+
         protected override void OnTakeDamage()
         {
             SpeedUpAnimation();

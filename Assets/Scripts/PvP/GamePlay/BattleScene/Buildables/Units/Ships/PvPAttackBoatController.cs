@@ -14,6 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
         //    protected override bool ShowSmokeWhenDestroyed => true;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         protected override Vector2 MaskHighlightableSize
         {

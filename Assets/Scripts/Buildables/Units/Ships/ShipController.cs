@@ -63,6 +63,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// but can be less if we want multiple of the ships turrets to be in range.
         /// </summary>
         public abstract float OptimalArmamentRangeInM { get; }
+        public abstract bool KeepDistanceFromEnemyCruiser { get; }
 
         private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
@@ -161,6 +162,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             // Do not want to stop ship from moving if it encounters aircraft
             IList<TargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();
             targetProcessorTargetTypes.Remove(TargetType.Aircraft);
+            if (KeepDistanceFromEnemyCruiser)
+                targetProcessorTargetTypes.Add(TargetType.Cruiser);
 
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
@@ -237,7 +240,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                 renderers.AddRange(turret.Renderers);
             }
 
-         foreach (GameObject obj in additionalRenderers)
+            foreach (GameObject obj in additionalRenderers)
             {
                 if (obj != null)
                 {

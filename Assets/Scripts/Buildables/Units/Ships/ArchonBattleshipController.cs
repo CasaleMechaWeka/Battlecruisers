@@ -36,6 +36,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public Vector2 droneAreaPositionAdjustment;
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -71,7 +72,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             //Debug.Log("Done 4 head");
             base.Activate(activationArgs);
-            
+
         }
 
         protected override void OnShipCompleted()
@@ -108,8 +109,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override IList<IBarrelWrapper> GetTurrets()
         {
             return new List<IBarrelWrapper>()
-            { 
-                laser 
+            {
+                laser
             };
         }
 

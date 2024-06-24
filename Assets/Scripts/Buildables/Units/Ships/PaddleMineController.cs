@@ -7,6 +7,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     public class PaddleMineController : AnimatedShipController
     {
         public override float OptimalArmamentRangeInM => 0.5f;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()
         {

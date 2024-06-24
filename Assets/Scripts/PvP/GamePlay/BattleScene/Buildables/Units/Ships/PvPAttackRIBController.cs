@@ -13,6 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPBarrelWrapper ak1, ak2;
 
         public override float OptimalArmamentRangeInM => ak1.RangeInM - 6;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         protected override IList<IPvPBarrelWrapper> GetTurrets()
         {

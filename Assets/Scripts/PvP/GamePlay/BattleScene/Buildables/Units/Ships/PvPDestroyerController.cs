@@ -15,6 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         private const float OPTIMAL_RANGE_BUFFER_IN_M = 1;
 

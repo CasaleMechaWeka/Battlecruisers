@@ -10,10 +10,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class DestroyerController : AnimatedShipController
     {
-        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir,  _missileLauncher;//, _samSite;
+        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _missileLauncher;//, _samSite;
 
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
+        public override bool KeepDistanceFromEnemyCruiser => false;
 
         private const float OPTIMAL_RANGE_BUFFER_IN_M = 1;
 
@@ -47,7 +48,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             // Anti air turret
             _directFireAntiAir = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir");
-			turrets.Add(_directFireAntiAir);
+            turrets.Add(_directFireAntiAir);
 
             // SAM site
             //_samSite = transform.FindNamedComponent<IBarrelWrapper>("SamSite");
@@ -58,7 +59,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             turrets.Add(_missileLauncher);
 
             return turrets;
-		}
+        }
 
         protected override void InitialiseTurrets()
         {
@@ -67,8 +68,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             _missileLauncher.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.RocketLauncher);
             _directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
             //_samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
-		}
- 
+        }
+
         protected override List<SpriteRenderer> GetNonTurretRenderers()
         {
             List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
