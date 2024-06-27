@@ -10,10 +10,13 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class DroneFocusStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
+public class DroneFocusStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
@@ -129,7 +132,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_slidingPanelWaitStepFactory.CreateInformatorShownWaitStep());
 
             // Explain drone focus buttons
-            string buttonText = _commonStrings.GetString("Common/Builders");
+            var stringDatabase = LocalizationSettings.StringDatabase;
+            var battleSceneTable = stringDatabase.GetTable("BattleScene");
+            var entry = battleSceneTable.GetEntry("ToggleDronesButton");
+            string buttonText = entry.GetLocalizedString();
+
             string clickBuildersButtonBase = _tutorialStrings.GetString("Steps/DroneFocus/ClickBuildersButton");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
