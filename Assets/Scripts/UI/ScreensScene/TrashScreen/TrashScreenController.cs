@@ -38,6 +38,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
         private GameObject enemyModel;
+        [SerializeField]
+        private GameObject AIv1Button; //Made for Bugfix
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -136,6 +138,9 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public override void Cancel()
         {
             LandingSceneGod.Instance.coinBattleLevelNum = -1;
+            CanvasGroup AIv1ButtonCanvasGroup =  AIv1Button.GetComponent<CanvasGroup>(); // Made for bugfix
+            AIv1ButtonCanvasGroup.interactable =  true;
+            AIv1ButtonCanvasGroup.blocksRaycasts = true;
             if (enemyModel != null)
                 Destroy(enemyModel);
             if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle || _appModel.Mode == GameMode.CoinBattle)

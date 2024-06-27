@@ -254,7 +254,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
              _applicationModel.Mode = GameMode.CoinBattle;
              coinBattleController.BattleButtonClicked();
-
+             CanvasGroup AIv1ButtonCanvasGroup = coinBattleButton.GetComponent<CanvasGroup>();
+             AIv1ButtonCanvasGroup.blocksRaycasts = false;
+             AIv1ButtonCanvasGroup.interactable = false;
         }
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
