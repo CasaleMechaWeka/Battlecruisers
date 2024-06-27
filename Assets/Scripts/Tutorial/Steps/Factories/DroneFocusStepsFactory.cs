@@ -14,7 +14,7 @@ using UnityEngine.Localization.Settings;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-public class DroneFocusStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
+    public class DroneFocusStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
