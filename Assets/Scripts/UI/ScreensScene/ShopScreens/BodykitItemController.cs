@@ -1,10 +1,10 @@
-using BattleCruisers.UI;
-using BattleCruisers.UI.ScreensScene;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using System.Collections;
-using System.Collections.Generic;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,19 +15,23 @@ namespace BattleCruisers.UI.ScreensScene
         public Image _bodyKitImage;
         public CanvasGroupButton clickingArea;
         public GameObject _ownedItemMark;
+        public GameObject _lockedItemMark;
         public GameObject _clickedFeedback;
         private IBodykitData _bodykitData;
         private ISingleSoundPlayer _soundPlayer;
         private BodykitsContainer _bodykitContainer;
         private Sprite _bodykitSprite;
         public int _index;
-
+        private bool isCruiserOwned = false;
 
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
             Sprite spriteBodykit,
             IBodykitData bodykitData,
             BodykitsContainer bodykitContainer,
+            IDataProvider dataProvider,
+            IPrefabFactory prefabFactory,
+
             int index
             )
         {
@@ -42,6 +46,13 @@ namespace BattleCruisers.UI.ScreensScene
             _clickedFeedback.SetActive(false);
 
             _ownedItemMark.SetActive(_bodykitData.IsOwned);
+
+            IHullNameToKey hullNameToKey = new HullNameToKey(dataProvider.StaticData.HullKeys, prefabFactory);
+
+            isCruiserOwned = dataProvider.GameModel.UnlockedHulls.Contains(hullNameToKey.GetKeyFromHullType(
+                prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index)).cruiserType.ToString()));
+
+            _lockedItemMark.SetActive(!isCruiserOwned);
             clickingArea.Initialise(_soundPlayer, OnClicked);
         }
 
@@ -54,7 +65,8 @@ namespace BattleCruisers.UI.ScreensScene
                 _bodykitContainer.bodykitDataChanged.Invoke(this, new BodykitDataEventArgs
                 {
                     bodykitData = _bodykitData,
-                    bodykitImage = _bodykitSprite
+                    bodykitImage = _bodykitSprite,
+                    purchasable = isCruiserOwned && !_bodykitData.IsOwned
                 });
             }
         }

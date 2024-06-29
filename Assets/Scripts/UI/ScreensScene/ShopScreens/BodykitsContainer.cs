@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene
                         bool result = await _dataProvider.PurchaseBodykitV2(currentBodykitData.Index);
                         if (result)
                         {
-                        //    await _dataProvider.SyncCurrencyFromCloud();
+                            //    await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
@@ -161,6 +161,11 @@ namespace BattleCruisers.UI.ScreensScene
                 btnBuy.SetActive(false);
                 ownFeedback.SetActive(true);
             }
+            else if (!e.purchasable)
+            {
+                btnBuy.SetActive(false);
+                ownFeedback.SetActive(false);
+            }
             else
             {
                 btnBuy.SetActive(true);
@@ -188,6 +193,7 @@ namespace BattleCruisers.UI.ScreensScene
     {
         public IBodykitData bodykitData { get; set; }
         public Sprite bodykitImage { get; set; }
+        public bool purchasable { get; set; }
     }
 }
 

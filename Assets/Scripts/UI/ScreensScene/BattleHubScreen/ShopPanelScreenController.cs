@@ -257,7 +257,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer);
                 Bodykit bodykit = bodykits[ii]/*await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index])*/;
-                bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, ii);
+                bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, _dataProvider, _prefabFactory, ii);
                 if (ii == 0)
                 {
                     bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
@@ -428,7 +428,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             DateTime utcNow = DateTime.UtcNow;
             List<int> randomList = new List<int>();
             for (int i = startValue; i < elements + startValue; i++)
-                randomList.Add((startValue + (maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue - startValue)));
+                randomList.Add(startValue + (maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue - startValue));
 
             return randomList;
         }
