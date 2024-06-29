@@ -531,6 +531,10 @@ namespace BattleCruisers.Scenes
 
         public void GotoHubScreen()
         {
+            CanvasGroup AIv1ButtonCanvasGroup = hubScreen.coinBattleButton.GetComponent<CanvasGroup>(); // Made for bugfix
+            AIv1ButtonCanvasGroup.interactable = true;
+            AIv1ButtonCanvasGroup.blocksRaycasts = true;
+
             homeScreen.gameObject.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
