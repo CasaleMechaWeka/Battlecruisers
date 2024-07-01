@@ -4,5 +4,7 @@
     {
         float Damage { get; }
         float DamageRadiusInM { get; }
+        float SecondaryDamage { get; }
+        float SecondaryRadiusInM { get; }
     }
 }

@@ -24,14 +24,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public void ApplyDamage(IPvPTarget baseTarget, Vector2 collisionPoint, IPvPTarget damageSource)
         {
             Collider2D[] colliders;
+            Collider2D[] secondaryColliders;
 
             if (_targetLayerMask == default)
             {
                 colliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.DamageRadiusInM);
+                secondaryColliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.SecondaryRadiusInM);
             }
             else
             {
                 colliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.DamageRadiusInM, _targetLayerMask);
+                secondaryColliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.SecondaryRadiusInM, _targetLayerMask);
             }
 
             foreach (Collider2D collider in colliders)
@@ -43,6 +46,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     && _targetFilter.IsMatch(target))
                 {
                     target.TakeDamage(_damageStats.Damage, damageSource);
+                }
+            }
+
+
+            foreach (Collider2D collider in secondaryColliders)
+            {
+                IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+
+                if (target != null
+                    && !target.IsDestroyed
+                    && _targetFilter.IsMatch(target))
+                {
+                    target.TakeDamage(_damageStats.SecondaryDamage, damageSource);
                 }
             }
         }

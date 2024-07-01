@@ -29,20 +29,23 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         public void ApplyDamage(ITarget baseTarget, Vector2 collisionPoint, ITarget damageSource)
         {
             Collider2D[] colliders;
+            Collider2D[] secondaryColliders;
 
             if (_targetLayerMask == default)
             {
                 colliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.DamageRadiusInM);
+                secondaryColliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.SecondaryRadiusInM);
             }
             else
             {
                 colliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.DamageRadiusInM, _targetLayerMask);
-			}
+                secondaryColliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.SecondaryRadiusInM, _targetLayerMask);
+            }
 
             foreach (Collider2D collider in colliders)
             {
-				ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
-                
+                ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
+
                 // damagedTargets is a set that is populated when damage is dealt to a collider.
                 // This is specifically useful for the HuntressPrime boss that has multiple colliders
                 // close together, which can oause AOE damage to deal multiple times more health than intended.
@@ -52,6 +55,23 @@ namespace BattleCruisers.Projectiles.DamageAppliers
                     && !damagedTargets.Contains(target))
                 {
                     target.TakeDamage(_damageStats.Damage, damageSource);
+                    damagedTargets.Add(target);
+                }
+            }
+
+            foreach (Collider2D collider in secondaryColliders)
+            {
+                ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
+
+                // damagedTargets is a set that is populated when damage is dealt to a collider.
+                // This is specifically useful for the HuntressPrime boss that has multiple colliders
+                // close together, which can oause AOE damage to deal multiple times more health than intended.
+                if (target != null
+                    && !target.IsDestroyed
+                    && _targetFilter.IsMatch(target)
+                    && !damagedTargets.Contains(target))
+                {
+                    target.TakeDamage(_damageStats.SecondaryDamage, damageSource);
                     damagedTargets.Add(target);
                 }
             }

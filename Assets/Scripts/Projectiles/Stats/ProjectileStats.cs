@@ -23,7 +23,12 @@ namespace BattleCruisers.Projectiles.Stats
 
         public float damageRadiusInM;
         public float DamageRadiusInM => damageRadiusInM;
-
+        public bool hasSecondaryDamage;
+        public bool HasSecondaryDamage => hasSecondaryDamage;
+        public float secondaryDamage;
+        public float SecondaryDamage => secondaryDamage;
+        public float secondaryRadiusInM;
+        public float SecondaryRadiusInM => secondaryRadiusInM;
         public float InitialVelocityInMPerS { get; private set; }
         protected bool isAppliedVariant = false;
 
@@ -46,7 +51,7 @@ namespace BattleCruisers.Projectiles.Stats
 
         public virtual void ApplyVariantStats(StatVariant statVariant)
         {
-            if(!isAppliedVariant)
+            if (!isAppliedVariant)
             {
                 initialVelocityMultiplier += statVariant.initial_velocity_multiplier;
                 damage *= statVariant.damage;
@@ -62,8 +67,8 @@ namespace BattleCruisers.Projectiles.Stats
 
                 isAppliedVariant = true;
             }
-            
+
         }
         protected virtual void OnAwake() { }
-	}
+    }
 }

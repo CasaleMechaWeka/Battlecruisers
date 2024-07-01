@@ -24,6 +24,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public float damageRadiusInM;
         public float DamageRadiusInM => damageRadiusInM;
 
+        public bool hasSecondaryDamage;
+        public bool HasSecondaryDamage => hasSecondaryDamage;
+        public float secondaryDamage;
+        public float SecondaryDamage => secondaryDamage;
+        public float secondaryRadiusInM;
+        public float SecondaryRadiusInM => secondaryRadiusInM;
+
         public float InitialVelocityInMPerS { get; private set; }
 
         protected bool isAppliedVariant = false;
