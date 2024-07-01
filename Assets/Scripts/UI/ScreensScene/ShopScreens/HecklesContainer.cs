@@ -10,15 +10,8 @@ using System;
 using System.Collections.Generic;
 using Unity.Services.Analytics;
 using Unity.Services.Authentication;
-using Unity.Services.Economy;
 using UnityEngine;
 using UnityEngine.UI;
-using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Static;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Utils;
-using System.Threading.Tasks;
-using Unity.Services.Core;
 
 namespace BattleCruisers.UI.ScreensScene
 {
@@ -64,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene
                         if (result)
                         {
 
-                        //    await _dataProvider.SyncCurrencyFromCloud();
+                            //    await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);

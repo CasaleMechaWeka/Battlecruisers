@@ -5,11 +5,8 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
-using NSubstitute.Core;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using UnityEngine;
@@ -78,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene
                         bool result = await _dataProvider.PurchaseCaptainV2(currentCaptainData.Index);
                         if (result)
                         {
-                        //    await _dataProvider.SyncCurrencyFromCloud();
+                            //    await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
