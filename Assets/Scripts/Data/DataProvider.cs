@@ -438,7 +438,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[0].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                _gameModel.Captains[i].captainCost = iCoins;
+                if (i < _gameModel.Captains.Count)
+                    _gameModel.Captains[i].captainCost = iCoins;
             }
             // heckles cost sync
             for (int i = 0; i < ecoConfig.categories[1].items.Count; i++)
@@ -446,7 +447,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[1].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                _gameModel.Heckles[i].heckleCost = iCoins;
+                if (i < _gameModel.Heckles.Count)
+                    _gameModel.Heckles[i].heckleCost = iCoins;
             }
             // bodykits cost sync
             for (int i = 0; i < ecoConfig.categories[2].items.Count; i++)
@@ -454,7 +456,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[2].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                _gameModel.Bodykits[i].bodykitCost = iCoins;
+                if (i < _gameModel.Bodykits.Count)
+                    _gameModel.Bodykits[i].bodykitCost = iCoins;
             }
             // variant cost async
             for (int i = 0; i < ecoConfig.categories[3].items.Count; i++)
@@ -462,7 +465,8 @@ namespace BattleCruisers.Data
                 string credits = ecoConfig.categories[3].items[i].credits;
                 int iCredits = 0;
                 int.TryParse(credits, out iCredits);
-                _gameModel.Variants[i].variantCredits = iCredits;
+                if (i < _gameModel.Bodykits.Count)
+                    _gameModel.Variants[i].variantCredits = iCredits;
             }
             SaveGame();
         }
