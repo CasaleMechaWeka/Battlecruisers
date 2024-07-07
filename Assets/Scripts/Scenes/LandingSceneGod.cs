@@ -132,6 +132,10 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
+#if PLATFORM_ANDROID
+            Application.targetFrameRate = 60;
+#endif
+
             if (Instance == null)
                 Instance = this;
             LogToScreen(Application.platform.ToString());
@@ -330,7 +334,7 @@ namespace BattleCruisers.Scenes
 #elif PLATFORM_ANDROID
                 googleBtn.Initialise(soundPlayer, GoogleLogin);
                 googleBtn.gameObject.SetActive(true);
-#elif PLATFORM_STANDALONE_WIN 
+#elif PLATFORM_STANDALONE_WIN
                 AnonymousLogin();
 #endif
             }
