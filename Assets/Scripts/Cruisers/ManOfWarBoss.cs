@@ -62,7 +62,7 @@ namespace BattleCruisers.Cruisers
                     break;
 
                 case Difficulty.Harder:
-                    laserTurretStats.fireRatePerS *= .1f;
+                    laserTurretStats.fireRatePerS *= 1f;
                     laserTurretStats.damagePerS *= 1;
                     unit.maxHealth *= 1;
                     break;
