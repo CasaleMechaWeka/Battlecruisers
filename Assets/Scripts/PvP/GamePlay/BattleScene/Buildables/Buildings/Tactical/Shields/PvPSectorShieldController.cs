@@ -64,6 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _soundPlayer = soundPlayer;
             _timeSinceDamageInS = 1000;
 
+            SetHealthToMax();
             SetupHealthBar();
         }
 
@@ -188,6 +189,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Stats.shieldRechargeDelayModifier += statVariant.shield_recharge_delay;
                 Stats.shieldRechargeRateModifier += statVariant.shield_recharge_rate;
             }
+        }
+        public void ActivateShield()//For the turtles ships
+        {
+            EnableShield();
         }
 
         [ClientRpc]

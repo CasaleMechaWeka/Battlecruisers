@@ -20,17 +20,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public bool keepDistanceFromEnemyCruiser;
         public override bool KeepDistanceFromEnemyCruiser => keepDistanceFromEnemyCruiser;
 
-        private bool isCompleted;
+        private bool isCompleted = false;
         private Animator animator;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
-            _shieldController = GetComponentInChildren<PvPSectorShieldController>(includeInactive: true);
-            Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
-            animator = GetComponent<Animator>();
-            Assert.IsNotNull(animator, "Animator component could not be found.");
-            animator.enabled = false; // Ensure the animator is disabled by default
             base.StaticInitialise(parent, healthBar, commonStrings);
+
+            _shieldController = GetComponentInChildren<PvPSectorShieldController>(includeInactive: true);
+            animator = GetComponent<Animator>();
+            Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
+            Assert.IsNotNull(animator, "Animator component could not be found.");
+            isCompleted = false;
+            animator.enabled = false; // Ensure the animator is disabled by default
             _shieldController.StaticInitialise(commonStrings);
         }
 
@@ -38,9 +40,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Activate(activationArgs);
 
-            _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, PvPTargetType.Ships);
-            _shieldController.gameObject.SetActive(false);
-            OnEnableShieldClientRpc(false);
+            if (_shieldController != null)
+            {
+                _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, PvPTargetType.Ships);
+                _shieldController.gameObject.SetActive(false);
+                OnEnableShieldClientRpc(false);
+            }
         }
 
         protected override IList<IPvPBarrelWrapper> GetTurrets()
@@ -48,6 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IList<IPvPBarrelWrapper> turrets = new List<IPvPBarrelWrapper>();
 
             _flakturret = gameObject.GetComponentInChildren<IPvPBarrelWrapper>();
+            Assert.IsNotNull(_flakturret);
             turrets.Add(_flakturret);
 
             return turrets;
@@ -79,8 +85,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsServer)
                 base.OnShipCompleted();
-            if (!isCompleted)
-                isCompleted = true;
         }
 
         private void LateUpdate()
@@ -92,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 if (ShouldPlayAnimation())
                     PlayAnimation();
-                EnableAnimatorClientRpc();
+                    EnableAnimatorClientRpc();
             }
             else
             {
@@ -182,8 +186,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
                 _shieldController.gameObject.SetActive(true);
+                _shieldController.ActivateShield();
                 OnEnableShieldClientRpc(true);
                 OnBuildableCompletedClientRpc();
+                isCompleted = true;
             }
             else
                 OnBuildableCompleted_PvPClient();

@@ -17,7 +17,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelWrapper _missileLauncher;
         private PvPSectorShieldController _shieldController;
         public float armamentRange;
-        private bool isCompleted;
+
+        private bool isCompleted = false;
         private Animator animator;
 
         public override float OptimalArmamentRangeInM => armamentRange;
@@ -28,9 +29,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.StaticInitialise(parent, healthBar, commonStrings);
 
             _shieldController = GetComponentInChildren<PvPSectorShieldController>(includeInactive: true);
-            Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
             animator = GetComponent<Animator>();
+            Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
             Assert.IsNotNull(animator, "Animator component could not be found.");
+            isCompleted = false;
             animator.enabled = false; // Ensure the animator is disabled by default
             _shieldController.StaticInitialise(commonStrings);
         }
@@ -38,12 +40,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
-
-            _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, PvPTargetType.Ships);
-            _shieldController.gameObject.SetActive(false);
-            OnEnableShieldClientRpc(false);
-            _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
-            _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
+            
+            if (_shieldController != null)
+            {
+                _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, PvPTargetType.Ships);
+                _shieldController.gameObject.SetActive(false);
+                OnEnableShieldClientRpc(false);
+                _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
+                _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
+            }
         }
 
         protected override IList<IPvPBarrelWrapper> GetTurrets()
@@ -51,6 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IList<IPvPBarrelWrapper> turrets = new List<IPvPBarrelWrapper>();
 
             _missileLauncher = transform.FindNamedComponent<IPvPBarrelWrapper>("MissileLauncher");
+            Assert.IsNotNull(_missileLauncher);
             turrets.Add(_missileLauncher);
 
             return turrets;
@@ -80,8 +86,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsServer)
                 base.OnShipCompleted();
-            if (!isCompleted)
-                isCompleted = true;
         }
         private void LateUpdate()
         {
@@ -92,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 if (ShouldPlayAnimation())
                     PlayAnimation();
-                EnableAnimatorClientRpc();
+                    EnableAnimatorClientRpc();
             }
             else
             {
@@ -182,11 +186,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
                 _shieldController.gameObject.SetActive(true);
+                _shieldController.ActivateShield();
                 OnEnableShieldClientRpc(true);
                 OnBuildableCompletedClientRpc();
+                isCompleted = true;
             }
             else
+            {
                 OnBuildableCompleted_PvPClient();
+            }
+            
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
