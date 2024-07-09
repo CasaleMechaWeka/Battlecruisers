@@ -1,14 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {

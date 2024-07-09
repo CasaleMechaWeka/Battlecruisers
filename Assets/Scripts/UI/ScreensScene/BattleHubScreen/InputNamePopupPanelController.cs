@@ -1,7 +1,6 @@
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
@@ -12,7 +11,6 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Services.Authentication;
 using System;
 using BattleCruisers.Data.Models.PrefabKeys;
-using UnityEngine.PlayerLoop;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
