@@ -95,6 +95,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             else
                 blackMarketButton.gameObject.SetActive(false);
 
+#if DISABLE_BLACK_MARKET
+                blackMarketButton.gameObject.SetActive(false);
+#endif
+
             exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
 #if UNITY_EDITOR
             exoBaseList = GenerateFullList(_dataProvider.GameModel.Captains.Count);

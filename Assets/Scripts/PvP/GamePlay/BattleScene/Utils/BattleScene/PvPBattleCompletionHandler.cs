@@ -62,6 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
+#if !DISABLE_MATCHMAKING
                 var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
                 if (team == Cruisers.Team.LEFT)
                 {
@@ -87,6 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
                     }
                 }
+#endif
             }
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
@@ -186,6 +188,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             if (registeredTime > 0 && Time.time - registeredTime > 60f)
             {
+#if !DISABLE_MATCHMAKING
                 var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
                 if (team == Cruisers.Team.LEFT)
                 {
@@ -211,6 +214,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         Debug.Log("Failed to update player leaderboard score");
                     }
                 }
+#endif
             }
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
