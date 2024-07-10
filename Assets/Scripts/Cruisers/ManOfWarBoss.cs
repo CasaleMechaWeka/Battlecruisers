@@ -29,7 +29,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(laserTurretStats);
         }
 
-        public override void Update()
+        public override void FixedUpdate()
         {
             if (started)
             {

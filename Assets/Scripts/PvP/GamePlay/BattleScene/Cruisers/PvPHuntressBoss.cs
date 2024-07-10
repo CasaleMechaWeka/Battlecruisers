@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             base.Start();
         }
 
-        public override void Update()
+        public override void FixedUpdate()
         {
             if (started)
             {
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 }
                 //Debug.Log(maxHealth);
             }
-            base.Update();
+            base.FixedUpdate();
             /*            if ((_enemyCruiser != null && _enemyCruiser.IsAlive))
                         {
                             if (IsServer)

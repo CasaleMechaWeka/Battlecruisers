@@ -81,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         // PERF:  Don't need to do this every frame
-        void Update()
+        void FixedUpdate()
         {
 
             // Eat into recharge delay

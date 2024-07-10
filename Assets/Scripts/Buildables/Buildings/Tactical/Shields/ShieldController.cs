@@ -86,7 +86,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         }
 
         // PERF:  Don't need to do this every frame
-        void Update()
+        void FixedUpdate()
         {
             // Eat into recharge delay
             if (Health < maxHealth)
@@ -194,7 +194,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         {
             Vector3 parentPosition = transform.position;
             Vector2 offsetToUse = manualOffsetOverride ? manualOffset : healthBar.Offset;
-            
+
             Vector3 newPosition = new Vector3(
                 parentPosition.x + offsetToUse.x,
                 parentPosition.y + offsetToUse.y,

@@ -490,7 +490,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             BuildingDestroyed?.Invoke(this, new PvPBuildingDestroyedEventArgs(destroyedBuilding));
         }
 
-        public virtual void Update()
+        public virtual void FixedUpdate()
         {
             if (RepairManager != null)
             {

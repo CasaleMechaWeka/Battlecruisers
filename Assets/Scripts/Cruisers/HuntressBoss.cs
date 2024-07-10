@@ -31,7 +31,7 @@ namespace BattleCruisers.Cruisers
             //Debug.Log(maxHealth);
         }
 
-        public override void Update()
+        public override void FixedUpdate()
         {
             if (started)
             {

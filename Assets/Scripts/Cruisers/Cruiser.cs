@@ -346,7 +346,7 @@ namespace BattleCruisers.Cruisers
             BuildingDestroyed?.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
         }
 
-        public virtual void Update()
+        public virtual void FixedUpdate()
         {
             if (RepairManager != null)
             {

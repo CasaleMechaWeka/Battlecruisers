@@ -29,14 +29,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             base.Start();
         }
-        public override void Update()
+        public override void FixedUpdate()
         {
             if (started)
             {
                 _healthTracker.SetHealth(0 + unit.Health);
                 //Debug.Log(unit.Health);
             }
-            base.Update();
+            base.FixedUpdate();
             /*            if (IsPlayerCruiser && (_enemyCruiser != null && _enemyCruiser.IsAlive))
                         {
                             if (IsServer)

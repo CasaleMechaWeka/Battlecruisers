@@ -65,7 +65,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             healthBar.Initialise(this, true);
         }
 
-        void Update()
+        void FixedUpdate()
         {
             if (Health < maxHealth)
             {
