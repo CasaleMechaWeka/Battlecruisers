@@ -94,7 +94,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
 
                 float damageDealt = prevTargetHP - _targetToDamage.Health;
+                _parentAircraft.TakeDamage(damageDealt / KAMIKAZE_DAMAGE_MULTIPLIER, _parentAircraft, true);
                 ramainingPotentialDamage -= damageDealt;
+
                 if (_targetToDamage.Health == 0f)
                     _targetToDamage = null;
 

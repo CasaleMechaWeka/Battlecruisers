@@ -93,6 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
 
                 float damageDealt = prevTargetHP - _targetToDamage.Health;
+                _parentAircraft.TakeDamage(damageDealt / KAMIKAZE_DAMAGE_MULTIPLIER, _parentAircraft);
                 ramainingPotentialDamage -= damageDealt;
 
                 if (_targetToDamage.Health == 0f)
