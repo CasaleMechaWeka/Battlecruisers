@@ -15,13 +15,13 @@ public class Blinking : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-       timeElapsed = 0;
+        timeElapsed = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
         if (timeElapsed < blinkTiming)
         {
             Color tempcolor = _spriteRenderer.color;
@@ -34,11 +34,12 @@ public class Blinking : MonoBehaviour
             {
                 tempcolor.a = endValue;
             }
-            
+
             _spriteRenderer.color = tempcolor;
             timeElapsed += Time.deltaTime;
         }
-        else {
+        else
+        {
             transparencySwitch = !transparencySwitch;
             timeElapsed = 0;
             if (!transparencySwitch)
@@ -46,7 +47,7 @@ public class Blinking : MonoBehaviour
                 startValue = 1;
                 endValue = 0;
             }
-            else 
+            else
             {
                 startValue = 0;
                 endValue = 1;

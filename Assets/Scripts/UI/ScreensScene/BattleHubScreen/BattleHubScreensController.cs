@@ -12,8 +12,6 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using Unity.Services.Authentication;
-using UnityEngine.Localization.Components;
-using System;
 using System.Linq;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
@@ -127,7 +125,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenBattleHub()
         {
             playerInfoPanelController.gameObject.SetActive(true);
-          
+
             if (_applicationModel.Mode != GameMode.PvP_1VS1)
             {
                 if (ScreensSceneGod.Instance.cameraOfCaptains != null)
@@ -135,7 +133,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 if (ScreensSceneGod.Instance.cameraOfCharacter != null)
                     ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             }
-           
+
             GoToScreen(battlePanel);
             UnselectAll();
         }
@@ -252,11 +250,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GotoCoinBattle()
         {
 
-             _applicationModel.Mode = GameMode.CoinBattle;
-             coinBattleController.BattleButtonClicked();
-             CanvasGroup AIv1ButtonCanvasGroup = coinBattleButton.GetComponent<CanvasGroup>();
-             AIv1ButtonCanvasGroup.blocksRaycasts = false;
-             AIv1ButtonCanvasGroup.interactable = false;
+            _applicationModel.Mode = GameMode.CoinBattle;
+            coinBattleController.BattleButtonClicked();
+            CanvasGroup AIv1ButtonCanvasGroup = coinBattleButton.GetComponent<CanvasGroup>();
+            AIv1ButtonCanvasGroup.blocksRaycasts = false;
+            AIv1ButtonCanvasGroup.interactable = false;
         }
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)

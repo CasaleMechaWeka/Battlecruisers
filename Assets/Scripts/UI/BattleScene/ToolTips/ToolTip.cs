@@ -27,12 +27,8 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         started = true;
     }
 
-    public void Update()
+    private void adjustForHandheld()
     {
-        
-    }
-
-    private void adjustForHandheld() {
         _virticalAdjustment = -3;
         toolTipText.fontSize = 80;
     }
@@ -46,19 +42,19 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             {
                 adjustForHandheld();
             }
-            if (Input.mousePosition.x < Screen.width*3/4)
+            if (Input.mousePosition.x < Screen.width * 3 / 4)
             {//left 3/4 of the screen
                 ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(0, _virticalAdjustment);
-                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(0, _virticalAdjustment);
-                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(0, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).anchorMax = new Vector2(0, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).pivot = new Vector2(0, _virticalAdjustment);
             }
             else
             {//right 1/4 of the screen
                 ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(1, _virticalAdjustment);
-                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(1, _virticalAdjustment);
-                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(1, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).anchorMax = new Vector2(1, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).pivot = new Vector2(1, _virticalAdjustment);
             }
-            
+
             ToolTipTextObject.transform.position = Input.mousePosition;
             ToolTipTextObject.transform.position = new Vector3(ToolTipTextObject.transform.position.x, ToolTipTextObject.transform.position.y + 60, ToolTipTextObject.transform.position.z);
             if (!toolTipActivator.toggleController.IsChecked.Value)
@@ -78,7 +74,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         background.enabled = true;
         background.color = activeColor;
     }
-    
+
     private void hide()
     {
         toolTipText.enabled = false;

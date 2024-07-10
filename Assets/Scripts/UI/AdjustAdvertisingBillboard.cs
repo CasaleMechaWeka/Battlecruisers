@@ -6,7 +6,7 @@ public class AdjustAdvertisingBillboard : MonoBehaviour
     private AdvertisingBannerScrollingText _AdvertisingBannerController;
     public AdvertisingBannerScrollingText AdvertisingBannerController
     { get => _AdvertisingBannerController; }
-   
+
     private bool _LoadAdvert = false;
     public bool LoadAdvert
     {
@@ -17,13 +17,7 @@ public class AdjustAdvertisingBillboard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         _AdvertisingBannerController = AdertisingBanner.GetComponent<AdvertisingBannerScrollingText>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _AdvertisingBannerController = AdertisingBanner.GetComponent<AdvertisingBannerScrollingText>();
     }
 
     public float GetBannerHeight()

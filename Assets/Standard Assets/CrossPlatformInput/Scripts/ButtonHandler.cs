@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets.CrossPlatformInput
@@ -8,10 +7,6 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         public string Name;
 
-        void OnEnable()
-        {
-
-        }
 
         public void SetDownState()
         {
@@ -40,11 +35,6 @@ namespace UnityStandardAssets.CrossPlatformInput
         public void SetAxisNegativeState()
         {
             CrossPlatformInputManager.SetAxisNegative(Name);
-        }
-
-        public void Update()
-        {
-
         }
     }
 }

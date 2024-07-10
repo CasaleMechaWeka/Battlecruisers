@@ -15,7 +15,7 @@ public class ScreenShake : MonoBehaviour
     // Amplitude of the shake. A larger value shakes the camera harder.
     public float shakeAmount = 0.7f;
     public float decreaseFactor = 1.0f;
-    
+
 
     void Start()
     {
@@ -26,7 +26,8 @@ public class ScreenShake : MonoBehaviour
         //fire at the time of the explosion becoming active
         _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
-        if (_camera == null) {
+        if (_camera == null)
+        {
             return;
         }
 
@@ -37,12 +38,13 @@ public class ScreenShake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!useScreenShake) {
+        if (!useScreenShake)
+        {
             return;
         }
         if (shakeDuration > 0)
         {
-            Vector3 newRotation =  Random.insideUnitSphere * shakeAmount;
+            Vector3 newRotation = Random.insideUnitSphere * shakeAmount;
             _camTransform.rotation = Quaternion.Euler(newRotation); //_originalPos + Random.insideUnitSphere * shakeAmount;
 
             shakeDuration -= Time.deltaTime * decreaseFactor;

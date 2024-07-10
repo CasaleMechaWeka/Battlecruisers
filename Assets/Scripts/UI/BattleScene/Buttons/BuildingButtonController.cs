@@ -33,11 +33,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _buildableClickAndDrag = GameObject.Find("BuildableClickAndDrag").GetComponentInChildren<BuildableClickAndDrag>();
         }
 
-        public void Update()
-        {
-
-        }
-
         public void OnEndDrag(PointerEventData eventData)
         {
             _clickAndDragIcon.gameObject.SetActive(false);
