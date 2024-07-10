@@ -24,25 +24,31 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITarget _targetToDamage;
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 4;
+        private IDamageStats kamikazeDamageStats;
+        private IFactoryProvider _factoryProvider;
+        private float ramainingPotentialDamage;
 
         public void Initialise(IUnit parentAircraft, IFactoryProvider factoryProvider, ITarget target)
         {
             Helper.AssertIsNotNull(parentAircraft, factoryProvider);
 
             _parentAircraft = parentAircraft;
+            _factoryProvider = factoryProvider;
             _initialTarget = target;
             _targetToDamage = null;
+
+            ramainingPotentialDamage = parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER;
 
             List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
             _targetFilter = factoryProvider.Targets.FilterFactory.CreateTargetFilter(_initialTarget.Faction, targetTypes);
 
-            IDamageStats kamikazeDamageStats
+            kamikazeDamageStats
                 = factoryProvider.DamageApplierFactory.CreateDamageStats(
-                    damage: parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER,
+                    damage: ramainingPotentialDamage,
                     damageRadiusInM: parentAircraft.Size.x);
-            _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+            _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
 
-            _explosionPoolProvider = factoryProvider.PoolProviders.ExplosionPoolProvider;
+            _explosionPoolProvider = _factoryProvider.PoolProviders.ExplosionPoolProvider;
 
             _initialTarget.Destroyed += Target_Destroyed;
         }
@@ -66,7 +72,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 && !_parentAircraft.IsDestroyed
                 && _targetToDamage == null)
             {
-                _targetToDamage = target;
+                if (target.Health != 0f)
+                    _targetToDamage = target;
             }
         }
 
@@ -75,9 +82,34 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             if (_targetToDamage != null
                 && !_parentAircraft.IsDestroyed)
             {
+                float prevTargetHP = _targetToDamage.Health;
+
+                kamikazeDamageStats
+                     = _factoryProvider.DamageApplierFactory.CreateDamageStats(
+                        damage: Mathf.Min(ramainingPotentialDamage, _targetToDamage.Health),
+                        damageRadiusInM: _parentAircraft.Size.x);
+                _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
                 _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
-                CleanUp();
+
+                float damageDealt = prevTargetHP - _targetToDamage.Health;
+                ramainingPotentialDamage -= damageDealt;
+                if (_targetToDamage.Health == 0f)
+                    _targetToDamage = null;
+
+                if (damageDealt < kamikazeDamageStats.Damage)
+                {
+                    kamikazeDamageStats
+                        = _factoryProvider.DamageApplierFactory.CreateDamageStats(
+                            damage: ramainingPotentialDamage,
+                            damageRadiusInM: _parentAircraft.Size.x);
+                    _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+                }
+                else
+                {
+                    CleanUp();
+                }
             }
         }
 

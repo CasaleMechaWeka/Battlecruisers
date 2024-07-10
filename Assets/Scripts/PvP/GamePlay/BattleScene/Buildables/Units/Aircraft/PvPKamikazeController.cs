@@ -22,6 +22,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // the target collider does not trigger OnTriggerExit2D().  I filed a bug with
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private IPvPTarget _targetToDamage;
+        private IPvPDamageStats kamikazeDamageStats;
+        private IPvPFactoryProvider _factoryProvider;
+
+        private float ramainingPotentialDamage;
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 4;
 
@@ -30,19 +34,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPHelper.AssertIsNotNull(parentAircraft, factoryProvider);
 
             _parentAircraft = parentAircraft;
+            _factoryProvider = factoryProvider;
             _initialTarget = target;
             _targetToDamage = null;
+
+            ramainingPotentialDamage = parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER;
 
             List<PvPTargetType> targetTypes = new List<PvPTargetType>() { PvPTargetType.Buildings, PvPTargetType.Cruiser, PvPTargetType.Ships };
             _targetFilter = factoryProvider.Targets.FilterFactory.CreateTargetFilter(_initialTarget.Faction, targetTypes);
 
-            IPvPDamageStats kamikazeDamageStats
-                = factoryProvider.DamageApplierFactory.CreateDamageStats(
-                    damage: parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER,
+            kamikazeDamageStats
+                = _factoryProvider.DamageApplierFactory.CreateDamageStats(
+                    damage: ramainingPotentialDamage,
                     damageRadiusInM: parentAircraft.Size.x);
-            _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+            _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
 
-            _explosionPoolProvider = factoryProvider.PoolProviders.ExplosionPoolProvider;
+            _explosionPoolProvider = _factoryProvider.PoolProviders.ExplosionPoolProvider;
 
             _initialTarget.Destroyed += Target_Destroyed;
         }
@@ -75,9 +82,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (_targetToDamage != null
                 && !_parentAircraft.IsDestroyed)
             {
+                float prevTargetHP = _targetToDamage.Health;
+                kamikazeDamageStats
+                = _factoryProvider.DamageApplierFactory.CreateDamageStats(
+                    damage: Mathf.Min(ramainingPotentialDamage, _targetToDamage.Health),
+                    damageRadiusInM: _parentAircraft.Size.x);
+                _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
                 _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
-                CleanUp();
+
+                float damageDealt = prevTargetHP - _targetToDamage.Health;
+                ramainingPotentialDamage -= damageDealt;
+
+                if (_targetToDamage.Health == 0f)
+                    _targetToDamage = null;
+
+                if (damageDealt < kamikazeDamageStats.Damage)
+                {
+                    kamikazeDamageStats
+                        = _factoryProvider.DamageApplierFactory.CreateDamageStats(
+                            damage: ramainingPotentialDamage,
+                            damageRadiusInM: _parentAircraft.Size.x);
+                    _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+
+                }
+                else
+                {
+                    CleanUp();
+                }
             }
         }
 
