@@ -282,7 +282,7 @@ namespace BattleCruisers.Data.Serialization
                         Debug.Log(gameModelData);
 
                         //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
-                        if (saveModel._lifetimeDestructionScore >= game.LifetimeDestructionScore)
+                        if (saveModel._lifetimeDestructionScore > game.LifetimeDestructionScore)
                         {
                             Debug.Log("Cloud save up to date");
                             return saveModel;
