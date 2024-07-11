@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private float remainingPotentialDamage;
 
-        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 4;
+        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 2;
 
         public void Initialise(IPvPUnit parentAircraft, IPvPFactoryProvider factoryProvider, IPvPTarget target)
         {
