@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -13,16 +14,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPFlakTurtleController : PvPShipController
     {
-        private IPvPBarrelWrapper _flakturret;
+        private IPvPBarrelWrapper _flakTurret;
         private PvPSectorShieldController _shieldController;
         public float armamentRange;
-        public override float OptimalArmamentRangeInM => armamentRange;
-        public bool keepDistanceFromEnemyCruiser;
-        public override bool KeepDistanceFromEnemyCruiser => keepDistanceFromEnemyCruiser;
 
         private bool isCompleted = false;
         private Animator animator;
 
+        public override float OptimalArmamentRangeInM => armamentRange;
+        public bool keepDistanceFromEnemyCruiser;
+        public override bool KeepDistanceFromEnemyCruiser => keepDistanceFromEnemyCruiser;
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
@@ -45,6 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, PvPTargetType.Ships);
                 _shieldController.gameObject.SetActive(false);
                 OnEnableShieldClientRpc(false);
+                _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
+                _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
             }
         }
 
@@ -52,16 +55,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             IList<IPvPBarrelWrapper> turrets = new List<IPvPBarrelWrapper>();
 
-            _flakturret = gameObject.GetComponentInChildren<IPvPBarrelWrapper>();
-            Assert.IsNotNull(_flakturret);
-            turrets.Add(_flakturret);
+            _flakTurret = transform.FindNamedComponent<IPvPBarrelWrapper>("FlakTurret");
+            Assert.IsNotNull(_flakTurret);
+            turrets.Add(_flakTurret);
 
             return turrets;
         }
 
         protected override void InitialiseTurrets()
         {
-            _flakturret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.AntiAir);
+            _flakTurret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.AntiAir);
         }
         private void PlayAnimation()
         {
@@ -75,18 +78,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return isCompleted && !IsMoving;
         }
 
-
         //------------------------------------ methods for sync, written by Sava ------------------------------//
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
 
         protected override void OnShipCompleted()
         {
             if (IsServer)
                 base.OnShipCompleted();
         }
-
         private void LateUpdate()
         {
             if (IsServer)
@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 if (ShouldPlayAnimation())
                     PlayAnimation();
-                    EnableAnimatorClientRpc();
+                EnableAnimatorClientRpc();
             }
             else
             {
@@ -192,7 +192,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 isCompleted = true;
             }
             else
+            {
                 OnBuildableCompleted_PvPClient();
+            }
+
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
@@ -255,11 +258,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
+        private void OnEnableShieldClientRpc(bool enabled)
+        {
+            if (!IsHost)
+                _shieldController.gameObject.SetActive(enabled);
+        }
+
+        [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
             if (!IsHost)
                 OnBuildableCompleted();
-            _flakturret.ApplyVariantStats(this);
+            _flakTurret.ApplyVariantStats(this);
         }
 
         [ClientRpc]
@@ -269,12 +279,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 BuildableState = state;
         }
 
-        [ClientRpc]
-        private void OnEnableShieldClientRpc(bool enabled)
-        {
-            if (!IsHost)
-                _shieldController.gameObject.SetActive(enabled);
-        }
         [ClientRpc]
         private void EnableAnimatorClientRpc()
         {
