@@ -22,8 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private Animator animator;
 
         public override float OptimalArmamentRangeInM => armamentRange;
-        public override bool KeepDistanceFromEnemyCruiser => false;
-
+        public bool keepDistanceFromEnemyCruiser;
+        public override bool KeepDistanceFromEnemyCruiser => keepDistanceFromEnemyCruiser;
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
-            
+
             if (_shieldController != null)
             {
                 _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, PvPTargetType.Ships);
@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 if (ShouldPlayAnimation())
                     PlayAnimation();
-                    EnableAnimatorClientRpc();
+                EnableAnimatorClientRpc();
             }
             else
             {
@@ -195,7 +195,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnBuildableCompleted_PvPClient();
             }
-            
+
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
