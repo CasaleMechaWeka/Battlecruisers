@@ -66,6 +66,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             SetHealthToMax();
             SetupHealthBar();
+
+            EnableShield();
+            OnHealthRecoveredClientRpc();
         }
 
         private void SetupHealthBar()
