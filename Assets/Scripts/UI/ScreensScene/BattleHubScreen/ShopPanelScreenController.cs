@@ -440,8 +440,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         List<int> VariantsForOwnedItems()
         {
             List<int> variantsList = new List<int>();
-            IList<BuildingKey> buildingKeys = _dataProvider.GameModel.PlayerLoadout.GetAllBuildings();
-            IList<UnitKey> unitKeys = _dataProvider.GameModel.PlayerLoadout.GetAllUnits();
+            IList<BuildingKey> buildingKeys = _dataProvider.GameModel.UnlockedBuildings;
+            IList<UnitKey> unitKeys = _dataProvider.GameModel.UnlockedUnits;
             List<string> buildablePrefabNames = new List<string>();
 
             for (int i = 0; i < buildingKeys.Count; i++)
