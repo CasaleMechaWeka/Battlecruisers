@@ -199,10 +199,8 @@ namespace BattleCruisers.Data
                 case ConfigOrigin.Remote:
                     Debug.Log("===> config.Remote");
                     GetConfigValues();
-                    //        await SyncItemsCost();
                     await SyncItemsCostV2();
                     await SyncCurrencyFromCloud();
-                    //        await SyncHecklesCost();
                     if (_gameModel.IsDoneMigration)
                     {
                         await SyncInventroyV2();
@@ -216,12 +214,12 @@ namespace BattleCruisers.Data
                         SaveGame();
                         await CloudSave();
                     }
-
                     GameModel.HasSyncdShop = true;
                     ScreensSceneGod.Instance.m_cancellationToken.Cancel();
                     break;
             }
         }
+
 
         public void MigrateInventory()
         {
@@ -329,17 +327,38 @@ namespace BattleCruisers.Data
 
         public void GetConfigValues()
         {
+            // Fetch and deserialize GAME_CONFIG
             var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
+            Debug.Log($"Fetched GAME_CONFIG: {gameConfigsJson}");
             GameConfig gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigsJson);
             _gameModel.GameConfigs = gameConfig.gameconfigs;
 
+            // Fetch and deserialize SHOP_CONFIG
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
+            Debug.Log($"Fetched SHOP_CONFIG: {shopCategoriesConfigJson}");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
 
+            // Fetch and deserialize ECO_CONFIG
             var ecoCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("ECO_CONFIG");
+            Debug.Log($"Fetched ECO_CONFIG: {ecoCategoriesConfigJson}");
             ecoConfig = JsonUtility.FromJson<EcoConfig>(ecoCategoriesConfigJson);
 
+            // Update variant prices from ECO_CONFIG
+            for (int i = 0; i < ecoConfig.categories[3].items.Count; i++)
+            {
+                string credits = ecoConfig.categories[3].items[i].credits;
+                int iCredits = 0;
+                int.TryParse(credits, out iCredits);
+                if (i < _gameModel.Variants.Count)
+                {
+                    _gameModel.Variants[i].variantCredits = iCredits;
+                    Debug.Log($"Updated GameModel Variant {i} Price: {iCredits}");
+                }
+            }
+
+            // Fetch and deserialize PVP_CONFIG
             var pvpConfigJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_CONFIG");
+            Debug.Log($"Fetched PVP_CONFIG: {pvpConfigJson}");
             PvPConfig pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
             List<Arena> rcArenas = new List<Arena>();
             for (int i = 0; i < pvpConfig.arenas.Count; i++)
@@ -356,12 +375,16 @@ namespace BattleCruisers.Data
                 _gameModel.QueueName = pvpQueueName;
 
             var sysReqsJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_REQUIREMENTS");
-            Debug.Log("####### " + sysReqsJson.ToString());
+            Debug.Log($"Fetched PVP_REQUIREMENTS: {sysReqsJson}");
             PvPSysReqs sysReqs = JsonConvert.DeserializeObject<PvPSysReqs>(sysReqsJson);
             _gameModel.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
             _gameModel.MinCPUFreq = sysReqs.PvPSystemReqs.MinCPUFreq;
             _gameModel.MaxLatency = sysReqs.PvPSystemReqs.MaxLatency;
+
+            // Save the updated game model
+            SaveGame();
         }
+
 
         public async Task<string> GetPVPVersion()
         {
