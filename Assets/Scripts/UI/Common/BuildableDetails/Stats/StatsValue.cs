@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
         public void ShowResult(ComparisonResult comparisonResult)
         {
             // Log the comparison result for debugging
-            Debug.Log($"ShowResult called with comparisonResult: {comparisonResult}");
+            // Debug.Log($"ShowResult called with comparisonResult: {comparisonResult}");
 
             // Check for null comparisonResult
             if (comparisonResult == null)
