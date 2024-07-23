@@ -82,7 +82,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
                 parentPosition.y + offsetToUse.y,
                 transform.position.z);
 
-            Debug.Log($"UpdatePosition: {gameObject.name} ParentPosition: {parentPosition}, Offset: {offsetToUse}, NewPosition: {newPosition}");
+        //    Debug.Log($"UpdatePosition: {gameObject.name} ParentPosition: {parentPosition}, Offset: {offsetToUse}, NewPosition: {newPosition}");
 
             transform.position = newPosition;
         }

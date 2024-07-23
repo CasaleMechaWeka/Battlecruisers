@@ -257,7 +257,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     Sprite parentSprite = variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).Sprite : variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory).Sprite;
 
                     int variantPrice = _dataProvider.GameModel.Variants[variant.variantIndex].variantCredits;
-                    Debug.Log($"Variant {variant.variantIndex} Price: {variantPrice}");
+                    // Debug.Log($"Variant {variant.variantIndex} Price: {variantPrice}");
 
                     variantItem.GetComponent<VariantItemController>().StaticInitialise(
                         _soundPlayer,
