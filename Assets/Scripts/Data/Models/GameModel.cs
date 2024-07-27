@@ -329,11 +329,6 @@ namespace BattleCruisers.Data.Models
 
         private List<int> _purchasedVariants;
 
-        public List<int> PurchasedExos { get; set; }
-        public List<int> PurchasedHeckles { get; set; }
-        public List<int> PurchasedBodykits { get; set; }
-        public List<int> PurchasedVariants { get; set; }
-
 
         private bool _isDoneMigration;
         public bool IsDoneMigration
@@ -836,7 +831,7 @@ namespace BattleCruisers.Data.Models
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Name", iapDescriptionKeybase: "Coins5000Description", iapIconName: "Coins5000Pack", 3.99f, 5000),
             };
 
-            _purchasedExos = new List<int>();
+            _purchasedExos = new List<int> { 0 };
             _purchasedHeckles = new List<int>();
             _purchasedBodykits = new List<int>();
             _purchasedVariants = new List<int>();
@@ -899,14 +894,7 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls.AddRange(unlockedHulls);
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
-
-            PurchasedExos = new List<int>();
-            PurchasedHeckles = new List<int>();
-            PurchasedBodykits = new List<int>();
-            PurchasedVariants = new List<int>();
         }
-
-
 
         public Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult)
         {
@@ -1116,98 +1104,85 @@ namespace BattleCruisers.Data.Models
             return UnlockedBuildings.Contains(buildingKey);
         }
 
-        // Add methods
-        public void AddExo(int exoId)
+        public void AddExo(int index)
         {
-            if (!PurchasedExos.Contains(exoId))
+            if (_purchasedExos != null)
             {
-                PurchasedExos.Add(exoId);
+                if (!_purchasedExos.Contains(index))
+                    _purchasedExos.Add(index);
+            }
+            else
+            {
+                _purchasedExos = new List<int>() { index };
             }
         }
-
-        public void AddHeckle(int heckleId)
-        {
-            if (!PurchasedHeckles.Contains(heckleId))
-            {
-                PurchasedHeckles.Add(heckleId);
-            }
-        }
-
-        public void AddBodykit(int bodykitId)
-        {
-            if (!PurchasedBodykits.Contains(bodykitId))
-            {
-                PurchasedBodykits.Add(bodykitId);
-            }
-        }
-
-        public void AddVariant(int variantId)
-        {
-            if (!PurchasedVariants.Contains(variantId))
-            {
-                PurchasedVariants.Add(variantId);
-            }
-        }
-
-        // Get methods
-        public List<int> GetExos()
-        {
-            return PurchasedExos;
-        }
-
-        public List<int> GetHeckles()
-        {
-            return PurchasedHeckles;
-        }
-
-        public List<int> GetBodykits()
-        {
-            return PurchasedBodykits;
-        }
-
-        public List<int> GetVariants()
-        {
-            return PurchasedVariants;
-        }
-
         public void RemoveExo(int id)
         {
             _purchasedExos.RemoveAll(x => x == id);
+        }
+        public List<int> GetExos()
+        {
+            return _purchasedExos;
+        }
+        public void AddHeckle(int index)
+        {
+            if (_purchasedHeckles != null)
+            {
+                if (!_purchasedHeckles.Contains(index))
+                    _purchasedHeckles.Add(index);
+            }
+            else
+            {
+                _purchasedHeckles = new List<int>() { index };
+            }
         }
         public void RemoveHeckle(int id)
         {
             _purchasedHeckles.RemoveAll(x => x == id);
         }
+        public List<int> GetHeckles()
+        {
+            return _purchasedHeckles;
+        }
+        public void AddBodykit(int index)
+        {
+            if (_purchasedBodykits != null)
+            {
+                if (!_purchasedBodykits.Contains(index))
+                    _purchasedBodykits.Add(index);
+            }
+            else
+            {
+                _purchasedBodykits = new List<int>() { index };
+            }
+        }
         public void RemoveBodykit(int id)
         {
             _purchasedBodykits.RemoveAll(x => x == id);
+        }
+        public List<int> GetBodykits()
+        {
+            return _purchasedBodykits;
+        }
+        public void AddVariant(int index)
+        {
+            if (_purchasedVariants != null)
+            {
+                if (!_purchasedVariants.Contains(index))
+                    _purchasedVariants.Add(index);
+            }
+            else
+            {
+                _purchasedVariants = new List<int>() { index };
+            }
         }
         public void RemoveVariant(int id)
         {
             _purchasedVariants.RemoveAll(x => x == id);
         }
-
-        // Set methods for migration
-        public void SetExos(List<int> exos)
+        public List<int> GetVariants()
         {
-            PurchasedExos = exos ?? new List<int>();
+            return _purchasedVariants;
         }
-
-        public void SetHeckles(List<int> heckles)
-        {
-            PurchasedHeckles = heckles ?? new List<int>();
-        }
-
-        public void SetBodykits(List<int> bodykits)
-        {
-            PurchasedBodykits = bodykits ?? new List<int>();
-        }
-
-        public void SetVariants(List<int> variants)
-        {
-            PurchasedVariants = variants ?? new List<int>();
-        }
-
-
     }
 }

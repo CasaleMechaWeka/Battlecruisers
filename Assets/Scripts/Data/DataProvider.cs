@@ -199,131 +199,76 @@ namespace BattleCruisers.Data
                 case ConfigOrigin.Remote:
                     Debug.Log("===> config.Remote");
                     GetConfigValues();
-                    //        await SyncItemsCost();
                     await SyncItemsCostV2();
                     await SyncCurrencyFromCloud();
-                    //        await SyncHecklesCost();
                     if (_gameModel.IsDoneMigration)
                     {
-                        await SyncInventoryV2();
+                        await SyncInventroyV2();
                     }
                     else
                     {
                         await SyncInventoryFromCloud();
                         MigrateInventory();
-                        await SyncInventoryV2();
+                        await SyncInventroyV2();
                         _gameModel.IsDoneMigration = true;
                         SaveGame();
                         await CloudSave();
                     }
-
                     GameModel.HasSyncdShop = true;
                     ScreensSceneGod.Instance.m_cancellationToken.Cancel();
                     break;
             }
         }
 
+
         public void MigrateInventory()
         {
-            Debug.Log("Starting Inventory Migration");
-
-            // Ensure all purchased lists are initialized
-            if (_gameModel.PurchasedExos == null)
-            {
-                _gameModel.PurchasedExos = new List<int>();
-            }
-
-            if (_gameModel.PurchasedHeckles == null)
-            {
-                _gameModel.PurchasedHeckles = new List<int>();
-            }
-
-            if (_gameModel.PurchasedBodykits == null)
-            {
-                _gameModel.PurchasedBodykits = new List<int>();
-            }
-
-            if (_gameModel.PurchasedVariants == null)
-            {
-                _gameModel.PurchasedVariants = new List<int>();
-            }
-
-            // Migrate captains/exos
+            // captain exo
             for (int i = 0; i < _gameModel.Captains.Count; i++)
             {
                 if (_gameModel.Captains[i].isOwned)
                 {
                     _gameModel.AddExo(i);
-                    if (!_gameModel.PurchasedExos.Contains(i))
-                    {
-                        _gameModel.PurchasedExos.Add(i);
-                        Debug.Log($"Migrated exo: {i}");
-                    }
                 }
             }
 
-            // Migrate heckles
+            // heckles
             for (int i = 0; i < _gameModel.Heckles.Count; i++)
             {
                 if (_gameModel.Heckles[i].isOwned)
                 {
                     _gameModel.AddHeckle(i);
-                    if (!_gameModel.PurchasedHeckles.Contains(i))
-                    {
-                        _gameModel.PurchasedHeckles.Add(i);
-                        Debug.Log($"Migrated heckle: {i}");
-                    }
                 }
             }
 
-            // Migrate bodykits
+            // bodykits
             for (int i = 0; i < _gameModel.Bodykits.Count; i++)
             {
                 if (_gameModel.Bodykits[i].isOwned)
                 {
                     _gameModel.AddBodykit(i);
-                    if (!_gameModel.PurchasedBodykits.Contains(i))
-                    {
-                        _gameModel.PurchasedBodykits.Add(i);
-                        Debug.Log($"Migrated bodykit: {i}");
-                    }
                 }
             }
 
-            // Migrate variants
+            // variants
             for (int i = 0; i < _gameModel.Variants.Count; i++)
             {
                 if (_gameModel.Variants[i].isOwned)
                 {
                     _gameModel.AddVariant(i);
-                    if (!_gameModel.PurchasedVariants.Contains(i))
-                    {
-                        _gameModel.PurchasedVariants.Add(i);
-                        Debug.Log($"Migrated variant: {i}");
-                    }
                 }
             }
-
-            Debug.Log("Inventory Migration Completed");
         }
 
-
-        public async Task SyncInventoryV2()
+        public async Task SyncInventroyV2()
         {
             // captain exo
             for (int i = 0; i < _gameModel.GetExos().Count; i++)
             {
                 int index = _gameModel.GetExos()[i];
-                if (index < _gameModel.Captains.Count)
+                if (!_gameModel.Captains[index].isOwned)
                 {
-                    if (!_gameModel.Captains[index].isOwned)
-                    {
-                        _gameModel.Captains[index].isOwned = true;
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"Captain index {index} is out of bounds.");
+                    _gameModel.Captains[index].isOwned = true;
                 }
             }
 
@@ -331,16 +276,9 @@ namespace BattleCruisers.Data
             for (int i = 0; i < _gameModel.GetHeckles().Count; i++)
             {
                 int index = _gameModel.GetHeckles()[i];
-                if (index < _gameModel.Heckles.Count)
+                if (!_gameModel.Heckles[index].isOwned)
                 {
-                    if (!_gameModel.Heckles[index].isOwned)
-                    {
-                        _gameModel.Heckles[index].isOwned = true;
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"Heckle index {index} is out of bounds.");
+                    _gameModel.Heckles[index].isOwned = true;
                 }
             }
 
@@ -353,14 +291,10 @@ namespace BattleCruisers.Data
                     if (index < _gameModel.Bodykits.Count)
                     {
                         if (!_gameModel.Bodykits[index].IsOwned)
-                        {
                             _gameModel.Bodykits[index].isOwned = true;
-                        }
                     }
                     else
-                    {
-                        throw new Exception($"Bodykit index {index} is out of bounds.");
-                    }
+                        throw new Exception("Not all bodykits could be loaded. " + index.ToString() + " Bodykits were loaded successfully.");
                 }
             }
             catch (Exception ex)
@@ -369,30 +303,15 @@ namespace BattleCruisers.Data
             }
 
             // variants
-            try
+            for (int i = 0; i < _gameModel.GetVariants().Count; i++)
             {
-                for (int i = 0; i < _gameModel.GetVariants().Count; i++)
-                {
-                    int index = _gameModel.GetVariants()[i];
-                    if (index < _gameModel.Variants.Count)
-                    {
-                        if (!_gameModel.Variants[index].IsOwned)
-                        {
-                            _gameModel.Variants[index].isOwned = true;
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception($"Variant index {index} is out of bounds.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError(ex.Message);
-            }
-        }
+                int index = _gameModel.GetVariants()[i];
+                if (!_gameModel.Variants[index].isOwned)
+                    _gameModel.Variants[index].isOwned = true;
 
+            }
+            await Task.CompletedTask;
+        }
         private async Task FetchConfigs()
         {
             try
@@ -408,17 +327,38 @@ namespace BattleCruisers.Data
 
         public void GetConfigValues()
         {
+            // Fetch and deserialize GAME_CONFIG
             var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
+            Debug.Log($"Fetched GAME_CONFIG: {gameConfigsJson}");
             GameConfig gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigsJson);
             _gameModel.GameConfigs = gameConfig.gameconfigs;
 
+            // Fetch and deserialize SHOP_CONFIG
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
+            Debug.Log($"Fetched SHOP_CONFIG: {shopCategoriesConfigJson}");
             virtualShopConfig = JsonUtility.FromJson<VirtualShopConfig>(shopCategoriesConfigJson);
 
+            // Fetch and deserialize ECO_CONFIG
             var ecoCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("ECO_CONFIG");
+            Debug.Log($"Fetched ECO_CONFIG: {ecoCategoriesConfigJson}");
             ecoConfig = JsonUtility.FromJson<EcoConfig>(ecoCategoriesConfigJson);
 
+            // Update variant prices from ECO_CONFIG
+            for (int i = 0; i < ecoConfig.categories[3].items.Count; i++)
+            {
+                string credits = ecoConfig.categories[3].items[i].credits;
+                int iCredits = 0;
+                int.TryParse(credits, out iCredits);
+                if (i < _gameModel.Variants.Count)
+                {
+                    _gameModel.Variants[i].variantCredits = iCredits;
+                    Debug.Log($"Updated GameModel Variant {i} Price: {iCredits}");
+                }
+            }
+
+            // Fetch and deserialize PVP_CONFIG
             var pvpConfigJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_CONFIG");
+            Debug.Log($"Fetched PVP_CONFIG: {pvpConfigJson}");
             PvPConfig pvpConfig = JsonUtility.FromJson<PvPConfig>(pvpConfigJson);
             List<Arena> rcArenas = new List<Arena>();
             for (int i = 0; i < pvpConfig.arenas.Count; i++)
@@ -435,12 +375,16 @@ namespace BattleCruisers.Data
                 _gameModel.QueueName = pvpQueueName;
 
             var sysReqsJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_REQUIREMENTS");
-            Debug.Log("####### " + sysReqsJson.ToString());
+            Debug.Log($"Fetched PVP_REQUIREMENTS: {sysReqsJson}");
             PvPSysReqs sysReqs = JsonConvert.DeserializeObject<PvPSysReqs>(sysReqsJson);
             _gameModel.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
             _gameModel.MinCPUFreq = sysReqs.PvPSystemReqs.MinCPUFreq;
             _gameModel.MaxLatency = sysReqs.PvPSystemReqs.MaxLatency;
+
+            // Save the updated game model
+            SaveGame();
         }
+
 
         public async Task<string> GetPVPVersion()
         {

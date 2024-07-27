@@ -71,8 +71,8 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-            _saveVersion = 5;
-            // Last change: 25/7/2024 by Pete
+            _saveVersion = 4;
+            // Last change: 5/16/2023
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -115,15 +115,117 @@ namespace BattleCruisers.Data.Models
         public void AssignSaveToGameModel(GameModel game)
         {
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
-            game.BattleWinScore = _battleWinScore;
-            game.PlayerName = _playerName;
+            if (_battleWinScore != null)
+                game.BattleWinScore = _battleWinScore;
+
+            if (game.PlayerName == "Charlie")
+            {
+                game.PlayerName = _playerName;
+                // otherwise keep the local name
+            }
             game.IsDoneMigration = _isDoneMigration;
 
             // IAPs
-            game.SetExos(_purchasedExos);
-            game.SetHeckles(_purchasedHeckles);
-            game.SetBodykits(_purchasedBodykits);
-            game.SetVariants(_purchasedVariants);
+            // Exos
+            if (_purchasedExos != null)
+            {
+                List<int> currentList = game.GetExos();
+                if (_purchasedExos.Count > 0)
+                {
+                    for (int i = 0; i <= _purchasedExos.Count - 1; i++)
+                    {
+                        // Add
+                        int index = _purchasedExos[i];
+                        if (!currentList.Contains(index))
+                        {
+                            game.AddExo(index);
+                            game.Captains[index].isOwned = true;
+                        }
+                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedExos).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveExo(entry);
+                    game.Captains[entry].isOwned = false;
+                }
+            }
+            // Heckles
+            if (_purchasedHeckles != null)
+            {
+                List<int> currentList = game.GetHeckles();
+                if (_purchasedHeckles.Count > 0)
+                {
+                    for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
+                    {
+                        // Add
+                        int index = _purchasedHeckles[i];
+                        if (!currentList.Contains(index))
+                        {
+                            game.AddHeckle(index);
+                            game.Heckles[index].isOwned = true;
+                        }
+                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedHeckles).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveHeckle(entry);
+                    game.Heckles[entry].isOwned = false;
+                }
+            }
+            // Bodykits
+            if (_purchasedBodykits != null)
+            {
+                List<int> currentList = game.GetBodykits();
+                if (_purchasedBodykits.Count > 0)
+                {
+                    for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
+                    {
+                        // Add
+                        int index = _purchasedBodykits[i];
+                        if (!currentList.Contains(index))
+                        {
+                            game.AddBodykit(index);
+                            game.Bodykits[index].isOwned = true;
+                        }
+                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedBodykits).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveBodykit(entry);
+                    game.Bodykits[entry].isOwned = false;
+                }
+            }
+            // Variants
+            if (_purchasedVariants != null)
+            {
+                List<int> currentList = game.GetVariants();
+                if (_purchasedVariants.Count > 0)
+                {
+                    for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
+                    {
+                        // Add
+                        int index = _purchasedVariants[i];
+                        if (!currentList.Contains(index))
+                        {
+                            game.AddVariant(index);
+                            game.Variants[index].isOwned = true;
+                        }
+                    }
+                }
+                // Remove if they're not in the cloud save data:
+                List<int> entriesToRemove = currentList.Except(_purchasedVariants).ToList();
+                foreach (int entry in entriesToRemove)
+                {
+                    game.RemoveVariant(entry);
+                    game.Variants[entry].isOwned = false;
+                }
+            }
 
             // levels completed
             foreach (var level in _levelsCompleted)
@@ -133,13 +235,11 @@ namespace BattleCruisers.Data.Models
             }
 
             if (_sideQuestsCompleted != null)
-            {
                 foreach (var sideQuest in _sideQuestsCompleted)
                 {
                     CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key, (Settings.Difficulty)sideQuest.Value);
                     game.AddCompletedSideQuest(cSideQuest);
                 }
-            }
 
             // unlocked hulls
             foreach (var hull in _unlockedHulls)
@@ -148,8 +248,8 @@ namespace BattleCruisers.Data.Models
                 game.AddUnlockedHull(hk);
             }
 
-            // Keys and Vals are reversed for unlocks and current units, because dictionaries require their Keys to be unique.
-            // The AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
+            // Keys and Vals are reversed for unlocks and current units, because dictionaries require their Keys to be
+            // unique. The AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
 
             // unlocked buildings
             foreach (var building in _unlockedBuildings)
@@ -190,6 +290,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // building limits
+            // the data structure here is pretty tough to process.
             Dictionary<BuildingCategory, List<BuildingKey>> buildLimits = new Dictionary<BuildingCategory, List<BuildingKey>>();
             foreach (string buildCat in _buildLimits.Keys)
             {
@@ -204,14 +305,13 @@ namespace BattleCruisers.Data.Models
                     Enum.TryParse(buildKey.Value, out BuildingCategory keycat);
                     BuildingKey newKey = new BuildingKey(keycat, buildKey.Key);
                     if (parsedBuildingKeys.Count == 0 || newKey.PrefabName != parsedBuildingKeys[parsedBuildingKeys.Count - 1].PrefabName)
-                    {
                         parsedBuildingKeys.Add(newKey);
-                    }
                 }
                 buildLimits.Add(bc, parsedBuildingKeys);
             }
 
             // unit limits
+            // the data structure here is pretty tough to process.
             Dictionary<UnitCategory, List<UnitKey>> unitLimits = new Dictionary<UnitCategory, List<UnitKey>>();
             foreach (string unitCat in _unitLimits.Keys)
             {
@@ -226,9 +326,7 @@ namespace BattleCruisers.Data.Models
                     Enum.TryParse(unitKey.Value, out UnitCategory keycat);
                     UnitKey newKey = new UnitKey(keycat, unitKey.Key);
                     if (parsedUnitKeys.Count == 0 || newKey.PrefabName != parsedUnitKeys[parsedUnitKeys.Count - 1].PrefabName)
-                    {
                         parsedUnitKeys.Add(newKey);
-                    }
                 }
                 unitLimits.Add(uc, parsedUnitKeys);
             }
@@ -261,9 +359,7 @@ namespace BattleCruisers.Data.Models
             {
                 game.PlayerLoadout.CurrentHeckles = _currentHeckles;
                 foreach (int i in _currentHeckles)
-                {
                     game._heckles[i].isOwned = true;
-                }
             }
             else
             {
@@ -290,7 +386,6 @@ namespace BattleCruisers.Data.Models
                 game.HasAttemptedTutorial = false;
             }
         }
-
 
         private Dictionary<int, int> ComputeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
         {
