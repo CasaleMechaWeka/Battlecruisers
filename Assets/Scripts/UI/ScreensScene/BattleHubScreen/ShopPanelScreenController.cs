@@ -116,10 +116,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 variants.Add(variant);
             }
 
-            bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
-#if UNITY_EDITOR
+            //bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
+
             bodykitList = GenerateFullList(_dataProvider.GameModel.Bodykits.Count);
-#endif
+            
             foreach (int index in bodykitList)
             {
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
