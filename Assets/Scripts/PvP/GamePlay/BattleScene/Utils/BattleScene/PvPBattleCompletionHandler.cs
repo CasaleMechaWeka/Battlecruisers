@@ -60,33 +60,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 MatchmakingScreenController.Instance.Destroy();
             }
 
-            if (registeredTime > 0 && Time.time - registeredTime > 60f)
-            {
 #if !DISABLE_MATCHMAKING
-                var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
-                if (team == Cruisers.Team.LEFT)
-                {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item1;
-                }
-                else
-                {
-                    _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item2;
-                }
-                _applicationModel.DataProvider.SaveGame();
+            var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
+            if (team == Cruisers.Team.LEFT)
+            {
+                _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item1;
+            }
+            else
+            {
+                _applicationModel.DataProvider.GameModel.BattleWinScore = newRatings.Item2;
+            }
+            _applicationModel.DataProvider.SaveGame();
 
-                double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
-                const string LeaderboardID = "BC-PvP1v1Leaderboard";
-                bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) != 0;
-                if (isSetPlayerName)
+            double score = (double)_applicationModel.DataProvider.GameModel.BattleWinScore;
+            const string LeaderboardID = "BC-PvP1v1Leaderboard";
+            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) != 0;
+            if (isSetPlayerName)
+            {
+                try
                 {
-                    try
-                    {
-                        await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
-                    }
-                    catch
-                    {
-
-                    }
+                    await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardID, score);
+                }
+                catch
+                {
+                    Debug.LogWarning("Could not add player to leaderboard");
                 }
 #endif
             }
@@ -147,13 +144,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (playerTeam == Cruisers.Team.LEFT)
                 {
-                    hostRating += K * (1 - Pa);
+                    if (registeredTime > 0 && Time.time - registeredTime > 60f)
+                        hostRating += K * (1 - Pa);
                     clientRating -= K * Pb;
                 }
                 else
                 {
                     hostRating -= K * Pa;
-                    clientRating += K * (1 - Pb);
+                    if (registeredTime > 0 && Time.time - registeredTime > 60f)
+                        clientRating += K * (1 - Pb);
                 }
             }
 
@@ -162,11 +161,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 if (playerTeam == Cruisers.Team.LEFT)
                 {
                     hostRating -= K * Pa;
-                    clientRating += K * (1 - Pb);
+                    if (registeredTime > 0 && Time.time - registeredTime > 60f)
+                        clientRating += K * (1 - Pb);
                 }
                 else
                 {
-                    hostRating += K * (1 - Pa);
+                    if (registeredTime > 0 && Time.time - registeredTime > 60f)
+                        hostRating += K * (1 - Pa);
                     clientRating -= K * Pb;
                 }
             }
