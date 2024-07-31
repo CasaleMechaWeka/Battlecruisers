@@ -11,5 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         Task<IList<IPvPSpriteWrapper>> GetGunshipSpritesAsync();
         Task<IList<IPvPSpriteWrapper>> GetSteamCopterSpritesAsync();
         Task<IList<IPvPSpriteWrapper>> GetSpyPlaneSpritesAsync();
+        Task<IList<IPvPSpriteWrapper>> GetStratBomberSpritesAsync();
     }
 }
