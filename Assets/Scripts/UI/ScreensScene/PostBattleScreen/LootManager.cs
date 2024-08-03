@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     if (!unlockedLoot.Items[i].IsUnlocked(_dataProvider.GameModel))
                         containsNewLoot = true;
 
-            if (_dataProvider.GameModel.CompletedSideQuests == null || _dataProvider.GameModel.CompletedSideQuests.Count <= 0)
+            if (_dataProvider.GameModel.CompletedSideQuests == null || _dataProvider.GameModel.CompletedSideQuests.Count == 0)
                 return containsNewLoot;
 
             List<int> completedSideQuestIDs = _dataProvider.GameModel.CompletedSideQuests.Select(completedSQ
