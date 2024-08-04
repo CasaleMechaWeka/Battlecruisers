@@ -393,7 +393,7 @@ namespace BattleCruisers.Data.Static
                 new Level(28, Hulls.BlackRig, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(28)),
                 new Level(29, Hulls.Rickshaw, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(29)),
                 new Level(30, Hulls.Yeti, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(30)),
-                new Level(31, Hulls.HuntressBoss, BackgroundMusic.Fortress, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31)), //HUNTRESS PRIME
+                new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31)), //HUNTRESS PRIME
 
                  // Set 9:  Secret Levels
                 new Level(32, Hulls.Trident, BackgroundMusic.Experimental, SkyMaterials.Purple, Exos.GetCaptainExoKey(32)),
