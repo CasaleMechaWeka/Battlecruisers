@@ -160,7 +160,7 @@ namespace BattleCruisers.UI.ScreensScene
                 btnBuy.SetActive(false);
                 ownFeedback.SetActive(true);
             }
-            else if (!e.purchasable)
+            else if (!e.purchasable || e.bodykitData.Index == 0)
             {
                 btnBuy.SetActive(false);
                 ownFeedback.SetActive(false);
