@@ -11,7 +11,6 @@ using BattleCruisers.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
-using System.Threading.Tasks;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
@@ -82,7 +81,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             ItemsPanel[] panels = GetComponentsInChildren<ItemsPanel>(includeInactive: true);
             panels[panels.Length - 1].AddHeckle(heckleData);
-
         }
 
         public void ShowItemsPanel(ItemType itemType)
