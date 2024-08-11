@@ -21,14 +21,7 @@ namespace BattleCruisers.Utils.Network
     {
         public void InitializePlayGamesLogin()
         {
-            var config = new PlayGamesClientConfiguration.Builder()
-                // Requests an ID token be generated.  
-                // This OAuth token can be used to
-                // identify the player to other services such as Firebase.
-                .RequestIdToken()
-                .Build();
-
-            PlayGamesPlatform.InitializeInstance(config);
+          
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
         }
@@ -36,18 +29,22 @@ namespace BattleCruisers.Utils.Network
         //Fetch the Token / Auth code
         public async Task<bool> Authenticate(SignInInteractivity interactivity)
         {
-            string c = "";
+
             bool state = false;
             //The compiler doesn't like it if "interactivity" isn't passed into Authenticate().
             //This diverges from tutorials and documentation!
-            PlayGamesPlatform.Instance.Authenticate(interactivity, (success) =>
+            PlayGamesPlatform.Instance.Authenticate( (success) =>
             {
                 if (SignInStatus.Success == success)
                 {
-                    // This is the recommended replacement for "PlayGamesPlatform.Instance.RequestServerSideAccess()":
-                    c = ((PlayGamesLocalUser)Social.localUser).GetIdToken();
-                    Debug.Log("Authorization code: " + c);
-                    SignInWithGoogleAsync(c);
+                    Debug.Log("PlayGamesPlatform: Authenticate ====  success");
+                    PlayGamesPlatform.Instance.RequestServerSideAccess(true, (token) => 
+                    {
+                        Debug.Log("PlayGamesPlatform: RequestServerSideAccess: " + token);
+                        SignInWithGooglePlayGamesAsync(token);
+                        state = true;
+                    });
+                   
                     state = true;
                 }
                 else
@@ -69,7 +66,7 @@ namespace BattleCruisers.Utils.Network
             if (success)
             {
                 // Call Unity Authentication SDK to sign in or link with Google.
-                Debug.Log("Login with Google done. IdToken: " + ((PlayGamesLocalUser)Social.localUser).GetIdToken());
+                Debug.Log("Login with Google done. IdToken: " + ((PlayGamesLocalUser)Social.localUser).id);
             }
             else
             {
@@ -106,6 +103,7 @@ namespace BattleCruisers.Utils.Network
         {
             try
             {
+                Debug.Log("PlayGamesPlatform: SignInWithGooglePlayGamesAsync: " + authCode);
                 await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
                 Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}"); //Display the Unity Authentication PlayerID
                 Debug.Log("SignIn is successful.");
