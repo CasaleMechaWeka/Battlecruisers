@@ -26,7 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public ResolutionDropdown resolutionDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
-        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle, turboToggle, richToggle, hecklesToggle;
+        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle, turboToggle, richToggle, hecklesToggle, cloudSaveToggle;
+        public Text cloudSaveLabel;
         public SaveButton saveButton;
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
@@ -56,7 +57,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton, cloudSaveToggle);
+            Helper.AssertIsNotNull(cloudSaveLabel);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable, screensSceneTable);
 
@@ -108,6 +110,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             turboToggle.Initialise(_settingsManager.TurboMode);
             richToggle.Initialise(_settingsManager.RichMode);
             hecklesToggle.Initialise(_settingsManager.HecklesAllowed);
+            cloudSaveToggle.Initialise(_settingsManager.CloudSaveEnabled);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -135,6 +138,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     turboToggle.IsChecked,
                     richToggle.IsChecked,
                     hecklesToggle.IsChecked,
+                    cloudSaveToggle.IsChecked,
                     fullScreenToggle.IsChecked,
                     VSyncToggle.IsChecked,
                     hotkeysPanel);
@@ -160,12 +164,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             DisplayUserID();
             iapRefreshButton.GetComponentInChildren<Text>().text = screensSceneTable.GetString("RefreshPurchasesButtonLabel");
             deleteCloudDataButton.GetComponentInChildren<Text>().text = screensSceneTable.GetString("UI/SettingsScreen/DeleteCloudData");
+            cloudSaveLabel.GetComponentInChildren<Text>().text = screensSceneTable.GetString("UI/SettingsScreen/EnableCloudSave");
 
             // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if THIRD_PARTY_PUBLISHER
             applicationModel.DataProvider.GameModel.PremiumEdition = true;
             premiumButton.gameObject.SetActive(false);
-#elif (UNITY_ANDROID || UNITY_IOS)
+#elif UNITY_ANDROID || UNITY_IOS
             premiumButton.gameObject.SetActive(false);
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
                 premiumButton.gameObject.SetActive(true);
@@ -291,7 +296,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void DisplayUserID()
         {
-            if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null)
+            if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null && _settingsManager.CloudSaveEnabled)
             {
                 idContainer.SetActive(true);
                 idString.text = "ID: " + AuthenticationService.Instance.PlayerId;
@@ -332,6 +337,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             AuthenticationService.Instance.DeleteAccountAsync();
             idButton.gameObject.SetActive(false);
+            _settingsManager.CloudSaveEnabled = false;
+            cloudSaveToggle.ResetToDefaults(false);
             StartCoroutine(AnimateDeleteCloudData());
         }
 
@@ -367,6 +374,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             turboToggle.ResetToDefaults(_settingsManager.TurboMode);
             richToggle.ResetToDefaults(_settingsManager.RichMode);
             hecklesToggle.ResetToDefaults(_settingsManager.HecklesAllowed);
+            cloudSaveToggle.ResetToDefaults(_settingsManager.CloudSaveEnabled);
         }
     }
 }

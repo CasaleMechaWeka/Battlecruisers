@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ResolutionDropdown _resolutionDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
-        private IBroadcastingProperty<bool> _showInGameHints, _showToolTips, _altDroneSounds, _showAds, _fullScreen, _VSync, _turboMode, _richMode, _hecklesAllowed;
+        private IBroadcastingProperty<bool> _showInGameHints, _showToolTips, _altDroneSounds, _showAds, _fullScreen, _VSync, _turboMode, _richMode, _hecklesAllowed, _cloudSaveEnabled;
         private IHotkeysPanel _hotkeysPanel;
 
         private CanvasGroup _canvasGroup;
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ISingleSoundPlayer soundPlayer,
             IDismissableEmitter parent,
             IScreensSceneGod screensSceneGod,
-            ISettingsManager settingsManager, 
+            ISettingsManager settingsManager,
             IDifficultyDropdown difficultyDropdown,
             LanguageDropdown languageDropdown,
             ResolutionDropdown resolutionDropdown,
@@ -46,6 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<bool> turboMode,
             IBroadcastingProperty<bool> richMode,
             IBroadcastingProperty<bool> hecklesAllowed,
+            IBroadcastingProperty<bool> cloudSaveEnabled,
             IBroadcastingProperty<bool> fullScreen,
             IBroadcastingProperty<bool> VSync,
             IHotkeysPanel hotkeysPanel)
@@ -77,6 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _turboMode = turboMode;
             _richMode = richMode;
             _hecklesAllowed = hecklesAllowed;
+            _cloudSaveEnabled = cloudSaveEnabled;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -101,6 +103,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _turboMode.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _richMode.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _hecklesAllowed.ValueChanged += (sended, e) => UpdateEnabledStatus();
+            cloudSaveEnabled.ValueChanged += (sended, e) => UpdateEnabledStatus();
             _hotkeysPanel.IsDirty.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _settingsManager.Save();
             UpdateEnabledStatus();
@@ -109,11 +112,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         protected override void OnClicked()
         {
             base.OnClicked();
-            Screen.SetResolution((int)_resolutionDropdown.Resolution.x, (int)_resolutionDropdown.Resolution.y - (_fullScreen.Value ? 0: (int)(_resolutionDropdown.Resolution.y*0.06)), _fullScreen.Value ? (FullScreenMode)1 : (FullScreenMode)3);
+            Screen.SetResolution((int)_resolutionDropdown.Resolution.x, (int)_resolutionDropdown.Resolution.y - (_fullScreen.Value ? 0 : (int)(_resolutionDropdown.Resolution.y * 0.06)), _fullScreen.Value ? (FullScreenMode)1 : (FullScreenMode)3);
             QualitySettings.vSyncCount = _VSync.Value ? 1 : 0;
-            
+
             Assert.IsTrue(ShouldBeEnabled());
-            
+
             _hotkeysPanel.UpdateHokeysModel();
 
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
@@ -134,6 +137,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.TurboMode = _turboMode.Value;
             _settingsManager.RichMode = _richMode.Value;
             _settingsManager.HecklesAllowed = _hecklesAllowed.Value;
+            _settingsManager.CloudSaveEnabled = _cloudSaveEnabled.Value;
             _settingsManager.FullScreen = _fullScreen.Value;
             _settingsManager.VSync = _VSync.Value;
             _settingsManager.Save();
@@ -170,6 +174,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _turboMode.Value != _settingsManager.TurboMode
                 || _richMode.Value != _settingsManager.RichMode
                 || _hecklesAllowed.Value != _settingsManager.HecklesAllowed
+                || _cloudSaveEnabled.Value != _settingsManager.CloudSaveEnabled
                 || _VSync.Value != _settingsManager.VSync
                 || _fullScreen.Value != _settingsManager.FullScreen
                 || _hotkeysPanel.IsDirty.Value;

@@ -5,9 +5,9 @@ namespace BattleCruisers.Data.Settings
 {
     public enum Difficulty
     {
-        Easy = 0, 
-        Normal = 1, 
-        Hard = 2, 
+        Easy = 0,
+        Normal = 1,
+        Hard = 2,
         Harder = 3
     }
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Data.Settings
         int ZoomSpeedLevel { get; set; }
         int ScrollSpeedLevel { get; set; }
 
-        float MasterVolume {get; set;}
+        float MasterVolume { get; set; }
         float MusicVolume { get; set; }
         float EffectVolume { get; set; }
         float AlertVolume { get; set; }
@@ -36,7 +36,8 @@ namespace BattleCruisers.Data.Settings
         bool ShowAds { get; set; }
         bool TurboMode { get; set; }
         bool RichMode { get; set; }
-        bool HecklesAllowed {  get; set; }
+        bool HecklesAllowed { get; set; }
+        bool CloudSaveEnabled { get; set; }
         void Save();
     }
 }

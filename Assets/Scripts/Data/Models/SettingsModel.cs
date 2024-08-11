@@ -213,6 +213,13 @@ namespace BattleCruisers.Data.Models
             set => _hecklesAllowed = value;
         }
 
+        private bool _cloudSaveEnabled;
+        public bool CloudSaveEnabled
+        {
+            get => _cloudSaveEnabled;
+            set => _cloudSaveEnabled = value;
+        }
+
         [SerializeField]
         private bool _VSync;
         public bool VSync
@@ -282,6 +289,7 @@ namespace BattleCruisers.Data.Models
             TurboMode = false;
             RichMode = false;
             HecklesAllowed = true;
+            CloudSaveEnabled = true;
 
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
             InitialiseGraphicsSettings();

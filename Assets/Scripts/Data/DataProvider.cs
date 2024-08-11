@@ -126,8 +126,16 @@ namespace BattleCruisers.Data
 
         public async Task CloudSave()
         {
-            await _serializer.CloudSave(_gameModel);
-            Debug.Log("Cloud saved.");
+            if (SettingsManager.CloudSaveEnabled)
+            {
+                await _serializer.CloudSave(_gameModel);
+                Debug.Log("Cloud saved.");
+            }
+            else
+            {
+                _serializer.SaveGame(_gameModel);
+                Debug.Log("Cloud save disabled. Saving locally instead");
+            }
         }
 
         public async Task CloudLoad()

@@ -101,7 +101,13 @@ namespace BattleCruisers.Data.Settings
         public bool HecklesAllowed
         {
             get => _settings.HecklesAllowed;
-            set => _settings.HecklesAllowed= value;
+            set => _settings.HecklesAllowed = value;
+        }
+
+        public bool CloudSaveEnabled
+        {
+            get => _settings.CloudSaveEnabled;
+            set => _settings.CloudSaveEnabled = value;
         }
 
         public bool VSync
