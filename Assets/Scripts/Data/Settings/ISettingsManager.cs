@@ -37,7 +37,7 @@ namespace BattleCruisers.Data.Settings
         bool TurboMode { get; set; }
         bool RichMode { get; set; }
         bool HecklesAllowed { get; set; }
-        bool CloudSaveEnabled { get; set; }
+        bool CloudSaveDisabled { get; set; }
         void Save();
     }
 }

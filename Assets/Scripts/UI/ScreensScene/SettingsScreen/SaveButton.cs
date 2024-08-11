@@ -137,7 +137,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.TurboMode = _turboMode.Value;
             _settingsManager.RichMode = _richMode.Value;
             _settingsManager.HecklesAllowed = _hecklesAllowed.Value;
-            _settingsManager.CloudSaveEnabled = _cloudSaveEnabled.Value;
+            _settingsManager.CloudSaveDisabled = !_cloudSaveEnabled.Value;
             _settingsManager.FullScreen = _fullScreen.Value;
             _settingsManager.VSync = _VSync.Value;
             _settingsManager.Save();
@@ -174,7 +174,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _turboMode.Value != _settingsManager.TurboMode
                 || _richMode.Value != _settingsManager.RichMode
                 || _hecklesAllowed.Value != _settingsManager.HecklesAllowed
-                || _cloudSaveEnabled.Value != _settingsManager.CloudSaveEnabled
+                || _cloudSaveEnabled.Value == _settingsManager.CloudSaveDisabled
                 || _VSync.Value != _settingsManager.VSync
                 || _fullScreen.Value != _settingsManager.FullScreen
                 || _hotkeysPanel.IsDirty.Value;

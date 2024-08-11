@@ -110,7 +110,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             turboToggle.Initialise(_settingsManager.TurboMode);
             richToggle.Initialise(_settingsManager.RichMode);
             hecklesToggle.Initialise(_settingsManager.HecklesAllowed);
-            cloudSaveToggle.Initialise(_settingsManager.CloudSaveEnabled);
+            cloudSaveToggle.Initialise(!_settingsManager.CloudSaveDisabled);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -296,7 +296,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void DisplayUserID()
         {
-            if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null && _settingsManager.CloudSaveEnabled)
+            if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null && !_settingsManager.CloudSaveDisabled)
             {
                 idContainer.SetActive(true);
                 idString.text = "ID: " + AuthenticationService.Instance.PlayerId;
@@ -337,7 +337,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             AuthenticationService.Instance.DeleteAccountAsync();
             idButton.gameObject.SetActive(false);
-            _settingsManager.CloudSaveEnabled = false;
+            _settingsManager.CloudSaveDisabled = false;
             cloudSaveToggle.ResetToDefaults(false);
             StartCoroutine(AnimateDeleteCloudData());
         }
@@ -374,7 +374,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             turboToggle.ResetToDefaults(_settingsManager.TurboMode);
             richToggle.ResetToDefaults(_settingsManager.RichMode);
             hecklesToggle.ResetToDefaults(_settingsManager.HecklesAllowed);
-            cloudSaveToggle.ResetToDefaults(_settingsManager.CloudSaveEnabled);
+            cloudSaveToggle.ResetToDefaults(!_settingsManager.CloudSaveDisabled);
         }
     }
 }
