@@ -77,7 +77,6 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 Debug.Log("Sync failed");
             }
-
         }
 
         public void Initialise(
@@ -147,6 +146,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             iapPrice.text = product.metadata.localizedPriceString;
         }
+
         public void GoHome()
         {
             _screensSceneGod.GotoShopScreen();

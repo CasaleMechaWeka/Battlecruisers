@@ -17,7 +17,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
     public CanvasGroupButton Button_Upgrade;
     public AdvertisingBannerScrollingText AdvertistingBanner;
     public Text TextPrice;
-    // Start is called before the first frame update
+
     void Start()
     {
         _soundPlayer
@@ -60,7 +60,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
 
     public void UpgradeToPremiumFailed()
     {
-        //Debug.Log("upgraing has failed please try again");
+        Debug.LogWarning("Upgraing has failed please try again");
         //UpgradeToPremium has failed do nothing - things will remain unchanged
     }
 }

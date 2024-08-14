@@ -6,7 +6,6 @@ using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 namespace BattleCruisers.UI.ScreensScene
 {
     public class IAPItemController : MonoBehaviour
@@ -34,14 +33,14 @@ namespace BattleCruisers.UI.ScreensScene
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             ISpriteWrapper spWrapper = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + _iapData.IAPIconName + ".png");
             _iapImage.sprite = spWrapper.Sprite;
-           // _clickedFeedback.SetActive(false);
+            // _clickedFeedback.SetActive(false);
 
             clickingArea.Initialise(_soundPlayer, OnClicked);
         }
 
         public void OnClicked()
         {
-            if (!_clickedFeedback.activeSelf) 
+            if (!_clickedFeedback.activeSelf)
             {
                 _clickedFeedback.SetActive(true);
                 _blackMarketScreenController.iapDataChanged.Invoke(this, new IAPDataEventArgs
