@@ -75,10 +75,11 @@ namespace BattleCruisers.Scenes
         public BlackMarketScreenController blackMarketScreen;
         public MessageBox messageBox;
         public MessageBoxBig messageBoxBig;
-        public CanvasGroupButton newsButton;
+        public CanvasGroupButton newsButton, premiumEditionButton;
         public GameObject processingPanel;
         public GameObject environmentArt;
         public GameObject homeScreenArt;
+        public IAPPremiumConfirmation premiumConfirmationScreen;
 
         public Animator thankYouPlane;
         [SerializeField]
@@ -127,6 +128,7 @@ namespace BattleCruisers.Scenes
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, levelTrashDataList, sideQuestTrashDataList, _uiAudioSource);
             Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
+            Helper.AssertIsNotNull(newsButton, premiumEditionButton);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             DestroyAllNetworkObjects();
@@ -145,6 +147,8 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             Task<IPrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
+
+            premiumEditionButton.gameObject.SetActive(false);
 
             // Interacting with Cloud
 
@@ -307,6 +311,14 @@ namespace BattleCruisers.Scenes
             messageBoxBig.Initialize(_dataProvider, _soundPlayer);
             messageBoxBig.HideMessage();
             newsButton.Initialise(_soundPlayer, ShowNewsPanel);
+
+#if !PREMIUM_EDITION
+            if (!_gameModel.PremiumEdition && IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
+            {
+                premiumEditionButton.Initialise(_soundPlayer, ShowPremiumEditionIAP);
+                premiumEditionButton.gameObject.SetActive(true);
+            }
+#endif
 
             characterOfShop.SetActive(false);
             characterOfBlackmarket.SetActive(false);
@@ -573,6 +585,15 @@ namespace BattleCruisers.Scenes
             GoToScreen(blackMarketScreen);
             blackMarketScreen.InitialiseIAPs();
             //AdvertisingBanner.startAdvert();
+        }
+
+        private void ShowPremiumEditionIAP()
+        {
+            Debug.Log("ShowPremiumEditionIAP");
+            Assert.IsNotNull(premiumConfirmationScreen, "Premium confirmation screen is missing!");
+            GotoHubScreen();
+            GotoBlackMarketScreen();
+            premiumConfirmationScreen.gameObject.SetActive(true);
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
