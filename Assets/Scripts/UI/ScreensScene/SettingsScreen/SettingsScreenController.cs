@@ -337,7 +337,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             AuthenticationService.Instance.DeleteAccountAsync();
             idButton.gameObject.SetActive(false);
-            _settingsManager.CloudSaveDisabled = false;
+            _settingsManager.CloudSaveDisabled = true;
             cloudSaveToggle.ResetToDefaults(false);
             StartCoroutine(AnimateDeleteCloudData());
         }
