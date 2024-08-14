@@ -322,7 +322,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     isProcessing = true;
 
                     await iLoadingAssets();
-                    isProcessing = false;
                 }
                 else
                 {
@@ -332,10 +331,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             catch (Exception e)
             {
                 Debug.LogError($"An error occurred: {e.Message}");
-                isProcessing = false;
-            }
-            finally 
-            {
                 isProcessing = false;
             }
             /*            if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
