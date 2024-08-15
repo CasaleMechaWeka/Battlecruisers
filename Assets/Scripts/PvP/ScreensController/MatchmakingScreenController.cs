@@ -109,7 +109,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public GameObject cameraOfCharacter;
         public RawImage leftCaptain, rightCaptain;
         public RenderTexture hostTexture, clientTexture;
-        public Text AssetsLoaded;
 
         public static MatchmakingScreenController Instance { get; private set; }
 
@@ -309,64 +308,32 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         bool isProcessing = false;
         public bool isLoaded = false;
-
         async void Update()
         {
-            try
+            if (!isProcessing && !isLoaded)
             {
-                Debug.Log($"Update called. Current values -> isProcessing: {isProcessing}, isLoaded: {isLoaded}");
-
-                if (!isProcessing && !isLoaded)
-                {
-                    Debug.Log("Entering asset loading because isProcessing is false and isLoaded is false.");
-                    isProcessing = true;
-
-                    await iLoadingAssets();
-                }
-                else
-                {
-                    Debug.Log("Skipping asset loading because either isProcessing or isLoaded is true.");
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"An error occurred: {e.Message}");
-                isProcessing = false;
+                isProcessing = true;
+                await iLoadingAssets();
             }
             /*            if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
-            {
-                SetFoundVictimString();
-                if (GameObject.Find("ConnectionManager") != null)
-                    GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LockLobby();
-                if(GameObject.Find("PvPBattleSceneGod") != null)
-                    GameObject.Find("PvPBattleSceneGod").GetComponent<PvPBattleSceneGodServer>().RunPvP_AIMode();
-                m_TimeLimitLookingVictim.PutOnCooldown(9999f);
-            }*/
+                        {
+                            SetFoundVictimString();
+                            if (GameObject.Find("ConnectionManager") != null)
+                                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LockLobby();
+                            if(GameObject.Find("PvPBattleSceneGod") != null)
+                                GameObject.Find("PvPBattleSceneGod").GetComponent<PvPBattleSceneGodServer>().RunPvP_AIMode();
+                            m_TimeLimitLookingVictim.PutOnCooldown(9999f);
+                        }*/
         }
 
         async Task iLoadingAssets()
         {
-            try
-            {
-                await Task.Delay(10);
-
-                if (isLoaded)
-                {
-                    return;
-                }
-
-                NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
-
-                /*AssetsLoaded.gameObject.SetActive(false);
-                Text AssetsLoadedText = AssetsLoaded?.GetComponent<Text>();
-                AssetsLoadedText.text = $"{LoadingBar.value} out of {objs.Length}";*/
-
-                LoadingBar.value = objs.Length;
-            }
-            finally
-            {
-                isProcessing = false;
-            }
+            await Task.Delay(10);
+            if (isLoaded)
+                return;
+            NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
+            LoadingBar.value = objs.Length;
+            isProcessing = false;
         }
 
         public void SetMMStatus(MMStatus _status)
