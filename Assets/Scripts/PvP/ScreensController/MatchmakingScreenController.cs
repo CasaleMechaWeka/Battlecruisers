@@ -307,7 +307,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
 
 
-        public bool isProcessing = false;
+        bool isProcessing = false;
         public bool isLoaded = false;
 
         async void Update()

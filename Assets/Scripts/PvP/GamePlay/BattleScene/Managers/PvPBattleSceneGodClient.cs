@@ -203,7 +203,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
-                            MatchmakingScreenController.Instance.isProcessing = false;
                         }
                         else
                         {
@@ -215,7 +214,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5);
-                            MatchmakingScreenController.Instance.isProcessing = false;
                         }
                     }
                     else
@@ -225,7 +223,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         IsBattleCompleted = true;
                         //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
-                        MatchmakingScreenController.Instance.isProcessing = false;
                     }
                 }
                 if (!isCompletedBattleByFlee && canFlee && NetworkManager.Singleton.IsHost && NetworkManager.Singleton.ConnectedClientsIds.Count != 2)
@@ -246,7 +243,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
-                            MatchmakingScreenController.Instance.isProcessing = false;
                         }
                         // Opponent Quit:
                         else
@@ -259,7 +255,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5f);
-                            MatchmakingScreenController.Instance.isProcessing = false;
                         }
                     }
                     else
@@ -269,7 +264,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         IsBattleCompleted = true;
                         //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
-                        MatchmakingScreenController.Instance.isProcessing = false;
                     }
                 }
             }
@@ -337,7 +331,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
-            MatchmakingScreenController.Instance.isProcessing = false;
         }
         private async Task StaticInitialiseAsync_Client()
         {
@@ -373,7 +366,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
-            MatchmakingScreenController.Instance.isProcessing = false;
         }
         private async void InitialiseAsync()
         {
@@ -385,7 +377,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             battleCompletionHandler.registeredTime = Time.time;
-            MatchmakingScreenController.Instance.isProcessing = false;
             MatchmakingScreenController.Instance.isLoaded = true;
             MatchmakingScreenController.Instance.AddProgress(1000);
             playerCruiser.StaticInitialise(commonStrings);
