@@ -407,7 +407,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Heckles.Count - 1, 10);
 #if UNITY_EDITOR
-            //heckleBaseList = GenerateFullList(_dataProvider.GameModel.Heckles.Count);
+            heckleBaseList = GenerateFullList(_dataProvider.GameModel.Heckles.Count);
 #endif
             byte ii = 0;
             foreach (int index in heckleBaseList)
