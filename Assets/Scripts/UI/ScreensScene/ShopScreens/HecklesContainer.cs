@@ -27,6 +27,7 @@ namespace BattleCruisers.UI.ScreensScene
         public HeckleItemController currentItem;
         public IHeckleData currentHeckleData;
         public Text hecklePrice;
+        public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
@@ -41,6 +42,7 @@ namespace BattleCruisers.UI.ScreensScene
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
+            priceLabel = hecklePrice.transform.parent.gameObject;
         }
 
         private async void Purchase()
@@ -79,6 +81,7 @@ namespace BattleCruisers.UI.ScreensScene
                                 ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                             }
                             ScreensSceneGod.Instance.loadoutScreen.AddHeckle(currentHeckleData);
+                            priceLabel.SetActive(false);
 
                             string logName = currentHeckleData.StringKeyBase;
 #if LOG_ANALYTICS
@@ -134,6 +137,7 @@ namespace BattleCruisers.UI.ScreensScene
                         {
                             ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                         }
+                        priceLabel.SetActive(false);
 
                         // Subtract from local economy:
                         _dataProvider.GameModel.Coins -= currentHeckleData.HeckleCost;
@@ -179,11 +183,13 @@ namespace BattleCruisers.UI.ScreensScene
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
             if (e.heckleData.IsOwned)
             {
+                priceLabel.SetActive(false);
                 btnBuy.SetActive(false);
                 ownFeedback.SetActive(true);
             }
             else
             {
+                priceLabel.SetActive(true);
                 btnBuy.SetActive(true);
                 ownFeedback.SetActive(false);
             }

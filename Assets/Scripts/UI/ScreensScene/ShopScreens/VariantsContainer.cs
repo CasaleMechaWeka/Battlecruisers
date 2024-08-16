@@ -36,6 +36,7 @@ namespace BattleCruisers.UI.ScreensScene
         public IVariantData currentVariantData;
         public GameObject btnBuy, ownFeedback;
 
+        public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
@@ -57,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             buildingStatsController.Initialise();
             unitStatsController.Initialise();
+            priceLabel = VariantPrice.transform.parent.gameObject;
         }
 
         private async void Purchase()
@@ -85,6 +87,7 @@ namespace BattleCruisers.UI.ScreensScene
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
+                            priceLabel.SetActive(false);
                         }
                         else
                         {
@@ -116,6 +119,7 @@ namespace BattleCruisers.UI.ScreensScene
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
+                        priceLabel.SetActive(false);
 
                         // Subtract from local economy:
                         _dataProvider.GameModel.Credits -= currentVariantData.VariantCredits;
@@ -167,11 +171,13 @@ namespace BattleCruisers.UI.ScreensScene
 
             if (e.variantData.IsOwned)
             {
+                priceLabel.SetActive(false);
                 btnBuy.SetActive(false);
                 ownFeedback.SetActive(true);
             }
             else
             {
+                priceLabel.SetActive(true);
                 btnBuy.SetActive(true);
                 ownFeedback.SetActive(false);
             }

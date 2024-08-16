@@ -587,7 +587,7 @@ namespace BattleCruisers.Scenes
             //AdvertisingBanner.startAdvert();
         }
 
-        private void ShowPremiumEditionIAP()
+        public void ShowPremiumEditionIAP()
         {
             Debug.Log("ShowPremiumEditionIAP");
             Assert.IsNotNull(premiumConfirmationScreen, "Premium confirmation screen is missing!");

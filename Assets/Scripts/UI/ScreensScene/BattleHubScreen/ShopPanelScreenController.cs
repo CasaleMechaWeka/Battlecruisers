@@ -119,7 +119,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             //bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
 
             bodykitList = GenerateFullList(_dataProvider.GameModel.Bodykits.Count);
-            
+
             foreach (int index in bodykitList)
             {
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
@@ -305,11 +305,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         if (_dataProvider.GameModel.Variants[variant.variantIndex].isOwned)
                         {
                             variantsContainer.btnBuy.SetActive(false);
+                            variantsContainer.priceLabel.SetActive(false);
                             variantsContainer.ownFeedback.SetActive(true);
                         }
                         else
                         {
                             variantsContainer.btnBuy.SetActive(true);
+                            variantsContainer.priceLabel.SetActive(true);
                             variantsContainer.ownFeedback.SetActive(false);
                         }
                     }
@@ -357,12 +359,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (_dataProvider.GameModel.Bodykits[index].isOwned)
                     {
                         bodykitsContainer.btnBuy.SetActive(false);
+                        bodykitsContainer.priceLabel.SetActive(false);
                         bodykitsContainer.ownFeedback.SetActive(true);
+                        bodykitsContainer.premiumButton.gameObject.SetActive(false);
                     }
                     else
                     {
                         bodykitsContainer.btnBuy.SetActive(true);
+                        bodykitsContainer.priceLabel.SetActive(true);
                         bodykitsContainer.ownFeedback.SetActive(false);
+                        bodykitsContainer.btnBuy.transform.parent.gameObject.SetActive(false);
+                        bodykitsContainer.premiumButton.gameObject.SetActive(true);
                     }
                 }
                 ii++;
@@ -391,7 +398,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-
             hecklesContainer.btnBuy.SetActive(false);
             hecklesContainer.ownFeedback.SetActive(false);
             CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
@@ -401,7 +407,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Heckles.Count - 1, 10);
 #if UNITY_EDITOR
-            heckleBaseList = GenerateFullList(_dataProvider.GameModel.Heckles.Count);
+            //heckleBaseList = GenerateFullList(_dataProvider.GameModel.Heckles.Count);
 #endif
             byte ii = 0;
             foreach (int index in heckleBaseList)
@@ -422,11 +428,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     {
                         hecklesContainer.hecklePrice.text = "0";
                         hecklesContainer.btnBuy.SetActive(false);
+                        hecklesContainer.priceLabel.SetActive(false);
                         hecklesContainer.ownFeedback.SetActive(true);
                     }
                     else
                     {
                         hecklesContainer.btnBuy.SetActive(true);
+                        hecklesContainer.priceLabel.SetActive(true);
                         hecklesContainer.ownFeedback.SetActive(false);
                     }
                 }
@@ -491,11 +499,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (_dataProvider.GameModel.Captains[index].IsOwned)
                     {
                         captainsContainer.btnBuy.SetActive(false);
+                        captainsContainer.priceLabel.SetActive(false);
                         captainsContainer.ownFeedback.SetActive(true);
                     }
                     else
                     {
                         captainsContainer.btnBuy.SetActive(true);
+                        captainsContainer.priceLabel.SetActive(true);
                         captainsContainer.ownFeedback.SetActive(false);
                     }
                 }
@@ -554,7 +564,5 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             return fullList;
         }
-
-       
     }
 }

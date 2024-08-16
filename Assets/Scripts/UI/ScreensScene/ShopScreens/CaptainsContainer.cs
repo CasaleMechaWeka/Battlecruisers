@@ -27,6 +27,7 @@ namespace BattleCruisers.UI.ScreensScene
         private ICaptainData currentCaptainData;
         public List<GameObject> visualOfCaptains = new List<GameObject>();
         public GameObject btnBuy, ownFeedback;
+        public GameObject priceLabel;
 
         private string firstNameString;
         private string firstDescrtiptionString;
@@ -52,6 +53,7 @@ namespace BattleCruisers.UI.ScreensScene
             firstNameString = captainName.text;
             firstDescrtiptionString = captainDescription.text;
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
+            priceLabel = captainPrice.transform.parent.gameObject;
         }
 
         private async void OnEnable()
@@ -88,6 +90,7 @@ namespace BattleCruisers.UI.ScreensScene
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                            priceLabel.SetActive(false);
                         }
                         else
                         {
@@ -133,6 +136,7 @@ namespace BattleCruisers.UI.ScreensScene
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                        priceLabel.SetActive(false);
 
                         // Subtract from local economy:
                         _dataProvider.GameModel.Coins -= currentCaptainData.CaptainCost;
@@ -189,11 +193,13 @@ namespace BattleCruisers.UI.ScreensScene
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
             if (e.captainData.IsOwned)
             {
+                priceLabel.SetActive(false);
                 btnBuy.SetActive(false);
                 ownFeedback.SetActive(true);
             }
             else
             {
+                priceLabel.SetActive(true);
                 btnBuy.SetActive(true);
                 ownFeedback.SetActive(false);
             }

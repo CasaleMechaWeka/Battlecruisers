@@ -25,7 +25,8 @@ namespace BattleCruisers.UI.ScreensScene
         public BodykitItemController currentItem;
         public IBodykitData currentBodykitData;
         public GameObject btnBuy, ownFeedback;
-
+        public GameObject priceLabel;
+        public CanvasGroupButton premiumButton;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
@@ -44,7 +45,23 @@ namespace BattleCruisers.UI.ScreensScene
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
+            premiumButton.Initialise(_soundPlayer, ScreensSceneGod.Instance.ShowPremiumEditionIAP);
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
+            priceLabel = bodykitPrice.transform.parent.gameObject;
+        }
+
+        public void OnEnable()
+        {
+            if (_dataProvider.GameModel.Bodykits[0].IsOwned)
+            {
+                priceLabel.SetActive(false);
+                premiumButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                btnBuy.transform.parent.gameObject.SetActive(false);
+                premiumButton.gameObject.SetActive(true);
+            }
         }
         private async void Purchase()
         {
@@ -72,6 +89,7 @@ namespace BattleCruisers.UI.ScreensScene
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("BodykitPurchased") + " " + commonStrings.GetString(currentBodykitData.NameStringKeyBase));
+                            priceLabel.SetActive(false);
                         }
                         else
                         {
@@ -101,6 +119,7 @@ namespace BattleCruisers.UI.ScreensScene
                         _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("BodykitPurchased") + " " + commonStrings.GetString(currentBodykitData.NameStringKeyBase));
+                        priceLabel.SetActive(false);
 
                         // Subtract from local economy:
                         _dataProvider.GameModel.Coins -= currentBodykitData.BodykitCost;
@@ -155,19 +174,29 @@ namespace BattleCruisers.UI.ScreensScene
             currentItem = (BodykitItemController)sender;
             currentBodykitData = e.bodykitData;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
+            btnBuy.transform.parent.gameObject.SetActive(true);
+            premiumButton.gameObject.SetActive(false);
+
             if (e.bodykitData.IsOwned)
             {
                 btnBuy.SetActive(false);
+                priceLabel.SetActive(false);
                 ownFeedback.SetActive(true);
             }
             else if (!e.purchasable || e.bodykitData.Index == 0)
             {
-                btnBuy.SetActive(false);
                 ownFeedback.SetActive(false);
+                btnBuy.SetActive(false);
+                if (e.bodykitData.Index == 0)
+                {
+                    btnBuy.transform.parent.gameObject.SetActive(false);
+                    premiumButton.gameObject.SetActive(true);
+                }
             }
             else
             {
                 btnBuy.SetActive(true);
+                priceLabel.SetActive(true);
                 ownFeedback.SetActive(false);
             }
 
