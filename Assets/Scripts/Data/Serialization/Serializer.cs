@@ -14,6 +14,8 @@ using BattleCruisers.Utils.UGS.Samples;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Models.PrefabKeys;
 using System.Linq;
+using System.Reflection;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 
 namespace BattleCruisers.Data.Serialization
@@ -153,6 +155,57 @@ namespace BattleCruisers.Data.Serialization
             {
                 compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
             }
+
+            PropertyInfo[] properties = gameData.GetType().GetProperties();
+            //foreach (PropertyInfo propertyInfo in properties)
+            //    Debug.Log(propertyInfo.Name);
+
+            if (gameData.GetType().GetProperty("Captains").GetValue(gameData) != null && (gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>).Count != 0)
+                foreach (CaptainData captain in gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>)
+                    if (captain.IsOwned)
+                    {
+                        compatibleGameModel.AddExo(captain.index);
+                        compatibleGameModel._captains[captain.index].isOwned = true;
+                    }
+
+            if (gameData.GetType().GetProperty("Heckles").GetValue(gameData) != null && (gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IReadOnlyCollection<HeckleData>).Count != 0)
+                foreach (HeckleData heckle in gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IReadOnlyCollection<HeckleData>)
+                    if (heckle.IsOwned)
+                    {
+                        compatibleGameModel.AddHeckle(heckle.index);
+                        compatibleGameModel._heckles[heckle.index].isOwned = true;
+                    }
+
+            if (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) != null && (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>).Count != 0)
+                foreach (BodykitData bodykit in gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>)
+                    if (bodykit.IsOwned)
+                    {
+                        compatibleGameModel.AddBodykit(bodykit.index);
+                        compatibleGameModel._bodykits[bodykit.index].isOwned = true;
+                    }
+
+            if (gameData.GetType().GetProperty("Variants").GetValue(gameData) != null && (gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>).Count != 0)
+                foreach (VariantData variant in gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>)
+                    if (variant.IsOwned)
+                    {
+                        compatibleGameModel.AddVariant(variant.index);
+                        compatibleGameModel._variants[variant.index].isOwned = true;
+                    }
+
+            if (gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData) != null)
+                compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);
+
+            if (gameData.GetType().GetProperty("Coins").GetValue(gameData) != null)
+                compatibleGameModel.Credits = (long)gameData.GetType().GetProperty("Coins").GetValue(gameData);
+
+            if (gameData.GetType().GetProperty("Credits").GetValue(gameData) != null)
+                compatibleGameModel.Credits = (long)gameData.GetType().GetProperty("Credits").GetValue(gameData);
+
+            if (gameData.GetType().GetProperty("CoinsChange").GetValue(gameData) != null)
+                compatibleGameModel.CoinsChange = (int)gameData.GetType().GetProperty("CoinsChange").GetValue(gameData);
+
+            if (gameData.GetType().GetProperty("CreditsChange").GetValue(gameData) != null)
+                compatibleGameModel.CreditsChange = (int)gameData.GetType().GetProperty("CreditsChange").GetValue(gameData);
 
             // Variants
             if (_playerLoadout.SelectedVariants == null)

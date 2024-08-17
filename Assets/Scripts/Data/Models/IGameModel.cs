@@ -99,6 +99,5 @@ namespace BattleCruisers.Data.Models
         void RemoveVariant(int id);
 
         List<int> GetVariants();
-
     }
 }
