@@ -38,6 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public bool showGameSettingsFirst = true;
 
+        public Transform accountHelpRow;
         public GameObject idContainer;
         public TextMeshProUGUI idString;
         public CanvasGroupButton idButton, iapRefreshButton, deleteCloudDataButton;
@@ -58,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton, cloudSaveToggle);
-            Helper.AssertIsNotNull(cloudSaveLabel);
+            Helper.AssertIsNotNull(cloudSaveLabel, accountHelpRow);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable, screensSceneTable);
 
@@ -160,6 +161,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
             iapRefreshButton.gameObject.SetActive(true);
             deleteCloudDataButton.Initialise(soundPlayer, DeleteCloudData, this);
+            if (Camera.main.aspect < 1.5f)
+                accountHelpRow.transform.localScale = new Vector3(.85f, .85f, 1f);
 
             DisplayUserID();
             iapRefreshButton.GetComponentInChildren<Text>().text = screensSceneTable.GetString("RefreshPurchasesButtonLabel");
