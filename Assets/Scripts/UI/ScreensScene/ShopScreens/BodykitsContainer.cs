@@ -190,8 +190,11 @@ namespace BattleCruisers.UI.ScreensScene
                 if (e.bodykitData.Index == 0)
                 {
                     btnBuy.transform.parent.gameObject.SetActive(false);
+                    priceLabel.SetActive(false);
                     premiumButton.gameObject.SetActive(true);
                 }
+                else
+                    priceLabel.SetActive(true);
             }
             else
             {
