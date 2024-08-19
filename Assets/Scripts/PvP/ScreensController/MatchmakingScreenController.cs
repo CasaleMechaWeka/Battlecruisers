@@ -331,7 +331,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             catch (Exception e)
             {
-                Debug.LogError($"An error occurred: {e.Message}");
+                Debug.LogError($"An error occurred in Update: {e.Message}, StackTrace: {e.StackTrace}");
                 isProcessing = false;
             }
             finally 
@@ -362,9 +362,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
                 NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
 
-                //AssetsLoaded.gameObject.SetActive(false);
-                Text AssetsLoadedText = AssetsLoaded?.GetComponent<Text>();
-                AssetsLoadedText.text = $"{LoadingBar.value} out of {objs.Length}";
                 LoadingBar.value = objs.Length;
             }
             finally
