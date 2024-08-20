@@ -196,7 +196,7 @@ namespace BattleCruisers.Data.Serialization
                 compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);
 
             if (gameData.GetType().GetProperty("Coins").GetValue(gameData) != null)
-                compatibleGameModel.Credits = (long)gameData.GetType().GetProperty("Coins").GetValue(gameData);
+                compatibleGameModel.Coins = (long)gameData.GetType().GetProperty("Coins").GetValue(gameData);
 
             if (gameData.GetType().GetProperty("Credits").GetValue(gameData) != null)
                 compatibleGameModel.Credits = (long)gameData.GetType().GetProperty("Credits").GetValue(gameData);
