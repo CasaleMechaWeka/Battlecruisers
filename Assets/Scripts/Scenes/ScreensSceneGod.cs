@@ -42,7 +42,6 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using System.Threading;
-using System.Collections;
 
 namespace BattleCruisers.Scenes
 {
@@ -151,14 +150,24 @@ namespace BattleCruisers.Scenes
             premiumEditionButton.gameObject.SetActive(false);
 
             // Interacting with Cloud
+            Debug.Log(IsFirstTimeLoad);
+            bool IsInternetAccessable = false;
+            if (IsFirstTimeLoad)
+            {
+                IsInternetAccessable = LandingSceneGod.Instance.InternetConnectivity.Value;
+            }
+            else
+            {
+                IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+            }
 
-            bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
             float timeStamper = Time.time;
 
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
                 try
                 {
+                    Task<string> getPvPVersion = _dataProvider.GetPVPVersion();
                     if (IsFirstTimeLoad)
                     {
                         await _dataProvider.CloudLoad();
@@ -167,39 +176,35 @@ namespace BattleCruisers.Scenes
 
                     await _dataProvider.LoadBCData();
 
-                    // version check
-
-                    IEnumerator getPvPVersion = GetPvPVersion();
-                    while (getPvPVersion.MoveNext())
+                    while (!m_cancellationToken.IsCancellationRequested)
                     {
-                        while (!m_cancellationToken.IsCancellationRequested)
-                        {
-                            await Task.Delay(10);
-                            if (Time.time - timeStamper > 15f)// for escape safty 
-                                break;
-                        }
-
-                        // local transactions syncing:
-                        if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
-                            _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
-                            _dataProvider.GameModel.OutstandingHeckleTransactions != null &&
-                            _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
-                            _dataProvider.GameModel.OutstandingBodykitTransactions != null &&
-                            _dataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
-                            _dataProvider.GameModel.OutstandingVariantTransactions != null &&
-                            _dataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
-                            _dataProvider.GameModel.CoinsChange > 0 ||
-                            _dataProvider.GameModel.CreditsChange > 0)
-                        {
-                            Debug.Log("Processing offline shop purchases and currency changes.");
-                            await _dataProvider.ProcessOfflineTransactions();
-                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
-                        }
+                        await Task.Delay(10);
+                        if (Time.time - timeStamper > 15f)// for escape safty 
+                            break;
                     }
 
-                    Debug.Log("Application Version: " + Application.version);
-                    Debug.Log("DataProvider Version: " + requiredVer);
+                    // local transactions syncing:
+                    if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
+                        _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
+                        _dataProvider.GameModel.OutstandingHeckleTransactions != null &&
+                        _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
+                        _dataProvider.GameModel.OutstandingBodykitTransactions != null &&
+                        _dataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
+                        _dataProvider.GameModel.OutstandingVariantTransactions != null &&
+                        _dataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
+                        _dataProvider.GameModel.CoinsChange > 0 ||
+                        _dataProvider.GameModel.CreditsChange > 0)
+                    {
+                        Debug.Log("Processing offline shop purchases and currency changes.");
+                        await _dataProvider.ProcessOfflineTransactions();
+                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                    }
+
+                    // version check
                     string currentVersion = Application.version;
+                    requiredVer = await getPvPVersion;
+                    Debug.Log("Application Version: " + currentVersion);
+                    Debug.Log("DataProvider Version: " + requiredVer);
 
                     if (requiredVer != "EDITOR" && VersionToInt(Application.version) < VersionToInt(requiredVer))
                     {
@@ -268,6 +273,8 @@ namespace BattleCruisers.Scenes
 
                 // if not Internet Connection or Sign in, we will use local data.
             }
+
+            Task handlePlayerPrefs = HandlePlayerPrefs();
 
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
@@ -357,6 +364,8 @@ namespace BattleCruisers.Scenes
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
 
+            Task initializeLevelsScreen = InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
+
             _applicationModel.DataProvider.SaveGame();
 
             if (_applicationModel.ShowPostBattleScreen)
@@ -398,7 +407,7 @@ namespace BattleCruisers.Scenes
 
             // After potentially initialising post battle screen, because that can modify the data model.
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
-            await InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
+            await initializeLevelsScreen;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
@@ -433,34 +442,7 @@ namespace BattleCruisers.Scenes
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
 
-            bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) != 0;
-            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) != 0;
-            if (!isPlayed)
-            {
-                try
-                {
-                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
-                    PlayerPrefs.SetInt("SETNAME", 1);
-                }
-                catch
-                {
-                    PlayerPrefs.SetInt("SETNAME", 0);
-                }
-            }
-
-            if (!isSetPlayerName)
-            {
-                try
-                {
-                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
-                    PlayerPrefs.SetInt("SETNAME", 1);
-                }
-                catch
-                {
-                    PlayerPrefs.SetInt("SETNAME", 0);
-                }
-            }
-            PlayerPrefs.GetInt("PLAYED", 1);
+            await handlePlayerPrefs;
             PvPBattleSceneGodTunnel.isCost = false;
         }
 
@@ -972,12 +954,39 @@ namespace BattleCruisers.Scenes
             return int.Parse(version);
         }
 
-        IEnumerator GetPvPVersion()
+        async Task HandlePlayerPrefs()
         {
-            Task<string> getPvPVersion = _dataProvider.GetPVPVersion();
-            yield return getPvPVersion;
-            requiredVer = getPvPVersion.Result;
-            Debug.Log(requiredVer);
+            bool isPlayed = PlayerPrefs.GetInt("PLAYED", 0) != 0;
+            bool isSetPlayerName = PlayerPrefs.GetInt("SETNAME", 0) != 0;
+
+            if (!isPlayed)
+            {
+                try
+                {
+                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
+                    PlayerPrefs.SetInt("SETNAME", 1);
+                    Debug.Log("MS JAA");
+                }
+                catch
+                {
+                    PlayerPrefs.SetInt("SETNAME", 0);
+                }
+            }
+
+            if (!isSetPlayerName)
+            {
+                try
+                {
+                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
+                    PlayerPrefs.SetInt("SETNAME", 1);
+                    Debug.Log("MS JAA2");
+                }
+                catch
+                {
+                    PlayerPrefs.SetInt("SETNAME", 0);
+                }
+            }
+            PlayerPrefs.GetInt("PLAYED", 1);
         }
     }
 }

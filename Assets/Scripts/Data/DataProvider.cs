@@ -180,18 +180,13 @@ namespace BattleCruisers.Data
 
         public async Task LoadBCData()
         {
-            IEnumerator refreshEcoConfig = RefreshEconomyConfig();
-            while (refreshEcoConfig.MoveNext())
-            {
-                Debug.Log("ApplyRemoteSettings");
-                RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
-                RemoteConfigService.Instance.FetchConfigs(new UserAttributes(), new AppAttributes());
-            }
-        }
+            Task refreshEconomy = RefreshEconomyConfiguration();
 
-        IEnumerator RefreshEconomyConfig()
-        {
-            yield return RefreshEconomyConfiguration();
+            Debug.Log("ApplyRemoteSettings");
+            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
+            RemoteConfigService.Instance.FetchConfigs(new UserAttributes(), new AppAttributes());
+
+            await refreshEconomy;
         }
 
         async void ApplyRemoteSettings(ConfigResponse configResponse)
