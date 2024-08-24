@@ -47,7 +47,6 @@ using System.Security.Cryptography;
 
 namespace BattleCruisers.Scenes
 {
-
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
         public Text onscreenLogging;
@@ -146,6 +145,12 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(messageHandler);
             LogToScreen("Starting Battlecruisers"); // SCREEN START
 
+            //loading loc tables in parallel is about 40-100% faster
+            //Starting these tasks here saves ~100 ms avg
+            Task<ILocTable> loadCommonStrings = LocTableFactory.Instance.LoadCommonTableAsync();
+            Task<ILocTable> loadHeckesStrings = LocTableFactory.Instance.LoadHecklesTableAsync();
+            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.Instance.LoadScreensSceneTableAsync();
+
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
             bool startingState = await CheckForInternetConnection();
@@ -219,16 +224,11 @@ namespace BattleCruisers.Scenes
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
 
-            //loading loc tables in parallel is about 40-100% faster
-            Task<ILocTable> loadCommonStrings = LocTableFactory.Instance.LoadCommonTableAsync();
-            Task<ILocTable> loadHeckesStrings = LocTableFactory.Instance.LoadHecklesTableAsync();
-            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.Instance.LoadScreensSceneTableAsync();
-
-            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            hecklesStrings = await LocTableFactory.Instance.LoadHecklesTableAsync();
-            screenSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
-
             await Task.WhenAll(loadCommonStrings, loadHeckesStrings, loadScreensSceneStrings);
+
+            commonStrings = loadCommonStrings.Result;
+            hecklesStrings = loadHeckesStrings.Result;
+            screenSceneStrings = loadScreensSceneStrings.Result;
 
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
