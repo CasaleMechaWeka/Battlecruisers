@@ -7,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
@@ -50,9 +51,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
             _dronePool = new PvPPool<IPvPDroneController, PvPDroneActivationArgs>(droneFactory);
-/*
-            IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-            _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs>(audioSourceFactory);*/
+            /*
+                        IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
+                        _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs>(audioSourceFactory);*/
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }
@@ -80,11 +81,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         // Not part of constructor, because ProjecilePoolProvider and UnitPollProvider depend on ExplosionPoolProvider :/
         public async Task SetInitialCapacities()
         {
-            await _explosionPoolProvider.SetInitialCapacity();
-            await _shipDeathPoolProvider.SetInitialCapacity();
-            await _projectilePoolProvider.SetInitialCapacity();
-            await _unitPoolProvider.SetInitialCapacity();
-            await _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
+            List<Task> setInitialCapacities = new List<Task>
+            {
+                _explosionPoolProvider.SetInitialCapacity(),
+                _shipDeathPoolProvider.SetInitialCapacity(),
+                _projectilePoolProvider.SetInitialCapacity(),
+                _unitPoolProvider.SetInitialCapacity(),
+                _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY)
+            };
+            await Task.WhenAll(setInitialCapacities);
         }
 
         public async Task SetInitialCapacities_Rest()
