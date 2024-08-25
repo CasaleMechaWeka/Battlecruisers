@@ -965,7 +965,6 @@ namespace BattleCruisers.Scenes
                 {
                     await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
                     PlayerPrefs.SetInt("SETNAME", 1);
-                    Debug.Log("MS JAA");
                 }
                 catch
                 {
@@ -979,7 +978,6 @@ namespace BattleCruisers.Scenes
                 {
                     await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
                     PlayerPrefs.SetInt("SETNAME", 1);
-                    Debug.Log("MS JAA2");
                 }
                 catch
                 {
