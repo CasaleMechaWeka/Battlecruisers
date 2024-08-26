@@ -58,7 +58,6 @@ namespace BattleCruisers.UI.ScreensScene
                         bool result = await _dataProvider.PurchaseHeckleV2(currentHeckleData.Index);
                         if (result)
                         {
-
                             //    await _dataProvider.SyncCurrencyFromCloud();
                             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
@@ -126,7 +125,6 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
                         _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
-                        _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                         {
@@ -151,6 +149,7 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
                         }
                         _dataProvider.GameModel.OutstandingHeckleTransactions.Add(heckle);
+                        _dataProvider.SaveGame();
                     }
                     catch
                     {
@@ -173,6 +172,8 @@ namespace BattleCruisers.UI.ScreensScene
         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
 #endif
             }
+            Debug.Log(_dataProvider.GameModel.Coins);
+
         }
 
         private void HeckleDataChanged(object sender, HeckleDataEventArgs e)

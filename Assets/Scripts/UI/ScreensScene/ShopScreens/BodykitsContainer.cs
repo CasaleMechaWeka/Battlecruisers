@@ -116,7 +116,6 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.Bodykits[currentBodykitData.Index].isOwned = true;
                         _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
-                        _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("BodykitPurchased") + " " + commonStrings.GetString(currentBodykitData.NameStringKeyBase));
                         priceLabel.SetActive(false);
@@ -133,6 +132,7 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.GameModel.OutstandingBodykitTransactions = new List<BodykitData>();
                         }
                         _dataProvider.GameModel.OutstandingBodykitTransactions.Add(bodykit);
+                        _dataProvider.SaveGame();
                     }
                     catch
                     {

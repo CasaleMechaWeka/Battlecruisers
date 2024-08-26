@@ -133,7 +133,6 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
                         _dataProvider.GameModel.AddExo(currentCaptainData.Index);
-                        _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
                         priceLabel.SetActive(false);
@@ -150,6 +149,7 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
                         }
                         _dataProvider.GameModel.OutstandingCaptainTransactions.Add(captain);
+                        _dataProvider.SaveGame();
                     }
                     catch
                     {

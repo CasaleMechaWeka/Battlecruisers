@@ -116,7 +116,6 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.Variants[currentVariantData.Index].isOwned = true;
                         _dataProvider.GameModel.AddVariant(currentVariantData.Index);
-                        _dataProvider.SaveGame();
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
                         priceLabel.SetActive(false);
@@ -133,6 +132,7 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
                         }
                         _dataProvider.GameModel.OutstandingVariantTransactions.Add(variant);
+                        _dataProvider.SaveGame();
                     }
                     catch
                     {
