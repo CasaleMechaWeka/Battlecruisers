@@ -146,6 +146,7 @@ namespace BattleCruisers.Data
                 Debug.Log("CloudSaveModel is null.");
                 List<Task> syncCurrencyToCloud = new List<Task>
                 {
+                    ProcessOfflineTransactions(),
                     SyncCoinsToCloud(),
                     SyncCreditsToCloud()
                 };
