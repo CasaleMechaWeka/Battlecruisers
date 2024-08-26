@@ -141,18 +141,26 @@ namespace BattleCruisers.Data
         public async Task CloudLoad()
         {
             SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
-            if (saveModel == null)
+            if (saveModel == null || saveModel._lifetimeDestructionScore < _gameModel.LifetimeDestructionScore)
             {
+                //override cloud save with local save
                 Debug.Log("CloudSaveModel is null.");
                 List<Task> syncCurrencyToCloud = new List<Task>
                 {
-                    ProcessOfflineTransactions(),
                     SyncCoinsToCloud(),
                     SyncCreditsToCloud()
                 };
+
+                _gameModel.CoinsChange = 0;
+                _gameModel.CreditsChange = 0;
+                _gameModel._outstandingBodykitTransactions = new List<BodykitData>();
+                _gameModel._outstandingCaptainTransactions = new List<CaptainData>();
+                _gameModel._outstandingHeckleTransactions = new List<HeckleData>();
+                _gameModel._outstandingVariantTransactions = new List<VariantData>();
+
                 await Task.WhenAll(syncCurrencyToCloud);
             }
-            else
+            else if (saveModel._lifetimeDestructionScore > _gameModel.LifetimeDestructionScore)
             {
                 saveModel.AssignSaveToGameModel(_gameModel);
                 Debug.Log("Cloud save retrieved and applied.");
