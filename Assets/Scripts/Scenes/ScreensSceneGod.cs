@@ -150,7 +150,15 @@ namespace BattleCruisers.Scenes
             premiumEditionButton.gameObject.SetActive(false);
 
             // Interacting with Cloud
-            bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+            bool IsInternetAccessable = false;
+            if (IsFirstTimeLoad)
+            {
+                IsInternetAccessable = LandingSceneGod.Instance.InternetConnectivity.Value;
+            }
+            else
+            {
+                IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+            }
 
             float timeStamper = Time.time;
 
@@ -158,7 +166,6 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                    Task<string> getPvPVersion = _dataProvider.GetPVPVersion();
                     if (IsFirstTimeLoad)
                     {
                         await _dataProvider.CloudLoad();
@@ -193,7 +200,7 @@ namespace BattleCruisers.Scenes
 
                     // version check
                     string currentVersion = Application.version;
-                    requiredVer = await getPvPVersion;
+                    requiredVer = await _dataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + currentVersion);
                     Debug.Log("DataProvider Version: " + requiredVer);
 
