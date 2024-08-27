@@ -150,16 +150,7 @@ namespace BattleCruisers.Scenes
             premiumEditionButton.gameObject.SetActive(false);
 
             // Interacting with Cloud
-            Debug.Log(IsFirstTimeLoad);
-            bool IsInternetAccessable = false;
-            if (IsFirstTimeLoad)
-            {
-                IsInternetAccessable = LandingSceneGod.Instance.InternetConnectivity.Value;
-            }
-            else
-            {
-                IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
-            }
+            bool IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
 
             float timeStamper = Time.time;
 
