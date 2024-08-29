@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene
             firstNameString = captainName.text;
             firstDescrtiptionString = captainDescription.text;
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
-            priceLabel = captainPrice.transform.parent.gameObject;
+            priceLabel.SetActive(false);
         }
 
         private async void OnEnable()
