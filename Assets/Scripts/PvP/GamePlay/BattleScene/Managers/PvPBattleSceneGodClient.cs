@@ -800,11 +800,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         }
 
-        private void Update()
+        private async void Update()
         {
             if (isReadyToShowCaptainExo && (leftCaptain == null || rightCaptain == null))
             {
-                LoadAllCaptains();
+                await LoadAllCaptains();
             }
             if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsHost)
             {

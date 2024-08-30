@@ -26,6 +26,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using System.Collections;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -109,7 +110,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public GameObject cameraOfCharacter;
         public RawImage leftCaptain, rightCaptain;
         public RenderTexture hostTexture, clientTexture;
-        public Text AssetsLoaded;
 
         public static MatchmakingScreenController Instance { get; private set; }
 
@@ -310,7 +310,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public bool isProcessing = false;
         public bool isLoaded = false;
 
-        async void Update()
+        void Update()
         {
             try
             {
@@ -319,10 +319,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 if (!isProcessing && !isLoaded)
                 {
                     Debug.Log("Entering asset loading because isProcessing is false and isLoaded is false.");
-                    isProcessing = true;
-
-                    await iLoadingAssets();
-                    isProcessing = false;
+                    StartCoroutine(LoadAssetsCoroutine());
                 }
                 else
                 {
@@ -332,10 +329,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             catch (Exception e)
             {
                 Debug.LogError($"An error occurred in Update: {e.Message}, StackTrace: {e.StackTrace}");
-                isProcessing = false;
-            }
-            finally 
-            {
                 isProcessing = false;
             }
             /*            if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
@@ -349,25 +342,19 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }*/
         }
 
-        async Task iLoadingAssets()
+        IEnumerator LoadAssetsCoroutine()
         {
-            try
-            {
-                await Task.Delay(10);
+            isProcessing = true;
 
-                if (isLoaded)
-                {
-                    return;
-                }
 
-                NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
+            NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
+            LoadingBar.value = objs.Length;
 
-                LoadingBar.value = objs.Length;
-            }
-            finally
-            {
-                isProcessing = false;
-            }
+            isLoaded = true;
+
+            yield return null;
+
+            isProcessing = false;
         }
 
         public void SetMMStatus(MMStatus _status)
