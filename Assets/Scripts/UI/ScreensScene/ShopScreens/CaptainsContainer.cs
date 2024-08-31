@@ -28,6 +28,7 @@ namespace BattleCruisers.UI.ScreensScene
         public List<GameObject> visualOfCaptains = new List<GameObject>();
         public GameObject btnBuy, ownFeedback;
         public GameObject priceLabel;
+        public GameObject ShopBuyControls;
 
         private string firstNameString;
         private string firstDescrtiptionString;
@@ -53,7 +54,8 @@ namespace BattleCruisers.UI.ScreensScene
             firstNameString = captainName.text;
             firstDescrtiptionString = captainDescription.text;
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
-            priceLabel.SetActive(false);
+            priceLabel = captainPrice.transform.parent.gameObject;
+            ShopBuyControls.SetActive(false);
         }
 
         private async void OnEnable()
@@ -191,6 +193,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentItem = (CaptainItemController)sender;
             currentCaptainData = e.captainData;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
+            ShopBuyControls.SetActive(true);
             if (e.captainData.IsOwned)
             {
                 priceLabel.SetActive(false);
