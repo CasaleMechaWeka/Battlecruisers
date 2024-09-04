@@ -13,7 +13,7 @@ public class DamageTakenIndicator : MonoBehaviour
         if (hidden == true)
         {
             ShowDamageTaken();
-            Invoke("hideDamageTaken", 0.5f);
+            Invoke("HideDamageTaken", 0.5f);
         }
     }
 
@@ -25,7 +25,6 @@ public class DamageTakenIndicator : MonoBehaviour
 
     public void HideDamageTaken()
     {
-
         //Debug.Log("Color should be clear");
         imageObject.SetActive(false);
         //Debug.Log("COLOR SHOULD BE CLEAR");
