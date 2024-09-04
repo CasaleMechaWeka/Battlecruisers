@@ -191,7 +191,7 @@ namespace BattleCruisers.Buildables.Units
 
         public void ApplyVariantStats(StatVariant statVariant)
         {
-            maxHealth += statVariant.max_health;
+            maxHealth *= statVariant.max_health;
             numOfDronesRequired += statVariant.drone_num;
             buildTimeInS += statVariant.build_time;
 

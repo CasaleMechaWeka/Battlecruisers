@@ -132,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             else
             {
-                if(variantIndex != -1)
+                if (variantIndex != -1)
                 {
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
                     HealthBar.variantIcon.enabled = true;
@@ -171,7 +171,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void ApplyVariantStats(StatVariant statVariant)
         {
-            maxHealth += statVariant.max_health;
+            maxHealth *= statVariant.max_health;
             pvp_Health.Value = maxHealth;
             numOfDronesRequired += statVariant.drone_num;
             buildTimeInS += statVariant.build_time;
