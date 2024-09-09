@@ -41,8 +41,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public BuildingDetailController _buildingDetails;
         public UnitDetailController _unitDetails;
 
-        // Heckles
         public CanvasGroupButton heckleButton;
+        public CanvasGroupButton shopButton;
+
 
         private ISingleSoundPlayer _soundPlayer;
         IScreensSceneGod _screensSceneGod;
@@ -141,6 +142,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
             heckleButton.Initialise(soundPlayer, ShowHeckles);
+            shopButton.Initialise(soundPlayer, GoToShop);
 
             ShowPlayerHull();
 
@@ -169,6 +171,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             itemPanels.CurrentlyShownPanel?.Hide();
             itemPanels.ShowHecklePanel();
         }
+
+        private void GoToShop()
+        {
+            _screensSceneGod.GotoShopScreen();
+        }
+
 
         private void ShowPlayerHull()
         {
