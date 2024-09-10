@@ -142,7 +142,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
             heckleButton.Initialise(soundPlayer, ShowHeckles);
-            shopButton.Initialise(soundPlayer, GoToShop);
+            shopButton.Initialise(soundPlayer, GoToBodykitsShop);
 
             ShowPlayerHull();
 
@@ -172,9 +172,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             itemPanels.ShowHecklePanel();
         }
 
-        private void GoToShop()
+        private void GoToBodykitsShop()
         {
-            _screensSceneGod.GotoShopScreen();
+            _screensSceneGod.GoToBodykitsShop();
         }
 
 
@@ -207,7 +207,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 case "Flea":
                     return HullType.Flea;
                 case "Goatherd":
-                    return HullType.Goatherd;  
+                    return HullType.Goatherd;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -225,7 +225,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 case "Pistol":
                     return HullType.Pistol;
                 case "Shepherd":
-                    return HullType.Shepherd; 
+                    return HullType.Shepherd;
                 case "TasDevil":
                     return HullType.TasDevil;
                 default:

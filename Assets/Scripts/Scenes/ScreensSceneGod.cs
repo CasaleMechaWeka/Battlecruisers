@@ -540,6 +540,12 @@ namespace BattleCruisers.Scenes
             GoToScreen(hubScreen);
         }
 
+        public void GoToBodykitsShop()
+        {
+            GotoShopScreen();
+            shopPanelScreen.BodykitButton_OnClick();
+        }
+
         public void GotoShopScreen()
         {
             homeScreen.gameObject.SetActive(false);

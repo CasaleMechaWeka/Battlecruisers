@@ -17,6 +17,7 @@
         void LoadCutsceneScene();
         void LoadPvPBattleScene();
         void LoadBattle1v1Mode();
+        void GoToBodykitsShop();
         void GotoShopScreen();
         public void GotoBlackMarketScreen();
         void GoToSideQuestTrashScreen(int sideQuestID, int firstLevelOfStage = -1);
