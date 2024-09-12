@@ -548,6 +548,7 @@ namespace BattleCruisers.Scenes
 
         public void GotoShopScreen()
         {
+            hubScreen.playerInfoPanelController.gameObject.SetActive(true);
             homeScreen.gameObject.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(true);
