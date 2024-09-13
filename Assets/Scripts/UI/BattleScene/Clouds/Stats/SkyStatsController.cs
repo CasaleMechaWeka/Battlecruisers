@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
     public class SkyStatsController : MonoBehaviour, ISkyStats
     {
         public IMoonStats MoonStats { get; private set; }
-        
+
         public Material skyboxMaterial;
         public Material SkyMaterial => skyboxMaterial;
 
@@ -37,6 +37,15 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         [SerializeField]
         private Color _fogColour;
         public Color FogColour => _fogColour;
+
+        [SerializeField]
+        private Color _waterColour; // Serialized field for water color, settable in Inspector
+        public Color WaterColour => _waterColour; // Property to expose water color
+
+        private void Awake()
+        {
+            Initialise();
+        }
 
         public void Initialise()
         {

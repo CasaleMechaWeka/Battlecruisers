@@ -20,9 +20,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
 
+        // SpriteRenderer for the water sprite, settable in the Inspector
+        public SpriteRenderer waterSpriteRenderer; // Manually link this in the Inspector
+
         public void Initialise(
-            string skyMaterialName, 
-            IUpdater updater, 
+            string skyMaterialName,
+            IUpdater updater,
             float cameraAspectRatio,
             IPrefabContainer<BackgroundImageStats> backgroundStats)
         {
@@ -54,6 +57,20 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             mist.Initialise(skyStats);
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
+
+            // Initialize water sprite color with SkyStatsController's water color
+            if (skyStats is SkyStatsController skyStatsController)
+            {
+                // Set the color of the water sprite if assigned in Inspector
+                if (waterSpriteRenderer != null)
+                {
+                    waterSpriteRenderer.color = skyStatsController.WaterColour;
+                }
+                else
+                {
+                    Debug.LogError("Water SpriteRenderer is not assigned in CloudInitialiser! Please assign it in the Inspector.");
+                }
+            }
         }
     }
 }
