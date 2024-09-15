@@ -110,6 +110,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public GameObject cameraOfCharacter;
         public RawImage leftCaptain, rightCaptain;
         public RenderTexture hostTexture, clientTexture;
+        public AudioSource backgroundMusic;
+        public AudioSource enemyFoundMusic;
 
         public static MatchmakingScreenController Instance { get; private set; }
 
@@ -255,6 +257,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
 
             //    m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
+            if (backgroundMusic != null)
+            {
+                backgroundMusic.Play();
+                if(enemyFoundMusic.isPlaying && enemyFoundMusic != null) 
+                {
+                    enemyFoundMusic.Stop();
+                }
+            }
         }
 
         public void ShowBadInternetMessageBox()
@@ -444,6 +454,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
+            
+            if(backgroundMusic.isPlaying)
+                backgroundMusic.Stop();
         }
 
         public void VsAI()
@@ -461,6 +474,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
+            
+            if(backgroundMusic.isPlaying)
+                backgroundMusic.Stop();
         }
 
         private void SaveCoinBattleSettings()
@@ -537,6 +553,16 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 leftCaptain.texture = hostTexture;
                 rightCaptain.texture = clientTexture;
             }
+
+            if (backgroundMusic != null && backgroundMusic.isPlaying)
+            {
+                backgroundMusic.Stop();
+            }
+
+            if (enemyFoundMusic != null)
+            {
+                enemyFoundMusic.Play();
+            }
             await Task.Delay(100);
             animator.SetBool("Found", true);
             LeaveLobby();
@@ -579,6 +605,10 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             _sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+
+            if(backgroundMusic.isPlaying)
+                backgroundMusic.Stop();
+
             Invoke("Destroy", 0.5f);
         }
 
