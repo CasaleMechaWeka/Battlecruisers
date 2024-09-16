@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene
     public class BodykitsContainer : MonoBehaviour
     {
         public Image bodykitImage;
+        public Image bodykitPreviewImage;
         public Text bodykitName;
         public Text bodykitDescription;
         public Text bodykitPrice;
@@ -205,6 +206,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             bodykitPrice.text = e.bodykitData.BodykitCost.ToString();
             bodykitImage.sprite = e.bodykitImage;
+            bodykitPreviewImage.sprite = e.bodykitImage;
             bodykitName.text = commonStrings.GetString(e.bodykitData.NameStringKeyBase);
             bodykitDescription.text = commonStrings.GetString(e.bodykitData.DescriptionKeyBase);
         }
