@@ -20,8 +20,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
 
-        // SpriteRenderer for the water sprite, settable in the Inspector
-        public SpriteRenderer waterSpriteRenderer; // Manually link this in the Inspector
+        // Reference to the Game 2D Water Kit Material, settable in the Inspector
+        public Material waterMaterial; // Manually link this in the Inspector
 
         public void Initialise(
             string skyMaterialName,
@@ -58,17 +58,18 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
 
-            // Initialize water sprite color with SkyStatsController's water color
+            // Initialize water material color with SkyStatsController's water color
             if (skyStats is SkyStatsController skyStatsController)
             {
-                // Set the color of the water sprite if assigned in Inspector
-                if (waterSpriteRenderer != null)
+                // Set the color of the water material if assigned in Inspector
+                if (waterMaterial != null)
                 {
-                    waterSpriteRenderer.color = skyStatsController.WaterColour;
+                    // Assuming the Game 2D Water Kit uses "_WaterColor" as the color property name; adjust if different
+                    waterMaterial.SetColor("_WaterColor", skyStatsController.WaterColour);
                 }
                 else
                 {
-                    Debug.LogError("Water SpriteRenderer is not assigned in CloudInitialiser! Please assign it in the Inspector.");
+                    Debug.LogError("Water Material is not assigned in CloudInitialiser! Please assign it in the Inspector.");
                 }
             }
         }
