@@ -138,6 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPHullKey PvPMicrolodon { get; } = new PvPHullKey("PvPMicrolodon");
             public static PvPHullKey PvPPistol { get; } = new PvPHullKey("PvPPistol");
             public static PvPHullKey PvPGoatherd { get; } = new PvPHullKey("PvPGoatherd");
+            public static PvPHullKey PvPMegalith { get; } = new PvPHullKey("PvPMegalith");
 
 
             public static IList<IPvPPrefabKey> AllKeys
@@ -146,7 +147,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 {
                     return new List<IPvPPrefabKey>()
                     {
-                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd
+                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith
                     };
                 }
             }
@@ -157,7 +158,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 {
                     return new List<PvPHullKey>()
                     {
-                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd
+                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith
                     };
                 }
             }

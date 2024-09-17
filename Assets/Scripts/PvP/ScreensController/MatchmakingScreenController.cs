@@ -79,6 +79,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite Longbow;
         public Sprite ManOfWarBoss;
         public Sprite Megalodon;
+        public Sprite Megalith;
         public Sprite Microlodon;
         public Sprite Raptor;
         public Sprite Rickshaw;
@@ -175,6 +176,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("Longbow", Longbow);
             sprites.Add("ManOfWarBoss", ManOfWarBoss);
             sprites.Add("Megalodon", Megalodon);
+            sprites.Add("Megalith", Megalith);
             sprites.Add("Microlodon", Microlodon);
             sprites.Add("Raptor", Raptor);
             sprites.Add("Rickshaw", Rickshaw);
@@ -296,6 +298,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     return HullType.Longbow;
                 case "Megalodon":
                     return HullType.Megalodon;
+                case "Megalith":
+                    return HullType.Megalith;
                 case "Microlodon":
                     return HullType.Microlodon;
                 case "Raptor":

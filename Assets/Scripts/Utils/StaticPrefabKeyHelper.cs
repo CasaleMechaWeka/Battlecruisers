@@ -29,6 +29,7 @@ namespace BattleCruisers.Utils
         Hull_Microlodon = 0014,
         Hull_Pistol = 0015,
         Hull_Goatherd = 0016,
+        Hull_Megalith = 0017,
 
         // === Buildings ===
         // Factories

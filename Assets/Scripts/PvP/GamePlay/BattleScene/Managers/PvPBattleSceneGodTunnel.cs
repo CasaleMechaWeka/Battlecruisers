@@ -77,6 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             { "Longbow", 5000},
             { "ManOfWarBoss", 10000},
             { "Megalodon", 5000},
+            { "Megalith", 7000},
             { "Microlodon", 1500},
             { "Pistol", 2200},
             { "Raptor", 1500},

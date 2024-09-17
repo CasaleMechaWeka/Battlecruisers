@@ -731,6 +731,8 @@ namespace BattleCruisers.Scenes
                     return HullType.Longbow;
                 case "Megalodon":
                     return HullType.Megalodon;
+                case "Megalith":
+                    return HullType.Megalith;
                 case "Microlodon":
                     return HullType.Microlodon;
                 case "Raptor":

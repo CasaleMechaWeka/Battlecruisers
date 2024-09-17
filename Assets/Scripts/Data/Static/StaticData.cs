@@ -112,6 +112,7 @@ namespace BattleCruisers.Data.Static
                 Hulls.Hammerhead,
                 Hulls.Longbow,
                 Hulls.Megalodon,
+                Hulls.Megalith,
                 Hulls.Microlodon,
                 Hulls.BlackRig,
                 Hulls.Pistol,
@@ -557,6 +558,7 @@ namespace BattleCruisers.Data.Static
                 { Hulls.Hammerhead, 19 },
                 { Hulls.Longbow, 23 },
                 { Hulls.Megalodon, 26 },
+                { Hulls.Megalith, 45 },
                 { Hulls.Rickshaw, 34 },
                 { Hulls.TasDevil, 35 },
                 { Hulls.BlackRig, 37 },
@@ -628,7 +630,8 @@ namespace BattleCruisers.Data.Static
                 { Hulls.Flea, 13 },
                 { Hulls.Shepherd, 15},
                 { Hulls.Pistol, 45},
-                { Hulls.Goatherd, 45}
+                { Hulls.Goatherd, 45},
+                { Hulls.Megalith, 45 }
             };
         }
 
