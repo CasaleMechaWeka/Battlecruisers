@@ -20,8 +20,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
 
-        // Reference to the Game 2D Water Kit Material, settable in the Inspector
-        public Material waterMaterial; // Manually link this in the Inspector
+        // References to Fancy Water and Fancy Water Surface Materials
+        public Material fancyWaterMaterial;  // Background water material (solid color)
+        public Material fancyWaterSurfaceMaterial;  // Foreground water material (gradient)
+
+        // Reference to the OpaqueDepthsMask sprite renderer
+        public SpriteRenderer opaqueDepthsMask;
 
         public void Initialise(
             string skyMaterialName,
@@ -58,20 +62,55 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
 
-            // Initialize water material color with SkyStatsController's water color
+            // Apply WaterColour to both fancyWaterMaterial (solid) and fancyWaterSurfaceMaterial (gradient) materials
             if (skyStats is SkyStatsController skyStatsController)
             {
-                // Set the color of the water material if assigned in Inspector
-                if (waterMaterial != null)
-                {
-                    // Assuming the Game 2D Water Kit uses "_WaterColor" as the color property name; adjust if different
-                    waterMaterial.SetColor("_WaterColor", skyStatsController.WaterColour);
-                }
-                else
-                {
-                    Debug.LogError("Water Material is not assigned in CloudInitialiser! Please assign it in the Inspector.");
-                }
+                ApplyWaterColourToMaterials(skyStatsController.WaterColour);
             }
         }
+
+        private void ApplyWaterColourToMaterials(Color waterColour)
+        {
+            // Set fancyWaterMaterial (background) material to the solid WaterColour
+            if (fancyWaterMaterial != null)
+            {
+                fancyWaterMaterial.SetColor("_WaterColor", waterColour);  // Assuming _WaterColor is the correct property
+            }
+            else
+            {
+                Debug.LogError("Fancy Water Material is not assigned! Please assign it in the Inspector.");
+            }
+
+            // Apply a gradient to fancyWaterSurfaceMaterial (foreground)
+            if (fancyWaterSurfaceMaterial != null)
+            {
+                // Create a gradient from WaterColour (0% opacity at the top) to WaterColour (100% opacity at the bottom)
+                Color opaqueColor = new Color(waterColour.r, waterColour.g, waterColour.b, 1f);
+                Color transparentColor = new Color(waterColour.r, waterColour.g, waterColour.b, 0f);
+
+                // Set the gradient start and end colors using the existing properties in the shader
+                fancyWaterSurfaceMaterial.SetColor("_WaterColorGradientStart", transparentColor);
+                fancyWaterSurfaceMaterial.SetColor("_WaterColorGradientEnd", opaqueColor);
+
+                // Enable gradient in the shader
+                fancyWaterSurfaceMaterial.SetFloat("_Water2D_IsColorGradientEnabled", 1f);
+            }
+            else
+            {
+                Debug.LogError("Fancy Water Surface Material is not assigned! Please assign it in the Inspector.");
+            }
+
+            // Set the OpaqueDepthsMask sprite to the WaterColour with 100% opacity
+            if (opaqueDepthsMask != null)
+            {
+                Color fullyOpaqueColor = new Color(waterColour.r, waterColour.g, waterColour.b, 1f);
+                opaqueDepthsMask.color = fullyOpaqueColor;
+            }
+            else
+            {
+                Debug.LogError("OpaqueDepthsMask SpriteRenderer is not assigned! Please assign it in the Inspector.");
+            }
+        }
+
     }
 }
