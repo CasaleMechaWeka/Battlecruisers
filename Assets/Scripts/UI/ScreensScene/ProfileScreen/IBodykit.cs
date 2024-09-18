@@ -27,6 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Shepherd,
         Pistol,
         Flea,
+        Megalith,
         None   //  no bodykit
     }
 }

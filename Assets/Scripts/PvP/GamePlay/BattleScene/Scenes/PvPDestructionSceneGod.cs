@@ -137,6 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public Sprite Longbow;
         public Sprite ManOfWarBoss;
         public Sprite Megalodon;
+        public Sprite Megalith;
         public Sprite Microlodon;
         public Sprite Raptor;
         public Sprite Rickshaw;
@@ -275,6 +276,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     break;
                 case "Megalodon":
                     destructionCards[2].image.sprite = Megalodon;
+                    break;
+                case "Megalith":
+                    destructionCards[2].image.sprite = Megalith;
                     break;
                 case "Microlodon":
                     destructionCards[2].image.sprite = Microlodon;
