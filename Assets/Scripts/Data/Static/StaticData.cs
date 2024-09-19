@@ -209,6 +209,7 @@ namespace BattleCruisers.Data.Static
                 Units.SteamCopter,
                 Units.Broadsword,
                 Units.StratBomber,
+                Units.SpyPlane,
 
                 // Ships
                 Units.AttackBoat,
@@ -530,6 +531,7 @@ namespace BattleCruisers.Data.Static
                 { Units.SteamCopter, 28 },
                 { Units.Broadsword, 41 },
                 { Units.StratBomber, 95 },
+                { Units.SpyPlane, 95 },
                 
                 
                 // Ships

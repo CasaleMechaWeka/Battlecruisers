@@ -12,6 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPPool<PvPUnit, PvPBuildableActivationArgs> SteamCopterPool { get; }
         IPvPPool<PvPUnit, PvPBuildableActivationArgs> BroadswordPool { get; }
         IPvPPool<PvPUnit, PvPBuildableActivationArgs> StratBomberPool { get; }
+        IPvPPool<PvPUnit, PvPBuildableActivationArgs> SpyPlanePool { get; }
         IPvPPool<PvPUnit, PvPBuildableActivationArgs> TestAircraftPool { get; }
 
         // Ships

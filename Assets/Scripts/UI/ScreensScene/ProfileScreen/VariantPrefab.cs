@@ -211,6 +211,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 case ParentBuildable.StratBomber:
                     prefabKey = new UnitKey(UnitCategory.Aircraft, "StratBomber");
                     break;
+                case ParentBuildable.SpyPlane:
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "SpyPlane");
+                    break;
                 case ParentBuildable.AttackBoat:
                     prefabKey = new UnitKey(UnitCategory.Naval, "AttackBoat");
                     break;
@@ -322,6 +325,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBroadsword");
                 case ParentBuildable.StratBomber:
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPStratBomber");
+                case ParentBuildable.SpyPlane:
+                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpyPlane");
                 case ParentBuildable.AttackBoat:
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackBoat");
                 case ParentBuildable.AttackRIB:

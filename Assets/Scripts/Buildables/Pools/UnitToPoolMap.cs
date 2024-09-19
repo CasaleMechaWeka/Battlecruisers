@@ -54,6 +54,9 @@ namespace BattleCruisers.Buildables.Pools
                 case "StratBomber":
                     return _unitPoolProvider.StratBomberPool;
 
+                case "SpyPlane":
+                    return _unitPoolProvider.SpyPlanePool;
+
                 case "TestAircraft":
                     return _unitPoolProvider.TestAircraftPool;
 
