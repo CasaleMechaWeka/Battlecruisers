@@ -6,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Data
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds
 {
@@ -19,6 +20,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPFogController fog;
         public PvPSkyStatsGroup skyStatsGroup;
         public PvPBackgroundImageController background;
+
+        // References to SeaBackground, UnderwaterGlow, and SeaShade
+        public SpriteRenderer seaBackgroundSprite;
+        public SpriteRenderer underwaterGlowSprite;
+        public Image seaShadeCanvas;
 
         public void Initialise(
             string skyMaterialName,
@@ -54,6 +60,45 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             mist.Initialise(skyStats);
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
+
+            // Apply WaterColour to SeaBackground sprite, UnderwaterGlow sprite, and SeaShade canvas
+            if (skyStats is PvPSkyStatsController pvPSkyStatsController)
+            {
+                ApplyWaterColourToElements(pvPSkyStatsController.WaterColour);
+            }
+        }
+
+        private void ApplyWaterColourToElements(Color waterColour)
+        {
+            // Set the SeaBackground sprite to WaterColour
+            if (seaBackgroundSprite != null)
+            {
+                seaBackgroundSprite.color = waterColour;
+            }
+            else
+            {
+                Debug.LogError("SeaBackground SpriteRenderer is not assigned! Please assign it in the Inspector.");
+            }
+
+            // Set the UnderwaterGlow sprite to WaterColour
+            if (underwaterGlowSprite != null)
+            {
+                underwaterGlowSprite.color = waterColour;
+            }
+            else
+            {
+                Debug.LogError("UnderwaterGlow SpriteRenderer is not assigned! Please assign it in the Inspector.");
+            }
+
+            // Set the SeaShade canvas to WaterColour
+            if (seaShadeCanvas != null)
+            {
+                seaShadeCanvas.color = waterColour;
+            }
+            else
+            {
+                Debug.LogError("SeaShade Canvas Image is not assigned! Please assign it in the Inspector.");
+            }
         }
     }
 }

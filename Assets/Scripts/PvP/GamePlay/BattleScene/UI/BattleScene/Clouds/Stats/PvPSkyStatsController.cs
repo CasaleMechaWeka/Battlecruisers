@@ -38,6 +38,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private Color _fogColour;
         public Color FogColour => _fogColour;
 
+        // WaterColour added for PvP version
+        [SerializeField]
+        private Color _waterColour; // Serialized field for water color
+        public Color WaterColour => _waterColour; // Property to expose water color
+
         public void Initialise()
         {
             MoonStats = GetComponentInChildren<PvPMoonStatsController>();
