@@ -6,6 +6,7 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
@@ -20,12 +21,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
 
-        // References to Fancy Water and Fancy Water Surface Materials
-        public Material fancyWaterMaterial;  // Background water material (solid color)
-        public Material fancyWaterSurfaceMaterial;  // Foreground water material (gradient)
+        public SpriteRenderer seaBackgroundSprite;
+        public SpriteRenderer underwaterGlowSprite;
+        public Image seaShadeCanvas;
 
-        // Reference to the OpaqueDepthsMask sprite renderer
-        public SpriteRenderer opaqueDepthsMask;
 
         public void Initialise(
             string skyMaterialName,
@@ -62,55 +61,45 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
 
-            // Apply WaterColour to both fancyWaterMaterial (solid) and fancyWaterSurfaceMaterial (gradient) materials
+            // Apply WaterColour to SeaBackground sprite, UnderwaterGlow sprite, and SeaShade canvas
             if (skyStats is SkyStatsController skyStatsController)
             {
-                ApplyWaterColourToMaterials(skyStatsController.WaterColour);
+                ApplyWaterColourToElements(skyStatsController.WaterColour);
             }
         }
 
-        private void ApplyWaterColourToMaterials(Color waterColour)
+        private void ApplyWaterColourToElements(Color waterColour)
         {
-            // Set fancyWaterMaterial (background) material to the solid WaterColour
-            if (fancyWaterMaterial != null)
+            // Set the SeaBackground sprite to WaterColour
+            if (seaBackgroundSprite != null)
             {
-                fancyWaterMaterial.SetColor("_WaterColor", waterColour);  // Assuming _WaterColor is the correct property
+                seaBackgroundSprite.color = waterColour;
             }
             else
             {
-                Debug.LogError("Fancy Water Material is not assigned! Please assign it in the Inspector.");
+                Debug.LogError("SeaBackground SpriteRenderer is not assigned! Please assign it in the Inspector.");
             }
 
-            // Apply a gradient to fancyWaterSurfaceMaterial (foreground)
-            if (fancyWaterSurfaceMaterial != null)
+            // Set the UnderwaterGlow sprite to WaterColour
+            if (underwaterGlowSprite != null)
             {
-                // Create a gradient from WaterColour (0% opacity at the top) to WaterColour (100% opacity at the bottom)
-                Color opaqueColor = new Color(waterColour.r, waterColour.g, waterColour.b, 1f);
-                Color transparentColor = new Color(waterColour.r, waterColour.g, waterColour.b, 0f);
-
-                // Set the gradient start and end colors using the existing properties in the shader
-                fancyWaterSurfaceMaterial.SetColor("_WaterColorGradientStart", transparentColor);
-                fancyWaterSurfaceMaterial.SetColor("_WaterColorGradientEnd", opaqueColor);
-
-                // Enable gradient in the shader
-                fancyWaterSurfaceMaterial.SetFloat("_Water2D_IsColorGradientEnabled", 1f);
+                underwaterGlowSprite.color = waterColour;
             }
             else
             {
-                Debug.LogError("Fancy Water Surface Material is not assigned! Please assign it in the Inspector.");
+                Debug.LogError("UnderwaterGlow SpriteRenderer is not assigned! Please assign it in the Inspector.");
             }
 
-            // Set the OpaqueDepthsMask sprite to the WaterColour with 100% opacity
-            if (opaqueDepthsMask != null)
+            // Set the SeaShade canvas to WaterColour
+            if (seaShadeCanvas != null)
             {
-                Color fullyOpaqueColor = new Color(waterColour.r, waterColour.g, waterColour.b, 1f);
-                opaqueDepthsMask.color = fullyOpaqueColor;
+                seaShadeCanvas.color = waterColour;
             }
             else
             {
-                Debug.LogError("OpaqueDepthsMask SpriteRenderer is not assigned! Please assign it in the Inspector.");
+                Debug.LogError("SeaShade Canvas Image is not assigned! Please assign it in the Inspector.");
             }
+
         }
-
     }
 }
