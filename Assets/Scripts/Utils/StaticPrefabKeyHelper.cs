@@ -66,6 +66,7 @@ namespace BattleCruisers.Utils
         Building_GatlingMortar = 0404,
         Building_MissilePod = 0405,
         Building_IonCannon = 0406,
+        Building_Cannon = 0407,
 
         // Ultras
         Building_DeathstarLauncher = 0500,

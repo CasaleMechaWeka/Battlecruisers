@@ -44,6 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         GatlingMortar = 0404,
         IonCannon = 0405,
         MissilePod = 0406,
+        Cannon = 0407,
         Bomber = 0500,
         Fighter = 0501,
         Gunship = 0502,

@@ -162,8 +162,9 @@ namespace BattleCruisers.Data.Static
                 Buildings.RocketLauncher,
                 Buildings.MLRS,
                 Buildings.GatlingMortar,
-                Buildings.IonCannon,//new
-                Buildings.MissilePod,//new
+                Buildings.IonCannon,
+                Buildings.MissilePod,
+                Buildings.Cannon,
 
                 // Ultras
                 Buildings.DeathstarLauncher,
@@ -507,6 +508,7 @@ namespace BattleCruisers.Data.Static
                 { Buildings.GatlingMortar, 32},
                 { Buildings.MissilePod, 36 },
                 { Buildings.IonCannon, 38 },
+                { Buildings.Cannon, 95 },
 
                 // Ultras
                 { Buildings.DeathstarLauncher, 7 },
@@ -590,6 +592,7 @@ namespace BattleCruisers.Data.Static
 
                 // Offence
                 { Buildings.IonCannon, 5 },
+                { Buildings.Cannon, 24 },
 
                 // Ultras
                 { Buildings.NovaArtillery, 0 },

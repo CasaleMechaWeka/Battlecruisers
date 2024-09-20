@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -43,7 +44,8 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey MLRS { get; } = new BuildingKey(BuildingCategory.Offence, "MLRS");
             public static BuildingKey GatlingMortar { get; } = new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
             public static BuildingKey IonCannon { get; } = new BuildingKey(BuildingCategory.Offence, "IonCannon");//new
-            public static BuildingKey MissilePod { get; } = new BuildingKey(BuildingCategory.Offence, "MissilePod");//new
+            public static BuildingKey MissilePod { get; } = new BuildingKey(BuildingCategory.Offence, "MissilePod");
+            public static BuildingKey Cannon { get; } = new BuildingKey(BuildingCategory.Offence, "Cannon");
 
             // Ultras
             public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
@@ -68,7 +70,7 @@ namespace BattleCruisers.Data.Static
                         // Defence
                         AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret, CIWS,
                         // Offence
-                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, //railgun = LasCannon! 
+                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, Cannon, //railgun = LasCannon! 
                         // Ultras
                         DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery, UltraCIWS, GlobeShield
                     };

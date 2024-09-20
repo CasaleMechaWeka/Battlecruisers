@@ -191,6 +191,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 case ParentBuildable.MissilePod:
                     prefabKey = new BuildingKey(BuildingCategory.Offence, "MissilePod");
                     break;
+                case ParentBuildable.Cannon:
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "Cannon");
+                    break;
 
                 // Units
                 case ParentBuildable.Bomber:
@@ -312,6 +315,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPIonCannon");
                 case ParentBuildable.MissilePod:
                     return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMissilePod");
+                case ParentBuildable.Cannon:
+                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPCannon");
 
                 case ParentBuildable.Bomber:
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBomber");
@@ -431,6 +436,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = false;
                     break;
                 case ParentBuildable.MissilePod:
+                    ret = false;
+                    break;
+                case ParentBuildable.Cannon:
                     ret = false;
                     break;
                 case ParentBuildable.Bomber:
