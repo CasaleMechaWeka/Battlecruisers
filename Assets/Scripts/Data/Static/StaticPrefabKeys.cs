@@ -584,7 +584,7 @@ namespace BattleCruisers.Data.Static
             { "BODYKIT030", 30},{ "BODYKIT031", 31},{ "BODYKIT032", 32},{ "BODYKIT033", 33},{ "BODYKIT034", 34},
             { "BODYKIT035", 35},{ "BODYKIT036", 36},{ "BODYKIT037", 37},{ "BODYKIT038", 38},{ "BODYKIT039", 39},
             { "BODYKIT040", 40},{ "BODYKIT041", 41},{ "BODYKIT042", 42},{ "BODYKIT043", 43},{ "BODYKIT044", 44},
-            { "BODYKIT045", 45},
+            { "BODYKIT045", 45},{ "BODYKIT046", 46},{ "BODYKIT047", 47},{ "BODYKIT048", 48},{ "BODYKIT049", 49},
         };
         public static class CaptainExos
         {
