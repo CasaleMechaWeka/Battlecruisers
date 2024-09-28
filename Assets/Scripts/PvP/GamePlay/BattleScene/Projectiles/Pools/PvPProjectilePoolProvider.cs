@@ -27,6 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesSmallPool { get; }
         public IPvPPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> RocketsSmallPool { get; }
         public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesMediumPool { get; }
+        public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesFirecrackerPool { get; }
         public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesLargePool { get; }
         public IPvPPool<PvPSmartMissileController, PvPSmartMissileActivationArgs<IPvPSmartProjectileStats>> MissilesSmartPool { get; }
 
@@ -120,6 +121,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPStaticPrefabKeys.PvPProjectiles.PvPMissileMedium,
                     PvPInitialCapacity.MISSILE_MEDIUM);
 
+            MissilesFirecrackerPool
+                = CreatePool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
+                    factoryProvider,
+                    PvPStaticPrefabKeys.PvPProjectiles.PvPMissileFirecracker,
+                    PvPInitialCapacity.MISSILE_MEDIUM);
+
             MissilesLargePool
                 = CreatePool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
                     factoryProvider,
@@ -163,6 +170,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await RocketsSmallPool.AddCapacity(1);
             await MissilesSmallPool.AddCapacity(1);
             await MissilesMediumPool.AddCapacity(1);
+            await MissilesFirecrackerPool.AddCapacity(1);
             await MissilesLargePool.AddCapacity(1);
             await MissilesSmartPool.AddCapacity(1);
         }
@@ -183,6 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await RocketsSmallPool.AddCapacity(PvPInitialCapacity.ROCKET - 1);
             await MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL - 1);
             await MissilesMediumPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
+            await MissilesFirecrackerPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
             await MissilesLargePool.AddCapacity(PvPInitialCapacity.MISSILE_LARGE - 1);
             await MissilesSmartPool.AddCapacity(PvPInitialCapacity.MISSILE_SMART - 1);
         }

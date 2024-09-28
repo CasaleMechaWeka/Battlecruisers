@@ -19,6 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public IPvPPool<IPvPExplosion, Vector3> FlakExplosionsPool { get; }
         public IPvPPool<IPvPExplosion, Vector3> SmallExplosionsPool { get; }
         public IPvPPool<IPvPExplosion, Vector3> MediumExplosionsPool { get; }
+        public IPvPPool<IPvPExplosion, Vector3> FirecrackerExplosionsPool { get; }
         public IPvPPool<IPvPExplosion, Vector3> LargeExplosionsPool { get; }
         public IPvPPool<IPvPExplosion, Vector3> HugeExplosionsPool { get; }
 
@@ -36,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             FlakExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPFlakExplosion);
             SmallExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion75);
             MediumExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion100);
+            FirecrackerExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFirecracker);
             LargeExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion150);
             HugeExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion500);
         }
@@ -58,6 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await FlakExplosionsPool.AddCapacity(1);
             await SmallExplosionsPool.AddCapacity(1);
             await MediumExplosionsPool.AddCapacity(1);
+            await FirecrackerExplosionsPool.AddCapacity(1);
             await LargeExplosionsPool.AddCapacity(1);
             await NovaShellImpactPool.AddCapacity(1);
             await RocketShellImpactPool.AddCapacity(1);
@@ -73,6 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await FlakExplosionsPool.AddCapacity(PvPInitialCapacity.FLAK - 1);
             await SmallExplosionsPool.AddCapacity(PvPInitialCapacity.SMALL - 1);
             await MediumExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
+            await FirecrackerExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
             await LargeExplosionsPool.AddCapacity(PvPInitialCapacity.LARGE - 1);
             await NovaShellImpactPool.AddCapacity(PvPInitialCapacity.LARGE - 1);
             await RocketShellImpactPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);

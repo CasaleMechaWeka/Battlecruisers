@@ -182,6 +182,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPExplosionKey PvPFlakExplosion { get; } = new PvPExplosionKey("PvPExplosionSAM");
             public static PvPExplosionKey PvPExplosion75 { get; } = new PvPExplosionKey("PvPExplosion0.75");
             public static PvPExplosionKey PvPExplosion100 { get; } = new PvPExplosionKey("PvPExplosion1.0");
+            public static PvPExplosionKey PvPExplosionFirecracker { get; } = new PvPExplosionKey("PvPExplosionFirecracker");
             public static PvPExplosionKey PvPExplosion150 { get; } = new PvPExplosionKey("PvPExplosion1.5");
             public static PvPExplosionKey PvPExplosion500 { get; } = new PvPExplosionKey("PvPExplosion5.0");
 
@@ -191,7 +192,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 {
                     return new List<IPvPPrefabKey>()
                     {
-                        PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion, PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosion150, PvPExplosion500
+                        PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion, PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosionFirecracker, PvPExplosion150, PvPExplosion500
                     };
                 }
             }
@@ -209,6 +210,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPProjectileKey PvPRocketShell { get; } = new PvPProjectileKey("PvPRocketShell");
             public static PvPProjectileKey PvPMissileSmall { get; } = new PvPProjectileKey("PvPMissileSmall");
             public static PvPProjectileKey PvPMissileMedium { get; } = new PvPProjectileKey("PvPMissileMedium");
+            public static PvPProjectileKey PvPMissileFirecracker { get; } = new PvPProjectileKey("PvPMissileFirecracker");
             public static PvPProjectileKey PvPMissileLarge { get; } = new PvPProjectileKey("PvPMissileLarge");
             public static PvPProjectileKey PvPMissileSmart { get; } = new PvPProjectileKey("PvPMissileSmart");
 
@@ -225,7 +227,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     return new List<IPvPPrefabKey>()
                     {
                         PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPRocketShell,
-                        PvPMissileSmall, PvPMissileMedium, PvPMissileLarge, PvPMissileSmart,
+                        PvPMissileSmall, PvPMissileMedium,  PvPMissileFirecracker, PvPMissileLarge, PvPMissileSmart,
                         PvPBomb, PvPStratBomb, PvPNuke, PvPRocket, PvPRocketSmall
                     };
                 }

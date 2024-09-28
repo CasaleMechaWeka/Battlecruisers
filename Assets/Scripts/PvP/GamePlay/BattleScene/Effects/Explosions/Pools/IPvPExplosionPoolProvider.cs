@@ -26,6 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         // Radius 1m    => Missiles: Destroyer missiles, archon front launcher missiles
         IPvPPool<IPvPExplosion, Vector3> MediumExplosionsPool { get; }
 
+        IPvPPool<IPvPExplosion, Vector3> FirecrackerExplosionsPool { get; }
+
         // Radius 1.5m  => Artillery, rocket launcher, broadsides, archon back missile launcher, archon primary cannon
         IPvPPool<IPvPExplosion, Vector3> LargeExplosionsPool { get; }
 
