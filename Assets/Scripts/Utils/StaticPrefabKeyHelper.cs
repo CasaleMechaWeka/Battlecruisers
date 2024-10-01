@@ -77,6 +77,7 @@ namespace BattleCruisers.Utils
         Building_NovaArtillery = 0505,
         Building_UltraCIWS = 0506,
         Building_GlobeShield = 0507,
+        Building_Sledgehammer = 0508,
 
 
         // === Units ===

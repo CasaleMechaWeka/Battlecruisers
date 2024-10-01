@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings
 {
     public abstract class Building : Buildable<BuildingActivationArgs>, IBuilding
     {
-        private BoxCollider2D _collider;
+        private Collider2D _collider;
 
         private IDoubleClickHandler<IBuilding> _doubleClickHandler;
         protected ISlot _parentSlot;
@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables.Buildings
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-            _collider = GetComponent<BoxCollider2D>();
+            _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
 
             SlotSpecification = new SlotSpecification(slotType, function, preferCruiserFront);

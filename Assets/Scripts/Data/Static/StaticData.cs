@@ -174,7 +174,8 @@ namespace BattleCruisers.Data.Static
                 Buildings.Broadsides,
                 Buildings.NovaArtillery,//new
                 Buildings.UltraCIWS,//new
-                Buildings.GlobeShield//new
+                Buildings.GlobeShield,//new
+                Buildings.Sledgehammer//new
 			};
         }
 
@@ -518,7 +519,8 @@ namespace BattleCruisers.Data.Static
                 { Buildings.Broadsides, 25 },
                 { Buildings.NovaArtillery, 33 },
                 { Buildings.UltraCIWS, 95 },
-                { Buildings.GlobeShield, 95 }
+                { Buildings.GlobeShield, 95 },
+                { Buildings.Sledgehammer, 95 }
             };
         }
 

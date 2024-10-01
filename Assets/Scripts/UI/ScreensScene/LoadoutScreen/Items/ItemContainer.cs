@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _newItemMark = GetComponentInChildren<NewItemMark>(includeInactive: true);
             Assert.IsNotNull(_newItemMark);
 
-            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer, prefabFactory,gameModel);
+            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer, prefabFactory, gameModel);
             itemButton.Clicked += ItemButton_Clicked;
 
             bool isItemUnlocked = IsUnlocked(gameModel);
@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
-            IGameModel gameModel);        
+            IGameModel gameModel);
 
         private void ItemButton_Clicked(object sender, EventArgs e)
         {
@@ -78,7 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void OnDisable()
         {
-            if(_itemButton == _itemsPanel.GetFirstItemButton())
+            if (_itemButton == _itemsPanel.GetFirstItemButton())
             {
                 MakeOld(_gameModel);
                 UpdateNewItemMarkVisibility();

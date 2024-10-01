@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public abstract class PvPBuilding : PvPBuildable<PvPBuildingActivationArgs>, IPvPBuilding
     {
-        private BoxCollider2D _collider;
+        private Collider2D _collider;
 
         private IPvPDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
         protected IPvPSlot _parentSlot;
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-            _collider = GetComponent<BoxCollider2D>();
+            _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
 
             SlotSpecification = new PvPSlotSpecification(slotType, function, preferCruiserFront);

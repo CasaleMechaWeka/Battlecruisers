@@ -55,6 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPNovaArtillery { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPNovaArtillery");
             public static PvPBuildingKey PvPUltraCIWS { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPUltraCIWS");
             public static PvPBuildingKey PvPGlobeShield { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPGlobeShield");
+            public static PvPBuildingKey PvPSledgehammer { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPSledgehammer");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -71,7 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         // Offence
                         PvPArtillery, PvPRocketLauncher, PvPRailgun, PvPMLRS, PvPGatlingMortar, PvPIonCannon, PvPMissilePod, PvPCannon,
                         // Ultras
-                        PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides, PvPNovaArtillery, PvPUltraCIWS, PvPGlobeShield
+                        PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides, PvPNovaArtillery, PvPUltraCIWS, PvPGlobeShield, PvPSledgehammer
                     };
                 }
             }
@@ -305,6 +306,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildableOutlineKey PvPCIWSOutline { get; } = new PvPBuildableOutlineKey("PvPCIWSOutline");
             public static PvPBuildableOutlineKey PvPUltraCIWSOutline { get; } = new PvPBuildableOutlineKey("PvPUltraCIWSOutline");
             public static PvPBuildableOutlineKey PvPGlobeShieldOutline { get; } = new PvPBuildableOutlineKey("PvPGlobeShieldOutline");
+            public static PvPBuildableOutlineKey PvPSledgehammerOutline { get; } = new PvPBuildableOutlineKey("PvPSledgehammerOutline");
             public static PvPBuildableOutlineKey PvPGrapheneBarrierOutline { get; } = new PvPBuildableOutlineKey("PvPGrapheneBarrierOutline");
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -346,6 +348,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         PvPCIWSOutline,
                         PvPUltraCIWSOutline,
                         PvPGlobeShieldOutline,
+                        PvPSledgehammerOutline,
                         PvPGrapheneBarrierOutline,
                         PvPCannonOutline
 

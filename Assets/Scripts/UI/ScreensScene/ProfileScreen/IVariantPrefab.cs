@@ -22,6 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         EngineeringBay = 0102,
         EngineeringBay4 = 0103,
         EngineeringBay8 = 0104,
+
         ShieldGenerator = 0200,
         StealthGenerator = 0201,
         SpySatelliteLauncher = 0202,
@@ -29,6 +30,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         ControlTower = 0204,
         GrapheneBarrier = 0205,
         GlobeShield = 0206,
+        Sledgehammer = 0207,
+
         AntiShipTurret = 0300,
         AntiAirTurret = 0301,
         Mortar = 0302,
@@ -37,6 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Coastguard = 0305,
         FlakTurret = 0306,
         CIWS = 0307,
+
         Artillery = 0400,
         RocketLauncher = 0401,
         Railgun = 0402,
@@ -45,6 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         IonCannon = 0405,
         MissilePod = 0406,
         Cannon = 0407,
+
         Bomber = 0500,
         Fighter = 0501,
         Gunship = 0502,
@@ -52,6 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Broadsword = 0504,
         StratBomber = 0505,
         SpyPlane = 0506,
+
         AttackBoat = 0600,
         AttackRIB = 0601,
         Frigate = 0602,
