@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Infrastructure
 {
-    public class NetworkGuid : INetworkSerializable
+    public class NetworkGuid : INetworkSerializable, IEquatable<NetworkGuid>
     {
         public ulong FirstHalf;
         public ulong SecondHalf;
@@ -13,6 +13,17 @@ namespace BattleCruisers.Network.Multiplay.Infrastructure
         {
             serializer.SerializeValue(ref FirstHalf);
             serializer.SerializeValue(ref SecondHalf);
+        }
+
+        public bool Equals(NetworkGuid other)
+        {
+            if (other == null)
+                return false;
+
+            if (other.FirstHalf == FirstHalf && other.SecondHalf == SecondHalf)
+                return true;
+
+            return false;
         }
     }
 
