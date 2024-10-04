@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-namespace BattleCruisers.Buildables.Units
+﻿namespace BattleCruisers.Buildables.Units
 {
-	public class UnitWrapper : BuildableWrapper<IUnit>
-	{
+    public class UnitWrapper : BuildableWrapper<IUnit>
+    {
 
     }
 }
