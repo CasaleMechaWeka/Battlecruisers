@@ -1,19 +1,13 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
-using UnityEngine.Assertions;
 using Unity.Services.Leaderboards;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
-using Unity.Services.Authentication;
-using Unity.Services.CloudCode;
 using System.Linq;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -47,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                             Destroy(obj.gameObject);
                     }
 
-                    if(score.Results.Count == 0)
+                    if (score.Results.Count == 0)
                         noData.SetActive(true);
                     int i = 0;
                     foreach (var entry in score.Results)

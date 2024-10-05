@@ -114,7 +114,6 @@ namespace BattleCruisers.Scenes
         public static ScreensSceneGod Instance;
         private CaptainExo charlie;
         public bool serverStatus;
-        public CancellationTokenSource m_cancellationToken = new CancellationTokenSource();
         public string requiredVer; // App version from Cloud;
         private static bool IsFirstTimeLoad = true;
         IPrefabCache _prefabCache;
@@ -161,8 +160,6 @@ namespace BattleCruisers.Scenes
                 IsInternetAccessable = await checkInternetConnection;
             }
 
-            float timeStamper = Time.time;
-
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
             {
                 try
@@ -176,13 +173,6 @@ namespace BattleCruisers.Scenes
 
                     await refreshEcoConfig;
                     await _dataProvider.ApplyRemoteConfig();
-
-                    while (!m_cancellationToken.IsCancellationRequested)
-                    {
-                        await Task.Delay(10);
-                        if (Time.time - timeStamper > 15f)// for escape safty 
-                            break;
-                    }
 
                     // local transactions syncing:
                     if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
@@ -289,8 +279,6 @@ namespace BattleCruisers.Scenes
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));
 
-            while (!loadStoryStrings.IsCompleted)
-                await Task.Delay(10);
 
             ILocTable storyStrings = await loadStoryStrings;
             levelTrashDataList.Initialise(storyStrings);

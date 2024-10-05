@@ -1,11 +1,8 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
-using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {

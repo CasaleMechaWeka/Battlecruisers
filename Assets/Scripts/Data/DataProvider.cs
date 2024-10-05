@@ -229,7 +229,6 @@ namespace BattleCruisers.Data
                         await CloudSave();
                     }
                     GameModel.HasSyncdShop = true;
-                    ScreensSceneGod.Instance.m_cancellationToken.Cancel();
                     break;
             }
         }

@@ -1,6 +1,5 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
@@ -8,20 +7,14 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-using Unity.Services.Core;
 using Unity.Services.Authentication;
 using UnityEngine.Assertions;
-using System;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Commands;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
-using System.Collections;
-using System.Runtime.ConstrainedExecution;
-using UnityEngine.Localization.Components;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -97,7 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             UpdateValueStrings(IndexCurrentArena);
         }
 
-        
+
         private void NextSetCommandExecute()
         {
             if (isTransitioning)
