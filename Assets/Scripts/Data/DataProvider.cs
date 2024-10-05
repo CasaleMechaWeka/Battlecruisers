@@ -187,24 +187,20 @@ namespace BattleCruisers.Data
             return await _serializer.SyncCreditsToCloud(this);
         }
 
-        private async Task RefreshEconomyConfiguration()
+        public async Task RefreshEconomyConfiguration()
         {
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             m_VirtualPurchaseDefinitions = EconomyService.Instance.Configuration.GetVirtualPurchases();
         }
 
-        public async Task LoadBCData()
+        public async Task ApplyRemoteConfig()
         {
-            Task refreshEconomy = RefreshEconomyConfiguration();
-
             Debug.Log("ApplyRemoteSettings");
-            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
+            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteConfig;
             RemoteConfigService.Instance.FetchConfigs(new UserAttributes(), new AppAttributes());
-
-            await refreshEconomy;
         }
 
-        async void ApplyRemoteSettings(ConfigResponse configResponse)
+        async void ApplyRemoteConfig(ConfigResponse configResponse)
         {
             switch (configResponse.requestOrigin)
             {
@@ -404,9 +400,8 @@ namespace BattleCruisers.Data
         }
 
 
-        public async Task<string> GetPVPVersion()
+        public string GetPVPVersion()
         {
-            await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
 #if UNITY_EDITOR
             version = "EDITOR";

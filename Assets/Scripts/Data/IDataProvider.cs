@@ -23,7 +23,8 @@ namespace BattleCruisers.Data
         public VirtualShopConfig virtualShopConfig { get; set; }
         /*       public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
-        Task<string> GetPVPVersion();
+        Task RefreshEconomyConfiguration();
+        string GetPVPVersion();
         ILevel GetLevel(int levelNum);
         ISideQuestData GetSideQuest(int sideQuestID);
         IPvPLevel GetPvPLevel(Map map);
@@ -39,7 +40,7 @@ namespace BattleCruisers.Data
         // Cloud Saving:
         Task CloudSave();
         Task CloudLoad();
-        Task LoadBCData();
+        Task ApplyRemoteConfig();
         Task<bool> SyncCurrencyFromCloud();
         Task<bool> SyncInventoryFromCloud();
         Task<bool> SyncCoinsToCloud();

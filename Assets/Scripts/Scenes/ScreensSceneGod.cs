@@ -136,6 +136,7 @@ namespace BattleCruisers.Scenes
             _gameModel = _dataProvider.GameModel;
             //components = GetComponent<ScreensSceneGodCompoments>();
 
+            Task<bool> checkInternetConnection = LandingSceneGod.CheckForInternetConnection();
             ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
             ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
             Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
@@ -157,7 +158,7 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
+                IsInternetAccessable = await checkInternetConnection;
             }
 
             float timeStamper = Time.time;
@@ -166,13 +167,15 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
+                    Task refreshEcoConfig = _dataProvider.RefreshEconomyConfiguration();
                     if (IsFirstTimeLoad)
                     {
                         await _dataProvider.CloudLoad();
                         IsFirstTimeLoad = false;
                     }
 
-                    await _dataProvider.LoadBCData();
+                    await refreshEcoConfig;
+                    await _dataProvider.ApplyRemoteConfig();
 
                     while (!m_cancellationToken.IsCancellationRequested)
                     {
@@ -200,7 +203,7 @@ namespace BattleCruisers.Scenes
 
                     // version check
                     string currentVersion = Application.version;
-                    requiredVer = await _dataProvider.GetPVPVersion();
+                    requiredVer = _dataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + currentVersion);
                     Debug.Log("DataProvider Version: " + requiredVer);
 
@@ -297,10 +300,10 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
 
+            Task initializeLevelsScreen = InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-
 
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
@@ -362,7 +365,6 @@ namespace BattleCruisers.Scenes
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
 
-            Task initializeLevelsScreen = InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
 
             _applicationModel.DataProvider.SaveGame();
 
