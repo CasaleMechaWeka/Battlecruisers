@@ -1,32 +1,31 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Effects;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
-    public abstract class MultiTurretController : Building
+    public abstract class PvPMultiTurretController : PvPBuilding
     {
-        private IAnimation _barrelAnimation;
-        protected IBarrelWrapper[] _barrelWrappers;
+        private IPvPAnimation _barrelAnimation;
+        protected IPvPBarrelWrapper[] _barrelWrappers;
 
         // By default have null (no) sound
-        protected virtual ISoundKey FiringSound => null;
+        protected virtual IPvPSoundKey FiringSound => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-            _barrelWrappers = gameObject.GetComponentsInChildren<IBarrelWrapper>().ToArray();
-            Debug.Log("BRWPCNT:" + _barrelWrappers.Count().ToString());
+            _barrelWrappers = gameObject.GetComponentsInChildren<IPvPBarrelWrapper>();
             Assert.IsNotNull(_barrelWrappers);
             for (int i = 0; i < _barrelWrappers.Count(); i++)
             {
@@ -34,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                 AddDamageStats(_barrelWrappers[i].DamageCapability);
             }
 
-            IAnimationInitialiser barrelAnimationInitialiser = GetComponent<IAnimationInitialiser>();
+            IPvPAnimationInitialiser barrelAnimationInitialiser = GetComponent<IPvPAnimationInitialiser>();
             Assert.IsNotNull(barrelAnimationInitialiser);
             _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
         }
@@ -54,6 +53,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                         _parentSlot.BoostProviders,
                         TurretFireRateBoostProviders,
                         _barrelAnimation);
+                _barrelWrappers[i].ApplyVariantStats(this);
+            }
+        }
+
+        protected override void OnBuildableCompleted_PvPClient()
+        {
+            base.OnBuildableCompleted_PvPClient();
+            for (int i = 0; i < _barrelWrappers.Count(); i++)
+            {
+                _barrelWrappers[i]
+                .Initialise(
+                    this,
+                    _factoryProvider,
+                    FiringSound,
+                    _barrelAnimation);
                 _barrelWrappers[i].ApplyVariantStats(this);
             }
         }
