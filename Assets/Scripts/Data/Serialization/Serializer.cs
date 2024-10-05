@@ -325,29 +325,21 @@ namespace BattleCruisers.Data.Serialization
         {
             try
             {
-                List<string> keys = await CloudSaveService.Instance.Data.RetrieveAllKeysAsync();
-                if (keys != null && keys.Contains("GameModel"))
+                Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
+                if (savedData != null && savedData.TryGetValue("GameModel", out string gameModelData) && !string.IsNullOrEmpty(gameModelData))
                 {
-                    Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
-                    if (savedData != null && savedData.TryGetValue("GameModel", out string gameModelData) && !string.IsNullOrEmpty(gameModelData))
-                    {
-                        SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(gameModelData);
-                        Debug.Log(gameModelData);
+                    SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(gameModelData);
+                    Debug.Log(gameModelData);
 
-                        //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
-                        if (saveModel._lifetimeDestructionScore >= game.LifetimeDestructionScore)
-                        {
-                            Debug.Log("Cloud save up to date");
-                            return saveModel;
-                        }
-                        else
-                        {
-                            Debug.Log("Cloud save not up to date");
-                            return null;
-                        }
+                    //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
+                    if (saveModel._lifetimeDestructionScore >= game.LifetimeDestructionScore)
+                    {
+                        Debug.Log("Cloud save up to date");
+                        return saveModel;
                     }
                     else
                     {
+                        Debug.Log("Cloud save not up to date");
                         return null;
                     }
                 }
