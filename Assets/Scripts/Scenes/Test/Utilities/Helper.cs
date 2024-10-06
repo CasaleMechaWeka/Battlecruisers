@@ -349,6 +349,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IList<Vector2> fighterPatrolPoints = null,
 			IList<Vector2> deathstarPatrolPoints = null,
             IList<Vector2> spySatellitePatrolPoints = null,
+            IList<Vector2> missileFighterPatrolPoints = null,
 			Rectangle fighterSafeZone = null)
 		{
 			IAircraftProvider provider = Substitute.For<IAircraftProvider>();
@@ -414,6 +415,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					minY: float.MinValue,
 					maxY: float.MaxValue);
 			}
+            if (missileFighterPatrolPoints == null)
+			{
+				missileFighterPatrolPoints = new List<Vector2>() 
+				{
+                    new Vector2(0, 0),  
+					new Vector2(3, 10)
+				};
+			}
+			provider.FindMissileFighterPatrolPoints(0).ReturnsForAnyArgs(missileFighterPatrolPoints);
+
 			provider.FighterSafeZone.Returns(fighterSafeZone);
 
 			return provider;

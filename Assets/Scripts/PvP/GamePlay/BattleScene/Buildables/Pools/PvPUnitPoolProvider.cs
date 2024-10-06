@@ -29,6 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> BroadswordPool { get; }
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> StratBomberPool { get; }
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> SpyPlanePool { get; }
+        public IPvPPool<PvPUnit, PvPBuildableActivationArgs> MissileFighterPool { get; }
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> TestAircraftPool { get; }
 
         // Ships
@@ -59,6 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             BroadswordPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPBroadsword);
             StratBomberPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPStratBomber);
             SpyPlanePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSpyPlane);
+            MissileFighterPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPMissileFighter);
 
             TestAircraftPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPTestAircraft);
 
@@ -92,6 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             BroadswordPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPBroadsword);
             StratBomberPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPStratBomber);
             SpyPlanePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSpyPlane);
+            MissileFighterPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPMissileFighter);
             TestAircraftPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPTestAircraft);
 
             // Ship

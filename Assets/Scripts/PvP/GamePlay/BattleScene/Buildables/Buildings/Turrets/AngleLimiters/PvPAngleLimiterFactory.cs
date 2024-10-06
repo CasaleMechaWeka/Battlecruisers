@@ -21,6 +21,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             return new PvPFighterAngleLimiter();
         }
+        public IPvPAngleLimiter CreateMissileFighterLimiter()
+        {
+            return new PvPMissileFighterAngleLimiter();
+        }
 
         public IPvPAngleLimiter CreateGravityAffectedLimiter()
         {

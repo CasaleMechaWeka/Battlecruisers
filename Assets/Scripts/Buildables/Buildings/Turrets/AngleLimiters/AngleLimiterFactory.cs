@@ -21,6 +21,10 @@
         {
             return new FighterAngleLimiter();
         }
+        public IAngleLimiter CreateMissileFighterLimiter()
+        {
+            return new MissileFighterAngleLimiter();
+        }
 
         public IAngleLimiter CreateGravityAffectedLimiter()
         {

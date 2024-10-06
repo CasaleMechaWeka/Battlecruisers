@@ -59,6 +59,9 @@ namespace BattleCruisers.Buildables.Pools
 
                 case "TestAircraft":
                     return _unitPoolProvider.TestAircraftPool;
+                
+                case "MissileFighter":
+                    return _unitPoolProvider.MissileFighterPool;
 
                 default:
                     throw new ArgumentException($"Unsupported aircraft: {aircraft.PrefabName}");

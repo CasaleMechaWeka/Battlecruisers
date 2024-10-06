@@ -6,6 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPAngleLimiter CreateFacingLimiter();
         IPvPAngleLimiter CreateAntiAirLimiter();
         IPvPAngleLimiter CreateFighterLimiter();
+        IPvPAngleLimiter CreateMissileFighterLimiter();
         IPvPAngleLimiter CreateGravityAffectedLimiter();
         IPvPAngleLimiter CreateCIWSLimiter();
     }

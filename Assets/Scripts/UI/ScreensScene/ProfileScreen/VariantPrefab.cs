@@ -217,6 +217,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 case ParentBuildable.SpyPlane:
                     prefabKey = new UnitKey(UnitCategory.Aircraft, "SpyPlane");
                     break;
+                case ParentBuildable.MissileFighter:
+                    prefabKey = new UnitKey(UnitCategory.Aircraft, "MissileFighter");
+                    break;
                 case ParentBuildable.AttackBoat:
                     prefabKey = new UnitKey(UnitCategory.Naval, "AttackBoat");
                     break;
@@ -322,6 +325,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBomber");
                 case ParentBuildable.Fighter:
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPFighter");
+                case ParentBuildable.MissileFighter:
+                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPMissileFighter");
                 case ParentBuildable.Gunship:
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPGunship");
                 case ParentBuildable.SteamCopter:
@@ -445,6 +450,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = true;
                     break;
                 case ParentBuildable.Fighter:
+                    ret = true;
+                    break;
+                case ParentBuildable.MissileFighter:
                     ret = true;
                     break;
                 case ParentBuildable.Gunship:

@@ -14,6 +14,7 @@ namespace BattleCruisers.Buildables.Pools
         IPool<Unit, BuildableActivationArgs> StratBomberPool { get; }
         IPool<Unit, BuildableActivationArgs> SpyPlanePool { get; }
         IPool<Unit, BuildableActivationArgs> TestAircraftPool { get; }
+        IPool<Unit, BuildableActivationArgs> MissileFighterPool { get; }
 
         // Ships
         IPool<Unit, BuildableActivationArgs> AttackBoatPool { get; }

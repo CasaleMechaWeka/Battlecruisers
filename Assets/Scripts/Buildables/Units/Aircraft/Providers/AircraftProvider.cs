@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float SAFE_ZONE_MAX_Y = 25;
 
 		private const float FIGHTER_PATROL_MARGIN = 5;
+		private const float MISSILE_FIGHTER_PATROL_MARGIN = 5;
 		private const float BOMBER_PATROL_MARGIN = 10;
 		private const float DEATHSTAR_PATROL_MARGIN = 5;
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
@@ -201,6 +202,19 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
                 new Vector2(closerToFriendlyCruiserPatrolPointX, cruisingAltitudeInM)
             };
         }
+		public IList<Vector2> FindMissileFighterPatrolPoints(float cruisingAltitudeInM)
+		{
+            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
+
+            float parentCruiserPatrolPoint = IsEnemyToTheRight ? FighterSafeZone.MinX + MISSILE_FIGHTER_PATROL_MARGIN : FighterSafeZone.MaxX - MISSILE_FIGHTER_PATROL_MARGIN;
+            float middlePatrolPoint = IsEnemyToTheRight ? FighterSafeZone.MaxX - MISSILE_FIGHTER_PATROL_MARGIN : FighterSafeZone.MinX + MISSILE_FIGHTER_PATROL_MARGIN;
+
+			return new List<Vector2>() 
+			{
+                new Vector2(parentCruiserPatrolPoint, cruisingAltitudeInM),
+                new Vector2(middlePatrolPoint, cruisingAltitudeInM)
+			};
+		}
 
         /// <summary>
 		/// Randomise cruising altitude slightly, to avoid all planes

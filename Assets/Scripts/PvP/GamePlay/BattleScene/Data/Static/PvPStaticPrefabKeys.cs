@@ -91,6 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPSpyPlane { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpyPlane");
             public static PvPUnitKey PvPTestAircraft { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPTestAircraft");
             public static PvPUnitKey PvPSpySatellite { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpySatellite");
+            public static PvPUnitKey PvPMissileFighter { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPMissileFighter");
             public static PvPUnitKey PvPDeathstar { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPDeathstar");
 
             // Ships
@@ -112,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     return new List<IPvPPrefabKey>()
                     {
                         // Aircraft
-                        PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPStratBomber, PvPSpyPlane, PvPTestAircraft,PvPSpySatellite,PvPDeathstar,
+                        PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPStratBomber, PvPSpyPlane, PvPTestAircraft, PvPSpySatellite, PvPMissileFighter, PvPDeathstar,
                         // Ships
                         PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship, PvPGlassCannoneer, PvPGunBoat, PvPRocketTurtle, PvPFlakTurtle
                     };

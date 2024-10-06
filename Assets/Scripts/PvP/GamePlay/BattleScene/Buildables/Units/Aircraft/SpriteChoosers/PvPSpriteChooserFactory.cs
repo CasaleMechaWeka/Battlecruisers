@@ -32,6 +32,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IList<IPvPSpriteWrapper> fighterSprites = await _spriteProvider.GetFighterSpritesAsync();
             return new PvPSpriteChooser(_assignerFactory, fighterSprites, maxVelocityProvider);
         }
+        public async Task<IPvPSpriteChooser> CreateMissileFighterSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
+        {
+            IList<IPvPSpriteWrapper> missileFighterSprites = await _spriteProvider.GetMissileFighterSpritesAsync();
+            return new PvPSpriteChooser(_assignerFactory, missileFighterSprites, maxVelocityProvider);
+        }
 
         public async Task<IPvPSpriteChooser> CreateGunshipSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
         {

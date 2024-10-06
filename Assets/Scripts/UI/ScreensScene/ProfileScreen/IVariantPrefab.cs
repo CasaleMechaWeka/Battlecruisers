@@ -57,6 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Broadsword = 0504,
         StratBomber = 0505,
         SpyPlane = 0506,
+        MissileFighter = 0507,
 
         AttackBoat = 0600,
         AttackRIB = 0601,

@@ -62,6 +62,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             IList<ISpriteWrapper> spyPlaneSprites = await _spriteProvider.GetSpyPlaneSpritesAsync();
             return new SpriteChooser(_assignerFactory, spyPlaneSprites, maxVelocityProvider);
         }
+        public async Task<ISpriteChooser> CreateMissileFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
+        {
+            IList<ISpriteWrapper> missileFighterSprites = await _spriteProvider.GetMissileFighterSpritesAsync();
+            return new SpriteChooser(_assignerFactory, missileFighterSprites, maxVelocityProvider);
+        }
 
         public ISpriteChooser CreateDummySpriteChooser(Sprite sprite)
         {

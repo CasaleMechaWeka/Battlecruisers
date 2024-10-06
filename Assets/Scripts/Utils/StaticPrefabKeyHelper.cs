@@ -89,6 +89,7 @@ namespace BattleCruisers.Utils
         Unit_Broadsword = 0604,
         Unit_StratBomber = 0605,
         Unit_SpyPlane = 0606,
+        Unit_MissileFighter = 0607,
 
         // Ships
         Unit_AttackBoat = 0700,

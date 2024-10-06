@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         Task<ISpriteChooser> CreateSpyPlaneSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
 
         Task<ISpriteChooser> CreateStratBomberSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
+        Task<ISpriteChooser> CreateMissileFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
 
 
         ISpriteChooser CreateDummySpriteChooser(Sprite sprite);

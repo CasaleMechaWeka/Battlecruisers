@@ -212,6 +212,7 @@ namespace BattleCruisers.Data.Static
                 Units.Broadsword,
                 Units.StratBomber,
                 Units.SpyPlane,
+                Units.MissileFighter,
 
                 // Ships
                 Units.AttackBoat,
@@ -536,6 +537,7 @@ namespace BattleCruisers.Data.Static
                 { Units.Broadsword, 41 },
                 { Units.StratBomber, 95 },
                 { Units.SpyPlane, 95 },
+                { Units.MissileFighter, 95 },
                 
                 
                 // Ships
