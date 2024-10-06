@@ -758,11 +758,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public void HandleClientDisconnected()
         {
             canFlee = false;
-            obj_RedSeaGlow.SetActive(false);
-            obj_HealthBarPanel.SetActive(false);
-            obj_LeftBackgroundPanel.SetActive(false);
-            obj_RightBackgroundPanel.SetActive(false);
-            obj_ToolTipActivator.SetActive(false);
+            if (null != obj_RedSeaGlow)
+                obj_RedSeaGlow.SetActive(false);
+
+            if (null != obj_HealthBarPanel)
+                obj_HealthBarPanel.SetActive(false);
+
+            if (null != obj_LeftBackgroundPanel)
+                obj_LeftBackgroundPanel.SetActive(false);
+
+            if (null != obj_RightBackgroundPanel)
+                obj_RightBackgroundPanel.SetActive(false);
+
+            if (null != obj_ToolTipActivator)
+                obj_ToolTipActivator.SetActive(false);
         }
 
         public void OnTunnelBattleCompleted_ValueChanged(/*Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal*/)
