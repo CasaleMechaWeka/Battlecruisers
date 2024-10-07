@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesSmallPool { get; }
         public IPvPPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> RocketsSmallPool { get; }
         public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesMediumPool { get; }
-        public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesFirecrackerPool { get; }
+        public IPvPPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> MissilesFirecrackerPool { get; }
         public IPvPPool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>> MissilesLargePool { get; }
         public IPvPPool<PvPSmartMissileController, PvPSmartMissileActivationArgs<IPvPSmartProjectileStats>> MissilesSmartPool { get; }
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                    factoryProvider,
                    PvPStaticPrefabKeys.PvPProjectiles.PvPTinyBullet,
                    PvPInitialCapacity.BULLET);
-            
+
             FlakBulletsPool
                = CreatePool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
                    factoryProvider,
@@ -122,7 +122,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.MISSILE_MEDIUM);
 
             MissilesFirecrackerPool
-                = CreatePool<PvPMissileController, PvPTargetProviderActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
+                = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>(
                     factoryProvider,
                     PvPStaticPrefabKeys.PvPProjectiles.PvPMissileFirecracker,
                     PvPInitialCapacity.MISSILE_MEDIUM);
