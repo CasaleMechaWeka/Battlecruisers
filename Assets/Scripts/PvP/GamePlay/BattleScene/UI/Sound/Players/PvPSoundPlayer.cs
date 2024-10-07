@@ -3,7 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.UI.Sound;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -27,8 +27,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         public async Task PlaySoundAsync(IPvPSoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
-            IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
-            PlaySound(sound, position);
+            try
+            {
+                IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
+                PlaySound(sound, position);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(soundKey + " sound could not be fetched: " + ex.Message);
+            }
         }
 
         public void PlaySound(IPvPAudioClipWrapper sound, Vector2 position)

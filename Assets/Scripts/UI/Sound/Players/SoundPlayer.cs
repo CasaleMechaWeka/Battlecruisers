@@ -3,6 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,9 +27,16 @@ namespace BattleCruisers.UI.Sound.Players
         public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
+            try
+            {
+                IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
+                PlaySound(sound, position);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(soundKey + " sound could not be fetched: " + ex.Message);
+            }
 
-            IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
-            PlaySound(sound, position);
         }
 
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
