@@ -17,10 +17,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         public TChild GetPrefab<TChild>(IPrefabKey prefabKey) where TChild : class, TBase
         {
             Assert.IsNotNull(prefabKey);
-            Assert.IsTrue(_prefabs.ContainsKey(prefabKey), prefabKey.ToString() + " cannnot be found");
+            Assert.IsTrue(_prefabs.ContainsKey(prefabKey), prefabKey + " cannnot be found");
 
             TChild prefab = _prefabs[prefabKey] as TChild;
-            Assert.IsNotNull(prefab, prefabKey.ToString() + " could not be retrieved as type " + typeof(TChild));
+            Assert.IsNotNull(prefab, prefabKey + " could not be retrieved as type " + typeof(TChild));
 
             return prefab;
         }

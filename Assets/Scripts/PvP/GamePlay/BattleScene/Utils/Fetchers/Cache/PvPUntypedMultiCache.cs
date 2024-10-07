@@ -17,10 +17,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public TChild GetPrefab<TChild>(IPvPPrefabKey prefabKey) where TChild : class, TBase
         {
             Assert.IsNotNull(prefabKey);
-            Assert.IsTrue(_prefabs.ContainsKey(prefabKey));
+            Assert.IsTrue(_prefabs.ContainsKey(prefabKey), prefabKey + " cannot be found");
 
             TChild prefab = _prefabs[prefabKey] as TChild;
-            Assert.IsNotNull(prefab);
+            Assert.IsNotNull(prefab, prefabKey + " could not be retrieved as type " + typeof(TChild));
 
             return prefab;
         }
