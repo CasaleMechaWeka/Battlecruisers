@@ -26,7 +26,7 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
         public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
-        public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesFirecrackerPool { get; }
+        public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         public IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
 
@@ -46,11 +46,11 @@ namespace BattleCruisers.Projectiles.Pools
                     StaticPrefabKeys.Projectiles.HighCalibreBullet,
                     InitialCapacity.BULLET);
 
-             TinyBulletsPool
-                = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
-                    StaticPrefabKeys.Projectiles.TinyBullet,
-                    InitialCapacity.BULLET);
+            TinyBulletsPool
+               = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
+                   factoryProvider,
+                   StaticPrefabKeys.Projectiles.TinyBullet,
+                   InitialCapacity.BULLET);
 
             FlakBulletsPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
@@ -68,19 +68,19 @@ namespace BattleCruisers.Projectiles.Pools
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.ShellLarge,
-                    InitialCapacity.SHELL_LARGE);       
+                    InitialCapacity.SHELL_LARGE);
 
             NovaShellPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.NovaShell,
-                    InitialCapacity.SHELL_LARGE);                
-         
+                    InitialCapacity.SHELL_LARGE);
+
             RocketShellPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.RocketShell,
-                    InitialCapacity.SHELL_LARGE);     
+                    InitialCapacity.SHELL_LARGE);
 
 
             BombsPool
@@ -120,7 +120,7 @@ namespace BattleCruisers.Projectiles.Pools
                     InitialCapacity.MISSILE_MEDIUM);
 
             MissilesFirecrackerPool
-                = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
+                = CreatePool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileFirecracker,
                     InitialCapacity.MISSILE_MEDIUM);
@@ -137,11 +137,11 @@ namespace BattleCruisers.Projectiles.Pools
                     StaticPrefabKeys.Projectiles.MissileSmart,
                     InitialCapacity.MISSILE_SMART);
 
-                
+
         }
 
         private IPool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(IFactoryProvider factoryProvider, ProjectileKey projectileKey, int initialCapacity)
-            where TArgs: ProjectileActivationArgs<TStats>
+            where TArgs : ProjectileActivationArgs<TStats>
             where TProjectile : ProjectileControllerBase<TArgs, TStats>
             where TStats : IProjectileStats
         {

@@ -722,7 +722,7 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         Bullet, HighCalibreBullet, TinyBullet, FlakBullet, ShellSmall, ShellLarge, NovaShell, RocketShell,
-                        MissileSmall, MissileMedium, MissileLarge, MissileSmart,
+                        MissileSmall, MissileMedium, MissileLarge, MissileSmart, MissileFirecracker,
                         Bomb, StratBomb, Nuke, Rocket, RocketSmall
                     };
                 }
