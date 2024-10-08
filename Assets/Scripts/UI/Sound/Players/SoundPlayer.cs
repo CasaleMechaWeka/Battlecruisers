@@ -27,16 +27,8 @@ namespace BattleCruisers.UI.Sound.Players
         public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
-            try
-            {
-                IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
-                PlaySound(sound, position);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError(soundKey + " sound could not be fetched: " + ex.Message);
-            }
-
+            IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
+            PlaySound(sound, position);
         }
 
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)

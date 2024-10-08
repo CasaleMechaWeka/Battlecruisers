@@ -15,13 +15,13 @@ namespace BattleCruisers.Utils.Fetchers
 
         public async Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
         {
-            string soundPath = CreateSoundPath(soundKey);       
+            string soundPath = CreateSoundPath(soundKey);
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
             try
             {
                 var validateAddress = Addressables.LoadResourceLocationsAsync(soundPath);
                 await validateAddress.Task;
-                if(validateAddress.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                if (validateAddress.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
                 {
                     if (validateAddress.Result.Count > 0)
                     {
@@ -31,13 +31,16 @@ namespace BattleCruisers.Utils.Fetchers
                         if (handle.Status != AsyncOperationStatus.Succeeded
                             || handle.Result == null)
                         {
-                            throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
+                            throw new ArgumentException("Failed to retrieve sound");
                         }
                     }
+                    else
+                    {
+                        throw new ArgumentException("Failed to retrieve sound: address didn't contain a valid sound");
+                    }
                 }
-                  
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.Log(ex.Message + " === " + soundPath);
             }

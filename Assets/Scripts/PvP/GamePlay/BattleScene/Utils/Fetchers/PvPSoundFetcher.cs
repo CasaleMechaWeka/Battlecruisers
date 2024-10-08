@@ -31,18 +31,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
                         if (handle.Status != AsyncOperationStatus.Succeeded || clip == null)
                         {
-                            throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
+                            throw new ArgumentException("Failed to retrieve sound");
                         }
                     }
                     else
                     {
-                        throw new ArgumentException("Failed to retrieve sound with key: " + soundPath + " address didn't contain a valid sound");
+                        throw new ArgumentException("Failed to retrieve sound: address didn't contain a valid sound");
                     }
                 }
             }
             catch (Exception ex)
             {
-                Debug.Log(ex.Message + " === " + soundPath);
+                Debug.LogError(ex.Message + " === " + soundPath);
             }
 
             return new PvPAudioClipWrapper(clip);
