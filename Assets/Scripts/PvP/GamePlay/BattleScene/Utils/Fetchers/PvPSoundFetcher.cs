@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     }
                     else
                     {
-                        throw new ArgumentException("Failed to retrieve sound with key: " + soundPath + " address didn't contain a valid sonud");
+                        throw new ArgumentException("Failed to retrieve sound with key: " + soundPath + " address didn't contain a valid sound");
                     }
                 }
             }
