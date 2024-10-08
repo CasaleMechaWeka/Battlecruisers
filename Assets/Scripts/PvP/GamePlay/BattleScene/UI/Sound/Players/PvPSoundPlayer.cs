@@ -27,15 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         public async Task PlaySoundAsync(IPvPSoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
-            try
-            {
-                IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
-                PlaySound(sound, position);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError(soundKey + " sound could not be fetched: " + ex.Message);
-            }
+            IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
+            PlaySound(sound, position);
         }
 
         public void PlaySound(IPvPAudioClipWrapper sound, Vector2 position)
