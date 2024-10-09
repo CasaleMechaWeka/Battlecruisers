@@ -605,11 +605,12 @@ namespace BattleCruisers.Data.Static
 
                 // Offence
                 { Buildings.IonCannon, 5 },
-                { Buildings.Cannon, 24 },
+                { Buildings.Cannon, 28 },
 
                 // Ultras
                 { Buildings.NovaArtillery, 0 },
-                { Buildings.UltraCIWS, 18 }
+                { Buildings.UltraCIWS, 18 },
+                { Buildings.UltraCIWS, 30 }
             };
         }
 
@@ -623,13 +624,14 @@ namespace BattleCruisers.Data.Static
                 // Aircraft
                 { Units.Broadsword, 8 },
                 { Units.StratBomber, 9 },
+                { Units.SpyPlane, 29 },
                 
                 // Ships
                 { Units.GlassCannoneer, 16 },
                 { Units.SiegeDestroyer, 17 },
                 { Units.RocketTurtle, 19 },
                 { Units.GunBoat, 20 },
-                { Units.FlakTurtle, 21 },
+                { Units.FlakTurtle, 21 }
             };
         }
 
@@ -647,9 +649,9 @@ namespace BattleCruisers.Data.Static
                 { Hulls.Microlodon, 12},
                 { Hulls.Flea, 13 },
                 { Hulls.Shepherd, 15},
-                { Hulls.Pistol, 25},
-                { Hulls.Goatherd, 26},
-                { Hulls.Megalith, 24}
+                { Hulls.Pistol, 26},
+                { Hulls.Goatherd, 27},
+                { Hulls.Megalith, 25}
             };
         }
 
