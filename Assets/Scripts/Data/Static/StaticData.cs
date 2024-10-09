@@ -486,7 +486,7 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<BuildingKey, int>()
             {
                 // Factories
-                { Buildings.AirFactory, 1 },  //The number represents the first level you get this item, so it unlocks when you win the previous level.
+                { Buildings.AirFactory, 1 },  //The number represents the first *main story* level you get this item, so it unlocks when you win the previous level.
                 { Buildings.NavalFactory, 1 },
                 { Buildings.DroneStation, 1 },
                 { Buildings.DroneStation4, 27 },
@@ -530,7 +530,7 @@ namespace BattleCruisers.Data.Static
                 { Buildings.NovaArtillery, 33 },
                 { Buildings.UltraCIWS, 95 },
                 { Buildings.GlobeShield, 95 },
-                { Buildings.Sledgehammer, 95 }
+                { Buildings.Sledgehammer, 95 } //Set to 95: way past the highest main story level, so that the sidequest unlocks it instead.
             };
         }
 
@@ -610,7 +610,7 @@ namespace BattleCruisers.Data.Static
                 // Ultras
                 { Buildings.NovaArtillery, 0 },
                 { Buildings.UltraCIWS, 18 },
-                { Buildings.UltraCIWS, 30 }
+                { Buildings.SledgehammerCannon, 30 }
             };
         }
 
