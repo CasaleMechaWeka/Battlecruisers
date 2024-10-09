@@ -6,6 +6,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
@@ -22,6 +23,7 @@ namespace BattleCruisers.Projectiles
         ITargetProvider
 	{
         private RocketTarget _rocketTarget;
+        public GameObject rocketSprite; //for making more complicated rocket sprites disappear on detonation
 
 		public ITarget Target { get; private set; }
 
@@ -31,6 +33,11 @@ namespace BattleCruisers.Projectiles
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
+
+            if (rocketSprite != null)
+            {
+                rocketSprite.SetActive(true); // Enable the sprite on initialization
+            }
         }
 
         public override void Activate(TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs)
@@ -56,11 +63,22 @@ namespace BattleCruisers.Projectiles
 
             _rocketTarget.GameObject.SetActive(true);
             _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+
+            if (rocketSprite != null)
+            {
+                rocketSprite.SetActive(true);
+            }
         }
 
         protected override void OnImpactCleanUp()
         {
             base.OnImpactCleanUp();
+
+            if (rocketSprite != null)
+            {
+                rocketSprite.SetActive(false);
+            }
+
             _rocketTarget.GameObject.SetActive(false);
         }
     }
