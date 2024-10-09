@@ -50,7 +50,16 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BoomStrategy(),
                 new BalancedStrategy(),
                 new BoomStrategy(),
-                new FortressPrimeStrategy()
+                new FortressPrimeStrategy(),
+
+                // Set 3 for 6.5: SideQuests 24-30
+                new BoomStrategy(),
+                new BoomStrategy(),
+                new BalancedStrategy(),
+                new BoomStrategy(),
+                new BalancedStrategy(),
+                new BoomStrategy(),
+                new BoomStrategy()
             };
         }
 
@@ -84,7 +93,16 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicTurtleStrategy(),
                 new BasicBalancedStrategy(),
                 new BasicBOOMStrategy(),
-                new BasicFortressPrimeStrategy()
+                new BasicFortressPrimeStrategy(),
+
+                 // Set 3 for 6.5: SideQuests 24-30
+                new BasicBoomAggressiveStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicBalancedStrategy(),
+                new BasicTurtleStrategy(),
+                new BasicBalancedStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicBoomAggressiveStrategy(),
             };
         }
 
@@ -290,6 +308,70 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                 },
+
+                // Set 3 for 6.5 : SideQuests 24 - 30
+                //SQ24
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                //SQ25
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                //SQ26
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                },
+                //SQ27
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
+                },
+                //SQ28
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
+                },
+                //SQ29
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                },
+                //SQ30
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+
+
             };
         }
 

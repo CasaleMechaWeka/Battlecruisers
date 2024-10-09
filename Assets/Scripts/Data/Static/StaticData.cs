@@ -38,7 +38,7 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_PvPLEVELS = 9;
         public const int NUM_OF_STANDARD_LEVELS = 31;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
-        public const int NUM_OF_SIDEQUESTS = 24;
+        public const int NUM_OF_SIDEQUESTS = 30;
 
 
 #if IS_DEMO
@@ -610,7 +610,7 @@ namespace BattleCruisers.Data.Static
                 // Ultras
                 { Buildings.NovaArtillery, 0 },
                 { Buildings.UltraCIWS, 18 },
-                { Buildings.SledgehammerCannon, 30 }
+                { Buildings.Sledgehammer, 30 }
             };
         }
 
