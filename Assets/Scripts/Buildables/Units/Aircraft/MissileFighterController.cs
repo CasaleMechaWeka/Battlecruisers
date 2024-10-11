@@ -20,6 +20,7 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -29,10 +30,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
         private IExactMatchTargetFilter _exactMatchTargetFilter;
         private IMovementController _figherMovementController;
-        private BarrelController _barrelController;
         private IAngleHelper _angleHelper;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
-
+        [SerializeField]
+        private List<AircraftBarrelWrapper> barrelWrappers;  // New list for multiple barrel wrappers
+        private BarrelController _barrelController;
         public float enemyFollowDetectionRangeInM;
 
         private const float PATROLLING_VELOCITY_DIVISOR = 2;
@@ -68,7 +70,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
             Assert.IsNotNull(_barrelController);
             _barrelController.StaticInitialise();
-            AddDamageStats(_barrelController.DamageCapability);
+            foreach (var barrelWrapper in barrelWrappers)
+            {
+                Assert.IsNotNull(barrelWrapper);
+                barrelWrapper.StaticInitialise();
+                AddDamageStats(barrelWrapper.DamageCapability);
+            }
         }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -174,6 +181,24 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IRankedTargetTracker shootableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
             _shootableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(shootableTargetTracker);
             _shootableTargetProcessor.AddTargetConsumer(_barrelController);
+            foreach (var barrelWrapper in barrelWrappers)
+            {
+                if (barrelWrapper != null)
+                {
+                    // Set up target detection for each barrel wrapper
+                    ManualDetectorProvider shootableDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
+                        Transform,
+                        _barrelController.TurretStats.RangeInM,  // Use the wrapper's range stats
+                        _targetFactories.RangeCalculatorProvider.BasicCalculator);
+                    ITargetFinder shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(shootableDetectorProvider.TargetDetector, _exactMatchTargetFilter);
+                    
+                    IRankedTargetTracker wrapperTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(shootableTargetFinder, shootableTargetRanker);
+                    ITargetProcessor wrapperTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(wrapperTargetTracker);
+
+                    // Add the wrapper as a consumer of the target processor
+                    wrapperTargetProcessor.AddTargetConsumer(barrelWrapper);
+                }
+            }
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
