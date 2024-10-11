@@ -9,16 +9,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// </summary>
     public class PvPGoatherd : PvPCruiser
     {
-        public float OffenseFireRate;
+        public float MastStructureBuildRate;
 
         public override void Initialise(IPvPCruiserArgs args)
         {
             base.Initialise(args);
 
-            Assert.IsTrue(OffenseFireRate > 0);
+            Assert.IsTrue(MastStructureBuildRate > 0);
 
-            IPvPBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(OffenseFireRate);
-            CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
+            IPvPBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(MastStructureBuildRate);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders.Add(buildRateBoostProvider);
         }
 
         protected override void Start()

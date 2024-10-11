@@ -18,7 +18,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override bool HasSingleSprite => true;
 
 
-
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
         // Visibility 
@@ -291,10 +290,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         protected override void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IPvPBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)
+            IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
         {
-            base.AddBuildRateBoostProviders(globalBoostProviders, rocketBuildingsBuildRateBoostProvidersList);
-            rocketBuildingsBuildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders);
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders);
         }
     }
 }
