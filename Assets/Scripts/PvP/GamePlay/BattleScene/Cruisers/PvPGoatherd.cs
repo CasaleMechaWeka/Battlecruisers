@@ -3,17 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-
-    class Person
-    {
-
-    }
-
-
-
-
-
-
     /// <summary>
     /// Perks:
     /// + Increases offensives fire rate
