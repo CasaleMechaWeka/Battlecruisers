@@ -32,12 +32,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public IPvPTarget Target { get; private set; }
 
+        public GameObject rocketSprite; //for making more complicated rocket sprites disappear on detonation
+
+
         public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
 
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
             Assert.IsNotNull(_rocketTarget);
+
+            if (rocketSprite != null)
+            {
+                rocketSprite.SetActive(true); // Enable the sprite on initialization
+            }
         }
 
         public override void Activate(PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats> activationArgs)
@@ -81,6 +89,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             timeStamp = Time.time;
             SetRocketTargetVisibleClientRpc(true);
             _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+
+            if (rocketSprite != null)
+            {
+                rocketSprite.SetActive(true);
+            }
         }
 
         protected override void OnActiveClient(Vector3 velocity, float gravityScale, bool isAlive)
@@ -98,6 +111,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.OnImpactCleanUp();
             _rocketTarget.GameObject.SetActive(false);
             SetRocketTargetVisibleClientRpc(false);
+
+             if (rocketSprite != null)
+            {
+                rocketSprite.SetActive(false);
+            }
 
             isVisible = false;
             timeStamp = Time.time;
