@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers
     /// </summary>
     public class Megalith : Cruiser //Change scripts so it boosts all buildables health
     {
-        public float ultrasBuildRateBoost;
+        public float buildingHealthBoost;
 
         public override void Initialise(ICruiserArgs args)
         {
@@ -18,14 +18,14 @@ namespace BattleCruisers.Cruisers
             if (applicationModel.SelectedLevel == 39) //This is where UltraCruiser Level is designated
             {
                 SetUltraCruiserHealth(args);
-                ultrasBuildRateBoost = SetUltraCruiserUtility(args, ultrasBuildRateBoost);
+                buildingHealthBoost = SetUltraCruiserUtility(args, buildingHealthBoost);
             }
             base.Initialise(args);
 
-            Assert.IsTrue(ultrasBuildRateBoost > 0);
+            Assert.IsTrue(buildingHealthBoost > 0);
 
-            IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(ultrasBuildRateBoost);
-            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders.Add(boostProvider);
+            IBoostProvider buildingHealthBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingHealthBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingHealth.AllBuildingsProviders.Add(buildingHealthBoostProvider);
         }
     }
 }

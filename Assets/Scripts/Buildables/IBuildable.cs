@@ -44,6 +44,7 @@ namespace BattleCruisers.Buildables
         float CostInDroneS { get; }
         ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
         IBoostable BuildProgressBoostable { get; }
+        IBoostable HealthBoostable { get; }
         bool IsInitialised { get; }
         ICruiser ParentCruiser { get; }
         ICruiser EnemyCruiser { get; }

@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         private bool _followDamagable;
         public Image variantIcon;
         private Vector2 _offset;
-        
+
         [SerializeField]
         private bool manualOffsetOverride = false; // Checkbox to enable manual override
 
@@ -55,8 +55,8 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         public void OverrideHealth(IDamagable damagable)
         {
             Assert.IsNotNull(damagable);
-            Assert.IsTrue(damagable.Health > 0);
-            _maxHealth = _damagable.Health;
+            Assert.IsTrue(damagable.MaxHealth > 0);
+            _maxHealth = _damagable.MaxHealth;
         }
 
         private void Damagable_HealthChanged(object sender, EventArgs e)
@@ -76,13 +76,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         {
             Vector3 parentPosition = _damagable.GameObject.transform.position;
             Vector2 offsetToUse = manualOffsetOverride ? manualOffset : Offset;
-            
+
             Vector3 newPosition = new Vector3(
                 parentPosition.x + offsetToUse.x,
                 parentPosition.y + offsetToUse.y,
                 transform.position.z);
 
-        //    Debug.Log($"UpdatePosition: {gameObject.name} ParentPosition: {parentPosition}, Offset: {offsetToUse}, NewPosition: {newPosition}");
+            //    Debug.Log($"UpdatePosition: {gameObject.name} ParentPosition: {parentPosition}, Offset: {offsetToUse}, NewPosition: {newPosition}");
 
             transform.position = newPosition;
         }

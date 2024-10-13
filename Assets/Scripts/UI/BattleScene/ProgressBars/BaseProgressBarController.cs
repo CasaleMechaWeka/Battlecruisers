@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-    public abstract class BaseProgressBarController : MonoBehaviourWrapper
+	public abstract class BaseProgressBarController : MonoBehaviourWrapper
 	{
 		private float _outlineWidth;
 
@@ -18,9 +18,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		{
 			get
 			{
-				return 
-                    progressBarOutline.enabled 
-                    && progressSoFar.enabled;
+				return
+					progressBarOutline.enabled
+					&& progressSoFar.enabled;
 			}
 		}
 
@@ -32,13 +32,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 		protected void OnProgressChanged(float newProgress)
 		{
-			Assert.IsTrue(newProgress >= 0 && newProgress <= 1);
+			Assert.IsTrue(newProgress >= 0 && newProgress <= 1, "Build Progress value was out of range: " + newProgress + " expected range: 0...1");
 
-            if (this == null)
-            {
-                // We have been destroyed
-                return;
-            }
+			if (this == null)
+			{
+				// We have been destroyed
+				return;
+			}
 
 			if (newProgress == 0)
 			{
@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			{
 				OnProgressHitsOne();
 			}
-			else if(!AreImagesEnabled)
+			else if (!AreImagesEnabled)
 			{
 				ShowProgressBar();
 			}
@@ -72,13 +72,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 		private void ShowProgressBar()
 		{
-            Logging.VerboseMethod(Tags.PROGRESS_BARS);
+			Logging.VerboseMethod(Tags.PROGRESS_BARS);
 			EnableImages(true);
 		}
 
 		private void HideProgressBar()
 		{
-            Logging.VerboseMethod(Tags.PROGRESS_BARS);
+			Logging.VerboseMethod(Tags.PROGRESS_BARS);
 			EnableImages(false);
 		}
 
