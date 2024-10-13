@@ -45,6 +45,8 @@ namespace BattleCruisers.Buildables.Buildings
         private bool isImmune = false;
         public int variantIndex { get; set; }
         private bool isAppliedVariant = false;
+        [SerializeField]
+        private List<GameObject> additionalRenderers = new List<GameObject>();
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -64,6 +66,23 @@ namespace BattleCruisers.Buildables.Buildings
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
             variantIndex = -1;
+
+            foreach (var renderer in additionalRenderers)
+            {
+                SetRendererVisibility(renderer, false);
+            }
+        }
+
+        private void SetRendererVisibility(GameObject obj, bool isVisible)
+        {
+            if (obj != null)
+            {
+                SpriteRenderer[] spriteRenderers = obj.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sr in spriteRenderers)
+                {
+                    sr.enabled = isVisible;
+                }
+            }
         }
 
         public void OverwriteComparableItem(string name, string description)
@@ -193,6 +212,30 @@ namespace BattleCruisers.Buildables.Buildings
             if (ParentCruiser.IsPlayerCruiser)
             {
                 _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+            }
+
+            foreach (var renderer in additionalRenderers)
+            {
+                SetRendererVisibility(renderer, false);
+            }
+        }
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+
+            // Show all additional renderers once construction is completed
+            foreach (var renderer in additionalRenderers)
+            {
+                SetRendererVisibility(renderer, true);
+            }
+        }
+
+        public void AddAdditionalRenderer(GameObject renderer)
+        {
+            if (!additionalRenderers.Contains(renderer))
+            {
+                additionalRenderers.Add(renderer);
             }
         }
 

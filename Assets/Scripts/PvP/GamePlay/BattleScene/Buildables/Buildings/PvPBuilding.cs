@@ -22,6 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private Collider2D _collider;
 
+         [SerializeField] 
+        private List<GameObject> additionalRenderers = new List<GameObject>(); // Added for handling additional renderers
         private IPvPDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
         protected IPvPSlot _parentSlot;
 
@@ -77,6 +79,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
             {
                 _doubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
+            }
+
+            foreach (var renderer in additionalRenderers)
+            {
+                SetRendererVisibility(renderer, false);
+            }
+        }
+
+        private void SetRendererVisibility(GameObject obj, bool isVisible)
+        {
+            if (obj != null)
+            {
+                SpriteRenderer[] spriteRenderers = obj.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sr in spriteRenderers)
+                {
+                    sr.enabled = isVisible;
+                }
             }
         }
 
@@ -187,6 +206,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void StartConstruction()
         {
             base.StartConstruction();
+
+            foreach (var renderer in additionalRenderers)
+            {
+                SetRendererVisibility(renderer, false);
+            }
         }
 
         protected override void OnBuildableCompleted()
@@ -195,11 +219,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnBuildableCompleted();
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
             // _coreEngineAudioSource.Play(isSpatial: true, loop: true);
+            foreach (var renderer in additionalRenderers)
+            {
+                SetRendererVisibility(renderer, true);
+            }
         }
         protected override void OnBuildableCompleted_PvPClient()
         {
             base.OnBuildableCompleted_PvPClient();
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+        }
+
+        public void AddAdditionalRenderer(GameObject renderer)
+        {
+            if (!additionalRenderers.Contains(renderer))
+            {
+                additionalRenderers.Add(renderer);
+            }
         }
 
         protected virtual void PlayPlacementSound()
@@ -209,6 +245,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
             }
         }
+
+        
 
         protected override void OnSingleClick()
         {
