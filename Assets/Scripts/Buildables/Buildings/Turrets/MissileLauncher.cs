@@ -8,17 +8,18 @@ using System.Collections.ObjectModel;
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class MissileLauncher : OffenseTurret
-	{
+    {
         // DLC  Have own sound
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.RocketLauncher;
         protected override bool HasSingleSprite => true;
         public ProjectileType projectileType = ProjectileType.Rocket;
         protected override void AddBuildRateBoostProviders(
         IGlobalBoostProviders globalBoostProviders,
-        IList<ObservableCollection<IBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)
+        IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            base.AddBuildRateBoostProviders(globalBoostProviders, rocketBuildingsBuildRateBoostProvidersList);
-            rocketBuildingsBuildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders);
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders);
         }
         protected override ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
         {
@@ -27,5 +28,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                 return _cruiserSpecificFactories.GlobalBoostProviders.RocketBuildingsFireRateBoostProviders;
             }
         }
-	}
+    }
 }

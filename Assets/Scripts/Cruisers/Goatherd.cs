@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers
     /// </summary>
     public class Goatherd : Cruiser
     {
-        public float OffenseFireRate;
+        public float MastStructureBuildRate;
 
         public override void Initialise(ICruiserArgs args)
         {
@@ -18,14 +18,14 @@ namespace BattleCruisers.Cruisers
             if (applicationModel.SelectedLevel == 58) //This is where UltraCruiser Level is designated
             {
                 SetUltraCruiserHealth(args);
-                OffenseFireRate = SetUltraCruiserUtility(args, OffenseFireRate);
+                MastStructureBuildRate = SetUltraCruiserUtility(args, MastStructureBuildRate);
             }
             base.Initialise(args);
 
-            Assert.IsTrue(OffenseFireRate > 0);
+            Assert.IsTrue(MastStructureBuildRate > 0);
 
-            IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(OffenseFireRate);
-            CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
+            IBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(MastStructureBuildRate);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders.Add(buildRateBoostProvider);
         }
     }
 }

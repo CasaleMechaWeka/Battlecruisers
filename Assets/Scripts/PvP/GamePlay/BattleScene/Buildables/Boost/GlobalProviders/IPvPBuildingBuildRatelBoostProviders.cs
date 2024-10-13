@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders
 {
@@ -17,5 +16,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ObservableCollection<IPvPBoostProvider> DroneBuildingsProviders { get; }
         ObservableCollection<IPvPBoostProvider> AllBuildingsProviders { get; }
         ObservableCollection<IPvPBoostProvider> TacticalUltrasProviders { get; }
+        ObservableCollection<IPvPBoostProvider> MastStructureProviders { get; }
     }
 }
