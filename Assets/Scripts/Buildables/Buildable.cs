@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.BuildProgress;
@@ -53,10 +53,12 @@ namespace BattleCruisers.Buildables
         protected ICruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
+        protected IBoostableGroup _healthBoostableGroup;
         // Boost resulting from adjacent local boosters
         protected IBoostableGroup _localBoosterBoostableGroup;
         protected BuildableProgressController _buildableProgress;
 
+        private float maxHealthBase;
         public string stringKeyName;
         public string keyName { get; set; }
         public int numOfDronesRequired;
@@ -73,6 +75,7 @@ namespace BattleCruisers.Buildables
         public int NumOfDronesRequired => numOfDronesRequired;
         public float BuildTimeInS => buildTimeInS;
         public IBoostable BuildProgressBoostable { get; private set; }
+        public IBoostable HealthBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
@@ -186,6 +189,8 @@ namespace BattleCruisers.Buildables
             _parent = parent;
             _healthBar = healthBar;
 
+            maxHealthBase = MaxHealth;
+
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
@@ -252,6 +257,7 @@ namespace BattleCruisers.Buildables
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            HealthBoostable = _factoryProvider.BoostFactory.CreateBoostable();
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
@@ -273,6 +279,7 @@ namespace BattleCruisers.Buildables
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
         }
 
         /// <summary>
@@ -301,13 +308,35 @@ namespace BattleCruisers.Buildables
 
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-
+            _healthBoostableGroup = CreateHealthBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+            _healthBoostableGroup.BoostChanged += HealthBoostChanged;
+            HealthBoostChanged(this, EventArgs.Empty);
         }
 
-
+        private void HealthBoostChanged(object sender, EventArgs e)
+        {
+            maxHealth = maxHealthBase * HealthBoostable.BoostMultiplier;
+            _healthTracker.OverrideMaxHealth(maxHealth);
+            HealthBar.OverrideHealth(this);
+        }
 
         public void Activate(TActivationArgs activationArgs, Faction faction)
         {
+        }
+        private IBoostableGroup CreateHealthBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
+        {
+            IBoostableGroup healthBoostableGroup = boostFactory.CreateBoostableGroup();
+            healthBoostableGroup.AddBoostable(healthBoostable);
+
+            IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
+            AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
+
+            foreach (ObservableCollection<IBoostProvider> healthBoostProviders in healthBoostProvidersList)
+            {
+                healthBoostableGroup.AddBoostProvidersList(healthBoostProviders);
+            }
+
+            return healthBoostableGroup;
         }
 
         private IBoostableGroup CreateBuildRateBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
@@ -334,6 +363,13 @@ namespace BattleCruisers.Buildables
         protected virtual void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+        {
+            Logging.Log(Tags.BOOST, this);
+        }
+
+        protected virtual void AddHealthBoostProviders(
+            IGlobalBoostProviders globalBoostProviders,
+            IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);
         }
@@ -485,6 +521,7 @@ namespace BattleCruisers.Buildables
 
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();
+            _healthBoostableGroup.CleanUp();
 
             _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
 

@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         public ObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }
         public ObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; }
         public ObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; }
-        
+
         public ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
 
         public ObservableCollection<IBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
@@ -22,6 +22,8 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
 
         public IBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         public IUnitBuildRatelBoostProviders UnitBuildRate { get; }
+
+        public IBuildingHealthlBoostProviders BuildingHealth { get; }
 
         public GlobalBoostProviders()
         {
@@ -37,6 +39,8 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
 
             BuildingBuildRate = new BuildingBuildRatelBoostProviders();
             UnitBuildRate = new UnitBuildRatelBoostProviders();
+
+            BuildingHealth = new BuildingHealthlBoostProviders();
         }
-	}
+    }
 }

@@ -7,8 +7,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Boost
 {
     public class BoostableGroup : IBoostableGroup
-	{
-		private readonly IBoostConsumer _boostConsumer;
+    {
+        private readonly IBoostConsumer _boostConsumer;
         private readonly IList<IBoostable> _boostables;
         private bool _isCleanedUp;
 
@@ -49,12 +49,12 @@ namespace BattleCruisers.Buildables.Boost
             _boostables.Add(boostable);
             boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
         }
-		
-		public bool RemoveBoostable(IBoostable boostable)
-		{
+
+        public bool RemoveBoostable(IBoostable boostable)
+        {
             Assert.IsTrue(_boostables.Contains(boostable));
             return _boostables.Remove(boostable);
-		}
+        }
 
         public void AddBoostProvidersList(ObservableCollection<IBoostProvider> boostProviders)
         {
@@ -71,22 +71,22 @@ namespace BattleCruisers.Buildables.Boost
 
         private void BoostProviders_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-			switch (e.Action)
-			{
+            switch (e.Action)
+            {
                 case NotifyCollectionChangedAction.Add:
                     Assert.AreEqual(1, e.NewItems.Count);
-					((IBoostProvider)e.NewItems[0]).AddBoostConsumer(_boostConsumer);
-					break;
+                    ((IBoostProvider)e.NewItems[0]).AddBoostConsumer(_boostConsumer);
+                    break;
 
-				case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Remove:
                     Assert.AreEqual(1, e.OldItems.Count);
                     ((IBoostProvider)e.OldItems[0]).RemoveBoostConsumer(_boostConsumer);
-					break;
-			}
+                    break;
+            }
         }
 
-		public void CleanUp()
-		{
+        public void CleanUp()
+        {
             Assert.IsFalse(_isCleanedUp, "CleanUp() should only be called once.");
 
             foreach (ObservableCollection<IBoostProvider> boostProviders in _boostProviders)
@@ -97,11 +97,11 @@ namespace BattleCruisers.Buildables.Boost
                 }
 
                 boostProviders.CollectionChanged -= BoostProviders_CollectionChanged;
-			}
+            }
 
-			_boostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
+            _boostConsumer.BoostChanged -= _boostConsumer_BoostChanged;
 
             _isCleanedUp = true;
-		}
+        }
     }
 }

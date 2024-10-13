@@ -286,6 +286,11 @@ namespace BattleCruisers.Buildables.Units
             base.InternalDestroy();
         }
 
+        public void AddHealthBoostProviders(ObservableCollection<IBoostProvider> boostProviders)
+        {
+            _healthBoostableGroup.AddBoostProvidersList(boostProviders);
+        }
+
         public void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders)
         {
             _buildRateBoostableGroup.AddBoostProvidersList(boostProviders);
