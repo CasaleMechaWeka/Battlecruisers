@@ -365,7 +365,7 @@ namespace BattleCruisers.Data
                 if (i < _gameModel.Variants.Count)
                 {
                     _gameModel.Variants[i].variantCredits = iCredits;
-                    Debug.Log($"Updated GameModel Variant {i} Price: {iCredits}");
+                    //Debug.Log($"Updated GameModel Variant {i} Price: {iCredits}");
                 }
             }
 
