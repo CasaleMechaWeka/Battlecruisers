@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
@@ -10,7 +9,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -56,7 +54,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked,
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider levelTrashDataList,
-            ITrashTalkProvider sideQuestTrashDataList,  //if this variable is unused after sideQuests are fully implemented, this can be deleted
             INextLevelHelper nextLevelHelper,
             IDataProvider dataProvider)
         {

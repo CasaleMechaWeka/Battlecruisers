@@ -80,22 +80,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(
-                title,
-                unlockedItemSection,
-                defeatMessage,
-                victoryNoLootMessage,
-                demoCompletedScreen,
-                levelName,
-                completedDifficultySymbol,
-                demoHomeButton,
-                levelTrashTalkList,
-                sideQuestTrashTalkList,
-                postTutorialButtonsPanel,
-                postBattleButtonsPanel,
-                postSkirmishButtonsPanel,
-                appraisalSection,
-                appraisalButtonsPanel);
-            Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider, screensSceneStrings);
+                title, unlockedItemSection,
+                defeatMessage, victoryNoLootMessage,
+                demoCompletedScreen, levelName,
+                completedDifficultySymbol, demoHomeButton,
+                levelTrashTalkList, sideQuestTrashTalkList,
+                postTutorialButtonsPanel, postBattleButtonsPanel,
+                postSkirmishButtonsPanel, appraisalSection,
+                appraisalButtonsPanel, applicationModel,
+                prefabFactory, musicPlayer,
+                difficultySpritesProvider, screensSceneStrings);
 
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
@@ -141,39 +135,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         screensSceneStrings,
                         soundPlayer);
             }
-            else if (_applicationModel.Mode == GameMode.Skirmish)
-            {
-                /*
-                string logName = "Battle_End";
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-                if (UnityServices.State != ServicesInitializationState.Uninitialized)
-                {
-                    try
-                    {
-                        AnalyticsService.Instance.CustomData("Battle",
-                                                                            _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
-                                                                                                               logName,
-                                                                                                               _applicationModel.UserWonSkirmish));
-                        AnalyticsService.Instance.Flush();
-                    }
-                    catch (ConsentCheckException e)
-                    {
-                        Debug.Log("Error reason = " + e.Reason.ToString());
-                    }
-                }
-                */
-
-                postBattleState
-                    = new PostSkirmishState(
-                        this,
-                        _applicationModel,
-                        musicPlayer,
-                        screensSceneStrings,
-                        soundPlayer);
-            }
-            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            else if (_applicationModel.Mode == GameMode.Skirmish || _applicationModel.Mode == GameMode.CoinBattle)
             {
                 /*
                 string logName = "Battle_End";

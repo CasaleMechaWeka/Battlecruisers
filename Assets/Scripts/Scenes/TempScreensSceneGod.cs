@@ -279,7 +279,6 @@ namespace BattleCruisers.Scenes
                 testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
                 difficultySpritesProvider,
                 levelTrashDataList,
-                sideQuestTrashDataList,
                 nextLevelHelper,
                 _dataProvider);
         }
