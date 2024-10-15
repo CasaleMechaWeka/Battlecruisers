@@ -326,10 +326,6 @@ namespace BattleCruisers.Scenes
 
             _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
 
-
-            while (!loadPrefabCache.IsCompleted)
-                await Task.Delay(2);
-
             _prefabCache = await loadPrefabCache;
 
             _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager, commonStrings);
@@ -353,7 +349,6 @@ namespace BattleCruisers.Scenes
             await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
-
 
             _applicationModel.DataProvider.SaveGame();
 
