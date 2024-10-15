@@ -72,7 +72,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
-            IDifficultySpritesProvider difficultySpritesProvider,
+            Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashTalkList,
             ITrashTalkProvider sideQuestTrashTalkList,
             ILocTable screensSceneStrings)
@@ -89,7 +89,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 postSkirmishButtonsPanel, appraisalSection,
                 appraisalButtonsPanel, applicationModel,
                 prefabFactory, musicPlayer,
-                difficultySpritesProvider, screensSceneStrings);
+                difficultyIndicators, screensSceneStrings);
 
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
@@ -235,7 +235,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             SetupBackground(postBattleState.ShowVictoryBackground);
-            await ShowDifficultySymbolIfNeeded(postBattleState, difficultySpritesProvider);
+            ShowDifficultySymbolIfNeeded(postBattleState, difficultyIndicators);
         }
 
         private ILootManager CreateLootManager(IPrefabFactory prefabFactory)
@@ -299,11 +299,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             background.Initalise(isVictory);
         }
 
-        private async Task ShowDifficultySymbolIfNeeded(IPostBattleState postBattleState, IDifficultySpritesProvider difficultySpritesProvider)
+        private void ShowDifficultySymbolIfNeeded(IPostBattleState postBattleState, Sprite[] difficultyIndicators)
         {
             if (postBattleState.ShowDifficultySymbol)
             {
-                await completedDifficultySymbol.InitialiseAsync(postBattleState.Difficulty, difficultySpritesProvider);
+                completedDifficultySymbol.Initialise(postBattleState.Difficulty, difficultyIndicators);
                 completedDifficultySymbol.gameObject.SetActive(true);
             }
         }

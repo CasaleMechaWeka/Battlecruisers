@@ -116,6 +116,9 @@ namespace BattleCruisers.Scenes
         public string requiredVer; // App version from Cloud;
         private static bool IsFirstTimeLoad = true;
         IPrefabCache _prefabCache;
+        [SerializeField]
+        private Sprite[] difficultyIndicators;
+
 
         async void Start()
         {
@@ -284,7 +287,7 @@ namespace BattleCruisers.Scenes
             sideQuestTrashDataList.Initialise(storyStrings);
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
-            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
+
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
 
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
@@ -358,7 +361,7 @@ namespace BattleCruisers.Scenes
             {
                 _applicationModel.ShowPostBattleScreen = false;
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
-                await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
+                await GoToPostBattleScreenAsync(screensSceneStrings);
 #if !THIRD_PARTY_PUBLISHER
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
@@ -393,7 +396,7 @@ namespace BattleCruisers.Scenes
 
             // After potentially initialising post battle screen, because that can modify the data model.
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
-            await InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
+            await InitialiseLevelsScreenAsync(nextLevelHelper);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
@@ -468,10 +471,10 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
         }
-        private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
+        private async Task GoToPostBattleScreenAsync(ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, levelTrashDataList, sideQuestTrashDataList, screensSceneStrings);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList, screensSceneStrings);
             //--->CODE CHANGED BY ANUJ
             if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
@@ -571,7 +574,7 @@ namespace BattleCruisers.Scenes
             premiumConfirmationScreen.gameObject.SetActive(true);
         }
 
-        private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
+        private async Task InitialiseLevelsScreenAsync(INextLevelHelper nextLevelHelper)
         {
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
@@ -580,7 +583,7 @@ namespace BattleCruisers.Scenes
                 _soundPlayer,
                 levels,
                 testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
-                difficultySpritesProvider,
+                difficultyIndicators,
                 levelTrashDataList,
                 nextLevelHelper,
                 _dataProvider);

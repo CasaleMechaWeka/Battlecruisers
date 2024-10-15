@@ -3,10 +3,10 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -27,12 +27,12 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked,
             ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
-            IDifficultySpritesProvider difficultySpritesProvider,
+            Sprite[] difficultyIndicators,
             ITrashTalkProvider trashDataList,
             int setIndex)
         {
             Assert.IsNotNull(navigationFeedbackButton);
-            Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider, trashDataList);
+            Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultyIndicators, trashDataList);
 
             SetIndex = setIndex;
 
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 LevelInfo level = allLevels[firstLevelIndex + i];
                 ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(level.Num);
 
-                await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData, levelsScreen);
+                button.Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData, levelsScreen);
             }
 
             // Set up Secret levels

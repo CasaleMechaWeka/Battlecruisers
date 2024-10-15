@@ -2,8 +2,6 @@
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,11 +20,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public Sprite defaultBackground, clickedBackground;
         public Color battlecruisersRed;
 
-        public async Task InitialiseAsync(
+        public void Initialise(
             ISingleSoundPlayer soundPlayer,
             LevelInfo level,
             IScreensSceneGod screensSceneGod,
-            IDifficultySpritesProvider difficultySpritesProvider,
+            Sprite[] difficultyIndicators,
             int numOfLevelsUnlocked,
             ITrashTalkData trashTalkData,
             IDismissableEmitter parent)
@@ -34,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             base.Initialise(soundPlayer, parent: parent);
 
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
-            Helper.AssertIsNotNull(level, screensSceneGod, difficultySpritesProvider, trashTalkData);
+            Helper.AssertIsNotNull(level, screensSceneGod, difficultyIndicators, trashTalkData);
 
             _level = level;
             _screensSceneGod = screensSceneGod;
@@ -42,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             levelNumberText.text = level.Num.ToString();
             levelNameText.text = trashTalkData.EnemyName;
             captainImage.sprite = trashTalkData.EnemySprite;
-            await levelStatsController.InitialiseAsync(level.DifficultyCompleted, difficultySpritesProvider);
+            levelStatsController.Initialise(level.DifficultyCompleted, difficultyIndicators);
 
             Enabled = numOfLevelsUnlocked >= level.Num;
         }

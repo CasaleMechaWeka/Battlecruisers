@@ -6,7 +6,6 @@ using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -52,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             ISingleSoundPlayer soundPlayer,
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,
-            IDifficultySpritesProvider difficultySpritesProvider,
+            Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashDataList,
             INextLevelHelper nextLevelHelper,
             IDataProvider dataProvider)
@@ -60,12 +59,12 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
-            Helper.AssertIsNotNull(levels, difficultySpritesProvider, levelTrashDataList, nextLevelHelper);
+            Helper.AssertIsNotNull(levels, difficultyIndicators, levelTrashDataList, nextLevelHelper);
 
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
             _nextLevelHelper = nextLevelHelper;
 
-            await InitialiseLevelSetsAsync(soundPlayer, screensSceneGod, dataProvider, levels, numOfLevelsUnlocked, difficultySpritesProvider, levelTrashDataList);
+            await InitialiseLevelSetsAsync(soundPlayer, screensSceneGod, dataProvider, levels, numOfLevelsUnlocked, difficultyIndicators, levelTrashDataList);
 
             _nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
             nextSetButton.Initialise(soundPlayer, _nextSetCommand);
@@ -81,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IDataProvider dataProvider,
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,
-            IDifficultySpritesProvider difficultySpritesProvider,
+            Sprite[] difficultyIndicators,
             ITrashTalkProvider trashDataList)
         {
             LevelsSetController[] levelSets = GetComponentsInChildren<LevelsSetController>();
@@ -91,7 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             for (int j = 0; j < levelSets.Length; j++)
             {
                 LevelsSetController levelsSet = levelSets[j];
-                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, dataProvider, difficultySpritesProvider, trashDataList, setIndex: j);
+                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, dataProvider, difficultyIndicators, trashDataList, setIndex: j);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }

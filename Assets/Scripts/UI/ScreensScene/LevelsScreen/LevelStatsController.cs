@@ -1,7 +1,4 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -12,9 +9,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     {
         public Image difficultyCompletedImage;
 
-        public async Task InitialiseAsync(Difficulty? levelCompletedDifficulty, IDifficultySpritesProvider difficultySpritesProvider)
+        public void Initialise(Difficulty? levelCompletedDifficulty, Sprite[] difficultyIndicators)
         {
-            Assert.IsNotNull(difficultySpritesProvider);
+            Assert.IsNotNull(difficultyIndicators);
             Assert.IsNotNull(difficultyCompletedImage);
 
             if (levelCompletedDifficulty == null)
@@ -23,8 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 return;
             }
 
-            ISpriteWrapper difficultySprite = await difficultySpritesProvider.GetSpriteAsync((Difficulty)levelCompletedDifficulty);
-            difficultyCompletedImage.sprite = difficultySprite.Sprite;
+            difficultyCompletedImage.sprite = difficultyIndicators[(int)levelCompletedDifficulty];
         }
 
         public void SetColour(Color color)
