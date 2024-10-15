@@ -14,5 +14,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM);
         IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM);
         IList<Vector2> FindSpySatellitePatrolPoints(Vector2 satellitePosition, float cruisingAltitudeInM);
+        IList<Vector2> FindMissileFighterPatrolPoints(float cruisingAltitudeInM);
     }
 }

@@ -185,17 +185,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             {
                 if (barrelWrapper != null)
                 {
-                    // Set up target detection for each barrel wrapper
                     ManualDetectorProvider shootableDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
                         Transform,
-                        _barrelController.TurretStats.RangeInM,  // Use the wrapper's range stats
+                        _barrelController.TurretStats.RangeInM, 
                         _targetFactories.RangeCalculatorProvider.BasicCalculator);
                     ITargetFinder shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(shootableDetectorProvider.TargetDetector, _exactMatchTargetFilter);
                     
                     IRankedTargetTracker wrapperTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(shootableTargetFinder, shootableTargetRanker);
                     ITargetProcessor wrapperTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(wrapperTargetTracker);
 
-                    // Add the wrapper as a consumer of the target processor
                     wrapperTargetProcessor.AddTargetConsumer(barrelWrapper);
                 }
             }
