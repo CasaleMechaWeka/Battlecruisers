@@ -20,7 +20,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 return;
             }
 
-            difficultyCompletedImage.sprite = difficultyIndicators[(int)levelCompletedDifficulty];
+            int difficultyValue = (int)levelCompletedDifficulty - 1;
+            if (difficultyValue < 0)
+                difficultyValue = 0;
+            difficultyCompletedImage.sprite = difficultyIndicators[difficultyValue];
         }
 
         public void SetColour(Color color)
