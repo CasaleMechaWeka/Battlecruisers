@@ -154,11 +154,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// Enemies first come within following range, and then shootable range as the figher closes
         /// in on the enemy.
         /// 
-        /// enemyDetectionRangeInM: 
+        /// enemyFollowDetectionRangeInM: 
         ///		The range at which enemies are detected
         /// barrelController.turretStats.rangeInM:  
         ///		The range at which the turret can shoot enemies
-        /// enemyDetectionRangeInM > barrelController.turretStats.rangeInM
+        /// enemyFollowDetectionRangeInM > barrelController.turretStats.rangeInM
         /// </summary>
         private void SetupTargetDetection()
         {
