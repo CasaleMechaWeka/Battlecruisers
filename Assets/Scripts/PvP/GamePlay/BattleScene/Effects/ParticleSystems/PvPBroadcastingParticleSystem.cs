@@ -29,7 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void Stop()
         {
-            _particleSystem?.Stop();
+            if (_particleSystem != null)
+                _particleSystem.Stop();
         }
 
         private void OnParticleSystemStopped()
