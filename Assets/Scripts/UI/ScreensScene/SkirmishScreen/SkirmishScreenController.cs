@@ -13,6 +13,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
@@ -33,6 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
     {
         private IApplicationModel _applicationModel;
         private IList<HullKey> _unlockedHulls;
+        private List<HullKey> _playableHulls;   //these also include the boss hulls
         private IRandomGenerator _random;
         private StrategyType[] _strategies;
 
@@ -58,7 +60,16 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             Helper.AssertIsNotNull(applicationModel, soundPlayer, commonStrings, screensSceneStrings, prefabFactory);
 
             _applicationModel = applicationModel;
-            _unlockedHulls = applicationModel.DataProvider.GameModel.UnlockedHulls;
+            _unlockedHulls = applicationModel.DataProvider.GameModel.UnlockedHulls.ToList();
+            _playableHulls = _unlockedHulls.ToList();
+
+            if (applicationModel.DataProvider.GameModel.CompletedLevels.Count >= 15)
+                _playableHulls.Add(StaticPrefabKeys.Hulls.ManOfWarBoss);
+            if (applicationModel.DataProvider.GameModel.CompletedLevels.Count >= 31)
+                _playableHulls.Add(StaticPrefabKeys.Hulls.HuntressBoss);
+            if (applicationModel.DataProvider.GameModel.CompletedSideQuests.ToArray().Select(sideQuest => sideQuest.LevelNum).Contains(23))
+                _playableHulls.Add(StaticPrefabKeys.Hulls.FortressPrime);
+
             _random = RandomGenerator.Instance;
             _randomDropdownEntry = screensSceneStrings.GetString("UI/SkirmishScreen/RandomDropdownEntry");
 
@@ -110,7 +121,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         {
             IList<string> hullNames = new List<string>();
 
-            foreach (HullKey hull in _unlockedHulls)
+            foreach (HullKey hull in _playableHulls)
             {
                 // Use cruiser prefab name, as this has been localised
                 ICruiser cruiser = prefabFactory.GetCruiserPrefab(hull);
@@ -207,8 +218,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
             else
             {
-                Assert.IsTrue(adjustedIndex < _unlockedHulls.Count);
-                cruiserKey = _unlockedHulls[adjustedIndex];
+                Assert.IsTrue(adjustedIndex < _playableHulls.Count);
+                cruiserKey = _playableHulls[adjustedIndex];
             }
             if (cruiserKey != _applicationModel.DataProvider.GameModel.PlayerLoadout.Hull)
                 _applicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
