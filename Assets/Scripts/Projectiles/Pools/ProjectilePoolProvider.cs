@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
@@ -17,6 +17,7 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
 
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
+        public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> FiveShellCluster { get; }
 
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
@@ -74,6 +75,12 @@ namespace BattleCruisers.Projectiles.Pools
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.NovaShell,
+                    InitialCapacity.SHELL_LARGE);
+
+            FiveShellCluster
+                = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
+                    factoryProvider,
+                    StaticPrefabKeys.Projectiles.FiveShellCluster,
                     InitialCapacity.SHELL_LARGE);
 
             RocketShellPool
@@ -161,6 +168,7 @@ namespace BattleCruisers.Projectiles.Pools
             ShellsSmallPool.AddCapacity(InitialCapacity.SHELL_SMALL);
             ShellsLargePool.AddCapacity(InitialCapacity.SHELL_LARGE);
             NovaShellPool.AddCapacity(InitialCapacity.SHELL_LARGE);
+            FiveShellCluster.AddCapacity(InitialCapacity.SHELL_LARGE);
             RocketShellPool.AddCapacity(InitialCapacity.SHELL_LARGE);
             BombsPool.AddCapacity(InitialCapacity.BOMB);
             StratBombsPool.AddCapacity(InitialCapacity.BOMB);

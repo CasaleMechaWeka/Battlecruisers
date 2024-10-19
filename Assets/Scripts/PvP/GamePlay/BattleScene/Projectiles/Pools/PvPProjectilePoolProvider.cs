@@ -18,6 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> ShellsLargePool { get; }
 
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> NovaShellPool { get; }
+        public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> FiveShellCluster { get; }
 
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> RocketShellPool { get; }
         public IPvPPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>> ShellsSmallPool { get; }
@@ -75,6 +76,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 = CreatePool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
                     factoryProvider,
                     PvPStaticPrefabKeys.PvPProjectiles.PvPNovaShell,
+                    PvPInitialCapacity.SHELL_LARGE);
+
+            FiveShellCluster
+                = CreatePool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>(
+                    factoryProvider,
+                    PvPStaticPrefabKeys.PvPProjectiles.PvPFiveShellCluster,
                     PvPInitialCapacity.SHELL_LARGE);
 
             RocketShellPool
@@ -163,6 +170,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await ShellsSmallPool.AddCapacity(1);
             await ShellsLargePool.AddCapacity(1);
             await NovaShellPool.AddCapacity(1);
+            await FiveShellCluster.AddCapacity(1);
             await RocketShellPool.AddCapacity(1);
             await BombsPool.AddCapacity(1);
             await StratBombsPool.AddCapacity(1);
@@ -184,6 +192,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await ShellsSmallPool.AddCapacity(PvPInitialCapacity.SHELL_SMALL - 1);
             await ShellsLargePool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
             await NovaShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
+            await FiveShellCluster.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
             await RocketShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
             await BombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
             await StratBombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
