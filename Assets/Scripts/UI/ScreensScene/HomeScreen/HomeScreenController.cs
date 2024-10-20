@@ -110,5 +110,10 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         {
             _screensSceneGod.GoToSkirmishScreen();
         }
+
+        public void ShowNewsPanel()
+        {
+            _screensSceneGod.ShowNewsPanel();
+        }
     }
 }

@@ -446,6 +446,12 @@ namespace BattleCruisers.Scenes
         {
 
         }
+
+        public void ShowNewsPanel()
+        {
+            throw new Exception("ShowNewsPanel method is not implemented");
+        }
+
         private void CleanUp()
         {
             loadoutScreen.DisposeManagedState();

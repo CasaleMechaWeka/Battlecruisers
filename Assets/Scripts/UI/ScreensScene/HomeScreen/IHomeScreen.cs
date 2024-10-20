@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         void GoToLoadoutScreen();
         void GoToSkirmishScreen();
         void GoToMultiplayScreen();
+        void ShowNewsPanel();
         void Quit();
     }
 }

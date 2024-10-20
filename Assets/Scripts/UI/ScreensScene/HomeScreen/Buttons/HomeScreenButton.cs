@@ -1,13 +1,17 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 {
-    public abstract class HomeScreenButton : TextButton
+    public class HomeScreenButton : TextButton
     {
         protected IHomeScreen _homeScreen;
         protected IGameModel _gameModel;
+        [SerializeField]
+        private UnityEvent clickAction;
 
         public virtual void Initialise(ISingleSoundPlayer soundPlayer, IHomeScreen homeScreen, IGameModel gameModel)
         {
@@ -17,6 +21,12 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 
             _homeScreen = homeScreen;
             _gameModel = gameModel;
+        }
+
+        protected override void OnClicked()
+        {
+            base.OnClicked();
+            clickAction.Invoke();
         }
     }
 }
