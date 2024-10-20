@@ -12,7 +12,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSledgehammerCannon : PvPOffenseMultiTurret
     {
-        protected override IPvPSoundKey FiringSound => PvPSoundKeys.PvPFiring.Broadsides;
+        protected override IPvPSoundKey[] FiringSounds => new IPvPSoundKey[]
+        {
+            PvPSoundKeys.PvPFiring.Missile,
+            PvPSoundKeys.PvPFiring.Artillery,
+
+        };
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.Ultra;
 
         protected override void AddBuildRateBoostProviders(

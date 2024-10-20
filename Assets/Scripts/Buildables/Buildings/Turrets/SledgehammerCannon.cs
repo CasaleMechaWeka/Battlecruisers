@@ -12,7 +12,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class SledgehammerCannon : OffenseMultiTurret
     {
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Artillery;
+        protected override ISoundKey[] FiringSounds => new ISoundKey[]
+        {
+            SoundKeys.Firing.Missile,
+            SoundKeys.Firing.Artillery
+        };
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override void AddBuildRateBoostProviders(

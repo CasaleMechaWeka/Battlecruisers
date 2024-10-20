@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IPvPBarrelWrapper[] _barrelWrappers;
 
         // By default have null (no) sound
-        protected virtual IPvPSoundKey FiringSound => null;
+        protected virtual IPvPSoundKey[] FiringSounds => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;
@@ -27,6 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _barrelWrappers = gameObject.GetComponentsInChildren<IPvPBarrelWrapper>();
             Assert.IsNotNull(_barrelWrappers);
+            Assert.IsTrue(_barrelWrappers.Length == FiringSounds.Length);
+
             for (int i = 0; i < _barrelWrappers.Count(); i++)
             {
                 _barrelWrappers[i].StaticInitialise();
@@ -49,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         this,
                         _factoryProvider,
                         _cruiserSpecificFactories,
-                        FiringSound,
+                        FiringSounds[i],
                         _parentSlot.BoostProviders,
                         TurretFireRateBoostProviders,
                         _barrelAnimation);
@@ -66,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 .Initialise(
                     this,
                     _factoryProvider,
-                    FiringSound,
+                    FiringSounds[i],
                     _barrelAnimation);
                 _barrelWrappers[i].ApplyVariantStats(this);
             }

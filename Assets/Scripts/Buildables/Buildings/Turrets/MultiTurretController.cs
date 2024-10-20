@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected IBarrelWrapper[] _barrelWrappers;
 
         // By default have null (no) sound
-        protected virtual ISoundKey FiringSound => null;
+        protected virtual ISoundKey[] FiringSounds => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;
@@ -24,10 +24,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
-
             _barrelWrappers = gameObject.GetComponentsInChildren<IBarrelWrapper>().ToArray();
             Debug.Log("BRWPCNT:" + _barrelWrappers.Count().ToString());
             Assert.IsNotNull(_barrelWrappers);
+            Assert.IsTrue(_barrelWrappers.Length == FiringSounds.Length);
+
             for (int i = 0; i < _barrelWrappers.Count(); i++)
             {
                 _barrelWrappers[i].StaticInitialise();
@@ -50,7 +51,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                         this,
                         _factoryProvider,
                         _cruiserSpecificFactories,
-                        FiringSound,
+                        FiringSounds[i],
                         _parentSlot.BoostProviders,
                         TurretFireRateBoostProviders,
                         _barrelAnimation);
