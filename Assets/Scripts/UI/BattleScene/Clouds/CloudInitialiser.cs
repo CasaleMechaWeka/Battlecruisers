@@ -20,8 +20,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public FogController fog;
         public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
-
-        public SpriteRenderer seaBackgroundSprite;
         public SpriteRenderer underwaterGlowSprite;
         public Image seaShadeCanvas;
 
@@ -61,35 +59,15 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
 
-            // Apply WaterColour to SeaBackground sprite, UnderwaterGlow sprite, and SeaShade canvas
-            if (skyStats is SkyStatsController skyStatsController)
+
+             if (skyStats is SkyStatsController skyStatsController)
             {
-                ApplyWaterColourToElements(skyStatsController.WaterColour);
+                ApplyColoursToElements(skyStatsController.WaterColour, skyStatsController.UnderwaterGlowColour);
             }
         }
 
-        private void ApplyWaterColourToElements(Color waterColour)
+        private void ApplyColoursToElements(Color waterColour, Color underwaterGlowColour)
         {
-            // Set the SeaBackground sprite to WaterColour
-            if (seaBackgroundSprite != null)
-            {
-                seaBackgroundSprite.color = waterColour;
-            }
-            else
-            {
-                Debug.LogError("SeaBackground SpriteRenderer is not assigned! Please assign it in the Inspector.");
-            }
-
-            // Set the UnderwaterGlow sprite to WaterColour
-            if (underwaterGlowSprite != null)
-            {
-                underwaterGlowSprite.color = waterColour;
-            }
-            else
-            {
-                Debug.LogError("UnderwaterGlow SpriteRenderer is not assigned! Please assign it in the Inspector.");
-            }
-
             // Set the SeaShade canvas to WaterColour
             if (seaShadeCanvas != null)
             {
@@ -100,6 +78,15 @@ namespace BattleCruisers.UI.BattleScene.Clouds
                 Debug.LogError("SeaShade Canvas Image is not assigned! Please assign it in the Inspector.");
             }
 
+            // Set the UnderwaterGlow sprite to UnderwaterGlowColour
+            if (underwaterGlowSprite != null)
+            {
+                underwaterGlowSprite.color = underwaterGlowColour;
+            }
+            else
+            {
+                Debug.LogError("UnderwaterGlow SpriteRenderer is not assigned! Please assign it in the Inspector.");
+            }
         }
     }
 }

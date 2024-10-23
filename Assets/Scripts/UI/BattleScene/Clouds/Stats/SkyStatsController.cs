@@ -38,9 +38,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         private Color _fogColour;
         public Color FogColour => _fogColour;
 
-        [SerializeField]
-        private Color _waterColour; // Serialized field for water color, settable in Inspector
-        public Color WaterColour => _waterColour; // Property to expose water color
+        [SerializeField] 
+        private Color _waterColour; 
+        public Color WaterColour => _waterColour; 
+
+        [SerializeField] private Color _underwaterGlowColour; 
+        public Color UnderwaterGlowColour => _underwaterGlowColour;
+
 
         private void Awake()
         {
