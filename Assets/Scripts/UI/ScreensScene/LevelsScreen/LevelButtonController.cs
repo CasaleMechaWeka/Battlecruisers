@@ -1,8 +1,10 @@
-﻿using BattleCruisers.Scenes;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -19,6 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public int disabledCaptainImageWidth = 150;
         public Sprite defaultBackground, clickedBackground;
         public Color battlecruisersRed;
+        private IApplicationModel applicationModel;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
@@ -33,6 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
             Helper.AssertIsNotNull(level, screensSceneGod, difficultyIndicators, trashTalkData);
+            Assert.IsNotNull(applicationModel = ApplicationModelProvider.ApplicationModel);
 
             _level = level;
             _screensSceneGod = screensSceneGod;
@@ -48,6 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         protected override void OnClicked()
         {
             base.OnClicked();
+            applicationModel.Mode = GameMode.Campaign;
             _screensSceneGod.GoToTrashScreen(_level.Num);
         }
 
