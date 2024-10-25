@@ -10,8 +10,6 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityEngine.Animations;
-//using UnityEditor.Animations;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
@@ -66,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _commonStrings = commonStrings;
             _storyStrings = storyStrings;
 
-            startBattleButton.Initialise(soundPlayer, LoadBattle);
+            startBattleButton.Initialise(soundPlayer, StartBattle);
             homeButton.Initialise(soundPlayer, Cancel);
         }
 
@@ -127,11 +125,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             if (enemyModel != null)
                 Destroy(enemyModel);
             _screensSceneGod.LoadBattleScene();
-        }
-
-        private void LoadBattle()
-        {
-            Invoke("StartBattle", 0.5f);
         }
 
         public override void Cancel()

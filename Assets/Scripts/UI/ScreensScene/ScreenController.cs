@@ -6,21 +6,21 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene
 {
-    public abstract class ScreenController : PresentableController
-	{ 
-		protected IScreensSceneGod _screensSceneGod;
+    public class ScreenController : PresentableController
+    {
+        protected IScreensSceneGod _screensSceneGod;
         protected IMultiplayScreensSceneGod _multiplayScreensSceneGod;
         public bool IsInitialised => _screensSceneGod != null;
 
-        protected void Initialise(IScreensSceneGod screensSceneGod)
-		{
+        public void Initialise(IScreensSceneGod screensSceneGod)
+        {
             base.Initialise();
 
             Assert.IsNotNull(screensSceneGod);
-			_screensSceneGod = screensSceneGod;
-		}
+            _screensSceneGod = screensSceneGod;
+        }
 
-        protected void Initialise(IMultiplayScreensSceneGod multiplayScreensSceneGod)
+        public void Initialise(IMultiplayScreensSceneGod multiplayScreensSceneGod)
         {
             base.Initialise();
 

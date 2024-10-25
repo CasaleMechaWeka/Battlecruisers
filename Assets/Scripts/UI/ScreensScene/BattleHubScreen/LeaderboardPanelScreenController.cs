@@ -1,7 +1,4 @@
-using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using Unity.Services.Leaderboards;
@@ -21,10 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject noData;
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
-            IDataProvider dataProvider,
-            INextLevelHelper nextLevelHelper)
+            IPrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
             noData.SetActive(false);
@@ -50,16 +44,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                             break;
                         if (entry != null)
                         {
-                            IList<string> list = entry.PlayerName.Split("#").ToList<string>();
+                            IList<string> list = entry.PlayerName.Split("#").ToList();
                             if (entry.Rank == 0)
                             {
                                 TopPlayer.gameObject.SetActive(true);
-                                TopPlayer.Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
+                                TopPlayer.Initialise(prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
                             }
                             else
                             {
-                                GameObject panel = Instantiate(leaderboardPanelPrefab, leaderboardPanelParent) as GameObject;
-                                panel.GetComponent<LeaderboradPanel>().Initialise(soundPlayer, prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
+                                GameObject panel = Instantiate(leaderboardPanelPrefab, leaderboardPanelParent);
+                                panel.GetComponent<LeaderboradPanel>().Initialise(prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
                             }
                             i++;
                         }

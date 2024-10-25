@@ -1,6 +1,5 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject Captain;
         public GameObject PlaceNumber;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer,
+        public void Initialise(
             IPrefabFactory prefabFactory,
             string playerName,
             double eol,

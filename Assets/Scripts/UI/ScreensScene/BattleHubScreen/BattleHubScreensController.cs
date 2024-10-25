@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton;
         public GameObject coins;
 
-        public BattlePanelScreenController battlePanel;
+        public ScreenController battlePanel;
         public InfiniteLoadoutScreenController loadoutPanel;
         //    public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
@@ -86,12 +86,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             battleButton.Initialise(_soundPlayer, GotoPvPMode);
             coinBattleButton.Initialise(_soundPlayer, GotoCoinBattle);
 
-            battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-            leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            battlePanel.Initialise(screensSceneGod);
+            leaderboardPanel.Initialise(screensSceneGod, prefabFactory);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, dataProvider);
 
-            coinBattleController.Initialise(screensSceneGod, _applicationModel, _soundPlayer, prefabFactory);
+            coinBattleController.Initialise(screensSceneGod, _applicationModel);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
 
             continueTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaign");
@@ -160,7 +160,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             playerInfoPanelController.gameObject.SetActive(true);
             ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
             ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
-            leaderboardPanel.Initialise(_screensSceneGod, _soundPlayer, _prefabFactory, _dataProvider, _nextLevelHelper);
+            leaderboardPanel.Initialise(_screensSceneGod, _prefabFactory);
             GoToScreen(leaderboardPanel);
             UnselectAll();
         }
@@ -242,7 +242,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 else
                 {
                     _applicationModel.Mode = GameMode.CoinBattle;
-                    coinBattleController.BattleButtonClicked();
+                    coinBattleController.Battle();
                 }
             }
         }
@@ -251,7 +251,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
 
             _applicationModel.Mode = GameMode.CoinBattle;
-            coinBattleController.BattleButtonClicked();
+            coinBattleController.Battle();
             CanvasGroup AIv1ButtonCanvasGroup = coinBattleButton.GetComponent<CanvasGroup>();
             AIv1ButtonCanvasGroup.blocksRaycasts = false;
             AIv1ButtonCanvasGroup.interactable = false;

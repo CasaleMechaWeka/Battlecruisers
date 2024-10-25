@@ -1,8 +1,6 @@
 using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 using UnityEngine;
 using DG.Tweening;
@@ -46,10 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ButtonController navLeftButton;
         public GameObject loadingSpinner;
         private IScreensSceneGod _screenSceneGod;
-        private ISingleSoundPlayer _singleSoundPlayer;
-        private IPrefabFactory _prefabFactory;
         private IDataProvider _dataProvider;
-        private INextLevelHelper _nextLevelHelper;
 
         public ILocTable screensSceneTable;
 
@@ -58,17 +53,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
-            IDataProvider dataProvider,
-            INextLevelHelper nextLevelHelper)
+            IDataProvider dataProvider)
         {
             loadingSpinner.SetActive(false);
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(battleButton, navRightButton, navLeftButton);
 
             _screenSceneGod = screensSceneGod;
-            _singleSoundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
 
             battleButton.Initialise(soundPlayer, StartBattle);

@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             _random = RandomGenerator.Instance;
             _randomDropdownEntry = screensSceneStrings.GetString("UI/SkirmishScreen/RandomDropdownEntry");
 
-            battleButton.Initialise(soundPlayer, BattleButtonClicked, this);
+            battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
             difficultyDropdown.Initialise(FindDefaultDifficulty(), commonStrings);
             InitialiseStrategyDropdown(commonStrings);
@@ -160,10 +160,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        public void BattleButtonClicked()
-        {
-            Invoke("Battle", 0.5f);
-        }
         public void Battle()
         {
             _applicationModel.Mode = GameMode.Skirmish;
