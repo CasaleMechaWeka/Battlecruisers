@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Services.Authentication;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;

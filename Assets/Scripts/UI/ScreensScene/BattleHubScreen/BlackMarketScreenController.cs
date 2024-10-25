@@ -1,5 +1,4 @@
 using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -83,11 +82,10 @@ namespace BattleCruisers.UI.ScreensScene
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
-            IDataProvider dataProvider,
-            INextLevelHelper nextLevelHelper)
+            IDataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
-            Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper, iapContainer);
+            Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, prefabFactory, dataProvider, iapContainer);
             Helper.AssertIsNotNull(iapIcon, iapName, iapDescription, iapPrice);
 
             _dataProvider = dataProvider;

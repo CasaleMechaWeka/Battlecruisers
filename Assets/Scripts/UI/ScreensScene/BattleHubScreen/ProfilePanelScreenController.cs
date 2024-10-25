@@ -1,5 +1,4 @@
 using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -58,13 +57,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
-            IDataProvider dataProvider,
-            INextLevelHelper nextLevelHelper)
+            IDataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel);
-            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
@@ -75,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             trillion = commonStrings.GetString("Trillion");
             quadrillion = commonStrings.GetString("Quadrillion");
 
-            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
             playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
             selectButton.Initialise(_soundPlayer, OnClickSelectButton);

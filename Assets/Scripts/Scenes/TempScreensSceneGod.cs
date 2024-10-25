@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
@@ -144,14 +143,13 @@ namespace BattleCruisers.Scenes
             }
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
-            INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
-            homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel, nextLevelHelper);
+            homeScreen.Initialise(this, _soundPlayer, _dataProvider);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
-            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
+            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -173,7 +171,7 @@ namespace BattleCruisers.Scenes
 
             // After potentially initialising post battle screen, because that can modify the data model.
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
-            await InitialiseLevelsScreenAsync(nextLevelHelper);
+            await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
             loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
 
@@ -269,7 +267,7 @@ namespace BattleCruisers.Scenes
             //
         }
 
-        private async Task InitialiseLevelsScreenAsync(INextLevelHelper nextLevelHelper)
+        private async Task InitialiseLevelsScreenAsync()
         {
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
@@ -280,7 +278,6 @@ namespace BattleCruisers.Scenes
                 testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
                 difficultyIndicators,
                 levelTrashDataList,
-                nextLevelHelper,
                 _dataProvider);
         }
 

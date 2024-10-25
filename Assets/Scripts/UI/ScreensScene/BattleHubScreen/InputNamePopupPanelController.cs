@@ -1,4 +1,3 @@
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
@@ -32,10 +31,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
         IPrefabFactory prefabFactory,
-        IDataProvider dataProvider,
-        INextLevelHelper nextLevelHelper)
+        IDataProvider dataProvider)
         {
-            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
             _screenSceneGod = screensSceneGod;
             _soundPlayer = soundPlayer;
             _prefabFactory = prefabFactory;

@@ -1,5 +1,4 @@
 using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
@@ -19,7 +18,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     public class BattleHubScreensController : ScreenController
     {
         private BattleResult _lastBattleResult;
-        private INextLevelHelper _nextLevelHelper;
         private ScreenController _currentScreen;
         private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
@@ -58,16 +56,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
             IDataProvider dataProvider,
-            IApplicationModel applicationModel,
-            INextLevelHelper nextLevelHelper)
+            IApplicationModel applicationModel)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(dataProvider, nextLevelHelper);
+            Helper.AssertIsNotNull(dataProvider);
             Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton);
 
             _lastBattleResult = dataProvider.GameModel.LastBattleResult;
-            _nextLevelHelper = nextLevelHelper;
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
             _applicationModel = applicationModel;
@@ -88,7 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             battlePanel.Initialise(screensSceneGod);
             leaderboardPanel.Initialise(screensSceneGod, prefabFactory);
-            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider);
             arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, dataProvider);
 
             coinBattleController.Initialise(screensSceneGod, _applicationModel);
@@ -188,6 +184,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Continue()
         {
+            Debug.Log(_lastBattleResult);
             if (_lastBattleResult == null)
             {
                 playerInfoPanelController.gameObject.SetActive(false);
@@ -199,7 +196,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 Assert.IsNotNull(_lastBattleResult);
                 playerInfoPanelController.gameObject.SetActive(false);
                 _applicationModel.Mode = GameMode.Campaign;
-                int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
+                int nextLevelToPlay = _dataProvider.GameModel.NumOfLevelsCompleted < 31 ? _dataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
                 _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
             }
         }

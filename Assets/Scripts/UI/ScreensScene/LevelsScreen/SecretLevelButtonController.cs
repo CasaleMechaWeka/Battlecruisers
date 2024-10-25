@@ -1,11 +1,8 @@
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
-using System.Threading.Tasks;
-using UnityEngine.UIElements;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {

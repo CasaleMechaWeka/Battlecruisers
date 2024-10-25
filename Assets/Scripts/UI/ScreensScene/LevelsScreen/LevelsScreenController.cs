@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
@@ -20,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
         private int _numOfLevelsUnlocked;
-        private INextLevelHelper _nextLevelHelper;
+        private IDataProvider _dataProvider;
 
         public ButtonController nextSetButton, previousSetButton;
         public CanvasGroupButton cancelButton;
@@ -53,16 +52,15 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashDataList,
-            INextLevelHelper nextLevelHelper,
             IDataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
-            Helper.AssertIsNotNull(levels, difficultyIndicators, levelTrashDataList, nextLevelHelper);
+            Helper.AssertIsNotNull(levels, difficultyIndicators, levelTrashDataList);
 
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
-            _nextLevelHelper = nextLevelHelper;
+            Assert.IsNotNull(_dataProvider = dataProvider);
 
             await InitialiseLevelSetsAsync(soundPlayer, screensSceneGod, dataProvider, levels, numOfLevelsUnlocked, difficultyIndicators, levelTrashDataList);
 
@@ -106,7 +104,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             base.OnPresenting(activationParameter);
 
-            int levelNumToShow = _nextLevelHelper.FindNextLevel();
+            int levelNumToShow = _dataProvider.GameModel.NumOfLevelsCompleted < 31 ? _dataProvider.GameModel.NumOfLevelsCompleted + 1 : 1; ;
             ShowLastPlayedLevelSet(_levelSets, levelNumToShow);
         }
 

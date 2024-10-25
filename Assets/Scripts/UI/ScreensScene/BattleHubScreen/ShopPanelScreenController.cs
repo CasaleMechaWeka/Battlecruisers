@@ -1,5 +1,4 @@
 using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using UnityEngine.UI;
@@ -53,7 +52,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
             IDataProvider dataProvider,
-            INextLevelHelper nextLevelHelper,
             bool hasInternetonnection = false)
         {
             base.Initialise(screensSceneGod);

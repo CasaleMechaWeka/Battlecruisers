@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
@@ -12,20 +11,18 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
     public class HomeScreenController : ScreenController, IHomeScreen
     {
         private BattleResult _lastBattleResult;
-        private INextLevelHelper _nextLevelHelper;
+        private IDataProvider _dataProvider;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider,
-            INextLevelHelper nextLevelHelper)
+            IDataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(dataProvider, nextLevelHelper);
+            Assert.IsNotNull(_dataProvider = dataProvider);
 
             _lastBattleResult = dataProvider.GameModel.LastBattleResult;
-            _nextLevelHelper = nextLevelHelper;
 
             HomeScreenLayout layout = GetLayout(dataProvider.GameModel);
             layout.Initialise(this, dataProvider.GameModel, soundPlayer);
@@ -60,11 +57,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         {
             Assert.IsNotNull(_lastBattleResult);
 
-            int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
+            int nextLevelToPlay = _dataProvider.GameModel.NumOfLevelsCompleted < 31 ? _dataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
             _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
         }
-
-
         public void StartBattleHub()
         {
             _screensSceneGod.GotoHubScreen();
