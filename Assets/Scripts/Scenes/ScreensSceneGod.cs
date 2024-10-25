@@ -345,9 +345,9 @@ namespace BattleCruisers.Scenes
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
-            await shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
+            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
-            captainSelectorPanel.Initialize(this, _soundPlayer, _prefabFactory, _dataProvider);
+            captainSelectorPanel.Initialize(_soundPlayer, _prefabFactory, _dataProvider);
 
             _applicationModel.DataProvider.SaveGame();
 

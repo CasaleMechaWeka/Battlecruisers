@@ -8,7 +8,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
-using System.Threading.Tasks;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -49,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private List<int> exoBaseList;
         private List<CaptainExo> captains = new List<CaptainExo>();
 
-        public async Task Initialise(
+        public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,

@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System;
-using System.Reflection;
-using static BattleCruisers.Data.Static.StaticPrefabKeys;
 using BattleCruisers.Data.Models.PrefabKeys;
 using Unity.Services.Authentication;
 
@@ -26,7 +24,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private IScreensSceneGod _screensSceneGod;
 
         public Transform captainCamContainer;
         public List<GameObject> visualOfCaptains = new List<GameObject>();
@@ -37,7 +34,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         private ICaptainData currentCaptainData;
 
         public void Initialize(
-            IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
             IDataProvider dataProvider)
@@ -45,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
-            _screensSceneGod = screensSceneGod;
             captainDataChanged += CaptainDataChanged;
         }
 
