@@ -172,12 +172,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Detect followable enemies
             _followableEnemyDetectorProvider
-                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
+                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                     Transform,
                     enemyFollowDetectionRangeInM,
                     _targetFactories.RangeCalculatorProvider.BasicCalculator);
             PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
-            IList<PvPTargetType> targetTypesToFollow = new List<PvPTargetType>() { PvPTargetType.Aircraft };
+            IList<PvPTargetType> targetTypesToFollow = new List<PvPTargetType>() { PvPTargetType.Aircraft, PvPTargetType.Ships };
             IPvPTargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
             _followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);
 
@@ -191,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 
             _shootableEnemeyDetectorProvider
-                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
+                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                     Transform,
                     _barrelController.pvpTurretStats.RangeInM,
                     _targetFactories.RangeCalculatorProvider.BasicCalculator);

@@ -29,6 +29,7 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         public IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
+        public IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissileFighterSmartPool { get; }
 
         public ProjectilePoolProvider(IFactoryProvider factoryProvider)
         {
@@ -137,6 +138,12 @@ namespace BattleCruisers.Projectiles.Pools
                     StaticPrefabKeys.Projectiles.MissileSmart,
                     InitialCapacity.MISSILE_SMART);
 
+            MissileFighterSmartPool
+                = CreatePool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>(
+                    factoryProvider,
+                    StaticPrefabKeys.Projectiles.MissileFighterBomb,
+                    InitialCapacity.MISSILE_SMART);
+
 
         }
 
@@ -171,6 +178,7 @@ namespace BattleCruisers.Projectiles.Pools
             MissilesFirecrackerPool.AddCapacity(InitialCapacity.MISSILE_MEDIUM);
             MissilesLargePool.AddCapacity(InitialCapacity.MISSILE_LARGE);
             MissilesSmartPool.AddCapacity(InitialCapacity.MISSILE_SMART);
+            MissileFighterSmartPool.AddCapacity(InitialCapacity.MISSILE_MEDIUM);
         }
     }
 }
