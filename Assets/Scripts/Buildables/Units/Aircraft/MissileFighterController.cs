@@ -128,7 +128,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         EnemyCruiser,
-                        SoundKeys.Firing.BigCannon));
+                        SoundKeys.Firing.BigCannon),
+                        true);
             }
 
             SetupTargetDetection();

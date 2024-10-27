@@ -1,6 +1,7 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
@@ -11,12 +12,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         private readonly IFireIntervalManager _fireIntervalManager;
         private readonly IBarrelFirer _barrelFirer;
 
+        private readonly bool _doDebug;
+
         public BarrelFiringHelper(
             IBarrelController barrelController,
             IAccuracyAdjuster accuracyAdjuster,
             IFireIntervalManager fireIntervalManager,
-            IBarrelFirer barrelFirer)
+            IBarrelFirer barrelFirer,
+            bool doDebug)
         {
+            _doDebug = doDebug;
             Helper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager, barrelFirer);
 
             _barrelController = barrelController;
@@ -27,10 +32,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public bool TryFire(BarrelAdjustmentResult barrelAdjustmentResult)
         {
+            if (_doDebug)
+                Debug.Log("TryFire");
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  _fireIntervalManager.ShouldFire: {_fireIntervalManager.ShouldFire.Value}");
 
             if (_fireIntervalManager.ShouldFire.Value)
             {
+                if (_doDebug)
+                    Debug.Log("ShouldFire");
+
                 Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  InBurst: {_barrelController.TurretStats.IsInBurst}  Current target: {_barrelController.CurrentTarget}  Can fire with no target: {_barrelController.CanFireWithoutTarget}  barrelAdjustmentResult.IsOnTarget: {barrelAdjustmentResult.IsOnTarget}");
 
                 if (_barrelController.TurretStats.IsInBurst
@@ -52,6 +62,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 }
                 else if (barrelAdjustmentResult.IsOnTarget)
                 {
+                    if (_doDebug)
+                        Debug.Log("IsOnTarget");
                     float fireAngleInDegrees
                         = _accuracyAdjuster.FindAngleInDegrees(
                             barrelAdjustmentResult.DesiredAngleInDegrees,
@@ -62,6 +74,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                     Fire(fireAngleInDegrees);
                     return true;
                 }
+                if (_doDebug)
+                    Debug.Log("IsOffTarget");
             }
 
             return false;
@@ -69,6 +83,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         private void Fire(float fireAngleInDegrees)
         {
+            Debug.Log("Fire");
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelFirer.Fire(fireAngleInDegrees);
