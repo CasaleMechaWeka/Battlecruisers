@@ -22,6 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public abstract class BarrelController : MonoBehaviour, IBarrelController
     {
+        [SerializeField] protected bool disableAnimator = false;
         private IBarrelAdjustmentHelper _adjustmentHelper;
         private IBarrelFiringHelper _firingHelper;
         private IUpdater _updater;
@@ -176,11 +177,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected virtual IBarrelFirer CreateFirer(IBarrelControllerArgs args)
         {
-            return
-                new BarrelFirer(
-                    this,
-                    GetBarrelFiringAnimation(args),
-                    _muzzleFlash);
+            return new BarrelFirer(
+                this,
+                disableAnimator ? null : GetBarrelFiringAnimation(args),  // Only get animation if not disabled
+                _muzzleFlash);
         }
 
         protected virtual IAnimation GetBarrelFiringAnimation(IBarrelControllerArgs args)

@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             IAnimation barrelFiringAnimation,
             IParticleSystemGroup muzzleFlash)
         {
-            Helper.AssertIsNotNull(barrelController, barrelFiringAnimation, muzzleFlash);
+            Helper.AssertIsNotNull(barrelController, muzzleFlash);  // Remove barrelFiringAnimation from assertion
 
             _barrelController = barrelController;
             _barrelFiringAnimation = barrelFiringAnimation;
@@ -27,7 +27,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelController.Fire(fireAngleInDegrees);
-            _barrelFiringAnimation.Play();
+            
+            // Safely play the animation if it exists
+            _barrelFiringAnimation?.Play();
+            
             _muzzleFlash.Play();
         }
     }
