@@ -21,8 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPSkyStatsGroup skyStatsGroup;
         public PvPBackgroundImageController background;
 
-        // References to SeaBackground, UnderwaterGlow, and SeaShade
-        public SpriteRenderer seaBackgroundSprite;
         public SpriteRenderer underwaterGlowSprite;
         public Image seaShadeCanvas;
 
@@ -64,32 +62,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Apply WaterColour to SeaBackground sprite, UnderwaterGlow sprite, and SeaShade canvas
             if (skyStats is PvPSkyStatsController pvPSkyStatsController)
             {
-                ApplyWaterColourToElements(pvPSkyStatsController.WaterColour);
+                ApplyColoursToElements(pvPSkyStatsController.WaterColour, pvPSkyStatsController.UnderwaterGlowColour);
             }
         }
-
-        private void ApplyWaterColourToElements(Color waterColour)
+    
+             private void ApplyColoursToElements(Color waterColour, Color underwaterGlowColour)
         {
-            // Set the SeaBackground sprite to WaterColour
-            if (seaBackgroundSprite != null)
-            {
-                seaBackgroundSprite.color = waterColour;
-            }
-            else
-            {
-                Debug.LogError("SeaBackground SpriteRenderer is not assigned! Please assign it in the Inspector.");
-            }
-
-            // Set the UnderwaterGlow sprite to WaterColour
-            if (underwaterGlowSprite != null)
-            {
-                underwaterGlowSprite.color = waterColour;
-            }
-            else
-            {
-                Debug.LogError("UnderwaterGlow SpriteRenderer is not assigned! Please assign it in the Inspector.");
-            }
-
             // Set the SeaShade canvas to WaterColour
             if (seaShadeCanvas != null)
             {
@@ -98,6 +76,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             else
             {
                 Debug.LogError("SeaShade Canvas Image is not assigned! Please assign it in the Inspector.");
+            }
+
+            // Set the UnderwaterGlow sprite to UnderwaterGlowColour
+            if (underwaterGlowSprite != null)
+            {
+                underwaterGlowSprite.color = underwaterGlowColour;
+            }
+            else
+            {
+                Debug.LogError("UnderwaterGlow SpriteRenderer is not assigned! Please assign it in the Inspector.");
             }
         }
     }
