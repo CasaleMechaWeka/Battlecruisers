@@ -27,10 +27,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelController.Fire(fireAngleInDegrees);
-            
+
             // Safely play the animation if it exists
-            _barrelFiringAnimation?.Play();
-            
+            if (_barrelFiringAnimation != null)
+                _barrelFiringAnimation.Play();
+
             _muzzleFlash.Play();
         }
     }
