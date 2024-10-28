@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPAnimation barrelFiringAnimation,
             IPvPParticleSystemGroup muzzleFlash)
         {
-            PvPHelper.AssertIsNotNull(barrelController, barrelFiringAnimation, muzzleFlash);
+            PvPHelper.AssertIsNotNull(barrelController, muzzleFlash);
 
             _barrelController = barrelController;
             _barrelFiringAnimation = barrelFiringAnimation;
@@ -27,7 +27,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelController.Fire(fireAngleInDegrees);
+            
+            if (_barrelFiringAnimation != null)
             _barrelFiringAnimation.Play();
+
             _muzzleFlash.Play();
         }
     }

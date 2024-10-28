@@ -64,6 +64,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public abstract Vector3 ProjectileSpawnerPosition { get; }
         public abstract bool CanFireWithoutTarget { get; }
 
+        [SerializeField] protected bool disableAnimator = false;
+
         public virtual void StaticInitialise()
         {
             // Usually > 0, but can be 0 (invisible barrel controller for fighters)
@@ -181,10 +183,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual IPvPBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
         {
-            return
-                new PvPBarrelFirer(
+            return new PvPBarrelFirer(
                     this,
-                    GetBarrelFiringAnimation(args),
+                    disableAnimator ? null : GetBarrelFiringAnimation(args),
                     _muzzleFlash);
         }
 
