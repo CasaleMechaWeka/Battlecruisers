@@ -140,7 +140,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         }
 
 
-        public async Task InitialiseAsync(IBarrelControllerArgs args)
+        public async Task InitialiseAsync(IBarrelControllerArgs args, bool doDebug = false)
         {
             Assert.IsNotNull(args);
 
@@ -167,7 +167,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     this,
                     args.AccuracyAdjuster,
                     _fireIntervalManager,
-                    CreateFirer(args));
+                    CreateFirer(args),
+                    doDebug);
 
             await InternalInitialiseAsync(args);
 

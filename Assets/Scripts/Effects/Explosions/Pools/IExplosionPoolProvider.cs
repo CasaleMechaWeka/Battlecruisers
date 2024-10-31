@@ -28,7 +28,9 @@ namespace BattleCruisers.Effects.Explosions.Pools
 
         // Radius 2m    => Firecracker warheads
         IPool<IExplosion, Vector3> FirecrackerExplosionsPool { get; }
-        
+        // Missile Fighter bomb
+        IPool<IExplosion, Vector3> MissileFighterExplosionsPool { get; }
+
         // Radius 1.5m  => Artillery, rocket launcher, broadsides, archon back missile launcher, archon primary cannon
         IPool<IExplosion, Vector3> LargeExplosionsPool { get; }
 
@@ -37,10 +39,10 @@ namespace BattleCruisers.Effects.Explosions.Pools
 
         // RocketShell Radius 1m  => Broadsword RocketShells
         IPool<IExplosion, Vector3> RocketShellImpactPool { get; }
-        
+
         // Radius 5m    => Nuke
         IPool<IExplosion, Vector3> HugeExplosionsPool { get; }
 
- 
+
     }
 }

@@ -16,6 +16,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public override Vector3 ProjectileSpawnerPosition => _missileSpawner.transform.position;
         public override bool CanFireWithoutTarget => true;
+        [SerializeField]
+        private float firingAngle = 90f;
+        [SerializeField]
+        private bool fixFiringAngle = true;
 
         public override void StaticInitialise()
         {
@@ -46,7 +50,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public override void Fire(float angleInDegrees)
         {
-            _missileSpawner.SpawnMissile(angleInDegrees: 90, IsSourceMirrored, _targetFilter);
+            float angle = fixFiringAngle ? firingAngle : angleInDegrees;
+            _missileSpawner.SpawnMissile(angle, IsSourceMirrored, _targetFilter);
+            Debug.Log("fired");
         }
     }
 }
