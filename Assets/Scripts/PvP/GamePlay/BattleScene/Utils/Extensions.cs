@@ -49,11 +49,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public static T FindNamedComponent<T>(this Transform transform, string componentName)
             where T : class
         {
+            if (transform == null)
+            {
+                Debug.LogError("Transform is null.");
+                return null;
+            }
+
+            Debug.Log($"Searching for component '{typeof(T).Name}' in '{transform.name}' with component name '{componentName}'");
+
             Transform namedTransform = transform.Find(componentName);
-            Assert.IsNotNull(namedTransform);
+            if (namedTransform == null)
+            {
+                Debug.LogError($"Transform with name '{componentName}' not found in '{transform.name}'");
+                return null; // Return null or handle the error as needed
+            }
 
             T namedComponent = namedTransform.gameObject.GetComponent<T>();
-            Assert.IsNotNull(namedComponent);
+            if (namedComponent == null)
+            {
+                Debug.LogError($"Component '{typeof(T).Name}' not found on '{namedTransform.name}'");
+                return null; // Return null or handle the error as needed
+            }
 
             return namedComponent;
         }
