@@ -12,24 +12,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public PvPBarrelAnimation(Animator animator)
         {
+            Assert.IsNotNull(animator, "Animator cannot be null");
             _animator = animator;
         }
 
         public void Play()
         {
-            CheckAnimationState();
-            _animator.enabled = true;
-            _animator.Play(BARREL_ANIMATION_STATE, layer: -1, normalizedTime: 0);
+            if (CheckAnimationState())
+            {
+                _animator.enabled = true;
+                _animator.Play(BARREL_ANIMATION_STATE, layer: -1, normalizedTime: 0);
+            }
+            else
+            {
+                Debug.LogWarning("PvP barrel animation state not found.");
+            }
         }
 
-        /// <summary>
-        /// If the game object is inactive, Animator.HasState() always returns false.
-        /// Hence cannot perform this check at construction in case the game object is inactive.
-        /// </summary>
-        private void CheckAnimationState()
+        private bool CheckAnimationState()
         {
             int stateId = Animator.StringToHash(BARREL_ANIMATION_STATE);
-            Assert.IsTrue(_animator.HasState(DEFAULT_ANIMATION_LAYER_INDEX, stateId));
+            return _animator.HasState(DEFAULT_ANIMATION_LAYER_INDEX, stateId);
         }
     }
 }
