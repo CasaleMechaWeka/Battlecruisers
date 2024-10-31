@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Effects.Trails
@@ -7,10 +9,15 @@ namespace BattleCruisers.Effects.Trails
     {
         public SpriteRenderer glow, missileFlare;
         public TrailRenderer trail;
+        public BroadcastingParticleSystem optionalParticleEffect;
 
         public void Initialise()
         {
             Helper.AssertIsNotNull(glow, missileFlare, trail);
+            if (optionalParticleEffect != null)
+            {
+                optionalParticleEffect.Initialise();
+            }
         }
 
         public void ShowAllEffects()
@@ -18,12 +25,24 @@ namespace BattleCruisers.Effects.Trails
             glow.enabled = true;
             missileFlare.enabled = true;
             trail.Clear();
+            trail.enabled = true;
+
+            if (optionalParticleEffect != null)
+            {
+                optionalParticleEffect.Play();
+            }
         }
 
         public void HideEffects()
         {
             glow.enabled = false;
             missileFlare.enabled = false;
+            trail.enabled = false;
+
+            if (optionalParticleEffect != null)
+            {
+                optionalParticleEffect.Stop();
+            }
         }
     }
 }
