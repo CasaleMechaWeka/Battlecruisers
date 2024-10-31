@@ -679,6 +679,7 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey ExplosionFirecracker { get; } = new ExplosionKey("ExplosionFirecracker");
             public static ExplosionKey Explosion150 { get; } = new ExplosionKey("Explosion1.5");
             public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
+            public static ExplosionKey ExplosionFighterBomb { get; } = new ExplosionKey("ExplosionFighterBomb");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -686,7 +687,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, RocketShellImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, ExplosionFirecracker, Explosion150, Explosion500
+                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, RocketShellImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, ExplosionFirecracker, Explosion150, Explosion500, ExplosionFighterBomb
                     };
                 }
             }
@@ -714,6 +715,7 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey Nuke { get; } = new ProjectileKey("Nuke");
             public static ProjectileKey Rocket { get; } = new ProjectileKey("Rocket");
             public static ProjectileKey RocketSmall { get; } = new ProjectileKey("RocketSmall");
+            public static ProjectileKey MissileFighterBomb { get; } = new ProjectileKey("MissileFighterBomb");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -723,7 +725,7 @@ namespace BattleCruisers.Data.Static
                     {
                         Bullet, HighCalibreBullet, TinyBullet, FlakBullet, ShellSmall, ShellLarge, NovaShell, FiveShellCluster, RocketShell,
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart, MissileFirecracker,
-                        Bomb, StratBomb, Nuke, Rocket, RocketSmall
+                        Bomb, StratBomb, Nuke, Rocket, RocketSmall, MissileFighterBomb
                     };
                 }
             }
