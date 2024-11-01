@@ -9,7 +9,7 @@ namespace BattleCruisers.Projectiles.Pools
     {
         public IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
-            return projectilePoolProvider.MissileFighterSmartPool;
+            return projectilePoolProvider.MissilesSmartPool;
         }
     }
 }
