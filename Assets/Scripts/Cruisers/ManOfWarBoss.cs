@@ -1,9 +1,9 @@
+using BattleCruisers.Buildables.Units.Ships;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
-using BattleCruisers.Buildables.Units.Ships;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Data.Settings;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers
@@ -51,13 +51,13 @@ namespace BattleCruisers.Cruisers
             {
                 case Difficulty.Normal:
                     laserTurretStats.fireRatePerS *= .625f;
-                    laserTurretStats.damagePerS *= .75f;
+                    laserTurretStats.damagePerS *= .625f;
                     unit.maxHealth *= .2f;
                     break;
 
                 case Difficulty.Hard:
                     laserTurretStats.fireRatePerS *= .8f;
-                    laserTurretStats.damagePerS *= 1;
+                    laserTurretStats.damagePerS *= .84f;
                     unit.maxHealth *= .4f;
                     break;
 
