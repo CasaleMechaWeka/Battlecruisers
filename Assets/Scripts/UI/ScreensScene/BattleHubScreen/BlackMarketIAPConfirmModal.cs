@@ -38,7 +38,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
         _soundPlayer = soundPlayer;
 
         buyBtn.Initialise(_soundPlayer, Purchase);
-        noBtn.Initialise(_soundPlayer, Close);
+        noBtn.Initialise(_soundPlayer, HideSelf);
         title.text = "";
         description.text = "";
         price.text = "";
@@ -50,7 +50,6 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
     {
         if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
         {
-            Close();
             switch (_currentIAPData.IAPNameKeyBase)
             {
                 case "Coins100Name":
@@ -67,6 +66,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
                     break;
             }
             PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+            HideSelf();
         }
         else
         {
@@ -141,10 +141,6 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
         Assert.IsNotNull(iapData);
         _currentIAPData = iapData;
         gameObject.SetActive(true);
-    }
-    private void Close()
-    {
-        Invoke("HideSelf", 0.25f);
     }
 
     private void HideSelf()
