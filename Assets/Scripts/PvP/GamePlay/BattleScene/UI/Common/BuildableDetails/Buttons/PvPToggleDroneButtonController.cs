@@ -1,14 +1,27 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System;
-using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
+    [RequireComponent(typeof(Image))]
     public class PvPToggleDroneButtonController : PvPCanvasGroupButton, IPvPButton
     {
         private IPvPBuildable _buildable;
+        private Image image;
+        [SerializeField]
+        private Sprite unfocusedSprite;
+        [SerializeField]
+        private Sprite focusedSprite;
+        void Start()
+        {
+            Assert.IsNotNull(image = GetComponent<Image>());
+            Assert.IsNotNull(unfocusedSprite, "Sprite for unfocusedSprite was not assigned");
+            Assert.IsNotNull(focusedSprite, "Sprite for unfocusedSprite was not assigned");
+        }
         public IPvPBuildable Buildable
         {
             private get { return _buildable; }
@@ -52,10 +65,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             UpdateVisibility();
         }
+        private void OnBuildableDroneNumChange(object sender, BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.PvPDroneNumChangedEventArgs e)
+        {
+            UpdateVisibility();
+        }
+
+        private void UpdateSprite()
+        {
+            if (_buildable == null || _buildable.DroneConsumer == null)
+                return;
+
+            Debug.Log(_buildable.DroneConsumer.NumOfDrones);
+            if (_buildable.DroneConsumer.NumOfDrones == _buildable.ParentCruiser.DroneManager.NumOfDrones)
+                image.sprite = focusedSprite;
+            else
+                image.sprite = unfocusedSprite;
+        }
 
         private void UpdateVisibility()
         {
             gameObject.SetActive(ShowToggleDroneButton);
+            UpdateSprite();
         }
     }
 }
