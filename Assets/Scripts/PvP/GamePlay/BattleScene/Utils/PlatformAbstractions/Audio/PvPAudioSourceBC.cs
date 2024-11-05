@@ -64,6 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public void Play(bool isSpatial = true, bool loop = false)
         {
+            Debug.Log($"Playing audio. Spatial: {isSpatial}, Loop: {loop}");
             _audioSource.spatialBlend = isSpatial ? MAX_BLEND : MIN_BLEND;
             _audioSource.loop = loop;
             _audioSource.Play();
@@ -71,10 +72,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public void Stop()
         {
-            // Only stop audio if game object has not been destroyed
             if (_audioSource != null)
             {
+                Debug.Log("Stopping audio.");
                 _audioSource.Stop();
+            }
+            else
+            {
+                Debug.LogWarning("Attempted to stop audio on a null audio source.");
             }
         }
 
@@ -82,8 +87,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             if (_audioClip != null)
             {
-                Addressables.Release(_audioClip.Handle);
+                if (_audioClip.Handle.IsValid())
+                {
+                    Debug.Log("Releasing audio clip handle.");
+                    Addressables.Release(_audioClip.Handle);
+                }
+                else
+                {
+                    Debug.LogWarning("Attempted to release an invalid audio clip handle.");
+                }
                 _audioClip = null;
+            }
+            else
+            {
+                Debug.LogWarning("No audio clip to release.");
             }
         }
     }
