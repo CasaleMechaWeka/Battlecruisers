@@ -23,9 +23,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public void ShowAllEffects()
         {
             glow.enabled = true;
-            missileFlare.enabled = true;      
-            trail.enabled = true;
+            missileFlare.enabled = true;
             trail.Clear();
+            trail.enabled = true;
 
             if (optionalParticleEffect != null)
             {
@@ -35,14 +35,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void HideEffects()
         {
-            glow.enabled = false;
-            missileFlare.enabled = false;
-            trail.enabled = false;
-
             if (optionalParticleEffect != null)
             {
                 optionalParticleEffect.Stop();
             }
+
+            glow.enabled = false;
+            missileFlare.enabled = false;
+            trail.enabled = false;
         }
 
         public void SetVisibleTrail(bool isVisible)
