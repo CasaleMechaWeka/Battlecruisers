@@ -17,6 +17,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -45,7 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public Transform Transform => transform;
         public float BarrelAngleInDegrees => Transform.rotation.eulerAngles.z;
 
-        public SpriteRenderer[] Renderers { get; private set; }
+        [SerializeField] private List<SpriteRenderer> manualRenderers = new List<SpriteRenderer>();
+        public List<SpriteRenderer> Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
         private IPvPDamageCapability _damageCapability;
@@ -68,8 +70,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public virtual void StaticInitialise()
         {
-            // Usually > 0, but can be 0 (invisible barrel controller for fighters)
-            Renderers = GetComponentsInChildren<SpriteRenderer>();
+            // Initialize the Renderers list
+            Renderers = new List<SpriteRenderer>();
+
+            // Add manually assigned renderers
+            Renderers.AddRange(manualRenderers);
+
+            // Add child SpriteRenderers
+            Renderers.AddRange(GetComponentsInChildren<SpriteRenderer>());
 
             _projectileStats = GetProjectileStats();
             _baseTurretStats = SetupTurretStats();
