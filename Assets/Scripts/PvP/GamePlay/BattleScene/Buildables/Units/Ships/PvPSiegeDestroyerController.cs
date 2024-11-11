@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// armament range be less than the longest range barrel.
         private float FindOptimalArmamentRangeInM()
         {
-            return _mortar.RangeInM - (Mathf.Abs(transform.position.x - _mortar.Position.x));
+            return _mortar.RangeInM + (Mathf.Abs(transform.position.x - _mortar.Position.x));
         }
 
         protected override IList<IPvPBarrelWrapper> GetTurrets()
