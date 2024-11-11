@@ -10,8 +10,8 @@ public class PvPPlayerBasedTrail : MonoBehaviour
     {
         colorKeys = new GradientColorKey[2]
         {
-            new GradientColorKey(Color.blue, 0f),
-            new GradientColorKey(Color.blue, 1f),
+            new GradientColorKey(new Color(.129f, .396f, .761f), 0f),
+            new GradientColorKey(new Color(.129f, .396f, .761f), 1f),
         },
         alphaKeys = new GradientAlphaKey[2]
         {
@@ -25,8 +25,8 @@ public class PvPPlayerBasedTrail : MonoBehaviour
     {
         colorKeys = new GradientColorKey[2]
         {
-            new GradientColorKey(Color.red, 0f),
-            new GradientColorKey(Color.red, 1f),
+            new GradientColorKey(new Color(.761f, .231f, .129f), 0f),
+            new GradientColorKey(new Color(.761f, .231f, .129f), 1f),
         },
         alphaKeys = new GradientAlphaKey[2]
         {
