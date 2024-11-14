@@ -136,30 +136,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.OnFixedUpdate();
             FaceVelocityDirection();
-
-            if (_target != null)
-            {
-                Vector2 directionToTarget = (_target.Position - (Vector2)transform.position).normalized;
-                float angleToTarget = Mathf.Round(_angleHelper.FindAngle(directionToTarget, transform.IsMirrored()));
-                float currentAngle = Mathf.Round(transform.rotation.eulerAngles.z);
-
-                if (Mathf.Abs(angleToTarget - currentAngle) <= AngleTolerance)
-                {
-                    Debug.Log("Target within angle tolerance for firing.");
-                }
-                else
-                {
-                    Debug.Log("Target outside angle tolerance.");
-                }
-            }
         }
+
 
         private void FaceVelocityDirection()
         {
             if (Velocity != Vector2.zero)
             {
                 float zRotationInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
-                transform.rotation = Quaternion.Euler(0, 0, zRotationInDegrees);
+                Quaternion rotation = rigidBody.transform.rotation;
+                rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, zRotationInDegrees);
+                transform.rotation = rotation;
             }
         }
 
