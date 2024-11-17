@@ -15,6 +15,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
         public override bool CanFireWithoutTarget => false;
 
+        public float delayInS;
+
         public override void StaticInitialise()
         {
             base.StaticInitialise();
@@ -36,10 +38,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void Fire(float angleInDegrees)
+        public override async void Fire(float angleInDegrees)
         {
             // Logging.Log(Tags.BARREL_CONTROLLER, $"{this}  angleInDegrees: " + angleInDegrees);
-
+            await Task.Delay((int)(delayInS * 1000f));
             _missileSpawners.Next().SpawnMissile(
                 angleInDegrees,
                 IsSourceMirrored,

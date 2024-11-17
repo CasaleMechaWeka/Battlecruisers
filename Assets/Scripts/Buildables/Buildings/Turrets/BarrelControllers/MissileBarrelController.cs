@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
         private ICircularList<MissileSpawner> _missileSpawners;
         private MissileSpawner _middleSpawner;
-
+        public float delayInS;
         public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
         public override bool CanFireWithoutTarget => false;
 
@@ -36,10 +36,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			}
 		}
 
-        public override void Fire(float angleInDegrees)
+        public override async void Fire(float angleInDegrees)
 		{
             Logging.Log(Tags.BARREL_CONTROLLER, $"{this}  angleInDegrees: " + angleInDegrees);
-
+            await Task.Delay((int)(delayInS * 1000f));
             _missileSpawners.Next().SpawnMissile(
                 angleInDegrees,
                 IsSourceMirrored,
