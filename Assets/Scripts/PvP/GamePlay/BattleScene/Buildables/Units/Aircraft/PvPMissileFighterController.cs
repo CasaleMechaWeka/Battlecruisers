@@ -24,6 +24,7 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -31,13 +32,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPTargetFinder _followableTargetFinder, _shootableTargetFinder;
         private IPvPTargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
-        private IPvPExactMatchTargetFilter _exactMatchTargetFilter;
-        private IPvPMovementController _figherMovementController;
-        [SerializeField]
-        private List<PvPAircraftBarrelWrapper> barrelWrappers;
-        private PvPBarrelController _barrelController;
+        private IPvPMovementController _fighterMovementController;
+        private PvPAircraftBarrelWrapper barrelWrapper;
+        private PvPBarrelController[] _barrelControllers;
         private IPvPAngleHelper _angleHelper;
-        private PvPManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
+        private PvPManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemyDetectorProvider;
 
         public float enemyFollowDetectionRangeInM;
 
@@ -59,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
                 else
                 {
-                    ActiveMovementController = _figherMovementController;
+                    ActiveMovementController = _fighterMovementController;
                 }
             }
         }
@@ -71,15 +70,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-            _barrelController = gameObject.GetComponentInChildren<PvPBarrelController>();
-            Assert.IsNotNull(_barrelController);
-            _barrelController.StaticInitialise();
-            foreach (var barrelWrapper in barrelWrappers)
+            _barrelControllers = gameObject.GetComponentsInChildren<PvPBarrelController>();
+            barrelWrapper = gameObject.GetComponentInChildren<PvPAircraftBarrelWrapper>();
+            Assert.IsNotNull(_barrelControllers);
+            foreach (var controller in _barrelControllers)
             {
-                Assert.IsNotNull(barrelWrapper);
-                barrelWrapper.StaticInitialise();
-                AddDamageStats(barrelWrapper.DamageCapability);
+                controller.StaticInitialise();
             }
+            Assert.IsNotNull(barrelWrapper);
+            barrelWrapper.StaticInitialise();
+            AddDamageStats(barrelWrapper.DamageCapability);
         }
 
         public override void Initialise( /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider)
@@ -97,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
             base.Activate(activationArgs);
-            _figherMovementController
+            _fighterMovementController
                 = _movementControllerFactory.CreateFighterMovementController(
                     rigidBody,
                     maxVelocityProvider: this,
@@ -105,8 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     safeZone: _aircraftProvider.FighterSafeZone);
 
             // Reset rotation
-            Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
-            transform.rotation = baseRotation;
+            transform.rotation = Quaternion.identity;
             rigidBody.rotation = 0;
             // Logging.Verbose(Tags.FIGHTER, $"Id: {GameObject.GetInstanceID()}  After reset rotation: {rigidBody.rotation}");
         }
@@ -116,46 +115,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
             {
                 base.OnBuildableCompleted();
-
-                PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
-                IPvPTarget parent = this;
-                IPvPUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
-
-                IPvPBarrelControllerArgs args
-                    = new PvPBarrelControllerArgs(
-                        updater,
-                        _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
-                        _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
-                        _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
-                        _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
-                        _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
-                        _movementControllerFactory.CreateRotationMovementController(_barrelController.pvpTurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
-                        _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
-                        _factoryProvider.Turrets.AngleLimiterFactory.CreateMissileFighterLimiter(),
-                        _factoryProvider,
-                        _cruiserSpecificFactories,
-                        parent,
-                        _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        EnemyCruiser,
-                        PvPSoundKeys.PvPFiring.BigCannon);
-
-                _barrelController.InitialiseAsync(args);
-
+                barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.Missile);
+                barrelWrapper.ApplyVariantStats(this);
                 SetupTargetDetection();
 
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateMissileFighterSpriteChooserAsync(this);
-                _barrelController.ApplyVariantStats(this);
-                OnBuildableCompletedClientRpc();
+                for (int i = 0; i < _barrelControllers.Length; i++)
+                {
+                    _barrelControllers[i].ApplyVariantStats(this);
+                }
             }
 
             else
             {
                 OnBuildableCompleted_PvPClient();
-                _barrelController.ApplyVariantStats(this);
+                barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.Missile);
+                barrelWrapper.ApplyVariantStats(this);
+                for (int i = 0; i < _barrelControllers.Length; i++)
+                {
+                    _barrelControllers[i].ApplyVariantStats(this);
+                }
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateMissileFighterSpriteChooserAsync(this);
             }
-
         }
 
         /// <summary>
@@ -170,52 +151,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// </summary>
         private void SetupTargetDetection()
         {
-            // Detect followable enemies
-            _followableEnemyDetectorProvider
-                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
-                    Transform,
-                    enemyFollowDetectionRangeInM,
-                    _targetFactories.RangeCalculatorProvider.BasicCalculator);
-            PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
-            IList<PvPTargetType> targetTypesToFollow = new List<PvPTargetType>() { PvPTargetType.Aircraft, PvPTargetType.Ships };
-            IPvPTargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
-            _followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);
+            // Target detection setup logic for followable and shootable targets
+            _followableEnemyDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
+                Transform, enemyFollowDetectionRangeInM, _targetFactories.RangeCalculatorProvider.BasicCalculator);
 
-            IPvPTargetRanker followableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
-            IPvPRankedTargetTracker followableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
-            _followableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(followableTargetTracker);
+            IPvPTargetFilter followTargetFilter = _targetFactories.FilterFactory.CreateTargetFilter(
+                PvPHelper.GetOppositeFaction(Faction), new List<PvPTargetType> { PvPTargetType.Aircraft, PvPTargetType.Ships });
+            _followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(
+                _followableEnemyDetectorProvider.TargetDetector, followTargetFilter);
+
+            _followableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(
+                _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, _targetFactories.RankerFactory.EqualTargetRanker));
             _followableTargetProcessor.AddTargetConsumer(this);
 
-            // Detect shootable enemies
-            _exactMatchTargetFilter = _targetFactories.FilterFactory.CreateMulitpleExactMatchTargetFilter();
-            _followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
+            _shootableEnemyDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
+                Transform, Mathf.Max(_barrelControllers[0].pvpTurretStats.RangeInM), _targetFactories.RangeCalculatorProvider.BasicCalculator);
+            _shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(
+                _shootableEnemyDetectorProvider.TargetDetector, _targetFactories.FilterFactory.CreateMulitpleExactMatchTargetFilter());
 
-            _shootableEnemeyDetectorProvider
-                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
-                    Transform,
-                    _barrelController.pvpTurretStats.RangeInM,
-                    _targetFactories.RangeCalculatorProvider.BasicCalculator);
-            _shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_shootableEnemeyDetectorProvider.TargetDetector, _exactMatchTargetFilter);
+            _shootableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(
+                _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, _targetFactories.RankerFactory.EqualTargetRanker));
 
-            IPvPTargetRanker shootableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
-            IPvPRankedTargetTracker shootableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
-            _shootableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(shootableTargetTracker);
-            _shootableTargetProcessor.AddTargetConsumer(_barrelController);
-            foreach (var barrelWrapper in barrelWrappers)
+            foreach (var barrel in _barrelControllers)
             {
-                if (barrelWrapper != null)
-                {
-                    PvPManualDetectorProvider shootableDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
-                        Transform,
-                        _barrelController.pvpTurretStats.RangeInM,
-                        _targetFactories.RangeCalculatorProvider.BasicCalculator);
-                    IPvPTargetFinder shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(shootableDetectorProvider.TargetDetector, _exactMatchTargetFilter);
-                    
-                    IPvPRankedTargetTracker wrapperTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(shootableTargetFinder, shootableTargetRanker);
-                    IPvPTargetProcessor wrapperTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(wrapperTargetTracker);
-
-                    wrapperTargetProcessor.AddTargetConsumer(barrelWrapper);
-                }
+                _shootableTargetProcessor.AddTargetConsumer(barrel);
             }
         }
 
@@ -247,29 +206,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.CleanUp();
 
-            _followableEnemyDetectorProvider.DisposeManagedState();
-            _followableEnemyDetectorProvider = null;
-
-            _followableTargetProcessor.RemoveTargetConsumer(this);
-            _followableTargetProcessor.RemoveTargetConsumer(_exactMatchTargetFilter);
-            _followableTargetProcessor.DisposeManagedState();
-            _followableTargetProcessor = null;
-
-            _followableTargetFinder.DisposeManagedState();
-            _followableTargetFinder = null;
-
-            _shootableEnemeyDetectorProvider.DisposeManagedState();
-            _shootableEnemeyDetectorProvider = null;
-
-            _shootableTargetProcessor.RemoveTargetConsumer(_barrelController);
-            _shootableTargetProcessor.DisposeManagedState();
-            _shootableTargetProcessor = null;
-
-            _shootableTargetFinder.DisposeManagedState();
-            _shootableTargetFinder = null;
+            _followableEnemyDetectorProvider?.DisposeManagedState();
+            _followableTargetProcessor?.DisposeManagedState();
+            _shootableEnemyDetectorProvider?.DisposeManagedState();
+            _shootableTargetProcessor?.DisposeManagedState();
 
             // Do not set to null, only created once in StaticInitialise(), so reused by unit pools.
-            _barrelController.CleanUp();
+            foreach (var barrel in _barrelControllers)
+            {
+                barrel.CleanUp();
+            }
         }
 
         // BuildableStatus
@@ -406,7 +352,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, PvPRandomGenerator.Instance);
                 FacingDirection = facingDirection;
-            //    _isAtCruisingHeight = isAtCruiserHeight;
                 Activate_PvPClient();
             }
         }

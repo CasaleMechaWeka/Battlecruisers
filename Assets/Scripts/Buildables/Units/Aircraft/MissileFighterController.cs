@@ -26,7 +26,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     {
         private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
         private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
-        private IExactMatchTargetFilter _exactMatchTargetFilter;
         private IMovementController _fighterMovementController;
         private IAngleHelper _angleHelper;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemyDetectorProvider;
@@ -85,8 +84,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected async override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            IUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
 
             barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
             barrelWrapper.ApplyVariantStats(this);
