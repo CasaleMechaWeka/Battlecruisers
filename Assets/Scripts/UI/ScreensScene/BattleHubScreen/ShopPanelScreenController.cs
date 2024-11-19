@@ -32,12 +32,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private IDataProvider _dataProvider;
         public Transform captainCamContainer;
         private ILocTable commonStrings;
-        public Image captainsButtonImage, hecklesButtonImage, bodyKitButtonImage, variantButtonImage;
         public Text blackMarketText;
         private bool InternetConnection;
-        private Color32 navButtonActive = new Color32(255, 255, 255, 255);
-        private Color32 navButtonInactive = new Color32(194, 59, 33, 255);
-
         private List<int> variantList;
         private List<VariantPrefab> variants = new List<VariantPrefab>();
 
@@ -171,32 +167,84 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private void HightlightVariantsNavButton()
         {
-            captainsButtonImage.color = navButtonInactive;
-            hecklesButtonImage.color = navButtonInactive;
-            bodyKitButtonImage.color = navButtonInactive;
-            variantButtonImage.color = navButtonActive;
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+            
+            // Change text and icon color to red
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+            
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
         private void HightlightBodykitsNavButton()
         {
-            captainsButtonImage.color = navButtonInactive;
-            hecklesButtonImage.color = navButtonInactive;
-            bodyKitButtonImage.color = navButtonActive;
-            variantButtonImage.color = navButtonInactive;
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            
+            // Change text and icon color to red
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+            
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
         private void HighlightCaptainsNavButton()
         {
-            captainsButtonImage.color = navButtonActive;
-            hecklesButtonImage.color = navButtonInactive;
-            bodyKitButtonImage.color = navButtonInactive;
-            variantButtonImage.color = navButtonInactive;
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            
+            // Change text and icon color to red
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+            
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
 
         private void HighlightHecklesNavButton()
         {
-            captainsButtonImage.color = navButtonInactive;
-            hecklesButtonImage.color = navButtonActive;
-            bodyKitButtonImage.color = navButtonInactive;
-            variantButtonImage.color = navButtonInactive;
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            
+            // Change text and icon color to red
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+            
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+            
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
 
         private void RemoveAllCaptainsFromRenderCamera()
