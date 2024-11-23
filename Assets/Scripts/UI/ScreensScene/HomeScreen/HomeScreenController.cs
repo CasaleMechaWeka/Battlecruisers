@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
     {
         private BattleResult _lastBattleResult;
         private IDataProvider _dataProvider;
-        public GameObject logos;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -30,22 +29,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
             layout.Initialise(this, dataProvider.GameModel, soundPlayer);
             layout.IsVisible = true;
 
-            LocalizeLogos();
         }
 
-        private void LocalizeLogos()
-        {
-            string locName = LocalizationSettings.SelectedLocale.name;
-            Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
-            foreach (Transform t in ts)
-            {
-                if (t.gameObject.name == locName)
-                {
-                    t.gameObject.SetActive(true);
-                    break;
-                }
-            }
-        }
+
 
         private HomeScreenLayout GetLayout(IGameModel gameModel)
         {
