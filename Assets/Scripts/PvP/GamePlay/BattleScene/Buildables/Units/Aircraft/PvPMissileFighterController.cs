@@ -28,7 +28,7 @@ using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
-    public class PvPMissileFighterController : PvPAircraftController, IPvPTargetConsumer, IPvPTargetProvider // enemyfollowdetection
+    public class PvPMissileFighterController : PvPAircraftController, IPvPTargetConsumer, IPvPTargetProvider
     {
         private IPvPTargetFinder _followableTargetFinder, _shootableTargetFinder;
         private IPvPTargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
@@ -116,34 +116,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
 
-                // Initialize barrelWrapper and apply stats
                 barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.Missile);
                 barrelWrapper.ApplyVariantStats(this);
 
-                // Setup target detection
                 SetupTargetDetection();
 
-                // Setup sprite chooser for missile fighter
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateMissileFighterSpriteChooserAsync(this);
 
-                // Apply variant stats to all barrel controllers
                 foreach (var controller in _barrelControllers)
                 {
                     controller.ApplyVariantStats(this);
                 }
 
-                // Notify clients
                 OnBuildableCompletedClientRpc();
             }
             else
             {
                 OnBuildableCompleted_PvPClient();
 
-                // Client-side initialization of barrelWrapper
                 barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, PvPSoundKeys.PvPFiring.Missile);
                 barrelWrapper.ApplyVariantStats(this);
 
-                // Setup sprite chooser for missile fighter
                 _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateMissileFighterSpriteChooserAsync(this);
 
                 foreach (var controller in _barrelControllers)
