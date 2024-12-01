@@ -40,8 +40,10 @@ public class PvPPlayerBasedTrail : MonoBehaviour
 
     void Start()
     {
-        Assert.IsNotNull(trailRenderer = GetComponent<TrailRenderer>(), "TrailRenderer cannot be found");
-        Assert.IsNotNull(target = GetComponentInParent<IPvPTarget>(), "Target cannot be found");
+        trailRenderer = GetComponent<TrailRenderer>();
+        target = GetComponentInParent<IPvPTarget>();
+        Assert.IsNotNull(trailRenderer, "TrailRenderer cannot be found");
+        Assert.IsNotNull(target, "Target cannot be found");
 
         if (target.Faction == PvPFaction.Blues)
             trailRenderer.colorGradient = playerColors;

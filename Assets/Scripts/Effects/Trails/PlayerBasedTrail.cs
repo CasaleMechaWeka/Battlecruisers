@@ -40,8 +40,10 @@ public class PlayerBasedTrail : MonoBehaviour
 
     void Start()
     {
-        Assert.IsNotNull(trailRenderer = GetComponent<TrailRenderer>(), "TrailRenderer cannot be found");
-        Assert.IsNotNull(target = GetComponentInParent<ITarget>(), "Target cannot be found");
+        trailRenderer = GetComponent<TrailRenderer>();
+        target = GetComponentInParent<ITarget>();
+        Assert.IsNotNull(trailRenderer, "TrailRenderer cannot be found");
+        Assert.IsNotNull(target, "Target cannot be found");
 
         if (target.Faction == Faction.Blues)
             trailRenderer.colorGradient = playerColors;

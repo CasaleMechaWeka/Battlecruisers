@@ -262,7 +262,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (backgroundMusic != null)
             {
                 backgroundMusic.Play();
-                if(enemyFoundMusic.isPlaying && enemyFoundMusic != null) 
+                if (enemyFoundMusic.isPlaying && enemyFoundMusic != null)
                 {
                     enemyFoundMusic.Stop();
                 }
@@ -291,7 +291,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 case "Flea":
                     return HullType.Flea;
                 case "Goatherd":
-                    return HullType.Goatherd;  
+                    return HullType.Goatherd;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -309,7 +309,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 case "Rockjaw":
                     return HullType.Rockjaw;
                 case "Pistol":
-                    return HullType.Pistol;    
+                    return HullType.Pistol;
                 case "Shepherd":
                     return HullType.Shepherd;
                 case "TasDevil":
@@ -324,28 +324,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public bool isProcessing = false;
         public bool isLoaded = false;
 
-        void Update()
+        async void Update()
         {
-            try
+            if (!isProcessing && !isLoaded)
             {
-                Debug.Log($"Update called. Current values -> isProcessing: {isProcessing}, isLoaded: {isLoaded}");
-
-                if (!isProcessing && !isLoaded)
-                {
-                    Debug.Log("Entering asset loading because isProcessing is false and isLoaded is false.");
-                    StartCoroutine(LoadAssetsCoroutine());
-                }
-                else
-                {
-                    Debug.Log("Skipping asset loading because either isProcessing or isLoaded is true.");
-                }
+                isProcessing = true;
+                await iLoadingAssets();
             }
-            catch (Exception e)
-            {
-                Debug.LogError($"An error occurred in Update: {e.Message}, StackTrace: {e.StackTrace}");
-                isProcessing = false;
-            }
-            /*            if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
+            /*if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
             {
                 SetFoundVictimString();
                 if (GameObject.Find("ConnectionManager") != null)
@@ -356,18 +342,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }*/
         }
 
-        IEnumerator LoadAssetsCoroutine()
+        async Task iLoadingAssets()
         {
-            isProcessing = true;
-
+            await Task.Delay(10);
+            if (isLoaded)
+                return;
 
             NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
             LoadingBar.value = objs.Length;
-
-            isLoaded = true;
-
-            yield return null;
-
             isProcessing = false;
         }
 
@@ -458,8 +440,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
-            
-            if(backgroundMusic.isPlaying)
+
+            if (backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
         }
 
@@ -478,8 +460,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             if (GameObject.Find("ConnectionManager") != null)
                 GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
-            
-            if(backgroundMusic.isPlaying)
+
+            if (backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
         }
 
@@ -610,7 +592,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             _sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
 
-            if(backgroundMusic.isPlaying)
+            if (backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
 
             Invoke("Destroy", 0.5f);
