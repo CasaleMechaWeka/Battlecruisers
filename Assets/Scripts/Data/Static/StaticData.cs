@@ -165,6 +165,8 @@ namespace BattleCruisers.Data.Static
                 Buildings.IonCannon,
                 Buildings.MissilePod,
                 Buildings.Cannon,
+                Buildings.BlastVLS,
+                Buildings.FirecrackerVLS,
 
                 // Ultras
                 Buildings.DeathstarLauncher,
@@ -520,6 +522,8 @@ namespace BattleCruisers.Data.Static
                 { Buildings.MissilePod, 36 },
                 { Buildings.IonCannon, 38 },
                 { Buildings.Cannon, 95 },
+                { Buildings.BlastVLS, 95 },
+                { Buildings.FirecrackerVLS, 95 },
 
                 // Ultras
                 { Buildings.DeathstarLauncher, 7 },

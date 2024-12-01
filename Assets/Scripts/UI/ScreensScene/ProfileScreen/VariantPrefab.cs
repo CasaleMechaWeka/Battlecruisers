@@ -194,6 +194,12 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 case ParentBuildable.Cannon:
                     prefabKey = new BuildingKey(BuildingCategory.Offence, "Cannon");
                     break;
+                case ParentBuildable.BlastVLS:
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "BlastVLS");
+                    break;
+                case ParentBuildable.FirecrackerVLS:
+                    prefabKey = new BuildingKey(BuildingCategory.Offence, "FirecrackerVLS");
+                    break;
 
                 // Units
                 case ParentBuildable.Bomber:
@@ -444,6 +450,12 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     ret = false;
                     break;
                 case ParentBuildable.Cannon:
+                    ret = false;
+                    break;
+                case ParentBuildable.BlastVLS:
+                    ret = false;
+                    break;
+                case ParentBuildable.FirecrackerVLS:
                     ret = false;
                     break;
                 case ParentBuildable.Bomber:

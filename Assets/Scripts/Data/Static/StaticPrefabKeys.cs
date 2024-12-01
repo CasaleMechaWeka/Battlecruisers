@@ -42,10 +42,11 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey Railgun { get; } = new BuildingKey(BuildingCategory.Offence, "Railgun");
             public static BuildingKey MLRS { get; } = new BuildingKey(BuildingCategory.Offence, "MLRS");
             public static BuildingKey GatlingMortar { get; } = new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
-            public static BuildingKey IonCannon { get; } = new BuildingKey(BuildingCategory.Offence, "IonCannon");//new
+            public static BuildingKey IonCannon { get; } = new BuildingKey(BuildingCategory.Offence, "IonCannon");
             public static BuildingKey MissilePod { get; } = new BuildingKey(BuildingCategory.Offence, "MissilePod");
             public static BuildingKey Cannon { get; } = new BuildingKey(BuildingCategory.Offence, "Cannon");
-
+            public static BuildingKey BlastVLS { get; } = new BuildingKey(BuildingCategory.Offence, "BlastVLS");
+            public static BuildingKey FirecrackerVLS { get; } = new BuildingKey(BuildingCategory.Offence, "FirecrackerVLS");
             // Ultras
             public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
             public static BuildingKey NukeLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "NukeLauncher");
@@ -70,7 +71,7 @@ namespace BattleCruisers.Data.Static
                         // Defence
                         AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret, CIWS,
                         // Offence
-                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, Cannon, //railgun = LasCannon! 
+                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, Cannon, BlastVLS, FirecrackerVLS, //railgun = LasCannon! 
                         // Ultras
                         DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery, UltraCIWS, GlobeShield, Sledgehammer
                     };

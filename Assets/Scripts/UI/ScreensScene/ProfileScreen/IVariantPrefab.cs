@@ -49,6 +49,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         IonCannon = 0405,
         MissilePod = 0406,
         Cannon = 0407,
+        BlastVLS = 0408,
+        FirecrackerVLS = 0409,
 
         Bomber = 0500,
         Fighter = 0501,
