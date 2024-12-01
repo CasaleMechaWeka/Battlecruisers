@@ -90,7 +90,6 @@ namespace BattleCruisers.Projectiles.Pools
                     StaticPrefabKeys.Projectiles.RocketShell,
                     InitialCapacity.SHELL_LARGE);
 
-
             BombsPool
                 = CreatePool<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
@@ -120,7 +119,6 @@ namespace BattleCruisers.Projectiles.Pools
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileSmall,
                     InitialCapacity.MISSILE_SMALL);
-
 
             MissilesMediumPool
                 = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
