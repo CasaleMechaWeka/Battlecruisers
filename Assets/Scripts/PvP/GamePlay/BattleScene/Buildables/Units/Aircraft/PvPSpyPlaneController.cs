@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.Test.Utilities
 {
@@ -36,21 +39,72 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
         }
 
-        protected async override void OnBuildableCompleted()
+        protected override async void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
-
-            if (UseDummyMovementController)
+            if (IsServer)
             {
-                ActiveMovementController = DummyMovementController;
-            }
+                base.OnBuildableCompleted();
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSpyPlaneSpriteChooserAsync(this);
+                PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
+                IPvPTarget parent = this;
+                IPvPUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
+
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSpyPlaneSpriteChooserAsync(this);
+                OnBuildableCompletedClientRpc();
+
+                if (UseDummyMovementController)
+                {
+                    ActiveMovementController = DummyMovementController;
+                }
+            }
+            else
+            {
+                OnBuildableCompleted_PvPClient();
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSpyPlaneSpriteChooserAsync(this);
+            }
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
         {
             return BCUtils.PvPHelper.ConvertVectorsToPatrolPoints(patrolPoints);
         }
+
+        // Add RPCs for client synchronization
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            if (!IsHost)
+                OnBuildableCompleted_PvPClient();
+        }
+
+        [ClientRpc]
+        private void OnSetPositionClientRpc(Vector3 pos)
+        {
+            if (!IsHost)
+                Position = pos;
+        }
+
+        [ClientRpc]
+        private void OnSetRotationClientRpc(Quaternion rotation)
+        {
+            if (!IsHost)
+                Rotation = rotation;
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            if (!IsHost && !isEnabled)
+            {
+                Invoke("ActiveTrail", 0.5f);
+            }
+        }
+
+        private void ActiveTrail()
+        {
+            _aircraftTrailObj.SetActive(true);
+        }
+
     }
 }

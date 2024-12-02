@@ -11,6 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         Task<IPvPSpriteChooser> CreateMissileFighterSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider);
         Task<IPvPSpriteChooser> CreateGunshipSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider);
         Task<IPvPSpriteChooser> CreateSteamCopterSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider);
+        Task<IPvPSpriteChooser> CreateSpyPlaneSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider);
 
         IPvPSpriteChooser CreateDummySpriteChooser(Sprite sprite);
     }
