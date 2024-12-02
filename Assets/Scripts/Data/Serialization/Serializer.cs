@@ -264,37 +264,6 @@ namespace BattleCruisers.Data.Serialization
                 compatibleGameModel.HasAttemptedTutorial = true;
             }
 
-            // New logic to ensure side quest completions unlock corresponding hulls
-            var completedSideQuests = gameData.GetType().GetProperty("CompletedSideQuests").GetValue(gameData) as IReadOnlyDictionary<int, int>;
-
-            // Mapping of side quest IDs to hull keys
-            Dictionary<int, HullKey> sideQuestToHullMap = new Dictionary<int, HullKey>
-            {
-                { 15, StaticPrefabKeys.Hulls.Shepherd },
-                { 25, StaticPrefabKeys.Hulls.Megalith },
-                { 26, StaticPrefabKeys.Hulls.Pistol },
-                { 27, StaticPrefabKeys.Hulls.Goatherd },
-                { 28, StaticPrefabKeys.Hulls.Flea },
-                { 29, StaticPrefabKeys.Hulls.Microlodon },
-                { 1, StaticPrefabKeys.Hulls.Rickshaw },
-                { 2, StaticPrefabKeys.Hulls.TasDevil },
-                { 4, StaticPrefabKeys.Hulls.BlackRig },
-                { 7, StaticPrefabKeys.Hulls.Yeti },
-                { 12, StaticPrefabKeys.Hulls.Microlodon },
-                { 13, StaticPrefabKeys.Hulls.Flea }
-            };
-
-            foreach (var sideQuest in completedSideQuests)
-            {
-                if (sideQuestToHullMap.TryGetValue(sideQuest.Key, out HullKey hullKey))
-                {
-                    if (!_unlockedHulls.Contains(hullKey))
-                    {
-                        _unlockedHulls.Add(hullKey);
-                    }
-                }
-            }
-
             return compatibleGameModel;
         }
 
