@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private IApplicationModel _applicationModel;
 
 
-        public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton;
+        public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
         public GameObject coins;
 
         public ScreenController battlePanel;
@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider);
-            Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton);
+            Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton);
 
             _lastBattleResult = dataProvider.GameModel.LastBattleResult;
             _soundPlayer = soundPlayer;
@@ -71,6 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             homeButton.Initialise(_soundPlayer, GoHome);
             battleHubButton.Initialise(_soundPlayer, OpenBattleHub);
+            arenaBackButton.Initialise(_soundPlayer, OpenBattleHub);
             loadoutButton.Initialise(_soundPlayer, OpenLoadout);
             shopButton.Initialise(_soundPlayer, OpenShop);
             leaderboardButton.Initialise(_soundPlayer, OpenLeaderboard);
