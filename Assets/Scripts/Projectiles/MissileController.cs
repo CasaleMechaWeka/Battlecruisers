@@ -20,7 +20,8 @@ namespace BattleCruisers.Projectiles
         private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;
 
-        private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
+        private const float SELF_DETONATION_TIMER = 1.75f;
+        private const float SELF_DETONATION_VARIANCE = .5f;
 
         private RocketTarget _rocketTarget;
 
@@ -76,7 +77,7 @@ namespace BattleCruisers.Projectiles
             MovementController = _dummyMovementController;
 
             // Destroy missile eventually (in case it does not hit a matching target)
-            _deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
+            _deferrer.Defer(ConditionalDestroy, Random.Range(SELF_DETONATION_TIMER, SELF_DETONATION_TIMER + SELF_DETONATION_VARIANCE));
         }
 
 

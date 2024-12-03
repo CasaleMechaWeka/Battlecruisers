@@ -25,7 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPDeferrer _deferrer;
         private IPvPMovementController _dummyMovementController;
 
-        private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
+        private const float SELF_DETONATION_TIMER = 1.75f;
+        private const float SELF_DETONATION_VARIANCE = .5f;
 
         //---> CODE BY ANUJ
         private PvPRocketTarget _rocketTarget;
@@ -94,7 +95,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             // Let missile keep current velocity
             MovementController = _dummyMovementController;
             // Destroy missile eventually (in case it does not hit a matching target)
-            _deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
+            _deferrer.Defer(ConditionalDestroy, Random.Range(SELF_DETONATION_TIMER, SELF_DETONATION_TIMER + SELF_DETONATION_VARIANCE));
             OnTargetDestroyedClientRpc();
         }
 
@@ -209,7 +210,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void OnTargetDestroyedClientRpc()
         {
             MovementController = _dummyMovementController;
-        //    _factoryProvider.DeferrerProvider.Deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
+            //    _factoryProvider.DeferrerProvider.Deferrer.Defer(ConditionalDestroy, MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S);
         }
         [ClientRpc]
         private void OnAddMoveControllerToClientRpc(ulong objectID, float MaxVelocityInMPerS)
@@ -295,7 +296,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             missile.enabled = visible;
             _rocketTarget.GameObject.SetActive(visible);
             if (!visible)
-                base.HideEffectsOfClient(); 
+                base.HideEffectsOfClient();
             //    Target.Destroyed -= Target_Destroyed;
         }
 
