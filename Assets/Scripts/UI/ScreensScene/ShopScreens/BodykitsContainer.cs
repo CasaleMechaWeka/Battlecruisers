@@ -36,6 +36,9 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject bodykitMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_bodykitsMessage;
+        public Animator skyAnimator;
+        public Animator seaAnimator;
+        public GameObject previewCanvas;
 
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
         {
@@ -167,6 +170,32 @@ namespace BattleCruisers.UI.ScreensScene
                 bodykitMessagePanel.SetActive(false);
                 itemDetailsPanel.SetActive(true);
             }
+
+            // Randomize animations
+            RandomizeAnimations();
+        }
+
+        private void RandomizeAnimations()
+        {
+            // Generate a random seed
+            int randomSeed = UnityEngine.Random.Range(0, int.MaxValue);
+
+            // Set the same seed for both animations
+            UnityEngine.Random.InitState(randomSeed);
+
+            // Randomize start positions
+            float randomStartPoint = UnityEngine.Random.Range(0f, 1f);
+
+            // Play animations from the random start point
+            if (skyAnimator != null)
+            {
+                skyAnimator.Play(0, -1, randomStartPoint);
+            }
+
+            if (seaAnimator != null)
+            {
+                seaAnimator.Play(0, -1, randomStartPoint);
+            }
         }
 
         private void BodykitDataChanged(object sender, BodykitDataEventArgs e)
@@ -219,6 +248,44 @@ namespace BattleCruisers.UI.ScreensScene
         public void GotoBlackMarket()
         {
             GetComponentInParent<ShopPanelScreenController>().GotoBlackMarket();
+        }
+
+        private void Start()
+        {
+            // Ensure the preview canvas is initially inactive
+            if (previewCanvas != null)
+            {
+                previewCanvas.SetActive(false);
+            }
+        }
+
+        public void OnBodykitPreviewButtonClicked()
+        {
+            // Activate the preview canvas
+            if (previewCanvas != null)
+            {
+                previewCanvas.SetActive(true);
+            }
+
+            // Randomize and restart animations
+            RandomizeAndRestartAnimations();
+        }
+
+        private void RandomizeAndRestartAnimations()
+        {
+            // Generate a random start point within the animation
+            float randomStartPoint = UnityEngine.Random.Range(0f, 1f);
+
+            // Restart the animations at the random start point
+            if (skyAnimator != null)
+            {
+                skyAnimator.Play(0, -1, randomStartPoint);
+            }
+
+            if (seaAnimator != null)
+            {
+                seaAnimator.Play(0, -1, randomStartPoint);
+            }
         }
     }
 
