@@ -36,7 +36,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
             Helper.AssertIsNotNull(level, screensSceneGod, difficultyIndicators, trashTalkData);
-            Assert.IsNotNull(applicationModel = ApplicationModelProvider.ApplicationModel);
+            applicationModel = ApplicationModelProvider.ApplicationModel;
+            Assert.IsNotNull(applicationModel);
 
             _level = level;
             _screensSceneGod = screensSceneGod;
