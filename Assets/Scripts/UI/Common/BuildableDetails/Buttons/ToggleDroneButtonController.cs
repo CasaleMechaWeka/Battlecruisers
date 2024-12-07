@@ -18,7 +18,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         void Start()
         {
-            Assert.IsNotNull(image = GetComponent<Image>());
+            image = GetComponent<Image>();
+            Assert.IsNotNull(image);
             Assert.IsNotNull(unfocusedSprite, "Sprite for unfocusedSprite was not assigned");
             Assert.IsNotNull(focusedSprite, "Sprite for unfocusedSprite was not assigned");
         }

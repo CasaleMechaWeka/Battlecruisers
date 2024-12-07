@@ -60,7 +60,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Helper.AssertIsNotNull(levels, difficultyIndicators, levelTrashDataList);
 
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
-            Assert.IsNotNull(_dataProvider = dataProvider);
+            _dataProvider = dataProvider;
+            Assert.IsNotNull(_dataProvider);
 
             await InitialiseLevelSetsAsync(soundPlayer, screensSceneGod, dataProvider, levels, numOfLevelsUnlocked, difficultyIndicators, levelTrashDataList);
 
