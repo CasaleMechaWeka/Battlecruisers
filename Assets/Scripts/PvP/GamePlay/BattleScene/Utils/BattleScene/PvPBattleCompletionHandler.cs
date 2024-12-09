@@ -85,8 +85,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 {
                     Debug.LogWarning("Could not add player to leaderboard");
                 }
-#endif
             }
+#endif
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
