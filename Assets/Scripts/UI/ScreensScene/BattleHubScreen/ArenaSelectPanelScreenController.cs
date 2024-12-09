@@ -50,6 +50,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private bool isTransitioning = false;
         private bool isClickedBattleButton = false;
+
+        public CanvasGroupButton customMessageButton;
+        public MessageBoxBig messageBoxBig;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -74,13 +78,31 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
             isClickedBattleButton = false;
             isTransitioning = false;
+
+            // Initialize the custom message button
+            customMessageButton.Initialise(soundPlayer, OnCustomMessageButtonClick);
+
+            // Initialize MessageBoxBig
+            messageBoxBig.Initialize(dataProvider, soundPlayer);
+            messageBoxBig.HideMessage();
+        }
+
+        private void OnCustomMessageButtonClick()
+        {
+            if (messageBoxBig != null && messageBoxBig.panel != null)
+            {
+                messageBoxBig.panel.SetActive(true);
+            }
+            else
+            {
+                Debug.LogError("MessageBoxBig or its panel is not assigned.");
+            }
         }
 
         public void OnEnable()
         {
             UpdateValueStrings(IndexCurrentArena);
         }
-
 
         private void NextSetCommandExecute()
         {
@@ -95,7 +117,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             ShowArena(cur_idx, IndexCurrentArena);
         }
-
 
         private bool CanNextSetCommandExecute()
         {
@@ -176,8 +197,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (_dataProvider.GameModel.Coins >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcoins
                         && _dataProvider.GameModel.Credits >= _dataProvider.GameModel.Arenas[indexCurrentArena + 1].costcredits)
                     {
-                        /*                        loadingSpinner.SetActive(true);
-                                                battleButton.gameObject.SetActive(false);*/
                         _dataProvider.GameModel.GameMap = IndexCurrentArena;
                         PvPBattleSceneGodTunnel.isCost = false;
                         PvPBattleCompletionHandler._isCompleted = false;
