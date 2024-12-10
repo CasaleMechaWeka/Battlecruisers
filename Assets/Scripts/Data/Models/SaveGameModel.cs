@@ -114,16 +114,55 @@ namespace BattleCruisers.Data.Models
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
+            Debug.Log("Assigning save data to GameModel...");
+
             game.LifetimeDestructionScore = _lifetimeDestructionScore;
-            if (_battleWinScore != null)
-                game.BattleWinScore = _battleWinScore;
+            Debug.Log($"LifetimeDestructionScore: {_lifetimeDestructionScore}");
+
+            game.BattleWinScore = _battleWinScore;
+            Debug.Log($"BattleWinScore: {_battleWinScore}");
 
             if (game.PlayerName == "Charlie")
             {
                 game.PlayerName = _playerName;
-                // otherwise keep the local name
+                Debug.Log($"PlayerName: {_playerName}");
             }
+
             game.IsDoneMigration = _isDoneMigration;
+            Debug.Log($"IsDoneMigration: {_isDoneMigration}");
+
+            // Log completed levels
+            foreach (var level in _levelsCompleted)
+            {
+                Debug.Log($"Completed Level: {level.Key}, Difficulty: {level.Value}");
+            }
+
+            // Log completed side quests
+            if (_sideQuestsCompleted != null)
+            {
+                foreach (var sideQuest in _sideQuestsCompleted)
+                {
+                    Debug.Log($"Completed SideQuest: {sideQuest.Key}, Difficulty: {sideQuest.Value}");
+                }
+            }
+
+            // Log unlocked hulls
+            foreach (var hull in _unlockedHulls)
+            {
+                Debug.Log($"Unlocked Hull: {hull}");
+            }
+
+            // Log unlocked buildings
+            foreach (var building in _unlockedBuildings)
+            {
+                Debug.Log($"Unlocked Building: {building.Key}, Category: {building.Value}");
+            }
+
+            // Log unlocked units
+            foreach (var unit in _unlockedUnits)
+            {
+                Debug.Log($"Unlocked Unit: {unit.Key}, Category: {unit.Value}");
+            }
 
             // IAPs
             // Exos
