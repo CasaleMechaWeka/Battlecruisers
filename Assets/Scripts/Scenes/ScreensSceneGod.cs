@@ -198,6 +198,15 @@ namespace BattleCruisers.Scenes
                     Debug.Log("Application Version: " + currentVersion);
                     Debug.Log("DataProvider Version: " + requiredVer);
 
+#if DISABLE_MATCHMAKING
+                    // When matchmaking is disabled, show offline-only UI regardless of version or server status
+                    hubScreen.serverStatusPanel.SetActive(false);
+                    hubScreen.offlinePlayOnly.SetActive(true);
+                    hubScreen.battle1vAI.SetActive(true);
+                    hubScreen.updateForPVP.SetActive(false);
+                    hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("BattleBots");
+                    Debug.Log("Matchmaking disabled by compile flag.");
+#else
                     if (requiredVer != "EDITOR" && VersionToInt(Application.version) < VersionToInt(requiredVer))
                     {
                         // set status panel values, prompt update
@@ -234,7 +243,8 @@ namespace BattleCruisers.Scenes
                             hubScreen.titleOfBattleButton.gameObject.GetComponent<LocalizeStringEvent>().SetEntry("CoinBattleDescription");
                             Debug.Log("PVP Server Unavailable.");
                         }
-                    }
+                    } 
+                #endif
                 }
                 catch (Exception ex)
                 {

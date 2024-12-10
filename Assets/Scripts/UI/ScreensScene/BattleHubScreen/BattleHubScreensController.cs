@@ -224,6 +224,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoPvPMode()
         {
+#if DISABLE_MATCHMAKING
+            _applicationModel.Mode = GameMode.CoinBattle;
+            // Set UI elements for offline-only mode
+            if (ScreensSceneGod.Instance != null)
+            {
+                ScreensSceneGod.Instance.hubScreen.serverStatusPanel.SetActive(false);
+                ScreensSceneGod.Instance.hubScreen.offlinePlayOnly.SetActive(true);
+                ScreensSceneGod.Instance.hubScreen.battle1vAI.SetActive(true);
+                ScreensSceneGod.Instance.hubScreen.updateForPVP.SetActive(false);
+            
+                offlineOnlyText.gameObject.SetActive(false);
+            }
+            coinBattleController.Battle();
+#else
             if (ScreensSceneGod.Instance.requiredVer != "EDITOR" && VersionToInt(Application.version) < VersionToInt(ScreensSceneGod.Instance.requiredVer))
             {
                 // prompt update
@@ -243,6 +257,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     coinBattleController.Battle();
                 }
             }
+#endif
         }
 
         public void GotoCoinBattle()
