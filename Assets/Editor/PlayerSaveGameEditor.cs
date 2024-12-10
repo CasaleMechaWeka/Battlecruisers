@@ -14,6 +14,7 @@ using UnityEditor;
 public class PlayerSaveGameEditor : EditorWindow
 {
     private GameModel gameModel;
+    private ApplicationModel applicationModel;
     private List<bool> sideQuestCompletion;
     private int mainQuestsUnlocked;
     private string gameModelDataDisplay;
@@ -35,9 +36,9 @@ public class PlayerSaveGameEditor : EditorWindow
 
     private void OnGUI()
     {
-        if (gameModel == null)
+        if (gameModel == null || applicationModel == null)
         {
-            EditorGUILayout.HelpBox("GameModel is not available.", MessageType.Warning);
+            EditorGUILayout.HelpBox("GameModel or ApplicationModel is not available.", MessageType.Warning);
             return;
         }
 
@@ -52,6 +53,13 @@ public class PlayerSaveGameEditor : EditorWindow
         EditorGUILayout.LabelField($"Coins: {gameModel.Coins}");
         EditorGUILayout.LabelField($"Credits: {gameModel.Credits}");
         EditorGUILayout.LabelField($"Tutorial Completed: {gameModel.HasAttemptedTutorial}");
+
+        EditorGUILayout.LabelField("Application Model Details", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField($"Selected Level: {applicationModel.SelectedLevel}");
+        EditorGUILayout.LabelField($"Selected Side Quest ID: {applicationModel.SelectedSideQuestID}");
+        EditorGUILayout.LabelField($"Game Mode: {applicationModel.Mode}");
+        EditorGUILayout.LabelField($"Lifetime Destruction Score: {gameModel.LifetimeDestructionScore}");
+        EditorGUILayout.LabelField($"Num of Levels Completed: {gameModel.NumOfLevelsCompleted}");
 
         EditorGUILayout.LabelField("Completed Side Quests:", EditorStyles.boldLabel);
         for (int i = 0; i < sideQuestCompletion.Count; i++)
@@ -74,9 +82,11 @@ public class PlayerSaveGameEditor : EditorWindow
         }
 
         gameModel = dataProvider.GameModel as GameModel;
-        if (gameModel == null)
+        applicationModel = ApplicationModelProvider.ApplicationModel as ApplicationModel;
+
+        if (gameModel == null || applicationModel == null)
         {
-            Debug.LogError("GameModel is not of type GameModel.");
+            Debug.LogError("GameModel or ApplicationModel is not of type GameModel or ApplicationModel.");
             return;
         }
         mainQuestsUnlocked = gameModel.CompletedLevels.Count;
