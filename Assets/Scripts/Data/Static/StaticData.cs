@@ -610,6 +610,8 @@ namespace BattleCruisers.Data.Static
                 // Offence
                 { Buildings.IonCannon, 5 },
                 { Buildings.Cannon, 28 },
+                { Buildings.BlastVLS, 31 },
+                { Buildings.FirecrackerVLS, 32 },
 
                 // Ultras
                 { Buildings.NovaArtillery, 0 },
@@ -628,6 +630,7 @@ namespace BattleCruisers.Data.Static
                 // Aircraft
                 { Units.Broadsword, 8 },
                 { Units.StratBomber, 9 },
+                { Units.MissileFighter, 24 },
                 { Units.SpyPlane, 29 },
                 
                 // Ships
