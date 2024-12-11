@@ -66,7 +66,7 @@ public class PlayerSaveGameEditor : EditorWindow
         {
             if (sideQuestCompletion[i])
             {
-                EditorGUILayout.LabelField($"Side Quest {i + 1} is completed.");
+                EditorGUILayout.LabelField($"Side Quest {i} is completed.");
             }
         }
     }
