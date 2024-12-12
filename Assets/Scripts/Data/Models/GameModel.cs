@@ -979,7 +979,8 @@ namespace BattleCruisers.Data.Models
 
         public void AddCompletedSideQuest(CompletedLevel completedSideQuest)
         {
-            Assert.IsTrue(completedSideQuest.LevelNum <= StaticData.NUM_OF_SIDEQUESTS, "Have not completed preceeding level :/");
+            Assert.IsTrue(completedSideQuest.LevelNum <= StaticData.NUM_OF_SIDEQUESTS,
+            "SideQuestID out of expected range: " + (completedSideQuest.LevelNum).ToString() + " | expected: <=" + (StaticData.NUM_OF_SIDEQUESTS).ToString());
             Assert.IsTrue(completedSideQuest.LevelNum >= 0);
 
             // First time SideQuest has been completed

@@ -27,7 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             IPvPTarget parentTarget = null)
         {
             PvPHelper.AssertIsNotNull(cruiserSpecificFactories, targetFactories, attackCapabilities);
-            Assert.IsTrue(maxRangeInM > minRangeInM);
+            Assert.IsTrue(maxRangeInM > minRangeInM,
+            "maxRange is not higher than minRange; expected: <" + minRangeInM.ToString() + " actual: " + maxRangeInM.ToString());
 
             CruiserSpecificFactories = cruiserSpecificFactories;
             TargetFactories = targetFactories;
