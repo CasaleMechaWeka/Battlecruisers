@@ -38,7 +38,7 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_PvPLEVELS = 9;
         public const int NUM_OF_STANDARD_LEVELS = 31;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
-        public const int NUM_OF_SIDEQUESTS = 30;
+        public const int NUM_OF_SIDEQUESTS = 31;
 
 
 #if IS_DEMO
