@@ -118,7 +118,6 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private Sprite[] difficultyIndicators;
 
-
         async void Start()
         {
             if (Instance == null)
@@ -244,7 +243,7 @@ namespace BattleCruisers.Scenes
                             Debug.Log("PVP Server Unavailable.");
                         }
                     } 
-                #endif
+#endif
                 }
                 catch (Exception ex)
                 {

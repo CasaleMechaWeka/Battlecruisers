@@ -21,7 +21,6 @@ using BattleCruisers.Scenes;
 using Unity.Services.Authentication;
 using BattleCruisers.Utils.UGS.Samples;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
-using System.Collections;
 
 namespace BattleCruisers.Data
 {

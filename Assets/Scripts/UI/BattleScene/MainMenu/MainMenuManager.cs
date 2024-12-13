@@ -49,8 +49,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);
-            string logName = "Battle_Quit";
             /*
+            string logName = "Battle_Quit";
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif

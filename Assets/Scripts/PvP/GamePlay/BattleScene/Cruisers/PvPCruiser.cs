@@ -141,7 +141,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public event EventHandler<PvPBuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<PvPBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
-        private int updateCnt = 0;
         public bool isPvPCruiser = true;
 
         // network variables

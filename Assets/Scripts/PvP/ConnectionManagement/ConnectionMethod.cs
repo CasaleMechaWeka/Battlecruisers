@@ -5,8 +5,6 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using Unity.Services.Lobbies;
-using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
 using UnityEngine;
@@ -54,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 playerGameMap = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap,
                 playerRating = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore,
                 playerBodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit,
-        //        playerSelectedVariants = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedVariantsAsString()
+                //        playerSelectedVariants = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedVariantsAsString()
                 //               isDebug = Debug.isDebugBuild
             });
 

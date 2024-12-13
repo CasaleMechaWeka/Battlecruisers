@@ -4,8 +4,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
-using BattleCruisers.Buildables.Buildings;
-using UnityEngine;
 
 namespace BattleCruisers.Hotkeys
 {

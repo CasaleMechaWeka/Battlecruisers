@@ -1,10 +1,7 @@
-using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using System;
-using Unity.Services.Analytics;
-using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
@@ -29,8 +26,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _modalMenu = modalMenu;
             _battleCompletionHandler = battleCompletionHandler;
         }
-
-
 
         public PvPMainMenuManager(
             // IPvPNavigationPermitterManager navigationPermitterManager,
@@ -65,8 +60,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);
-            string logName = "Battle_Quit";
             /*
+            string logName = "Battle_Quit";
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -82,7 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 Debug.Log(ex.Message);
             }
             */
-
         }
 
         public void RetryLevel()
@@ -91,8 +85,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: true);
             Dismissed?.Invoke(this, EventArgs.Empty);
-            string logName = "Battle_Retry_InGame";
             /*
+            string logName = "Battle_Retry_InGame";
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -107,7 +101,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 Debug.Log(ex.Message);
             }
             */
-
         }
 
         public void ShowSettings()

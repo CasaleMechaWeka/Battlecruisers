@@ -487,10 +487,10 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
             GameOver = false;
-            string logName = "Battle_Begin";
             if (LandingSceneGod.Instance.coinBattleLevelNum > 0)
                 LandingSceneGod.Instance.coinBattleLevelNum = -2; //Erik - DestructionSceneGod will detect Coin battle mode through this
             /*
+            string logName = "Battle_Begin";
             #if LOG_ANALYTICS
                 Debug.Log("Analytics: " + logName);
             #endif

@@ -223,7 +223,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 catch (Exception ex)
                 {
                     //    Debug.Log("Cruiser maybe not have _parent " + damageSource.GameObject.name);
-                    Debug.Log("Cruiser maybe not have _parent ");
+                    Debug.LogError("Cruiser maybe not have _parent: " + ex.Message);
                 }
 
                 if (wasFullHealth)

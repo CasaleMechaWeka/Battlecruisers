@@ -6,7 +6,6 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
-using System.Text;
 #endif
 
 

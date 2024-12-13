@@ -1,12 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BattleCruisers.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
@@ -24,16 +20,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.C
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Scenes.BattleScene;
-using UnityEngine.Analytics;
-using Unity.Services.Analytics;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
-using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using UnityEngine.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
@@ -79,7 +68,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPDroneManagerMonitor droneManagerMonitorA;
         private PvPDroneManagerMonitor droneManagerMonitorB;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        private bool IsAIBotMode = false;
         public NameGenerationData nameGenerator;
         public static PvPBattleSceneGodServer Instance
         {
@@ -231,7 +219,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
             _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
-        //    _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
+            //    _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
             RegisteredAllBuildalbesToServer();
             /*            string logName = "Battle_Begin";
             #if LOG_ANALYTICS
@@ -249,28 +237,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         */
         }
 
-/*        public void GetSelectedVariantsFromString()
-        {
-            string[] str_VaraintsA = SynchedServerData.Instance.playerASelectedVariants.Value.ToString().Split(' ');
-            foreach(string str in str_VaraintsA) 
-            {
-                int tempI;
-                if(int.TryParse(str, out tempI))
+        /*        public void GetSelectedVariantsFromString()
                 {
-                    playerASelectedVariants.Add(tempI);
-                }
-            }
+                    string[] str_VaraintsA = SynchedServerData.Instance.playerASelectedVariants.Value.ToString().Split(' ');
+                    foreach(string str in str_VaraintsA) 
+                    {
+                        int tempI;
+                        if(int.TryParse(str, out tempI))
+                        {
+                            playerASelectedVariants.Add(tempI);
+                        }
+                    }
 
-            string[] str_VariantsB = SynchedServerData.Instance.playerBSelectedVariants.Value.ToString().Split(' ');
-            foreach(string str in str_VariantsB)
-            {
-                int tempP;
-                if (int.TryParse(str, out tempP))
-                {
-                    playerBSelectedVariants.Add(tempP);
-                }
-            }
-        }*/
+                    string[] str_VariantsB = SynchedServerData.Instance.playerBSelectedVariants.Value.ToString().Split(' ');
+                    foreach(string str in str_VariantsB)
+                    {
+                        int tempP;
+                        if (int.TryParse(str, out tempP))
+                        {
+                            playerBSelectedVariants.Add(tempP);
+                        }
+                    }
+                }*/
 
         public async void Initialise_Rest()
         {
@@ -280,7 +268,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public async Task RunPvP_AIMode()
         {
-            IsAIBotMode = true;
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
 

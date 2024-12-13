@@ -10,7 +10,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         private readonly Stack<TPoolable> _items;
         private readonly IPvPPoolableFactory<TPoolable, TArgs> _itemFactory;
-        private int _createCount = 0;
         private int MaxLimit = 1000;
 
         public PvPPool(IPvPPoolableFactory<TPoolable, TArgs> itemFactory)

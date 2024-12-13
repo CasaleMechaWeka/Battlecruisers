@@ -9,7 +9,6 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private Image background;
     public Text textForLoc;
     private float xDelta;
-    private bool exited = true;
     private ToolTipActivator toolTipActivator;
     private bool started = false;
     private int _virticalAdjustment = 0;

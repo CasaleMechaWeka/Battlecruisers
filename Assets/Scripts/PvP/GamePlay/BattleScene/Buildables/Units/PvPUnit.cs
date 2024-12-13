@@ -223,12 +223,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnFixedUpdate();
             }
         }
-        bool isUpdating = false;
         IEnumerator iOnFixedUpdte()
         {
             yield return null;
             OnFixedUpdate();
-            isUpdating = false;
         }
 
         protected virtual void OnFixedUpdate() { }

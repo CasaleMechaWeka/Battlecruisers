@@ -17,9 +17,6 @@ namespace BattleCruisers.Scenes.Test
 
         private async void Start()
         {
-            // Exceptions are lost in async code.  Turning exceptions off means we get a nice log message :)
-            Assert.raiseExceptions = false;
-
             // Deactivate all game objects (to avoid update loop while we are initialising)
             IList<GameObject> gameObjects = GetGameObjects();
             SetActiveness(gameObjects, false);
@@ -52,16 +49,16 @@ namespace BattleCruisers.Scenes.Test
         {
             return new List<GameObject>();
         }
-        
+
         protected virtual async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             // May both be null
             IDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
             IDeferrer realTimeDeferrer = GetComponent<RealTimeDeferrer>();
 
-            return 
+            return
                 await HelperFactory.CreateHelperAsync(
-                    updaterProvider: updaterProvider, 
+                    updaterProvider: updaterProvider,
                     deferrer: deferrer,
                     realTimeDeferrer: realTimeDeferrer,
                     buildSpeedMultiplier: buildSpeedMultiplier);

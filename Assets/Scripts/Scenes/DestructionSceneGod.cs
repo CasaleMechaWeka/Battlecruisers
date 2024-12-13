@@ -33,8 +33,6 @@ namespace BattleCruisers.Scenes
 
         private long[] destructionValues;
 
-        private bool realScene = true;
-
         [SerializeField]
         private AnimationClip cardRevealAnim;
         [SerializeField]
@@ -348,7 +346,6 @@ namespace BattleCruisers.Scenes
             CalculateRewards();
 
             screenTitle.text = "Debug Mode";
-            realScene = false;
         }
 
         IEnumerator AnimateScreen()

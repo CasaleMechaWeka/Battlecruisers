@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers

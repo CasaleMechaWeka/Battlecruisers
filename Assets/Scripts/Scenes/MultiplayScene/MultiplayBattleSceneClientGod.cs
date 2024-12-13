@@ -7,12 +7,10 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
-using BattleCruisers.Tutorial;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.UI.BattleScene.HelpLabels;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
@@ -43,7 +41,6 @@ using BattleCruisers.Buildables;
 using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
-using Unity.Services.Analytics;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Scenes;
 using BattleCruisers.Network.Multiplay.Gameplay.GameState;
@@ -419,8 +416,8 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
 
             GameOver = false;
-            string logName = "Battle_Begin";
             /*
+            string logName = "Battle_Begin";
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif

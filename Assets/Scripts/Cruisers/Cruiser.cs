@@ -108,7 +108,6 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
-        private int updateCnt = 0;
         public bool isCruiser = true;
         public bool isUsingBodykit = false;
 

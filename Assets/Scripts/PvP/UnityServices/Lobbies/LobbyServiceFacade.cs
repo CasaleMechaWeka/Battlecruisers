@@ -9,8 +9,6 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
@@ -45,7 +43,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         public Lobby CurrentUnityLobby { get; private set; }
 
         bool m_IsTracking = false;
-        bool m_IsMatchmaking = false;
 
         public Action OnMatchMakingFailed;
         public Action OnMatchMakingStarted;
@@ -92,7 +89,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             if (!m_IsTracking)
             {
                 m_IsTracking = true;
-                m_IsMatchmaking = false;
                 m_RateLimitLobbyQuery.PutOnCooldown();
                 // 2s update cadence is arbitrary and is here to demonstrate the fact that this update can be rather infrequent
                 // the actual rate limits are tracked via the RateLimitCooldown objects defined above
@@ -103,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         public async void LockLobby()
         {
-            if(CurrentUnityLobby != null)
+            if (CurrentUnityLobby != null)
             {
                 var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
                 var result = await m_LobbyApiInterface.UpdateLobbyWithPrivate(CurrentUnityLobby.Id, dataCurr, isPrivate: true);
@@ -170,12 +166,12 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {
                     if (m_LocalLobby.PlayerCount == 2)
                     {
-/*                        var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
-                        var result = await m_LobbyApiInterface.UpdateLobbyWithPrivate(CurrentUnityLobby.Id, dataCurr, isPrivate: true);
-                        if (result != null)
-                        {
-                            CurrentUnityLobby = result;
-                        }*/
+                        /*                        var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
+                                                var result = await m_LobbyApiInterface.UpdateLobbyWithPrivate(CurrentUnityLobby.Id, dataCurr, isPrivate: true);
+                                                if (result != null)
+                                                {
+                                                    CurrentUnityLobby = result;
+                                                }*/
                     }
                 }
                 else
@@ -226,7 +222,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     return (false, lobby);
                 }
             }
-            catch(Exception e) /*(LobbyServiceException e)*/
+            catch (Exception e) /*(LobbyServiceException e)*/
             {
                 /*                if (e.Reason == LobbyExceptionReason.RateLimited)
                                 {
@@ -537,7 +533,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             try
             {
-                var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock : false);
+                var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock: false);
 
                 if (result != null)
                 {

@@ -856,7 +856,6 @@ namespace BattleCruisers.Scenes
 #endif
         }
 
-        bool isUpdatingInternetConnectivity = false;
         async void iUpdateInternetConnectivity()
         {
             await Task.Delay(5000);
@@ -871,9 +870,6 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = ConnectedState;
             else
                 CurrentInternetConnectivity = DisconnectedState;
-
-            isUpdatingInternetConnectivity = false;
-
         }
 
         public void OnRetry()
