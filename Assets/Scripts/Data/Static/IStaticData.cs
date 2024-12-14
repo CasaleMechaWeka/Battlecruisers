@@ -36,6 +36,5 @@ namespace BattleCruisers.Data.Static
         ILoot GetSideQuestLoot(int sideQuestID);
         int UnitUnlockLevel(UnitKey unitKey);
         int BuildingUnlockLevel(BuildingKey buildingKey);
-
     }
 }
