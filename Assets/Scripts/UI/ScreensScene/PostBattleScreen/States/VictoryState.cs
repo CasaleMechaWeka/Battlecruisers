@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;

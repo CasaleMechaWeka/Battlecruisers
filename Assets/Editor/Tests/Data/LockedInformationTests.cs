@@ -32,7 +32,6 @@ namespace BattleCruisers.Tests.Data
             };
             _levels = new ReadOnlyCollection<ILevel>(levels);
             _staticData.Levels.Returns(_levels);
-            _staticData.IsDemo.Returns(false);
 
             _lockedInfo = new LockedInformation(_gameModel, _staticData);
         }
@@ -56,7 +55,6 @@ namespace BattleCruisers.Tests.Data
         public void NumOfLevelsUnlocked_IsDemo()
         {
             _gameModel.NumOfLevelsCompleted.Returns(_levels.Count);
-            _staticData.IsDemo.Returns(true);
             Assert.AreEqual(StaticData.NUM_OF_LEVELS_IN_DEMO, _lockedInfo.NumOfLevelsUnlocked);
         }
         #endregion NumOfLevelsUnlocked
