@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             RemoveAllCaptainsFromRenderCamera();
 
             byte ii = 0;
-            for (int i = 0; i < StaticPrefabKeys.CaptainExos.CaptainExoCount(); i++)
+            for (int i = 0; i < StaticPrefabKeys.CaptainExos.CaptainExoCount; i++)
             {
                 if (_dataProvider.GameModel.Captains[i].isOwned)
                 {

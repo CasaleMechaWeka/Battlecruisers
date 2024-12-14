@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static
 {
@@ -47,7 +48,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPBlastVLS { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPBlastVLS");
             public static PvPBuildingKey PvPFirecrackerVLS { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPFirecrackerVLS");
 
-
             // Ultras
             public static PvPBuildingKey PvPDeathstarLauncher { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPDeathstarLauncher");
             public static PvPBuildingKey PvPNukeLauncher { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPNukeLauncher");
@@ -59,27 +59,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPGlobeShield { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPGlobeShield");
             public static PvPBuildingKey PvPSledgehammer { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPSledgehammer");
 
-            public static IList<IPvPPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {
-                get
-                {
-                    return new List<IPvPPrefabKey>()
-                    {
-                        // Factories
-                        PvPAirFactory, PvPNavalFactory, PvPDroneStation, PvPDroneStation4, PvPDroneStation6, PvPDroneStation8,
-                        // Tactical
-                        PvPShieldGenerator, PvPStealthGenerator, PvPSpySatelliteLauncher, PvPLocalBooster, PvPControlTower, PvPGrapheneBarrier,
-                        // Defence
-                        PvPAntiShipTurret, PvPAntiAirTurret, PvPMortar, PvPSamSite, PvPTeslaCoil, PvPCoastguard, PvPFlakTurret, PvPCIWS,
-                        // Offence
-                        PvPArtillery, PvPRocketLauncher, PvPRailgun, PvPMLRS, PvPGatlingMortar, PvPIonCannon, PvPMissilePod, PvPCannon, PvPBlastVLS, PvPFirecrackerVLS,
-                        // Ultras
-                        PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides, PvPNovaArtillery, PvPUltraCIWS, PvPGlobeShield, PvPSledgehammer
-                    };
-                }
-            }
+                // Factories
+                PvPAirFactory, PvPNavalFactory, PvPDroneStation, PvPDroneStation4, PvPDroneStation6, PvPDroneStation8,
+                // Tactical
+                PvPShieldGenerator, PvPStealthGenerator, PvPSpySatelliteLauncher, PvPLocalBooster, PvPControlTower, PvPGrapheneBarrier,
+                // Defence
+                PvPAntiShipTurret, PvPAntiAirTurret, PvPMortar, PvPSamSite, PvPTeslaCoil, PvPCoastguard, PvPFlakTurret, PvPCIWS,
+                // Offence
+                PvPArtillery, PvPRocketLauncher, PvPRailgun, PvPMLRS, PvPGatlingMortar, PvPIonCannon, PvPMissilePod, PvPCannon, PvPBlastVLS, PvPFirecrackerVLS,
+                // Ultras
+                PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides, PvPNovaArtillery, PvPUltraCIWS, PvPGlobeShield, PvPSledgehammer
+            });
         }
-
 
         public static class PvPUnits
         {
@@ -108,19 +101,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPRocketTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPRocketTurtle");
             public static PvPUnitKey PvPFlakTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPFlakTurtle");
 
-            public static IList<IPvPPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {
-                get
-                {
-                    return new List<IPvPPrefabKey>()
-                    {
-                        // Aircraft
-                        PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPStratBomber, PvPSpyPlane, PvPTestAircraft, PvPSpySatellite, PvPMissileFighter, PvPDeathstar,
-                        // Ships
-                        PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship, PvPGlassCannoneer, PvPGunBoat, PvPRocketTurtle, PvPFlakTurtle
-                    };
-                }
-            }
+                // Aircraft
+                PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPStratBomber, PvPSpyPlane, PvPTestAircraft, PvPSpySatellite, PvPMissileFighter, PvPDeathstar,
+                // Ships
+                PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer, PvPSiegeDestroyer, PvPArchonBattleship, PvPGlassCannoneer, PvPGunBoat, PvPRocketTurtle, PvPFlakTurtle
+            });
         }
 
         public static class PvPHulls
@@ -146,28 +133,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPHullKey PvPGoatherd { get; } = new PvPHullKey("PvPGoatherd");
             public static PvPHullKey PvPMegalith { get; } = new PvPHullKey("PvPMegalith");
 
-
-            public static IList<IPvPPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {
-                get
-                {
-                    return new List<IPvPPrefabKey>()
-                    {
-                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith
-                    };
-                }
-            }
-
-            public static IList<PvPHullKey> AllKeysExplicit
-            {
-                get
-                {
-                    return new List<PvPHullKey>()
-                    {
-                        PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith
-                    };
-                }
-            }
+                PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ 
+                PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith
+            });
         }
 
         public static class PvPEffects
@@ -191,17 +161,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPExplosionKey PvPExplosion150 { get; } = new PvPExplosionKey("PvPExplosion1.5");
             public static PvPExplosionKey PvPExplosion500 { get; } = new PvPExplosionKey("PvPExplosion5.0");
 
-            public static IList<IPvPPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {
-                get
-                {
-                    return new List<IPvPPrefabKey>()
-                    {
-                        PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion,
-                        PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosionMF, PvPExplosionFirecracker, PvPExplosion150, PvPExplosion500
-                    };
-                }
-            }
+                PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion,
+                PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosionMF, PvPExplosionFirecracker, PvPExplosion150, PvPExplosion500
+            });
         }
 
         public static class PvPProjectiles
@@ -227,18 +191,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPProjectileKey PvPRocket { get; } = new PvPProjectileKey("PvPRocket");
             public static PvPProjectileKey PvPRocketSmall { get; } = new PvPProjectileKey("PvPRocketSmall");
 
-            public static IList<IPvPPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {
-                get
-                {
-                    return new List<IPvPPrefabKey>()
-                    {
-                        PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPFiveShellCluster, PvPRocketShell,
-                        PvPMissileSmall, PvPMissileMedium, PvPMissileMF, PvPMissileFirecracker, PvPMissileLarge, PvPMissileSmart,
-                        PvPBomb, PvPStratBomb, PvPNuke, PvPRocket, PvPRocketSmall
-                    };
-                }
-            }
+                PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPFiveShellCluster, PvPRocketShell,
+                PvPMissileSmall, PvPMissileMedium, PvPMissileMF, PvPMissileFirecracker, PvPMissileLarge, PvPMissileSmart,
+                PvPBomb, PvPStratBomb, PvPNuke, PvPRocket, PvPRocketSmall
+            });
         }
 
         public static class PvPShipDeaths
@@ -253,24 +211,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPShipDeathKey PvPGunBoat { get; } = new PvPShipDeathKey("PvPGunBoat");
             public static PvPShipDeathKey PvPTurtle { get; } = new PvPShipDeathKey("PvPTurtle");
 
-            public static IList<IPvPPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {
-                get
-                {
-                    return new List<IPvPPrefabKey>()
-                    {
-                        PvPAttackBoat,
-                        PvPFrigate,
-                        PvPDestroyer,
-                        PvPArchon,
-                        PvPAttackRIB,
-                        PvPSiegeDestroyer,
-                        PvPGlassCannoneer,
-                        PvPGunBoat,
-                        PvPTurtle
-                    };
-                }
-            }
+                PvPAttackBoat, PvPFrigate, PvPDestroyer, PvPArchon, PvPAttackRIB, PvPSiegeDestroyer, PvPGlassCannoneer, PvPGunBoat, PvPTurtle
+            });
         }
 
         public static IPvPPrefabKey AudioSource { get; } = new PvPGenericKey("PvPAudioSource", "UI/Sound");
@@ -316,54 +260,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildableOutlineKey PvPGrapheneBarrierOutline { get; } = new PvPBuildableOutlineKey("PvPGrapheneBarrierOutline");
             public static PvPBuildableOutlineKey PvPBlastVLSOutline { get; } = new PvPBuildableOutlineKey("PvPBlastVLSOutline");
             public static PvPBuildableOutlineKey PvPFirecrackerVLSOutline { get; } = new PvPBuildableOutlineKey("PvPFirecrackerVLSOutline");
-            public static IList<IPvPPrefabKey> AllKeys
+
+            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {
-                get
-                {
-                    return new List<IPvPPrefabKey>()
-                    {
-                        PvPAirFactoryOutline,
-                        PvPAntiAirTurretOutline,
-                        PvPAntiShipTurretOutline,
-                        PvPArtilleryOutline,
-                        PvPBroadsidesOutline,
-                        PvPControlTowerOutline,
-                        PvPDeathstarLauncherOutline,
-                        PvPEngineeringBay4Outline,
-                        PvPEngineeringBay6Outline,
-                        PvPEngineeringBay8Outline,
-                        PvPEngineeringBayOutline,
-                        PvPGatlingMortarOutline,
-                        PvPKamikazeSignalOutline,
-                        PvPLocalBoosterOutline,
-                        PvPMLRSOutline,
-                        PvPMortarOutline,
-                        PvPNavalFactoryOutline,
-                        PvPNukeLauncherOutline,
-                        PvPRailgunOutline,
-                        PvPRocketLauncherOutline,
-                        PvPSamSiteOutline,
-                        PvPShieldGeneratorOutline,
-                        PvPStealthGeneratorOutline,
-                        PvPTeslaCoilOutline,
-                        PvPUltraliskOutline,
-                        PvPSpySatelliteLauncherOutline,
-                        PvPIonCannonOutline,
-                        PvPMissilePodOutline,
-                        PvPNovaArtilleryOutline,
-                        PvPCoastguardOutline,
-                        PvPFlakTurretOutline,
-                        PvPCIWSOutline,
-                        PvPUltraCIWSOutline,
-                        PvPGlobeShieldOutline,
-                        PvPSledgehammerOutline,
-                        PvPGrapheneBarrierOutline,
-                        PvPCannonOutline,
-                        PvPBlastVLSOutline,
-                        PvPFirecrackerVLSOutline
-                    };
-                }
-            }
+                PvPAirFactoryOutline, PvPAntiAirTurretOutline, PvPAntiShipTurretOutline, PvPArtilleryOutline, PvPBroadsidesOutline,
+                PvPControlTowerOutline, PvPDeathstarLauncherOutline, PvPEngineeringBay4Outline, PvPEngineeringBay6Outline, PvPEngineeringBay8Outline,
+                PvPEngineeringBayOutline, PvPGatlingMortarOutline, PvPKamikazeSignalOutline, PvPLocalBoosterOutline, PvPMLRSOutline,
+                PvPMortarOutline, PvPNavalFactoryOutline, PvPNukeLauncherOutline, PvPRailgunOutline, PvPRocketLauncherOutline,
+                PvPSamSiteOutline, PvPShieldGeneratorOutline, PvPStealthGeneratorOutline, PvPTeslaCoilOutline, PvPUltraliskOutline,
+                PvPSpySatelliteLauncherOutline, PvPIonCannonOutline, PvPMissilePodOutline, PvPNovaArtilleryOutline, PvPCoastguardOutline,
+                PvPFlakTurretOutline, PvPCIWSOutline, PvPUltraCIWSOutline, PvPGlobeShieldOutline, PvPSledgehammerOutline,
+                PvPGrapheneBarrierOutline, PvPCannonOutline, PvPBlastVLSOutline, PvPFirecrackerVLSOutline
+            });
         }
     }
 }

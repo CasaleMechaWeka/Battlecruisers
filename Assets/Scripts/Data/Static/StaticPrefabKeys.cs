@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Data.Static
 {
@@ -24,7 +25,7 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey SpySatelliteLauncher { get; } = new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher");
             public static BuildingKey LocalBooster { get; } = new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
             public static BuildingKey ControlTower { get; } = new BuildingKey(BuildingCategory.Tactical, "ControlTower");
-            public static BuildingKey GrapheneBarrier { get; } = new BuildingKey(BuildingCategory.Tactical, "GrapheneBarrier");//new
+            public static BuildingKey GrapheneBarrier { get; } = new BuildingKey(BuildingCategory.Tactical, "GrapheneBarrier");
 
             // Defence
             public static BuildingKey AntiShipTurret { get; } = new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
@@ -32,9 +33,9 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey Mortar { get; } = new BuildingKey(BuildingCategory.Defence, "Mortar");
             public static BuildingKey SamSite { get; } = new BuildingKey(BuildingCategory.Defence, "SamSite");
             public static BuildingKey TeslaCoil { get; } = new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
-            public static BuildingKey Coastguard { get; } = new BuildingKey(BuildingCategory.Defence, "Coastguard");//new
-            public static BuildingKey FlakTurret { get; } = new BuildingKey(BuildingCategory.Defence, "FlakTurret");//new
-            public static BuildingKey CIWS { get; } = new BuildingKey(BuildingCategory.Defence, "CIWS");//new
+            public static BuildingKey Coastguard { get; } = new BuildingKey(BuildingCategory.Defence, "Coastguard");
+            public static BuildingKey FlakTurret { get; } = new BuildingKey(BuildingCategory.Defence, "FlakTurret");
+            public static BuildingKey CIWS { get; } = new BuildingKey(BuildingCategory.Defence, "CIWS");
 
             // Offence
             public static BuildingKey Artillery { get; } = new BuildingKey(BuildingCategory.Offence, "Artillery");
@@ -53,32 +54,25 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey Ultralisk { get; } = new BuildingKey(BuildingCategory.Ultra, "Ultralisk");
             public static BuildingKey KamikazeSignal { get; } = new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal");
             public static BuildingKey Broadsides { get; } = new BuildingKey(BuildingCategory.Ultra, "Broadsides");
-            public static BuildingKey NovaArtillery { get; } = new BuildingKey(BuildingCategory.Ultra, "NovaArtillery");//new
-            public static BuildingKey UltraCIWS { get; } = new BuildingKey(BuildingCategory.Ultra, "UltraCIWS");//new
-            public static BuildingKey GlobeShield { get; } = new BuildingKey(BuildingCategory.Ultra, "GlobeShield");//new
+            public static BuildingKey NovaArtillery { get; } = new BuildingKey(BuildingCategory.Ultra, "NovaArtillery");
+            public static BuildingKey UltraCIWS { get; } = new BuildingKey(BuildingCategory.Ultra, "UltraCIWS");
+            public static BuildingKey GlobeShield { get; } = new BuildingKey(BuildingCategory.Ultra, "GlobeShield");
             public static BuildingKey Sledgehammer { get; } = new BuildingKey(BuildingCategory.Ultra, "Sledgehammer");//new
 
-            public static IList<IPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        // Factories
-                        AirFactory, NavalFactory, DroneStation, DroneStation4, DroneStation6, DroneStation8,
-                        // Tactical
-                        ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower, GrapheneBarrier,
-                        // Defence
-                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret, CIWS,
-                        // Offence
-                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, Cannon, BlastVLS, FirecrackerVLS, //railgun = LasCannon! 
-                        // Ultras
-                        DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery, UltraCIWS, GlobeShield, Sledgehammer
-                    };
-                }
-            }
+                // Factories
+                AirFactory, NavalFactory, DroneStation, DroneStation4, DroneStation6, DroneStation8,
+                // Tactical
+                ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower, GrapheneBarrier,
+                // Defence
+                AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret, CIWS,
+                // Offence
+                Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, Cannon, BlastVLS, FirecrackerVLS, //railgun = LasCannon! 
+                // Ultras
+                DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery, UltraCIWS, GlobeShield, Sledgehammer
+            });
         }
-
 
         public static class Units
         {
@@ -106,19 +100,13 @@ namespace BattleCruisers.Data.Static
             public static UnitKey RocketTurtle { get; } = new UnitKey(UnitCategory.Naval, "RocketTurtle");
             public static UnitKey FlakTurtle { get; } = new UnitKey(UnitCategory.Naval, "FlakTurtle");
 
-            public static IList<IPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        // Aircraft
-                        Bomber, Fighter, Gunship, SteamCopter, Broadsword, StratBomber, SpyPlane, MissileFighter, TestAircraft,
-                        // Ships
-                        AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, ArchonBattleship, GlassCannoneer, GunBoat, RocketTurtle, FlakTurtle
-                    };
-                }
-            }
+                // Aircraft
+                Bomber, Fighter, Gunship, SteamCopter, Broadsword, StratBomber, SpyPlane, MissileFighter, TestAircraft,
+                // Ships
+                AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, ArchonBattleship, GlassCannoneer, GunBoat, RocketTurtle, FlakTurtle
+            });
         }
 
         public static class Hulls
@@ -145,29 +133,11 @@ namespace BattleCruisers.Data.Static
             public static HullKey Megalith { get; } = new HullKey("Megalith");
             public static HullKey FortressPrime { get; } = new HullKey("FortressPrime");
 
-
-
-            public static IList<IPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss, BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime
-                    };
-                }
-            }
-
-            public static IList<HullKey> AllKeysExplicit
-            {
-                get
-                {
-                    return new List<HullKey>()
-                    {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime
-                    };
-                }
-            }
+                Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss,
+                BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime
+            });
         }
 
         public static class Ranks
@@ -207,22 +177,17 @@ namespace BattleCruisers.Data.Static
             public static RankData rank31 { get; } = new RankData("Rank31Admiral4Star", "31", "Rank31");
             public static RankData rank32 { get; } = new RankData("Rank32Admiral5Star", "32", "Rank32");
             public static RankData rank33 { get; } = new RankData("Rank33SupremeCommander", "33", "Rank33");
-            public static IList<IRankData> AllRanks
+
+            public static ReadOnlyCollection<IRankData> AllRanks = new ReadOnlyCollection<IRankData>(new List<IRankData>()
             {
-                get
-                {
-                    return new List<IRankData>()
-                    {
-                        rank00, rank01, rank02, rank03, rank04, rank05, rank06, rank07, rank08, rank09,
-                        rank10, rank11, rank12, rank13, rank14, rank15, rank16, rank17, rank18, rank19,
-                        rank20, rank21, rank22, rank23, rank24, rank25, rank26, rank27, rank28, rank29,
-                        rank30, rank31, rank32, rank33
-                    };
-                }
-            }
+                rank00, rank01, rank02, rank03, rank04, rank05, rank06, rank07, rank08, rank09,
+                rank10, rank11, rank12, rank13, rank14, rank15, rank16, rank17, rank18, rank19,
+                rank20, rank21, rank22, rank23, rank24, rank25, rank26, rank27, rank28, rank29,
+                rank30, rank31, rank32, rank33
+            });
         }
 
-        public static Dictionary<string, int> CaptainItems = new Dictionary<string, int>
+        public static Dictionary<string, int> CaptainItems { get; } = new Dictionary<string, int>
         {
             { "CAPTAINEXO000", 0},{ "CAPTAINEXO001", 1},{ "CAPTAINEXO002", 2},{ "CAPTAINEXO003", 3},{ "CAPTAINEXO004", 4},{ "CAPTAINEXO005", 5},{ "CAPTAINEXO006", 6},{ "CAPTAINEXO007", 7},{ "CAPTAINEXO008", 8},{ "CAPTAINEXO009", 9},
             { "CAPTAINEXO010", 10},{ "CAPTAINEXO011", 11},{ "CAPTAINEXO012", 12},{ "CAPTAINEXO013", 13}, { "CAPTAINEXO014", 14},{ "CAPTAINEXO015", 15}, { "CAPTAINEXO016", 16}, { "CAPTAINEXO017", 17},{ "CAPTAINEXO018", 18},{ "CAPTAINEXO019", 19},
@@ -274,308 +239,77 @@ namespace BattleCruisers.Data.Static
             public static CaptainExoKey CaptainExo039 { get; } = new CaptainExoKey("CaptainExo039");
             public static CaptainExoKey CaptainExo040 { get; } = new CaptainExoKey("CaptainExo040");
 
-            public static IList<IPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        CaptainExo000,CaptainExo001, CaptainExo002, CaptainExo003, CaptainExo004, CaptainExo005, CaptainExo006, CaptainExo007, CaptainExo008, CaptainExo009,
-                        CaptainExo010,CaptainExo011, CaptainExo012, CaptainExo013, CaptainExo014, CaptainExo015, CaptainExo016, CaptainExo017, CaptainExo018, CaptainExo019,
-                        CaptainExo020,CaptainExo021, CaptainExo022, CaptainExo023, CaptainExo024, CaptainExo025, CaptainExo026, CaptainExo027, CaptainExo028, CaptainExo029,
-                        CaptainExo030,CaptainExo031, CaptainExo032, CaptainExo033, CaptainExo034, CaptainExo035, CaptainExo036, CaptainExo037, CaptainExo038, CaptainExo039,
-                        CaptainExo040
-                    };
-                }
-            }
+                CaptainExo000,CaptainExo001, CaptainExo002, CaptainExo003, CaptainExo004, CaptainExo005, CaptainExo006, CaptainExo007, CaptainExo008, CaptainExo009,
+                CaptainExo010,CaptainExo011, CaptainExo012, CaptainExo013, CaptainExo014, CaptainExo015, CaptainExo016, CaptainExo017, CaptainExo018, CaptainExo019,
+                CaptainExo020,CaptainExo021, CaptainExo022, CaptainExo023, CaptainExo024, CaptainExo025, CaptainExo026, CaptainExo027, CaptainExo028, CaptainExo029,
+                CaptainExo030,CaptainExo031, CaptainExo032, CaptainExo033, CaptainExo034, CaptainExo035, CaptainExo036, CaptainExo037, CaptainExo038, CaptainExo039,
+                CaptainExo040
+            });
         }
 
-
-        public static Dictionary<string, int> HeckleItems = new Dictionary<string, int>
+        public static Dictionary<string, int> HeckleItems { get; } = new Dictionary<string, int>
         {
-            { "HECKLE000", 0},
-            { "HECKLE001", 1},
-            { "HECKLE002", 2},
-            { "HECKLE003", 3},
-            { "HECKLE004", 4},
-            { "HECKLE005", 5},
-            { "HECKLE006", 6},
-            { "HECKLE007", 7},
-            { "HECKLE008", 8},
-            { "HECKLE009", 9},
-            { "HECKLE010", 10},
-            { "HECKLE011", 11},
-            { "HECKLE012", 12},
-            { "HECKLE013", 13},
-            { "HECKLE014", 14},
-            { "HECKLE015", 15},
-            { "HECKLE016", 16},
-            { "HECKLE017", 17},
-            { "HECKLE018", 18},
-            { "HECKLE019", 19},
-            { "HECKLE020", 20},
-            { "HECKLE021", 21},
-            { "HECKLE022", 22},
-            { "HECKLE023", 23},
-            { "HECKLE024", 24},
-            { "HECKLE025", 25},
-            { "HECKLE026", 26},
-            { "HECKLE027", 27},
-            { "HECKLE028", 28},
-            { "HECKLE029", 29},
-            { "HECKLE030", 30},
-            { "HECKLE031", 31},
-            { "HECKLE032", 32},
-            { "HECKLE033", 33},
-            { "HECKLE034", 34},
-            { "HECKLE035", 35},
-            { "HECKLE036", 36},
-            { "HECKLE037", 37},
-            { "HECKLE038", 38},
-            { "HECKLE039", 39},
-            { "HECKLE040", 40},
-            { "HECKLE041", 41},
-            { "HECKLE042", 42},
-            { "HECKLE043", 43},
-            { "HECKLE044", 44},
-            { "HECKLE045", 45},
-            { "HECKLE046", 46},
-            { "HECKLE047", 47},
-            { "HECKLE048", 48},
-            { "HECKLE049", 49},
-            { "HECKLE050", 50},
-            { "HECKLE051", 51},
-            { "HECKLE052", 52},
-            { "HECKLE053", 53},
-            { "HECKLE054", 54},
-            { "HECKLE055", 55},
-            { "HECKLE056", 56},
-            { "HECKLE057", 57},
-            { "HECKLE058", 58},
-            { "HECKLE059", 59},
-            { "HECKLE060", 60},
-            { "HECKLE061", 61},
-            { "HECKLE062", 62},
-            { "HECKLE063", 63},
-            { "HECKLE064", 64},
-            { "HECKLE065", 65},
-            { "HECKLE066", 66},
-            { "HECKLE067", 67},
-            { "HECKLE068", 68},
-            { "HECKLE069", 69},
-            { "HECKLE070", 70},
-            { "HECKLE071", 71},
-            { "HECKLE072", 72},
-            { "HECKLE073", 73},
-            { "HECKLE074", 74},
-            { "HECKLE075", 75},
-            { "HECKLE076", 76},
-            { "HECKLE077", 77},
-            { "HECKLE078", 78},
-            { "HECKLE079", 79},
-            { "HECKLE080", 80},
-            { "HECKLE081", 81},
-            { "HECKLE082", 82},
-            { "HECKLE083", 83},
-            { "HECKLE084", 84},
-            { "HECKLE085", 85},
-            { "HECKLE086", 86},
-            { "HECKLE087", 87},
-            { "HECKLE088", 88},
-            { "HECKLE089", 89},
-            { "HECKLE090", 90},
-            { "HECKLE091", 91},
-            { "HECKLE092", 92},
-            { "HECKLE093", 93},
-            { "HECKLE094", 94},
-            { "HECKLE095", 95},
-            { "HECKLE096", 96},
-            { "HECKLE097", 97},
-            { "HECKLE098", 98},
-            { "HECKLE099", 99},
-            { "HECKLE100", 100},
-            { "HECKLE101", 101},
-            { "HECKLE102", 102},
-            { "HECKLE103", 103},
-            { "HECKLE104", 104},
-            { "HECKLE105", 105},
-            { "HECKLE106", 106},
-            { "HECKLE107", 107},
-            { "HECKLE108", 108},
-            { "HECKLE109", 109},
-            { "HECKLE110", 110},
-            { "HECKLE111", 111},
-            { "HECKLE112", 112},
-            { "HECKLE113", 113},
-            { "HECKLE114", 114},
-            { "HECKLE115", 115},
-            { "HECKLE116", 116},
-            { "HECKLE117", 117},
-            { "HECKLE118", 118},
-            { "HECKLE119", 119},
-            { "HECKLE120", 120},
-            { "HECKLE121", 121},
-            { "HECKLE122", 122},
-            { "HECKLE123", 123},
-            { "HECKLE124", 124},
-            { "HECKLE125", 125},
-            { "HECKLE126", 126},
-            { "HECKLE127", 127},
-            { "HECKLE128", 128},
-            { "HECKLE129", 129},
-            { "HECKLE130", 130},
-            { "HECKLE131", 131},
-            { "HECKLE132", 132},
-            { "HECKLE133", 133},
-            { "HECKLE134", 134},
-            { "HECKLE135", 135},
-            { "HECKLE136", 136},
-            { "HECKLE137", 137},
-            { "HECKLE138", 138},
-            { "HECKLE139", 139},
-            { "HECKLE140", 140},
-            { "HECKLE141", 141},
-            { "HECKLE142", 142},
-            { "HECKLE143", 143},
-            { "HECKLE144", 144},
-            { "HECKLE145", 145},
-            { "HECKLE146", 146},
-            { "HECKLE147", 147},
-            { "HECKLE148", 148},
-            { "HECKLE149", 149},
-            { "HECKLE150", 150},
-            { "HECKLE151", 151},
-            { "HECKLE152", 152},
-            { "HECKLE153", 153},
-            { "HECKLE154", 154},
-            { "HECKLE155", 155},
-            { "HECKLE156", 156},
-            { "HECKLE157", 157},
-            { "HECKLE158", 158},
-            { "HECKLE159", 159},
-            { "HECKLE160", 160},
-            { "HECKLE161", 161},
-            { "HECKLE162", 162},
-            { "HECKLE163", 163},
-            { "HECKLE164", 164},
-            { "HECKLE165", 165},
-            { "HECKLE166", 166},
-            { "HECKLE167", 167},
-            { "HECKLE168", 168},
-            { "HECKLE169", 169},
-            { "HECKLE170", 170},
-            { "HECKLE171", 171},
-            { "HECKLE172", 172},
-            { "HECKLE173", 173},
-            { "HECKLE174", 174},
-            { "HECKLE175", 175},
-            { "HECKLE176", 176},
-            { "HECKLE177", 177},
-            { "HECKLE178", 178},
-            { "HECKLE179", 179},
-            { "HECKLE180", 180},
-            { "HECKLE181", 181},
-            { "HECKLE182", 182},
-            { "HECKLE183", 183},
-            { "HECKLE184", 184},
-            { "HECKLE185", 185},
-            { "HECKLE186", 186},
-            { "HECKLE187", 187},
-            { "HECKLE188", 188},
-            { "HECKLE189", 189},
-            { "HECKLE190", 190},
-            { "HECKLE191", 191},
-            { "HECKLE192", 192},
-            { "HECKLE193", 193},
-            { "HECKLE194", 194},
-            { "HECKLE195", 195},
-            { "HECKLE196", 196},
-            { "HECKLE197", 197},
-            { "HECKLE198", 198},
-            { "HECKLE199", 199},
-            { "HECKLE200", 200},
-            { "HECKLE201", 201},
-            { "HECKLE202", 202},
-            { "HECKLE203", 203},
-            { "HECKLE204", 204},
-            { "HECKLE205", 205},
-            { "HECKLE206", 206},
-            { "HECKLE207", 207},
-            { "HECKLE208", 208},
-            { "HECKLE209", 209},
-            { "HECKLE210", 210},
-            { "HECKLE211", 211},
-            { "HECKLE212", 212},
-            { "HECKLE213", 213},
-            { "HECKLE214", 214},
-            { "HECKLE215", 215},
-            { "HECKLE216", 216},
-            { "HECKLE217", 217},
-            { "HECKLE218", 218},
-            { "HECKLE219", 219},
-            { "HECKLE220", 220},
-            { "HECKLE221", 221},
-            { "HECKLE222", 222},
-            { "HECKLE223", 223},
-            { "HECKLE224", 224},
-            { "HECKLE225", 225},
-            { "HECKLE226", 226},
-            { "HECKLE227", 227},
-            { "HECKLE228", 228},
-            { "HECKLE229", 229},
-            { "HECKLE230", 230},
-            { "HECKLE231", 231},
-            { "HECKLE232", 232},
-            { "HECKLE233", 233},
-            { "HECKLE234", 234},
-            { "HECKLE235", 235},
-            { "HECKLE236", 236},
-            { "HECKLE237", 237},
-            { "HECKLE238", 238},
-            { "HECKLE239", 239},
-            { "HECKLE240", 240},
-            { "HECKLE241", 241},
-            { "HECKLE242", 242},
-            { "HECKLE243", 243},
-            { "HECKLE244", 244},
-            { "HECKLE245", 245},
-            { "HECKLE246", 246},
-            { "HECKLE247", 247},
-            { "HECKLE248", 248},
-            { "HECKLE249", 249},
-            { "HECKLE250", 250},
-            { "HECKLE251", 251},
-            { "HECKLE252", 252},
-            { "HECKLE253", 253},
-            { "HECKLE254", 254},
-            { "HECKLE255", 255},
-            { "HECKLE256", 256},
-            { "HECKLE257", 257},
-            { "HECKLE258", 258},
-            { "HECKLE259", 259},
-            { "HECKLE260", 260},
-            { "HECKLE261", 261},
-            { "HECKLE262", 262},
-            { "HECKLE263", 263},
-            { "HECKLE264", 264},
-            { "HECKLE265", 265},
-            { "HECKLE266", 266},
-            { "HECKLE267", 267},
-            { "HECKLE268", 268},
-            { "HECKLE269", 269},
-            { "HECKLE270", 270},
-            { "HECKLE271", 271},
-            { "HECKLE272", 272},
-            { "HECKLE273", 273},
-            { "HECKLE274", 274},
-            { "HECKLE275", 275},
-            { "HECKLE276", 276},
-            { "HECKLE277", 277},
-            { "HECKLE278", 278},
-            { "HECKLE279", 279},
+            { "HECKLE000", 0}, { "HECKLE001", 1}, { "HECKLE002", 2}, { "HECKLE003", 3}, { "HECKLE004", 4},
+            { "HECKLE005", 5}, { "HECKLE006", 6}, { "HECKLE007", 7}, { "HECKLE008", 8}, { "HECKLE009", 9},
+            { "HECKLE010", 10}, { "HECKLE011", 11}, { "HECKLE012", 12}, { "HECKLE013", 13}, { "HECKLE014", 14},
+            { "HECKLE015", 15}, { "HECKLE016", 16}, { "HECKLE017", 17}, { "HECKLE018", 18}, { "HECKLE019", 19},
+            { "HECKLE020", 20}, { "HECKLE021", 21}, { "HECKLE022", 22}, { "HECKLE023", 23}, { "HECKLE024", 24},
+            { "HECKLE025", 25}, { "HECKLE026", 26}, { "HECKLE027", 27}, { "HECKLE028", 28}, { "HECKLE029", 29},
+            { "HECKLE030", 30}, { "HECKLE031", 31}, { "HECKLE032", 32}, { "HECKLE033", 33}, { "HECKLE034", 34},
+            { "HECKLE035", 35}, { "HECKLE036", 36}, { "HECKLE037", 37}, { "HECKLE038", 38}, { "HECKLE039", 39},
+            { "HECKLE040", 40}, { "HECKLE041", 41}, { "HECKLE042", 42}, { "HECKLE043", 43}, { "HECKLE044", 44},
+            { "HECKLE045", 45}, { "HECKLE046", 46}, { "HECKLE047", 47}, { "HECKLE048", 48}, { "HECKLE049", 49},
+            { "HECKLE050", 50}, { "HECKLE051", 51}, { "HECKLE052", 52}, { "HECKLE053", 53}, { "HECKLE054", 54},
+            { "HECKLE055", 55}, { "HECKLE056", 56}, { "HECKLE057", 57}, { "HECKLE058", 58}, { "HECKLE059", 59},
+            { "HECKLE060", 60}, { "HECKLE061", 61}, { "HECKLE062", 62}, { "HECKLE063", 63}, { "HECKLE064", 64},
+            { "HECKLE065", 65}, { "HECKLE066", 66}, { "HECKLE067", 67}, { "HECKLE068", 68}, { "HECKLE069", 69},
+            { "HECKLE070", 70}, { "HECKLE071", 71}, { "HECKLE072", 72}, { "HECKLE073", 73}, { "HECKLE074", 74},
+            { "HECKLE075", 75}, { "HECKLE076", 76}, { "HECKLE077", 77}, { "HECKLE078", 78}, { "HECKLE079", 79},
+            { "HECKLE080", 80}, { "HECKLE081", 81}, { "HECKLE082", 82}, { "HECKLE083", 83}, { "HECKLE084", 84},
+            { "HECKLE085", 85}, { "HECKLE086", 86}, { "HECKLE087", 87}, { "HECKLE088", 88}, { "HECKLE089", 89},
+            { "HECKLE090", 90}, { "HECKLE091", 91}, { "HECKLE092", 92}, { "HECKLE093", 93}, { "HECKLE094", 94},
+            { "HECKLE095", 95}, { "HECKLE096", 96}, { "HECKLE097", 97}, { "HECKLE098", 98}, { "HECKLE099", 99},
+            { "HECKLE100", 100}, { "HECKLE101", 101}, { "HECKLE102", 102}, { "HECKLE103", 103}, { "HECKLE104", 104},
+            { "HECKLE105", 105}, { "HECKLE106", 106}, { "HECKLE107", 107}, { "HECKLE108", 108}, { "HECKLE109", 109},
+            { "HECKLE110", 110}, { "HECKLE111", 111}, { "HECKLE112", 112}, { "HECKLE113", 113}, { "HECKLE114", 114},
+            { "HECKLE115", 115}, { "HECKLE116", 116}, { "HECKLE117", 117}, { "HECKLE118", 118}, { "HECKLE119", 119},
+            { "HECKLE120", 120}, { "HECKLE121", 121}, { "HECKLE122", 122}, { "HECKLE123", 123}, { "HECKLE124", 124},
+            { "HECKLE125", 125}, { "HECKLE126", 126}, { "HECKLE127", 127}, { "HECKLE128", 128}, { "HECKLE129", 129},
+            { "HECKLE130", 130}, { "HECKLE131", 131}, { "HECKLE132", 132}, { "HECKLE133", 133}, { "HECKLE134", 134},
+            { "HECKLE135", 135}, { "HECKLE136", 136}, { "HECKLE137", 137}, { "HECKLE138", 138}, { "HECKLE139", 139},
+            { "HECKLE140", 140}, { "HECKLE141", 141}, { "HECKLE142", 142}, { "HECKLE143", 143}, { "HECKLE144", 144},
+            { "HECKLE145", 145}, { "HECKLE146", 146}, { "HECKLE147", 147}, { "HECKLE148", 148}, { "HECKLE149", 149},
+            { "HECKLE150", 150}, { "HECKLE151", 151}, { "HECKLE152", 152}, { "HECKLE153", 153}, { "HECKLE154", 154},
+            { "HECKLE155", 155}, { "HECKLE156", 156}, { "HECKLE157", 157}, { "HECKLE158", 158}, { "HECKLE159", 159},
+            { "HECKLE160", 160}, { "HECKLE161", 161}, { "HECKLE162", 162}, { "HECKLE163", 163}, { "HECKLE164", 164},
+            { "HECKLE165", 165}, { "HECKLE166", 166}, { "HECKLE167", 167}, { "HECKLE168", 168}, { "HECKLE169", 169},
+            { "HECKLE170", 170}, { "HECKLE171", 171}, { "HECKLE172", 172}, { "HECKLE173", 173}, { "HECKLE174", 174},
+            { "HECKLE175", 175}, { "HECKLE176", 176}, { "HECKLE177", 177}, { "HECKLE178", 178}, { "HECKLE179", 179},
+            { "HECKLE180", 180}, { "HECKLE181", 181}, { "HECKLE182", 182}, { "HECKLE183", 183}, { "HECKLE184", 184},
+            { "HECKLE185", 185}, { "HECKLE186", 186}, { "HECKLE187", 187}, { "HECKLE188", 188}, { "HECKLE189", 189},
+            { "HECKLE190", 190}, { "HECKLE191", 191}, { "HECKLE192", 192}, { "HECKLE193", 193}, { "HECKLE194", 194},
+            { "HECKLE195", 195}, { "HECKLE196", 196}, { "HECKLE197", 197}, { "HECKLE198", 198}, { "HECKLE199", 199},
+            { "HECKLE200", 200}, { "HECKLE201", 201}, { "HECKLE202", 202}, { "HECKLE203", 203}, { "HECKLE204", 204},
+            { "HECKLE205", 205}, { "HECKLE206", 206}, { "HECKLE207", 207}, { "HECKLE208", 208}, { "HECKLE209", 209},
+            { "HECKLE210", 210}, { "HECKLE211", 211}, { "HECKLE212", 212}, { "HECKLE213", 213}, { "HECKLE214", 214},
+            { "HECKLE215", 215}, { "HECKLE216", 216}, { "HECKLE217", 217}, { "HECKLE218", 218}, { "HECKLE219", 219},
+            { "HECKLE220", 220}, { "HECKLE221", 221}, { "HECKLE222", 222}, { "HECKLE223", 223}, { "HECKLE224", 224},
+            { "HECKLE225", 225}, { "HECKLE226", 226}, { "HECKLE227", 227}, { "HECKLE228", 228}, { "HECKLE229", 229},
+            { "HECKLE230", 230}, { "HECKLE231", 231}, { "HECKLE232", 232}, { "HECKLE233", 233}, { "HECKLE234", 234},
+            { "HECKLE235", 235}, { "HECKLE236", 236}, { "HECKLE237", 237}, { "HECKLE238", 238}, { "HECKLE239", 239},
+            { "HECKLE240", 240}, { "HECKLE241", 241}, { "HECKLE242", 242}, { "HECKLE243", 243}, { "HECKLE244", 244},
+            { "HECKLE245", 245}, { "HECKLE246", 246}, { "HECKLE247", 247}, { "HECKLE248", 248}, { "HECKLE249", 249},
+            { "HECKLE250", 250}, { "HECKLE251", 251}, { "HECKLE252", 252}, { "HECKLE253", 253}, { "HECKLE254", 254},
+            { "HECKLE255", 255}, { "HECKLE256", 256}, { "HECKLE257", 257}, { "HECKLE258", 258}, { "HECKLE259", 259},
+            { "HECKLE260", 260}, { "HECKLE261", 261}, { "HECKLE262", 262}, { "HECKLE263", 263}, { "HECKLE264", 264},
+            { "HECKLE265", 265}, { "HECKLE266", 266}, { "HECKLE267", 267}, { "HECKLE268", 268}, { "HECKLE269", 269},
+            { "HECKLE270", 270}, { "HECKLE271", 271}, { "HECKLE272", 272}, { "HECKLE273", 273}, { "HECKLE274", 274},
+            { "HECKLE275", 275}, { "HECKLE276", 276}, { "HECKLE277", 277}, { "HECKLE278", 278}, { "HECKLE279", 279},
         };
 
-        public static Dictionary<string, int> BodykitItems = new Dictionary<string, int>
+        public static Dictionary<string, int> BodykitItems { get; } = new Dictionary<string, int>
         {
             { "BODYKIT000", 0},{ "BODYKIT001", 1},{ "BODYKIT002", 2},{ "BODYKIT003", 3},{ "BODYKIT004", 4},
             { "BODYKIT005", 5},{ "BODYKIT006", 6},{ "BODYKIT007", 7},{ "BODYKIT008", 8},{ "BODYKIT009", 9},
@@ -597,20 +331,15 @@ namespace BattleCruisers.Data.Static
                 return new CaptainExoKey("CaptainExo" + index.ToString("000"));
             }
 
-            public static int CaptainExoCount()
-            {
-                return ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Captains.Count;
-            }
-
+            public static int CaptainExoCount => ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Captains.Count;
 
             public static IList<IPrefabKey> AllKeys
             {
                 get
                 {
                     List<IPrefabKey> exoKeys = new List<IPrefabKey>();
-                    int exoCount = CaptainExoCount();
 
-                    for (int i = 0; i < exoCount; i++)
+                    for (int i = 0; i < CaptainExoCount; i++)
                         exoKeys.Add(GetCaptainExoKey(i));
 
                     return exoKeys;
@@ -682,16 +411,12 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
             public static ExplosionKey ExplosionMF { get; } = new ExplosionKey("ExplosionMF");
 
-            public static IList<IPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, RocketShellImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, ExplosionFirecracker, Explosion150, Explosion500, ExplosionMF
-                    };
-                }
-            }
+                BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, RocketShellImpact,
+                BombExplosion, FlakExplosion, Explosion75, Explosion100, ExplosionFirecracker,
+                Explosion150, Explosion500, ExplosionMF
+            });
         }
 
         public static class Projectiles
@@ -717,18 +442,11 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey Rocket { get; } = new ProjectileKey("Rocket");
             public static ProjectileKey RocketSmall { get; } = new ProjectileKey("RocketSmall");
 
-            public static IList<IPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        Bullet, HighCalibreBullet, TinyBullet, FlakBullet, ShellSmall, ShellLarge, NovaShell, FiveShellCluster, RocketShell,
-                        MissileSmall, MissileMedium, MissileMF, MissileLarge, MissileSmart, MissileFirecracker,
-                        Bomb, StratBomb, Nuke, Rocket, RocketSmall
-                    };
-                }
-            }
+                Bullet, HighCalibreBullet, TinyBullet, FlakBullet, ShellSmall, ShellLarge, NovaShell, FiveShellCluster, RocketShell, MissileSmall,
+                MissileMedium, MissileMF, MissileLarge, MissileSmart, MissileFirecracker, Bomb, StratBomb, Nuke, Rocket, RocketSmall
+            });
         }
 
         public static class ShipDeaths
@@ -743,24 +461,10 @@ namespace BattleCruisers.Data.Static
             public static ShipDeathKey GunBoat { get; } = new ShipDeathKey("GunBoat");
             public static ShipDeathKey Turtle { get; } = new ShipDeathKey("Turtle");
 
-            public static IList<IPrefabKey> AllKeys
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                get
-                {
-                    return new List<IPrefabKey>()
-                    {
-                        AttackBoat,
-                        Frigate,
-                        Destroyer,
-                        SiegeDestroyer,
-                        Archon,
-                        AttackRIB,
-                        GlassCannoneer,
-                        GunBoat,
-                        Turtle
-                    };
-                }
-            }
+                AttackBoat, Frigate, Destroyer, SiegeDestroyer, Archon, AttackRIB, GlassCannoneer, GunBoat, Turtle
+            });
         }
 
         public static IPrefabKey AudioSource { get; } = new GenericKey("AudioSource", "UI/Sound");
