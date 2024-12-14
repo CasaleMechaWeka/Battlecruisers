@@ -25,7 +25,11 @@ namespace BattleCruisers.Data
         {
             get
             {
-                int maxLevelCount = _staticData.IsDemo ? StaticData.NUM_OF_LEVELS_IN_DEMO : _staticData.Levels.Count;
+#if IS_DEMO
+                int maxLevelCount = StaticData.NUM_OF_LEVELS_IN_DEMO;
+#else
+                int maxLevelCount = _staticData.Levels.Count;
+#endif
                 return Mathf.Min(_gameModel.NumOfLevelsCompleted + 1, maxLevelCount);
             }
         }

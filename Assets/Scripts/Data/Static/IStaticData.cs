@@ -17,7 +17,6 @@ namespace BattleCruisers.Data.Static
     /// </summary>
     public interface IStaticData
     {
-        bool IsDemo { get; }
         GameModel InitialGameModel { get; }
         ReadOnlyCollection<ILevel> Levels { get; }
         ReadOnlyCollection<ISideQuestData> SideQuests { get; }

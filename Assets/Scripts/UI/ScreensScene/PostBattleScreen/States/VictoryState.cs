@@ -44,59 +44,58 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.levelName.levelName.color = Color.black;
             //musicPlayer.PlayVictoryMusic();
 
+#if IS_DEMO
             if (desiredBehaviour == PostBattleScreenBehaviour.Victory_DemoCompleted
                 || (desiredBehaviour == PostBattleScreenBehaviour.Default
-                    && _appModel.DataProvider.StaticData.IsDemo
                     && battleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO))
             {
                 postBattleScreen.demoCompletedScreen.SetActive(true);
                 postBattleScreen.demoHomeButton.Initialise(soundPlayer, postBattleScreen.GoToHomeScreen);
                 lootManager.UnlockLevelLoot(battleResult.LevelNum);
             }
+#else
+            //completed a levels that unlocks new loot
+            if (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked
+                || (desiredBehaviour == PostBattleScreenBehaviour.Default
+                && _lootManager.ShouldShowLevelLoot(battleResult.LevelNum)))
+            {
+                postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
+                postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
+
+                _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
+                postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
+                _unlockedLoot = lootManager.UnlockLevelLoot(battleResult.LevelNum);
+            }
             else
             {
-                //completed a levels that unlocks new loot
-                if (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked
-                    || (desiredBehaviour == PostBattleScreenBehaviour.Default
-                    && _lootManager.ShouldShowLevelLoot(battleResult.LevelNum)))
+                //completed a side quest that unlocks new loot
+                if (desiredBehaviour == PostBattleScreenBehaviour.Victory_SideQuest_LootUnlocked ||
+                    desiredBehaviour == PostBattleScreenBehaviour.Default
+                    && appModel.Mode == GameMode.SideQuest && _lootManager.ShouldShowSideQuestLoot(battleResult.LevelNum))
                 {
                     postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
                     postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
 
                     _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                     postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                    _unlockedLoot = lootManager.UnlockLevelLoot(battleResult.LevelNum);
+                    _unlockedLoot = lootManager.UnlockSideQuestLoot(battleResult.LevelNum);
+
+                }
+                else
+                if (appModel.Mode == GameMode.CoinBattle)
+                {
+                    postBattleScreen.victoryNoLootMessage.gameObject.SetActive(true);
+                    postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
+                    musicPlayer.PlayVictoryMusic();
                 }
                 else
                 {
-                    //completed a side quest that unlocks new loot
-                    if (desiredBehaviour == PostBattleScreenBehaviour.Victory_SideQuest_LootUnlocked ||
-                        desiredBehaviour == PostBattleScreenBehaviour.Default
-                        && appModel.Mode == GameMode.SideQuest && _lootManager.ShouldShowSideQuestLoot(battleResult.LevelNum))
-                    {
-                        postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
-                        postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
-
-                        _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
-                        postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                        _unlockedLoot = lootManager.UnlockSideQuestLoot(battleResult.LevelNum);
-
-                    }
-                    else
-                    if (appModel.Mode == GameMode.CoinBattle)
-                    {
-                        postBattleScreen.victoryNoLootMessage.gameObject.SetActive(true);
-                        postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
-                        musicPlayer.PlayVictoryMusic();
-                    }
-                    else
-                    {
-                        postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
-                        postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer);
-                    }
-
+                    postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+                    postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer);
                 }
+
             }
+#endif
             if (appModel.Mode == GameMode.CoinBattle)
             {
                 //Reset gamemode to Campaign

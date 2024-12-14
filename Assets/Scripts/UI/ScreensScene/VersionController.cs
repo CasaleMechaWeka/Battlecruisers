@@ -18,10 +18,9 @@ namespace BattleCruisers.UI.ScreensScene
 
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
 
-            if (staticData.IsDemo)
-            {
+#if IS_DEMO
                 value += " - DEMO";
-            }
+#endif
 
 #if ENABLE_CHEATS
             value += " - Cheats";

@@ -182,12 +182,6 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
         public const int NUM_OF_SIDEQUESTS = 31;
 
-#if IS_DEMO
-        public bool IsDemo => true;
-#else
-        public bool IsDemo => false;
-#endif
-
         public GameModel InitialGameModel { get; }
         public ReadOnlyCollection<ILevel> Levels { get; } = new ReadOnlyCollection<ILevel>(new List<ILevel>()
         {
