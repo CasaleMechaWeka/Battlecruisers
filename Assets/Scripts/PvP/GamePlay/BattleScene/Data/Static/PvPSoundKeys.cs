@@ -16,6 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static IPvPSoundKey Laser { get; } = new PvPSoundKey(PvPSoundType.Firing, "laser");
             public static IPvPSoundKey RocketLauncher { get; } = new PvPSoundKey(PvPSoundType.Firing, "rocket-launcher");
             public static IPvPSoundKey Missile { get; } = new PvPSoundKey(PvPSoundType.Firing, "SAMFiring");
+            public static IPvPSoundKey Lightning { get; } = new PvPSoundKey(PvPSoundType.Firing, "TeslaCoil");
             public static IPvPSoundKey PneumaticSlug { get; } = new PvPSoundKey(PvPSoundType.Firing, "PneumaticSlug");
         }
 
@@ -122,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                     = new PvPSoundKeyPair(
                         new PvPSoundKey(PvPSoundType.Music, "sleeper-base"),
                         new PvPSoundKey(PvPSoundType.Music, "sleeper-danger"));
-                
+
                 public static PvPSoundKeyPair Fortress { get; }
                     = new PvPSoundKeyPair(
                         new PvPSoundKey(PvPSoundType.Music, "fortress-base"),

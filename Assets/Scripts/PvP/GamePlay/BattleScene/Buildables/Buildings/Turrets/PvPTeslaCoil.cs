@@ -14,6 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.TeslaCoil;
         protected override bool HasSingleSprite => true;
+        protected override IPvPSoundKey FiringSound => PvPSoundKeys.PvPFiring.Lightning;
 
 
         protected override void AddBuildRateBoostProviders(

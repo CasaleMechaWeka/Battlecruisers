@@ -11,10 +11,11 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Artillery { get; } = new SoundKey(SoundType.Firing, "artillery");
             public static ISoundKey AttackBoat { get; } = new SoundKey(SoundType.Firing, "small-cannon");
             public static ISoundKey Broadsides { get; } = new SoundKey(SoundType.Firing, "broadsides");
-			public static ISoundKey BigCannon { get; } = new SoundKey(SoundType.Firing, "big-cannon");
+            public static ISoundKey BigCannon { get; } = new SoundKey(SoundType.Firing, "big-cannon");
             public static ISoundKey Laser { get; } = new SoundKey(SoundType.Firing, "laser");
             public static ISoundKey RocketLauncher { get; } = new SoundKey(SoundType.Firing, "rocket-launcher");
             public static ISoundKey Missile { get; } = new SoundKey(SoundType.Firing, "SAMFiring");
+            public static ISoundKey Lightning { get; } = new SoundKey(SoundType.Firing, "TeslaCoil");
 
             public static ISoundKey PneumaticSlug { get; } = new SoundKey(SoundType.Firing, "PneumaticSlug");
         }
@@ -59,7 +60,7 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey CruiserUnderAttack { get; } = new SoundKey(SoundType.Events, "cruiser-under-attack");
             public static ISoundKey CruiserSignificantlyDamaged { get; } = new SoundKey(SoundType.Events, "cruiser-significantly-damaged");
             public static ISoundKey NoBuildingSlotsLeft { get; } = new SoundKey(SoundType.Events, "no-building-slots-left");
-            
+
             // Drones
             public static ISoundKey DronesNewDronesReady { get; } = new SoundKey(SoundType.Events, "drones-new-drones-ready");
             public static ISoundKey DronesIdle { get; } = new SoundKey(SoundType.Events, "drones-idle");
@@ -86,7 +87,7 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Cutscene { get; } = new SoundKey(SoundType.Music, "OrionOmega");
             public static ISoundKey Credits { get; } = new SoundKey(SoundType.Music, "SerialKillerRemaster");
             public static ISoundKey Advertisements { get; } = new SoundKey(SoundType.Music, "FullscreenAdsMusic");
-            
+
             public static class Background
             {
                 public static SoundKeyPair Bobby { get; }
@@ -113,12 +114,12 @@ namespace BattleCruisers.Data.Static
                     = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "juggernaut-base"),
                         new SoundKey(SoundType.Music, "juggernaut-danger"));
-                
+
                 public static SoundKeyPair Nothing { get; }
                     = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "nothing-base"),
                         new SoundKey(SoundType.Music, "nothing-danger"));
-                
+
                 public static SoundKeyPair Sleeper { get; }
                     = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "sleeper-base"),
