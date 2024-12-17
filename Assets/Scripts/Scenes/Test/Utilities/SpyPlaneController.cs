@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 ActiveMovementController = DummyMovementController;
             }
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSpyPlaneSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BCUtils.PrefabKeyName.Unit_SpyPlane, this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

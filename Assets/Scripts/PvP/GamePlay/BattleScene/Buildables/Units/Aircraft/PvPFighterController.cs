@@ -136,7 +136,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 SetupTargetDetection();
 
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter, this);
                 _barrelController.ApplyVariantStats(this);
                 OnBuildableCompletedClientRpc();
             }
@@ -145,7 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnBuildableCompleted_PvPClient();
                 _barrelController.ApplyVariantStats(this);
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter, this);
             }
 
         }
@@ -382,7 +382,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, PvPRandomGenerator.Instance);
                 FacingDirection = facingDirection;
-            //    _isAtCruisingHeight = isAtCruiserHeight;
+                //    _isAtCruisingHeight = isAtCruiserHeight;
                 Activate_PvPClient();
             }
         }

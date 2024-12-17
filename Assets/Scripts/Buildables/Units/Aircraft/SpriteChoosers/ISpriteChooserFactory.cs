@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Movement.Velocity.Providers;
+using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -6,18 +7,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
     public interface ISpriteChooserFactory
     {
-        Task<ISpriteChooser> CreateBomberSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-        Task<ISpriteChooser> CreateFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-        Task<ISpriteChooser> CreateGunshipSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-        Task<ISpriteChooser> CreateSteamCopterSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-
-        Task<ISpriteChooser> CreateBroadswordSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-        Task<ISpriteChooser> CreateSpyPlaneSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-
-        Task<ISpriteChooser> CreateStratBomberSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-        Task<ISpriteChooser> CreateMissileFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider);
-
-
+        Task<ISpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IVelocityProvider maxVelocityProvider);
         ISpriteChooser CreateDummySpriteChooser(Sprite sprite);
     }
 }

@@ -8,7 +8,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
-    public class TestAircraftController : AircraftController
+	public class TestAircraftController : AircraftController
 	{
 		private TargetType _targetType;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
 		public override TargetType TargetType => _targetType;
 
-		private bool _useDummyMovementController = false; 
+		private bool _useDummyMovementController = false;
 		public bool UseDummyMovementController
 		{
 			private get { return _useDummyMovementController; }
@@ -39,19 +39,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			}
 		}
 
-        public TargetValue targetValue;
-        public override TargetValue TargetValue => targetValue;
+		public TargetValue targetValue;
+		public override TargetValue TargetValue => targetValue;
 
-        protected async override void OnBuildableCompleted()
+		protected async override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
 			if (UseDummyMovementController)
 			{
-                ActiveMovementController = DummyMovementController;
+				ActiveMovementController = DummyMovementController;
 			}
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+			_spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BCUtils.PrefabKeyName.Unit_Fighter, this);
 		}
 
 		public void SetTargetType(TargetType targetType)
@@ -81,7 +81,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				float healthToAdd = proportionToAdd * MaxHealth;
 				RepairCommandExecute(healthToAdd);
 			}
-			else if(healthProportion < currentProportion)
+			else if (healthProportion < currentProportion)
 			{
 				float proportionToRemove = currentProportion - healthProportion;
 				float healthToRemove = proportionToRemove * MaxHealth;

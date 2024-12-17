@@ -121,7 +121,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 SetupTargetDetection();
 
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateMissileFighterSpriteChooserAsync(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_MissileFighter, this);
 
                 foreach (var controller in _barrelControllers)
                 {
@@ -134,7 +134,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnBuildableCompleted_PvPClient();
 
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateMissileFighterSpriteChooserAsync(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_MissileFighter, this);
 
                 foreach (var controller in _barrelControllers)
                 {

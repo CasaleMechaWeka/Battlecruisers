@@ -12,7 +12,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
@@ -89,7 +88,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             barrelWrapper.ApplyVariantStats(this);
             SetupTargetDetection();
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateMissileFighterSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(PrefabKeyName.Unit_MissileFighter, this);
             for (int i = 0; i < _barrelControllers.Length; i++)
             {
                 _barrelControllers[i].ApplyVariantStats(this);

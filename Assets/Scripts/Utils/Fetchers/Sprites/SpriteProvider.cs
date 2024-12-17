@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,23 +10,6 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
     public class SpriteProvider : ISpriteProvider
     {
         private readonly ISpriteFetcher _spriteFetcher;
-
-        private const string BOMBER_SPRITE_NAME = "bomber";
-        private const int NUM_OF_BOMBER_SPRITES = 8;
-        private const string FIGHTER_SPRITE_NAME = "fighter";
-        private const int NUM_OF_FIGHTER_SPRITES = 7;
-        private const string GUNSHIP_SPRITE_NAME = "gunship";
-        private const int NUM_OF_GUNSHIP_SPRITES = 7;
-        private const string STEAMCOPTER_SPRITE_NAME = "SteamCopter";
-        private const int NUM_OF_STEAMCOPTER_SPRITES = 7;
-        private const string BROADSWORD_SPRITE_NAME = "Broadsword";
-        private const int NUM_OF_BROADSWORD_SPRITES = 10;
-        private const string STRATBOMBER_SPRITE_NAME = "StratBomber";
-        private const int NUM_OF_STRATBOMBER_SPRITES = 12;
-        private const string SPYPLANE_SPRITE_NAME = "SpyPlane";
-        private const int NUM_OF_SPYPLANE_SPRITES = 12;
-        private const string MISSILE_FIGHTER_SPRITE_NAME = "MissileFighter";
-        private const int NUM_OF_MISSILE_FIGHTER_SPRITES = 9;
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";
 
@@ -35,63 +19,32 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
             _spriteFetcher = spriteFetcher;
         }
 
-        public async Task<IList<ISpriteWrapper>> GetBomberSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(BOMBER_SPRITE_NAME), NUM_OF_BOMBER_SPRITES);
-        }
-
-        public async Task<IList<ISpriteWrapper>> GetFighterSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(FIGHTER_SPRITE_NAME), NUM_OF_FIGHTER_SPRITES);
-        }
-        public async Task<IList<ISpriteWrapper>> GetMissileFighterSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(MISSILE_FIGHTER_SPRITE_NAME), NUM_OF_MISSILE_FIGHTER_SPRITES);
-        }
-
-        public async Task<IList<ISpriteWrapper>> GetGunshipSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(GUNSHIP_SPRITE_NAME), NUM_OF_GUNSHIP_SPRITES);
-        }
-
-        public async Task<IList<ISpriteWrapper>> GetSteamCopterSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(STEAMCOPTER_SPRITE_NAME), NUM_OF_STEAMCOPTER_SPRITES);
-        }
-        public async Task<IList<ISpriteWrapper>> GetBroadswordSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(BROADSWORD_SPRITE_NAME), NUM_OF_BROADSWORD_SPRITES);
-        }
-        public async Task<IList<ISpriteWrapper>> GetStratBomberSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(STRATBOMBER_SPRITE_NAME), NUM_OF_STRATBOMBER_SPRITES);
-        }
-        public async Task<IList<ISpriteWrapper>> GetSpyPlaneSpritesAsync()
-        {
-            return await GetAircraftSpritesAsync(GetSpritePath(SPYPLANE_SPRITE_NAME), NUM_OF_SPYPLANE_SPRITES);
-        }
-
-        private string GetSpritePath(string spriteName)
-        {
-            return UNIT_SPRITES_PATH + spriteName + SPRITES_FILE_EXTENSION;
-        }
-
         /// <returns>
         /// A list of aircraft sprites, with the first sprite being the least turned
         /// (side on view, no wings showing) and the last sprite being the most
         /// turned (top view, both wings fully showing).
         /// </returns>
-        private async Task<IList<ISpriteWrapper>> GetAircraftSpritesAsync(string spritePath, int expectedNumOfSprites)
+        public async Task<IList<ISpriteWrapper>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName)
         {
-            IList<ISpriteWrapper> aircraftSprites = await _spriteFetcher.GetMultiSpritesAsync(spritePath);
-            Assert.AreEqual(expectedNumOfSprites, aircraftSprites.Count);
+            (string, int) spriteData = prefabKeyName switch
+            {
+                PrefabKeyName.Unit_Bomber => ("bomber", 8),
+                PrefabKeyName.Unit_Fighter => ("fighter", 7),
+                PrefabKeyName.Unit_Gunship => ("gunship", 7),
+                PrefabKeyName.Unit_SteamCopter => ("SteamCopter", 7),
+                PrefabKeyName.Unit_StratBomber => ("StratBomber", 12),
+                PrefabKeyName.Unit_SpyPlane => ("SpyPlane", 12),
+                PrefabKeyName.Unit_MissileFighter => ("MissileFighter", 9),
+                _ => throw new ArgumentException("PrefabKeyName '" + prefabKeyName + "' is not an Aircraft!")
+            };
+
+            IList<ISpriteWrapper> aircraftSprites = await _spriteFetcher.GetMultiSpritesAsync(
+                UNIT_SPRITES_PATH + spriteData.Item1 + SPRITES_FILE_EXTENSION);
+            Assert.AreEqual(spriteData.Item2, aircraftSprites.Count);
 
             // Reverse order, because the sprites are provided in most turned to 
             // least turned, whereas we want to return least turned to most turned.
-            return
-                aircraftSprites
-                    .Reverse()
-                    .ToList();
+            return aircraftSprites.Reverse().ToList();
         }
     }
 }

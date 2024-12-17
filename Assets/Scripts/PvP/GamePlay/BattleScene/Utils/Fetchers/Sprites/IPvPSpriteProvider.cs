@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,12 +7,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public interface IPvPSpriteProvider
     {
-        Task<IList<IPvPSpriteWrapper>> GetBomberSpritesAsync();
-        Task<IList<IPvPSpriteWrapper>> GetFighterSpritesAsync();
-        Task<IList<IPvPSpriteWrapper>> GetMissileFighterSpritesAsync();
-        Task<IList<IPvPSpriteWrapper>> GetGunshipSpritesAsync();
-        Task<IList<IPvPSpriteWrapper>> GetSteamCopterSpritesAsync();
-        Task<IList<IPvPSpriteWrapper>> GetSpyPlaneSpritesAsync();
-        Task<IList<IPvPSpriteWrapper>> GetStratBomberSpritesAsync();
+        Task<IList<IPvPSpriteWrapper>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName);
     }
 }

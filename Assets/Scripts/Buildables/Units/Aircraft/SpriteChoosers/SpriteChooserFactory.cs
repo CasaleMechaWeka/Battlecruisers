@@ -21,51 +21,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             _spriteProvider = spriteProvider;
         }
 
-        public async Task<ISpriteChooser> CreateBomberSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
+        public async Task<ISpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IVelocityProvider maxVelocityProvider)
         {
-            IList<ISpriteWrapper> bomberSprites = await _spriteProvider.GetBomberSpritesAsync();
-            return new SpriteChooser(_assignerFactory, bomberSprites, maxVelocityProvider);
-        }
-
-        public async Task<ISpriteChooser> CreateFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-        {
-            IList<ISpriteWrapper> fighterSprites = await _spriteProvider.GetFighterSpritesAsync();
-            return new SpriteChooser(_assignerFactory, fighterSprites, maxVelocityProvider);
-        }
-
-        public async Task<ISpriteChooser> CreateGunshipSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-        {
-            IList<ISpriteWrapper> gunshipSprites = await _spriteProvider.GetGunshipSpritesAsync();
-            return new SpriteChooser(_assignerFactory, gunshipSprites, maxVelocityProvider);
-        }
-
-        public async Task<ISpriteChooser> CreateSteamCopterSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-        {
-            IList<ISpriteWrapper> copterSprites = await _spriteProvider.GetSteamCopterSpritesAsync();
-            return new SpriteChooser(_assignerFactory, copterSprites, maxVelocityProvider);
-        }
-
-        public async Task<ISpriteChooser> CreateBroadswordSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-        {
-            IList<ISpriteWrapper> broadswordSprites = await _spriteProvider.GetBroadswordSpritesAsync();
-            return new SpriteChooser(_assignerFactory, broadswordSprites, maxVelocityProvider);
-        }
-
-        public async Task<ISpriteChooser> CreateStratBomberSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-        {
-            IList<ISpriteWrapper> stratbomberSprites = await _spriteProvider.GetStratBomberSpritesAsync();
-            return new SpriteChooser(_assignerFactory, stratbomberSprites, maxVelocityProvider);
-        }
-
-        public async Task<ISpriteChooser> CreateSpyPlaneSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-        {
-            IList<ISpriteWrapper> spyPlaneSprites = await _spriteProvider.GetSpyPlaneSpritesAsync();
-            return new SpriteChooser(_assignerFactory, spyPlaneSprites, maxVelocityProvider);
-        }
-        public async Task<ISpriteChooser> CreateMissileFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
-        {
-            IList<ISpriteWrapper> missileFighterSprites = await _spriteProvider.GetMissileFighterSpritesAsync();
-            return new SpriteChooser(_assignerFactory, missileFighterSprites, maxVelocityProvider);
+            IList<ISpriteWrapper> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
+            return new SpriteChooser(_assignerFactory, aircraftSprites, maxVelocityProvider);
         }
 
         public ISpriteChooser CreateDummySpriteChooser(Sprite sprite)

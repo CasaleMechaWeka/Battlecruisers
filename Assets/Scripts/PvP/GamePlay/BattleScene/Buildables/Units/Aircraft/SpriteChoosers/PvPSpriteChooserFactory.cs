@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.V
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -21,39 +22,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _spriteProvider = spriteProvider;
         }
 
-        public async Task<IPvPSpriteChooser> CreateBomberSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
+        public async Task<IPvPSpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IPvPVelocityProvider maxVelocityProvider)
         {
-            IList<IPvPSpriteWrapper> bomberSprites = await _spriteProvider.GetBomberSpritesAsync();
-            return new PvPSpriteChooser(_assignerFactory, bomberSprites, maxVelocityProvider);
-        }
-
-        public async Task<IPvPSpriteChooser> CreateFighterSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
-        {
-            IList<IPvPSpriteWrapper> fighterSprites = await _spriteProvider.GetFighterSpritesAsync();
-            return new PvPSpriteChooser(_assignerFactory, fighterSprites, maxVelocityProvider);
-        }
-        public async Task<IPvPSpriteChooser> CreateMissileFighterSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
-        {
-            IList<IPvPSpriteWrapper> missileFighterSprites = await _spriteProvider.GetMissileFighterSpritesAsync();
-            return new PvPSpriteChooser(_assignerFactory, missileFighterSprites, maxVelocityProvider);
-        }
-
-        public async Task<IPvPSpriteChooser> CreateGunshipSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
-        {
-            IList<IPvPSpriteWrapper> gunshipSprites = await _spriteProvider.GetGunshipSpritesAsync();
-            return new PvPSpriteChooser(_assignerFactory, gunshipSprites, maxVelocityProvider);
-        }
-
-        public async Task<IPvPSpriteChooser> CreateSteamCopterSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
-        {
-            IList<IPvPSpriteWrapper> copterSprites = await _spriteProvider.GetSteamCopterSpritesAsync();
-            return new PvPSpriteChooser(_assignerFactory, copterSprites, maxVelocityProvider);
-        }
-
-        public async Task<IPvPSpriteChooser> CreateSpyPlaneSpriteChooserAsync(IPvPVelocityProvider maxVelocityProvider)
-        {
-            IList<IPvPSpriteWrapper> spyPlaneSprites = await _spriteProvider.GetSpyPlaneSpritesAsync();
-            return new PvPSpriteChooser(_assignerFactory, spyPlaneSprites, maxVelocityProvider);
+            IList<IPvPSpriteWrapper> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
+            return new PvPSpriteChooser(_assignerFactory, aircraftSprites, maxVelocityProvider);
         }
 
         public IPvPSpriteChooser CreateDummySpriteChooser(Sprite sprite)

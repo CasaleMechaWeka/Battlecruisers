@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
             _fetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
 
             IList<ISpriteWrapper> expectedSprites = _bomberSprites.Reverse().ToList();
-            IList<ISpriteWrapper> bomberSprites = _provider.GetBomberSpritesAsync().Result;
+            IList<ISpriteWrapper> bomberSprites = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
 
             Assert.IsTrue(Enumerable.SequenceEqual(expectedSprites, bomberSprites));
         }
@@ -61,7 +61,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
 
             Assert.Throws<AggregateException>(() =>
             {
-                var result = _provider.GetBomberSpritesAsync().Result;
+                var result = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
             });
         }
 
@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
             _fetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
 
             IList<ISpriteWrapper> expectedSprites = _fighterSprites.Reverse().ToList();
-            IList<ISpriteWrapper> fighterSprites = _provider.GetFighterSpritesAsync().Result;
+            IList<ISpriteWrapper> fighterSprites = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
 
             Assert.IsTrue(Enumerable.SequenceEqual(expectedSprites, fighterSprites));
         }
@@ -86,7 +86,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
 
             Assert.Throws<AggregateException>(() =>
             {
-                var result = _provider.GetFighterSpritesAsync().Result;
+                var result = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
             });
         }
     }

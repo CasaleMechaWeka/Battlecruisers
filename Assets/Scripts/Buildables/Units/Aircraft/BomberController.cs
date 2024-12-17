@@ -132,7 +132,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
             _targetProcessor.AddTargetConsumer(this);
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(PrefabKeyName.Unit_Bomber, this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

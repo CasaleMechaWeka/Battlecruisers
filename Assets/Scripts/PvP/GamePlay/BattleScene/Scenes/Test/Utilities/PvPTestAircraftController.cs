@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 ActiveMovementController = DummyMovementController;
             }
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter, this);
         }
 
         public void SetTargetType(PvPTargetType targetType)

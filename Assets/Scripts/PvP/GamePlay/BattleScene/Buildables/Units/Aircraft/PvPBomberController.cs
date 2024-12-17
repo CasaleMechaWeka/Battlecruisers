@@ -150,13 +150,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
                 _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
                 _targetProcessor.AddTargetConsumer(this);
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber, this);
                 OnBuildableCompletedClientRpc();
             }
             else
             {
                 OnBuildableCompleted_PvPClient();
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber, this);
             }
         }
 

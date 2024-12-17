@@ -45,7 +45,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 ActiveMovementController = DummyMovementController;
             }
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSpyPlaneSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_SpyPlane, this);
+
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
