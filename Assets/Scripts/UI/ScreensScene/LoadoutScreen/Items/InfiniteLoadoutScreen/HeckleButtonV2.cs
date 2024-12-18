@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items

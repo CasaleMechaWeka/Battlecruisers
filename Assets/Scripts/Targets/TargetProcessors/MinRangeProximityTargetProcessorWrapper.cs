@@ -1,8 +1,7 @@
-﻿using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -10,7 +9,7 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
-			CircleTargetDetectorController maxRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MaxRangeDetector");
+            CircleTargetDetectorController maxRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MaxRangeDetector");
             maxRangeDetector.Initialise(args.MaxRangeInM);
 
             CircleTargetDetectorController minRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MinRangeDetector");

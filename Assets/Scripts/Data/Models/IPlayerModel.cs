@@ -1,9 +1,3 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models.PrefabKeys;
-
 namespace BattleCruisers.Data.Models
 {
     public interface IPlayerModel
@@ -39,7 +33,7 @@ namespace BattleCruisers.Data.Models
         int MaxHP { get; set; }
 
         // List of perks
- //       List<Perk> Perks { get; set; } 
+        //       List<Perk> Perks { get; set; } 
 
         // Total number of voyages
         int TotalVoyages { get; set; }

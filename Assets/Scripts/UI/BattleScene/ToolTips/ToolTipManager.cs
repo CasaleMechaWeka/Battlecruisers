@@ -1,5 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +12,8 @@ public class ToolTipManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        else{
+        else
+        {
             _instance = this;
         }
     }
@@ -31,11 +30,12 @@ public class ToolTipManager : MonoBehaviour
         gameObject.SetActive(true);
         textComponent.text = message;
         transform.position = Input.mousePosition;
-        if (transform.position.x < Screen.width/2)
+        if (transform.position.x < Screen.width / 2)
         {
             textComponent.alignment = TextAnchor.LowerRight;
         }
-        else{
+        else
+        {
             textComponent.alignment = TextAnchor.LowerLeft;
         }
     }
@@ -45,5 +45,5 @@ public class ToolTipManager : MonoBehaviour
         gameObject.SetActive(false);
         textComponent.text = "";
     }
-    
+
 }

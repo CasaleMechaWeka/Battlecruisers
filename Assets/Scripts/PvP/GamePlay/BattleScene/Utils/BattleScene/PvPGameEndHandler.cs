@@ -1,8 +1,3 @@
-using BattleCruisers.AI;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Ships;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -15,19 +10,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
-using BattleCruisers.Projectiles;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.Buttons.Toggles;
-using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Sound.Wind;
-using BattleCruisers.Utils.Threading;
 using System.Linq;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -101,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
 
-        //    _battleSceneGodTunnel.HandleCruiserDestroyed();
+            //    _battleSceneGodTunnel.HandleCruiserDestroyed();
             _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false);
             //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
@@ -127,8 +111,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             victoryCruiser.MakeInvincible();
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-            _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S / 2);            
-        //    _battleSceneGodTunnel.HandleCruiserDestroyed();
+            _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S / 2);
+            //    _battleSceneGodTunnel.HandleCruiserDestroyed();
             _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore);
             //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
         }

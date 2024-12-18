@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine;
 
 

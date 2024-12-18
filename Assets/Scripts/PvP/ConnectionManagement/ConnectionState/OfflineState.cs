@@ -1,14 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.Utils;
-using Unity.Multiplayer.Samples.Utilities;
 using VContainer;
-using Unity.Services.Lobbies;
-using Unity.Services.Lobbies.Models;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
@@ -40,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.FailedMatchmaking();
-            }                
+            }
             else
             {
                 if (GameObject.Find("ApplicationController") != null)

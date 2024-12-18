@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -305,7 +304,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             bool wasRemoved = _droneConsumers.Remove(droneConsumer);
             // sava added
-        //    Assert.IsTrue(wasRemoved);
+            //    Assert.IsTrue(wasRemoved);
             _droneConsumers.Insert(0, droneConsumer);
         }
 

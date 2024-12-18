@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
-using System.Threading.Tasks;
 using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items

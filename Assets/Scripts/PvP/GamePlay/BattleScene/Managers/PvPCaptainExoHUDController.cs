@@ -1,9 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
@@ -46,19 +42,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             _rightAnimator.SetTrigger("happy");
         }
-        private void OnDoLeftAngry() 
+        private void OnDoLeftAngry()
         {
             _leftAnimator.SetTrigger("angry");
         }
-        private void OnDoRightAngry() 
+        private void OnDoRightAngry()
         {
             _rightAnimator.SetTrigger("angry");
         }
-        private void OnDoLeftTaunt() 
+        private void OnDoLeftTaunt()
         {
             _leftAnimator.SetTrigger("taunt");
         }
-        private void OnDoRightTaunt() 
+        private void OnDoRightTaunt()
         {
             _rightAnimator.SetTrigger("taunt");
         }

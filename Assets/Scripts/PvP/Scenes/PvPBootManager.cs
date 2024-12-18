@@ -1,5 +1,4 @@
 using BattleCruisers.Data;
-using BattleCruisers.Scenes;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
@@ -21,11 +20,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-using System.Diagnostics;
-using System.Net;
 using Unity.Services.Qos;
 using System.Threading;
-using BattleCruisers.Network.Multiplay.Gameplay.UI;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {

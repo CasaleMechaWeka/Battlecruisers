@@ -1,11 +1,10 @@
-﻿using BattleCruisers.Data;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Localization.Settings;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {

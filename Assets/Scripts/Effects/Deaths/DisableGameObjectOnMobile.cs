@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DisableGameObjectOnMobile : MonoBehaviour
@@ -10,7 +8,7 @@ public class DisableGameObjectOnMobile : MonoBehaviour
         if (UnityEngine.Application.platform != UnityEngine.RuntimePlatform.WindowsEditor &&
      UnityEngine.Application.platform != UnityEngine.RuntimePlatform.WindowsPlayer)
         {
-                gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 

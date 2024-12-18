@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.Netcode;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading
@@ -15,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private IEnumerator Wait(Action action, float delayInS)
         {
             yield return new WaitForSeconds(delayInS);
-                action.Invoke();
+            action.Invoke();
         }
     }
 }

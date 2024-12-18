@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
@@ -12,7 +12,6 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
-using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 

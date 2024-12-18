@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
-    public interface IBodykitData 
+    public interface IBodykitData
     {
         int BodykitCost { get; }
         string NameStringKeyBase { get; }

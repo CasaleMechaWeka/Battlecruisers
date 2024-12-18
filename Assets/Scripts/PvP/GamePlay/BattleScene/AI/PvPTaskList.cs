@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
@@ -33,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
         public void Add(IPvPPrioritisedTask taskToAdd)
         {
-          //  Logging.Log(Tags.AI, taskToAdd.ToString());
+            //  Logging.Log(Tags.AI, taskToAdd.ToString());
             Assert.IsFalse(_tasks.Contains(taskToAdd));
 
             bool wasEmpty = IsEmpty;
@@ -52,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
             if (ReferenceEquals(taskToAdd, HighestPriorityTask))
             {
-               // Logging.Log(Tags.AI, "Added highest priority task, emit highest priority changed event");
+                // Logging.Log(Tags.AI, "Added highest priority task, emit highest priority changed event");
                 EmitHighestPriorityTaskChangedEvent();
             }
 
@@ -64,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
         public void Remove(IPvPPrioritisedTask taskToRemove)
         {
-        //    Logging.Log(Tags.AI, taskToRemove.ToString());
+            //    Logging.Log(Tags.AI, taskToRemove.ToString());
             Assert.IsTrue(_tasks.Contains(taskToRemove));
 
             bool wasHighestPriorityTask = ReferenceEquals(taskToRemove, HighestPriorityTask);
@@ -73,7 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
             if (wasHighestPriorityTask)
             {
-        //        Logging.Log(Tags.AI, "Removed highest priority task, emit highest priority changed event");
+                //        Logging.Log(Tags.AI, "Removed highest priority task, emit highest priority changed event");
                 EmitHighestPriorityTaskChangedEvent();
             }
 

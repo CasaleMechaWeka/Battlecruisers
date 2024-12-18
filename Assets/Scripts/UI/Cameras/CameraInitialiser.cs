@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.UI.Cameras
 {
@@ -56,8 +55,8 @@ namespace BattleCruisers.UI.Cameras
         private CameraTransitionSpeedManager cameraTransitionSpeedManager;
 
         public ICameraComponents Initialise(
-            ISettingsManager settingsManager, 
-            ICruiser playerCruiser, 
+            ISettingsManager settingsManager,
+            ICruiser playerCruiser,
             ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater,
@@ -105,7 +104,7 @@ namespace BattleCruisers.UI.Cameras
                     new SmoothZoomAdjuster(icamera, time, cameraTransitionSpeedManager),
                     new SmoothPositionAdjuster(icamera, time, cameraTransitionSpeedManager));
 
-            CameraFocuser coreCameraFocuser 
+            CameraFocuser coreCameraFocuser
                 = new CameraFocuser(
                     targets,
                     trumpCameraTargetProvider,
@@ -153,12 +152,12 @@ namespace BattleCruisers.UI.Cameras
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
-            IList<IUserInputCameraTargetProvider> cameraTargetProviders 
+            IList<IUserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
-                    camera, 
-                    cameraCalculator, 
-                    settingsManager, 
-                    settings, 
+                    camera,
+                    cameraCalculator,
+                    settingsManager,
+                    settings,
                     updater,
                     trumpCameraTargetProvider);
 

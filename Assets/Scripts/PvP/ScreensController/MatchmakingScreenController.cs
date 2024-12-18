@@ -26,7 +26,6 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using System.Collections;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {

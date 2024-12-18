@@ -5,12 +5,6 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Properties;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models;
-using BattleCruisers.UI.Common.BuildableDetails;
 using UnityEngine.Assertions;
 using IItemDetailsManager = BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.IItemDetailsManager;
 

@@ -2,9 +2,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.UI.BattleScene.Cruisers;
-using System;
-using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers
 {
@@ -31,9 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _numberDisplay.Num = _droneManager.NumOfDrones;
 
-/*            _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
-            _droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
-            _droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;*/
+            /*            _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+                        _droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
+                        _droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;*/
         }
 
 

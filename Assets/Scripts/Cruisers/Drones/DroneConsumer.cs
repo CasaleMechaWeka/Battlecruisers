@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
@@ -26,10 +25,10 @@ namespace BattleCruisers.Cruisers.Drones
 					_numOfDrones = value;
 
 					DroneNumChanged?.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
-					
-                    DroneConsumerState newState = FindDroneState(_numOfDrones, NumOfDronesRequired);
-					
-                    if (newState != State)
+
+					DroneConsumerState newState = FindDroneState(_numOfDrones, NumOfDronesRequired);
+
+					if (newState != State)
 					{
 						DroneStateChanged?.Invoke(this, new DroneStateChangedEventArgs(State, newState));
 						State = newState;
@@ -39,10 +38,10 @@ namespace BattleCruisers.Cruisers.Drones
 		}
 
 		public int NumOfDronesRequired { get; set; }
-        public int NumOfSpareDrones => NumOfDrones - NumOfDronesRequired;
-        public DroneConsumerState State { get; private set; }
+		public int NumOfSpareDrones => NumOfDrones - NumOfDronesRequired;
+		public DroneConsumerState State { get; private set; }
 
-        public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
+		public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 		public event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 
 		public DroneConsumer(int numOfDronesRequired, IDroneManager droneManager)

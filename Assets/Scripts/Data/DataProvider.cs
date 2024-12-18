@@ -397,7 +397,6 @@ namespace BattleCruisers.Data
             SaveGame();
         }
 
-
         public string GetPVPVersion()
         {
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
@@ -429,28 +428,22 @@ namespace BattleCruisers.Data
                             {
                                 int index = StaticPrefabKeys.CaptainItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
-                                {
                                     if (cost.id == "COIN")
                                         _gameModel.Captains[index].captainCost = cost.amount;
-                                }
                             }
                             if (reward.id.Contains("HECKLE"))
                             {
                                 int index = StaticPrefabKeys.HeckleItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
-                                {
                                     if (cost.id == "COIN")
                                         _gameModel.Heckles[index].heckleCost = cost.amount;
-                                }
                             }
                             if (reward.id.Contains("BODYKIT"))
                             {
                                 int index = StaticPrefabKeys.BodykitItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
-                                {
                                     if (cost.id == "COIN")
                                         _gameModel.Bodykits[index].bodykitCost = cost.amount;
-                                }
                             }
                         }
                     }
@@ -520,10 +513,8 @@ namespace BattleCruisers.Data
                             {
                                 var costs = ParseEconomyItems(purchaseDef.Costs);
                                 foreach (ItemAndAmountSpec spec in costs)
-                                {
                                     if (spec.id == "COIN")
                                         _gameModel.Heckles[i + 3].heckleCost = spec.amount;
-                                }
                             }
                         }
                     }

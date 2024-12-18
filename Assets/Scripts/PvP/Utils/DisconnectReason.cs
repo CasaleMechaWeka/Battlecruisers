@@ -1,6 +1,3 @@
-
-using System;
-
 namespace BattleCruisers.Network.Multiplay.Utils
 {
     /// <summary>
