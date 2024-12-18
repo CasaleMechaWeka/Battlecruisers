@@ -5,15 +5,15 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus
 {
     public class PvPBuildingMenus : PvPBuildableMenus<IPvPBuilding, PvPBuildingCategory, PvPBuildingsMenuController>
     {
-        private IPvPSpriteProvider _spriteProvider;
+        private ISpriteProvider _spriteProvider;
         private IPvPBuildingClickHandler _clickHandler;
         private bool _flipClickAndDragIcon;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<IPvPBuilding> buildingSorter,
-            IPvPSpriteProvider spriteProvider,
+            ISpriteProvider spriteProvider,
             IPvPSingleSoundPlayer soundPlayer,
             IPvPBuildingClickHandler clickHandler,
             bool flipClickAndDragIcon)

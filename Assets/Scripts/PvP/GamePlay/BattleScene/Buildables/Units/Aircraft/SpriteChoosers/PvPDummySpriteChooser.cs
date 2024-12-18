@@ -1,24 +1,25 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
+
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers
 {
     public class PvPDummySpriteChooser : IPvPSpriteChooser
     {
-        private IPvPSpriteWrapper _sprite;
+        private ISpriteWrapper _sprite;
 
         public PvPDummySpriteChooser(Sprite sprite)
         {
             Assert.IsNotNull(sprite);
-            _sprite = new PvPSpriteWrapper(sprite);
+            _sprite = new SpriteWrapper(sprite);
         }
 
-        public (IPvPSpriteWrapper, int) ChooseSprite(Vector2 velocity)
+        public (ISpriteWrapper, int) ChooseSprite(Vector2 velocity)
         {
             return (_sprite, 0);
         }
-        public IPvPSpriteWrapper ChooseSprite(int index)
+        public ISpriteWrapper ChooseSprite(int index)
         {
             return _sprite;
         }
