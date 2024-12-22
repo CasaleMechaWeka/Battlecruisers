@@ -14,13 +14,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -148,10 +148,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
                 _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
                 _targetProcessor.AddTargetConsumer(this);
-                List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
+                List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
                 foreach (Sprite sprite in allSprites)
                 {
-                    allSpriteWrappers.Add(new PvPSpriteWrapper(sprite));
+                    allSpriteWrappers.Add(new SpriteWrapper(sprite));
                 }
                 //create Sprite Chooser
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
@@ -161,10 +161,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
             {
                 OnBuildableCompleted_PvPClient();
-                List<IPvPSpriteWrapper> allSpriteWrappers = new List<IPvPSpriteWrapper>();
+                List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
                 foreach (Sprite sprite in allSprites)
                 {
-                    allSpriteWrappers.Add(new PvPSpriteWrapper(sprite));
+                    allSpriteWrappers.Add(new SpriteWrapper(sprite));
                 }
                 //create Sprite Chooser
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
