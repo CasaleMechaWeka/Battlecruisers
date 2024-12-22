@@ -1,6 +1,7 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Escape;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
 // using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.HelpLabels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
     {
         // Keep references to avoid garbage collection
         private PvPNavigationHotkeyListener _navigationHotkeyListener;
-        //   private PvPGameSpeedHotkeyListener _gameSpeedHotkeyListener;
+     //   private PvPGameSpeedHotkeyListener _gameSpeedHotkeyListener;
         private PvPEscapeHandler _escapeHandler;
 
         public PvPBuildableButtonsHotkeyInitialiser buildableButtonsHotkeyInitialiser;
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IPvPUpdater updater,
             IPvPBroadcastingFilter hotkeyFilter,
             IPvPCameraFocuser cameraFocuser,
-            //            IPvPSpeedComponents speedComponents,
+//            IPvPSpeedComponents speedComponents,
             IPvPMainMenuManager mainMenuManager,
             IPvPUIManager uiManager)
         {
@@ -40,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter, uiManager);
 
             _navigationHotkeyListener = new PvPNavigationHotkeyListener(hotkeyDetector, cameraFocuser);
-            //    _gameSpeedHotkeyListener = new PvPGameSpeedHotkeyListener(hotkeyDetector/*, speedComponents*/);
+        //    _gameSpeedHotkeyListener = new PvPGameSpeedHotkeyListener(hotkeyDetector/*, speedComponents*/);
             buildableButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
             buildingCategoryButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
 

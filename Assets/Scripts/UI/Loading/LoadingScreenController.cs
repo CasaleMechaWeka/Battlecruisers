@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
@@ -11,6 +11,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using Unity.Services.Core;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Loading
 {

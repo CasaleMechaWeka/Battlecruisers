@@ -1,6 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
+using Unity.Netcode;
 using UnityEngine.Assertions;
 using UnityEngine;
+using System.Collections;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
@@ -46,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 if (transform.Find("Effects") != null)
                 {
                     effects_parent = transform.Find("Effects").gameObject;
-                    //    effects_parent.SetActive(false);
+                //    effects_parent.SetActive(false);
                 }
             }
         }

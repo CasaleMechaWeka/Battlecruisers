@@ -1,7 +1,10 @@
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {

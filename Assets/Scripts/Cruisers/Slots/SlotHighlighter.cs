@@ -1,7 +1,9 @@
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
+using System;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -11,7 +13,7 @@ namespace BattleCruisers.Cruisers.Slots
         private readonly ISlotFilter _highlightableFilter;
         private ISlotSpecification _highlightedSlotSpec;
         public bool isHighlighting = false;
-        private ISlot _highlightedSlot;
+		private ISlot _highlightedSlot;
         private ISlot HighlightedSlot
         {
             get { return _highlightedSlot; }
@@ -32,10 +34,10 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         public SlotHighlighter(
-            ISlotAccessor slotAccessor,
-            ISlotFilter highlightableFilter,
+            ISlotAccessor slotAccessor, 
+            ISlotFilter highlightableFilter, 
             ICruiserBuildingMonitor parentCruiserBuildingMonitor)
-        {
+		{
             Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiserBuildingMonitor);
 
             _slotAccessor = slotAccessor;
@@ -57,39 +59,39 @@ namespace BattleCruisers.Cruisers.Slots
 
         // Only highlight one slot type at a time
         public bool HighlightAvailableSlots(ISlotSpecification slotSpecification)
-        {
+		{
             Logging.LogMethod(Tags.SLOTS);
 
-            UnhighlightSlots();
+			UnhighlightSlots();
 
             bool wasAnySlotHighlighted = false;
-            _highlightedSlotSpec = slotSpecification;
+			_highlightedSlotSpec = slotSpecification;
 
-            foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
-            {
+			foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
+			{
                 if (_highlightableFilter.IsMatch(slot))
-                {
+				{
                     slot.stopBuildingPlacementFeedback();
                     slot.IsVisible = true;
                     wasAnySlotHighlighted = true;
-                }
-            }
+				}
+			}
 
             return wasAnySlotHighlighted;
-        }
+		}
 
         public void HighlightAvailableSlotsCurrent()
         {
             if (_highlightedSlotSpec != null)
             {
                 HighlightAvailableSlots(_highlightedSlotSpec);
-            }
+            }  
         }
 
         public void HighlightSlots(ISlotSpecification slotSpecification)
         {
             Logging.LogMethod(Tags.SLOTS);
-
+            
             UnhighlightSlots();
 
             _highlightedSlotSpec = slotSpecification;
@@ -101,25 +103,25 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         public void UnhighlightSlots()
-        {
+		{
             Logging.LogMethod(Tags.SLOTS);
 
             if (_highlightedSlotSpec != null)
-            {
-                UnhighlightSlots(_highlightedSlotSpec);
-                _highlightedSlotSpec = null;
-            }
+			{
+				UnhighlightSlots(_highlightedSlotSpec);
+				_highlightedSlotSpec = null;
+			}
 
             HighlightedSlot = null;
-        }
+		}
 
-        private void UnhighlightSlots(ISlotSpecification slotSpecification)
-        {
-            foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
-            {
+		private void UnhighlightSlots(ISlotSpecification slotSpecification)
+		{
+			foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
+			{
                 slot.IsVisible = false;
-            }
-        }
+			}
+		}
 
         public void HighlightBuildingSlot(IBuilding building)
         {

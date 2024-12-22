@@ -1,4 +1,7 @@
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Localization.Pseudo;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -31,20 +34,20 @@ namespace BattleCruisers.Utils.Localisation
 
             if (entry == null || entry.GetLocalizedString() == " ")
             {
-                return key + " is Not localised in " + LocalizationSettings.SelectedLocale.name + " yet";
+                return key + " is Not localised in " + LocalizationSettings.SelectedLocale.name +  " yet";
             }
-            //#if !PSEUDO_LOCALE
+//#if !PSEUDO_LOCALE
             return entry.GetLocalizedString();
-            /*#else
-                        if (LocalizationSettings.SelectedLocale is PseudoLocale loc)
-                        {
-                            return loc.GetPseudoString(entry.GetLocalizedString());
-                        }
-                        else
-                        {
-                            throw new Exception($"Selected locale is not pseudo locale :/  {LocalizationSettings.SelectedLocale}");
-                        }
-            #endif*/
+/*#else
+            if (LocalizationSettings.SelectedLocale is PseudoLocale loc)
+            {
+                return loc.GetPseudoString(entry.GetLocalizedString());
+            }
+            else
+            {
+                throw new Exception($"Selected locale is not pseudo locale :/  {LocalizationSettings.SelectedLocale}");
+            }
+#endif*/
         }
     }
 }

@@ -13,6 +13,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using BattleCruisers.Network.Multiplay.UnityServices;
+using Unity.Services.Authentication;
 
 namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
 {

@@ -1,12 +1,13 @@
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene
 {
-    public class PvPPauseGameManager : IPvPPauseGameManager
+    public class PvPPauseGameManager : IPvPPauseGameManager        
     {
         private readonly IPvPTime _time;
         private float _prePauseTimeScale;

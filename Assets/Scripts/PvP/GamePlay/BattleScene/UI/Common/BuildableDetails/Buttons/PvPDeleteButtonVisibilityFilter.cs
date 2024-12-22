@@ -1,5 +1,7 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
@@ -21,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             return
                 target != null
-                /*        && target.Faction == Faction.Blues*/
+        /*        && target.Faction == Faction.Blues*/
                 && target.TargetType == PvPTargetType.Buildings
                 && target.IsInScene;
         }

@@ -1,6 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using System.Diagnostics;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
@@ -63,9 +65,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void FocusOnRightPlayerNavalFactory()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
-
+       
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
-            _defaultCameraTargetProvider.SetTarget(_targets.EnemyNavalFactoryTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.EnemyNavalFactoryTarget);        
 
         }
 

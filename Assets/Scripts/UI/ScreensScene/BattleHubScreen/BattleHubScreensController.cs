@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
+using Unity.Services.Authentication;
 using System.Linq;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen

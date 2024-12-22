@@ -4,6 +4,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public void SendHeckleMessage()
         {
-            PvPHeckleMessageManager.Instance.SendHeckle(_heckleData.Index);
+            PvPHeckleMessageManager.Instance.SendHeckle(_heckleData.Index);    
             heckleButton.Enabled = false;
             background.alpha = 0.4f;
             _panelController.OnHeckleButtonClicked();

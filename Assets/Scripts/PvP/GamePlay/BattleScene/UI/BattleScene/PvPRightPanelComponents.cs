@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPInformatorPanel informatorPanel,
             IPvPMainMenuManager mainMenuManager,
             IPvPModalMenu mainMenu,
-            //   PvPSpeedComponents speedComponents,
+         //   PvPSpeedComponents speedComponents,
             PvPHecklePanelController pvPHecklePanelController,
             PvPHelpButton helpButton)
         {
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             InformatorPanel = informatorPanel;
             MainMenuManager = mainMenuManager;
             MainMenu = mainMenu;
-            //    SpeedComponents = speedComponents;
+        //    SpeedComponents = speedComponents;
             HelpButton = helpButton;
             HacklePanelController = pvPHecklePanelController;
         }

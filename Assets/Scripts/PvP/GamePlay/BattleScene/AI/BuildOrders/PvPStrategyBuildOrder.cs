@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BattleCruisers.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             private set
             {
                 _current = value;
-                //   Logging.Log(Tags.AI_BUILD_ORDERS, $"{this}.Current = {_current}");
+             //   Logging.Log(Tags.AI_BUILD_ORDERS, $"{this}.Current = {_current}");
             }
         }
 
@@ -33,9 +34,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         {
             while (_baseBuildOrder.MoveNext())
             {
-                /*                Logging.Log(
-                                    Tags.AI_BUILD_ORDERS,
-                                    $"{this}.MoveNext()  _baseBuildOrder.Current: {_baseBuildOrder.Current}  _baseBuildOrder.Current.HasKey: {_baseBuildOrder.Current.HasKey}");*/
+/*                Logging.Log(
+                    Tags.AI_BUILD_ORDERS,
+                    $"{this}.MoveNext()  _baseBuildOrder.Current: {_baseBuildOrder.Current}  _baseBuildOrder.Current.HasKey: {_baseBuildOrder.Current.HasKey}");*/
 
                 if (_baseBuildOrder.Current.HasKey
                     && _levelInfo.CanConstructBuilding(_baseBuildOrder.Current.Key))

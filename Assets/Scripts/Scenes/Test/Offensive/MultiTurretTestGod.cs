@@ -1,8 +1,9 @@
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -51,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
             // Setup target
             helper.InitialiseBuilding(_target, Faction.Blues);
-            _target.StartConstruction();
+			_target.StartConstruction();
 
             // Setup cruiser (optional)
             TestTarget fakeCruiser = FindObjectOfType<TestTarget>();
@@ -73,11 +74,11 @@ namespace BattleCruisers.Scenes.Test.Offensive
             IAccuracyAdjusterFactory accuracyAdjusterFactory = useRealAccuracy ? new AccuracyAdjusterFactory() : null;
 
             helper.InitialiseBuilding(
-                _turret,
-                Faction.Reds,
+                _turret, 
+                Faction.Reds, 
                 targetFactories: targetFactories,
                 accuracyAdjusterFactory: accuracyAdjusterFactory);
-            _turret.StartConstruction();
-        }
-    }
+			_turret.StartConstruction();
+		}
+	}
 }

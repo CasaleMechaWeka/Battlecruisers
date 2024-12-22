@@ -1,6 +1,7 @@
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -9,8 +10,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public abstract class ComparableItemDetails<TItem> : ItemDetails<TItem>, IPointerClickHandler
         where TItem : class, ITarget, IComparableItem
-    {
-        public GameObject rightSide;
+	{
+		public GameObject rightSide;
 
         public override void Initialise()
         {
@@ -35,8 +36,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
-        {
-            // Empty.  Simply here to eat event so parent does not receive event.
-        }
-    }
+		{
+			// Empty.  Simply here to eat event so parent does not receive event.
+		}
+	}
 }

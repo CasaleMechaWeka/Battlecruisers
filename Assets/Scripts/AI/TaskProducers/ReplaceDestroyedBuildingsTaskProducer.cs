@@ -1,4 +1,4 @@
-using BattleCruisers.AI.Tasks;
+﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
@@ -7,6 +7,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
@@ -41,9 +42,9 @@ namespace BattleCruisers.AI.TaskProducers
 
         public ReplaceDestroyedBuildingsTaskProducer(
             ITaskList tasks,
-            ICruiserController cruiser,
-            IPrefabFactory prefabFactory,
-            ITaskFactory taskFactory,
+            ICruiserController cruiser, 
+            IPrefabFactory prefabFactory, 
+            ITaskFactory taskFactory, 
             IList<BuildingKey> buildingKeys)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
@@ -76,7 +77,7 @@ namespace BattleCruisers.AI.TaskProducers
             IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.keyName];
             TaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? TaskPriority.High : TaskPriority.Normal;
             _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
-        }
+		}
 
         public override void DisposeManagedState()
         {

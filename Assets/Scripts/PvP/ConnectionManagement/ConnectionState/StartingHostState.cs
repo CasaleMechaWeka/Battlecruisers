@@ -1,8 +1,11 @@
 using System;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using Unity.Multiplayer.Samples.BossRoom;
+using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine;
 using VContainer;
 using Unity.Netcode;
+using UnityEngine.Android;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Scenes;
@@ -74,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.captainAPrefabName = connectionPayload.playerCaptainPrefabName;
                 MatchmakingScreenController.Instance.playerRating = connectionPayload.playerRating;
                 MatchmakingScreenController.Instance.playerABodykit = connectionPayload.playerBodykit;
-                //        MatchmakingScreenController.Instance.playerASelectedVariants = connectionPayload.playerSelectedVariants;
+        //        MatchmakingScreenController.Instance.playerASelectedVariants = connectionPayload.playerSelectedVariants;
             }
             response.Approved = true;
             response.Pending = false;

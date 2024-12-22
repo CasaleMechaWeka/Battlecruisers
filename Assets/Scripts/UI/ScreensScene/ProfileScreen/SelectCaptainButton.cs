@@ -4,6 +4,9 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
@@ -29,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             //_comparisonStateTracker.State.ValueChanged += ComparisonStateChanged;
 
             _dataProvider = dataProvider;
-            _selectedCaptain = new SettableBroadcastingProperty<CaptainExoKey>(initialValue: _dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            _selectedCaptain = new SettableBroadcastingProperty<CaptainExoKey>(initialValue:  _dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
 
             SelectedCaptain = new BroadcastingProperty<CaptainExoKey>(_selectedCaptain);
         }

@@ -1,11 +1,13 @@
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using TMPro;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {

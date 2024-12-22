@@ -1,5 +1,6 @@
-using BattleCruisers.Effects.ParticleSystems;
+﻿using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Effects.Trails

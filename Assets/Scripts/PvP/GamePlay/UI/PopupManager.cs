@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Infrastructure;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 
         List<PopupPanel> m_PopupPanels = new List<PopupPanel>();
 
-        public static PopupManager s_Instance;
+       public static PopupManager s_Instance;
 
         const float k_Offset = 30;
         const float k_MaxOffset = 200;

@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click
 {
@@ -9,11 +10,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         public void OnDoubleClick(IPvPCruiser playerCruiser)
         {
-            /*       Assert.AreEqual(PvPFaction.Blues, playerCruiser.Faction);*/
+     /*       Assert.AreEqual(PvPFaction.Blues, playerCruiser.Faction);*/
 
             // Toggle repair drone consumer focus
 
-            if (playerCruiser.IsAIBot())
+            if(playerCruiser.IsAIBot())
             {
                 PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerCruiser);
             }

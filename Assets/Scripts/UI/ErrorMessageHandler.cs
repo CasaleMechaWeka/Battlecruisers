@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -22,7 +24,7 @@ namespace BattleCruisers.UI
 
         public async void ShowMessage(string msg)
         {
-            if (!isShowing)
+            if(!isShowing)
             {
                 isShowing = true;
                 message.text = msg;

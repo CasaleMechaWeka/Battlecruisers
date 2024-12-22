@@ -1,9 +1,10 @@
-using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.Cameras;
 using BattleCruisers.Scenes.BattleScene;
 
 namespace BattleCruisers.UI.BattleScene.MainMenu
@@ -23,7 +24,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
-            ISettingsManager settingsManager,
+            ISettingsManager settingsManager, 
             IBroadcastingProperty<float> masterVolume,
             IBroadcastingProperty<float> effectVolume,
             IBroadcastingProperty<float> ambientVolume,
@@ -72,7 +73,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             base.OnClicked();
 
             Assert.IsTrue(ShouldBeEnabled());
-
+            
             _settingsManager.MasterVolume = _masterVolume.Value;
             _settingsManager.EffectVolume = _effectVolume.Value;
             _settingsManager.AmbientVolume = _ambientVolume.Value;
@@ -83,7 +84,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
             _settingsManager.ShowToolTips = _showToolTips.Value;
             _settingsManager.Save();
-
+            
             UpdateEnabledStatus();
 
             god.UpdateCamera();

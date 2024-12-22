@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace BattleCruisers.Data.Models
 {
     public class PlayerModel : IPlayerModel
@@ -16,7 +20,7 @@ namespace BattleCruisers.Data.Models
 
         public int Coins { get; set; } = 0;
 
-        //        public List<Perk> Perks { get; set; }
+//        public List<Perk> Perks { get; set; }
         public int TotalVoyages { get; set; } = 0;
     }
 }

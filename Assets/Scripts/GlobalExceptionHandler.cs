@@ -1,8 +1,12 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils;
+using NSubstitute;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Analytics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalExceptionHandler : MonoBehaviour
 {

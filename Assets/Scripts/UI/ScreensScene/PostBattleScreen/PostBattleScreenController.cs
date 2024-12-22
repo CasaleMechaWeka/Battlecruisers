@@ -1,4 +1,4 @@
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
@@ -14,6 +14,7 @@ using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;

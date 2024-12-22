@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
@@ -19,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         public string VariantNameStringKeyBase => variantNameStringKeyBase;
 
         public string variantDescriptionStringKeyBase;
-        public string VariantDescriptionStringKeyBase => variantDescriptionStringKeyBase;
+        public string VariantDescriptionStringKeyBase =>  variantDescriptionStringKeyBase;
 
         public bool isOwned;
         public bool IsOwned => isOwned;
@@ -30,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         public VariantData(string prefabName = "Variant000", string variantNameBase = "Variant000", string variantDescriptionBase = "VariantDescription000", int coins = 0, int credits = 0, bool owned = false, int id = 0)
         {
             variantPrefabName = prefabName;
-            variantCoins = coins;
+            variantCoins = coins; 
             variantCredits = credits;
             variantNameStringKeyBase = variantNameBase;
             variantDescriptionStringKeyBase = variantDescriptionBase;

@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using Unity.Multiplayer.Samples.Utilities;
 using Unity.Multiplayer.Samples.BossRoom;
 using Unity.Netcode;
 

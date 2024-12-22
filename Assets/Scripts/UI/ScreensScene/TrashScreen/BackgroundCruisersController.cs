@@ -1,9 +1,10 @@
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using UnityEngine;
 using UnityEngine.UI;
 

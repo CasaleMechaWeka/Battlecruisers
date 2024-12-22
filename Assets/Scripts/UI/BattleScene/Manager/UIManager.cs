@@ -1,4 +1,4 @@
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
@@ -11,13 +11,14 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
     public class UIManager : IUIManager
-    {
-        private ICruiser _playerCruiser, _aiCruiser;
+	{
+		private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
@@ -33,8 +34,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private IHintDisplayer _hintDisplayer;
         private BuildingCategory _currentBuildingCategory;
 
-        public void SetExplanationPanel(IExplanationPanel explanationPanelValue)
-        {
+        public void SetExplanationPanel(IExplanationPanel explanationPanelValue) {
             _explanationPanel = explanationPanelValue;
         }
 
@@ -76,8 +76,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
             HideItemDetails();
         }
 
-        public virtual void HideItemDetails()
-        {
+		public virtual void HideItemDetails()
+		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _detailsManager.HideDetails();
@@ -94,11 +94,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
         {
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
             _aiCruiser.SlotHighlighter.UnhighlightSlots();
-            /*            ShownItem = null;
-                        lastClickedBuilding = null;
-                        lastClickedUnit = null;
-                        lastClickedType = -1;
-                        lastClickedBuildable = null;*/
+/*            ShownItem = null;
+            lastClickedBuilding = null;
+            lastClickedUnit = null;
+            lastClickedType = -1;
+            lastClickedBuildable = null;*/
         }
 
         public void HideCurrentlyShownMenu()
@@ -116,7 +116,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         }
 
         public void SelectBuildingGroup(BuildingCategory buildingCategory)
-        {
+		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
             HideItemDetails();
@@ -124,13 +124,13 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
-        public async void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
-        {
+		public async void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
+		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
             //_detailsManager.ShowDetails(buildingWrapper.Buildable);
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-            bool wasAnySlotHighlighted = _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
+            bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
             ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
             if (_explanationPanel != null)
             {
@@ -147,8 +147,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
             }
         }
 
-        public virtual void SelectBuilding(IBuilding building)
-        {
+		public virtual void SelectBuilding(IBuilding building)
+		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _detailsManager.ShowDetails(building);
@@ -159,8 +159,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
             lastClickedType = 0;
         }
 
-        public void ShowFactoryUnits(IFactory factory)
-        {
+		public void ShowFactoryUnits(IFactory factory)
+		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
             if (ReferenceEquals(factory.ParentCruiser, _playerCruiser))
@@ -170,8 +170,8 @@ namespace BattleCruisers.UI.BattleScene.Manager
             }
         }
 
-        public virtual void ShowUnitDetails(IUnit unit)
-        {
+		public virtual void ShowUnitDetails(IUnit unit)
+		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _detailsManager.ShowDetails(unit);
@@ -207,48 +207,42 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
         public void UnpeakBuildingDetails()
         {
-            if (lastClickedBuildable != null)
+            if (lastClickedBuildable!=null)
             {
                 if (lastClickedType == 0)
                 {
                     _detailsManager.ShowDetails(lastClickedBuilding);
                 }
-                else if (lastClickedType == 1)
-                {
+                else if (lastClickedType == 1){
                     _detailsManager.ShowDetails(lastClickedUnit);
                 }
-                else
-                {
+                else{
                     _detailsManager.ShowDetails(lastClickedCruiser);
                 }
-
+                
             }
-            else
-            {
+            else{
                 _detailsManager.HideDetails();
             }
         }
 
         public void UnpeakUnitDetails()
         {
-            if (lastClickedBuildable != null)
+            if (lastClickedBuildable!=null)
             {
                 if (lastClickedType == 0)
                 {
                     _detailsManager.ShowDetails(lastClickedBuilding);
                 }
-                else if (lastClickedType == 1)
-                {
+                else if (lastClickedType == 1){
                     _detailsManager.ShowDetails(lastClickedUnit);
                 }
-                else
-                {
+                else{
                     _detailsManager.ShowDetails(lastClickedCruiser);
                 }
-
+                
             }
-            else
-            {
+            else{
                 _detailsManager.HideDetails();
             }
         }

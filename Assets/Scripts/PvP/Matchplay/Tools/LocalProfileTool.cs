@@ -1,4 +1,6 @@
+using UnityEngine;
 #if UNITY_EDITOR
+using System;
 using ParrelSync;
 #endif
 

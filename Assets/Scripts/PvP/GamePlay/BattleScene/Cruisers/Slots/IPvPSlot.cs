@@ -2,6 +2,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
@@ -33,8 +34,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         PvPDirection Direction { get; }
         IPvPBroadcastingProperty<IPvPBuilding> Building { get; }
         ObservableCollection<IPvPBoostProvider> BoostProviders { get; }
-        bool IsVisibleRederer { get; set; }
-
+        bool IsVisibleRederer { get; set; }        
+        
         Vector2 Position { get; }
         IPvPTransform Transform { get; }
 

@@ -1,4 +1,5 @@
 #if PLATFORM_ANDROID
+using System;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Threading.Tasks;

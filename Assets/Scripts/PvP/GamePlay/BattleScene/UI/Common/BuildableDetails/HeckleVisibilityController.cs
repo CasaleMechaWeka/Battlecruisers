@@ -1,4 +1,6 @@
 using BattleCruisers.Data;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails

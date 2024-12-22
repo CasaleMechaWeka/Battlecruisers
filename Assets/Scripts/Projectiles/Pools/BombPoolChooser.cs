@@ -1,4 +1,5 @@
-using BattleCruisers.Projectiles.ActivationArgs;
+﻿using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Projectiles.Pools
     {
         public bool stratBomb = false;
 
-        public IPool<BombController, ProjectileActivationArgs<IProjectileStats>>
+        public IPool<BombController, ProjectileActivationArgs<IProjectileStats>> 
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
 

@@ -1,11 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
-namespace Collider2DOptimization
-{
-	public static class ShapeOptimizationHelper
-	{
+namespace Collider2DOptimization{
+	public static class ShapeOptimizationHelper{
 
 		// c# implementation of the Ramer-Douglas-Peucker-Algorithm by Craig Selbert slightly adapted for Unity Vector Types
 		//http://www.codeproject.com/Articles/18936/A-Csharp-Implementation-of-Douglas-Peucker-Line-Ap
@@ -29,7 +28,7 @@ namespace Collider2DOptimization
 				lastPoint--;
 			}
 
-			DouglasPeuckerReductionRecursive(Points, firstPoint, lastPoint,
+			DouglasPeuckerReductionRecursive(Points, firstPoint, lastPoint, 
 				Tolerance, ref pointIndexsToKeep);
 
 			List<Vector2> returnPoints = new List<Vector2>();
@@ -42,8 +41,8 @@ namespace Collider2DOptimization
 			return returnPoints;
 		}
 
-		private static void DouglasPeuckerReductionRecursive(List<Vector2>
-			points, Int32 firstPoint, Int32 lastPoint, Double tolerance,
+		private static void DouglasPeuckerReductionRecursive(List<Vector2> 
+			points, Int32 firstPoint, Int32 lastPoint, Double tolerance, 
 			ref List<Int32> pointIndexsToKeep)
 		{
 			Double maxDistance = 0;
@@ -65,9 +64,9 @@ namespace Collider2DOptimization
 				//Add the largest point that exceeds the tolerance
 				pointIndexsToKeep.Add(indexFarthest);
 
-				DouglasPeuckerReductionRecursive(points, firstPoint,
+				DouglasPeuckerReductionRecursive(points, firstPoint, 
 					indexFarthest, tolerance, ref pointIndexsToKeep);
-				DouglasPeuckerReductionRecursive(points, indexFarthest,
+				DouglasPeuckerReductionRecursive(points, indexFarthest, 
 					lastPoint, tolerance, ref pointIndexsToKeep);
 			}
 		}
@@ -75,10 +74,10 @@ namespace Collider2DOptimization
 		public static double PerpendicularDistance
 		(Vector2 Point1, Vector2 Point2, Vector2 Point)
 		{
-			double area = Math.Abs(.5f * (Point1.x * Point2.y + Point2.x *
-				Point.y + Point.x * Point1.y - Point2.x * Point1.y - Point.x *
+			double area = Math.Abs(.5f * (Point1.x * Point2.y + Point2.x * 
+				Point.y + Point.x * Point1.y - Point2.x * Point1.y - Point.x * 
 				Point2.y - Point1.x * Point.y));
-			double bottom = Math.Sqrt(Mathf.Pow(Point1.x - Point2.x, 2f) +
+			double bottom = Math.Sqrt(Mathf.Pow(Point1.x - Point2.x, 2f) + 
 				Math.Pow(Point1.y - Point2.y, 2f));
 			double height = area / bottom * 2f;
 

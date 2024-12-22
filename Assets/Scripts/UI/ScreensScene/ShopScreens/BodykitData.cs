@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
@@ -21,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         public string descriptionKeyBase;
         public string DescriptionKeyBase => descriptionKeyBase;
 
-
+        
 
         public BodykitData(string nameBase = "Bodykit000", string descriptionBase = "BodykitDescription000", int cost = 0, bool owned = false, int id = 0)
         {

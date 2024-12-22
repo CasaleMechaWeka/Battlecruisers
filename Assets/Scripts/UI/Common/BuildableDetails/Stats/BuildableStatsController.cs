@@ -1,4 +1,4 @@
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
@@ -6,6 +6,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Categorisation;
 //using Unity.Tutorials.Core.Editor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {

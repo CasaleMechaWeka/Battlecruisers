@@ -1,7 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using BattleCruisers.Data;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
@@ -18,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private IPvPSingleSoundPlayer _soundPlayer;
         private ILocTable heckleStrings;
 
-        public async void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer)
+        public  async void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer);
             _dataProvider = dataProvider;

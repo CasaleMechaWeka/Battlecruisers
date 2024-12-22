@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;

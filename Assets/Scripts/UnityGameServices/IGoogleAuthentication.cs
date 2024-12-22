@@ -1,7 +1,12 @@
 
 #if PLATFORM_ANDROID
+using System;
+using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Threading.Tasks;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.Network
 {

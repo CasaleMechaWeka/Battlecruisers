@@ -1,3 +1,5 @@
+﻿using UnityEngine;
+
 namespace BattleCruisers.Buildables
 {
     /// <summary>
@@ -8,10 +10,10 @@ namespace BattleCruisers.Buildables
     /// This is so that as the buildable's rotation changes (eg, fighter), the healthbar
     /// rotation remains the same.
     /// </summary>
-    public interface IBuildableWrapper<TBuildable> : IPrefab
+    public interface IBuildableWrapper<TBuildable> : IPrefab 
         where TBuildable : class, IBuildable
     {
         TBuildable Buildable { get; }
         BuildableWrapper<TBuildable> UnityObject { get; }
-    }
+	}
 }
