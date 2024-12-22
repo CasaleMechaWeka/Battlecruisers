@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using System.Linq;
-
+using Unity.Services.Authentication;
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class BattleHubScreensController : ScreenController
