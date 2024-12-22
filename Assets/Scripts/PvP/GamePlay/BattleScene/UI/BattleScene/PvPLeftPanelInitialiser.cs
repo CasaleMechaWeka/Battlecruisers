@@ -14,13 +14,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
 using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Utils.Fetchers.Sprites;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -92,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
+            IPvPSpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
@@ -151,7 +151,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
+            IPvPSpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,

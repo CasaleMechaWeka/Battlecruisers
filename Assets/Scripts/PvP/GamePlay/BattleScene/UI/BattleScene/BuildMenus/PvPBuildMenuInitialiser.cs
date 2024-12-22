@@ -9,9 +9,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
             IPvPBuildableSorterFactory sorterFactory,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            ISpriteProvider spriteProvider,
+            IPvPSpriteProvider spriteProvider,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             IPvPSingleSoundPlayer uiSoundPlayer,

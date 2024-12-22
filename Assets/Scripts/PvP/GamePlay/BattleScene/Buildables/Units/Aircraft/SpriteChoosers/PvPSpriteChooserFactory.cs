@@ -1,8 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -12,9 +12,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPSpriteChooserFactory : IPvPSpriteChooserFactory
     {
         private readonly IPvPAssignerFactory _assignerFactory;
-        private readonly ISpriteProvider _spriteProvider;
+        private readonly IPvPSpriteProvider _spriteProvider;
 
-        public PvPSpriteChooserFactory(IPvPAssignerFactory assignerFactory, ISpriteProvider spriteProvider)
+        public PvPSpriteChooserFactory(IPvPAssignerFactory assignerFactory, IPvPSpriteProvider spriteProvider)
         {
             PvPHelper.AssertIsNotNull(assignerFactory, spriteProvider);
 
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public async Task<IPvPSpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IPvPVelocityProvider maxVelocityProvider)
         {
-            IList<ISpriteWrapper> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
+            IList<IPvPSpriteWrapper> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
             return new PvPSpriteChooser(_assignerFactory, aircraftSprites, maxVelocityProvider);
         }
 
