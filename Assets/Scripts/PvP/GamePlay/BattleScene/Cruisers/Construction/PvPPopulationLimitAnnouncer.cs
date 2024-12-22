@@ -1,12 +1,7 @@
-using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
-using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.Timers;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
@@ -52,8 +47,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             _playerCruiser.pvp_popLimitReachedFeedback.Value = _populationLimitMonitor.IsPopulationLimitReached.Value;
 
-/*            if (_popLimitReachedFeedback != null)
-                _popLimitReachedFeedback.IsVisible = _populationLimitMonitor.IsPopulationLimitReached.Value;*/
+            /*            if (_popLimitReachedFeedback != null)
+                            _popLimitReachedFeedback.IsVisible = _populationLimitMonitor.IsPopulationLimitReached.Value;*/
         }
     }
 }

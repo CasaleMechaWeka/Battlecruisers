@@ -1,12 +1,8 @@
-using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Properties;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen

@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 
@@ -19,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private int botHecklesCount = 3;
         public void ShowAIBotHeckle()
         {
-            if(botHecklesCount > 0)
+            if (botHecklesCount > 0)
             {
                 botHecklesCount--;
                 rightMessage.Show(UnityEngine.Random.Range(0, 280));
@@ -37,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         public void SendHeckle(int heckleIndex)
         {
-            if(IsClient)
+            if (IsClient)
             {
                 SendHeckleServerRpc(heckleIndex);
             }
@@ -55,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         [ClientRpc]
         private void DisplayHeckleMessageClientRpc(int heckleIndex, ulong sender)
         {
-            if(sender == NetworkManager.Singleton.LocalClientId)
+            if (sender == NetworkManager.Singleton.LocalClientId)
             {
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                     leftMessage.Show(heckleIndex);
@@ -75,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
-            if(Instance == null)
+            if (Instance == null)
                 Instance = this;
         }
 

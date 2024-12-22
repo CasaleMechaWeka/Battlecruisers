@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using System;
 using UnityEngine.Assertions;
 
@@ -35,21 +34,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _damagable.pvp_Health.OnValueChanged += _damagable_HealthChanged;
         }
 
-/*        private void _damagable_HealthChanged(object sender, EventArgs e)
-        {
-            if (_wasAboveThreshold
-                && _damagable.Health < _threshold)
-            {
-                DroppedBelowThreshold?.Invoke(this, EventArgs.Empty);
-            }
-            else if (!_wasAboveThreshold
-                && _damagable.Health >= _threshold)
-            {
-                RoseAboveThreshold?.Invoke(this, EventArgs.Empty);
-            }
+        /*        private void _damagable_HealthChanged(object sender, EventArgs e)
+                {
+                    if (_wasAboveThreshold
+                        && _damagable.Health < _threshold)
+                    {
+                        DroppedBelowThreshold?.Invoke(this, EventArgs.Empty);
+                    }
+                    else if (!_wasAboveThreshold
+                        && _damagable.Health >= _threshold)
+                    {
+                        RoseAboveThreshold?.Invoke(this, EventArgs.Empty);
+                    }
 
-            _wasAboveThreshold = _damagable.Health >= _threshold;
-        }*/
+                    _wasAboveThreshold = _damagable.Health >= _threshold;
+                }*/
 
         private void _damagable_HealthChanged(float oldVal, float newVal)
         {

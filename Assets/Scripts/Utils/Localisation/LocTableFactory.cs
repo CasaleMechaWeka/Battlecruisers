@@ -1,7 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using BattleCruisers.Data;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using UnityEngine.Localization;

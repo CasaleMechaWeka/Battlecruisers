@@ -1,9 +1,3 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models.PrefabKeys;
-
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     public interface IPvPPlayerModel

@@ -1,12 +1,9 @@
-
-using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Utils;
 using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars
 {
@@ -15,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPDamagable _damagable;
         private float _maxHealth;
         private bool _followDamagable;
-        
+
         [SerializeField]
         private bool manualOffsetOverride = false; // Checkbox to enable manual override
 

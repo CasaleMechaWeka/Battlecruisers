@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Permissions;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen

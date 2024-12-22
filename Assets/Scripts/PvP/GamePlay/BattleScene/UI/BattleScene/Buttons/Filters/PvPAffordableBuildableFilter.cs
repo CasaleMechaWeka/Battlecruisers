@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -23,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsNotNull(droneManager);
 
             _droneManager = droneManager;
-       //     _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+            //     _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
         }
 
 
@@ -35,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
             _playerCruiser = playerCruiser;
             _playerCruiser.pvp_NumOfDrones.OnValueChanged += _droneManager_DroneNumChanged;
-     
+
         }
 
         private void _droneManager_DroneNumChanged(int oldVal, int newVal /*object sender, PvPDroneNumChangedEventArgs e*/)

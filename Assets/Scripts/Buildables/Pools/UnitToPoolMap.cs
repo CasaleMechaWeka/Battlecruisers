@@ -19,92 +19,47 @@ namespace BattleCruisers.Buildables.Pools
         {
             Assert.IsNotNull(unit);
 
-            switch (unit.Category)
+            return unit.Category switch
             {
-                case UnitCategory.Aircraft:
-                    return GetAircraftPool(unit);
-
-                case UnitCategory.Naval:
-                    return GetShipPool(unit);
-
-                default:
-                    throw new ArgumentException($"Unsupported unit category: {unit.Category}");
-            }
+                UnitCategory.Aircraft => GetAircraftPool(unit),
+                UnitCategory.Naval => GetShipPool(unit),
+                _ => throw new ArgumentException($"Unsupported unit category: {unit.Category}"),
+            };
         }
 
         private IPool<Unit, BuildableActivationArgs> GetAircraftPool(IUnit aircraft)
         {
-            switch (aircraft.PrefabName)
+            return aircraft.PrefabName switch
             {
-                case "Bomber":
-                    return _unitPoolProvider.BomberPool;
-
-                case "Fighter":
-                    return _unitPoolProvider.FighterPool;
-
-                case "Gunship":
-                    return _unitPoolProvider.GunshipPool;
-
-                case "SteamCopter":
-                    return _unitPoolProvider.SteamCopterPool;
-
-                case "Broadsword":
-                    return _unitPoolProvider.BroadswordPool;
-
-                case "StratBomber":
-                    return _unitPoolProvider.StratBomberPool;
-
-                case "SpyPlane":
-                    return _unitPoolProvider.SpyPlanePool;
-
-                case "TestAircraft":
-                    return _unitPoolProvider.TestAircraftPool;
-                
-                case "MissileFighter":
-                    return _unitPoolProvider.MissileFighterPool;
-
-                default:
-                    throw new ArgumentException($"Unsupported aircraft: {aircraft.PrefabName}");
-            }
+                "Bomber" => _unitPoolProvider.BomberPool,
+                "Fighter" => _unitPoolProvider.FighterPool,
+                "Gunship" => _unitPoolProvider.GunshipPool,
+                "SteamCopter" => _unitPoolProvider.SteamCopterPool,
+                "Broadsword" => _unitPoolProvider.BroadswordPool,
+                "StratBomber" => _unitPoolProvider.StratBomberPool,
+                "SpyPlane" => _unitPoolProvider.SpyPlanePool,
+                "TestAircraft" => _unitPoolProvider.TestAircraftPool,
+                "MissileFighter" => _unitPoolProvider.MissileFighterPool,
+                _ => throw new ArgumentException($"Unsupported aircraft: {aircraft.PrefabName}"),
+            };
         }
 
         private IPool<Unit, BuildableActivationArgs> GetShipPool(IUnit ship)
         {
-            switch (ship.PrefabName)
+            return ship.PrefabName switch
             {
-                case "AttackBoat":
-                    return _unitPoolProvider.AttackBoatPool;
-
-                case "Frigate":
-                    return _unitPoolProvider.FrigatePool;
-
-                case "Destroyer":
-                    return _unitPoolProvider.DestroyerPool;
-
-                case "SiegeDestroyer":
-                    return _unitPoolProvider.SiegeDestroyerPool;
-
-                case "ArchonBattleship":
-                    return _unitPoolProvider.ArchonPool;
-
-                case "AttackRIB":
-                    return _unitPoolProvider.AttackRIBPool;
-
-                case "GlassCannoneer":
-                    return _unitPoolProvider.GlassCannoneerPool;
-
-                case "GunBoat":
-                    return _unitPoolProvider.GunBoatPool;
-
-                case "RocketTurtle":
-                    return _unitPoolProvider.RocketTurtlePool;
-
-                case "FlakTurtle":
-                    return _unitPoolProvider.FlakTurtlePool;
-
-                default:
-                    throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");
-            }
+                "AttackBoat" => _unitPoolProvider.AttackBoatPool,
+                "Frigate" => _unitPoolProvider.FrigatePool,
+                "Destroyer" => _unitPoolProvider.DestroyerPool,
+                "SiegeDestroyer" => _unitPoolProvider.SiegeDestroyerPool,
+                "ArchonBattleship" => _unitPoolProvider.ArchonPool,
+                "AttackRIB" => _unitPoolProvider.AttackRIBPool,
+                "GlassCannoneer" => _unitPoolProvider.GlassCannoneerPool,
+                "GunBoat" => _unitPoolProvider.GunBoatPool,
+                "RocketTurtle" => _unitPoolProvider.RocketTurtlePool,
+                "FlakTurtle" => _unitPoolProvider.FlakTurtlePool,
+                _ => throw new ArgumentException($"Unsupported ship: {ship.PrefabName}"),
+            };
         }
     }
 }

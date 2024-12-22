@@ -1,4 +1,3 @@
-﻿using BattleCruisers.UI.BattleScene.HelpLabels;
 using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.Utils;
 using System;
@@ -16,7 +15,7 @@ namespace BattleCruisers.Hotkeys.Escape
 
             _escapeDetector = escapeDetector;
             _mainMenuManager = mainMenuManager;
-            
+
 
             _escapeDetector.EscapePressed += _escapeDetector_EscapePressed;
         }

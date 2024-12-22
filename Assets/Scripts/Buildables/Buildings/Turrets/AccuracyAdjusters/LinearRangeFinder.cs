@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Utils.DataStrctures;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
@@ -11,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         /// </returns>
         public IRange<float> FindFireAngleRange(IRange<float> onTargetRange, float accuracy)
         {
-			var t2 = onTargetRange.Min;
+            var t2 = onTargetRange.Min;
             var t1 = onTargetRange.Max;
 
             //Assert.IsTrue(onTargetRange.Max > onTargetRange.Min);

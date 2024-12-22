@@ -1,5 +1,3 @@
-using BattleCruisers.AI;
-
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders
 {
     public interface IPvPBuildOrderFactory

@@ -1,7 +1,5 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -13,7 +11,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class MissileSpawnerTestGod : TestGodBase
+	public class MissileSpawnerTestGod : TestGodBase
 	{
 		private MissileSpawner _missileSpawner;
 		private TestAircraftController _target;
@@ -21,38 +19,38 @@ namespace BattleCruisers.Scenes.Test
 
 		public List<Vector2> targetPatrolPoints;
 
-        protected override List<GameObject> GetGameObjects()
-        {
+		protected override List<GameObject> GetGameObjects()
+		{
 			_target = FindObjectOfType<TestAircraftController>();
 
-            return new List<GameObject>()
-            {
-                _target.GameObject
-            };
-        }
+			return new List<GameObject>()
+			{
+				_target.GameObject
+			};
+		}
 
-        protected override async Task SetupAsync(Helper helper)
-        {
+		protected override async Task SetupAsync(Helper helper)
+		{
 			// Setup target
 			_target.PatrolPoints = targetPatrolPoints;
-            helper.InitialiseUnit(_target);
-            _target.StartConstruction();
+			helper.InitialiseUnit(_target);
+			_target.StartConstruction();
 
 
 			// Setup missile spawner
 			_missileSpawner = FindObjectOfType<MissileSpawner>();
-			_targetFilter = new ExactMatchTargetFilter() 
+			_targetFilter = new ExactMatchTargetFilter()
 			{
 				Target = _target
 			};
 
 			ITarget parent = Substitute.For<ITarget>();
-            ProjectileStats stats = GetComponent<ProjectileStats>();
-            int burstSize = 1;
+			ProjectileStats stats = GetComponent<ProjectileStats>();
+			int burstSize = 1;
 			BuildableInitialisationArgs args = helper.CreateBuildableInitialisationArgs();
-            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, stats, burstSize, args.FactoryProvider, args.CruiserSpecificFactories, args.EnemyCruiser);
+			IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, stats, burstSize, args.FactoryProvider, args.CruiserSpecificFactories, args.EnemyCruiser);
 
-            await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile);
+			await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile);
 
 			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
 		}

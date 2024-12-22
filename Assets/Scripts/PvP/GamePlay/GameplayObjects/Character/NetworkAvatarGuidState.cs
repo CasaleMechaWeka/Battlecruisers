@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using System;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,8 +15,8 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.GameplayObjects.Character
         [HideInInspector]
         public NetworkVariable<NetworkGuid> AvatarGuid = new NetworkVariable<NetworkGuid>();
 
-/*        [SerializeField]
-        AvatarRegistry m_AvatarRegistry;*/
+        /*        [SerializeField]
+                AvatarRegistry m_AvatarRegistry;*/
 
         Avatar m_Avatar;
 
@@ -36,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.GameplayObjects.Character
 
         public void SetRandomAvatar()
         {
-         /*   AvatarGuid.Value = m_AvatarRegistry.GetRandomAvatar().Guid.ToNetworkGuid();*/
+            /*   AvatarGuid.Value = m_AvatarRegistry.GetRandomAvatar().Guid.ToNetworkGuid();*/
         }
 
         void RegisterAvatar(Guid guid)
@@ -47,25 +46,25 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.GameplayObjects.Character
                 return;
             }
 
-/*            // based on the Guid received, Avatar is fetched from AvatarRegistry
-            if (!m_AvatarRegistry.TryGetAvatar(guid, out var avatar))
-            {
-                Debug.LogError("Avatar not found!");
-                return;
-            }*/
+            /*            // based on the Guid received, Avatar is fetched from AvatarRegistry
+                        if (!m_AvatarRegistry.TryGetAvatar(guid, out var avatar))
+                        {
+                            Debug.LogError("Avatar not found!");
+                            return;
+                        }*/
 
             if (m_Avatar != null)
             {
                 // already set, this is an idempotent call, we don't want to Instantiate twice
                 return;
             }
-/*
-            m_Avatar = avatar;
+            /*
+                        m_Avatar = avatar;
 
-            if (TryGetComponent<ServerCharacter>(out var serverCharacter))
-            {
-                serverCharacter.CharacterClass = avatar.CharacterClass;
-            }*/
+                        if (TryGetComponent<ServerCharacter>(out var serverCharacter))
+                        {
+                            serverCharacter.CharacterClass = avatar.CharacterClass;
+                        }*/
         }
     }
 }

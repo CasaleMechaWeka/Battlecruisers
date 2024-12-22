@@ -1,7 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -50,12 +49,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _shipDeathController.Position = activationArgs;
 
 
-         //    _sinkingAnimation.Play();                          // server does not need to play effects
-         //    iPlayEffects();
-/*            foreach (IPvPParticleSystemGroup effect in _effects)
-            {
-                effect.Play();
-            }*/
+            //    _sinkingAnimation.Play();                          // server does not need to play effects
+            //    iPlayEffects();
+            /*            foreach (IPvPParticleSystemGroup effect in _effects)
+                        {
+                            effect.Play();
+                        }*/
         }
 
         private async Task iPlayEffects()
@@ -63,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await Task.Yield();
             foreach (IPvPParticleSystemGroup effect in _effects)
             {
-               await effect.Play();
+                await effect.Play();
             }
         }
 
@@ -83,11 +82,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             _sinkingAnimation.Play();
 
-       //     iPlayEffects();                                     // server does not need to play effects.
-/*            foreach (IPvPParticleSystemGroup effect in _effects)
-            {
-                effect.Play();
-            }*/
+            //     iPlayEffects();                                     // server does not need to play effects.
+            /*            foreach (IPvPParticleSystemGroup effect in _effects)
+                        {
+                            effect.Play();
+                        }*/
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
-using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -19,8 +18,8 @@ namespace BattleCruisers.Targets.TargetFinders
         public event EventHandler<TargetEventArgs> TargetLost;
 
         public MinRangeTargetFinder(
-            ITargetDetector maxRangeDetector, 
-            ITargetDetector minRangeDetector, 
+            ITargetDetector maxRangeDetector,
+            ITargetDetector minRangeDetector,
             ITargetFilter targetFilter)
         {
             Helper.AssertIsNotNull(maxRangeDetector, minRangeDetector, targetFilter);

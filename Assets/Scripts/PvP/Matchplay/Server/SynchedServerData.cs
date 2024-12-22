@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
@@ -27,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<NetworkString> captainAPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<float> playerARating = new NetworkVariable<float>();
         public NetworkVariable<int> playerABodykit = new NetworkVariable<int>();
-    //    public NetworkVariable<NetworkString> playerASelectedVariants = new NetworkVariable<NetworkString>();
+        //    public NetworkVariable<NetworkString> playerASelectedVariants = new NetworkVariable<NetworkString>();
 
 
         public NetworkVariable<NetworkString> playerBPrefabName = new NetworkVariable<NetworkString>();
@@ -37,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<NetworkString> captainBPrefabName = new NetworkVariable<NetworkString>();
         public NetworkVariable<float> playerBRating = new NetworkVariable<float>();
         public NetworkVariable<int> playerBBodykit = new NetworkVariable<int>();
-    //    public NetworkVariable<NetworkString> playerBSelectedVariants = new NetworkVariable<NetworkString>();
+        //    public NetworkVariable<NetworkString> playerBSelectedVariants = new NetworkVariable<NetworkString>();
 
         public NetworkVariable<float> left_levelTimeInSeconds = new NetworkVariable<float>();
         public NetworkVariable<long> left_aircraftVal = new NetworkVariable<long>();

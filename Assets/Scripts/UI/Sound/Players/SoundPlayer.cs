@@ -1,9 +1,8 @@
-﻿using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;

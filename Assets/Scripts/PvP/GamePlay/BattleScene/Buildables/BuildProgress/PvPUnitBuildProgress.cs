@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using System.Diagnostics;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
@@ -24,11 +23,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (unit != null
                 && unit.keyName == _unitName)
             {
-                _buildProgressFeedback.ShowBuildProgress(unit, factory);                
+                _buildProgressFeedback.ShowBuildProgress(unit, factory);
             }
             else
             {
-                _buildProgressFeedback.HideBuildProgress();                
+                _buildProgressFeedback.HideBuildProgress();
             }
         }
     }

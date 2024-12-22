@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.Economy.Model;
 using Unity.Services.Economy;
@@ -12,13 +10,13 @@ namespace BattleCruisers.Utils.UGS.Samples
     {
         public static Task<GetBalancesResult> GetEconomyBalances()
         {
-            var options = new GetBalancesOptions { ItemsPerFetch = 100 };            
+            var options = new GetBalancesOptions { ItemsPerFetch = 100 };
             return EconomyService.Instance.PlayerBalances.GetBalancesAsync(options);
         }
 
         public static Task<GetInventoryResult> GetEconomyInventories()
         {
-            var options = new GetInventoryOptions {  ItemsPerFetch = 100 };
+            var options = new GetInventoryOptions { ItemsPerFetch = 100 };
             return EconomyService.Instance.PlayerInventory.GetInventoryAsync(options);
         }
 
@@ -28,34 +26,34 @@ namespace BattleCruisers.Utils.UGS.Samples
             {
                 await EconomyService.Instance.PlayerBalances.SetBalanceAsync(currencyId, balance);
             }
-            catch 
+            catch
             {
                 Debug.Log("Currencies not synche to cloud");
             }
-          
+
         }
 
         public static async Task<MakeVirtualPurchaseResult> MakeVirtualPurchaseAsync(string virtualPurchaseId)
         {
             try
-            {                 
+            {
                 return await EconomyService.Instance.Purchases.MakeVirtualPurchaseAsync(virtualPurchaseId);
             }
-            catch(EconomyException e)
+            catch (EconomyException e)
             {
                 Debug.LogException(e);
                 return null;
             }
         }
 
-/*        public static async Task<RedeemGooglePlayPurchaseResult> MakeRealMoneyPurchaseAsync(string purchaseId)
-        {
-            try
-            {
-                RedeemGooglePlayStorePurchaseArgs args = new RedeemGooglePlayStorePurchaseArgs(purchaseId, "PURCHASE_DATA", "PURCHASE_DATA_SIGNATURE", 0, "USD");
-                return await EconomyService.Instance.Purchases.RedeemGooglePlayPurchaseAsync()
-            }
-        }*/
+        /*        public static async Task<RedeemGooglePlayPurchaseResult> MakeRealMoneyPurchaseAsync(string purchaseId)
+                {
+                    try
+                    {
+                        RedeemGooglePlayStorePurchaseArgs args = new RedeemGooglePlayStorePurchaseArgs(purchaseId, "PURCHASE_DATA", "PURCHASE_DATA_SIGNATURE", 0, "USD");
+                        return await EconomyService.Instance.Purchases.RedeemGooglePlayPurchaseAsync()
+                    }
+                }*/
 
         public static async Task RefreshCurrencyBalances()
         {

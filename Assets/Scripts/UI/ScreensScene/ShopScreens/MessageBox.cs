@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using TMPro;
 using BattleCruisers.Data;
 using BattleCruisers.UI.Sound.Players;
 using System;

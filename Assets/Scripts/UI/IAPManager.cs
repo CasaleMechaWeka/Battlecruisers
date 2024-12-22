@@ -1,9 +1,5 @@
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene;
-using BattleCruisers.UI.ScreensScene.BattleHubScreen;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
-using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
@@ -140,7 +136,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                 Debug.Log("RestorePurchases continuing: " + success + ". If no further messages, no purchases available to restore.");
             });
         }
-        else if(Application.platform == RuntimePlatform.Android)
+        else if (Application.platform == RuntimePlatform.Android)
         {
             Debug.Log("RestorePurchases started ...");
 
