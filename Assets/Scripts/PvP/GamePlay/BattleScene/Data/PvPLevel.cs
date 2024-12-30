@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data
 {
@@ -8,13 +8,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data
     {
         public int Num { get; }
         public IPvPPrefabKey Hull { get; }
-        public PvPSoundKeyPair MusicKeys { get; }
+        public SoundKeyPair MusicKeys { get; }
         public string SkyMaterialName { get; }
 
         public PvPLevel(
             int num,
             IPvPPrefabKey hull,
-            PvPSoundKeyPair musicKeys,
+            SoundKeyPair musicKeys,
             string skyMaterialName)
         {
             PvPHelper.AssertIsNotNull(hull, musicKeys);

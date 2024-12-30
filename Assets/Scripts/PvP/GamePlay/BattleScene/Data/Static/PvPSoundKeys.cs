@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 
@@ -89,52 +88,52 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
             public static class Background
             {
-                public static PvPSoundKeyPair Bobby { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Bobby { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "bobby-base"),
                         new SoundKey(SoundType.Music, "bobby-danger"));
 
-                public static PvPSoundKeyPair Confusion { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Confusion { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "confusion-base"),
                         new SoundKey(SoundType.Music, "confusion-danger"));
 
-                public static PvPSoundKeyPair Experimental { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Experimental { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "experimental-base"),
                         new SoundKey(SoundType.Music, "experimental-danger"));
 
-                public static PvPSoundKeyPair Againagain { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Againagain { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "againagain-base"),
                         new SoundKey(SoundType.Music, "againagain-danger"));
 
-                public static PvPSoundKeyPair Juggernaut { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Juggernaut { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "juggernaut-base"),
                         new SoundKey(SoundType.Music, "juggernaut-danger"));
 
-                public static PvPSoundKeyPair Nothing { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Nothing { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "nothing-base"),
                         new SoundKey(SoundType.Music, "nothing-danger"));
 
-                public static PvPSoundKeyPair Sleeper { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Sleeper { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "sleeper-base"),
                         new SoundKey(SoundType.Music, "sleeper-danger"));
 
-                public static PvPSoundKeyPair Fortress { get; }
-                    = new PvPSoundKeyPair(
+                public static SoundKeyPair Fortress { get; }
+                    = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "fortress-base"),
                         new SoundKey(SoundType.Music, "fortress-danger"));
 
-                public static PvPSoundKeyPair Boss { get; }
-                = new PvPSoundKeyPair(
+                public static SoundKeyPair Boss { get; }
+                = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "fortress-base"),
                         new SoundKey(SoundType.Music, "fortress-danger"));
 
-                public static IList<PvPSoundKeyPair> All = new List<PvPSoundKeyPair>()
+                public static IList<SoundKeyPair> All = new List<SoundKeyPair>()
                 {
                     Bobby,
                     Confusion,

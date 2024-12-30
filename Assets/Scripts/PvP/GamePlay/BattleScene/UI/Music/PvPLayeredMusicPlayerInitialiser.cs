@@ -1,5 +1,4 @@
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
@@ -9,6 +8,7 @@ using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
     {
         public async Task<IPvPLayeredMusicPlayer> CreatePlayerAsync(
             IPvPSoundFetcher soundFetcher,
-            PvPSoundKeyPair soundKeys,
+            SoundKeyPair soundKeys,
             ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(soundFetcher, soundKeys, settingsManager);
