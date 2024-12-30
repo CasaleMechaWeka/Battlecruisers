@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools
@@ -8,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPAudioSourcePoolableFactory : IPvPAudioSourcePoolableFactory
     {
         private readonly IPvPPrefabFactory _prefabFactory;
-        private readonly IDeferrer _realTimeDeferrer;
+        private readonly IPvPDeferrer _realTimeDeferrer;
 
-        public PvPAudioSourcePoolableFactory(IPvPPrefabFactory prefabFactory, IDeferrer realTimeDeferrer)
+        public PvPAudioSourcePoolableFactory(IPvPPrefabFactory prefabFactory, IPvPDeferrer realTimeDeferrer)
         {
             PvPHelper.AssertIsNotNull(prefabFactory, realTimeDeferrer);
 

@@ -3,8 +3,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
@@ -12,14 +12,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
     {
         private readonly PvPCruiser _playerCruiser;
         private readonly IPvPTime _time;
-        private readonly IDeferrer _deferrer;
+        private readonly IPvPDeferrer _deferrer;
 
         private const int AIR_HIGH_THREAT_DRONE_NUM = 6;
         private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
         private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
         private const float STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
-        public PvPThreatMonitorFactory(PvPCruiser playerCruiser, IPvPTime time, IDeferrer deferrer)
+        public PvPThreatMonitorFactory(PvPCruiser playerCruiser, IPvPTime time, IPvPDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(playerCruiser, time, deferrer);
 

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio
 {
-    public class PvPAudioSourceBC : IAudioSource
+    public class PvPAudioSourceBC : IPvPAudioSource
     {
         private readonly AudioSource _audioSource;
 

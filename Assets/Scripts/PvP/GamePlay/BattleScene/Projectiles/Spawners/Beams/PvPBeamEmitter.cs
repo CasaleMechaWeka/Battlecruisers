@@ -9,7 +9,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using System;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
 {
@@ -20,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         [SerializeField]
         private AudioSource _platformAudioSource;
-        protected IAudioSource _audioSource;
+        protected IPvPAudioSource _audioSource;
 
         public PvPBroadcastingParticleSystem constantSparks;
         public LayerMask unitsLayerMask, shieldsLayerMask;

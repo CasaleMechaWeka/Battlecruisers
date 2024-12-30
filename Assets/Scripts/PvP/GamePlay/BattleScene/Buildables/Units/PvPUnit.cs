@@ -18,13 +18,12 @@ using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
 {
     public abstract class PvPUnit : PvPBuildable<PvPBuildableActivationArgs>, IPvPUnit
     {
-        private IAudioSource _coreEngineAudioSource;
+        private IPvPAudioSource _coreEngineAudioSource;
         private PvPVolumeAwareAudioSource _engineAudioSource;
 
         [Header("Other")]

@@ -1,7 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +23,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             AudioSource[] platformAudioSources = GetComponentsInChildren<AudioSource>(includeInactive: true);
             Assert.IsTrue(platformAudioSources.Length != 0);
-            IList<IAudioSource> audioSources
+            IList<IPvPAudioSource> audioSources
                 = platformAudioSources
-                    .Select(audioSource => (IAudioSource)new PvPAudioSourceBC(audioSource))
+                    .Select(audioSource => (IPvPAudioSource)new PvPAudioSourceBC(audioSource))
                     .ToList();
 
             _audioSources = new PvPAudioSourceGroup(settingsManager, audioSources);

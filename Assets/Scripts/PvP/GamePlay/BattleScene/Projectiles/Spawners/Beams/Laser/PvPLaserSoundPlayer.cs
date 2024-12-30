@@ -1,15 +1,15 @@
 
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
     public class PvPLaserSoundPlayer : IPvPLaserSoundPlayer
     {
         private readonly IPvPLaserRenderer _laserRenderer;
-        private readonly IAudioSource _audioSource;
+        private readonly IPvPAudioSource _audioSource;
 
-        public PvPLaserSoundPlayer(IPvPLaserRenderer laserRenderer, IAudioSource audioSource)
+        public PvPLaserSoundPlayer(IPvPLaserRenderer laserRenderer, IPvPAudioSource audioSource)
         {
             PvPHelper.AssertIsNotNull(laserRenderer, audioSource);
 

@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         private const float HIDE_IMPACT_DEBOUNCE_TIME_IN_S = 0.25f;
 
-        public void Initialise(IDeferrer timeScaleDeferrer)
+        public void Initialise(IPvPDeferrer timeScaleDeferrer)
         {
             // Logging.LogMethod(Tags.LASER);
             Assert.IsNotNull(timeScaleDeferrer);

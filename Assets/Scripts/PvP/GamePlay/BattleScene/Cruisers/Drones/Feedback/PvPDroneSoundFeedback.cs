@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback
 {
@@ -11,9 +11,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPDroneSoundFeedback : IPvPManagedDisposable
     {
         private readonly IPvPBroadcastingProperty<bool> _parentCruiserHasActiveDrones;
-        private readonly IAudioSource _audioSource;
+        private readonly IPvPAudioSource _audioSource;
 
-        public PvPDroneSoundFeedback(IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones, IAudioSource audioSource)
+        public PvPDroneSoundFeedback(IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones, IPvPAudioSource audioSource)
         {
             PvPHelper.AssertIsNotNull(parentCruiserHasActiveDrones, audioSource);
 

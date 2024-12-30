@@ -1,7 +1,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPAudioSourceGroup : IPvPManagedDisposable
     {
         private readonly ISettingsManager _settingsManager;
-        private readonly IList<IAudioSource> _audioSources;
+        private readonly IList<IPvPAudioSource> _audioSources;
 
-        public PvPAudioSourceGroup(ISettingsManager settingsManager, params IAudioSource[] audioSources)
+        public PvPAudioSourceGroup(ISettingsManager settingsManager, params IPvPAudioSource[] audioSources)
             : this(settingsManager, audioSources.ToList())
         {
         }
 
-        public PvPAudioSourceGroup(ISettingsManager settingsManager, IList<IAudioSource> audioSources)
+        public PvPAudioSourceGroup(ISettingsManager settingsManager, IList<IPvPAudioSource> audioSources)
         {
             Helper.AssertIsNotNull(settingsManager, audioSources);
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
         private void SetVolume()
         {
-            foreach (IAudioSource audioSource in _audioSources)
+            foreach (IPvPAudioSource audioSource in _audioSources)
             {
                 audioSource.Volume = _settingsManager.EffectVolume * _settingsManager.MasterVolume;
             }

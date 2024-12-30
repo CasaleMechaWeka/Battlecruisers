@@ -1,16 +1,15 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.UI.Sound.ProjectileSpawners;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners
 {
-    public class PvPDummyProjectileSoundPlayerInitialiser : MonoBehaviour, IProjectileSoundPlayerInitialiser
+    public class PvPDummyProjectileSoundPlayerInitialiser : MonoBehaviour, IPvPProjectileSoundPlayerInitialiser
     {
-        public Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory,
+        public Task<IPvPProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
+            IPvPSoundPlayerFactory soundPlayerFactory,
             ISoundKey firingSound,
             int burstSize,
             ISettingsManager settingsManager)

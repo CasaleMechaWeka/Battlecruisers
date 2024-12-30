@@ -3,17 +3,19 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+
+
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
     public interface IPvPBattleSceneGodComponents
     {
-        IAudioSource PrioritisedSoundPlayerAudioSource { get; }
-        IAudioSource UISoundsAudioSource { get; }
+        IPvPAudioSource PrioritisedSoundPlayerAudioSource { get; }
+        IPvPAudioSource UISoundsAudioSource { get; }
         PvPLayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; }
         IPvPClickableEmitter BackgroundClickableEmitter { get; }
         IPvPTargetIndicator TargetIndicator { get; }
@@ -21,8 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         PvPHotkeyInitialiser HotkeyInitialiser { get; }
 
 
-        IDeferrer Deferrer { get; }
-        IDeferrer RealTimeDeferrer { get; }
+        IPvPDeferrer Deferrer { get; }
+        IPvPDeferrer RealTimeDeferrer { get; }
 
         IPvPUpdaterProvider UpdaterProvider { get; }
 

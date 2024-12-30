@@ -2,7 +2,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         private AudioSource _audioSource;
         public int type = -1;
 
-        public PvPAudioSourcePoolable Initialise(IDeferrer realTimeDeferrer, ISettingsManager settingsManager)
+        public PvPAudioSourcePoolable Initialise(IPvPDeferrer realTimeDeferrer, ISettingsManager settingsManager)
         {
             Assert.IsNotNull(_audioSource);
             PvPHelper.AssertIsNotNull(realTimeDeferrer, settingsManager);

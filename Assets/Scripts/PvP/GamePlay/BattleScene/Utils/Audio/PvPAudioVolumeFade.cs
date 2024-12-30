@@ -1,9 +1,9 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using System.Collections;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Audio
 {
@@ -22,14 +22,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _shouldFade = false;
         }
 
-        public void FadeToVolume(IAudioSource audioSource, float targetVolume, float durationInS)
+        public void FadeToVolume(IPvPAudioSource audioSource, float targetVolume, float durationInS)
         {
             Assert.IsNotNull(audioSource);
 
             _coroutineStarter.StartRoutine(FadeToVolumeCoroutine(audioSource, targetVolume, durationInS));
         }
 
-        private IEnumerator FadeToVolumeCoroutine(IAudioSource audioSource, float targetVolume, float durationInS)
+        private IEnumerator FadeToVolumeCoroutine(IPvPAudioSource audioSource, float targetVolume, float durationInS)
         {
             _shouldFade = true;
 
