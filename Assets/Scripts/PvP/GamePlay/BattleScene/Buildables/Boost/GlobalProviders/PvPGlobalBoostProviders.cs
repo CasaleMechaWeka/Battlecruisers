@@ -21,6 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IPvPBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         public IPvPUnitBuildRatelBoostProviders UnitBuildRate { get; }
+        public IPvPBuildingHealthlBoostProviders BuildingHealth { get; }
 
         public PvPGlobalBoostProviders()
         {
@@ -36,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             BuildingBuildRate = new PvPBuildingBuildRatelBoostProviders();
             UnitBuildRate = new PvPUnitBuildRatelBoostProviders();
+            BuildingHealth = new PvPBuildingHealthlBoostProviders();
         }
     }
 }

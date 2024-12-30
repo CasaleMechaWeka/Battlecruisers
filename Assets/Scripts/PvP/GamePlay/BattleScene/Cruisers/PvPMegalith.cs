@@ -10,16 +10,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPMegalith : PvPCruiser
     {
         public float buildingFireRateBoost;
-
+        public float buildingHealthBoost;
         public override void Initialise(IPvPCruiserArgs args)
         {
             base.Initialise(args);
 
-            Assert.IsTrue(buildingFireRateBoost > 0);
+            Assert.IsTrue(buildingHealthBoost > 0);
 
-            IPvPBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingFireRateBoost);
-            CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
-            CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.Add(fireRateBoostProvider);
+            IPvPBoostProvider buildingHealthBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingHealthBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingHealth.AllBuildingsProviders.Add(buildingHealthBoostProvider);
         }
 
         protected override void Start()
