@@ -9,11 +9,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement
 {
@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             return new PvPMissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
         }
 
-        public IPvPMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, PvPRectangle safeZone)
+        public IPvPMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, Rectangle safeZone)
         {
             return new PvPFighterMovementController(rigidBody, maxVelocityProvider, targetProvider, safeZone);
         }

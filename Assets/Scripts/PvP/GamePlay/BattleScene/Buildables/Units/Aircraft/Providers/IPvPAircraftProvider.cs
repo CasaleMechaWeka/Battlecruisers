@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers
 {
     public interface IPvPAircraftProvider
     {
-        PvPRectangle FighterSafeZone { get; }
+        Rectangle FighterSafeZone { get; }
 
         IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM);
         IList<Vector2> FindGunshipPatrolPoints(float cruisingAltitudeInM);

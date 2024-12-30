@@ -8,10 +8,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement
 {
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         // Velocity => Homing
         IPvPMovementController CreateMissileMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, IPvPTargetPositionPredictorFactory targetPositionPredictorFactory);
-        IPvPMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, PvPRectangle safeZone);
+        IPvPMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, Rectangle safeZone);
         IPvPMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, float cruisingAltitudeInM, IPvPFlightPointsProvider flightPointsProvider);
         IPvPMovementController CreateHomingMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider);
 

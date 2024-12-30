@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Homing
@@ -9,9 +9,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     {
         // Zone in which fighter will pursue enemies.  If those enemies move outside this
         // safe zone the fighter will abandon pursuit.
-        private readonly PvPRectangle _safeZone;
+        private readonly Rectangle _safeZone;
 
-        public PvPFighterMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, PvPRectangle safeZone)
+        public PvPFighterMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, Rectangle safeZone)
             : base(rigidBody, maxVelocityProvider, targetProvider)
         {
             _safeZone = safeZone;

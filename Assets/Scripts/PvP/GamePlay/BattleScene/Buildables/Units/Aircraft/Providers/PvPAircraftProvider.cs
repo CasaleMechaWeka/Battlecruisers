@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public const float CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M = 4;
 
         private bool IsEnemyToTheRight => _enemyCruiserPosition.x > _parentCruiserPosition.x;
-        public PvPRectangle FighterSafeZone { get; }
+        public Rectangle FighterSafeZone { get; }
 
         public PvPAircraftProvider(
             Vector2 parentCruiserPosition,
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 maxX = parentCruiserPosition.x + SAFE_ZONE_PARENT_CRUISER_OVERLAP;
             }
 
-            FighterSafeZone = new PvPRectangle(
+            FighterSafeZone = new Rectangle(
                 minX: minX,
                 maxX: maxX,
                 minY: SAFE_ZONE_MIN_Y,
@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 maxX = parentCruiserPosition.x + SAFE_ZONE_PARENT_CRUISER_OVERLAP;
             }
 
-            FighterSafeZone = new PvPRectangle(
+            FighterSafeZone = new Rectangle(
                 minX: minX,
                 maxX: maxX,
                 minY: SAFE_ZONE_MIN_Y,
