@@ -17,7 +17,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Ex
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -660,7 +659,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 bool wasAnySlotHighlighted = SlotHighlighter.HighlightAvailableSlots(SlotSpecification);
                 if (!wasAnySlotHighlighted)
                 {
-                    PvP_PrioritisedSoundClientRpc(SoundType.Events, "no-building-slots-left", PvPSoundPriority.VeryHigh);
+                    PvP_PrioritisedSoundClientRpc(SoundType.Events, "no-building-slots-left", SoundPriority.VeryHigh);
                     SlotHighlighter.HighlightSlots(SlotSpecification);
                 }
             }
@@ -668,10 +667,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         [ClientRpc]
-        private void PvP_PrioritisedSoundClientRpc(SoundType soundType, string name, PvPSoundPriority priority)
+        private void PvP_PrioritisedSoundClientRpc(SoundType soundType, string name, SoundPriority priority)
         {
 
-            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new SoundKey(soundType, name), priority));
+            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PrioritisedSoundKey(new SoundKey(soundType, name), priority));
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -704,7 +703,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_RepairableButtonClickedServerRpc()
         {
             IPvPDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
-            PvPPrioritisedSoundKey sound = DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+            PrioritisedSoundKey sound = DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
             PvP_PrioritisedSoundClientRpc(sound.Key.Type, sound.Key.Name, sound.Priority);
         }
 

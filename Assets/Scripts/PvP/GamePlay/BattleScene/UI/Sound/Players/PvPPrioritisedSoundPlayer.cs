@@ -1,3 +1,4 @@
+using BattleCruisers.UI.Sound;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPPrioritisedSoundPlayer : IPvPPrioritisedSoundPlayer
     {
         private readonly IPvPSingleSoundPlayer _soundPlayer;
-        private PvPPrioritisedSoundKey _lastSoundKey;
+        private PrioritisedSoundKey _lastSoundKey;
 
         public bool Enabled { get; set; } = true;
 
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             _soundPlayer = soundPlayer;
         }
 
-        public void PlaySound(PvPPrioritisedSoundKey soundKey)
+        public void PlaySound(PrioritisedSoundKey soundKey)
         {
             if (Enabled
                 && (_lastSoundKey == null

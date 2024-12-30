@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound;
 using System;
 using UnityEngine;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // _soundPlayer = soundPlayer;
         }
 
-        public PvPPrioritisedSoundKey ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer, bool isTriggeredByPlayer)
+        public PrioritisedSoundKey ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer, bool isTriggeredByPlayer)
         {
             //  Assert.IsNotNull(droneConsumer);
             if (droneConsumer == null)
@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 try
                 {
-                    PvPPrioritisedSoundKey sound = _soundPicker.PickSound(preFocusState, postFocusState);
+                    PrioritisedSoundKey sound = _soundPicker.PickSound(preFocusState, postFocusState);
                     // Debug.Log(sound.Key);
                     // _soundPlayer.PlaySound(sound);
 
