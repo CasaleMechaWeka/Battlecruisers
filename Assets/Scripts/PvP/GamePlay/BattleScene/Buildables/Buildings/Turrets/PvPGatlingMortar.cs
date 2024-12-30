@@ -1,6 +1,5 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.UI.Sound;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         // DLC  Have own sound
         protected override ISoundKey FiringSound => SoundKeys.Firing.AttackBoat;
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.Mortar;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Mortar;
 
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();

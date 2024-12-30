@@ -1,5 +1,5 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void PlayAlert()
         {
-            _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.EnemyStartedUltra);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
         }
 
         public void DisposeManagedState()

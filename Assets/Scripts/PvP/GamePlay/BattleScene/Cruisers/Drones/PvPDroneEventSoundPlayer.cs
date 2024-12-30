@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
@@ -26,12 +26,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void _droneManagerMonitor_DroneNumIncreased(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.NewDronesReady);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NewDronesReady);
         }
 
         private void _droneManagerMonitor_IdleDronesStarted(object sender, EventArgs e)
         {
-            _idleDronesDebouncer.Debounce(() => _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.Idle));
+            _idleDronesDebouncer.Debounce(() => _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle));
         }
 
         public void DisposeManagedState()

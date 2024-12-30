@@ -1,7 +1,7 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             {
                 // Clear user chosen target
                 _userChosenTargetManager.Target = null;
-                _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPTargetting.TargetCleared);
+                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Targetting.TargetCleared);
                 _targetIndicator.Hide();
                 SynchedServerData.Instance.SetUserChosenTargetToServer(false, 0, SynchedServerData.Instance.GetTeam());
             }
@@ -79,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             {
                 // Set user chosen target
                 _userChosenTargetManager.Target = target;
-                _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPTargetting.NewTarget);
+                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Targetting.NewTarget);
                 _targetIndicator.Show(target.Position);
 
                 ulong objectId;

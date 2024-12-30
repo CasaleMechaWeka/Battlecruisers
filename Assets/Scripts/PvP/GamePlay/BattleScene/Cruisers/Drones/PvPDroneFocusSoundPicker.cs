@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using System;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones
@@ -17,9 +17,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     {
                         case PvPDroneConsumerState.Active:
                         case PvPDroneConsumerState.Focused:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.Focusing;
+                            return PrioritisedSoundKeys.Events.Drones.Focusing;
                         case PvPDroneConsumerState.AllFocused:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.AllFocused;
+                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
                         default:
                             throw new ArgumentException();
                     }
@@ -28,11 +28,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     switch (postFocusState)
                     {
                         case PvPDroneConsumerState.Idle:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.NotEnoughDronesToFocus;
+                            return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
                         case PvPDroneConsumerState.Focused:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.Focusing;
+                            return PrioritisedSoundKeys.Events.Drones.Focusing;
                         case PvPDroneConsumerState.AllFocused:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.AllFocused;
+                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
                         default:
                             throw new ArgumentException();
                     }
@@ -41,11 +41,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     switch (postFocusState)
                     {
                         case PvPDroneConsumerState.Idle:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.NotEnoughDronesToFocus;
+                            return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
                         case PvPDroneConsumerState.Active:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.Dispersing;
+                            return PrioritisedSoundKeys.Events.Drones.Dispersing;
                         case PvPDroneConsumerState.AllFocused:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.AllFocused;
+                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
                         default:
                             throw new ArgumentException();
                     }
@@ -54,12 +54,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     switch (postFocusState)
                     {
                         case PvPDroneConsumerState.Idle:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.NotEnoughDronesToFocus;
+                            return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
                         case PvPDroneConsumerState.Active:
                         case PvPDroneConsumerState.Focused:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.Dispersing;
+                            return PrioritisedSoundKeys.Events.Drones.Dispersing;
                         default:
-                            return PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.AllFocused;
+                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
                     }
                 default:
                     throw new ArgumentException();

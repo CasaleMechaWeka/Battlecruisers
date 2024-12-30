@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
@@ -37,12 +37,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void _cruiserHealthThresholdMonitor_DroppedBelowThreshold(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.SignificantlyDamaged);
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.SignificantlyDamaged);
         }
 
         private void _cruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
         {
-            _damagedDebouncer.Debounce(() => _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.UnderAttack));
+            _damagedDebouncer.Debounce(() => _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.UnderAttack));
         }
 
         public void DisposeManagedState()
