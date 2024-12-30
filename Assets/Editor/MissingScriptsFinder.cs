@@ -22,16 +22,15 @@ public class MissingScriptsFinder : EditorWindow
         int missingCount = 0;
 
         // Check all prefabs and assets in the project
-        string[] allPrefabs = AssetDatabase.GetAllAssetPaths();
-        foreach (string prefabPath in allPrefabs)
+        string[] allAssets = AssetDatabase.GetAllAssetPaths();
+        foreach (string assetPath in allAssets)
         {
-            if (prefabPath.EndsWith(".prefab") || prefabPath.EndsWith(".unity"))
+            if (assetPath.EndsWith(".prefab") || assetPath.EndsWith(".unity"))
             {
-                GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-                if (obj != null && CheckForMissingScripts(obj))
+                GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+                if (obj != null)
                 {
-                    Debug.Log($"Missing script in: {prefabPath}", obj);
-                    missingCount++;
+                    missingCount += CheckForMissingScripts(obj, assetPath);
                 }
             }
         }
@@ -39,27 +38,26 @@ public class MissingScriptsFinder : EditorWindow
         Debug.Log($"Total assets with missing scripts: {missingCount}");
     }
 
-    private static bool CheckForMissingScripts(GameObject obj)
+    private static int CheckForMissingScripts(GameObject obj, string assetPath)
     {
-        bool hasMissingScripts = false;
+        int missingCount = 0;
 
         Component[] components = obj.GetComponents<Component>();
         for (int i = 0; i < components.Length; i++)
         {
             if (components[i] == null)
             {
-                hasMissingScripts = true;
+                // Log with a clickable reference to the specific GameObject
+                Debug.LogWarning($"Missing script found on GameObject '{obj.name}' in asset: {assetPath}", obj);
+                missingCount++;
             }
         }
 
         foreach (Transform child in obj.transform)
         {
-            if (CheckForMissingScripts(child.gameObject))
-            {
-                hasMissingScripts = true;
-            }
+            missingCount += CheckForMissingScripts(child.gameObject, assetPath);
         }
 
-        return hasMissingScripts;
+        return missingCount;
     }
 }
