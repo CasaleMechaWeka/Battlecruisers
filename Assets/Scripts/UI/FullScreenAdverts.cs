@@ -1,15 +1,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI;
-using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
-//using GoogleMobileAds.Api;
-using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -29,11 +20,6 @@ public class FullScreenAdverts : MonoBehaviour
         Button btn = closeButton.GetComponent<Button>();
         btn.onClick.AddListener(CloseAdvert);
     }
-
-
-    // Update is called once per frame
-
-
     public void CloseAdvert()
     {
         gameObject.SetActive(false);
@@ -53,7 +39,7 @@ public class FullScreenAdverts : MonoBehaviour
         gameObject.SetActive(false);
 #endif
         // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
-#if (UNITY_ANDROID || UNITY_IOS)
+#if UNITY_ANDROID || UNITY_IOS
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
@@ -84,11 +70,7 @@ public class FullScreenAdverts : MonoBehaviour
     //gameObject.SetActive(false);
 #endif
     }
-
-
-
-
-
+    
     public static float DeviceDiagonalSizeInInches()
     {
         float screenWidth = Screen.width / Screen.dpi;

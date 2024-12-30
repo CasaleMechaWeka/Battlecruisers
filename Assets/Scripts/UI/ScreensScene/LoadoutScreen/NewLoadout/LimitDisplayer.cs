@@ -1,23 +1,14 @@
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils;
 using System;
-using BattleCruisers.Utils.Properties;
-using UnityEngine.Assertions;
 using UnityEngine;
-using System.Collections.Generic;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
-using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using TMPro;
-using Unity.Services.Analytics;
 using BattleCruisers.Buildables.Buildings;
-using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 using BattleCruisers.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen

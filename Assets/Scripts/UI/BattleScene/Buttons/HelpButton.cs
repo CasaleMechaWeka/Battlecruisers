@@ -3,7 +3,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {

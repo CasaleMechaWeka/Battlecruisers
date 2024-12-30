@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using BattleCruisers.Data;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {

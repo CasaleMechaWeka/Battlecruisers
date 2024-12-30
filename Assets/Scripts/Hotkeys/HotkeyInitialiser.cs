@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Hotkeys.BuildableButtons;
 using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.UI.BattleScene.GameSpeed;
-using BattleCruisers.UI.BattleScene.HelpLabels;
 using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;

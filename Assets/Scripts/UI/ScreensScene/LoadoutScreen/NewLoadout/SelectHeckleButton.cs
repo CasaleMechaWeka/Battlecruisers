@@ -1,13 +1,8 @@
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Properties;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using BattleCruisers.Utils;

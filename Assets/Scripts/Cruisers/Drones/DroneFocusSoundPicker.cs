@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using System;
-using UnityEngine;
 namespace BattleCruisers.Cruisers.Drones
 {
     public class DroneFocusSoundPicker : IDroneFocusSoundPicker

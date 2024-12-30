@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.U2D;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {

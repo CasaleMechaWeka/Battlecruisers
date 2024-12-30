@@ -2,8 +2,6 @@ using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
-using BattleCruisers.UI;
-using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;

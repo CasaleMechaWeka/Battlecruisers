@@ -14,8 +14,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 

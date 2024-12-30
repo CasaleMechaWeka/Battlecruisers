@@ -13,7 +13,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using BattleCruisers.Effects.Explosions;
-using BattleCruisers.Scenes.BattleScene;
 
 
 namespace BattleCruisers.Cruisers.Slots

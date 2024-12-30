@@ -17,12 +17,7 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
-using System;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Utils.Fetchers
