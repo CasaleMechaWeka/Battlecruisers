@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
@@ -9,12 +10,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPSmokeEmitter
     {
         private readonly IPvPHealthStateMonitor _healthStateMonitor;
-        private readonly IPvPSmoke _smoke;
+        private readonly ISmoke _smoke;
         private readonly bool _showSmokeWhenDestroyed;
         private PvPBuildable<PvPBuildableActivationArgs> _parentBuildable_buildable;
         private PvPBuildable<PvPBuildingActivationArgs> _parentBuildable_building;
 
-        public PvPSmokeEmitter(PvPBuildable<PvPBuildableActivationArgs> parentBuildable, IPvPHealthStateMonitor healthStateMonitor, IPvPSmoke smoke, bool showSmokeWhenDestroyed)
+        public PvPSmokeEmitter(PvPBuildable<PvPBuildableActivationArgs> parentBuildable, IPvPHealthStateMonitor healthStateMonitor, ISmoke smoke, bool showSmokeWhenDestroyed)
         {
             Helper.AssertIsNotNull(healthStateMonitor, smoke);
 
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _parentBuildable_buildable = parentBuildable;
         }
 
-        public PvPSmokeEmitter(PvPBuildable<PvPBuildingActivationArgs> parentBuildable, IPvPHealthStateMonitor healthStateMonitor, IPvPSmoke smoke, bool showSmokeWhenDestroyed)
+        public PvPSmokeEmitter(PvPBuildable<PvPBuildingActivationArgs> parentBuildable, IPvPHealthStateMonitor healthStateMonitor, ISmoke smoke, bool showSmokeWhenDestroyed)
         {
             Helper.AssertIsNotNull(healthStateMonitor, smoke);
 
@@ -49,25 +50,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 _smoke.SmokeStrength = FindSmokeStrength(_healthStateMonitor.HealthState);
         }
 
-        private PvPSmokeStrength FindSmokeStrength(PvPHealthState healthState)
+        private SmokeStrength FindSmokeStrength(PvPHealthState healthState)
         {
             switch (healthState)
             {
                 case PvPHealthState.FullHealth:
-                    return PvPSmokeStrength.None;
+                    return SmokeStrength.None;
 
                 case PvPHealthState.SlightlyDamaged:
-                    return PvPSmokeStrength.Weak;
+                    return SmokeStrength.Weak;
 
                 case PvPHealthState.Damaged:
-                    return PvPSmokeStrength.Normal;
+                    return SmokeStrength.Normal;
 
                 case PvPHealthState.SeverelyDamaged:
-                    return PvPSmokeStrength.Strong;
+                    return SmokeStrength.Strong;
 
                 case PvPHealthState.NoHealth:
                     // sava added
-                    return _showSmokeWhenDestroyed ? PvPSmokeStrength.Strong : PvPSmokeStrength.None;
+                    return _showSmokeWhenDestroyed ? SmokeStrength.Strong : SmokeStrength.None;
                 //   return PvPSmokeStrength.None;
 
                 default:

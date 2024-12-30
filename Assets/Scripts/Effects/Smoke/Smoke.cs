@@ -15,7 +15,7 @@ namespace BattleCruisers.Effects.Smoke
     public class Smoke : MonoBehaviour, ISmoke
     {
         private ISmokeChanger _smokeChanger;
-        private ParticleSystem _particleSystem;
+        public ParticleSystem _particleSystem;
 
         private SmokeStrength _smokeStrength;
         public SmokeStrength SmokeStrength
@@ -52,6 +52,13 @@ namespace BattleCruisers.Effects.Smoke
             _particleSystem.Pause();
 
             transform.rotation = Quaternion.Euler(-90, 0, 0);
+        }
+
+        private void Awake()
+        {
+            _particleSystem = GetComponent<ParticleSystem>();
+            Assert.IsNotNull(_particleSystem);
+            _particleSystem.Pause();
         }
 
         private void ApplySmokeStats(SmokeStatistics smokeStats)

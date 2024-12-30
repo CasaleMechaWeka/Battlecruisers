@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
@@ -15,10 +16,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void Initialise(PvPBuildable<PvPBuildableActivationArgs> parentDamagable, bool showSmokeWhenDestroyed)
         {
-            PvPSmoke smoke = GetComponent<PvPSmoke>();
+            BattleCruisers.Effects.Smoke.Smoke smoke = GetComponent<BattleCruisers.Effects.Smoke.Smoke>();
             Assert.IsNotNull(smoke);
             smoke._particleSystem.Clear();
-            smoke.Initialise(new PvPSmokeChanger());
+            smoke.Initialise(new SmokeChanger());
 
             _smokeEmitter
                 = new PvPSmokeEmitter(
@@ -30,10 +31,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void Initialise(PvPBuildable<PvPBuildingActivationArgs> parentDamagable, bool showSmokeWhenDestroyed)
         {
-            PvPSmoke smoke = GetComponent<PvPSmoke>();
+            BattleCruisers.Effects.Smoke.Smoke smoke = GetComponent<BattleCruisers.Effects.Smoke.Smoke>();
             Assert.IsNotNull(smoke);
             smoke._particleSystem.Clear();
-            smoke.Initialise(new PvPSmokeChanger());
+            smoke.Initialise(new SmokeChanger());
 
             _smokeEmitter
                 = new PvPSmokeEmitter(

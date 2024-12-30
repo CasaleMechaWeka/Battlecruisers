@@ -27,6 +27,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Effects.Smoke;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
@@ -219,7 +220,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat start to build.
-                _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
+                _smokeInitialiser.gameObject.GetComponent<Smoke>()._particleSystem.Clear();
         }
 
         private void OnHealthbarOffsetChanged()
