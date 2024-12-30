@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.UI.Sound;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPCoastGuard : PvPDefenseTurret
     {
-        protected override ISoundKey FiringSound => PvPSoundKeys.PvPFiring.Artillery;
+        protected override ISoundKey FiringSound => SoundKeys.Firing.Artillery;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.AntiShipTurret;
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();

@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.UI.Sound;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPGatlingMortar : PvPOffenseTurret
     {
         // DLC  Have own sound
-        protected override ISoundKey FiringSound => PvPSoundKeys.PvPFiring.AttackBoat;
+        protected override ISoundKey FiringSound => SoundKeys.Firing.AttackBoat;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.Mortar;
 
 

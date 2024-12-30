@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _smartProjectileStats,
                     pvpTurretStats.BurstSize);
 
-            await _missileSpawner.InitialiseAsync(spawnerArgs, PvPSoundKeys.PvPFiring.Missile, _smartProjectileStats);
+            await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, _smartProjectileStats);
         }
 
         public override void Fire(float angleInDegrees)

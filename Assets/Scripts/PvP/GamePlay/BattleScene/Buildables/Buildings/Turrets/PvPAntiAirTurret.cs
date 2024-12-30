@@ -3,12 +3,13 @@ using UnityEngine;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
     public class PvPAntiAirTurret : PvPDefenseTurret
     {
-        protected override ISoundKey FiringSound => PvPSoundKeys.PvPFiring.AntiAir;
+        protected override ISoundKey FiringSound => SoundKeys.Firing.AntiAir;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.AntiAirTurret;
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();

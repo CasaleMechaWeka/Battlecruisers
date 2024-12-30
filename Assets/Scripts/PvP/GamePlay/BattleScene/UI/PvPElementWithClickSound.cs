@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
 using UnityEngine;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
         private Action _clickAction;
         private IPvPDismissableEmitter _parent;
         protected IPvPSingleSoundPlayer _soundPlayer;
-        protected virtual ISoundKey ClickSound => PvPSoundKeys.UI.Click;
+        protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual void Initialise(
             IPvPSingleSoundPlayer soundPlayer,

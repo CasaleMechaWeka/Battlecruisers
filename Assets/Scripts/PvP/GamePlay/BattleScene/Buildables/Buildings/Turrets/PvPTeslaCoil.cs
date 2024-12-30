@@ -7,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.TeslaCoil;
         protected override bool HasSingleSprite => true;
-        protected override ISoundKey FiringSound => PvPSoundKeys.PvPFiring.Lightning;
+        protected override ISoundKey FiringSound => SoundKeys.Firing.Lightning;
 
 
         protected override void AddBuildRateBoostProviders(

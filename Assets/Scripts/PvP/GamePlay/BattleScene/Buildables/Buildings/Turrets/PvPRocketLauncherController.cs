@@ -7,13 +7,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
     public class PvPRocketLauncherController : PvPOffenseTurret
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.RocketLauncher;
-        protected override ISoundKey FiringSound => PvPSoundKeys.PvPFiring.RocketLauncher;
+        protected override ISoundKey FiringSound => SoundKeys.Firing.RocketLauncher;
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         // Visibility 

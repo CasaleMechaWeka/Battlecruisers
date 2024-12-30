@@ -1,5 +1,5 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public float lightUpIntervalS = 0.25f;
         public Image activeImage;
         public List<Sprite> activeStateImages;
-        protected override ISoundKey ClickSound => PvPSoundKeys.UI.Delete;
+        protected override ISoundKey ClickSound => SoundKeys.UI.Delete;
 
         private const int NUMBER_OF_ACTIVE_STATES = 3;
 

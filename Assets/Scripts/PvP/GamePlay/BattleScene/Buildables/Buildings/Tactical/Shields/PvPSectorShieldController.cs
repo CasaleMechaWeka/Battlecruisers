@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -99,9 +98,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                     if (Health == maxHealth)
                     {
-                        //    _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.FullyCharged, Position);
+                        //    _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
                         //   OnPlayFullchargedSoundClientRpc(Position);
-                        OnPlaySoundClientRpc(PvPSoundKeys.Shields.FullyCharged.Type, PvPSoundKeys.Shields.FullyCharged.Name, Position);
+                        OnPlaySoundClientRpc(SoundKeys.Shields.FullyCharged.Type, SoundKeys.Shields.FullyCharged.Name, Position);
                     }
                 }
             }
@@ -151,9 +150,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void PlayDamagedSound()
         {
-            //  _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.HitWhileActive, Position);
+            //  _soundPlayer.PlaySoundAsync(SoundKeys.Shields.HitWhileActive, Position);
             //  OnPlayTakeDamageSoundClientRpc(Position);
-            OnPlaySoundClientRpc(PvPSoundKeys.Shields.HitWhileActive.Type, PvPSoundKeys.Shields.HitWhileActive.Name, Position);
+            OnPlaySoundClientRpc(SoundKeys.Shields.HitWhileActive.Type, SoundKeys.Shields.HitWhileActive.Name, Position);
         }
 
         private void EnableShield()
@@ -169,8 +168,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (visuals != null)
                 visuals.SetActive(false);
             polygonCollider.enabled = false;
-            // _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.FullyDepleted, Position);
-            OnPlaySoundClientRpc(PvPSoundKeys.Shields.FullyDepleted.Type, PvPSoundKeys.Shields.FullyDepleted.Name, Position);
+            // _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
+            OnPlaySoundClientRpc(SoundKeys.Shields.FullyDepleted.Type, SoundKeys.Shields.FullyDepleted.Name, Position);
             UpdateBuildingImmunity(false);
         }
 

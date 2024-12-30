@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
@@ -26,6 +25,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -136,14 +136,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     switch (barrelWrapper.firingSoundKey)
                     {
                         case "AttackBoat":
-                            soundKey = PvPSoundKeys.PvPFiring.AttackBoat;
+                            soundKey = SoundKeys.Firing.AttackBoat;
                             break;
                         case "Missile":
-                            soundKey = PvPSoundKeys.PvPFiring.Missile;
+                            soundKey = SoundKeys.Firing.Missile;
                             break;
                         // Add more cases for other sound keys as needed
                         default:
-                            soundKey = PvPSoundKeys.PvPFiring.AttackBoat; // default sound key if no match is found
+                            soundKey = SoundKeys.Firing.AttackBoat; // default sound key if no match is found
                             break;
                     }
                     barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, soundKey);
