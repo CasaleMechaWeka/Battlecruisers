@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,10 +7,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPSpawnPositionFinder : IPvPSpawnPositionFinder
     {
-        private readonly IPvPRandomGenerator _random;
+        private readonly IRandomGenerator _random;
         private readonly float _waterLine;
 
-        public PvPSpawnPositionFinder(IPvPRandomGenerator random, float waterLine)
+        public PvPSpawnPositionFinder(IRandomGenerator random, float waterLine)
         {
             Assert.IsNotNull(random);
 

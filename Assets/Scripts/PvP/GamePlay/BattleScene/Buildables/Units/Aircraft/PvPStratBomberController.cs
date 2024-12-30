@@ -21,6 +21,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -472,7 +473,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
             {
-                _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, PvPRandomGenerator.Instance);
+                _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition, RandomGenerator.Instance);
                 FacingDirection = facingDirection;
                 _isAtCruisingHeight = isAtCruiserHeight;
                 Activate_PvPClient();

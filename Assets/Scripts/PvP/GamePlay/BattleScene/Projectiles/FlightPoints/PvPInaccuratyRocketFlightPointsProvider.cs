@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public class PvPInaccuratyRocketFlightPointsProvider : PvPRocketFlightPointsProvider
     {
         private readonly PvPFlightPointStats _stats;
-        private readonly IPvPRandomGenerator _random;
+        private readonly IRandomGenerator _random;
 
         // Because may miss target on the x axis, need to aim lower to hit cruiser or water
         private const float TARGET_Y_ADJUSTMENT = -5;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsNotNull(stats);
 
             _stats = stats;
-            _random = PvPRandomGenerator.Instance;
+            _random = RandomGenerator.Instance;
         }
 
         protected override Vector2 CreateAscendPoint(Vector2 sourcePosition, Vector2 targetPosition, float cruisingPointsXOffset, float cruisingAltitudeInM)

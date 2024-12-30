@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -44,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IPvPCloudRandomiser cloudRandomiser
                 = new PvPCloudRandomiser(
-                    PvPRandomGenerator.Instance,
+                    RandomGenerator.Instance,
                     rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 

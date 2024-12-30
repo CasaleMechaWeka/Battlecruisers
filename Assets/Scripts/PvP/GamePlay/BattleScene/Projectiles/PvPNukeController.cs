@@ -8,7 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using Unity.Netcode;
 using UnityEngine;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound;
 

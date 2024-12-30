@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Fa
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -31,17 +32,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, PvPRandomGenerator.Instance, isTutorial);
+            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance, isTutorial);
             GlobalBoostProviders = new PvPGlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
-         //   BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
-          //  BuildableEffectsSoundPlayer = factoryProvider.Sound.PrioritisedSoundPlayer;
+            //   BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
+            //  BuildableEffectsSoundPlayer = factoryProvider.Sound.PrioritisedSoundPlayer;
             Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
                 = new PvPDroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
-                    new PvPSpawnPositionFinder(PvPRandomGenerator.Instance, PvPConstants.WATER_LINE),
+                    new PvPSpawnPositionFinder(RandomGenerator.Instance, PvPConstants.WATER_LINE),
                     faction);
         }
 
@@ -55,16 +56,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, PvPRandomGenerator.Instance);
+            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance);
             GlobalBoostProviders = new PvPGlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
-        //    BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
+            //    BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
                 = new PvPDroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
-                    new PvPSpawnPositionFinder(PvPRandomGenerator.Instance, PvPConstants.WATER_LINE),
+                    new PvPSpawnPositionFinder(RandomGenerator.Instance, PvPConstants.WATER_LINE),
                     faction);
         }
     }

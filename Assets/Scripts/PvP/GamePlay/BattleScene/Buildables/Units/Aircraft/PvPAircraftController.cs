@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -103,7 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Initialise( /* uiManager, */ factoryProvider);
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-            _fuzziedMaxVelocityInMPerS = PvPRandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, PvPChangeDirection.Both);
+            _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
 
@@ -111,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Initialise(factoryProvider, uiManager);
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-            _fuzziedMaxVelocityInMPerS = PvPRandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, PvPChangeDirection.Both);
+            _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
 

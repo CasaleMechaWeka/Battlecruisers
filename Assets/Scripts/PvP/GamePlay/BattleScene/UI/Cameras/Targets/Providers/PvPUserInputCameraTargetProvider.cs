@@ -1,5 +1,5 @@
+using BattleCruisers.Utils;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {

@@ -13,6 +13,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Utils;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
@@ -51,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             IPvPSlotAssigner slotAssigner = new PvPSlotAssigner();
             _buildOrderFactory = new PvPBuildOrderFactory(slotAssigner, _dataProvider.StaticData, _battleSceneGodTunnel, strategyFactory);
 
-            _factoryMonitorFactory = new PvPFactoryMonitorFactory(PvPRandomGenerator.Instance);
+            _factoryMonitorFactory = new PvPFactoryMonitorFactory(RandomGenerator.Instance);
         }
 
         public IPvPArtificialIntelligence CreateAI(IPvPLevelInfo levelInfo, Difficulty difficulty)

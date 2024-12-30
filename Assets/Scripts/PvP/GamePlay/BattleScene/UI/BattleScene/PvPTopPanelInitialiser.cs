@@ -6,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {

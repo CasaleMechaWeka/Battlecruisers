@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;

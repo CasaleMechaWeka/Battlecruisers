@@ -1,6 +1,6 @@
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Faction = activationArgs.Faction;
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);
-            state.normalizedTime = PvPRandomGenerator.Instance.Value;
+            state.normalizedTime = RandomGenerator.Instance.Value;
             _animation.Play();
             _animatedDrone.Play();
             _droneSpark.Play();
@@ -93,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 {
                     AnimationState state = _animation["BuilderDrone"];
                     Assert.IsNotNull(state);
-                    state.normalizedTime = PvPRandomGenerator.Instance.Value;
+                    state.normalizedTime = RandomGenerator.Instance.Value;
                     _animation.Play();
                     _animatedDrone.Play();
                     _droneSpark.Play();

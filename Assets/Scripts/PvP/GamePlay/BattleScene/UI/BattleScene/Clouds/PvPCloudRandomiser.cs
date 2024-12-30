@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPCloudRandomiser : IPvPCloudRandomiser
     {
-        private readonly IPvPRandomGenerator _random;
+        private readonly IRandomGenerator _random;
         private readonly IRange<float> _rightCloudValidXPositions;
 
-        public PvPCloudRandomiser(IPvPRandomGenerator random, IRange<float> rightCloudValidXPositions)
+        public PvPCloudRandomiser(IRandomGenerator random, IRange<float> rightCloudValidXPositions)
         {
             PvPHelper.AssertIsNotNull(random, rightCloudValidXPositions);
 

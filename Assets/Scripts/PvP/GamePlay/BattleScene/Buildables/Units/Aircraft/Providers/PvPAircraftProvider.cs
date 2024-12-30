@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPAircraftProvider : IPvPAircraftProvider
     {
         private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
-        private readonly IPvPRandomGenerator _random;
+        private readonly IRandomGenerator _random;
         private readonly bool _isTutorial;
 
         private const float SAFE_ZONE_PARENT_CRUISER_OVERLAP = 10;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPAircraftProvider(
             Vector2 parentCruiserPosition,
             Vector2 enemyCruiserPosition,
-            IPvPRandomGenerator random,
+            IRandomGenerator random,
             bool isTutorial = false)
         {
             _parentCruiserPosition = parentCruiserPosition;
@@ -67,11 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 maxY: SAFE_ZONE_MAX_Y);
         }
 
-        public PvPAircraftProvider(
-    Vector2 parentCruiserPosition,
-    Vector2 enemyCruiserPosition,
-    IPvPRandomGenerator random
-   )
+        public PvPAircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition, IRandomGenerator random)
         {
             _parentCruiserPosition = parentCruiserPosition;
             _enemyCruiserPosition = enemyCruiserPosition;

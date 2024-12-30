@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
@@ -19,11 +19,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             get
             {
-                if(_middleSpawner != null) return _middleSpawner.transform.position;
+                if (_middleSpawner != null) return _middleSpawner.transform.position;
                 return Vector3.zero;
             }
         }
-           
+
         public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
