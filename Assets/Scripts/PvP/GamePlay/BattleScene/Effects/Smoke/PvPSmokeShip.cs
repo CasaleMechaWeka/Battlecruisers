@@ -1,19 +1,21 @@
+using BattleCruisers.Effects.Smoke;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Smoke
 {
     public class PvPSmokeShip : PvPSmoke
     {
-        protected override PvPSmokeStatistics GetStatsForStrength(PvPSmokeStrength strength)
+        protected override SmokeStatistics GetStatsForStrength(PvPSmokeStrength strength)
         {
             switch (strength)
             {
                 case PvPSmokeStrength.Weak:
-                    return PvPStaticSmokeStats.PvPShip.Weak;
+                    return StaticSmokeStats.Ship.Weak;
 
                 case PvPSmokeStrength.Normal:
-                    return PvPStaticSmokeStats.PvPShip.Normal;
+                    return StaticSmokeStats.Ship.Normal;
 
                 case PvPSmokeStrength.Strong:
-                    return PvPStaticSmokeStats.PvPShip.Strong;
+                    return StaticSmokeStats.Ship.Strong;
 
                 default:
                     return null;

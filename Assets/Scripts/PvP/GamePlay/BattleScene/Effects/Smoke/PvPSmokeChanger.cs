@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPSmokeChanger : IPvPSmokeChanger
     {
-        public void Change(ParticleSystem smoke, PvPSmokeStatistics smokeStats)
+        public void Change(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
             Helper.AssertIsNotNull(smoke, smokeStats);
 
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             ChangeSizeOverLifetimeModule(smoke, smokeStats);
         }
 
-        private void ChangeMainModule(ParticleSystem smoke, PvPSmokeStatistics smokeStats)
+        private void ChangeMainModule(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
             ParticleSystem.MainModule mainModule = smoke.main;
 
@@ -37,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
         }
 
-        private void ChangeEmissionModule(ParticleSystem smoke, PvPSmokeStatistics smokeStats)
+        private void ChangeEmissionModule(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
             ParticleSystem.EmissionModule emissionModule = smoke.emission;
             if (smokeStats.RateOverTime != null)
@@ -54,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
         }
 
-        private void ChangeShapeModule(ParticleSystem smoke, PvPSmokeStatistics smokeStats)
+        private void ChangeShapeModule(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
             if (smokeStats.EdgeRadius != null)
             {
@@ -63,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
         }
 
-        private void ChangeNoiseModule(ParticleSystem smoke, PvPSmokeStatistics smokeStats)
+        private void ChangeNoiseModule(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
             if (smokeStats.NoiseStrength != null)
             {
@@ -72,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
         }
 
-        private void ChangeVelocityOverLifetimeModule(ParticleSystem smoke, PvPSmokeStatistics smokeStats)
+        private void ChangeVelocityOverLifetimeModule(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
             if (smokeStats.VelocityOverLifetimeY != null)
             {
@@ -81,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
         }
 
-        private void ChangeSizeOverLifetimeModule(ParticleSystem smoke, PvPSmokeStatistics smokeStats)
+        private void ChangeSizeOverLifetimeModule(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
             if (smokeStats.StartSize != null)
             {

@@ -1,4 +1,5 @@
 using System;
+using BattleCruisers.Effects.Smoke;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 {
                     _smokeStrength = value;
 
-                    PvPSmokeStatistics smokeStats = GetStatsForStrength(_smokeStrength);
+                    SmokeStatistics smokeStats = GetStatsForStrength(_smokeStrength);
 
                     if (smokeStats != null)
                     {
@@ -61,13 +62,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _particleSystem.Pause();
         }
 
-        private void ApplySmokeStats(PvPSmokeStatistics smokeStats)
+        private void ApplySmokeStats(SmokeStatistics smokeStats)
         {
             _smokeChanger.Change(_particleSystem, smokeStats);
         }
 
         // Would normally make abstract, but see class summary comment.
-        protected virtual PvPSmokeStatistics GetStatsForStrength(PvPSmokeStrength strength)
+        protected virtual SmokeStatistics GetStatsForStrength(PvPSmokeStrength strength)
         {
             throw new NotImplementedException();
         }
