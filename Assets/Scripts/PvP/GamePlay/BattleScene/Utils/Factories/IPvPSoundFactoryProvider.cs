@@ -1,12 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
     public interface IPvPSoundFactoryProvider
     {
-        IPvPSoundFetcher SoundFetcher { get; }
+        ISoundFetcher SoundFetcher { get; }
         IPvPSoundPlayer SoundPlayer { get; set; }
 
         /// <summary>

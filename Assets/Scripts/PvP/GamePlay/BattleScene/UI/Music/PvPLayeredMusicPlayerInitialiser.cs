@@ -1,7 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using System.Threading.Tasks;
@@ -10,13 +9,14 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
     public class PvPLayeredMusicPlayerInitialiser : MonoBehaviour
     {
         public async Task<IPvPLayeredMusicPlayer> CreatePlayerAsync(
-            IPvPSoundFetcher soundFetcher,
+            ISoundFetcher soundFetcher,
             SoundKeyPair soundKeys,
             ISettingsManager settingsManager)
         {

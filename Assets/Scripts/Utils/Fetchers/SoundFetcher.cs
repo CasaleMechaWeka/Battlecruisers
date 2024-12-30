@@ -21,15 +21,14 @@ namespace BattleCruisers.Utils.Fetchers
             {
                 var validateAddress = Addressables.LoadResourceLocationsAsync(soundPath);
                 await validateAddress.Task;
-                if (validateAddress.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                if (validateAddress.Status == AsyncOperationStatus.Succeeded)
                 {
                     if (validateAddress.Result.Count > 0)
                     {
                         handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
                         await handle.Task;
 
-                        if (handle.Status != AsyncOperationStatus.Succeeded
-                            || handle.Result == null)
+                        if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
                         {
                             throw new ArgumentException("Failed to retrieve sound");
                         }
