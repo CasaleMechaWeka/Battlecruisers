@@ -33,10 +33,10 @@ public class MissingScriptsFinder : EditorWindow
 
     private List<MissingScriptEntry> missingScriptEntries = new List<MissingScriptEntry>();
     private List<MissingScriptEntry> ignoreList = new List<MissingScriptEntry>();
-    private int ignoredItemsFound = 0; // Tracks how many ignored items were found
+    private int ignoredItemsFound = 0;
     private Vector2 scrollPosition;
     private bool viewIgnoreList = false;
-    private bool keepIgnoreList = true; // Default: true
+    private bool keepIgnoreList = true;
 
     private const string IgnoreListKey = "MissingScriptsIgnoreList";
 
@@ -48,13 +48,11 @@ public class MissingScriptsFinder : EditorWindow
 
     private void OnEnable()
     {
-        // Load ignore list from EditorPrefs
         LoadIgnoreList();
     }
 
     private void OnDisable()
     {
-        // Save ignore list to EditorPrefs if persistence is enabled
         if (keepIgnoreList)
         {
             SaveIgnoreList();
@@ -68,13 +66,10 @@ public class MissingScriptsFinder : EditorWindow
             FindMissingScripts();
         }
 
-        if (GUILayout.Button(viewIgnoreList ? $"View Main List({missingScriptEntries.Count})" : $"View Ignore List ({ignoreList.Count})"))
+        if (GUILayout.Button(viewIgnoreList ? $"View Main List ({missingScriptEntries.Count})" : $"View Ignore List ({ignoreList.Count})"))
         {
             viewIgnoreList = !viewIgnoreList;
         }
-
-        // Toggle to enable/disable persistence of the ignore list
-        keepIgnoreList = EditorGUILayout.Toggle("Keep Ignore List", keepIgnoreList);
 
         if (viewIgnoreList)
         {
@@ -84,6 +79,19 @@ public class MissingScriptsFinder : EditorWindow
         {
             DisplayMissingScriptsList();
         }
+
+        // Bottom UI Layout
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.BeginHorizontal();
+
+        // Bottom-center: Ignored items found
+        GUILayout.Label($"Ignored items found: {ignoredItemsFound}", GUILayout.Width(200));
+
+        // Bottom-right: KeepIgnoreList toggle
+        GUILayout.FlexibleSpace();
+        keepIgnoreList = EditorGUILayout.Toggle("Keep Ignore List", keepIgnoreList, GUILayout.Width(200));
+
+        EditorGUILayout.EndHorizontal();
     }
 
     private void DisplayMissingScriptsList()
@@ -121,17 +129,13 @@ public class MissingScriptsFinder : EditorWindow
         {
             EditorGUILayout.LabelField("No missing scripts found.");
         }
-
-        // Show ignored items found
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField($"Ignored items found: {ignoredItemsFound}", EditorStyles.boldLabel);
     }
 
     private void DisplayIgnoreList()
     {
         if (ignoreList.Count > 0)
         {
-            EditorGUILayout.LabelField("Ignore List", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"Ignore List ({ignoreList.Count})", EditorStyles.boldLabel);
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
 
             for (int i = 0; i < ignoreList.Count; i++)
@@ -139,7 +143,7 @@ public class MissingScriptsFinder : EditorWindow
                 var entry = ignoreList[i];
                 EditorGUILayout.BeginHorizontal();
 
-                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.Width(400));
+                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.Width(800));
 
                 if (GUILayout.Button("Remove", GUILayout.Width(80)))
                 {
@@ -162,7 +166,7 @@ public class MissingScriptsFinder : EditorWindow
     private void FindMissingScripts()
     {
         missingScriptEntries.Clear();
-        ignoredItemsFound = 0; // Reset the count
+        ignoredItemsFound = 0;
 
         string[] allAssets = AssetDatabase.GetAllAssetPaths();
         foreach (string assetPath in allAssets)
@@ -178,7 +182,7 @@ public class MissingScriptsFinder : EditorWindow
         }
 
         Debug.Log($"Total assets with missing scripts: {missingScriptEntries.Count}");
-        Repaint(); // Refresh the window
+        Repaint();
     }
 
     private void CheckForMissingScripts(GameObject obj, string assetPath)
@@ -192,7 +196,7 @@ public class MissingScriptsFinder : EditorWindow
 
                 if (ignoreList.Contains(entry))
                 {
-                    ignoredItemsFound++; // Increment ignored items found
+                    ignoredItemsFound++;
                 }
                 else
                 {
