@@ -1,3 +1,4 @@
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio
@@ -5,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public interface IPvPAudioSource
     {
         bool IsPlaying { get; }
-        IPvPAudioClipWrapper AudioClip { set; }
+        IAudioClipWrapper AudioClip { set; }
         float Volume { get; set; }
         Vector2 Position { get; set; }
         bool IsActive { get; set; }

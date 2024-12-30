@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -33,12 +34,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         {
             // Logging.Log(Tags.SOUND, $"{soundKey.Name}  loop: {loop}");
 
-            IPvPAudioClipWrapper soundToPlay = await _soundFetcher.GetSoundAsync(soundKey);
+            IAudioClipWrapper soundToPlay = await _soundFetcher.GetSoundAsync(soundKey);
             PlaySound(soundToPlay, loop);
             return soundToPlay.Handle;
         }
 
-        public void PlaySound(IPvPAudioClipWrapper sound, bool loop = false)
+        public void PlaySound(IAudioClipWrapper sound, bool loop = false)
         {
             // Logging.Log(Tags.SOUND, $"{sound}  loop: {loop}");
 

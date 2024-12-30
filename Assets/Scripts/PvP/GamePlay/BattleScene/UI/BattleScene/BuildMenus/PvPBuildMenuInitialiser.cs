@@ -9,9 +9,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     eventSoundPlayer,
                     uiSoundPlayer,
                     playerCruiserFocusHelper,
-                    new PvPAudioClipWrapper(buildingButtonSelectedSound));
+                    new AudioClipWrapper(buildingButtonSelectedSound));
             buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, uiSoundPlayer, buildingClickHandler, flipClickAndDragIcon);
 
             // Unit menus
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     buildingMenus,
                     unitMenus,
                     uiSoundPlayer,
-                    new PvPAudioClipWrapper(selectorOpeningSound));
+                    new AudioClipWrapper(selectorOpeningSound));
         }
 
         private IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> ConvertGroupsToDictionary(IList<IPvPBuildingGroup> buildingGroups)

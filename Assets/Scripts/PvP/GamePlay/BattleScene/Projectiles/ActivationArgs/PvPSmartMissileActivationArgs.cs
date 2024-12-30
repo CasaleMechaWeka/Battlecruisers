@@ -4,7 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Vector2 initialVelocityInMPerS,
             IPvPTargetFilter targetFilter,
             IPvPTarget parent,
-            IPvPAudioClipWrapper impactSound,
+            IAudioClipWrapper impactSound,
             IPvPCruiserTargetFactoriesProvider targetFactories,
             IPvPCruiser enemyCruiser)
             : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent, impactSound)

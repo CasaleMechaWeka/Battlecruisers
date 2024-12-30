@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine.Assertions;
 
 
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         private const int MIN_BURST_SIZE = 2;
 
         public PvPLongSoundPlayer(
-            IPvPAudioClipWrapper audioClip,
+            IAudioClipWrapper audioClip,
             IPvPAudioSource audioSource,
             IPvPDeferrer deferrer,
             int burstSize,

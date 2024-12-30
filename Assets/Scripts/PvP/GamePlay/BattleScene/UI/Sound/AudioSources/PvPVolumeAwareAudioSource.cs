@@ -1,6 +1,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         private readonly ISettingsManager _settingsManager;
 
         public bool IsPlaying => _audioSource.IsPlaying;
-        public IPvPAudioClipWrapper AudioClip { set => _audioSource.AudioClip = value; }
+        public IAudioClipWrapper AudioClip { set => _audioSource.AudioClip = value; }
         public float Volume { get => _audioSource.Volume; set => _audioSource.Volume = value; }
         public Vector2 Position { get => _audioSource.Position; set => _audioSource.Position = value; }
         public bool IsActive { get => _audioSource.IsActive; set => _audioSource.IsActive = value; }

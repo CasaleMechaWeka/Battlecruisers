@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -22,12 +22,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private Collider2D _collider;
 
-         [SerializeField] 
+        [SerializeField]
         private List<GameObject> additionalRenderers = new List<GameObject>(); // Added for handling additional renderers
         private IPvPDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
         protected IPvPSlot _parentSlot;
 
-        private IPvPAudioClipWrapper _placementSound;
+        private IAudioClipWrapper _placementSound;
         public AudioClip placementSound;
 
         [Header("Slots")]
@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PuzzleRootPoint = puzzleRootPoint.position;
 
             Assert.IsNotNull(placementSound);
-            _placementSound = new PvPAudioClipWrapper(placementSound);
+            _placementSound = new AudioClipWrapper(placementSound);
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
@@ -128,7 +128,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
-            _placementSound = new PvPAudioClipWrapper(placementSound);
+            _placementSound = new AudioClipWrapper(placementSound);
         }
 
         public override void Activate(PvPBuildingActivationArgs activationArgs)
@@ -246,7 +246,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        
+
 
         protected override void OnSingleClick()
         {

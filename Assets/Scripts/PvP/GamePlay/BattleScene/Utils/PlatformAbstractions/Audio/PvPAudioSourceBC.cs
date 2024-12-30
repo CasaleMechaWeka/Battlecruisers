@@ -1,3 +1,4 @@
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
@@ -11,8 +12,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const float MAX_BLEND = 1;
         private const float MIN_BLEND = 0;
 
-        private IPvPAudioClipWrapper _audioClip;
-        public IPvPAudioClipWrapper AudioClip
+        private IAudioClipWrapper _audioClip;
+        public IAudioClipWrapper AudioClip
         {
             set
             {

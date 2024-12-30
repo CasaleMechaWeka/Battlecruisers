@@ -18,7 +18,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +26,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
@@ -64,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public int numOfDronesRequired;
         public float buildTimeInS;
 
-        private IPvPAudioClipWrapper _deathSound;
+        private IAudioClipWrapper _deathSound;
         [Header("Sounds")]
         public AudioClip deathSound;
 
@@ -256,7 +256,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _smokeInitialiser = GetComponentInChildren<PvPSmokeInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeInitialiser);
             Assert.IsNotNull(deathSound);
-            _deathSound = new PvPAudioClipWrapper(deathSound);
+            _deathSound = new AudioClipWrapper(deathSound);
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }
 
@@ -286,7 +286,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_smokeInitialiser);
 
             Assert.IsNotNull(deathSound);
-            _deathSound = new PvPAudioClipWrapper(deathSound);
+            _deathSound = new AudioClipWrapper(deathSound);
 
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }

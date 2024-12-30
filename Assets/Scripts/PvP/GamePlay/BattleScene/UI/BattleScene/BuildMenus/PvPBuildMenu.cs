@@ -5,7 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private readonly IPvPBuildableMenus<PvPBuildingCategory> _buildingMenus;
         private readonly IPvPBuildableMenus<PvPUnitCategory> _unitMenus;
         private readonly IPvPSingleSoundPlayer _uiSoundPlayer;
-        private readonly IPvPAudioClipWrapper _selectorOpeningSound;
+        private readonly IAudioClipWrapper _selectorOpeningSound;
         private IPvPMenu _currentMenu, _lastShownMenu;
 
         public IPvPSlidingPanel SelectorPanel { get; }
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPBuildableMenus<PvPBuildingCategory> buildingMenus,
             IPvPBuildableMenus<PvPUnitCategory> unitMenus,
             IPvPSingleSoundPlayer uiSoundPlayer,
-            IPvPAudioClipWrapper selectorOpeningSound)
+            IAudioClipWrapper selectorOpeningSound)
         {
             PvPHelper.AssertIsNotNull(selectorPanel, buildingCategoriesMenu, buildingMenus, unitMenus, uiSoundPlayer, selectorOpeningSound);
 

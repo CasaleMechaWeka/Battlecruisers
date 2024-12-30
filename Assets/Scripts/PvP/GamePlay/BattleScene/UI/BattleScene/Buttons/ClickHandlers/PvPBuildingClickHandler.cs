@@ -5,7 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers
@@ -13,14 +13,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPBuildingClickHandler : PvPBuildableClickHandler, IPvPBuildingClickHandler
     {
         private readonly IPvPPlayerCruiserFocusHelper _playerCruiserFocusHelper;
-        private readonly IPvPAudioClipWrapper _buildingSelectedSound;
+        private readonly IAudioClipWrapper _buildingSelectedSound;
 
         public PvPBuildingClickHandler(
             IPvPUIManager uiManager,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             IPvPSingleSoundPlayer uiSoundPlayer,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPvPAudioClipWrapper buildingSelectedSound)
+            IAudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(playerCruiserFocusHelper, buildingSelectedSound);

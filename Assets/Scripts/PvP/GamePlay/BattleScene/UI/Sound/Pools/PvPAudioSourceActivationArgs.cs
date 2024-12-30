@@ -1,16 +1,16 @@
 using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools
 {
     public class PvPAudioSourceActivationArgs
     {
-        public IPvPAudioClipWrapper Sound { get; }
+        public IAudioClipWrapper Sound { get; }
         public Vector2 Position { get; }
 
-        public PvPAudioSourceActivationArgs(IPvPAudioClipWrapper sound, Vector2 position)
+        public PvPAudioSourceActivationArgs(IAudioClipWrapper sound, Vector2 position)
         {
             Assert.IsNotNull(sound);
 

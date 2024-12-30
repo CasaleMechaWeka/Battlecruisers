@@ -7,8 +7,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected IPvPCruiser _enemyCruiser;
 
-        protected IPvPAudioClipWrapper _impactSound;
+        protected IAudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
         private ISoundKey _firingSound;
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             PvPHelper.AssertIsNotNull(impactSound, args);
 
-            _impactSound = new PvPAudioClipWrapper(impactSound);
+            _impactSound = new AudioClipWrapper(impactSound);
             _parent = args.Parent;
             _projectileStats = args.ProjectileStats;
             _factoryProvider = args.FactoryProvider;

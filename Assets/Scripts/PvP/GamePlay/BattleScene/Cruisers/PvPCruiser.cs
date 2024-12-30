@@ -37,6 +37,7 @@ using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -51,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private IPvPClickHandler _clickHandler;
         private IPvPDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
         private IPvPDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
-        private IPvPAudioClipWrapper _selectedSound;
+        private IAudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IPvPManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;

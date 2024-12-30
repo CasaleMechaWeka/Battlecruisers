@@ -8,12 +8,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode.Components;
 using Unity.Netcode;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -92,10 +92,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         public AudioClip selectedSound;
-        public IPvPAudioClipWrapper SelectedSound { get; private set; }
+        public IAudioClipWrapper SelectedSound { get; private set; }
 
         public AudioClip unitSelectedSound;
-        public IPvPAudioClipWrapper UnitSelectedSound { get; private set; }
+        public IAudioClipWrapper UnitSelectedSound { get; private set; }
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
@@ -105,10 +105,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _isUnitPaused = new PvPObservableValue<bool>(false);
 
             Assert.IsNotNull(selectedSound);
-            SelectedSound = new PvPAudioClipWrapper(selectedSound);
+            SelectedSound = new AudioClipWrapper(selectedSound);
 
             Assert.IsNotNull(unitSelectedSound);
-            UnitSelectedSound = new PvPAudioClipWrapper(unitSelectedSound);
+            UnitSelectedSound = new AudioClipWrapper(unitSelectedSound);
         }
 
         public override void Activate(PvPBuildingActivationArgs activationArgs)

@@ -9,6 +9,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
@@ -22,14 +23,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
             PvPHelper.AssertIsNotNull(soundFetcher, soundKeys, settingsManager);
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
-            IPvPAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);
+            IAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);
             IPvPAudioSource primary = new PvPAudioSourceBC(primarySource)
             {
                 AudioClip = primaryClip
             };
 
             AudioSource secondarySource = transform.FindNamedComponent<AudioSource>("SecondaryAudioSource");
-            IPvPAudioClipWrapper secondaryClip = await soundFetcher.GetSoundAsync(soundKeys.SecondaryKey);
+            IAudioClipWrapper secondaryClip = await soundFetcher.GetSoundAsync(soundKeys.SecondaryKey);
             secondarySource.clip = secondaryClip.AudioClip;
             IPvPAudioSource secondary = new PvPAudioSourceBC(secondarySource)
             {

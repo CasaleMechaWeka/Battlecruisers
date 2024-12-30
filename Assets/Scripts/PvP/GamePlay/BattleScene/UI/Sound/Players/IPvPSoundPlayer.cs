@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,6 +8,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public interface IPvPSoundPlayer
     {
         Task PlaySoundAsync(ISoundKey soundKey, Vector2 position);
-        void PlaySound(IPvPAudioClipWrapper sound, Vector2 position);
+        void PlaySound(IAudioClipWrapper sound, Vector2 position);
     }
 }

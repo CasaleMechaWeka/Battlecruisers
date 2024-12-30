@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
 
@@ -15,8 +15,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPUnit UnitUnderConstruction { get; set; }
         IPvPObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }
-        IPvPAudioClipWrapper SelectedSound { get; }
-        IPvPAudioClipWrapper UnitSelectedSound { get; }
+        IAudioClipWrapper SelectedSound { get; }
+        IAudioClipWrapper UnitSelectedSound { get; }
 
         void StartBuildingUnit(IPvPBuildableWrapper<IPvPUnit> unit, int variantIndex);
         void StartBuildingUnit(IPvPBuildableWrapper<IPvPUnit> unit);

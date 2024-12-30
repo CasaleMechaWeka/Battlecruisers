@@ -10,7 +10,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +21,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Offensive
 {
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPSiloHalfController leftSiloHalf, rightSiloHalf;
         public PvPNukeController nukeMissilePrefab;
 
-        private IPvPAudioClipWrapper _nukeImpactSound;
+        private IAudioClipWrapper _nukeImpactSound;
         public AudioClip nukeImpactSound;
 
         private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(new PvPDamageCapability(_nukeStats.Damage, AttackCapabilities));
 
             Assert.IsNotNull(nukeImpactSound);
-            _nukeImpactSound = new PvPAudioClipWrapper(nukeImpactSound);
+            _nukeImpactSound = new AudioClipWrapper(nukeImpactSound);
         }
 
         public override void Initialise(IPvPFactoryProvider factoryProvider)
