@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Utils.Threading;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPDroneManagerMonitor : IPvPDroneManagerMonitor, IPvPManagedDisposable
     {
         private readonly IPvPDroneManager _droneManager;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private int _previousNumOfDrones;
 
         private const float IDLE_DRONE_CHECK_DEFERRAL_TIME_IN_S = 0.1f;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public event EventHandler IdleDronesStarted;
         public event EventHandler IdleDronesEnded;
 
-        public PvPDroneManagerMonitor(IPvPDroneManager droneManager, IPvPDeferrer deferrer)
+        public PvPDroneManagerMonitor(IPvPDroneManager droneManager, IDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(droneManager, deferrer);
 

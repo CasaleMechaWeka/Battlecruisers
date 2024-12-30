@@ -10,7 +10,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Utils.Threading;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private IPvPArtificialIntelligence _ai_LeftPlayer;
         private IPvPArtificialIntelligence _ai_RightPlayer;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly IPvPCruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPvPPermitter _navigationPermitter;
         private readonly IPvPUIManager _uiManager;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser playerACruiser,
             IPvPCruiser playerBCruiser,
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
-            IPvPDeferrer deferrer
+            IDeferrer deferrer
             )
         {
             PvPHelper.AssertIsNotNull(

@@ -1,7 +1,7 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers
 {
@@ -11,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPDeferredDebouncer : IPvPDebouncer
     {
         private readonly IPvPTimeSinceGameStartProvider _time;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly float _debounceTimeInS;
         private float _lastDebounceTimestamp;
         private Action _action;
 
-        public PvPDeferredDebouncer(IPvPTimeSinceGameStartProvider time, IPvPDeferrer deferrer, float debounceTimeInS)
+        public PvPDeferredDebouncer(IPvPTimeSinceGameStartProvider time, IDeferrer deferrer, float debounceTimeInS)
         {
             PvPHelper.AssertIsNotNull(time, deferrer);
             Assert.IsTrue(debounceTimeInS > 0);

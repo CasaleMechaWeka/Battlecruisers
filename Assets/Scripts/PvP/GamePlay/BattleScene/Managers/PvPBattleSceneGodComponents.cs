@@ -16,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -47,8 +48,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPHotkeyInitialiser hotkeyInitialiser;
         public PvPHotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
 
-        public IPvPDeferrer Deferrer { get; private set; }
-        public IPvPDeferrer RealTimeDeferrer { get; private set; }
+        public IDeferrer Deferrer { get; private set; }
+        public IDeferrer RealTimeDeferrer { get; private set; }
 
         public IPvPLifetimeEventBroadcaster LifetimeEvents { get; private set; }
 

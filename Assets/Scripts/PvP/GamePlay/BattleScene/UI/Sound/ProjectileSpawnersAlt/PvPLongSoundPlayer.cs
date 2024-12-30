@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
 
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPLongSoundPlayer : PvPProjectileSpawnerSoundPlayer
     {
         private readonly int _burstSize;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly float _burstEndDelayInS;
         private int _burstIndex;
 
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         public PvPLongSoundPlayer(
             IAudioClipWrapper audioClip,
             IPvPAudioSource audioSource,
-            IPvPDeferrer deferrer,
+            IDeferrer deferrer,
             int burstSize,
             float burstEndDelayInS)
             : base(audioClip, audioSource)

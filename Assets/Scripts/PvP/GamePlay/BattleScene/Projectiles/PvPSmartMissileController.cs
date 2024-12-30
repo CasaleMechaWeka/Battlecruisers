@@ -15,11 +15,11 @@ using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IPvPTargetConsumer
     {
         private IPvPTransform _transform;
-        private IPvPDeferrer _deferrer;
+        private IDeferrer _deferrer;
         private IPvPMovementController _dummyMovementController;
         private PvPManualDetectorProvider _enemyDetectorProvider;
         private IPvPTargetFinder _targetFinder;

@@ -12,8 +12,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly IPvPSlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
         private readonly IPvPFactoryManagerFactory _factoryManagerFactory;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             IPvPPrefabFactory prefabFactory,
             IDataProvider dataProvider,
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
-            IPvPDeferrer deferrer,
+            IDeferrer deferrer,
             PvPCruiser playerCruiser,
             IPvPStrategyFactory strategyFactory)
         {

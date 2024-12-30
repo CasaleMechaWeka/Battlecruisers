@@ -1,7 +1,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -21,6 +20,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Time
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     {
 
         private readonly IPvPPrefabFactory _prefabFactory;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
         private PvPUIManager _uiManager;
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IPvPPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             IPvPPrefabFactory prefabFactory,
-            IPvPDeferrer deferrer
+            IDeferrer deferrer
         ) : base(appModel, prefabFetcher, storyStrings)
         {
             // _appModel = appModel;
@@ -156,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
 
-        public override IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IPvPDeferrer deferrer)
+        public override IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer)
         {
             return
                 new PvPDroneEventSoundPlayer(

@@ -1,8 +1,10 @@
+using BattleCruisers.Utils.Threading;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading
 {
     public interface IPvPDeferrerProvider
     {
-        IPvPDeferrer Deferrer { get; }
-        IPvPDeferrer RealTimeDeferrer { get; }
+        IDeferrer Deferrer { get; }
+        IDeferrer RealTimeDeferrer { get; }
     }
 }

@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners
@@ -11,11 +11,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPSoundPlayerFactory : IPvPSoundPlayerFactory
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
         public IPvPProjectileSpawnerSoundPlayer DummyPlayer { get; }
 
-        public PvPSoundPlayerFactory(ISoundFetcher soundFetcher, IPvPDeferrer deferrer)
+        public PvPSoundPlayerFactory(ISoundFetcher soundFetcher, IDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(soundFetcher, deferrer);
 
