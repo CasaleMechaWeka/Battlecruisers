@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using System;
 using Unity.Netcode;
@@ -7,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars
 {
-    public class PvPHealthBarController : PvPBaseProgressBarController, IPvPHealthBar
+    public class PvPHealthBarController : PvPBaseProgressBarController, IHealthBar
     {
         private IPvPDamagable _damagable;
         private float _maxHealth;
