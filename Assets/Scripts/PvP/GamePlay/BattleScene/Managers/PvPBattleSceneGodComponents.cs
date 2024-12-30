@@ -90,7 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Deferrer = GetComponent<PvPTimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
 
-            RealTimeDeferrer = GetComponent<PvPRealTimeDeferrer>();
+            RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
             Assert.IsNotNull(RealTimeDeferrer);
 
             _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
