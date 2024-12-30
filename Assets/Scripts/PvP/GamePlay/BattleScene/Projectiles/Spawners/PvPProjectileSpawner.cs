@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using Unity.Netcode;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         where TPvPProjectileArgs : PvPProjectileActivationArgs<TPvPStats>
         where TPvPStats : IPvPProjectileStats
     {
-        private IPvPProjectileSpawnerSoundPlayer _soundPlayer;
+        private IProjectileSpawnerSoundPlayer _soundPlayer;
         private IPvPPool<TPvPProjectile, TPvPProjectileArgs> _projectilePool;
 
         protected IPvPTarget _parent;

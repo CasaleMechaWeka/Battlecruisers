@@ -3,7 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Utils.Threading;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
     /// </summary>
     public class PvPDangerMonitor : IPvPDangerMonitor
     {
-        private readonly IPvPDeferrer _timeScaleDeferrer;
+        private readonly IDeferrer _timeScaleDeferrer;
         private readonly IPvPCruiserController _playerCruiser, _enemyCruiser;
         private readonly IPvPHealthThresholdMonitor _playerCruiserHealthMonitor, _aiCruiserHealthMonitor;
 
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
         public event EventHandler DangerEnd;
 
         public PvPDangerMonitor(
-            IPvPDeferrer timeScaleDeferrer,
+            IDeferrer timeScaleDeferrer,
             IPvPCruiserController playerCruiser,
             IPvPCruiserController enemyCruiser,
             IPvPHealthThresholdMonitor playerCruiserHealthMonitor,

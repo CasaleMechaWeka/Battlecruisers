@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Utils.Localisation;
@@ -50,6 +49,7 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -929,7 +929,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IApplicationModel applicationModel,
             IPvPPrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
-            IPvPDeferrer deferrer,
+            IDeferrer deferrer,
             PvPNavigationPermitters navigationPermitters,
             ILocTable storyStrings
         )

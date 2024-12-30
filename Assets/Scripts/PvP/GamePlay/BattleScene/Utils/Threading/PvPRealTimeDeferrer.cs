@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading
 {
-    public class PvPRealTimeDeferrer : MonoBehaviour, IPvPDeferrer
+    public class PvPRealTimeDeferrer : MonoBehaviour, IDeferrer
     {
         public void Defer(Action action, float delayInS)
         {

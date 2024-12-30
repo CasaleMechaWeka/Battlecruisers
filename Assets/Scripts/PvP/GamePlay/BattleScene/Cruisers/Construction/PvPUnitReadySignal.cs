@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
@@ -8,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPUnitReadySignal : IPvPManagedDisposable
     {
         private readonly IPvPCruiserUnitMonitor _unitMonitor;
-        private readonly IPvPAudioSource _navalAudioSource, _aircraftAudioSource;
+        private readonly IAudioSource _navalAudioSource, _aircraftAudioSource;
 
-        public PvPUnitReadySignal(IPvPCruiserUnitMonitor unitMonitor, IPvPAudioSource navalAudioSource, IPvPAudioSource aircraftAudioSource)
+        public PvPUnitReadySignal(IPvPCruiserUnitMonitor unitMonitor, IAudioSource navalAudioSource, IAudioSource aircraftAudioSource)
         {
             PvPHelper.AssertIsNotNull(unitMonitor, navalAudioSource, aircraftAudioSource);
 

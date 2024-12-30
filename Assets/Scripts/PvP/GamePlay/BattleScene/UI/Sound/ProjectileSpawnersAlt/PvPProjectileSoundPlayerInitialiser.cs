@@ -3,6 +3,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.A
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -11,8 +13,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 {
     public abstract class PvPProjectileSoundPlayerInitialiser : MonoBehaviour, IPvPProjectileSoundPlayerInitialiser
     {
-        public async Task<IPvPProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            IPvPSoundPlayerFactory soundPlayerFactory,
+        public async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
+            ISoundPlayerFactory soundPlayerFactory,
             ISoundKey firingSound,
             int burstSize,
             ISettingsManager settingsManager)
@@ -22,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             AudioSource audioSource = GetComponentInChildren<AudioSource>();
             Assert.IsNotNull(audioSource);
 
-            IPvPAudioSource audioSourceWrapper
+            IAudioSource audioSourceWrapper
                 = new PvPEffectVolumeAudioSource(
                     new PvPAudioSourceBC(audioSource),
                     settingsManager);
@@ -30,10 +32,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             return await CreateSoundPlayerAsync(soundPlayerFactory, firingSound, burstSize, audioSourceWrapper);
         }
 
-        protected abstract Task<IPvPProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            IPvPSoundPlayerFactory soundPlayerFactory,
+        protected abstract Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
+            ISoundPlayerFactory soundPlayerFactory,
             ISoundKey firingSound,
             int burstSize,
-            IPvPAudioSource audioSource);
+            IAudioSource audioSource);
     }
 }

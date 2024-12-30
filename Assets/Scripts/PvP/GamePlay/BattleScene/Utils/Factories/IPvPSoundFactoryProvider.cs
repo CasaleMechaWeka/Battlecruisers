@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
@@ -16,6 +16,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         IPvPPrioritisedSoundPlayer DummySoundPlayer { get; }
         IPvPSingleSoundPlayer UISoundPlayer { get; }
-        IPvPSoundPlayerFactory SoundPlayerFactory { get; }
+        ISoundPlayerFactory SoundPlayerFactory { get; }
     }
 }

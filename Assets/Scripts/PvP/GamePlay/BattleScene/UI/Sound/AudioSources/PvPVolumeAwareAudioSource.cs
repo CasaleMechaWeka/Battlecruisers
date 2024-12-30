@@ -1,14 +1,13 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources
 {
-    public abstract class PvPVolumeAwareAudioSource : IPvPManagedDisposable, IPvPAudioSource
+    public abstract class PvPVolumeAwareAudioSource : IPvPManagedDisposable, IAudioSource
     {
-        private readonly IPvPAudioSource _audioSource;
+        private readonly IAudioSource _audioSource;
         private readonly ISettingsManager _settingsManager;
 
         public bool IsPlaying => _audioSource.IsPlaying;
@@ -17,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         public Vector2 Position { get => _audioSource.Position; set => _audioSource.Position = value; }
         public bool IsActive { get => _audioSource.IsActive; set => _audioSource.IsActive = value; }
 
-        protected PvPVolumeAwareAudioSource(IPvPAudioSource audioSource, ISettingsManager settingsManager)
+        protected PvPVolumeAwareAudioSource(IAudioSource audioSource, ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(audioSource, settingsManager);
 
@@ -29,8 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             }
 
             SetVolume();
-
-
         }
 
         private void _settingsManager_SettingsSaved(object sender, System.EventArgs e)

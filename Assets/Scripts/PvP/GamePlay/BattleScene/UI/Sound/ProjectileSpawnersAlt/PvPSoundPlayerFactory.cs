@@ -1,40 +1,40 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners
 {
-    public class PvPSoundPlayerFactory : IPvPSoundPlayerFactory
+    public class PvPSoundPlayerFactory : ISoundPlayerFactory
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
-        public IPvPProjectileSpawnerSoundPlayer DummyPlayer { get; }
+        public IProjectileSpawnerSoundPlayer DummyPlayer { get; }
 
-        public PvPSoundPlayerFactory(ISoundFetcher soundFetcher, IPvPDeferrer deferrer)
+        public PvPSoundPlayerFactory(ISoundFetcher soundFetcher, IDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(soundFetcher, deferrer);
 
             _soundFetcher = soundFetcher;
             _deferrer = deferrer;
 
-            DummyPlayer = new PvPDummyProjectileSpawnerSoundPlayer();
+            DummyPlayer = new DummyProjectileSpawnerSoundPlayer();
         }
 
-        public async Task<IPvPProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IPvPAudioSource audioSource)
+        public async Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource)
         {
             IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
-            return new PvPShortSoundPlayer(sound, audioSource);
+            return new ShortSoundPlayer(sound, audioSource);
         }
 
-        public async Task<IPvPProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(ISoundKey firingSound, IPvPAudioSource audioSource, int burstSize, float burstEndDelayInS)
+        public async Task<IProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS)
         {
             IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
-            return new PvPLongSoundPlayer(sound, audioSource, _deferrer, burstSize, burstEndDelayInS);
+            return new LongSoundPlayer(sound, audioSource, _deferrer, burstSize, burstEndDelayInS);
         }
     }
 }

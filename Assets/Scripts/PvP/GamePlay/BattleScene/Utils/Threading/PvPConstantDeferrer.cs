@@ -1,14 +1,15 @@
 using System;
+using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading
 {
     public class PvPConstantDeferrer : IPvPConstantDeferrer
     {
-        private readonly IPvPDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly float _delayInS;
 
-        public PvPConstantDeferrer(IPvPDeferrer deferrer, float delayInS)
+        public PvPConstantDeferrer(IDeferrer deferrer, float delayInS)
         {
             Assert.IsNotNull(deferrer);
 

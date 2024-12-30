@@ -16,6 +16,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -23,10 +25,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     public class PvPBattleSceneGodComponents : MonoBehaviour, IPvPBattleSceneGodComponents
     {
         public AudioSource prioritisedSoundPlayerAudioSource;
-        public IPvPAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
+        public IAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
 
         public AudioSource uiSoundsAudioSource;
-        public IPvPAudioSource UISoundsAudioSource { get; private set; }
+        public IAudioSource UISoundsAudioSource { get; private set; }
 
         public PvPLayeredMusicPlayerInitialiser musicPlayerInitialiser;
         public PvPLayeredMusicPlayerInitialiser MusicPlayerInitialiser => musicPlayerInitialiser;
@@ -47,8 +49,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPHotkeyInitialiser hotkeyInitialiser;
         public PvPHotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
 
-        public IPvPDeferrer Deferrer { get; private set; }
-        public IPvPDeferrer RealTimeDeferrer { get; private set; }
+        public IDeferrer Deferrer { get; private set; }
+        public IDeferrer RealTimeDeferrer { get; private set; }
 
         public IPvPLifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
