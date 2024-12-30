@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.Experimental.SceneManagement;
 using UnityEngine;
 
 public class MissingScriptsFinder : EditorWindow
@@ -9,16 +8,57 @@ public class MissingScriptsFinder : EditorWindow
     private struct MissingScriptEntry
     {
         public string assetPath;
-        public GameObject gameObject;
+        public string objectName;
+
+        public MissingScriptEntry(string assetPath, string objectName)
+        {
+            this.assetPath = assetPath;
+            this.objectName = objectName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is MissingScriptEntry other)
+            {
+                return assetPath == other.assetPath && objectName == other.objectName;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (assetPath + objectName).GetHashCode();
+        }
     }
 
     private List<MissingScriptEntry> missingScriptEntries = new List<MissingScriptEntry>();
+    private List<MissingScriptEntry> ignoreList = new List<MissingScriptEntry>();
+    private int ignoredItemsFound = 0; // Tracks how many ignored items were found
     private Vector2 scrollPosition;
+    private bool viewIgnoreList = false;
+    private bool keepIgnoreList = true; // Default: true
+
+    private const string IgnoreListKey = "MissingScriptsIgnoreList";
 
     [MenuItem("Tools/Find Missing Scripts")]
     public static void ShowWindow()
     {
         GetWindow<MissingScriptsFinder>("Missing Scripts Finder");
+    }
+
+    private void OnEnable()
+    {
+        // Load ignore list from EditorPrefs
+        LoadIgnoreList();
+    }
+
+    private void OnDisable()
+    {
+        // Save ignore list to EditorPrefs if persistence is enabled
+        if (keepIgnoreList)
+        {
+            SaveIgnoreList();
+        }
     }
 
     private void OnGUI()
@@ -28,22 +68,48 @@ public class MissingScriptsFinder : EditorWindow
             FindMissingScripts();
         }
 
+        if (GUILayout.Button(viewIgnoreList ? $"View Main List({missingScriptEntries.Count})" : $"View Ignore List ({ignoreList.Count})"))
+        {
+            viewIgnoreList = !viewIgnoreList;
+        }
+
+        // Toggle to enable/disable persistence of the ignore list
+        keepIgnoreList = EditorGUILayout.Toggle("Keep Ignore List", keepIgnoreList);
+
+        if (viewIgnoreList)
+        {
+            DisplayIgnoreList();
+        }
+        else
+        {
+            DisplayMissingScriptsList();
+        }
+    }
+
+    private void DisplayMissingScriptsList()
+    {
         if (missingScriptEntries.Count > 0)
         {
-            EditorGUILayout.LabelField("Results", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"Results ({missingScriptEntries.Count})", EditorStyles.boldLabel);
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
 
-            foreach (var entry in missingScriptEntries)
+            for (int i = 0; i < missingScriptEntries.Count; i++)
             {
+                var entry = missingScriptEntries[i];
                 EditorGUILayout.BeginHorizontal();
 
-                // Display asset path and GameObject name
-                GUILayout.Label($"{entry.assetPath} -> {entry.gameObject.name}", GUILayout.Width(400));
+                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.Width(800));
 
-                // Jump button to open the prefab and select the object
-                if (GUILayout.Button("Jump", GUILayout.Width(80)))
+                if (GUILayout.Button("Jump", GUILayout.Width(50)))
                 {
-                    OpenPrefabAndSelect(entry.assetPath, entry.gameObject);
+                    OpenPrefabAndSelect(entry.assetPath, entry.objectName);
+                }
+
+                if (GUILayout.Button("Ignore", GUILayout.Width(50)))
+                {
+                    ignoreList.Add(entry);
+                    missingScriptEntries.RemoveAt(i);
+                    i--; // Adjust index after removal
                 }
 
                 EditorGUILayout.EndHorizontal();
@@ -55,14 +121,49 @@ public class MissingScriptsFinder : EditorWindow
         {
             EditorGUILayout.LabelField("No missing scripts found.");
         }
+
+        // Show ignored items found
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField($"Ignored items found: {ignoredItemsFound}", EditorStyles.boldLabel);
+    }
+
+    private void DisplayIgnoreList()
+    {
+        if (ignoreList.Count > 0)
+        {
+            EditorGUILayout.LabelField("Ignore List", EditorStyles.boldLabel);
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+
+            for (int i = 0; i < ignoreList.Count; i++)
+            {
+                var entry = ignoreList[i];
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.Width(400));
+
+                if (GUILayout.Button("Remove", GUILayout.Width(80)))
+                {
+                    missingScriptEntries.Add(entry);
+                    ignoreList.RemoveAt(i);
+                    i--; // Adjust index after removal
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.EndScrollView();
+        }
+        else
+        {
+            EditorGUILayout.LabelField("No items in the ignore list.");
+        }
     }
 
     private void FindMissingScripts()
     {
         missingScriptEntries.Clear();
-        int missingCount = 0;
+        ignoredItemsFound = 0; // Reset the count
 
-        // Check all prefabs and assets in the project
         string[] allAssets = AssetDatabase.GetAllAssetPaths();
         foreach (string assetPath in allAssets)
         {
@@ -71,51 +172,48 @@ public class MissingScriptsFinder : EditorWindow
                 GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
                 if (obj != null)
                 {
-                    missingCount += CheckForMissingScripts(obj, assetPath);
+                    CheckForMissingScripts(obj, assetPath);
                 }
             }
         }
 
-        Debug.Log($"Total assets with missing scripts: {missingCount}");
+        Debug.Log($"Total assets with missing scripts: {missingScriptEntries.Count}");
         Repaint(); // Refresh the window
     }
 
-    private int CheckForMissingScripts(GameObject obj, string assetPath)
+    private void CheckForMissingScripts(GameObject obj, string assetPath)
     {
-        int missingCount = 0;
-
         Component[] components = obj.GetComponents<Component>();
         for (int i = 0; i < components.Length; i++)
         {
             if (components[i] == null)
             {
-                missingScriptEntries.Add(new MissingScriptEntry
-                {
-                    assetPath = assetPath,
-                    gameObject = obj
-                });
+                var entry = new MissingScriptEntry(assetPath, obj.name);
 
-                missingCount++;
+                if (ignoreList.Contains(entry))
+                {
+                    ignoredItemsFound++; // Increment ignored items found
+                }
+                else
+                {
+                    missingScriptEntries.Add(entry);
+                }
             }
         }
 
         foreach (Transform child in obj.transform)
         {
-            missingCount += CheckForMissingScripts(child.gameObject, assetPath);
+            CheckForMissingScripts(child.gameObject, assetPath);
         }
-
-        return missingCount;
     }
 
-    private void OpenPrefabAndSelect(string assetPath, GameObject gameObject)
+    private void OpenPrefabAndSelect(string assetPath, string objectName)
     {
-        // Open the prefab in Prefab Mode
         PrefabStage prefabStage = PrefabStageUtility.OpenPrefab(assetPath);
         if (prefabStage != null)
         {
-            // Try to find the GameObject in the prefab instance
             GameObject prefabRoot = prefabStage.prefabContentsRoot;
-            GameObject targetObject = FindGameObjectInPrefab(prefabRoot, gameObject.name);
+            GameObject targetObject = FindGameObjectInPrefab(prefabRoot, objectName);
 
             if (targetObject != null)
             {
@@ -142,5 +240,38 @@ public class MissingScriptsFinder : EditorWindow
         }
 
         return null;
+    }
+
+    private void LoadIgnoreList()
+    {
+        ignoreList.Clear();
+        string serializedList = EditorPrefs.GetString(IgnoreListKey, "");
+        if (!string.IsNullOrEmpty(serializedList))
+        {
+            string[] entries = serializedList.Split(';');
+            foreach (string entry in entries)
+            {
+                if (!string.IsNullOrEmpty(entry))
+                {
+                    string[] parts = entry.Split('|');
+                    if (parts.Length == 2)
+                    {
+                        ignoreList.Add(new MissingScriptEntry(parts[0], parts[1]));
+                    }
+                }
+            }
+        }
+    }
+
+    private void SaveIgnoreList()
+    {
+        List<string> serializedEntries = new List<string>();
+        foreach (var entry in ignoreList)
+        {
+            serializedEntries.Add($"{entry.assetPath}|{entry.objectName}");
+        }
+
+        string serializedList = string.Join(";", serializedEntries);
+        EditorPrefs.SetString(IgnoreListKey, serializedList);
     }
 }
