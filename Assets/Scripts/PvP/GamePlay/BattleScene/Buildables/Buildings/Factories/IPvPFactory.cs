@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         int NumOfDrones { get; }
         IPvPBuildableWrapper<IPvPUnit> UnitWrapper { get; set; }
         IPvPUnit UnitUnderConstruction { get; set; }
-        IPvPObservableValue<bool> IsUnitPaused { get; }
+        IObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }
         IAudioClipWrapper SelectedSound { get; }
         IAudioClipWrapper UnitSelectedSound { get; }

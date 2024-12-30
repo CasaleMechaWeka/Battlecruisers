@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.C
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using System;
@@ -14,6 +13,7 @@ using UnityEngine.Assertions;
 using Unity.Netcode.Components;
 using Unity.Netcode;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -36,8 +36,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPUnit UnitUnderConstruction { get; set; }
         public override bool IsBoostable => true;
 
-        private PvPObservableValue<bool> _isUnitPaused;
-        public IPvPObservableValue<bool> IsUnitPaused
+        private ObservableValue<bool> _isUnitPaused;
+        public IObservableValue<bool> IsUnitPaused
         {
             get { return _isUnitPaused; }
         }
@@ -102,7 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-            _isUnitPaused = new PvPObservableValue<bool>(false);
+            _isUnitPaused = new ObservableValue<bool>(false);
 
             Assert.IsNotNull(selectedSound);
             SelectedSound = new AudioClipWrapper(selectedSound);
