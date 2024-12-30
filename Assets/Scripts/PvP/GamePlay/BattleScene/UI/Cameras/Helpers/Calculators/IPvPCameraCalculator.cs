@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         /// amount.  Hence, given a desired camera orthographic size we can determine
         /// what camera position x values are valid.
         /// </summary>
-        IPvPRange<float> FindValidCameraXPositions(float desiredOrthographicSize);
+        IRange<float> FindValidCameraXPositions(float desiredOrthographicSize);
 
         /// <summary>
         /// Returns the camera position required for the zoomTarget's viewport position

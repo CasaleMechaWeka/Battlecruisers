@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 {
     public class PvPProportionCalculator : IPvPProportionCalculator
     {
-        public float FindProportion(float value, IPvPRange<float> range)
+        public float FindProportion(float value, IRange<float> range)
         {
             Assert.IsNotNull(range);
 

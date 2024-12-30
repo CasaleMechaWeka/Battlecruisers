@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ///         min:  9.5, -1
         ///         max:  10.5, 1
         /// </summary>
-        public IPvPRange<Vector2> FindTargetBounds(Vector2 sourcePosition, Vector2 targetPosition)
+        public IRange<Vector2> FindTargetBounds(Vector2 sourcePosition, Vector2 targetPosition)
         {
             Assert.IsTrue(sourcePosition.x != targetPosition.x);
 
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 maxPosition = new Vector2(targetPosition.x - _targetXMarginInM, targetPosition.y + _targetYMarginInM);
             }
 
-            return new PvPRange<Vector2>(minPosition, maxPosition);
+            return new Range<Vector2>(minPosition, maxPosition);
         }
     }
 }

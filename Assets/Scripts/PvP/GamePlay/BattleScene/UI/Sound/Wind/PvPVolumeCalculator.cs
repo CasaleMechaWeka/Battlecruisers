@@ -1,18 +1,18 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind
 {
     public class PvPVolumeCalculator : IPvPVolumeCalculator
     {
         private readonly IPvPProportionCalculator _proportionCalculator;
-        private readonly IPvPRange<float> _validOrthographicSizes;
+        private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
 
         public PvPVolumeCalculator(
             IPvPProportionCalculator proportionCalculator,
-            IPvPRange<float> validOrthographicSizes,
+            IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(proportionCalculator, validOrthographicSizes, settingsManager);

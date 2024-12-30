@@ -2,8 +2,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPCloudRandomiser cloudRandomiser
                 = new PvPCloudRandomiser(
                     PvPRandomGenerator.Instance,
-                    rightCloudValidXPositions: new PvPRange<float>(min: -100, max: 400));
+                    rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
             _cloudTeleporter
@@ -65,8 +65,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 ApplyColoursToElements(pvPSkyStatsController.WaterColour, pvPSkyStatsController.UnderwaterGlowColour);
             }
         }
-    
-             private void ApplyColoursToElements(Color waterColour, Color underwaterGlowColour)
+
+        private void ApplyColoursToElements(Color waterColour, Color underwaterGlowColour)
         {
             // Set the SeaShade canvas to WaterColour
             if (seaShadeCanvas != null)

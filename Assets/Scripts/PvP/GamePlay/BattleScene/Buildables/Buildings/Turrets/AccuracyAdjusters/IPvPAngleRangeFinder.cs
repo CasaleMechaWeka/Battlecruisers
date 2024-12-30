@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public interface IPvPAngleRangeFinder
     {
-        IPvPRange<float> FindFireAngleRange(IPvPRange<float> onTargetRange, float accuracy);
+        IRange<float> FindFireAngleRange(IRange<float> onTargetRange, float accuracy);
     }
 }

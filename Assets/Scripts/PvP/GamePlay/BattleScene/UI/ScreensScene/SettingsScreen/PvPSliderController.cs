@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
 {
     public class PvPSliderController : MonoBehaviour
     {
-        private IPvPRange<int> _validRange;
+        private IRange<int> _validRange;
         private Slider _slider;
 
         private IPvPSettableBroadcastingProperty<int> _sliderValue;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
         public GameObject sliderTextLabel;
         private Text textSliderValue;
 
-        public void Initialise(int selectedValue, IPvPRange<int> validRange)
+        public void Initialise(int selectedValue, IRange<int> validRange)
         {
             Assert.IsNotNull(validRange);
 

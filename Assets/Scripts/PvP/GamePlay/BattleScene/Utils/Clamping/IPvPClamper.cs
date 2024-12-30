@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Clamping
 {
     public interface IPvPClamper
     {
-        float Clamp(float value, IPvPRange<float> validRange);
+        float Clamp(float value, IRange<float> validRange);
     }
 }

@@ -1,5 +1,5 @@
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
@@ -24,8 +24,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public float ScrollSpeedConstant => 2.86f;  // 20/7
         public float ScrollSpeed => _settingsManager.ScrollSpeedLevel;
 
-        public IPvPRange<float> ValidOrthographicSizes { get; }
-        public IPvPRange<float> CameraVisibleXRange { get; }
+        public IRange<float> ValidOrthographicSizes { get; }
+        public IRange<float> CameraVisibleXRange { get; }
 
         public PvPCameraCalculatorSettings(ISettingsManager settingsManager, float cameraAspectRatio)
         {
@@ -34,18 +34,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _settingsManager = settingsManager;
 
             float adjustmentMultiplier = DEFAULT_ASPECT_RATIO / cameraAspectRatio;
-            ValidOrthographicSizes = new PvPRange<float>(min: 5, max: DEFAULT_MAX_ORTHOGRAPHIC_SIZE * adjustmentMultiplier);
+            ValidOrthographicSizes = new Range<float>(min: 5, max: DEFAULT_MAX_ORTHOGRAPHIC_SIZE * adjustmentMultiplier);
 
             CameraVisibleXRange = FindCameraVisiableXRange(cameraAspectRatio);
         }
 
         // Assumes camera aspect ratio remains constant
-        private IPvPRange<float> FindCameraVisiableXRange(float cameraAspectRatio)
+        private IRange<float> FindCameraVisiableXRange(float cameraAspectRatio)
         {
             float maxHeight = 2 * ValidOrthographicSizes.Max;
             float maxWidth = maxHeight * cameraAspectRatio;
             float halfMaxWidth = maxWidth / 2;
-            return new PvPRange<float>(-halfMaxWidth, halfMaxWidth);
+            return new Range<float>(-halfMaxWidth, halfMaxWidth);
         }
     }
 }

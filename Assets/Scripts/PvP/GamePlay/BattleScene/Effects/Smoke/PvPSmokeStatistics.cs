@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Smoke
 {
     public class PvPSmokeStatistics
     {
-        public IPvPRange<float> StartLifetime { get; set; }
+        public IRange<float> StartLifetime { get; set; }
         public float? StartSpeed { get; set; }
         public float? StartSize { get; set; }
         public float? RateOverTime { get; set; }

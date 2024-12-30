@@ -1,8 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
@@ -11,9 +11,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     {
         private readonly IPvPCamera _camera;
         private readonly IPvPCameraCalculator _cameraCalculator;
-        private readonly IPvPRange<float> _validOrthographicSizes;
+        private readonly IRange<float> _validOrthographicSizes;
 
-        public PvPDirectionalZoom(IPvPCamera camera, IPvPCameraCalculator cameraCalculator, IPvPRange<float> validOrthographicSizes)
+        public PvPDirectionalZoom(IPvPCamera camera, IPvPCameraCalculator cameraCalculator, IRange<float> validOrthographicSizes)
         {
             PvPHelper.AssertIsNotNull(camera, cameraCalculator, validOrthographicSizes);
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
 
             // Find target camera x position
-            IPvPRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
+            IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
             float targetXPosition = Mathf.Clamp(_camera.Position.x, validXPositions.Min, validXPositions.Max);
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Position.x}");
 
@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     _camera.Position.z);
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"contactWorldPosition: {contactWorldPosition}  contactZoomPosition: {contactZoomPosition}");
 
-            IPvPRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
+            IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
             float targetXPosition = Mathf.Clamp(contactZoomPosition.x, validXPositions.Min, validXPositions.Max);
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Position.x}");
 

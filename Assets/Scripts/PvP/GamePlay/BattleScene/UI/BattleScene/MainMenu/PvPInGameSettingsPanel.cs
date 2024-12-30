@@ -4,8 +4,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
+using BattleCruisers.Utils.DataStrctures;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
@@ -30,28 +30,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _settingsManager = settingsManager;
 
-            IPvPRange<float> masterVolumeRange = new PvPRange<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            IRange<float> masterVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             masterVolumeSlider.Initialise(settingsManager.MasterVolume, masterVolumeRange);
 
-            IPvPRange<float> musicVolumeRange = new PvPRange<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             musicVolumeSlider.Initialise(settingsManager.MusicVolume, musicVolumeRange);
 
-            IPvPRange<float> effectVolumeRange = new PvPRange<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             effectVolumeSlider.Initialise(settingsManager.EffectVolume, effectVolumeRange);
 
-            IPvPRange<float> alertVolumeRange = new PvPRange<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            IRange<float> alertVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             alertVolumeSlider.Initialise(settingsManager.AlertVolume, alertVolumeRange);
 
-            IPvPRange<float> interfaceVolumeRange = new PvPRange<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            IRange<float> interfaceVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             interfaceVolumeSlider.Initialise(settingsManager.InterfaceVolume, interfaceVolumeRange);
 
-            IPvPRange<float> ambientVolumeRange = new PvPRange<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            IRange<float> ambientVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             ambientVolumeSlider.Initialise(settingsManager.AmbientVolume, ambientVolumeRange);
 
-            IPvPRange<int> zoomlLevelRange = new PvPRange<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
+            IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
-            IPvPRange<int> scrollLevelRange = new PvPRange<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
+            IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
             scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
             showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
             return Range(center - radius, center + radius);
         }
 
-        public float Range(IPvPRange<float> range)
+        public float Range(IRange<float> range)
         {
             return Range(range.Min, range.Max);
         }

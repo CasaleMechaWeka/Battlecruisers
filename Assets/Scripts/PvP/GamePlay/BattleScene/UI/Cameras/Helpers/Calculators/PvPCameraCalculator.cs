@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
@@ -93,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             return (dimension / 2) + zoomTargetDimension - (targetViewportDimension * dimension);
         }
 
-        public IPvPRange<float> FindValidCameraXPositions(float desiredOrthographicSize)
+        public IRange<float> FindValidCameraXPositions(float desiredOrthographicSize)
         {
             desiredOrthographicSize = Mathf.Clamp(desiredOrthographicSize, _settings.ValidOrthographicSizes.Min, _settings.ValidOrthographicSizes.Max);
 
@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             if (maxValidX < 0)
                 maxValidX = 0;
 
-            return new PvPRange<float>(minValidX, maxValidX);
+            return new Range<float>(minValidX, maxValidX);
         }
     }
 }

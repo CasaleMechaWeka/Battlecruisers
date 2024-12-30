@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Smoke
 {
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             {
                 Weak = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(3, 4),
+                    StartLifetime = new Range<float>(3, 4),
                     StartSpeed = 0.85f,
                     RateOverTime = 6,
                     RateOverDistance = 16,
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 };
                 Normal = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(3, 4),
+                    StartLifetime = new Range<float>(3, 4),
                     StartSpeed = 1,
                     RateOverTime = 6,
                     RateOverDistance = 16,
@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
                 Strong = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(4, 6),
+                    StartLifetime = new Range<float>(4, 6),
                     StartSpeed = 1,
                     RateOverTime = 4,
                     RateOverDistance = 12,
@@ -59,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             {
                 Weak = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(2.5f, 3f),
+                    StartLifetime = new Range<float>(2.5f, 3f),
                     StartSpeed = 0.05f,
                     StartSize = 0.05f,
                     NoiseStrength = 0.01f,
@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
                 Normal = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(3.5f, 4.5f),
+                    StartLifetime = new Range<float>(3.5f, 4.5f),
                     StartSpeed = 0.1f,
                     StartSize = 0.01f,
                     NoiseStrength = 0.02f,
@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
                 Strong = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(3.5f, 5),
+                    StartLifetime = new Range<float>(3.5f, 5),
                     StartSpeed = 0.02f,
                     StartSize = 0.25f,
                     NoiseStrength = 0.03f,
@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             {
                 Weak = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(1.1f, 1.3f),
+                    StartLifetime = new Range<float>(1.1f, 1.3f),
                     StartSize = 0.05f,
                     RateOverTime = 0,
                     RateOverDistance = 39
@@ -104,7 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
                 Normal = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(1.7f, 1.9f),
+                    StartLifetime = new Range<float>(1.7f, 1.9f),
                     StartSize = 0.07f,
                     RateOverTime = 0,
                     RateOverDistance = 35
@@ -112,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
                 Strong = new PvPSmokeStatistics()
                 {
-                    StartLifetime = new PvPRange<float>(2, 2.3f),
+                    StartLifetime = new Range<float>(2, 2.3f),
                     StartSize = 0.09f,
                     RateOverTime = 0,
                     RateOverDistance = 31

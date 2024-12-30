@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// The possible range of fire angles.  Includes the given on target range,
         /// with an error margin either side.
         /// </returns>
-        public IPvPRange<float> FindFireAngleRange(IPvPRange<float> onTargetRange, float accuracy)
+        public IRange<float> FindFireAngleRange(IRange<float> onTargetRange, float accuracy)
         {
             var t2 = onTargetRange.Min;
             var t1 = onTargetRange.Max;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             float minFireAngle = onTargetRange.Min - errorMarginEachSide;
             float maxFireAngle = onTargetRange.Max + errorMarginEachSide;
 
-            return new PvPRange<float>(minFireAngle, maxFireAngle);
+            return new Range<float>(minFireAngle, maxFireAngle);
         }
     }
 }

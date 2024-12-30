@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -23,14 +23,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(droneConsumerInfo);
 
             float xDeltaInM = droneConsumerInfo.Size.x / 2;
-            IPvPRange<float> xPositionRange
-                = new PvPRange<float>(
+            IRange<float> xPositionRange
+                = new Range<float>(
                     droneConsumerInfo.Position.x - xDeltaInM,
                     droneConsumerInfo.Position.x + xDeltaInM);
 
             float yDeltaInM = droneConsumerInfo.Size.y / 2;
-            IPvPRange<float> yPositionRange
-                = new PvPRange<float>(
+            IRange<float> yPositionRange
+                = new Range<float>(
                     // Drones must be above the water line
                     Mathf.Max(droneConsumerInfo.Position.y - yDeltaInM, _waterLine),
                     Mathf.Max(droneConsumerInfo.Position.y + yDeltaInM, _waterLine));
