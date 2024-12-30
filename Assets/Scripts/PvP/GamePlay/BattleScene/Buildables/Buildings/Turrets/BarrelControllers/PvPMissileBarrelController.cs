@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPMissileBarrelController : PvPBarrelController
     {
-        private IPvPCircularList<PvPMissileSpawner> _missileSpawners;
+        private ICircularList<PvPMissileSpawner> _missileSpawners;
         private PvPMissileSpawner _middleSpawner;
 
         public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             PvPMissileSpawner[] missileSpawners = gameObject.GetComponentsInChildren<PvPMissileSpawner>();
             Assert.IsTrue(missileSpawners.Length != 0);
-            _missileSpawners = new PvPCircularList<PvPMissileSpawner>(missileSpawners);
+            _missileSpawners = new CircularList<PvPMissileSpawner>(missileSpawners);
 
             _middleSpawner = missileSpawners.Middle();
         }

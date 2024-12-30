@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPRocketBarrelController : PvPBarrelController
     {
-        private IPvPCircularList<PvPRocketSpawner> _rocketSpawners;
+        private ICircularList<PvPRocketSpawner> _rocketSpawners;
         private PvPRocketSpawner _middleSpawner;
         private IPvPCruisingProjectileStats _rocketStats;
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             PvPRocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<PvPRocketSpawner>();
             Assert.IsTrue(rocketSpawners.Length != 0);
-            _rocketSpawners = new PvPCircularList<PvPRocketSpawner>(rocketSpawners);
+            _rocketSpawners = new CircularList<PvPRocketSpawner>(rocketSpawners);
 
             _middleSpawner = rocketSpawners.Middle();
         }
