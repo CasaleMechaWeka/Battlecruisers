@@ -1,11 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones
 {
-    public class PvPFactoryWastingDronesFilter : IPvPFilter<IPvPFactoryMonitor>
+    public class PvPFactoryWastingDronesFilter : IFilter<IPvPFactoryMonitor>
     {
         /// <summary>
         /// A factory is wrongly using drones if:

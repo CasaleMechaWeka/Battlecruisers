@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 {
-    public class PvPStaticFilter<TElement> : IPvPFilter<TElement>
+    public class PvPStaticFilter<TElement> : IFilter<TElement>
     {
         private readonly bool _isMatch;
 

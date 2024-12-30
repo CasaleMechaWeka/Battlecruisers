@@ -3,8 +3,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsNotNull(platformFillableImage);
             IPvPFillableImage fillableImage = new PvPFillableImage(platformFillableImage);
 
-            IPvPFilter<PvPTarget> visibilityFilter = new PvPStaticFilter<PvPTarget>(isMatch: true);
+            IFilter<PvPTarget> visibilityFilter = new PvPStaticFilter<PvPTarget>(isMatch: true);
 
             IPvPHealthDial healthDial = new PvPHealthDial(fillableImage, visibilityFilter, damageTakenIndicator);
             healthDial.Damagable = cruiser;

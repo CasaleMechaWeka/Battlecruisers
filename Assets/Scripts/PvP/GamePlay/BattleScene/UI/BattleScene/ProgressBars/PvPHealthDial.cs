@@ -1,13 +1,14 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars
 {
     public class PvPHealthDial : IPvPHealthDial
     {
         private readonly IPvPFillableImage _healthDialImage;
-        private readonly IPvPFilter<PvPTarget> _visibilityFilter;
+        private readonly IFilter<PvPTarget> _visibilityFilter;
         private PvPDamageTakenIndicator _damageTakenIndicator;
 
         private float previousHealthProportion;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public PvPHealthDial(IPvPFillableImage healthDialImage, IPvPFilter<PvPTarget> visibilityFilter, PvPDamageTakenIndicator damageTakenIndicator)
+        public PvPHealthDial(IPvPFillableImage healthDialImage, IFilter<PvPTarget> visibilityFilter, PvPDamageTakenIndicator damageTakenIndicator)
         {
             PvPHelper.AssertIsNotNull(healthDialImage, visibilityFilter);
 
@@ -49,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             previousHealthProportion = 1.0f;
         }
 
-        public PvPHealthDial(IPvPFillableImage healthDialImage, IPvPFilter<PvPTarget> visibilityFilter)
+        public PvPHealthDial(IPvPFillableImage healthDialImage, IFilter<PvPTarget> visibilityFilter)
         {
             PvPHelper.AssertIsNotNull(healthDialImage, visibilityFilter);
 

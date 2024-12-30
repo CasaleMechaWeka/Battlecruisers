@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public interface IPvPSlotFilter : IPvPFilter<IPvPSlot>
+    public interface IPvPSlotFilter : IFilter<IPvPSlot>
     {
     }
 }

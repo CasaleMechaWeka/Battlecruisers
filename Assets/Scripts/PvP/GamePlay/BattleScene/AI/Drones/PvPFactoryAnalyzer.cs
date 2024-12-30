@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones
@@ -7,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
     public class PvPFactoryAnalyzer : IPvPFactoryAnalyzer
     {
         private readonly IPvPFactoriesMonitor _factoriesMonitor;
-        private readonly IPvPFilter<IPvPFactoryMonitor> _wastingDronesFilter;
+        private readonly IFilter<IPvPFactoryMonitor> _wastingDronesFilter;
 
-        public PvPFactoryAnalyzer(IPvPFactoriesMonitor factoriesMonitor, IPvPFilter<IPvPFactoryMonitor> wastingDronesFilter)
+        public PvPFactoryAnalyzer(IPvPFactoriesMonitor factoriesMonitor, IFilter<IPvPFactoryMonitor> wastingDronesFilter)
         {
             PvPHelper.AssertIsNotNull(factoriesMonitor, wastingDronesFilter);
 

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Fil
         bool IsMatch { get; }
     }
 
-    public interface IPvPBroadcastingFilter<TPvPElement> : IPvPFilter<TPvPElement>
+    public interface IPvPBroadcastingFilter<TPvPElement> : IFilter<TPvPElement>
     {
         event EventHandler PotentialMatchChange;
     }

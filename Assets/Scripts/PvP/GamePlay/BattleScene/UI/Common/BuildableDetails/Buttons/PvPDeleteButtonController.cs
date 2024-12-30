@@ -7,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public GameObject PvPbuildingMenu;
         private CanvasGroup PvPcanvasGroup;
         private IPvPUIManager _uiManager;
-        private IPvPFilter<IPvPTarget> _buttonVisibilityFilter;
+        private IFilter<IPvPTarget> _buttonVisibilityFilter;
         private IPvPLongPressIdentifier _longPressIdentifier;
 
         public float lightUpIntervalS = 0.25f;
@@ -44,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public void Initialise(
             IPvPSingleSoundPlayer soundPlayer,
             IPvPUIManager uiManager,
-            IPvPFilter<IPvPTarget> buttonVisibilityFilter,
+            IFilter<IPvPTarget> buttonVisibilityFilter,
             IPvPUpdater updater
             )
         {

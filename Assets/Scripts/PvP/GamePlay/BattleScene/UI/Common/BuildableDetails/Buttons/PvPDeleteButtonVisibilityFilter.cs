@@ -1,10 +1,10 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
-    public class PvPDeleteButtonVisibilityFilter : IPvPFilter<IPvPTarget>
+    public class PvPDeleteButtonVisibilityFilter : IFilter<IPvPTarget>
     {
         // Player building
         public bool IsMatch(IPvPTarget target)
