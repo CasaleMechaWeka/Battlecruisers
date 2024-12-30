@@ -10,7 +10,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Dr
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -60,10 +60,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IDictionary<IPvPPrefabKey, PvPProjectile> keyToProjectile = new ConcurrentDictionary<IPvPPrefabKey, PvPProjectile>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPProjectiles.AllKeys, keyToProjectile));
 
-            PvPContainer<PvPDroneController> droneContainer = new PvPContainer<PvPDroneController>();
+            Container<PvPDroneController> droneContainer = new Container<PvPDroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone, droneContainer));
 
-            PvPContainer<PvPAudioSourceInitialiser> audioSourceContainer = new PvPContainer<PvPAudioSourceInitialiser>();
+            Container<PvPAudioSourceInitialiser> audioSourceContainer = new Container<PvPAudioSourceInitialiser>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, PvPStaticPrefabKeys.AudioSource, audioSourceContainer));
 
             IDictionary<IPvPPrefabKey, PvPBuildableOutlineController> keyToOutline = new ConcurrentDictionary<IPvPPrefabKey, PvPBuildableOutlineController>();
@@ -112,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private async Task GetPrefab<TPrefab>(
             IPvPPrefabFetcher prefabFetcher,
             IPvPPrefabKey prefabKey,
-            PvPContainer<TPrefab> prefabContainer)
+            Container<TPrefab> prefabContainer)
                 where TPrefab : class, IPvPPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
