@@ -1,6 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables
@@ -14,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public bool IsPresented =>
             _presentableComponent != null
                 && _presentableComponent.IsPresented;
-        protected override IPvPSoundKey ClickSound => null;
+        protected override ISoundKey ClickSound => null;
 
         public void Initialise(IPvPSingleSoundPlayer soundPlayer, IPvPDismissableEmitter parent = null)
         {

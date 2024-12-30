@@ -38,6 +38,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableO
 using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -215,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 
-            IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
+            ISoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
             _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
             if (IsClient && IsOwner)
             {
@@ -659,7 +660,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 bool wasAnySlotHighlighted = SlotHighlighter.HighlightAvailableSlots(SlotSpecification);
                 if (!wasAnySlotHighlighted)
                 {
-                    PvP_PrioritisedSoundClientRpc(PvPSoundType.Events, "no-building-slots-left", PvPSoundPriority.VeryHigh);
+                    PvP_PrioritisedSoundClientRpc(SoundType.Events, "no-building-slots-left", PvPSoundPriority.VeryHigh);
                     SlotHighlighter.HighlightSlots(SlotSpecification);
                 }
             }
@@ -667,10 +668,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         [ClientRpc]
-        private void PvP_PrioritisedSoundClientRpc(PvPSoundType soundType, string name, PvPSoundPriority priority)
+        private void PvP_PrioritisedSoundClientRpc(SoundType soundType, string name, PvPSoundPriority priority)
         {
 
-            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new PvPSoundKey(soundType, name), priority));
+            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new SoundKey(soundType, name), priority));
         }
 
         [ServerRpc(RequireOwnership = true)]

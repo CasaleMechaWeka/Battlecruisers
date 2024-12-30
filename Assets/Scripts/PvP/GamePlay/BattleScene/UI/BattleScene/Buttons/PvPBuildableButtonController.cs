@@ -6,11 +6,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
@@ -69,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         protected override bool Disable => false;
-        protected override IPvPSoundKey ClickSound => PvPSoundKeys.UI.Click;
+        protected override ISoundKey ClickSound => PvPSoundKeys.UI.Click;
 
         public virtual bool IsMatch => current_variant == null ? _shouldBeEnabledFilter.IsMatch(Buildable) : _shouldBeEnabledFilter.IsMatch(Buildable, current_variant);
 

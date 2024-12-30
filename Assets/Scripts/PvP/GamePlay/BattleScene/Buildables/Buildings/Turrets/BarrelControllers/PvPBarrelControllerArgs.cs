@@ -9,10 +9,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.UI.Sound;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPTarget Parent { get; }
         public ObservableCollection<IPvPBoostProvider> LocalBoostProviders { get; }
         public ObservableCollection<IPvPBoostProvider> GlobalFireRateBoostProviders { get; }
-        public IPvPSoundKey SpawnerSoundKey { get; }
+        public ISoundKey SpawnerSoundKey { get; }
         public IPvPAnimation BarrelFiringAnimation { get; }
         public IPvPCruiser EnemyCruiser { get; }
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ObservableCollection<IPvPBoostProvider> localBoostProviders,
             ObservableCollection<IPvPBoostProvider> globalFireRateBoostProvider,
             IPvPCruiser enemyCruiser,
-            IPvPSoundKey firingSound = null,
+            ISoundKey firingSound = null,
             IPvPAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(
@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPBarrelControllerArgs(
             IPvPFactoryProvider factoryProvider,
             IPvPTarget parent,
-            IPvPSoundKey firingSound = null,
+            ISoundKey firingSound = null,
             IPvPAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent);

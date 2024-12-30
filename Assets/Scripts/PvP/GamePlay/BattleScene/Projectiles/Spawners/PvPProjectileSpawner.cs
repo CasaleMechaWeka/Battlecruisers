@@ -3,12 +3,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
@@ -33,10 +33,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected IPvPAudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
-        private IPvPSoundKey _firingSound;
+        private ISoundKey _firingSound;
         protected int _burstSize;
 
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, IPvPSoundKey firingSound)
+        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, ISoundKey firingSound)
         {
 
             PvPHelper.AssertIsNotNull(impactSound, args);
@@ -96,6 +96,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 Debug.LogWarning("Warning, soundplayer was null when spawn projectile was called");
             }
         }
-        protected virtual void OnProjectileFiredSound(IPvPSoundKey firingSound, int burstSize) { }
+        protected virtual void OnProjectileFiredSound(ISoundKey firingSound, int burstSize) { }
     }
 }

@@ -3,12 +3,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using UnityEngine;
 using Unity.Netcode;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
     public class PvPMortar : PvPDefenseTurret
     {
-        protected override IPvPSoundKey FiringSound => PvPSoundKeys.PvPFiring.Artillery;
+        protected override ISoundKey FiringSound => PvPSoundKeys.PvPFiring.Artillery;
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.Mortar;
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();

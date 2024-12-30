@@ -19,7 +19,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Thre
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -222,7 +222,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected override float timeToActiveTrail => 0.1f;
         protected override bool needToTeleport => true;
-        private PvPSoundType _type;
+        private SoundType _type;
         private string _name;
         private Vector3 _pos;
 
@@ -248,14 +248,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             OnActiveClient_PositionVisibleClientRpc(velocity, gravityScale, isAlive, position, visible);
         }
         // PlayExplosionSound
-        protected override void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
+        protected override void OnPlayExplosionSound(SoundType type, string name, Vector3 position)
         {
             OnPlayExplosionSoundClientRpc(type, name, position);
         }
 
         private async void PlayExplosionSound()
         {
-            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(_type, _name), _pos);
+            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
         // should be called by client
@@ -327,7 +327,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             gameObject.SetActive(true);
         }
         [ClientRpc]
-        private void OnPlayExplosionSoundClientRpc(PvPSoundType type, string name, Vector3 position)
+        private void OnPlayExplosionSoundClientRpc(SoundType type, string name, Vector3 position)
         {
             _type = type;
             _name = name;

@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Unity.Netcode;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSledgehammerCannon : PvPOffenseMultiTurret
     {
-        protected override IPvPSoundKey[] FiringSounds => new IPvPSoundKey[]
+        protected override ISoundKey[] FiringSounds => new ISoundKey[]
         {
             PvPSoundKeys.PvPFiring.Missile,
             PvPSoundKeys.PvPFiring.Artillery,

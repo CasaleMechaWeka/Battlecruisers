@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
         protected override async Task<IPvPProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
             IPvPSoundPlayerFactory soundPlayerFactory,
-            IPvPSoundKey firingSound,
+            ISoundKey firingSound,
             int burstSize,
             IPvPAudioSource audioSource)
         {

@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IPvPBarrelWrapper[] _barrelWrappers;
 
         // By default have null (no) sound
-        protected virtual IPvPSoundKey[] FiringSounds => null;
+        protected virtual ISoundKey[] FiringSounds => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;

@@ -3,9 +3,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBuildable parent,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            IPvPSoundKey firingSound = null,
+            ISoundKey firingSound = null,
             ObservableCollection<IPvPBoostProvider> localBoostProviders = null,
             ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders = null,
             IPvPAnimation barrelFiringAnimation = null);
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void Initialise(
             IPvPBuildable parent,
             IPvPFactoryProvider factoryProvider,
-            IPvPSoundKey firingSound = null,
+            ISoundKey firingSound = null,
             IPvPAnimation barrelFiringAnimation = null);
 
         void ApplyVariantStats(IPvPBuilding building);

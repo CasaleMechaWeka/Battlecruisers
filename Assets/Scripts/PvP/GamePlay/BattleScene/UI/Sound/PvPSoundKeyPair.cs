@@ -1,13 +1,14 @@
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound
 {
     public class PvPSoundKeyPair
     {
-        public IPvPSoundKey PrimaryKey { get; }
-        public IPvPSoundKey SecondaryKey { get; }
+        public ISoundKey PrimaryKey { get; }
+        public ISoundKey SecondaryKey { get; }
 
-        public PvPSoundKeyPair(IPvPSoundKey primaryKey, IPvPSoundKey secondaryKey)
+        public PvPSoundKeyPair(ISoundKey primaryKey, ISoundKey secondaryKey)
         {
             Helper.AssertIsNotNull(primaryKey, secondaryKey);
 

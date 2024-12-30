@@ -13,7 +13,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.R
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -23,8 +22,7 @@ using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
-
-
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -129,7 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBuildable parent,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            IPvPSoundKey firingSound = null,
+            ISoundKey firingSound = null,
             ObservableCollection<IPvPBoostProvider> localBoostProviders = null,
             ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders = null,
             IPvPAnimation barrelFiringAnimation = null)
@@ -183,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void Initialise(
             IPvPBuildable parent,
             IPvPFactoryProvider factoryProvider,
-            IPvPSoundKey firingSound = null,
+            ISoundKey firingSound = null,
             IPvPAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent, factoryProvider);
@@ -212,7 +210,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPTargetFilter targetFilter,
             IPvPAngleCalculator angleCalculator,
             IPvPAttackablePositionFinder attackablePositionFinder,
-            IPvPSoundKey firingSound,
+            ISoundKey firingSound,
             ObservableCollection<IPvPBoostProvider> localBoostProviders,
             ObservableCollection<IPvPBoostProvider> globalFireRateBoostProvider,
             IPvPAnimation barrelFiringAnimation)
@@ -243,7 +241,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
             IPvPBarrelController barrel,
             IPvPBuildable parent,
-            IPvPSoundKey firingSound,
+            ISoundKey firingSound,
             IPvPAnimation barrelFiringAnimation)
         {
             return new PvPBarrelControllerArgs(

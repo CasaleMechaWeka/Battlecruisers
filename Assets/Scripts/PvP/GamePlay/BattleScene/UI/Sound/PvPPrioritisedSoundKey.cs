@@ -1,3 +1,5 @@
+using BattleCruisers.UI.Sound;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound
 {
     public enum PvPSoundPriority
@@ -11,10 +13,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
     public class PvPPrioritisedSoundKey
     {
-        public IPvPSoundKey Key { get; }
+        public ISoundKey Key { get; }
         public PvPSoundPriority Priority { get; }
 
-        public PvPPrioritisedSoundKey(IPvPSoundKey key, PvPSoundPriority priority)
+        public PvPPrioritisedSoundKey(ISoundKey key, PvPSoundPriority priority)
         {
             Key = key;
             Priority = priority;

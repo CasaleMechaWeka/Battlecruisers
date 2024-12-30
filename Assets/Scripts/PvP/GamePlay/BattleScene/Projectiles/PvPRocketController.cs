@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
@@ -14,6 +13,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -112,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _rocketTarget.GameObject.SetActive(false);
             SetRocketTargetVisibleClientRpc(false);
 
-             if (rocketSprite != null)
+            if (rocketSprite != null)
             {
                 rocketSprite.SetActive(false);
             }
@@ -124,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         // Sava added these fields and methods
         protected override bool needToTeleport => true;
         protected override float timeToActiveTrail => 0.2f;
-        private PvPSoundType _type;
+        private SoundType _type;
         private string _name;
         private Vector3 _pos;
         private bool isVisible = false;
@@ -158,14 +158,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         }
 
         // PlayExplosionSound
-        protected override void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
+        protected override void OnPlayExplosionSound(SoundType type, string name, Vector3 position)
         {
             OnPlayExplosionSoundClientRpc(type, name, position);
         }
 
         private async void PlayExplosionSound()
         {
-            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(_type, _name), _pos);
+            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
         private void Update()
@@ -320,7 +320,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                                 base.OnImpactCleanUp();*/
         }
         [ClientRpc]
-        private void OnPlayExplosionSoundClientRpc(PvPSoundType type, string name, Vector3 position)
+        private void OnPlayExplosionSoundClientRpc(SoundType type, string name, Vector3 position)
         {
             _type = type;
             _name = name;

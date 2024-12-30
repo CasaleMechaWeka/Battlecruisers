@@ -9,9 +9,9 @@ using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -147,7 +147,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     }
                 }
             }
-            ////
         }
 
         private void PlayDamagedSound()
@@ -199,10 +198,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnPlaySoundClientRpc(PvPSoundType soundType, string soundName, Vector3 position)
+        private void OnPlaySoundClientRpc(SoundType soundType, string soundName, Vector3 position)
         {
             if (IsClient)
-                PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new PvPSoundKey(soundType, soundName), position);
+                PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(soundType, soundName), position);
         }
 
         [ClientRpc]

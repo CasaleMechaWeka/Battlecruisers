@@ -9,9 +9,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.UI.Sound;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPFactoryProvider FactoryProvider { get; }
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         IPvPTarget Parent { get; }
-        IPvPSoundKey SpawnerSoundKey { get; }
+        ISoundKey SpawnerSoundKey { get; }
         ObservableCollection<IPvPBoostProvider> LocalBoostProviders { get; }
         ObservableCollection<IPvPBoostProvider> GlobalFireRateBoostProviders { get; }
         IPvPAnimation BarrelFiringAnimation { get; }

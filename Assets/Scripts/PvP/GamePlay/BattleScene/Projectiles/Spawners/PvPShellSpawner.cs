@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
@@ -15,14 +15,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     {
         private IPvPTargetFilter _targetFilter;
         private IPvPProjectileSoundPlayerInitialiser soundPlayerInitialiser;
-        private PvPSoundType _type;
+        private SoundType _type;
         private string _name;
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, IPvPSoundKey firingSound, IPvPTargetFilter targetFilter)
+        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, ISoundKey firingSound, IPvPTargetFilter targetFilter)
         {
             await base.InitialiseAsync(args, firingSound);
 
             PvPHelper.AssertIsNotNull(targetFilter);
-            _targetFilter = targetFilter; 
+            _targetFilter = targetFilter;
         }
 
         public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
@@ -39,13 +39,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.SpawnProjectile(activationArgs);
         }
 
-        protected override void OnProjectileFiredSound(IPvPSoundKey firingSound, int burstSize)
+        protected override void OnProjectileFiredSound(ISoundKey firingSound, int burstSize)
         {
             OnProjectileFiredSoundClientRpc(firingSound.Type, firingSound.Name, burstSize);
         }
 
         [ClientRpc]
-        private void OnProjectileFiredSoundClientRpc(PvPSoundType type, string name, int burstSize)
+        private void OnProjectileFiredSoundClientRpc(SoundType type, string name, int burstSize)
         {
             if (IsOwner)
             {
@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             var soundPlayer
                 = await soundPlayerInitialiser?.CreateSoundPlayerAsync(
                     PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayerFactory,
-                    new PvPSoundKey(_type, _name),
+                    new SoundKey(_type, _name),
                     _burstSize,
                     PvPBattleSceneGodClient.Instance.factoryProvider.SettingsManager);
             soundPlayer?.OnProjectileFired();

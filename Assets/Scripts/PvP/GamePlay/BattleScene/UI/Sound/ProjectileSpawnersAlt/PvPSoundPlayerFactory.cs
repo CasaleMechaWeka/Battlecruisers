@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners
@@ -23,13 +24,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             DummyPlayer = new PvPDummyProjectileSpawnerSoundPlayer();
         }
 
-        public async Task<IPvPProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(IPvPSoundKey firingSound, IPvPAudioSource audioSource)
+        public async Task<IPvPProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IPvPAudioSource audioSource)
         {
             IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
             return new PvPShortSoundPlayer(sound, audioSource);
         }
 
-        public async Task<IPvPProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(IPvPSoundKey firingSound, IPvPAudioSource audioSource, int burstSize, float burstEndDelayInS)
+        public async Task<IPvPProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(ISoundKey firingSound, IPvPAudioSource audioSource, int burstSize, float burstEndDelayInS)
         {
             IPvPAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
             return new PvPLongSoundPlayer(sound, audioSource, _deferrer, burstSize, burstEndDelayInS);

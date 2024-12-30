@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.UI.Sound;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const string SOUND_ROOT_DIR = "Assets/Resources_moved/Sounds";
         private const char PATH_SEPARATOR = '/';
 
-        public async Task<IPvPAudioClipWrapper> GetSoundAsync(IPvPSoundKey soundKey)
+        public async Task<IPvPAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
         {
             string soundPath = CreateSoundPath(soundKey);
             AudioClip clip = null;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return new PvPAudioClipWrapper(clip);
         }
 
-        private string CreateSoundPath(IPvPSoundKey soundKey)
+        private string CreateSoundPath(ISoundKey soundKey)
         {
             return SOUND_ROOT_DIR + PATH_SEPARATOR + soundKey.Type.ToString() + PATH_SEPARATOR + soundKey.Name;
         }
