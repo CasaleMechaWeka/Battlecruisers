@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Buildables;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
@@ -7,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPDamageCapability : IPvPDamageCapability
     {
         public float DamagePerS { get; }
-        public IList<PvPTargetType> AttackCapabilities { get; }
+        public IList<TargetType> AttackCapabilities { get; }
 
-        public PvPDamageCapability(float damagePerS, IList<PvPTargetType> attackCapabilities)
+        public PvPDamageCapability(float damagePerS, IList<TargetType> attackCapabilities)
         {
             Assert.IsTrue(damagePerS > 0);
             Assert.IsTrue(attackCapabilities.Count > 0);

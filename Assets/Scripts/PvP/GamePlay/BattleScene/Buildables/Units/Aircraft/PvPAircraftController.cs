@@ -19,6 +19,7 @@ using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float SEABED_SAFE_POSITION_Y = -40;
 
         protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
-        public override PvPTargetType TargetType => PvPTargetType.Aircraft;
+        public override TargetType TargetType => TargetType.Aircraft;
         public override Vector2 Velocity => ActiveMovementController.Velocity;
         protected virtual float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS;
         protected float EffectiveMaxVelocityInMPerS => _velocityBoostable.BoostMultiplier * _fuzziedMaxVelocityInMPerS;

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,8 +11,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public float detectionRangeM;
         public float DetectionRangeM => detectionRangeM;
 
-        public List<PvPTargetType> attackCapabilities;
-        public ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; private set; }
+        public List<TargetType> attackCapabilities;
+        public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
 
         protected override void OnAwake()
         {

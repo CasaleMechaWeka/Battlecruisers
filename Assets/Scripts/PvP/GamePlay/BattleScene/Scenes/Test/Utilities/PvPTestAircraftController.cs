@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 {
     public class PvPTestAircraftController : PvPAircraftController
     {
-        private PvPTargetType _targetType;
+        private TargetType _targetType;
 
         // IList is not picked up by the Unity inspector
         public List<Vector2> patrolPoints;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             set { patrolPoints = new List<Vector2>(value); }
         }
 
-        public override PvPTargetType TargetType => _targetType;
+        public override TargetType TargetType => _targetType;
 
         private bool _useDummyMovementController = false;
         public bool UseDummyMovementController
@@ -54,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter, this);
         }
 
-        public void SetTargetType(PvPTargetType targetType)
+        public void SetTargetType(TargetType targetType)
         {
             _targetType = targetType;
         }

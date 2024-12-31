@@ -63,20 +63,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         protected virtual float GetAntiAirDamage(TItem item)
         {
-            return GetDamageForTargetType(item, PvPTargetType.Aircraft);
+            return GetDamageForTargetType(item, TargetType.Aircraft);
         }
 
         protected virtual float GetAntiShipDamage(TItem item)
         {
-            return GetDamageForTargetType(item, PvPTargetType.Ships);
+            return GetDamageForTargetType(item, TargetType.Ships);
         }
 
         protected virtual float GetAntiCruiserDamage(TItem item)
         {
-            return GetDamageForTargetType(item, PvPTargetType.Cruiser);
+            return GetDamageForTargetType(item, TargetType.Cruiser);
         }
 
-        protected float GetDamageForTargetType(TItem item, PvPTargetType targetType)
+        protected float GetDamageForTargetType(TItem item, TargetType targetType)
         {
             float damagePerS = 0;
 

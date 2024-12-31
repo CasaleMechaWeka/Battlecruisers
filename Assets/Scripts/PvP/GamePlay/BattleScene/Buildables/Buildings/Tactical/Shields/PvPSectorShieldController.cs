@@ -11,6 +11,7 @@ using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -27,9 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IPvPShieldStats Stats { get; private set; }
 
-        private PvPTargetType _targetType;
+        private TargetType _targetType;
 
-        public override PvPTargetType TargetType => _targetType;
+        public override TargetType TargetType => _targetType;
 
         private Vector2 _size;
         public override Vector2 Size => _size;
@@ -50,12 +51,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _takeDamageSoundDebouncer = new PvPDebouncer(PvPTimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(PvPFaction faction, IPvPSoundPlayer soundPlayer, PvPTargetType targetType = PvPTargetType.Buildings)
+        public void Initialise(PvPFaction faction, IPvPSoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
         {
             _targetType = targetType;
 
             //otherwise the shield won't recharge / reactivate when used on units
-            if (_targetType != PvPTargetType.Buildings)
+            if (_targetType != TargetType.Buildings)
                 Stats.BoostMultiplier = 1f;
 
             Faction = faction;

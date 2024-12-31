@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters
 {
     public class PvPFactionAndTargetTypeFilter : PvPFactionTargetFilter
     {
-        private readonly IList<PvPTargetType> _targetTypes;
+        private readonly IList<TargetType> _targetTypes;
 
-        public PvPFactionAndTargetTypeFilter(PvPFaction factionToDetect, IList<PvPTargetType> targetTypes)
+        public PvPFactionAndTargetTypeFilter(PvPFaction factionToDetect, IList<TargetType> targetTypes)
             : base(factionToDetect)
         {
             _targetTypes = targetTypes;

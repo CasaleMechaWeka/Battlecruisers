@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine.Assertions;
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         // just show their ship damage.
         protected override float GetAntiCruiserDamage(IPvPUnit item)
         {
-            if (item.AttackCapabilities.Contains(PvPTargetType.Ships))
+            if (item.AttackCapabilities.Contains(TargetType.Ships))
             {
                 // Eg:  Ships (Attack boat, frigate, etc)
                 return 0;

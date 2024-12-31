@@ -11,6 +11,7 @@ using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
         public IPvPShieldStats Stats { get; private set; }
-        public override PvPTargetType TargetType => PvPTargetType.Buildings;
+        public override TargetType TargetType => TargetType.Buildings;
 
         private Vector2 _size;
         public override Vector2 Size => _size;

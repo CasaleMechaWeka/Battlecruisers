@@ -28,6 +28,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Effects.Smoke;
+using BattleCruisers.Buildables;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
@@ -303,7 +304,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             foreach (IPvPDamageCapability damageStat in _damageCapabilities)
             {
-                foreach (PvPTargetType attackCapability in damageStat.AttackCapabilities)
+                foreach (TargetType attackCapability in damageStat.AttackCapabilities)
                 {
                     AddAttackCapability(attackCapability);
                 }
@@ -759,7 +760,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 if (Faction == PvPFaction.Reds)
                 {
-                    if (TargetType == PvPTargetType.Ships)
+                    if (TargetType == TargetType.Ships)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoLeftHappy(); else PvPCaptainExoHUDController.Instance.DoLeftTaunt();
                         PvPCaptainExoHUDController.Instance.DoRightAngry();
@@ -767,7 +768,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                                                     PvPHeckleMessageManager.Instance.ShowAIBotHeckle();*/
                         return;
                     }
-                    if (TargetType == PvPTargetType.Buildings)
+                    if (TargetType == TargetType.Buildings)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoLeftHappy(); else PvPCaptainExoHUDController.Instance.DoLeftTaunt();
                         PvPCaptainExoHUDController.Instance.DoRightAngry();
@@ -778,7 +779,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
                 else
                 {
-                    if (TargetType == PvPTargetType.Ships)
+                    if (TargetType == TargetType.Ships)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoRightHappy(); else PvPCaptainExoHUDController.Instance.DoRightTaunt();
 
@@ -787,7 +788,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         PvPCaptainExoHUDController.Instance.DoLeftAngry();
                         return;
                     }
-                    if (TargetType == PvPTargetType.Buildings)
+                    if (TargetType == TargetType.Buildings)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) PvPCaptainExoHUDController.Instance.DoRightHappy(); else PvPCaptainExoHUDController.Instance.DoRightTaunt();
                         /*                        if (UnityEngine.Random.Range(0, 3) == 1)

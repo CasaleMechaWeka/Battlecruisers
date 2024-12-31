@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float RangeInM => _baseStats.RangeInM;
         public float MinRangeInM => _baseStats.MinRangeInM;
         public float MeanFireRatePerS => _fireRateBoostable.BoostMultiplier * _baseStats.MeanFireRatePerS;
-        public ReadOnlyCollection<PvPTargetType> AttackCapabilities => _baseStats.AttackCapabilities;
+        public ReadOnlyCollection<TargetType> AttackCapabilities => _baseStats.AttackCapabilities;
         public float DurationInS => _baseStats.DurationInS / _fireRateBoostable.BoostMultiplier;
 
         public PvPBoostedBasicTurretStats(

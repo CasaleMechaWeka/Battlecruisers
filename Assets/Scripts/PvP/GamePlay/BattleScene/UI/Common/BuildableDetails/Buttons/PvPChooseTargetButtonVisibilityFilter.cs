@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
@@ -12,8 +13,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             return
                 target != null
                 /*    && SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT? target.Faction == PvPFaction.Reds : target.Faction == PvPFaction.Blues*/
-                && (target.TargetType == PvPTargetType.Buildings
-                    || target.TargetType == PvPTargetType.Cruiser);
+                && (target.TargetType == TargetType.Buildings
+                    || target.TargetType == TargetType.Cruiser);
         }
 
         public bool IsMatch(IPvPTarget target, VariantPrefab variant)
@@ -21,8 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             return
                 target != null
                 /* && target.Faction == PvPFaction.Reds*/
-                && (target.TargetType == PvPTargetType.Buildings
-                    || target.TargetType == PvPTargetType.Cruiser);
+                && (target.TargetType == TargetType.Buildings
+                    || target.TargetType == TargetType.Cruiser);
         }
     }
 }

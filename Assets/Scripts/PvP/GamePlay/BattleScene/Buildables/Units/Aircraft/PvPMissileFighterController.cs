@@ -21,6 +21,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -156,7 +157,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Transform, enemyFollowDetectionRangeInM, _targetFactories.RangeCalculatorProvider.BasicCalculator);
 
             IPvPTargetFilter followTargetFilter = _targetFactories.FilterFactory.CreateTargetFilter(
-                PvPHelper.GetOppositeFaction(Faction), new List<PvPTargetType> { PvPTargetType.Aircraft, PvPTargetType.Ships });
+                PvPHelper.GetOppositeFaction(Faction), new List<TargetType> { TargetType.Aircraft, TargetType.Ships });
 
             _followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(
                 _followableEnemyDetectorProvider.TargetDetector, followTargetFilter);

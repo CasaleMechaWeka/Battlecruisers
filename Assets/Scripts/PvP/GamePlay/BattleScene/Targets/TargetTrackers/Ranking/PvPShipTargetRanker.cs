@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPShipTargetRanker()
         {
-            _attackCapabilityToBonus[PvPTargetType.Ships] = ANTI_SHIP_BONUS;
+            _attackCapabilityToBonus[TargetType.Ships] = ANTI_SHIP_BONUS;
         }
     }
 }

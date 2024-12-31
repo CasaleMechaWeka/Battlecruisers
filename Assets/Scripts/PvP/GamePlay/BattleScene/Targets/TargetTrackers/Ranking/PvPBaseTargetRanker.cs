@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPBaseTargetRanker : IPvPTargetRanker
     {
-        protected IDictionary<PvPTargetType, int> _attackCapabilityToBonus;
+        protected IDictionary<TargetType, int> _attackCapabilityToBonus;
 
         private const int TARGET_VALUE_MULTIPLIER = 10;
         private const int DEFAULT_ATTACK_CAPABILITY_BONUS = 0;
@@ -19,9 +20,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPBaseTargetRanker()
         {
-            _attackCapabilityToBonus = new Dictionary<PvPTargetType, int>();
+            _attackCapabilityToBonus = new Dictionary<TargetType, int>();
 
-            foreach (PvPTargetType attackCapability in Enum.GetValues(typeof(PvPTargetType)))
+            foreach (TargetType attackCapability in Enum.GetValues(typeof(TargetType)))
             {
                 _attackCapabilityToBonus.Add(attackCapability, DEFAULT_ATTACK_CAPABILITY_BONUS);
             }
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         {
             int rank = (int)target.TargetValue * TARGET_VALUE_MULTIPLIER;
 
-            foreach (PvPTargetType attackCapability in target.AttackCapabilities)
+            foreach (TargetType attackCapability in target.AttackCapabilities)
             {
                 rank += _attackCapabilityToBonus[attackCapability];
             }

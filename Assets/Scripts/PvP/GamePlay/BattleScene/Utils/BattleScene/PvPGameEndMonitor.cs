@@ -1,5 +1,5 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using System;
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         // Always happens
         private void _battleCompletionHandler_BattleCompleted(Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal)
         {
-            if(newVal == Tunnel_BattleCompletedState.Completed)
+            if (newVal == Tunnel_BattleCompletedState.Completed)
             {
                 _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= _battleCompletionHandler_BattleCompleted;
                 _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
@@ -58,9 +58,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private static long GetTotalDestructionScore_Left()
         {
-            Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_left;
+            Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_left;
             long ds = 0;
-            foreach (KeyValuePair<PvPTargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
+            foreach (KeyValuePair<TargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
             {
                 ds += kvp.Value.GetTotalDamageInCredits();
             }
@@ -69,9 +69,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private static long GetTotalDestructionScore_Right()
         {
-            Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_right;
+            Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_right;
             long ds = 0;
-            foreach (KeyValuePair<PvPTargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
+            foreach (KeyValuePair<TargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
             {
                 ds += kvp.Value.GetTotalDamageInCredits();
             }

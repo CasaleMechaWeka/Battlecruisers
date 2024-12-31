@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSpySatelliteController : PvPSatelliteController
     {
-        public override PvPTargetType TargetType => PvPTargetType.Satellite;
+        public override TargetType TargetType => TargetType.Satellite;
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
         {

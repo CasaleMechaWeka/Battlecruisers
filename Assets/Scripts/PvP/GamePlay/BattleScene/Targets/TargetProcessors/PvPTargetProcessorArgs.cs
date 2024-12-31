@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public IPvPTargetFactoriesProvider TargetFactories { get; }
         public PvPFaction EnemyFaction { get; }
-        public IList<PvPTargetType> AttackCapabilities { get; }
+        public IList<TargetType> AttackCapabilities { get; }
         public float MaxRangeInM { get; }
         public float MinRangeInM { get; }
         public IPvPTarget ParentTarget { get; }
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPTargetFactoriesProvider targetFactories,
             PvPFaction enemyFaction,
-            IList<PvPTargetType> attackCapabilities,
+            IList<TargetType> attackCapabilities,
             float maxRangeInM,
             float minRangeInM = 0,
             IPvPTarget parentTarget = null)

@@ -22,6 +22,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -83,10 +84,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_bombStats);
 
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
-            IList<PvPTargetType> attackCapabilities = new List<PvPTargetType>()
+            IList<TargetType> attackCapabilities = new List<TargetType>()
             {
-                PvPTargetType.Cruiser,
-                PvPTargetType.Buildings
+                TargetType.Cruiser,
+                TargetType.Buildings
             };
             AddDamageStats(new PvPDamageCapability(damagePerS, attackCapabilities));
         }
@@ -133,10 +134,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _bombStats = GetComponent<PvPProjectileStats>();
             Assert.IsNotNull(_bombStats);
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
-            IList<PvPTargetType> attackCapabilities = new List<PvPTargetType>()
+            IList<TargetType> attackCapabilities = new List<TargetType>()
             {
-                PvPTargetType.Cruiser,
-                PvPTargetType.Buildings
+                TargetType.Cruiser,
+                TargetType.Buildings
             };
             AddDamageStats(new PvPDamageCapability(damagePerS, attackCapabilities));
         }

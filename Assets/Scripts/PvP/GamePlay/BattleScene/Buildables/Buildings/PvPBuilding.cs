@@ -15,6 +15,7 @@ using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public bool preferCruiserFront;
         public PvPSlotType slotType;
 
-        public override PvPTargetType TargetType => PvPTargetType.Buildings;
+        public override TargetType TargetType => TargetType.Buildings;
         public IPvPSlotSpecification SlotSpecification { get; private set; }
         public Vector3 PuzzleRootPoint { get; private set; }
 

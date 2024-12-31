@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats
@@ -6,6 +6,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public interface IPvPSmartProjectileStats : IPvPProjectileStats
     {
         float DetectionRangeM { get; }
-        ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; }
+        ReadOnlyCollection<TargetType> AttackCapabilities { get; }
     }
 }

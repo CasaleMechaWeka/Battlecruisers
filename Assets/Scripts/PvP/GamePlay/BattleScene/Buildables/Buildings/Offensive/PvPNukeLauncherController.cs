@@ -23,6 +23,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Offensive
 {
@@ -68,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _nukeStats = GetComponent<PvPNukeProjectileStats>();
             Assert.IsNotNull(_nukeStats);
-            AddAttackCapability(PvPTargetType.Cruiser);
+            AddAttackCapability(TargetType.Cruiser);
             AddDamageStats(new PvPDamageCapability(_nukeStats.Damage, AttackCapabilities));
 
             Assert.IsNotNull(nukeImpactSound);

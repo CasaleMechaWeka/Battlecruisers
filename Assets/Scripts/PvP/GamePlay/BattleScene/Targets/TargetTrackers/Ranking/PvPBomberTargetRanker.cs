@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking
 {
@@ -15,8 +15,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPBomberTargetRanker()
         {
-            _attackCapabilityToBonus[PvPTargetType.Aircraft] = ANTI_AIR_BONUS;
-            _attackCapabilityToBonus[PvPTargetType.Cruiser] = ANTI_CRUISER_BONUS;
+            _attackCapabilityToBonus[TargetType.Aircraft] = ANTI_AIR_BONUS;
+            _attackCapabilityToBonus[TargetType.Cruiser] = ANTI_CRUISER_BONUS;
         }
     }
 }

@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
@@ -22,9 +23,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPTargetDetectorController targetDetectorController = GetComponent<PvPTargetDetectorController>();
             Assert.IsNotNull(targetDetectorController);
 
-            IList<PvPTargetType> targetTypesToFind = new List<PvPTargetType>()
+            IList<TargetType> targetTypesToFind = new List<TargetType>()
             {
-                PvPTargetType.Ships
+                TargetType.Ships
             };
 
             IPvPTargetFinder targetFinder

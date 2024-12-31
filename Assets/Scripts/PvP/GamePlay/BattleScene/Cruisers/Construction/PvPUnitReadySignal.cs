@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -25,11 +25,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             switch (e.CompletedUnit.TargetType)
             {
-                case PvPTargetType.Aircraft:
+                case TargetType.Aircraft:
                     _aircraftAudioSource.Play();
                     break;
 
-                case PvPTargetType.Ships:
+                case TargetType.Ships:
                     _navalAudioSource.Play();
                     break;
 

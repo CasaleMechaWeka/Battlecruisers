@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -38,13 +39,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             switch (e.StartedUnit.TargetType)
             {
-                case PvPTargetType.Ships:
+                case TargetType.Ships:
                     Assert.IsFalse(_ships.Contains(e.StartedUnit));
                     _ships.Add(e.StartedUnit);
                     AddToShipsAndAircraft(e);
                     break;
 
-                case PvPTargetType.Aircraft:
+                case TargetType.Aircraft:
                     Assert.IsFalse(_aircraft.Contains(e.StartedUnit));
                     _aircraft.Add(e.StartedUnit);
                     AddToShipsAndAircraft(e);
@@ -64,11 +65,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             switch (e.DestroyedUnit.TargetType)
             {
-                case PvPTargetType.Ships:
+                case TargetType.Ships:
                     _ships.Remove(e.DestroyedUnit);
                     break;
 
-                case PvPTargetType.Aircraft:
+                case TargetType.Aircraft:
                     _aircraft.Remove(e.DestroyedUnit);
                     break;
             }

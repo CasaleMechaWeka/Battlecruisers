@@ -4,6 +4,7 @@ using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private Rigidbody2D _rigidBody;
         private IRemovable _parentProjectile;
 
-        public override PvPTargetType TargetType => PvPTargetType.Rocket;
+        public override TargetType TargetType => TargetType.Rocket;
         public override Vector2 Velocity => _rigidBody.velocity;
 
         private Vector2 _size;

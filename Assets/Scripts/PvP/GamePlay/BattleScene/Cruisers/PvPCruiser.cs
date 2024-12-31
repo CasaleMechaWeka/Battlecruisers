@@ -39,6 +39,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -66,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         // ITarget
-        public override PvPTargetType TargetType => PvPTargetType.Cruiser;
+        public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { if (_renderer != null) _renderer.color = value; } }
         public override Vector2 Size => _collider.bounds.size;
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
@@ -502,11 +503,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 {
                     if (Faction == PvPFaction.Blues)
                     {
-                        PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, Time.deltaTime);
+                        PvPBattleSceneGodServer.AddPlayedTime_Left(TargetType.PlayedTime, Time.deltaTime);
                     }
                     if (Faction == PvPFaction.Reds)
                     {
-                        PvPBattleSceneGodServer.AddPlayedTime_Right(PvPTargetType.PlayedTime, Time.deltaTime);
+                        PvPBattleSceneGodServer.AddPlayedTime_Right(TargetType.PlayedTime, Time.deltaTime);
                     }
                 }
             }

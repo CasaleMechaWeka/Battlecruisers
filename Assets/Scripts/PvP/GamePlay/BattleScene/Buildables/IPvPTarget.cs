@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
@@ -12,11 +13,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         Blues, Reds
     }
 
-    public enum PvPTargetType
-    {
-        Aircraft, Ships, Cruiser, Buildings, Rocket, Satellite, PaddleMine, PlayedTime
-    }
-
     /// <summary>
     /// Used for prioritising targets, so do NOT change order!
     /// </summary>
@@ -28,9 +24,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPTarget : IPvPDamagable, IPvPRepairable, IPvPHighlightable
     {
         PvPFaction Faction { get; }
-        PvPTargetType TargetType { get; }
+        TargetType TargetType { get; }
         Vector2 Velocity { get; }
-        ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; }
+        ReadOnlyCollection<TargetType> AttackCapabilities { get; }
         PvPTargetValue TargetValue { get; }
         Color Color { set; }
         bool IsInScene { get; }

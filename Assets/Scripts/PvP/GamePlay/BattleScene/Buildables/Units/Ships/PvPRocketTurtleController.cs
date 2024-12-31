@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (_shieldController != null)
             {
-                _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, PvPTargetType.Ships);
+                _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, TargetType.Ships);
                 _shieldController.gameObject.SetActive(false);
                 OnEnableShieldClientRpc(false);
                 _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);

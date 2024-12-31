@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,8 +21,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public virtual float DurationInS => 1 / FireRatePerS;
 
-        public List<PvPTargetType> attackCapabilities;
-        public ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; private set; }
+        public List<TargetType> attackCapabilities;
+        public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
 
         protected bool isAppliedVariant = false;
 
@@ -32,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsTrue(RangeInM > MinRangeInM);
             Assert.IsTrue(attackCapabilities.Count > 0);
 
-            AttackCapabilities = new ReadOnlyCollection<PvPTargetType>(attackCapabilities);
+            AttackCapabilities = new ReadOnlyCollection<TargetType>(attackCapabilities);
         }
 
         public virtual void MoveToNextDuration()

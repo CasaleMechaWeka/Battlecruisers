@@ -12,6 +12,7 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public bool IsDestroyed => IsServer ? Health == 0 : pvp_Health.Value == 0;
         public PvPFaction Faction { get; protected set; }
         public GameObject GameObject => gameObject;
-        public abstract PvPTargetType TargetType { get; }
+        public abstract TargetType TargetType { get; }
         public virtual PvPTargetValue TargetValue => PvPTargetValue.Low;
         public virtual Vector2 Velocity => new Vector2(0, 0);
         public abstract Vector2 Size { get; }
@@ -95,8 +96,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPRepairCommand RepairCommand { get; private set; }
         public float HealthGainPerDroneS { get; protected set; }
 
-        private List<PvPTargetType> _attackCapabilities;
-        public ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; private set; }
+        private List<TargetType> _attackCapabilities;
+        public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
         public IPvPTarget LastDamagedSource { get; private set; }
         IPvPTarget IPvPTargetProxy.Target => this;
 
@@ -116,7 +117,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         }
 
-        protected void AddAttackCapability(PvPTargetType attackCapability)
+        protected void AddAttackCapability(TargetType attackCapability)
         {
             if (!_attackCapabilities.Contains(attackCapability))
             {
@@ -132,8 +133,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _healthTracker.HealthGone += _health_HealthGone;
 
             _time = PvPTimeBC.Instance;
-            _attackCapabilities = new List<PvPTargetType>();
-            AttackCapabilities = new ReadOnlyCollection<PvPTargetType>(_attackCapabilities);
+            _attackCapabilities = new List<TargetType>();
+            AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
             RepairCommand = new PvPRepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 

@@ -20,6 +20,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -44,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
-        public override PvPTargetType TargetType => PvPTargetType.Ships;
+        public override TargetType TargetType => TargetType.Ships;
 
         [SerializeField]
         private float ySpawnOffset = -0.35f; // Default value, can be adjusted in the Inspector
@@ -92,20 +93,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void FindDamageStats()
         {
-            IList<IPvPDamageCapability> antiAirDamageCapabilities = GetDamageCapabilities(PvPTargetType.Aircraft);
+            IList<IPvPDamageCapability> antiAirDamageCapabilities = GetDamageCapabilities(TargetType.Aircraft);
             if (antiAirDamageCapabilities.Count != 0)
             {
                 AddDamageStats(new PvPDamageCapability(antiAirDamageCapabilities));
             }
 
-            IList<IPvPDamageCapability> antiSeaDamageCapabilities = GetDamageCapabilities(PvPTargetType.Ships);
+            IList<IPvPDamageCapability> antiSeaDamageCapabilities = GetDamageCapabilities(TargetType.Ships);
             if (antiSeaDamageCapabilities.Count != 0)
             {
                 AddDamageStats(new PvPDamageCapability(antiSeaDamageCapabilities));
             }
         }
 
-        private IList<IPvPDamageCapability> GetDamageCapabilities(PvPTargetType attackCapability)
+        private IList<IPvPDamageCapability> GetDamageCapabilities(TargetType attackCapability)
         {
             return
                 _turrets
@@ -165,10 +166,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
 
             // Do not want to stop ship from moving if it encounters aircraft
-            IList<PvPTargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();
-            targetProcessorTargetTypes.Remove(PvPTargetType.Aircraft);
+            IList<TargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();
+            targetProcessorTargetTypes.Remove(TargetType.Aircraft);
             if (KeepDistanceFromEnemyCruiser)
-                targetProcessorTargetTypes.Add(PvPTargetType.Cruiser);
+                targetProcessorTargetTypes.Add(TargetType.Cruiser);
 
             IPvPTargetProcessorArgs args
                 = new PvPTargetProcessorArgs(

@@ -10,9 +10,9 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using System.Linq;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -122,46 +122,46 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        public static void AddAllBuildablesOfLeftPlayer(PvPTargetType type, float val)
+        public static void AddAllBuildablesOfLeftPlayer(TargetType type, float val)
         {
             switch (type)
             {
-                case PvPTargetType.Aircraft:
+                case TargetType.Aircraft:
                     _playerAAircraftVal += (long)val;
                     _playerATotoalDestroyed[0]++;
                     break;
-                case PvPTargetType.Ships:
+                case TargetType.Ships:
                     _playerAShipsVal += (long)val;
                     _playerATotoalDestroyed[1]++;
                     break;
-                case PvPTargetType.Cruiser:
+                case TargetType.Cruiser:
                     _playerACruiserVal += (long)val;
                     _playerATotoalDestroyed[2]++;
                     break;
-                case PvPTargetType.Buildings:
+                case TargetType.Buildings:
                     _playerABuildingsVal += (long)val;
                     _playerATotoalDestroyed[3]++;
                     break;
             }
         }
 
-        public static void AddAllBuildablesOfRightPlayer(PvPTargetType type, float val)
+        public static void AddAllBuildablesOfRightPlayer(TargetType type, float val)
         {
             switch (type)
             {
-                case PvPTargetType.Aircraft:
+                case TargetType.Aircraft:
                     _playerBAircraftVal += (long)val;
                     _playerBTotoalDestroyed[0]++;
                     break;
-                case PvPTargetType.Ships:
+                case TargetType.Ships:
                     _playerBShipsVal += (long)val;
                     _playerBTotoalDestroyed[1]++;
                     break;
-                case PvPTargetType.Cruiser:
+                case TargetType.Cruiser:
                     _playerBCruiserVal += (long)val;
                     _playerBTotoalDestroyed[2]++;
                     break;
-                case PvPTargetType.Buildings:
+                case TargetType.Buildings:
                     _playerBBuildingsVal += (long)val;
                     _playerBTotoalDestroyed[3]++;
                     break;
@@ -187,31 +187,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 Debug.Log($"SERVER Complete Battle is Victory {wasVictory}");
 
                 //handle server stats
-                _levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
-                _aircraftVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();
-                _shipsVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Ships].GetTotalDamageInCredits();
-                _cruiserVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Cruiser].GetTotalDamageInCredits();
-                _buildingsVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Buildings].GetTotalDamageInCredits();
+                _levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_left[TargetType.PlayedTime].GetPlayedTime();
+                _aircraftVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Aircraft].GetTotalDamageInCredits();
+                _shipsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Ships].GetTotalDamageInCredits();
+                _cruiserVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Cruiser].GetTotalDamageInCredits();
+                _buildingsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Buildings].GetTotalDamageInCredits();
                 _enemyCruiserName = PvPBattleSceneGodServer.playerBCruiserName;
                 _totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
-                    _totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_left[(PvPTargetType)i].GetTotalDestroyed();
+                    _totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_left[(TargetType)i].GetTotalDestroyed();
                 }
                 Debug.Log($"CRUISERS DESTROYED LEFT: {_totalDestroyed[2]}");
                 battleCompletionHandler?.CompleteBattle(wasVictory, retryLevel);
 
                 //handle client stats
-                float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
-                long aircraftVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();
-                long shipsVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Ships].GetTotalDamageInCredits();
-                long cruiserVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Cruiser].GetTotalDamageInCredits();
-                long buildingsVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Buildings].GetTotalDamageInCredits();
+                float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_right[TargetType.PlayedTime].GetPlayedTime();
+                long aircraftVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Aircraft].GetTotalDamageInCredits();
+                long shipsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Ships].GetTotalDamageInCredits();
+                long cruiserVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Cruiser].GetTotalDamageInCredits();
+                long buildingsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Buildings].GetTotalDamageInCredits();
                 string enemyCruiserName = PvPBattleSceneGodServer.enemyCruiserName;
                 long[] totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
-                    totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(PvPTargetType)i].GetTotalDestroyed();
+                    totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(TargetType)i].GetTotalDestroyed();
                 }
                 Debug.Log($"CRUISERS DESTROYED RIGHT: {totalDestroyed[2]}");
                 CompleteBattleClientRpc(!wasVictory, retryLevel, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
@@ -238,32 +238,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 Debug.Log($"SERVER Complete Battle is Victory {wasPlayerVictory}");
 
                 //handle server stats
-                _levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
-                _aircraftVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();
-                _shipsVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Ships].GetTotalDamageInCredits();
-                _cruiserVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Cruiser].GetTotalDamageInCredits();
-                _buildingsVal = PvPBattleSceneGodServer.deadBuildables_left[Buildables.PvPTargetType.Buildings].GetTotalDamageInCredits();
+                _levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_left[TargetType.PlayedTime].GetPlayedTime();
+                _aircraftVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Aircraft].GetTotalDamageInCredits();
+                _shipsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Ships].GetTotalDamageInCredits();
+                _cruiserVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Cruiser].GetTotalDamageInCredits();
+                _buildingsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Buildings].GetTotalDamageInCredits();
                 _enemyCruiserName = PvPBattleSceneGodServer.playerBCruiserName;
                 _totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
-                    _totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_left[(PvPTargetType)i].GetTotalDestroyed();
+                    _totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_left[(TargetType)i].GetTotalDestroyed();
                 }
                 Debug.Log($"CRUISERS DESTROYED LEFT: {_totalDestroyed[2]}");
 
                 battleCompletionHandler?.CompleteBattle(wasPlayerVictory, retryLevel, destructionScore);
 
                 //handle client stats
-                float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.PlayedTime].GetPlayedTime();
-                long aircraftVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Aircraft].GetTotalDamageInCredits();
-                long shipsVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Ships].GetTotalDamageInCredits();
-                long cruiserVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Cruiser].GetTotalDamageInCredits();
-                long buildingsVal = PvPBattleSceneGodServer.deadBuildables_right[Buildables.PvPTargetType.Buildings].GetTotalDamageInCredits();
+                float levelTimeInSeconds = PvPBattleSceneGodServer.deadBuildables_right[TargetType.PlayedTime].GetPlayedTime();
+                long aircraftVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Aircraft].GetTotalDamageInCredits();
+                long shipsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Ships].GetTotalDamageInCredits();
+                long cruiserVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Cruiser].GetTotalDamageInCredits();
+                long buildingsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Buildings].GetTotalDamageInCredits();
                 string enemyCruiserName = PvPBattleSceneGodServer.enemyCruiserName;
                 long[] totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
-                    totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(PvPTargetType)i].GetTotalDestroyed();
+                    totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(TargetType)i].GetTotalDestroyed();
                 }
                 Debug.Log($"CRUISERS DESTROYED RIGHT: {totalDestroyed[2]}");
                 CompleteBattleClientRpc(!wasPlayerVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);

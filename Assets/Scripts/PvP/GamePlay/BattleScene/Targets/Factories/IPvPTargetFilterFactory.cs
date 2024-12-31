@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetFilterFactory
     {
         IPvPTargetFilter CreateTargetFilter(PvPFaction faction);
-        IPvPTargetFilter CreateTargetFilter(PvPFaction faction, IList<PvPTargetType> targetTypes);
+        IPvPTargetFilter CreateTargetFilter(PvPFaction faction, IList<TargetType> targetTypes);
         IPvPTargetFilter CreateDummyTargetFilter(bool isMatchResult);
         IPvPTargetFilter CreateTargetInFrontFilter(IPvPUnit source);
         IPvPExactMatchTargetFilter CreateExactMatchTargetFilter();

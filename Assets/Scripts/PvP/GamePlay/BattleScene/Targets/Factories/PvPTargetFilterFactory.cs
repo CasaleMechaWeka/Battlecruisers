@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return new PvPFactionTargetFilter(faction);
         }
 
-        public IPvPTargetFilter CreateTargetFilter(PvPFaction faction, IList<PvPTargetType> targetTypes)
+        public IPvPTargetFilter CreateTargetFilter(PvPFaction faction, IList<TargetType> targetTypes)
         {
             return new PvPFactionAndTargetTypeFilter(faction, targetTypes);
         }

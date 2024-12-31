@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using BattleCruisers.Buildables;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
@@ -23,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float RangeInM => pvpTurretStats.RangeInM;
         public float MinRangeInM => pvpTurretStats.MinRangeInM;
         public float MeanFireRatePerS => pvpTurretStats.MeanFireRatePerS;
-        public ReadOnlyCollection<PvPTargetType> AttackCapabilities => pvpTurretStats.AttackCapabilities;
+        public ReadOnlyCollection<TargetType> AttackCapabilities => pvpTurretStats.AttackCapabilities;
         public float DurationInS => pvpTurretStats.DurationInS;
         public int BurstSize => pvpTurretStats.BurstSize;
 
