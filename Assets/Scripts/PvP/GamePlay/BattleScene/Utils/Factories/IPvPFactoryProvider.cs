@@ -11,6 +11,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Fa
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         IPvPBoostFactory BoostFactory { get; }
         IPvPDamageApplierFactory DamageApplierFactory { get; }
-        IPvPDeferrerProvider DeferrerProvider { get; }
+        IDeferrerProvider DeferrerProvider { get; }
         IPvPDroneMonitor DroneMonitor { get; }
         IPvPFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IPvPMovementControllerFactory MovementControllerFactory { get; }

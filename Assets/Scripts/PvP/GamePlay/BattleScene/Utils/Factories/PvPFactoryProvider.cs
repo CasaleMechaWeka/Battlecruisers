@@ -12,10 +12,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Fa
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public IPvPBoostFactory BoostFactory { get; }
         public IPvPDamageApplierFactory DamageApplierFactory { get; }
-        public IPvPDeferrerProvider DeferrerProvider { get; }
+        public IDeferrerProvider DeferrerProvider { get; }
         public IPvPDroneMonitor DroneMonitor { get; private set; }
         public IPvPFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IPvPMovementControllerFactory MovementControllerFactory { get; }
@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 = new PvPSpriteChooserFactory(
                     new PvPAssignerFactory(),
                     spriteProvider);
-            DeferrerProvider = new PvPDeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
+            DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
 
