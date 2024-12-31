@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IAngleCalculator CreateMortarAngleCalculator(IProjectileFlightStats projectileFlightStats)
         {
-            return new PvPMortarAngleCalculator(_angleHelper, _angleConverter, projectileFlightStats);
+            return new MortarAngleCalculator(_angleHelper, _angleConverter, projectileFlightStats);
         }
 
         public IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees)
