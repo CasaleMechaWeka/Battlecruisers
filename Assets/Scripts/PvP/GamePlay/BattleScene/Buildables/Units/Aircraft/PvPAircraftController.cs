@@ -18,6 +18,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -340,7 +341,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Vector3 currentPosition = rigidBody.position;
             rigidBody.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
 
-            _factoryProvider.DeferrerProvider.Deferrer.Defer(((IPvPRemovable)this).RemoveFromScene, seabedParkTimeInS);
+            _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
         }
 
     }

@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Utils.BattleScene;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
@@ -7,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         void OnTriggerEnter2D(Collider2D collider)
         {
-            IPvPRemovable removable = collider.GetComponent<IPvPRemovable>();
+            IRemovable removable = collider.GetComponent<IRemovable>();
 
             if (removable != null)
             {
@@ -15,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
 
-            IPvPRemovable targetRemovable = collider.GetComponent<IPvPTargetProxy>()?.Target as IPvPRemovable;
+            IRemovable targetRemovable = collider.GetComponent<IPvPTargetProxy>()?.Target as IRemovable;
 
             if (targetRemovable != null)
             {

@@ -1,13 +1,13 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Trails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// before deactivating completely and being recycled.
     /// </summary>
     public abstract class PvPProjectileWithTrail<TPvPActivationArgs, TPvPStats> : PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats>,
-        IPvPRemovable,
+        IRemovable,
         IPvPPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
             where TPvPStats : IPvPProjectileStats
