@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(fireIntervalManagerInitialiser);
 
             IDurationProvider waitingDurationProvider = _laserTurretStats;
-            IDurationProvider firingDurationProvider = new PvPDummyDurationProvider(_laserTurretStats.laserDurationInS);
+            IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
             return fireIntervalManagerInitialiser.Initialise(waitingDurationProvider, firingDurationProvider);
         }
 
