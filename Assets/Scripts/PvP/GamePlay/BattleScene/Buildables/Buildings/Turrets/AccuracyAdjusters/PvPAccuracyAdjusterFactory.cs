@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 CreateAccuracyAdjuster(
                     angleCalculator,
                     turretStats,
-                    new PvPHorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M));
+                    new HorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M));
         }
 
         public IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
