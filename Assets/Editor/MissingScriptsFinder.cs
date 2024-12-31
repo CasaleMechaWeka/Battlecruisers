@@ -89,7 +89,7 @@ public class MissingScriptsFinder : EditorWindow
         EditorGUILayout.BeginHorizontal();
 
         // Bottom-left: Ignored items found
-        GUILayout.Label($"Ignored items found: {ignoredItemsFound}", GUILayout.Width(200));
+        GUILayout.Label($"Ignored items found: {ignoredItemsFound}", GUILayout.Width(180));
         GUILayout.FlexibleSpace();
         // Bottom-center: Skip Testing Scenes toggle
         skipTestingScenes = EditorGUILayout.Toggle("Skip Testing Scenes", skipTestingScenes, GUILayout.Width(200));
@@ -114,7 +114,8 @@ public class MissingScriptsFinder : EditorWindow
                 var entry = missingScriptEntries[i];
                 EditorGUILayout.BeginHorizontal();
 
-                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.Width(800));
+                // Adaptive width for the label showing the asset path and object name
+                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.ExpandWidth(true));
 
                 if (GUILayout.Button("Jump", GUILayout.Width(50)))
                 {
@@ -173,7 +174,8 @@ public class MissingScriptsFinder : EditorWindow
                 var entry = ignoreList[i];
                 EditorGUILayout.BeginHorizontal();
 
-                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.Width(800));
+                // Adaptive width for the label showing the asset path and object name
+                GUILayout.Label($"{entry.assetPath} -> {entry.objectName}", GUILayout.ExpandWidth(true));
 
                 if (GUILayout.Button("Remove", GUILayout.Width(80)))
                 {
