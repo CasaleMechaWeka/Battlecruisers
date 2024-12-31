@@ -90,10 +90,10 @@ public class MissingScriptsFinder : EditorWindow
 
         // Bottom-left: Ignored items found
         GUILayout.Label($"Ignored items found: {ignoredItemsFound}", GUILayout.Width(200));
-
+        GUILayout.FlexibleSpace();
         // Bottom-center: Skip Testing Scenes toggle
         skipTestingScenes = EditorGUILayout.Toggle("Skip Testing Scenes", skipTestingScenes, GUILayout.Width(200));
-
+        GUILayout.FlexibleSpace();
         // Bottom-center-right: Skip Trash Scenes toggle
         skipTrashScenes = EditorGUILayout.Toggle("Skip Trash Scenes", skipTrashScenes, GUILayout.Width(200));
         GUILayout.FlexibleSpace();
