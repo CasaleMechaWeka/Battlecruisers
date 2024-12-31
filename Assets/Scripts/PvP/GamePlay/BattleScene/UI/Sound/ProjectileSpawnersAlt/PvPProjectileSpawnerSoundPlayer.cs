@@ -1,14 +1,13 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners
 {
     public abstract class PvPProjectileSpawnerSoundPlayer : IPvPProjectileSpawnerSoundPlayer
     {
-        protected readonly IPvPAudioSource _audioSource;
+        protected readonly IAudioSource _audioSource;
 
-        protected PvPProjectileSpawnerSoundPlayer(IAudioClipWrapper audioClip, IPvPAudioSource audioSource)
+        protected PvPProjectileSpawnerSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource)
         {
             PvPHelper.AssertIsNotNull(audioClip, audioSource);
 

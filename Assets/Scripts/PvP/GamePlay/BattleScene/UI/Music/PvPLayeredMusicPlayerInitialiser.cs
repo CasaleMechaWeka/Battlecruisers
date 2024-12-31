@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
             IAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);
-            IPvPAudioSource primary = new PvPAudioSourceBC(primarySource)
+            IAudioSource primary = new PvPAudioSourceBC(primarySource)
             {
                 AudioClip = primaryClip
             };
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
             AudioSource secondarySource = transform.FindNamedComponent<AudioSource>("SecondaryAudioSource");
             IAudioClipWrapper secondaryClip = await soundFetcher.GetSoundAsync(soundKeys.SecondaryKey);
             secondarySource.clip = secondaryClip.AudioClip;
-            IPvPAudioSource secondary = new PvPAudioSourceBC(secondarySource)
+            IAudioSource secondary = new PvPAudioSourceBC(secondarySource)
             {
                 AudioClip = secondaryClip
             };

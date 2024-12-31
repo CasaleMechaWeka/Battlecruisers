@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -23,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
         public PvPLongSoundPlayer(
             IAudioClipWrapper audioClip,
-            IPvPAudioSource audioSource,
+            IAudioSource audioSource,
             IDeferrer deferrer,
             int burstSize,
             float burstEndDelayInS)

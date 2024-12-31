@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -18,11 +17,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPSingleSoundPlayer : IPvPSingleSoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly IPvPAudioSource _audioSource;
+        private readonly IAudioSource _audioSource;
 
         public bool IsPlayingSound => _audioSource.IsPlaying;
 
-        public PvPSingleSoundPlayer(ISoundFetcher soundFetcher, IPvPAudioSource audioSource)
+        public PvPSingleSoundPlayer(ISoundFetcher soundFetcher, IAudioSource audioSource)
         {
             PvPHelper.AssertIsNotNull(soundFetcher, audioSource);
 

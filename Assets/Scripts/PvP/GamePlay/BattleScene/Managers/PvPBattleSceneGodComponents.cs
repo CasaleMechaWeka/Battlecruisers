@@ -17,6 +17,7 @@ using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -24,10 +25,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     public class PvPBattleSceneGodComponents : MonoBehaviour, IPvPBattleSceneGodComponents
     {
         public AudioSource prioritisedSoundPlayerAudioSource;
-        public IPvPAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
+        public IAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
 
         public AudioSource uiSoundsAudioSource;
-        public IPvPAudioSource UISoundsAudioSource { get; private set; }
+        public IAudioSource UISoundsAudioSource { get; private set; }
 
         public PvPLayeredMusicPlayerInitialiser musicPlayerInitialiser;
         public PvPLayeredMusicPlayerInitialiser MusicPlayerInitialiser => musicPlayerInitialiser;

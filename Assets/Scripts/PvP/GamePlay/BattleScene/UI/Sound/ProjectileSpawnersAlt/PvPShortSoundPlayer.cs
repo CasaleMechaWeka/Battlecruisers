@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners
@@ -9,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     /// </summary>
     public class PvPShortSoundPlayer : PvPProjectileSpawnerSoundPlayer
     {
-        public PvPShortSoundPlayer(IAudioClipWrapper audioClip, IPvPAudioSource audioSource)
+        public PvPShortSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource)
             : base(audioClip, audioSource)
         {
             PvPHelper.AssertIsNotNull(audioClip, audioSource);

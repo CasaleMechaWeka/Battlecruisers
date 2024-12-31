@@ -1,7 +1,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine.Assertions;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
     public class PvPLayeredMusicPlayer : IPvPLayeredMusicPlayer
     {
         private readonly IPvPAudioVolumeFade _audioVolumeFade;
-        private readonly IPvPAudioSource _primarySource, _secondarySource;
+        private readonly IAudioSource _primarySource, _secondarySource;
         private readonly ISettingsManager _settingsManager;
         private bool _isDisposed, _isPlayingSecondary;
 
@@ -18,8 +18,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 
         public PvPLayeredMusicPlayer(
             IPvPAudioVolumeFade audioVolumeFade,
-            IPvPAudioSource primarySource,
-            IPvPAudioSource secondarySource,
+            IAudioSource primarySource,
+            IAudioSource secondarySource,
             ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(audioVolumeFade, primarySource, secondarySource, settingsManager);

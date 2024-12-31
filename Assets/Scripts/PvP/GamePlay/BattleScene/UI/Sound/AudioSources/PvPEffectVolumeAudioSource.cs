@@ -1,18 +1,18 @@
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources
 {
     public class PvPEffectVolumeAudioSource : PvPVolumeAwareAudioSource
     {
         private int _type = -1;
-        public PvPEffectVolumeAudioSource(IPvPAudioSource audioSource, ISettingsManager settingsManager, int type)
+        public PvPEffectVolumeAudioSource(IAudioSource audioSource, ISettingsManager settingsManager, int type)
             : base(audioSource, settingsManager)
         {
             _type = type;
         }
 
-        public PvPEffectVolumeAudioSource(IPvPAudioSource audioSource, ISettingsManager settingsManager)
+        public PvPEffectVolumeAudioSource(IAudioSource audioSource, ISettingsManager settingsManager)
             : base(audioSource, settingsManager)
         {
             _type = -1;
