@@ -1,8 +1,9 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
-    public class PvPLinearRangeFinder : IPvPAngleRangeFinder
+    public class PvPLinearRangeFinder : IAngleRangeFinder
     {
         /// <returns>
         /// The possible range of fire angles.  Includes the given on target range,
