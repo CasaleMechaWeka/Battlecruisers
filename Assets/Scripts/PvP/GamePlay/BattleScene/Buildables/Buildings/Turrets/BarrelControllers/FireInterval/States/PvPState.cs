@@ -1,14 +1,16 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
 {
     public abstract class PvPState : IPvPState
     {
         protected IPvPState _otherState;
-        protected IPvPDurationProvider _durationProvider;
+        protected IDurationProvider _durationProvider;
 
         public abstract bool ShouldFire { get; }
 
         // No constructor due to circular dependency :)
-        public virtual void Initialise(IPvPState otherState, IPvPDurationProvider durationProvider)
+        public virtual void Initialise(IPvPState otherState, IDurationProvider durationProvider)
         {
             // Helper.AssertIsNotNull(otherState, durationProvider);
 

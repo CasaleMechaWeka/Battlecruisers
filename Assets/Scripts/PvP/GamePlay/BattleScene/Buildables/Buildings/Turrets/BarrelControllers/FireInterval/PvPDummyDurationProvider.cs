@@ -1,6 +1,8 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-    public class PvPDummyDurationProvider : IPvPDurationProvider
+    public class PvPDummyDurationProvider : IDurationProvider
     {
         public float DurationInS { get; }
 

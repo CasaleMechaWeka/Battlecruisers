@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser;
@@ -40,8 +41,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPLaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPLaserFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);
 
-            IPvPDurationProvider waitingDurationProvider = _laserTurretStats;
-            IPvPDurationProvider firingDurationProvider = new PvPDummyDurationProvider(_laserTurretStats.laserDurationInS);
+            IDurationProvider waitingDurationProvider = _laserTurretStats;
+            IDurationProvider firingDurationProvider = new PvPDummyDurationProvider(_laserTurretStats.laserDurationInS);
             return fireIntervalManagerInitialiser.Initialise(waitingDurationProvider, firingDurationProvider);
         }
 

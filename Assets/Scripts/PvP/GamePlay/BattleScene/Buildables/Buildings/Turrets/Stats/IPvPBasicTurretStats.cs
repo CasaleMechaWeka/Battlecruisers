@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
-    public interface IPvPBasicTurretStats : IPvPDurationProvider
+    public interface IPvPBasicTurretStats : IDurationProvider
     {
         float FireRatePerS { get; }
         float RangeInM { get; }

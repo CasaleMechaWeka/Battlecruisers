@@ -1,3 +1,5 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
 {
     public abstract class PvPDurationState : PvPState
@@ -6,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected bool _haveFired;
 
         // No constructor due to circular dependency :)
-        public override void Initialise(IPvPState otherState, IPvPDurationProvider durationProvider)
+        public override void Initialise(IPvPState otherState, IDurationProvider durationProvider)
         {
             base.Initialise(otherState, durationProvider);
             Reset();

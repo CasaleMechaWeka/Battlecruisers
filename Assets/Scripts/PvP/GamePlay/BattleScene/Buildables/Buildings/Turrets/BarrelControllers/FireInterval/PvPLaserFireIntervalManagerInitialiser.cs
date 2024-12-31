@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
@@ -6,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPLaserFireIntervalManagerInitialiser : MonoBehaviour
     {
-        public IPvPFireIntervalManager Initialise(IPvPDurationProvider waitingDurationProvider, IPvPDurationProvider firingDurationProvider)
+        public IPvPFireIntervalManager Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider)
         {
             PvPHelper.AssertIsNotNull(waitingDurationProvider, firingDurationProvider);
 
