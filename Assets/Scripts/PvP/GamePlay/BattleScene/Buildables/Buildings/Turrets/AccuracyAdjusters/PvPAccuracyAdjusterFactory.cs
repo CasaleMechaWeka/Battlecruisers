@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters
@@ -32,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 CreateAccuracyAdjuster(
                     angleCalculator,
                     turretStats,
-                    new PvPVerticalTargetBoundsFinder(TARGET_Y_MARGIN_IN_M));
+                    new VerticalTargetBoundsFinder(TARGET_Y_MARGIN_IN_M));
         }
 
         private IAccuracyAdjuster CreateAccuracyAdjuster(
