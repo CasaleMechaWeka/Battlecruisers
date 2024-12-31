@@ -3,11 +3,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using Unity.Netcode;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         where TPvPProjectileArgs : PvPProjectileActivationArgs<TPvPStats>
         where TPvPStats : IPvPProjectileStats
     {
-        private IPvPProjectileSpawnerSoundPlayer _soundPlayer;
+        private IProjectileSpawnerSoundPlayer _soundPlayer;
         private IPvPPool<TPvPProjectile, TPvPProjectileArgs> _projectilePool;
 
         protected IPvPTarget _parent;
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _projectilePool = poolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ProjectilePoolProvider);
 
-            IPvPProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IPvPProjectileSoundPlayerInitialiser>();
+            IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
             _soundPlayer
                 = await soundPlayerInitialiser.CreateSoundPlayerAsync(

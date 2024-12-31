@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     /// the specified delay after the last shot in the burst.  For long sounds, such as the anti-air
     /// turret sound.
     /// </summary>
-    public class PvPLongSoundPlayer : PvPProjectileSpawnerSoundPlayer
+    public class PvPLongSoundPlayer : ProjectileSpawnerSoundPlayer
     {
         private readonly int _burstSize;
         private readonly IDeferrer _deferrer;
