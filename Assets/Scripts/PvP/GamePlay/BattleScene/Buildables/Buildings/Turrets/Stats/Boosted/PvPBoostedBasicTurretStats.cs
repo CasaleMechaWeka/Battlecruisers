@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// <summary>
     /// Wraps IBasicTurretStats, adding boosters.
     /// </summary>
-    public class PvPBoostedBasicTurretStats<TStats> : IPvPBasicTurretStats where TStats : IPvPBasicTurretStats
+    public class PvPBoostedBasicTurretStats<TStats> : IBasicTurretStats where TStats : IBasicTurretStats
     {
         protected readonly TStats _baseStats;
         private readonly IPvPBoostable _fireRateBoostable;

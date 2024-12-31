@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
-    public class PvPBasicTurretStats : MonoBehaviour, IPvPBasicTurretStats
+    public class PvPBasicTurretStats : MonoBehaviour, IBasicTurretStats
     {
         public float fireRatePerS;
         public float FireRatePerS => fireRatePerS;
