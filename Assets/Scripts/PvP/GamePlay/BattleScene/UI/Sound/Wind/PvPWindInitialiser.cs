@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.UI.Sound.Wind;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
                     new PvPAudioSourceBC(audioSource),
                     camera,
                     new PvPVolumeCalculator(
-                        new PvPProportionCalculator(),
+                        new ProportionCalculator(),
                         cameraCalculatorSettings.ValidOrthographicSizes,
                         settingsManager),
                     settingsManager);

@@ -1,17 +1,18 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind
 {
     public class PvPVolumeCalculator : IPvPVolumeCalculator
     {
-        private readonly IPvPProportionCalculator _proportionCalculator;
+        private readonly IProportionCalculator _proportionCalculator;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
 
         public PvPVolumeCalculator(
-            IPvPProportionCalculator proportionCalculator,
+            IProportionCalculator proportionCalculator,
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager)
         {
