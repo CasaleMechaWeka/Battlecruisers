@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators
 {
@@ -7,8 +7,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         IAngleHelper CreateAngleHelper();
         IAngleCalculator CreateAngleCalculator();
-        IAngleCalculator CreateArtilleryAngleCalculator(IPvPProjectileFlightStats projectileFlightStats);
-        IAngleCalculator CreateMortarAngleCalculator(IPvPProjectileFlightStats projectileFlightStats);
+        IAngleCalculator CreateArtilleryAngleCalculator(IProjectileFlightStats projectileFlightStats);
+        IAngleCalculator CreateMortarAngleCalculator(IProjectileFlightStats projectileFlightStats);
         IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees);
     }
 }

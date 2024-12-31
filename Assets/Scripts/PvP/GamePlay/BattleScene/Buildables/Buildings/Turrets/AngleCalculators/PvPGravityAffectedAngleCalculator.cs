@@ -1,7 +1,7 @@
 using System;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -15,13 +15,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public abstract class PvPGravityAffectedAngleCalculator : AngleCalculator
     {
         private readonly IAngleConverter _angleConverter;
-        private readonly IPvPProjectileFlightStats _projectileFlightStats;
+        private readonly IProjectileFlightStats _projectileFlightStats;
         private readonly float _adjustedGravity;
         private float previousAngle;
 
         protected abstract bool UseLargerAngle { get; }
 
-        public PvPGravityAffectedAngleCalculator(IAngleHelper angleHelper, IAngleConverter angleConverter, IPvPProjectileFlightStats projectileFlightStats)
+        public PvPGravityAffectedAngleCalculator(IAngleHelper angleHelper, IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats)
             : base(angleHelper)
         {
             PvPHelper.AssertIsNotNull(angleConverter, projectileFlightStats);
