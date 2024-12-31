@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Choose smaller angle, because we want the artillery to fire in a flat arc instead of a high arc.
         protected override bool UseLargerAngle => false;
 
-        public PvPArtilleryAngleCalculator(IAngleHelper angleHelper, IPvPAngleConverter angleConverter, IPvPProjectileFlightStats projectileFlightStats)
+        public PvPArtilleryAngleCalculator(IAngleHelper angleHelper, IAngleConverter angleConverter, IPvPProjectileFlightStats projectileFlightStats)
             : base(angleHelper, angleConverter, projectileFlightStats)
         {
         }

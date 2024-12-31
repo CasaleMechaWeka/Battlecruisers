@@ -6,12 +6,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPAngleCalculatorFactory : IPvPAngleCalculatorFactory
     {
         private readonly IAngleHelper _angleHelper;
-        private readonly IPvPAngleConverter _angleConverter;
+        private readonly IAngleConverter _angleConverter;
 
         public PvPAngleCalculatorFactory()
         {
             _angleHelper = new AngleHelper();
-            _angleConverter = new PvPAngleConverter();
+            _angleConverter = new AngleConverter();
         }
 
         public IAngleHelper CreateAngleHelper()

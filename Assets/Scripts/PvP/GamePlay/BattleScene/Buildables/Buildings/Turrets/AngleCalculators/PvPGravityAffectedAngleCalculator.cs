@@ -14,14 +14,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public abstract class PvPGravityAffectedAngleCalculator : AngleCalculator
     {
-        private readonly IPvPAngleConverter _angleConverter;
+        private readonly IAngleConverter _angleConverter;
         private readonly IPvPProjectileFlightStats _projectileFlightStats;
         private readonly float _adjustedGravity;
         private float previousAngle;
 
         protected abstract bool UseLargerAngle { get; }
 
-        public PvPGravityAffectedAngleCalculator(IAngleHelper angleHelper, IPvPAngleConverter angleConverter, IPvPProjectileFlightStats projectileFlightStats)
+        public PvPGravityAffectedAngleCalculator(IAngleHelper angleHelper, IAngleConverter angleConverter, IPvPProjectileFlightStats projectileFlightStats)
             : base(angleHelper)
         {
             PvPHelper.AssertIsNotNull(angleConverter, projectileFlightStats);
