@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
                 new PvPWindManager(
                     new PvPAudioSourceBC(audioSource),
                     camera,
-                    new PvPVolumeCalculator(
+                    new VolumeCalculator(
                         new ProportionCalculator(),
                         cameraCalculatorSettings.ValidOrthographicSizes,
                         settingsManager),

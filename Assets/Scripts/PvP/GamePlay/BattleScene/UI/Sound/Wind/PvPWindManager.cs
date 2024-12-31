@@ -1,6 +1,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 
@@ -10,13 +11,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     {
         private readonly IAudioSource _audioSource;
         private readonly IPvPCamera _camera;
-        private readonly IPvPVolumeCalculator _volumeCalculator;
+        private readonly IVolumeCalculator _volumeCalculator;
         private readonly ISettingsManager _settingsManager;
 
         public PvPWindManager(
             IAudioSource audioSource,
             IPvPCamera camera,
-            IPvPVolumeCalculator volumeCalculator,
+            IVolumeCalculator volumeCalculator,
             ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(audioSource, camera, volumeCalculator, settingsManager);
