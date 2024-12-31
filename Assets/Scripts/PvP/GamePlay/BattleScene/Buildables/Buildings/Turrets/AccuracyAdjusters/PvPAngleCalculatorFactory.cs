@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees)
         {
-            return new PvPStaticAngleCalculator(_angleHelper, desiredAngleInDegrees);
+            return new StaticAngleCalculator(_angleHelper, desiredAngleInDegrees);
         }
     }
 }
