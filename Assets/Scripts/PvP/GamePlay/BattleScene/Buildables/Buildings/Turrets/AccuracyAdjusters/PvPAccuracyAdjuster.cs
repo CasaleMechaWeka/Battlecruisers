@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// <summary>
     /// NOTE:  All angles are in degrees.
     /// </summary>
-    public class PvPAccuracyAdjuster : IPvPAccuracyAdjuster
+    public class PvPAccuracyAdjuster : IAccuracyAdjuster
     {
         private readonly IPvPTargetBoundsFinder _boundsFinder;
         private readonly IAngleCalculator _angleCalculator;

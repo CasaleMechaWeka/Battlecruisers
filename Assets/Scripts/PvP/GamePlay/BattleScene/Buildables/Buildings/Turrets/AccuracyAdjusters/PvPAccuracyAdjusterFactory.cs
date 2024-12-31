@@ -11,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float TARGET_X_MARGIN_IN_M = 0.75f;
         private const float TARGET_Y_MARGIN_IN_M = 0.75f;
 
-        public IPvPAccuracyAdjuster CreateDummyAdjuster()
+        public IAccuracyAdjuster CreateDummyAdjuster()
         {
             return new PvPDummyAccuracyAdjuster();
         }
 
-        public IPvPAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
+        public IAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
         {
             return
                 CreateAccuracyAdjuster(
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     new PvPHorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M));
         }
 
-        public IPvPAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
+        public IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
         {
             return
                 CreateAccuracyAdjuster(
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     new PvPVerticalTargetBoundsFinder(TARGET_Y_MARGIN_IN_M));
         }
 
-        private IPvPAccuracyAdjuster CreateAccuracyAdjuster(
+        private IAccuracyAdjuster CreateAccuracyAdjuster(
             IAngleCalculator angleCalculator,
             ITurretStats turretStats,
             IPvPTargetBoundsFinder targetBoundsFinder)

@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters
@@ -5,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// <summary>
     /// Null object
     /// </summary>
-    public class PvPDummyAccuracyAdjuster : IPvPAccuracyAdjuster
+    public class PvPDummyAccuracyAdjuster : IAccuracyAdjuster
     {
         public float FindAngleInDegrees(float idealFireAngle, Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
         {

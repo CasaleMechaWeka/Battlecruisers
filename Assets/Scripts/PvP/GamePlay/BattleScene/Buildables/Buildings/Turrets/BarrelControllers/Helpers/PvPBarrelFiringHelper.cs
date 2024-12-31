@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
@@ -7,13 +7,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBarrelFiringHelper : IPvPBarrelFiringHelper
     {
         private readonly IPvPBarrelController _barrelController;
-        private readonly IPvPAccuracyAdjuster _accuracyAdjuster;
+        private readonly IAccuracyAdjuster _accuracyAdjuster;
         private readonly IPvPFireIntervalManager _fireIntervalManager;
         private readonly IPvPBarrelFirer _barrelFirer;
 
         public PvPBarrelFiringHelper(
             IPvPBarrelController barrelController,
-            IPvPAccuracyAdjuster accuracyAdjuster,
+            IAccuracyAdjuster accuracyAdjuster,
             IPvPFireIntervalManager fireIntervalManager,
             IPvPBarrelFirer barrelFirer)
         {
