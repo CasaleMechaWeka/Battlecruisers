@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPSoundPlayer : IPvPSoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly IPvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs> _audioSourcePool;
+        private readonly IPvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
 
-        public PvPSoundPlayer(ISoundFetcher soundFetcher, IPvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs> audioSourcePool)
+        public PvPSoundPlayer(ISoundFetcher soundFetcher, IPvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> audioSourcePool)
         {
             PvPHelper.AssertIsNotNull(soundFetcher, audioSourcePool);
 
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
         {
             Assert.IsNotNull(sound);
-            PvPAudioSourceActivationArgs activationArgs = new PvPAudioSourceActivationArgs(sound, position);
+            AudioSourceActivationArgs activationArgs = new AudioSourceActivationArgs(sound, position);
             _audioSourcePool.GetItem(activationArgs);
         }
     }

@@ -7,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using BattleCruisers.UI.Sound.Pools;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,8 +30,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private PvPPool<IPvPDroneController, PvPDroneActivationArgs> _dronePool;
         public IPvPPool<IPvPDroneController, PvPDroneActivationArgs> DronePool => _dronePool;
 
-        private PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs> _audioSourcePool;
-        public IPvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
+        private PvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
+        public IPvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
 
         public IPvPUnitToPoolMap UnitToPoolMap { get; }
 
@@ -73,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _dronePool = new PvPPool<IPvPDroneController, PvPDroneActivationArgs>(droneFactory);
 
             IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-            _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs>(audioSourceFactory);
+            _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }

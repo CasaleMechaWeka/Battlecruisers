@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Threading;
 using System;
 using UnityEngine.Assertions;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             _source.IsActive = false;
         }
 
-        public void Activate(PvPAudioSourceActivationArgs activationArgs)
+        public void Activate(AudioSourceActivationArgs activationArgs)
         {
             Assert.IsNotNull(activationArgs);
 
@@ -37,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             _realTimeDeferrer.Defer(CleanUp, activationArgs.Sound.Length);
         }
 
-        public void Activate(PvPAudioSourceActivationArgs activationArgs, PvPFaction faction)
+        public void Activate(AudioSourceActivationArgs activationArgs, PvPFaction faction)
         {
         }
 
