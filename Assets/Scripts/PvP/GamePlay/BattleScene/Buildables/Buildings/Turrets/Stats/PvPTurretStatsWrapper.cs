@@ -5,10 +5,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
-    public class PvPTurretStatsWrapper : IPvPTurretStatsWrapper
+    public class PvPTurretStatsWrapper : ITurretStatsWrapper
     {
         private ITurretStats _turretStats;
-        public ITurretStats pvpTurretStats
+        public ITurretStats TurretStats
         {
             private get { return _turretStats; }
             set
@@ -18,20 +18,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public float Accuracy => pvpTurretStats.Accuracy;
-        public float TurretRotateSpeedInDegrees => pvpTurretStats.TurretRotateSpeedInDegrees;
-        public bool IsInBurst => pvpTurretStats.IsInBurst;
-        public float FireRatePerS => pvpTurretStats.FireRatePerS;
-        public float RangeInM => pvpTurretStats.RangeInM;
-        public float MinRangeInM => pvpTurretStats.MinRangeInM;
-        public float MeanFireRatePerS => pvpTurretStats.MeanFireRatePerS;
-        public ReadOnlyCollection<TargetType> AttackCapabilities => pvpTurretStats.AttackCapabilities;
-        public float DurationInS => pvpTurretStats.DurationInS;
-        public int BurstSize => pvpTurretStats.BurstSize;
+        public float Accuracy => TurretStats.Accuracy;
+        public float TurretRotateSpeedInDegrees => TurretStats.TurretRotateSpeedInDegrees;
+        public bool IsInBurst => TurretStats.IsInBurst;
+        public float FireRatePerS => TurretStats.FireRatePerS;
+        public float RangeInM => TurretStats.RangeInM;
+        public float MinRangeInM => TurretStats.MinRangeInM;
+        public float MeanFireRatePerS => TurretStats.MeanFireRatePerS;
+        public ReadOnlyCollection<TargetType> AttackCapabilities => TurretStats.AttackCapabilities;
+        public float DurationInS => TurretStats.DurationInS;
+        public int BurstSize => TurretStats.BurstSize;
 
         public PvPTurretStatsWrapper(ITurretStats turretStats)
         {
-            pvpTurretStats = turretStats;
+            TurretStats = turretStats;
         }
 
         public void MoveToNextDuration()

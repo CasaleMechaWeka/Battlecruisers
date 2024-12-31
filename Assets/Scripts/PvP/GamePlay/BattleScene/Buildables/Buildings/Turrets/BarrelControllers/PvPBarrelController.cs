@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPProjectileStats ProjectileStats => _projectileStats;
 
         private PvPTurretStats _baseTurretStats;
-        private IPvPTurretStatsWrapper _turretStatsWrapper;
+        private ITurretStatsWrapper _turretStatsWrapper;
         public ITurretStats pvpTurretStats => _turretStatsWrapper;
 
         public IPvPTarget Target { get; set; }
@@ -149,7 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(args);
             _parent = args.Parent;
             _targetFilter = args.TargetFilter;
-            _turretStatsWrapper.pvpTurretStats
+            _turretStatsWrapper.TurretStats
                 = args.CruiserSpecificFactories.TurretStatsFactory.CreateBoostedTurretStats(
                     _baseTurretStats,
                     args.LocalBoostProviders,
