@@ -11,6 +11,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using Unity.Services.Core;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Loading
 {
