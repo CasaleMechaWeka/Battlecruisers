@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetBoundsFinder targetBoundsFinder)
         {
             return
-                new PvPAccuracyAdjuster(
+                new AccuracyAdjuster(
                     targetBoundsFinder,
                     angleCalculator,
                     new LinearRangeFinder(),
