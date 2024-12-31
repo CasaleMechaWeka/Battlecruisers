@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPDummyAccuracyAdjuster();
         }
 
-        public IPvPAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IPvPAngleCalculator angleCalculator, IPvPTurretStats turretStats)
+        public IPvPAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IAngleCalculator angleCalculator, IPvPTurretStats turretStats)
         {
             return
                 CreateAccuracyAdjuster(
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     new PvPHorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M));
         }
 
-        public IPvPAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IPvPAngleCalculator angleCalculator, IPvPTurretStats turretStats)
+        public IPvPAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IAngleCalculator angleCalculator, IPvPTurretStats turretStats)
         {
             return
                 CreateAccuracyAdjuster(
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         private IPvPAccuracyAdjuster CreateAccuracyAdjuster(
-            IPvPAngleCalculator angleCalculator,
+            IAngleCalculator angleCalculator,
             IPvPTurretStats turretStats,
             IPvPTargetBoundsFinder targetBoundsFinder)
         {

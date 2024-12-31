@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// 1. Shells ARE affected by gravity
     /// 2. Target is in facing direction of source
     /// </summary>
-    public abstract class PvPGravityAffectedAngleCalculator : PvPAngleCalculator
+    public abstract class PvPGravityAffectedAngleCalculator : AngleCalculator
     {
         private readonly IPvPAngleConverter _angleConverter;
         private readonly IPvPProjectileFlightStats _projectileFlightStats;

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters
@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPAccuracyAdjusterFactory
     {
         IPvPAccuracyAdjuster CreateDummyAdjuster();
-        IPvPAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IPvPAngleCalculator angleCalculator, IPvPTurretStats turretStats);
-        IPvPAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IPvPAngleCalculator angleCalculator, IPvPTurretStats turretStats);
+        IPvPAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IAngleCalculator angleCalculator, IPvPTurretStats turretStats);
+        IPvPAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IAngleCalculator angleCalculator, IPvPTurretStats turretStats);
     }
 }

@@ -1,5 +1,5 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [Header("True to use lower arc (artillery), false to use higher arc (mortar)")]
         public bool useLowerArc = true;
 
-        protected override IPvPAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats)
         {
             if (useLowerArc)
             {
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected override IPvPAccuracyAdjuster CreateAccuracyAdjuster(IPvPAngleCalculator angleCalculator, IPvPBarrelController barrel)
+        protected override IPvPAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IPvPBarrelController barrel)
         {
             if (barrel.pvpTurretStats.Accuracy >= PvPConstants.MAX_ACCURACY)
             {

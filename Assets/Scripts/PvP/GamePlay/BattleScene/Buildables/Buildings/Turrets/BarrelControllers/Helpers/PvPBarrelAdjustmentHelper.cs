@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IPvPBarrelController _barrelController;
         private readonly IPvPTargetPositionPredictor _targetPositionPredictor;
         private readonly IPvPTargetPositionValidator _targetPositionValidator;
-        private readonly IPvPAngleCalculator _angleCalculator;
+        private readonly IAngleCalculator _angleCalculator;
         private readonly IPvPRotationMovementController _rotationMovementController;
         private readonly IPvPAngleLimiter _angleLimiter;
         private readonly IPvPAttackablePositionFinder _attackablePositionFinder;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBarrelController barrelController,
             IPvPTargetPositionPredictor targetPositionPredictor,
             IPvPTargetPositionValidator targetPositionValidator,
-            IPvPAngleCalculator angleCalculator,
+            IAngleCalculator angleCalculator,
             IPvPRotationMovementController rotationMovementController,
             IPvPAngleLimiter angleLimiter,
             IPvPAttackablePositionFinder attackablePositionFinder)

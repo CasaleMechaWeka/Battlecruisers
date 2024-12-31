@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor();
         }
 
-        protected override IPvPAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats)
         {
             return _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator();
         }

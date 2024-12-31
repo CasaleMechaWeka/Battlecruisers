@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPUpdater Updater { get; }
         public IPvPTargetFilter TargetFilter { get; }
         public IPvPTargetPositionPredictor TargetPositionPredictor { get; }
-        public IPvPAngleCalculator AngleCalculator { get; }
+        public IAngleCalculator AngleCalculator { get; }
         public IPvPAttackablePositionFinder AttackablePositionFinder { get; }
         public IPvPAccuracyAdjuster AccuracyAdjuster { get; }
         public IPvPRotationMovementController RotationMovementController { get; }
@@ -42,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPUpdater updater,
             IPvPTargetFilter targetFilter,
             IPvPTargetPositionPredictor targetPositionPredictor,
-            IPvPAngleCalculator angleCalculator,
+            IAngleCalculator angleCalculator,
             IPvPAttackablePositionFinder attackablePositionFinder,
             IPvPAccuracyAdjuster accuracyAdjuster,
             IPvPRotationMovementController rotationMovementController,

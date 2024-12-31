@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected abstract float DesiredAngleInDegrees { get; }
 
-        protected override IPvPAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats)
         {
             return _factoryProvider.Turrets.AngleCalculatorFactory.CreateStaticAngleCalculator(DesiredAngleInDegrees);
         }

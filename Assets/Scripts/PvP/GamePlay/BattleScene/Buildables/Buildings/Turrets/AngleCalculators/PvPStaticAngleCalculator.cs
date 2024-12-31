@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators
 {
-    public class PvPStaticAngleCalculator : PvPAngleCalculator
+    public class PvPStaticAngleCalculator : AngleCalculator
     {
         private readonly float _desiredAngleInDegrees;
 

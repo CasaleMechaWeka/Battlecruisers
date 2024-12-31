@@ -19,22 +19,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _angleHelper;
         }
 
-        public IPvPAngleCalculator CreateAngleCalculator()
+        public IAngleCalculator CreateAngleCalculator()
         {
-            return new PvPAngleCalculator(_angleHelper);
+            return new AngleCalculator(_angleHelper);
         }
 
-        public IPvPAngleCalculator CreateArtilleryAngleCalculator(IPvPProjectileFlightStats projectileFlightStats)
+        public IAngleCalculator CreateArtilleryAngleCalculator(IPvPProjectileFlightStats projectileFlightStats)
         {
             return new PvPArtilleryAngleCalculator(_angleHelper, _angleConverter, projectileFlightStats);
         }
 
-        public IPvPAngleCalculator CreateMortarAngleCalculator(IPvPProjectileFlightStats projectileFlightStats)
+        public IAngleCalculator CreateMortarAngleCalculator(IPvPProjectileFlightStats projectileFlightStats)
         {
             return new PvPMortarAngleCalculator(_angleHelper, _angleConverter, projectileFlightStats);
         }
 
-        public IPvPAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees)
+        public IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees)
         {
             return new PvPStaticAngleCalculator(_angleHelper, desiredAngleInDegrees);
         }

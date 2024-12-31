@@ -6,9 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPAngleCalculatorFactory
     {
         IAngleHelper CreateAngleHelper();
-        IPvPAngleCalculator CreateAngleCalculator();
-        IPvPAngleCalculator CreateArtilleryAngleCalculator(IPvPProjectileFlightStats projectileFlightStats);
-        IPvPAngleCalculator CreateMortarAngleCalculator(IPvPProjectileFlightStats projectileFlightStats);
-        IPvPAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees);
+        IAngleCalculator CreateAngleCalculator();
+        IAngleCalculator CreateArtilleryAngleCalculator(IPvPProjectileFlightStats projectileFlightStats);
+        IAngleCalculator CreateMortarAngleCalculator(IPvPProjectileFlightStats projectileFlightStats);
+        IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees);
     }
 }

@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
@@ -23,6 +22,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -141,7 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             //Debug.Log(_enemyFaction);
             // Shared by all barrels
             IPvPTargetFilter targetFilter = CreateTargetFilter();
-            IPvPAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
+            IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
             IPvPAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
 
             foreach (PvPBarrelController barrel in _barrels)
@@ -208,7 +208,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBarrelController barrel,
             IPvPBuildable parent,
             IPvPTargetFilter targetFilter,
-            IPvPAngleCalculator angleCalculator,
+            IAngleCalculator angleCalculator,
             IPvPAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
             ObservableCollection<IPvPBoostProvider> localBoostProviders,
@@ -273,7 +273,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor();
         }
 
-        protected abstract IPvPAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats);
+        protected abstract IAngleCalculator CreateAngleCalculator(IPvPProjectileStats projectileStats);
 
         private IPvPAttackablePositionFinder CreateAttackablePositionFinder()
         {
@@ -298,7 +298,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     deltaTimeProvider);
         }
 
-        protected virtual IPvPAccuracyAdjuster CreateAccuracyAdjuster(IPvPAngleCalculator angleCalculator, IPvPBarrelController barrel)
+        protected virtual IPvPAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IPvPBarrelController barrel)
         {
             // Default to 100% accuracy
             return _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster();
