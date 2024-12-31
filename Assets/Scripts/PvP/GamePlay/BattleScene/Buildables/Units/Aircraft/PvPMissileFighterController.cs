@@ -21,6 +21,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPTargetFinder _followableTargetFinder, _shootableTargetFinder;
         private IPvPTargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
         private IPvPMovementController _fighterMovementController;
-        private IPvPAngleHelper _angleHelper;
+        private IAngleHelper _angleHelper;
         private PvPManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemyDetectorProvider;
         private PvPAircraftBarrelWrapper barrelWrapper;
         private PvPBarrelController[] _barrelControllers;

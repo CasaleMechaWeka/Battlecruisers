@@ -1,4 +1,5 @@
 using System;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected abstract bool UseLargerAngle { get; }
 
-        public PvPGravityAffectedAngleCalculator(IPvPAngleHelper angleHelper, IPvPAngleConverter angleConverter, IPvPProjectileFlightStats projectileFlightStats)
+        public PvPGravityAffectedAngleCalculator(IAngleHelper angleHelper, IPvPAngleConverter angleConverter, IPvPProjectileFlightStats projectileFlightStats)
             : base(angleHelper)
         {
             PvPHelper.AssertIsNotNull(angleConverter, projectileFlightStats);

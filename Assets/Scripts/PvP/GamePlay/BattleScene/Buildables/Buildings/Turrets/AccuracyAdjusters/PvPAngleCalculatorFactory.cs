@@ -1,19 +1,20 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleCalculators
 {
     public class PvPAngleCalculatorFactory : IPvPAngleCalculatorFactory
     {
-        private readonly IPvPAngleHelper _angleHelper;
+        private readonly IAngleHelper _angleHelper;
         private readonly IPvPAngleConverter _angleConverter;
 
         public PvPAngleCalculatorFactory()
         {
-            _angleHelper = new PvPAngleHelper();
+            _angleHelper = new AngleHelper();
             _angleConverter = new PvPAngleConverter();
         }
 
-        public IPvPAngleHelper CreateAngleHelper()
+        public IAngleHelper CreateAngleHelper()
         {
             return _angleHelper;
         }

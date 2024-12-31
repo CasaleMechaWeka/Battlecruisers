@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -5,9 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPAngleCalculator : IPvPAngleCalculator
     {
-        private readonly IPvPAngleHelper _angleHelper;
+        private readonly IAngleHelper _angleHelper;
 
-        public PvPAngleCalculator(IPvPAngleHelper angleHelper)
+        public PvPAngleCalculator(IAngleHelper angleHelper)
         {
             Assert.IsNotNull(angleHelper);
             _angleHelper = angleHelper;
