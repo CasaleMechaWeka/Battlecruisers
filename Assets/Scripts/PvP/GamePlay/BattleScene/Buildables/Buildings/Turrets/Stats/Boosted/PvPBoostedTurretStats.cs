@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// <summary>
     /// Wraps ITurretStats, adding boosters.
     /// </summary>
-    public class PvPBoostedTurretStats : PvPBoostedBasicTurretStats<IPvPTurretStats>, IPvPTurretStats
+    public class PvPBoostedTurretStats : PvPBoostedBasicTurretStats<ITurretStats>, ITurretStats
     {
         private readonly IPvPBoostable _accuracyBoostable;
         private readonly IPvPBoostableGroup _accuracyBoostableGroup;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public int BurstSize => _baseStats.BurstSize;
 
         public PvPBoostedTurretStats(
-            IPvPTurretStats baseStats,
+            ITurretStats baseStats,
             IPvPBoostFactory boostFactory,
             ObservableCollection<IPvPBoostProvider> localBoostProviders,
             ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders,

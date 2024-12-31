@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPBarrelController : IPvPTargetConsumer
     {
         Transform Transform { get; }
-        IPvPTurretStats pvpTurretStats { get; }
+        ITurretStats pvpTurretStats { get; }
         IPvPProjectileStats ProjectileStats { get; }
         Vector3 ProjectileSpawnerPosition { get; }
         bool IsSourceMirrored { get; }

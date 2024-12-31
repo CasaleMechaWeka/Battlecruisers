@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser;
@@ -36,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _laserTurretStats;
         }
 
-        protected override IPvPFireIntervalManager SetupFireIntervalManager(IPvPTurretStats turretStats)
+        protected override IPvPFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
             PvPLaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPLaserFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);

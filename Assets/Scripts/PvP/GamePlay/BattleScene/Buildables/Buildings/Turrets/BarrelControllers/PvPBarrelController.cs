@@ -16,6 +16,7 @@ using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private PvPTurretStats _baseTurretStats;
         private IPvPTurretStatsWrapper _turretStatsWrapper;
-        public IPvPTurretStats pvpTurretStats => _turretStatsWrapper;
+        public ITurretStats pvpTurretStats => _turretStatsWrapper;
 
         public IPvPTarget Target { get; set; }
         public IPvPTarget CurrentTarget => Target;
@@ -127,7 +128,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected virtual IPvPFireIntervalManager SetupFireIntervalManager(IPvPTurretStats turretStats)
+        protected virtual IPvPFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
             PvPFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);

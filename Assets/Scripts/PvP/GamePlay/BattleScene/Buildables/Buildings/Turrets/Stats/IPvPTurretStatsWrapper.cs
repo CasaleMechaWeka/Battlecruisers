@@ -1,3 +1,5 @@
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
     /// <summary>
@@ -5,8 +7,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// to be switched (eg: from normal TurretStats to BoostedTurretStats) without
     /// the consumer noticing.
     /// </summary>
-    public interface IPvPTurretStatsWrapper : IPvPTurretStats
+    public interface IPvPTurretStatsWrapper : ITurretStats
     {
-        IPvPTurretStats pvpTurretStats { set; }
+        ITurretStats pvpTurretStats { set; }
     }
 }

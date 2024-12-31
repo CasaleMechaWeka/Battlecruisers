@@ -1,10 +1,11 @@
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
-    public class PvPTurretStats : PvPBasicTurretStats, IPvPTurretStats
+    public class PvPTurretStats : PvPBasicTurretStats, ITurretStats
     {
         public float accuracy;
         public float Accuracy => accuracy;

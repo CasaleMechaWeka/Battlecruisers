@@ -1,13 +1,14 @@
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
     public class PvPTurretStatsWrapper : IPvPTurretStatsWrapper
     {
-        private IPvPTurretStats _turretStats;
-        public IPvPTurretStats pvpTurretStats
+        private ITurretStats _turretStats;
+        public ITurretStats pvpTurretStats
         {
             private get { return _turretStats; }
             set
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float DurationInS => pvpTurretStats.DurationInS;
         public int BurstSize => pvpTurretStats.BurstSize;
 
-        public PvPTurretStatsWrapper(IPvPTurretStats turretStats)
+        public PvPTurretStatsWrapper(ITurretStats turretStats)
         {
             pvpTurretStats = turretStats;
         }

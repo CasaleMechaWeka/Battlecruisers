@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -18,14 +19,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IAngleCalculator _angleCalculator;
         private readonly IAngleRangeFinder _angleRangeFinder;
         private readonly IRandomGenerator _random;
-        private readonly IPvPTurretStats _turretStats;
+        private readonly ITurretStats _turretStats;
 
         public PvPAccuracyAdjuster(
             IPvPTargetBoundsFinder boundsFinder,
             IAngleCalculator angleCalculator,
             IAngleRangeFinder angleRangeFinder,
             IRandomGenerator random,
-            IPvPTurretStats turretStats)
+            ITurretStats turretStats)
         {
             PvPHelper.AssertIsNotNull(boundsFinder, angleCalculator, angleRangeFinder, random, turretStats);
 
