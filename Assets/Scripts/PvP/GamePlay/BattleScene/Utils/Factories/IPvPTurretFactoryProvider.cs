@@ -1,5 +1,5 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public interface IPvPTurretFactoryProvider
     {
-        IPvPAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
+        IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
         IAngleCalculatorFactory AngleCalculatorFactory { get; }
         IPvPAngleLimiterFactory AngleLimiterFactory { get; }
         IPvPAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
