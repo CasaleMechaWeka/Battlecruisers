@@ -5,8 +5,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,12 +15,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPUnitsMenuController : PvPBuildablesMenuController<PvPUnitButtonController, IPvPUnit>
     {
-        private IPvPSingleSoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _soundPlayer;
         private IPvPUnitClickHandler _unitClickHandler;
         private IPvPFactory _factory;
 
         public void Initialise(
-            IPvPSingleSoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IPvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPUnit>> units,

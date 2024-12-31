@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
 {
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public IPvPBuildMenu BuildMenu { get; }
         public IPvPItemDetailsManager DetailsManager { get; }
         public IPvPPrioritisedSoundPlayer SoundPlayer { get; }
-        public IPvPSingleSoundPlayer UISoundPlayer { get; }
+        public ISingleSoundPlayer UISoundPlayer { get; }
 
         public PvPManagerArgs(
             PvPCruiser playerCruiser,
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPBuildMenu buildMenu,
             IPvPItemDetailsManager detailsManager,
             IPvPPrioritisedSoundPlayer soundPlayer,
-            IPvPSingleSoundPlayer uiSoundPlayer)
+            ISingleSoundPlayer uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser, buildMenu, detailsManager, soundPlayer, uiSoundPlayer);
 

@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPCanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton;
 
         public void Initialise(
-            IPvPSingleSoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             bool isTutorial,
             IPvPMainMenuManager menuManager)
         {
@@ -17,9 +17,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(soundPlayer, menuManager);
 
             endGameButton.Initialise(soundPlayer, menuManager.QuitGame);
-        //    skipTutorialButton.Initialise(soundPlayer, menuManager.QuitGame);
+            //    skipTutorialButton.Initialise(soundPlayer, menuManager.QuitGame);
             resumeButton.Initialise(soundPlayer, menuManager.DismissMenu);
-        //    retryButton.Initialise(soundPlayer, menuManager.RetryLevel);
+            //    retryButton.Initialise(soundPlayer, menuManager.RetryLevel);
             settingsButton.Initialise(soundPlayer, menuManager.ShowSettings);
 
             /*            if (isTutorial)

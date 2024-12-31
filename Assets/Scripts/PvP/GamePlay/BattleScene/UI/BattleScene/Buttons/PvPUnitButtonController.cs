@@ -4,8 +4,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         public void Initialise(
-            IPvPSingleSoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPUnit> unitWrapper,
             IPvPBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
             IPvPUnitClickHandler unitClickHandler)

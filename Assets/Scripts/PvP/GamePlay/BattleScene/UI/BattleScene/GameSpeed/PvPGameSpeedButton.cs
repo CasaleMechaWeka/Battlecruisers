@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.UI.Sound.Players;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public void Initialise(IPvPSingleSoundPlayer soundPlayer, IPvPBroadcastingFilter shouldBeEnabledFilter, IPvPTime time)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPBroadcastingFilter shouldBeEnabledFilter, IPvPTime time)
         {
             base.Initialise(soundPlayer);
 

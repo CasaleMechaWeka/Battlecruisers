@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
+using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public override void Initialise(
-            IPvPSingleSoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             Action clickAction = null,
             IPvPDismissableEmitter parent = null)
         {

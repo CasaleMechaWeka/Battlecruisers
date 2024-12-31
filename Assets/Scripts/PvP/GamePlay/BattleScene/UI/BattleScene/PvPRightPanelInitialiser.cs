@@ -8,13 +8,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUpdater perFrameUpdater,
             IPvPPauseGameManager pauseGameManager,
             IPvPBattleCompletionHandler battleCompletionHandler,
-            IPvPSingleSoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IPvPNavigationPermitterManager navigationPermitterManager
             )
         {
@@ -83,7 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUpdater perFrameUpdater,
             IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            IPvPSingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer)
         {
             PvPInformatorPanelController informator = GetComponentInChildren<PvPInformatorPanelController>();
             Assert.IsNotNull(informator);
@@ -100,14 +100,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return informator;
         }
 
-        private PvPSpeedComponents SetupSpeedPanel(IPvPSingleSoundPlayer soundPlayer, IPvPButtonVisibilityFilters buttonVisibilityFilters)
+        private PvPSpeedComponents SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IPvPButtonVisibilityFilters buttonVisibilityFilters)
         {
             PvPSpeedPanelController speedPanelInitialiser = GetComponentInChildren<PvPSpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
             return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButtons(IPvPSingleSoundPlayer soundPlayer, IPvPMainMenuManager mainMenuManager)
+        private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IPvPMainMenuManager mainMenuManager)
         {
             PvPMainMenuButtonController mainMenuButton = GetComponentInChildren<PvPMainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);

@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPCanvasGroupButton heckleButton, mainMenuButton;
 
-        public void Initialise(IPvPBroadcastingFilter enabledFilter, IPvPCameraFocuser cameraFocuser, IPvPSingleSoundPlayer singleSoundPlayer)
+        public void Initialise(IPvPBroadcastingFilter enabledFilter, IPvPCameraFocuser cameraFocuser, ISingleSoundPlayer singleSoundPlayer)
         {
             base.Initialise();
 

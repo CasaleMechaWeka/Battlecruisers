@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.Sound.Players;
 using System;
 using Unity.Netcode;
 
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             }
         }
 
-        public void Initialise(IPvPSingleSoundPlayer soundPlayer, IPvPDroneFocuser droneFocuser, IPvPRepairManager repairManager)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPDroneFocuser droneFocuser, IPvPRepairManager repairManager)
         {
             base.Initialise(soundPlayer);
 

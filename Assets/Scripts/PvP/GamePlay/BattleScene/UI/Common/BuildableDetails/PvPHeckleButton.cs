@@ -1,10 +1,10 @@
 using BattleCruisers.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using TMPro;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage
 {
@@ -15,11 +15,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public TextMeshProUGUI message;
 
         private IHeckleData _heckleData;
-        private IPvPSingleSoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private ILocTable hecklesStrings;
         private PvPHecklePanelController _panelController;
-        public async void StaticInitialise(IPvPSingleSoundPlayer soundPlayer, IDataProvider dataProvider, IHeckleData heckleData, PvPHecklePanelController panelController)
+        public async void StaticInitialise(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IHeckleData heckleData, PvPHecklePanelController panelController)
         {
             Helper.AssertIsNotNull(soundPlayer, dataProvider, heckleData, panelController);
             _soundPlayer = soundPlayer;

@@ -1,7 +1,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -21,10 +21,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public IPvPSlidingPanel HecklePanel => hecklePanel;
 
         private IDataProvider _dataProvider;
-        private IPvPSingleSoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _soundPlayer;
         private IPvPUIManager _puUIManager;
         private bool isOpened;
-        public async void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer, IPvPUIManager uiManager)
+        public async void Initialise(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer, IPvPUIManager uiManager)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer, closed, opened, hecklesButton);
             _dataProvider = dataProvider;

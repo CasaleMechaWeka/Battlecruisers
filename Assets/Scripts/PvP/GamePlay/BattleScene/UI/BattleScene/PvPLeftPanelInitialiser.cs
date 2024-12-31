@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -96,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
-            IPvPSingleSoundPlayer uiSoundPlayer,
+            ISingleSoundPlayer uiSoundPlayer,
             IPvPPopulationLimitMonitor populationLimitMonitor,
             IStaticData staticData,
             bool flipClickAndDragIcon)
@@ -155,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
-            IPvPSingleSoundPlayer uiSoundPlayer,
+            ISingleSoundPlayer uiSoundPlayer,
             IPvPPopulationLimitMonitor populationLimitMonitor,
             IStaticData staticData,
             bool flipClickAndDragIcon)

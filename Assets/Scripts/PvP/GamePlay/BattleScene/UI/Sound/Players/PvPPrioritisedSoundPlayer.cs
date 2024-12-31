@@ -1,4 +1,5 @@
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players
@@ -11,12 +12,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     /// </summary>
     public class PvPPrioritisedSoundPlayer : IPvPPrioritisedSoundPlayer
     {
-        private readonly IPvPSingleSoundPlayer _soundPlayer;
+        private readonly ISingleSoundPlayer _soundPlayer;
         private PrioritisedSoundKey _lastSoundKey;
 
         public bool Enabled { get; set; } = true;
 
-        public PvPPrioritisedSoundPlayer(IPvPSingleSoundPlayer soundPlayer)
+        public PvPPrioritisedSoundPlayer(ISingleSoundPlayer soundPlayer)
         {
             Assert.IsNotNull(soundPlayer);
             _soundPlayer = soundPlayer;

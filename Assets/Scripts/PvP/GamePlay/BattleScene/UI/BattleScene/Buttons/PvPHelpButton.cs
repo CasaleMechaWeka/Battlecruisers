@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.HelpLabels;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
+using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         //private Image _leverOff, _leverOn;
         private IPvPHelpLabelManager _helpLabelManager;
 
-        public void Initialise(IPvPSingleSoundPlayer soundPlayer, IPvPHelpLabelManager helpLabelManager)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPHelpLabelManager helpLabelManager)
         {
             base.Initialise(soundPlayer);
 

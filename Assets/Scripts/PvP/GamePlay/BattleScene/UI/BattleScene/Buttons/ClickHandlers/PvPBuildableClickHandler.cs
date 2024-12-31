@@ -2,16 +2,17 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers
 {
     public abstract class PvPBuildableClickHandler
     {
         protected readonly IPvPPrioritisedSoundPlayer _eventSoundPlayer;
-        protected readonly IPvPSingleSoundPlayer _uiSoundPlayer;
+        protected readonly ISingleSoundPlayer _uiSoundPlayer;
         protected readonly IPvPUIManager _uiManager;
 
-        public PvPBuildableClickHandler(IPvPUIManager uiManager, IPvPPrioritisedSoundPlayer eventSoundPlayer, IPvPSingleSoundPlayer uiSoundPlayer)
+        public PvPBuildableClickHandler(IPvPUIManager uiManager, IPvPPrioritisedSoundPlayer eventSoundPlayer, ISingleSoundPlayer uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(uiManager, eventSoundPlayer, uiSoundPlayer);
 

@@ -10,6 +10,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
 {
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPBuildMenu _buildMenu;
         private IPvPItemDetailsManager _detailsManager;
         private IPvPPrioritisedSoundPlayer _soundPlayer;
-        private IPvPSingleSoundPlayer _uiSoundPlayer;
+        private ISingleSoundPlayer _uiSoundPlayer;
         private IPvPBuilding lastClickedBuilding;
         private IPvPUnit lastClickedUnit;
         private IPvPCruiser lastClickedCruiser;

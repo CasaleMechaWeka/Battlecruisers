@@ -5,11 +5,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
@@ -115,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         public bool isSelected = false;
-        public void Initialise(IPvPSingleSoundPlayer soundPlayer, IPvPBuildable buildable, IPvPBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPBuildable buildable, IPvPBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

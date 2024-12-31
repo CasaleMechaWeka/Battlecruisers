@@ -4,7 +4,7 @@ using DG.Tweening;
 using BattleCruisers.Data;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage
 {
@@ -15,10 +15,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private RectTransform messageFrame;
 
         private IDataProvider _dataProvider;
-        private IPvPSingleSoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _soundPlayer;
         private ILocTable heckleStrings;
 
-        public async void Initialise(IDataProvider dataProvider, IPvPSingleSoundPlayer soundPlayer)
+        public async void Initialise(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer);
             _dataProvider = dataProvider;
