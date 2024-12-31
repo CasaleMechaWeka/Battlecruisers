@@ -192,7 +192,7 @@ namespace BattleCruisers.Data.Static
             { "CAPTAINEXO000", 0},{ "CAPTAINEXO001", 1},{ "CAPTAINEXO002", 2},{ "CAPTAINEXO003", 3},{ "CAPTAINEXO004", 4},{ "CAPTAINEXO005", 5},{ "CAPTAINEXO006", 6},{ "CAPTAINEXO007", 7},{ "CAPTAINEXO008", 8},{ "CAPTAINEXO009", 9},
             { "CAPTAINEXO010", 10},{ "CAPTAINEXO011", 11},{ "CAPTAINEXO012", 12},{ "CAPTAINEXO013", 13}, { "CAPTAINEXO014", 14},{ "CAPTAINEXO015", 15}, { "CAPTAINEXO016", 16}, { "CAPTAINEXO017", 17},{ "CAPTAINEXO018", 18},{ "CAPTAINEXO019", 19},
             { "CAPTAINEXO020", 20},{ "CAPTAINEXO021", 21}, { "CAPTAINEXO022", 22}, { "CAPTAINEXO023", 23}, { "CAPTAINEXO024", 24},  { "CAPTAINEXO025", 25}, { "CAPTAINEXO026", 26}, { "CAPTAINEXO027", 27}, { "CAPTAINEXO028", 28},{ "CAPTAINEXO029", 29},
-            { "CAPTAINEXO030", 30},{ "CAPTAINEXO031", 31},{ "CAPTAINEXO032", 32},{ "CAPTAINEXO033", 33},{ "CAPTAINEXO034", 34},{ "CAPTAINEXO035", 35},{ "CAPTAINEXO036", 36},{ "CAPTAINEXO037", 37},{ "CAPTAINEXO038", 38},{ "CAPTAINEXO039", 39},{ "CAPTAINEXO040", 40},
+            { "CAPTAINEXO030", 30},{ "CAPTAINEXO031", 31},{ "CAPTAINEXO032", 32},{ "CAPTAINEXO033", 33},{ "CAPTAINEXO034", 34},{ "CAPTAINEXO035", 35},{ "CAPTAINEXO036", 36},{ "CAPTAINEXO037", 37},{ "CAPTAINEXO038", 38},{ "CAPTAINEXO039", 39},{ "CAPTAINEXO040", 40}
         };
 
         public static class CaptainExo
@@ -306,7 +306,7 @@ namespace BattleCruisers.Data.Static
             { "HECKLE260", 260}, { "HECKLE261", 261}, { "HECKLE262", 262}, { "HECKLE263", 263}, { "HECKLE264", 264},
             { "HECKLE265", 265}, { "HECKLE266", 266}, { "HECKLE267", 267}, { "HECKLE268", 268}, { "HECKLE269", 269},
             { "HECKLE270", 270}, { "HECKLE271", 271}, { "HECKLE272", 272}, { "HECKLE273", 273}, { "HECKLE274", 274},
-            { "HECKLE275", 275}, { "HECKLE276", 276}, { "HECKLE277", 277}, { "HECKLE278", 278}, { "HECKLE279", 279},
+            { "HECKLE275", 275}, { "HECKLE276", 276}, { "HECKLE277", 277}, { "HECKLE278", 278}, { "HECKLE279", 279}
         };
 
         public static Dictionary<string, int> BodykitItems { get; } = new Dictionary<string, int>
@@ -321,6 +321,7 @@ namespace BattleCruisers.Data.Static
             { "BODYKIT035", 35},{ "BODYKIT036", 36},{ "BODYKIT037", 37},{ "BODYKIT038", 38},{ "BODYKIT039", 39},
             { "BODYKIT040", 40},{ "BODYKIT041", 41},{ "BODYKIT042", 42},{ "BODYKIT043", 43},{ "BODYKIT044", 44},
             { "BODYKIT045", 45},{ "BODYKIT046", 46},{ "BODYKIT047", 47},{ "BODYKIT048", 48},{ "BODYKIT049", 49},
+            { "BODYKIT050", 50}
         };
         public static class CaptainExos
         {

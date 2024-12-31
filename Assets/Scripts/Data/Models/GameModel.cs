@@ -690,6 +690,7 @@ namespace BattleCruisers.Data.Models
                     new BodykitData(nameBase: "Bodykit047", descriptionBase : "BodykitDescription047", cost: 1650, owned : false, id: 47),
                     new BodykitData(nameBase: "Bodykit048", descriptionBase : "BodykitDescription048", cost: 1120, owned : false, id: 48),
                     new BodykitData(nameBase: "Bodykit049", descriptionBase : "BodykitDescription049", cost: 1000, owned : false, id: 49),
+                    new BodykitData(nameBase: "Bodykit050", descriptionBase : "BodykitDescription050", cost: 1400, owned : false, id: 50)
             };
 
             _variants = new List<VariantData>
@@ -824,14 +825,14 @@ namespace BattleCruisers.Data.Models
                 new VariantData(prefabName: "Variant127", variantNameBase : "Refined", variantDescriptionBase : "RefinedDescription", coins: 0, credits: 662, owned: false, id: 127),
                 new VariantData(prefabName: "Variant128", variantNameBase : "Sniper", variantDescriptionBase : "SniperDescription", coins: 0, credits: 662, owned: false, id: 128),
                 new VariantData(prefabName: "Variant129", variantNameBase : "Robust", variantDescriptionBase : "RobustDescription", coins: 0, credits: 662, owned: false, id: 129),
-                new VariantData(prefabName: "Variant130", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 130),
+                new VariantData(prefabName: "Variant130", variantNameBase : "Damaging", variantDescriptionBase : "DamagingDescription", coins: 0, credits: 662, owned: false, id: 130)
             };
 
             _iaps = new List<IAPData> {
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins100Name", iapDescriptionKeybase: "Coins100Description", iapIconName: "Coins100Pack", 0.99f, 100),
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins500Name", iapDescriptionKeybase: "Coins500Description", iapIconName: "Coins500Pack", 1.99f, 500),
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Name", iapDescriptionKeybase: "Coins1000Description", iapIconName: "Coins1000Pack", 2.99f, 1000),
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Name", iapDescriptionKeybase: "Coins5000Description", iapIconName: "Coins5000Pack", 3.99f, 5000),
+                    new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Name", iapDescriptionKeybase: "Coins5000Description", iapIconName: "Coins5000Pack", 3.99f, 5000)
             };
 
             _purchasedExos = new List<int> { 0 };
@@ -857,7 +858,7 @@ namespace BattleCruisers.Data.Models
                 new Arena("UACArena", costcredits:1500, prizecredits: 400),
                 new Arena("RioBattlesport", costcoins:10, prizecoins:15, prizecredits:2000, consolationcredits:2000),
                 new Arena("UACUltimate", costcoins: 10000, prizecredits:20000),
-                new Arena("MercenaryOne", costcoins:50, prizecredits:50000, prizenukes: 1),
+                new Arena("MercenaryOne", costcoins:50, prizecredits:50000, prizenukes: 1)
             };
 
             _queueName = "bc-1vs1-queue";
@@ -923,7 +924,7 @@ namespace BattleCruisers.Data.Models
                                             { "lastSkirmish_Difficulty", skirmishDifficulty },
                                             { "LifetimeDestructionScore", LifetimeDestructionScore },
                                             { "BestDestructionScore", BestDestructionScore },
-                                            { "HasAttemptedTutorial", HasAttemptedTutorial },
+                                            { "HasAttemptedTutorial", HasAttemptedTutorial }
                                           };
         }
 
