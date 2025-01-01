@@ -9,7 +9,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Clamping;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.Clamping;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -386,7 +386,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                             input,
                             new PvPScreenBC(),
                             edgeRegionWidthInPixels),
-                        new PvPClamper()));
+                        new Clamper()));
             }
 
             targetProviders.Add(
@@ -404,7 +404,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     cameraCalculator,
                     directionalZoom,
                     scrollRecogniser,
-                    new PvPBufferClamper(CAMERA_X_POSITION_BUFFER_IN_M)));
+                    new BufferClamper(CAMERA_X_POSITION_BUFFER_IN_M)));
 
             return targetProviders;
         }
