@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.Utils.Timers;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private PvPCruiser _playerCruiser;
         private readonly IPvPPopulationLimitMonitor _populationLimitMonitor;
         private readonly IPvPPrioritisedSoundPlayer _soundPlayer;
-        private readonly IPvPDebouncer _debouncer;
+        private readonly IDebouncer _debouncer;
         private readonly IPvPGameObject _popLimitReachedFeedback;
 
         public PvPPopulationLimitAnnouncer(
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPPopulationLimitAnnouncer(
             IPvPPopulationLimitMonitor populationLimitMonitor,
             IPvPPrioritisedSoundPlayer soundPlayer,
-            IPvPDebouncer debouncer,
+            IDebouncer debouncer,
             IPvPGameObject popLimitReachedFeedback)
         {
             PvPHelper.AssertIsNotNull(populationLimitMonitor, soundPlayer, debouncer, popLimitReachedFeedback);

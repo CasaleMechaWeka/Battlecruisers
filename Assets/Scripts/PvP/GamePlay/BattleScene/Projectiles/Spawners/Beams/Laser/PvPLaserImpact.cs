@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPLaserImpact : MonoBehaviour, IPvPLaserImpact
     {
         private IPvPParticleSystemGroup _effects;
-        private IPvPDebouncer _debouncer;
+        private IDebouncer _debouncer;
 
         private const float HIDE_IMPACT_DEBOUNCE_TIME_IN_S = 0.25f;
 

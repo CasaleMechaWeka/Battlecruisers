@@ -2,7 +2,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
@@ -11,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IPvPCruiserBuildingMonitor _cruiserBuildingMonitor;
         private readonly IPvPCruiserUnitMonitor _cruiserUnitMonitor;
         private readonly IPvPPrioritisedSoundPlayer _soundPlayer;
-        private readonly IPvPDebouncer _debouncer;
+        private readonly IDebouncer _debouncer;
 
         public PvPUltrasConstructionMonitor(
             IPvPCruiserController cruiser,
             IPvPPrioritisedSoundPlayer soundPlayer,
-            IPvPDebouncer debouncer)
+            IDebouncer debouncer)
         {
             PvPHelper.AssertIsNotNull(cruiser, soundPlayer, debouncer);
 

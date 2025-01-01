@@ -5,7 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 
@@ -75,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPHealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     playerCruiserDamageMonitor,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
-                    new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
+                    new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
         private PvPUltrasConstructionMonitor CreateUltrasConstructionMonitor(IPvPCruiser aiCruiser, ITime time)
@@ -84,7 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 new PvPUltrasConstructionMonitor(
                     aiCruiser,
                     aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
-                    new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
+                    new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
         /*        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, ITime time, IPvPGameObject popLimitReachedFeedback)
@@ -104,7 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 new PvPPopulationLimitAnnouncer(
                     playerCruiser.PopulationLimitMonitor,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
-                    new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
+                    new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
                     popLimitReachedFeedback);
         }
     }

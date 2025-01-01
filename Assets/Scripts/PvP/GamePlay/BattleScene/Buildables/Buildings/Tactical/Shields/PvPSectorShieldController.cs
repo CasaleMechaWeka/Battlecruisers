@@ -1,11 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Timers;
 using System.Collections.Generic;
 using Unity.Netcode;
 using BattleCruisers.Data.Static;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPSoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
-        private IPvPDebouncer _takeDamageSoundDebouncer;
+        private IDebouncer _takeDamageSoundDebouncer;
 
         public GameObject visuals;
         public PolygonCollider2D polygonCollider;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             float diameter = 2 * Stats.ShieldRadiusInM;
             _size = new Vector2(diameter, diameter);
 
-            _takeDamageSoundDebouncer = new PvPDebouncer(PvPTimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
+            _takeDamageSoundDebouncer = new Debouncer(PvPTimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
         public void Initialise(Faction faction, IPvPSoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)

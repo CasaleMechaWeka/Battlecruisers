@@ -2,13 +2,14 @@ using System;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers
 {
     /// <summary>
     /// Performs the debounce action after the specified time after the last debounce call.
     /// </summary>
-    public class PvPDeferredDebouncer : IPvPDebouncer
+    public class PvPDeferredDebouncer : IDebouncer
     {
         private readonly ITimeSinceGameStartProvider _time;
         private readonly IDeferrer _deferrer;

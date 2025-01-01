@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPCheaterButtonsPanelToggler : MonoBehaviour
     {
-        private IPvPDebouncer _debouncer;
+        private IDebouncer _debouncer;
 
         public float debounceTimeInS = 1;
         public int numOfContactPoints = 4;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Destroy(gameObject);
 #endif
 
-            _debouncer = new PvPDebouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS);
+            _debouncer = new Debouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS);
         }
 
         void Update()

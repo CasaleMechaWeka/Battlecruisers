@@ -27,7 +27,6 @@ using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
@@ -41,6 +40,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Timers;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPLeftPanelComponents leftPanelComponents;
         private ITime time;
         private IPvPPauseGameManager pauseGameManager;
-        private IPvPDebouncer _debouncer;
+        private IDebouncer _debouncer;
         private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
         private IPvPWindManager windManager;
@@ -427,7 +427,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     SynchedServerData.Instance.GetTeam() == Team.RIGHT);
             time = PvPTimeBC.Instance;
             IPvPPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
-            _debouncer = new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
+            _debouncer = new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
             playerCruiser.pvp_popLimitReachedFeedback.OnValueChanged += IsPopulationLimitReached_ValueChanged;
             playerCruiser.pvp_DroneNumIncreased.OnValueChanged += DroneNumIncreased_ValueChanged;
             playerCruiser.pvp_IdleDronesStarted.OnValueChanged += IdleDronesStarted_ValueChanged;
@@ -802,7 +802,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void IdleDronesStarted_ValueChanged(bool oldVal, bool newVal)
         {
-            new PvPDebouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle));
+            new Debouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle));
         }
 
         private void IdleDronesEnded_ValueChanged(bool oldVal, bool newVal)

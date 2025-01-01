@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                     laserEmitter.IsLaserFiring,
                     laserFlap,
                     smokeDischarge,
-                    new PvPDebouncer(PvPTimeBC.Instance.TimeSinceGameStartProvider, laserStoppedDebounceTimeInS));
+                    new Debouncer(PvPTimeBC.Instance.TimeSinceGameStartProvider, laserStoppedDebounceTimeInS));
         }
     }
 }
