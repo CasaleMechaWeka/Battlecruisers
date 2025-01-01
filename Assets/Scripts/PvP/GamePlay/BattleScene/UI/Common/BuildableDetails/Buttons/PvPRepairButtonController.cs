@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
             }
             else if (!NetworkManager.Singleton.IsHost)
-                _repairable.clickedRepairButton?.Invoke();
+                _repairable.PvPClickedRepairButton?.Invoke();
         }
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)

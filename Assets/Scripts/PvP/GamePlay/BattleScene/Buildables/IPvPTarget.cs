@@ -28,6 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void SetBuildingImmunity(bool boo);
         bool IsBuildingImmune();
 
-        Action clickedRepairButton { get; set; }
+        Action PvPClickedRepairButton { get; set; }
     }
 }

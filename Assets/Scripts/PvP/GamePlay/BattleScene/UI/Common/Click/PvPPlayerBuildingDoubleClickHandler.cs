@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                         // Building repairs
                         /* IPvPDroneConsumer repairDroneConsumer = playerBuliding.ParentCruiser.RepairManager.GetDroneConsumer(playerBuliding);
                          playerBuliding.ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);*/
-                        playerBuliding.clickedRepairButton?.Invoke();
+                        playerBuliding.PvPClickedRepairButton?.Invoke();
                     }
 
                 }
