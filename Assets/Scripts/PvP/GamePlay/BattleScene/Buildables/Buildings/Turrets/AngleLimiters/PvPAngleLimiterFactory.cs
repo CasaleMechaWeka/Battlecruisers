@@ -2,7 +2,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters
 {
-    public class PvPAngleLimiterFactory : IPvPAngleLimiterFactory
+    public class PvPAngleLimiterFactory : IAngleLimiterFactory
     {
         public IAngleLimiter CreateDummyLimiter()
         {
