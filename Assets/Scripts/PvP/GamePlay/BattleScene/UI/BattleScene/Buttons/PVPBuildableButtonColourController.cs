@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using System;
@@ -20,8 +20,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     /// </summary>
     public class PvPBuildableButtonColourController
     {
-        private readonly IPvPBroadcastingProperty<IPvPTarget> _selectedItem;
-        private readonly IDictionary<IPvPTarget, IPvPBuildableButton> _buildableToButton;
+        private readonly IPvPBroadcastingProperty<ITarget> _selectedItem;
+        private readonly IDictionary<ITarget, IPvPBuildableButton> _buildableToButton;
 
         private IPvPBuildableButton _selectedButton;
         private IPvPBuildableButton SelectedButton
@@ -42,14 +42,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public PvPBuildableButtonColourController(IPvPBroadcastingProperty<IPvPTarget> selectedItem, IReadOnlyCollection<IPvPBuildableButton> buttons)
+        public PvPBuildableButtonColourController(IPvPBroadcastingProperty<ITarget> selectedItem, IReadOnlyCollection<IPvPBuildableButton> buttons)
         {
             PvPHelper.AssertIsNotNull(selectedItem, buttons);
 
             _selectedItem = selectedItem;
             _selectedItem.ValueChanged += _selectedItem_ValueChanged;
 
-            _buildableToButton = new Dictionary<IPvPTarget, IPvPBuildableButton>();
+            _buildableToButton = new Dictionary<ITarget, IPvPBuildableButton>();
             foreach (IPvPBuildableButton button in buttons)
             {
                 _buildableToButton.Add(button.Buildable, button);

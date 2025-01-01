@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using System;
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPHealthBarController : PvPBaseProgressBarController, IHealthBar
     {
-        private IPvPDamagable _damagable;
+        private IDamagable _damagable;
         private float _maxHealth;
         private bool _followDamagable;
 
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public void Initialise(IPvPDamagable damagable, bool followDamagable = false)
+        public void Initialise(IDamagable damagable, bool followDamagable = false)
         {
             Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
 
@@ -76,7 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public void OverrideHealth(IPvPDamagable damagable)
+        public void OverrideHealth(IDamagable damagable)
         {
             Assert.IsNotNull(damagable);
             Assert.IsTrue(damagable.Health > 0);

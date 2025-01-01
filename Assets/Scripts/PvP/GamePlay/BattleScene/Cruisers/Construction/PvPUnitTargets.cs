@@ -8,26 +8,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPUnitTargets : IPvPUnitTargets
     {
-        private readonly HashSet<IPvPTarget> _ships;
-        public IReadOnlyCollection<IPvPTarget> Ships => _ships;
+        private readonly HashSet<ITarget> _ships;
+        public IReadOnlyCollection<ITarget> Ships => _ships;
 
-        private readonly HashSet<IPvPTarget> _aircraft;
-        public IReadOnlyCollection<IPvPTarget> Aircraft => _aircraft;
+        private readonly HashSet<ITarget> _aircraft;
+        public IReadOnlyCollection<ITarget> Aircraft => _aircraft;
 
-        private readonly HashSet<IPvPTarget> _cruisers;
-        public IReadOnlyCollection<IPvPTarget> Cruisers => _cruisers;
+        private readonly HashSet<ITarget> _cruisers;
+        public IReadOnlyCollection<ITarget> Cruisers => _cruisers;
 
-        private readonly HashSet<IPvPTarget> _shipsAndAircraft;
-        public IReadOnlyCollection<IPvPTarget> ShipsAndAircraft => _shipsAndAircraft;
+        private readonly HashSet<ITarget> _shipsAndAircraft;
+        public IReadOnlyCollection<ITarget> ShipsAndAircraft => _shipsAndAircraft;
 
         public PvPUnitTargets(IPvPCruiserUnitMonitor cruiserUnitMonitor)
         {
             Assert.IsNotNull(cruiserUnitMonitor);
 
-            _ships = new HashSet<IPvPTarget>();
-            _aircraft = new HashSet<IPvPTarget>();
-            _shipsAndAircraft = new HashSet<IPvPTarget>();
-            _cruisers = new HashSet<IPvPTarget>();
+            _ships = new HashSet<ITarget>();
+            _aircraft = new HashSet<ITarget>();
+            _shipsAndAircraft = new HashSet<ITarget>();
+            _cruisers = new HashSet<ITarget>();
 
             cruiserUnitMonitor.UnitStarted += CruiserUnitMonitor_UnitStarted;
             cruiserUnitMonitor.UnitDestroyed += CruiserUnitMonitor_UnitDestroyed;

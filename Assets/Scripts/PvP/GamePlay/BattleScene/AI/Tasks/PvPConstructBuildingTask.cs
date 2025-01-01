@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -68,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             TaskCompleted();
         }
 
-        private void _building_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _building_Destroyed(object sender, DestroyedEventArgs e)
         {
             TaskCompleted();
         }

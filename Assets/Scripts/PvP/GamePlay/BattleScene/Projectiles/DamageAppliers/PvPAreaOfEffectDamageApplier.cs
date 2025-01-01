@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _targetLayerMask = targetLayerMask;
         }
 
-        public void ApplyDamage(IPvPTarget baseTarget, Vector2 collisionPoint, IPvPTarget damageSource)
+        public void ApplyDamage(ITarget baseTarget, Vector2 collisionPoint, ITarget damageSource)
         {
             Collider2D[] colliders;
             Collider2D[] secondaryColliders;
@@ -39,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             foreach (Collider2D collider in colliders)
             {
-                IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+                ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
                 if (target != null
                     && !target.IsDestroyed
@@ -52,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             foreach (Collider2D collider in secondaryColliders)
             {
-                IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+                ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
                 if (target != null
                     && !target.IsDestroyed

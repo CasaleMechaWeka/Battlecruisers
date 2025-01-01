@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPTargetFilter _targetFilter;
         private IPvPDamageApplier _damageApplier;
         private IPvPDamageApplier _singleDamageApplier;
-        private IPvPTarget _parent;
+        private ITarget _parent;
         private IAudioClipWrapper _impactSound;
         private IPvPPool<IPvPExplosion, Vector3> _explosionPool;
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
         // the target collider does not trigger OnTriggerExit2D().  I filed a bug with
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
-        private IPvPTarget _targetToDamage;
+        private ITarget _targetToDamage;
 
         protected Rigidbody2D _rigidBody;
 
@@ -181,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (!IsHost)
                 return;
             Logging.LogMethod(Tags.SHELLS);
-            IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+            ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
             if (target != null
                 && !target.IsDestroyed
                 && _targetFilter != null

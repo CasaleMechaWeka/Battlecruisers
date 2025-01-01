@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
@@ -114,7 +114,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private bool AreTrackingTarget(IPvPTarget target)
+        private bool AreTrackingTarget(ITarget target)
         {
             return _targets.Any(rankedTarget => ReferenceEquals(rankedTarget.Target, target));
         }
@@ -125,7 +125,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             HighestPriorityTargetChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private PvPRankedTarget CreateRankedTarget(IPvPTarget target)
+        private PvPRankedTarget CreateRankedTarget(ITarget target)
         {
             int targetRank = _targetRanker.RankTarget(target);
             return new PvPRankedTarget(target, targetRank);

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
@@ -53,8 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected override float TrailLifetimeInS => 3;
 
-        private IPvPTarget _target;
-        public IPvPTarget Target
+        private ITarget _target;
+        public ITarget Target
         {
             get => _target;
             set
@@ -190,7 +190,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.DestroyProjectile();
         }
 
-        private void _target_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _target_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= _target_Destroyed;
             Retarget();

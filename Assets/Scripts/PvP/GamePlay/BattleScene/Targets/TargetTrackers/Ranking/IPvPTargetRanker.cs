@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking
 {
@@ -11,6 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         /// 
         /// The lowest priority is 0.  There is no upper limit.
         /// </returns>
-        int RankTarget(IPvPTarget target);
+        int RankTarget(ITarget target);
     }
 }

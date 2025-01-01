@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public PvPToggleDroneButtonController toggleDronesButton;
         public IPvPButton ToggleDronesButton => toggleDronesButton;
 
-        public IPvPTarget SelectedItem
+        public ITarget SelectedItem
         {
             set
             {

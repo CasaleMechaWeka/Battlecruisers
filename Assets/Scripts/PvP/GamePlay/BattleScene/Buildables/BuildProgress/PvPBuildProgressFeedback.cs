@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
@@ -92,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildProgressImage.FillAmount = 0;
         }
 
-        private void _currentBuildable_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _currentBuildable_Destroyed(object sender, DestroyedEventArgs e)
         {
             _buildProgressImage.FillAmount = 0;
         }

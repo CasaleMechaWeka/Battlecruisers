@@ -45,8 +45,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private List<SpriteRenderer> _renderers;
         public IList<SpriteRenderer> Renderers => _renderers;
 
-        private IPvPTarget _target;
-        public IPvPTarget Target
+        private ITarget _target;
+        public ITarget Target
         {
             get { return _target; }
             set
@@ -327,7 +327,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return animationInitialiser?.CreateAnimation();
         }
 
-        private string PrintTarget(IPvPTarget target)
+        private string PrintTarget(ITarget target)
         {
             return target?.ToString() ?? "null";
         }

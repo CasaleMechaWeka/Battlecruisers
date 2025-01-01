@@ -5,10 +5,10 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
-    public class PvPChooseTargetButtonVisibilityFilter : IFilter<IPvPTarget>
+    public class PvPChooseTargetButtonVisibilityFilter : IFilter<ITarget>
     {
         // AI buildings or cruiser
-        public bool IsMatch(IPvPTarget target)
+        public bool IsMatch(ITarget target)
         {
             return
                 target != null
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                     || target.TargetType == TargetType.Cruiser);
         }
 
-        public bool IsMatch(IPvPTarget target, VariantPrefab variant)
+        public bool IsMatch(ITarget target, VariantPrefab variant)
         {
             return
                 target != null

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters
@@ -12,12 +12,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _isMatchResult = isMatchResult;
         }
 
-        public virtual bool IsMatch(IPvPTarget target)
+        public virtual bool IsMatch(ITarget target)
         {
             return _isMatchResult;
         }
 
-        public virtual bool IsMatch(IPvPTarget target, VariantPrefab variant)
+        public virtual bool IsMatch(ITarget target, VariantPrefab variant)
         {
             return _isMatchResult;
         }

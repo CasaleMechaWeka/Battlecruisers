@@ -13,12 +13,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     public class PvPChooseTargetButtonController : PvPCanvasGroupButton, IPvPButton
     {
         private IPvPUserChosenTargetHelper _userChosenTargetHelper;
-        private IFilter<IPvPTarget> _buttonVisibilityFilter;
+        private IFilter<ITarget> _buttonVisibilityFilter;
 
         public Image activeFeedback;
 
-        private IPvPTarget _target;
-        public IPvPTarget Target
+        private ITarget _target;
+        public ITarget Target
         {
             private get { return _target; }
             set
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IPvPUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<IPvPTarget> buttonVisibilityFilter)
+            IFilter<ITarget> buttonVisibilityFilter)
         {
             base.Initialise(soundPlayer);
 

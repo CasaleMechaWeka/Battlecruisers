@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _ship = ship;
         }
 
-        public bool IsTargetInRange(IPvPTarget target)
+        public bool IsTargetInRange(ITarget target)
         {
             float distanceCenterToCenter = Vector2.Distance(target.Position, _ship.Position);
             float distanceCenterToEdge = distanceCenterToCenter - target.Size.x / 2;

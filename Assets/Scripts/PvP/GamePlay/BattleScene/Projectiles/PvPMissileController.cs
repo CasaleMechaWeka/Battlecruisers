@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public SpriteRenderer missile;
         protected override float TrailLifetimeInS => 3;
-        public IPvPTarget Target { get; private set; }
+        public ITarget Target { get; private set; }
 
         public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
         {
@@ -90,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             activationArgs.Target.Destroyed += Target_Destroyed;
         }
 
-        private void Target_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Target_Destroyed(object sender, DestroyedEventArgs e)
         {
             // Let missile keep current velocity
             MovementController = _dummyMovementController;
@@ -220,14 +221,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectID);
                 if (obj != null)
                 {
-                    IPvPTarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                    ITarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<ITarget>();
                     if (target == null)
                     {
-                        target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPTarget>();
+                        target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<ITarget>();
                     }
                     if (target == null)
                     {
-                        target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<IPvPTarget>();
+                        target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<ITarget>();
                     }
                     Target = target;
                     IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);

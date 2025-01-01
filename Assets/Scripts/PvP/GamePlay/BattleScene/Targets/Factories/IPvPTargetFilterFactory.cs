@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         IPvPTargetFilter CreateDummyTargetFilter(bool isMatchResult);
         IPvPTargetFilter CreateTargetInFrontFilter(IPvPUnit source);
         IPvPExactMatchTargetFilter CreateExactMatchTargetFilter();
-        IPvPExactMatchTargetFilter CreateExactMatchTargetFilter(IPvPTarget targetToMatch);
+        IPvPExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch);
         IPvPExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter();
     }
 }

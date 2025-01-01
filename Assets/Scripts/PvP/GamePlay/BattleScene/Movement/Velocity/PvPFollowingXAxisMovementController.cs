@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     /// </summary>
     public class PvPFollowingXAxisMovementController : PvPTargetVelocityMovementController, IPvPTargetConsumer
     {
-        public IPvPTarget Target { private get; set; }
+        public ITarget Target { private get; set; }
 
         public PvPFollowingXAxisMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider)
             : base(rigidBody, maxVelocityProvider) { }

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public TPvPStats ProjectileStats { get; }
         public Vector2 InitialVelocityInMPerS { get; }
         public IPvPTargetFilter TargetFilter { get; }
-        public IPvPTarget Parent { get; }
+        public ITarget Parent { get; }
         public IAudioClipWrapper ImpactSound { get; }
 
         public PvPProjectileActivationArgs(
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             TPvPStats projectileStats,
             Vector2 initialVelocityInMPerS,
             IPvPTargetFilter targetFilter,
-            IPvPTarget parent,
+            ITarget parent,
             IAudioClipWrapper impactSound)
         {
             Helper.AssertIsNotNull(projectileStats, targetFilter, parent, impactSound);

@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -40,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
         }
 
-        private void _enemyCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _enemyCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             InvokeTargetLostEvent(_enemyCruiser);
         }
@@ -62,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private void Building_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Building_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Parse<IPvPBuildable>().BuildableProgress -= Buildable_BuildableProgress;
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
@@ -85,13 +86,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             InvokeTargetFoundEvent(_enemyCruiser);
         }
 
-        private void InvokeTargetFoundEvent(IPvPTarget targetFound)
+        private void InvokeTargetFoundEvent(ITarget targetFound)
         {
             // Logging.Log(Tags.GLOBAL_TARGET_FINDER, $"Found target: {targetFound}  Target faction: {targetFound.Faction}  Enemy cruiser faction: {_enemyCruiser.Faction}");
             TargetFound?.Invoke(this, new PvPTargetEventArgs(targetFound));
         }
 
-        private void InvokeTargetLostEvent(IPvPTarget targetLost)
+        private void InvokeTargetLostEvent(ITarget targetLost)
         {
             // Logging.Log(Tags.GLOBAL_TARGET_FINDER, $"Lost target: {targetLost}  Target faction: {targetLost.Faction}  Enemy cruiser faction: {_enemyCruiser.Faction}");
             TargetLost?.Invoke(this, new PvPTargetEventArgs(targetLost));

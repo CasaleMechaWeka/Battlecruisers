@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public class PvPProjectileSpawnerArgs : IPvPProjectileSpawnerArgs
     {
-        public IPvPTarget Parent { get; }
+        public ITarget Parent { get; }
         public IPvPProjectileStats ProjectileStats { get; }
         public int BurstSize { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         { }
 
         public PvPProjectileSpawnerArgs(
-            IPvPTarget parent,
+            ITarget parent,
             IPvPProjectileStats projectileStats,
             int burstSize,
             IPvPFactoryProvider factoryProvider,

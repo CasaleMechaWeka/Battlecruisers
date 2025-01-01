@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _targetTypes = targetTypes;
         }
 
-        public override bool IsMatch(IPvPTarget target)
+        public override bool IsMatch(ITarget target)
         {
             bool result
                 = base.IsMatch(target)

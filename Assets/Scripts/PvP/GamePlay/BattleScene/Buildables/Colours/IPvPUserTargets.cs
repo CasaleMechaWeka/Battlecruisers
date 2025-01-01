@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours
@@ -14,6 +15,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// The target the user has selected to show in the informator. Ie,
         /// the user wants to know about the target.
         /// </summary>
-        IPvPTarget SelectedTarget { set; }
+        ITarget SelectedTarget { set; }
     }
 }

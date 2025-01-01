@@ -39,8 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private const float PATROLLING_VELOCITY_DIVISOR = 2;
 
-        private IPvPTarget _target;
-        public IPvPTarget Target
+        private ITarget _target;
+        public ITarget Target
         {
             get { return _target; }
             set

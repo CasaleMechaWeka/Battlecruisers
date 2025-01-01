@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 
@@ -21,12 +21,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _playerBCruiser.Destroyed += _playerBCruiser_Destroyed;
         }
 
-        private void _playerACruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _playerACruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             OnCruiserDestroyed(false); // leftplayer lost, rightplayer win
         }
 
-        private void _playerBCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _playerBCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             OnCruiserDestroyed(true); //  leftplayer win, rightplayer lost
         }

@@ -15,8 +15,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private IPvPDroneFocuser _droneFocuser;
         private IPvPRepairManager _repairManager;
 
-        private IPvPTarget _repairable;
-        public IPvPTarget Repairable
+        private ITarget _repairable;
+        public ITarget Repairable
         {
             private get { return _repairable; }
             set

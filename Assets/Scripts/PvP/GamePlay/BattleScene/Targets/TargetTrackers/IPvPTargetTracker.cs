@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 
@@ -8,6 +8,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         event EventHandler TargetsChanged;
 
-        bool ContainsTarget(IPvPTarget target);
+        bool ContainsTarget(ITarget target);
     }
 }

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public async Task InitialiseAsync(
             IPvPTargetFilter targetFilter,
             float damagePerS,
-            IPvPTarget parent,
+            ITarget parent,
             ISettingsManager settingsManager,
             IPvPDeltaTimeProvider deltaTimeProvider,
             IDeferrer timeScaleDeferrer)

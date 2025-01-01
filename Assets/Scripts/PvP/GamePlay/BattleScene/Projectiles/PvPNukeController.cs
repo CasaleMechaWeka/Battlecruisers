@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPNukeStats _nukeStats;
         private IPvPFlightPointsProvider _flightPointsProvider;
 
-        public IPvPTarget Target { get; private set; }
+        public ITarget Target { get; private set; }
 
         public override void Activate(PvPTargetProviderActivationArgs<IPvPNukeStats> activationArgs)
         {
@@ -174,14 +175,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectID);
                 if (obj != null)
                 {
-                    IPvPTarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                    ITarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<ITarget>();
                     if (target == null)
                     {
-                        target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPTarget>();
+                        target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<ITarget>();
                     }
                     if (target == null)
                     {
-                        target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<IPvPTarget>();
+                        target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<ITarget>();
                     }
                     Target = target;
                     IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);

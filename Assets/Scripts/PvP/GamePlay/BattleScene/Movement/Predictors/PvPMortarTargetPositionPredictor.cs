@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public class PvPMortarTargetPositionPredictor : PvPTargetPositionPredictor
     {
-        protected override float EstimateTimeToTarget(Vector2 sourcePosition, Vector2 targetPositionToAttack, float projectileVelocityInMPerS, float currentAngleInRadians, IPvPTarget target)
+        protected override float EstimateTimeToTarget(Vector2 sourcePosition, Vector2 targetPositionToAttack, float projectileVelocityInMPerS, float currentAngleInRadians, ITarget target)
         {
             float sourceElevationInM = sourcePosition.y - targetPositionToAttack.y;
             float vSin = projectileVelocityInMPerS * Mathf.Sin(currentAngleInRadians);

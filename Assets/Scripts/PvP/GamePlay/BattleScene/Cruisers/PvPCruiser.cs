@@ -482,7 +482,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             BuildingCompleted?.Invoke(this, new PvPBuildingCompletedEventArgs(completedBuilding));
         }
 
-        private void Building_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Building_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
 

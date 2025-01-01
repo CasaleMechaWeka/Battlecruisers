@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors
@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     public class PvPLinearTargetPositionPredictor : PvPTargetPositionPredictor
     {
         protected override float EstimateTimeToTarget(Vector2 sourcePosition, Vector2 targetPositionToAttack,
-        float projectileVelocityInMPerS, float currentAngleInRadians, IPvPTarget target)
+        float projectileVelocityInMPerS, float currentAngleInRadians, ITarget target)
         {
             Vector2? predictedTargetVector = GetIntersection(targetPositionToAttack, target.Velocity, sourcePosition, projectileVelocityInMPerS);
 

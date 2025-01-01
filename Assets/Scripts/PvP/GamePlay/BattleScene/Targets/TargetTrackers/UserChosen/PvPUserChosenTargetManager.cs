@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using System;
 using UnityEngine.Assertions;
@@ -15,8 +15,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         // The highest rank possible :)
         private const int USER_CHOSEN_TARGET_RANK = int.MaxValue;
 
-        private IPvPTarget _userChosenTarget;
-        public IPvPTarget Target
+        private ITarget _userChosenTarget;
+        public ITarget Target
         {
             private get { return _userChosenTarget; }
             set
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public PvPRankedTarget HighestPriorityTarget { get; private set; }
         public event EventHandler HighestPriorityTargetChanged;
 
-        private void _userChosenTarget_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _userChosenTarget_Destroyed(object sender, DestroyedEventArgs e)
         {
             Assert.IsTrue(ReferenceEquals(Target, e.DestroyedTarget));
             Target = null;

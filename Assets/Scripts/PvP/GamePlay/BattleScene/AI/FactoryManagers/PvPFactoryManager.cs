@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
@@ -72,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             factory.StartBuildingUnit(_unitChooser.ChosenUnit);
         }
 
-        private void Factory_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
             IPvPFactory factory = sender.Parse<IPvPFactory>();
             Assert.IsTrue(_factories.Contains(factory));

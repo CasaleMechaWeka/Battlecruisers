@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical;
@@ -55,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             AddBuilding(_friendlyIStealthGenerators, e.CompletedBuilding, IStealthGenerator_Destroyed);
         }
 
-        private void IStealthGenerator_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void IStealthGenerator_Destroyed(object sender, DestroyedEventArgs e)
         {
             RemoveBuilding(_friendlyIStealthGenerators, e.DestroyedTarget, IStealthGenerator_Destroyed);
         }
@@ -71,17 +72,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             AddUnit(_enemySpyPlanes, e.CompletedUnit, SpyPlane_Destroyed);
         }
 
-        private void SatelliteLauncher_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void SatelliteLauncher_Destroyed(object sender, DestroyedEventArgs e)
         {
             RemoveBuilding(_enemySpySatellites, e.DestroyedTarget, SatelliteLauncher_Destroyed);
         }
 
-        private void SpyPlane_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void SpyPlane_Destroyed(object sender, DestroyedEventArgs e)
         {
             RemoveUnit(_enemySpyPlanes, e.DestroyedTarget, SpyPlane_Destroyed);
         }
 
-        private void AddBuilding<T>(IList<T> buildings, IPvPBuildable buildingCompleted, EventHandler<PvPDestroyedEventArgs> destroyedHander)
+        private void AddBuilding<T>(IList<T> buildings, IPvPBuildable buildingCompleted, EventHandler<DestroyedEventArgs> destroyedHander)
             where T : class, IPvPBuilding
         {
             T building = buildingCompleted as T;
@@ -95,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private void AddUnit<T>(IList<T> units, IPvPBuildable unitCompleted, EventHandler<PvPDestroyedEventArgs> destroyedHander)
+        private void AddUnit<T>(IList<T> units, IPvPBuildable unitCompleted, EventHandler<DestroyedEventArgs> destroyedHander)
             where T : class, IPvPUnit
         {
             T unit = unitCompleted as T;
@@ -109,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private void RemoveBuilding<T>(IList<T> buildings, IPvPTarget destroyedTarget, EventHandler<PvPDestroyedEventArgs> destroyedHandler)
+        private void RemoveBuilding<T>(IList<T> buildings, ITarget destroyedTarget, EventHandler<DestroyedEventArgs> destroyedHandler)
             where T : class, IPvPBuilding
         {
             T destroyedBuilding = destroyedTarget.Parse<T>();
@@ -122,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UpdateFogState();
         }
 
-        private void RemoveUnit<T>(IList<T> units, IPvPTarget desroyedTarget, EventHandler<PvPDestroyedEventArgs> destroyedHandler)
+        private void RemoveUnit<T>(IList<T> units, ITarget desroyedTarget, EventHandler<DestroyedEventArgs> destroyedHandler)
             where T : class, IPvPUnit
         {
             T destroyedUnit = desroyedTarget.Parse<T>();

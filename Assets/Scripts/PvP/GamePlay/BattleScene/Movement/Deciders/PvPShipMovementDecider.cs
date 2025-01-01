@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
@@ -25,8 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         private readonly IPvPTargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
         private readonly IPvPTargetRangeHelper _rangeHelper;
 
-        private IPvPTarget _highestPriorityTarget;
-        public IPvPTarget Target
+        private ITarget _highestPriorityTarget;
+        public ITarget Target
         {
             set
             {

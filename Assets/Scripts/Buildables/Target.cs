@@ -30,6 +30,7 @@ namespace BattleCruisers.Buildables
         public virtual Vector2 DroneAreaSize => Size;
 
         public ITransform Transform { get; private set; }
+        public Action clickedRepairButton { get; set; }
 
         public Quaternion Rotation
         {
@@ -72,7 +73,6 @@ namespace BattleCruisers.Buildables
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
         public ITarget LastDamagedSource { get; private set; }
         ITarget ITargetProxy.Target => this;
-
         protected void AddAttackCapability(TargetType attackCapability)
         {
             if (!_attackCapabilities.Contains(attackCapability))

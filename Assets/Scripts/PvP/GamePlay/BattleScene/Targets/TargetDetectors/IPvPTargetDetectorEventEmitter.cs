@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
     public interface IPvPTargetDetectorEventEmitter
     {
-        void InvokeTargetEnteredEvent(IPvPTarget target);
-        void InvokeTargetExitedEvent(IPvPTarget target);
+        void InvokeTargetEnteredEvent(ITarget target);
+        void InvokeTargetExitedEvent(ITarget target);
     }
 }

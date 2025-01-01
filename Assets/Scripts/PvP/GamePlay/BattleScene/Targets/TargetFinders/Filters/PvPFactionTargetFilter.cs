@@ -14,14 +14,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _factionToDetect = faction;
         }
 
-        public virtual bool IsMatch(IPvPTarget target)
+        public virtual bool IsMatch(ITarget target)
         {
             bool result = target.Faction == _factionToDetect;
             // Logging.Log(Tags.TARGET_FILTER, $"result: {result}  _factionToDetect: {_factionToDetect}");
             return result;
         }
 
-        public virtual bool IsMatch(IPvPTarget target, VariantPrefab variant)
+        public virtual bool IsMatch(ITarget target, VariantPrefab variant)
         {
             bool result = target.Faction == _factionToDetect;
             Logging.Log(Tags.TARGET_FILTER, $"result: {result}  _factionToDetect: {_factionToDetect}");

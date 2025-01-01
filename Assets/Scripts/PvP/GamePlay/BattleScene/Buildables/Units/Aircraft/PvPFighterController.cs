@@ -41,8 +41,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private const float PATROLLING_VELOCITY_DIVISOR = 2;
 
-        private IPvPTarget _target;
-        public IPvPTarget Target
+        private ITarget _target;
+        public ITarget Target
         {
             get { return _target; }
             set
@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnBuildableCompleted();
 
                 Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
-                IPvPTarget parent = this;
+                ITarget parent = this;
                 IPvPUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
 
                 IPvPBarrelControllerArgs args

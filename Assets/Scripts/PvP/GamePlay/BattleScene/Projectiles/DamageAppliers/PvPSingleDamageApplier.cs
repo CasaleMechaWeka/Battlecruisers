@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _damage = damage;
         }
 
-        public void ApplyDamage(IPvPTarget target, Vector2 collisionPoint, IPvPTarget damageSource)
+        public void ApplyDamage(ITarget target, Vector2 collisionPoint, ITarget damageSource)
         {
             target.TakeDamage(_damage, damageSource);
         }

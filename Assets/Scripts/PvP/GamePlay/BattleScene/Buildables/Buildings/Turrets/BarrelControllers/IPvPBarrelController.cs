@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPProjectileStats ProjectileStats { get; }
         Vector3 ProjectileSpawnerPosition { get; }
         bool IsSourceMirrored { get; }
-        IPvPTarget CurrentTarget { get; }
+        ITarget CurrentTarget { get; }
         float BarrelAngleInDegrees { get; }
 
         // Basic projectiles CAN be fired without a target, as their trajectory

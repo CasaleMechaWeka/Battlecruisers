@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors
 {
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
             RemoveInProgressBuilding(completedBuilding);
         }
 
-        private void Buildable_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
         {
             IPvPBuilding destroyedBuildable = e.DestroyedTarget.Parse<IPvPBuilding>();
             RemoveInProgressBuilding(destroyedBuildable);

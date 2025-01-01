@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public IList<TargetType> AttackCapabilities { get; }
         public float MaxRangeInM { get; }
         public float MinRangeInM { get; }
-        public IPvPTarget ParentTarget { get; }
+        public ITarget ParentTarget { get; }
 
         public PvPTargetProcessorArgs(
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             IList<TargetType> attackCapabilities,
             float maxRangeInM,
             float minRangeInM = 0,
-            IPvPTarget parentTarget = null)
+            ITarget parentTarget = null)
         {
             PvPHelper.AssertIsNotNull(cruiserSpecificFactories, targetFactories, attackCapabilities);
             Assert.IsTrue(maxRangeInM > minRangeInM,

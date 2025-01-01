@@ -16,13 +16,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPTargetFilter _targetFilter;
         private IPvPDamageApplier _damageApplier;
         private IPvPExplosionPoolProvider _explosionPoolProvider;
-        private IPvPTarget _initialTarget;
+        private ITarget _initialTarget;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
         // the target collider does not trigger OnTriggerExit2D().  I filed a bug with
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
-        private IPvPTarget _targetToDamage;
+        private ITarget _targetToDamage;
         private IPvPDamageStats kamikazeDamageStats;
         private IPvPFactoryProvider _factoryProvider;
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1;
 
-        public void Initialise(IPvPUnit parentAircraft, IPvPFactoryProvider factoryProvider, IPvPTarget target)
+        public void Initialise(IPvPUnit parentAircraft, IPvPFactoryProvider factoryProvider, ITarget target)
         {
             PvPHelper.AssertIsNotNull(parentAircraft, factoryProvider);
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _initialTarget.Destroyed += Target_Destroyed;
         }
 
-        private void Target_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Target_Destroyed(object sender, DestroyedEventArgs e)
         {
             if (!_parentAircraft.IsDestroyed)
             {
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+            ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
             if (target != null
                 && !target.IsDestroyed

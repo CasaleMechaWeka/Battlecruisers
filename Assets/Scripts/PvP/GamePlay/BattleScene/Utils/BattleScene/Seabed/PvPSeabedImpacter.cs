@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Seabed
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
 
-            if (collider.GetComponent<IPvPTargetProxy>()?.Target is IPvPSeabedImpactable targetImpactable)
+            if (collider.GetComponent<ITargetProxy>()?.Target is IPvPSeabedImpactable targetImpactable)
             {
                 targetImpactable.OnHitSeabed();
             }

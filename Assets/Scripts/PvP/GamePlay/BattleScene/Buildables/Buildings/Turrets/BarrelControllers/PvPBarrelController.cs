@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPUpdater _updater;
         protected IPvPParticleSystemGroup _muzzleFlash;
         protected IPvPAnimation _barrelAnimation;
-        private IPvPTarget _parent;
+        private ITarget _parent;
         protected IPvPTargetFilter _targetFilter;
         protected IPvPFireIntervalManager _fireIntervalManager;
 
@@ -38,8 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private ITurretStatsWrapper _turretStatsWrapper;
         public ITurretStats pvpTurretStats => _turretStatsWrapper;
 
-        public IPvPTarget Target { get; set; }
-        public IPvPTarget CurrentTarget => Target;
+        public ITarget Target { get; set; }
+        public ITarget CurrentTarget => Target;
         public bool IsSourceMirrored => transform.IsMirrored();
         protected virtual int NumOfBarrels => 1;
         public Transform Transform => transform;

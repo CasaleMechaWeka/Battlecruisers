@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils.BattleScene;
 using UnityEngine;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
 
-            IRemovable targetRemovable = collider.GetComponent<IPvPTargetProxy>()?.Target as IRemovable;
+            IRemovable targetRemovable = collider.GetComponent<ITargetProxy>()?.Target as IRemovable;
 
             if (targetRemovable != null)
             {

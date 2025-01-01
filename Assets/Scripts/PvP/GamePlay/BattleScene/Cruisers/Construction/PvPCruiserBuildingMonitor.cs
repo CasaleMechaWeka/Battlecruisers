@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             BuildingCompleted?.Invoke(this, new PvPBuildingCompletedEventArgs(completedBuilding));
         }
 
-        private void Buildable_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
         {
             IPvPBuilding destroyedBuilding = e.DestroyedTarget.Parse<IPvPBuilding>();
             destroyedBuilding.Destroyed -= Buildable_Destroyed;

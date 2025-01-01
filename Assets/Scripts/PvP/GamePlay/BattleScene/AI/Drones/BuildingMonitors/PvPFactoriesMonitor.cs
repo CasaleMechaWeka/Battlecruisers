@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors
 {
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
             }
         }
 
-        private void Factory_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
             IPvPFactory destroyedFactory = e.DestroyedTarget.Parse<IPvPFactory>();
             destroyedFactory.Destroyed -= Factory_Destroyed;

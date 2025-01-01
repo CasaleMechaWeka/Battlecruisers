@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using System;
 using System.Collections.Generic;
@@ -15,11 +15,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly IPvPRankedTargetTracker _rankedTargetTracker;
         private readonly IList<IPvPTargetConsumer> _targetConsumers;
 
-        private IPvPTarget HighestPriorityTarget
+        private ITarget HighestPriorityTarget
         {
             get
             {
-                IPvPTarget highestPriorityTarget = _rankedTargetTracker.HighestPriorityTarget?.Target;
+                ITarget highestPriorityTarget = _rankedTargetTracker.HighestPriorityTarget?.Target;
                 // Logging.Verbose(Tags.TARGET_PROCESSORS, $"{highestPriorityTarget}  position: {highestPriorityTarget?.Position}");
                 return highestPriorityTarget;
             }

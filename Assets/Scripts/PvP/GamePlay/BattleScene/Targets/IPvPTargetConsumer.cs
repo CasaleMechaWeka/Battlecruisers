@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets
 {
     public interface IPvPTargetConsumer
     {
-        IPvPTarget Target { set; }
+        ITarget Target { set; }
     }
 }

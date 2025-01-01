@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using DigitalRuby.LightningBolt;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public LightningBoltScript lightningBolt;
 
-        public void Initialise(IPvPTargetFilter targetFilter, float damage, IPvPTarget parent, ISettingsManager settingsManager)
+        public void Initialise(IPvPTargetFilter targetFilter, float damage, ITarget parent, ISettingsManager settingsManager)
         {
             base.Initialise(targetFilter, parent, settingsManager);
 

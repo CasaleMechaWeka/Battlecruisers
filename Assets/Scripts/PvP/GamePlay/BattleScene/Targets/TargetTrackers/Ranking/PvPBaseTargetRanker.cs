@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        public int RankTarget(IPvPTarget target)
+        public int RankTarget(ITarget target)
         {
             int rank = (int)target.TargetValue * TARGET_VALUE_MULTIPLIER;
 

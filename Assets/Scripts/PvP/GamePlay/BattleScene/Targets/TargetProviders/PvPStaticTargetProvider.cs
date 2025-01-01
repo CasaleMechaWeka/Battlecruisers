@@ -1,12 +1,12 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders
 {
     public class PvPStaticTargetProvider : IPvPTargetProvider
     {
-        public IPvPTarget Target { get; }
+        public ITarget Target { get; }
 
-        public PvPStaticTargetProvider(IPvPTarget target)
+        public PvPStaticTargetProvider(ITarget target)
         {
             Target = target;
         }

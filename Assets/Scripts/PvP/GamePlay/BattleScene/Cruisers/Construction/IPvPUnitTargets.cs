@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
@@ -8,16 +8,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// <summary>
         /// All ships of a faction that are started and not yet destroyed.
         /// </summary>
-        IReadOnlyCollection<IPvPTarget> Ships { get; }
+        IReadOnlyCollection<ITarget> Ships { get; }
 
         /// <summary>
         /// All aircraft of a faction that are started and not yet destroyed.
         /// </summary>
-        IReadOnlyCollection<IPvPTarget> Aircraft { get; }
+        IReadOnlyCollection<ITarget> Aircraft { get; }
 
         /// <summary>
         /// All ships and aircraft of a faction that are started and not yet destroyed.
         /// </summary>
-        IReadOnlyCollection<IPvPTarget> ShipsAndAircraft { get; }
+        IReadOnlyCollection<ITarget> ShipsAndAircraft { get; }
     }
 }

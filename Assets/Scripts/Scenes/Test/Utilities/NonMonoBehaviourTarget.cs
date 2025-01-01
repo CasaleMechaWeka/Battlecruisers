@@ -20,6 +20,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public bool IsInScene { get; set; }
         public Vector2 Size { get; set; }
         public ITransform Transform { get; set; }
+        public Action clickedRepairButton { get; set; }
         public Vector2 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public float HealthGainPerDroneS { get; set; }

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
@@ -13,13 +13,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _eventEmitter = eventEmitter;
         }
 
-        public void OnTargetColliderEntered(IPvPTarget target)
+        public void OnTargetColliderEntered(ITarget target)
         {
             target.Destroyed += Target_Destroyed;
             _eventEmitter.InvokeTargetEnteredEvent(target);
         }
 
-        public void OnTargetColliderExited(IPvPTarget target)
+        public void OnTargetColliderExited(ITarget target)
         {
             if (!target.IsDestroyed)
             {
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private void Target_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Target_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= Target_Destroyed;
             _eventEmitter.InvokeTargetExitedEvent(e.DestroyedTarget);

@@ -14,6 +14,7 @@ using Unity.Netcode.Components;
 using Unity.Netcode;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -279,7 +280,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private void UnitUnderConstruction_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void UnitUnderConstruction_Destroyed(object sender, DestroyedEventArgs e)
         {
             // Logging.Log(Tags.FACTORY, sender.ToString());
 

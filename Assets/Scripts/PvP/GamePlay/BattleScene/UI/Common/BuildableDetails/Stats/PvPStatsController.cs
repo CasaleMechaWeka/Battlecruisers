@@ -1,11 +1,11 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats
 {
-    public abstract class PvPStatsController<T> : MonoBehaviour where T : class, IPvPTarget
+    public abstract class PvPStatsController<T> : MonoBehaviour where T : class, ITarget
     {
         protected IPvPValueToStarsConverter _unitMovementSpeedConverter;
         protected IPvPValueToStarsConverter _buildableHealthConverter, _cruiserHealthConverter;

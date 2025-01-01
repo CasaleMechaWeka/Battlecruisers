@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
@@ -42,5 +43,6 @@ namespace BattleCruisers.Buildables
         bool IsShield();
         void SetBuildingImmunity(bool boo);
         bool IsBuildingImmune();
+        Action clickedRepairButton { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public IPvPTargetPositionValidator TargetPositionValidator { get; }
         public IAngleLimiter AngleLimiter { get; }
-        public IPvPTarget Parent { get; }
+        public ITarget Parent { get; }
         public ObservableCollection<IPvPBoostProvider> LocalBoostProviders { get; }
         public ObservableCollection<IPvPBoostProvider> GlobalFireRateBoostProviders { get; }
         public ISoundKey SpawnerSoundKey { get; }
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IAngleLimiter angleLimiter,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            IPvPTarget parent,
+            ITarget parent,
             ObservableCollection<IPvPBoostProvider> localBoostProviders,
             ObservableCollection<IPvPBoostProvider> globalFireRateBoostProvider,
             IPvPCruiser enemyCruiser,
@@ -98,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public PvPBarrelControllerArgs(
             IPvPFactoryProvider factoryProvider,
-            IPvPTarget parent,
+            ITarget parent,
             ISoundKey firingSound = null,
             IPvPAnimation barrelFiringAnimation = null)
         {

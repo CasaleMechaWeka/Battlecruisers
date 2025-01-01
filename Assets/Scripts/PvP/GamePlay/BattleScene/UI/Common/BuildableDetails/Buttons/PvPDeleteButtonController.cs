@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public GameObject PvPbuildingMenu;
         private CanvasGroup PvPcanvasGroup;
         private IPvPUIManager _uiManager;
-        private IFilter<IPvPTarget> _buttonVisibilityFilter;
+        private IFilter<ITarget> _buttonVisibilityFilter;
         private IPvPLongPressIdentifier _longPressIdentifier;
 
         public float lightUpIntervalS = 0.25f;
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IPvPUIManager uiManager,
-            IFilter<IPvPTarget> buttonVisibilityFilter,
+            IFilter<ITarget> buttonVisibilityFilter,
             IPvPUpdater updater
             )
         {

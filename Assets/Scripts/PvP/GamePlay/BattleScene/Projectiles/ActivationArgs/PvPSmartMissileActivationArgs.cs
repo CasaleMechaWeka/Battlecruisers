@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             TPvPStats projectileStats,
             Vector2 initialVelocityInMPerS,
             IPvPTargetFilter targetFilter,
-            IPvPTarget parent,
+            ITarget parent,
             IAudioClipWrapper impactSound,
             IPvPCruiserTargetFactoriesProvider targetFactories,
             IPvPCruiser enemyCruiser)

@@ -215,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public void Kamikaze(IPvPTarget kamikazeTarget)
+        public void Kamikaze(ITarget kamikazeTarget)
         {
             Assert.AreEqual(PvPUnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
             Assert.AreEqual(PvPBuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
@@ -234,7 +234,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnKamikaze();
         }
 
-        private void UpdateFaction(IPvPTarget kamikazeTarget)
+        private void UpdateFaction(ITarget kamikazeTarget)
         {
             Faction = PvPHelper.GetOppositeFaction(kamikazeTarget.Faction);
 

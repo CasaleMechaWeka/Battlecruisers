@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             foreach (Collider2D collider in colliders)
             {
-                IPvPUnit blockingUnit = collider.GetComponent<IPvPTargetProxy>()?.Target as IPvPUnit;
+                IPvPUnit blockingUnit = collider.GetComponent<ITargetProxy>()?.Target as IPvPUnit;
 
                 if (blockingUnit != null
                     && blockingUnit.TargetType == unitToSpawn.TargetType

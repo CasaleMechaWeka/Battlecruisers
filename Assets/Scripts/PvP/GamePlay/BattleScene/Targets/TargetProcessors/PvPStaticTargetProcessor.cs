@@ -1,13 +1,13 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors
 {
     public class PvPStaticTargetProcessor : IPvPTargetProcessor
     {
-        private readonly IPvPTarget _target;
+        private readonly ITarget _target;
 
-        public PvPStaticTargetProcessor(IPvPTarget target)
+        public PvPStaticTargetProcessor(ITarget target)
         {
             Assert.IsNotNull(target);
             _target = target;

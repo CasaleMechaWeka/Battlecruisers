@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using System;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPTargetTracker : IPvPTargetTracker
     {
         private readonly IPvPTargetFinder _targetFinder;
-        private readonly IList<IPvPTarget> _targets;
+        private readonly IList<ITarget> _targets;
 
         public event EventHandler TargetsChanged;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             Assert.IsNotNull(targetFinder);
 
             _targetFinder = targetFinder;
-            _targets = new List<IPvPTarget>();
+            _targets = new List<ITarget>();
 
             _targetFinder.TargetFound += _targetFinder_TargetFound;
             _targetFinder.TargetLost += _targetFinder_TargetLost;
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         }
 
         // PERF  Hashset instead of list?
-        public bool ContainsTarget(IPvPTarget target)
+        public bool ContainsTarget(ITarget target)
         {
             bool result = _targets.Contains(target);
             // Logging.Log(Tags.TARGET_TRACKER, $"result: {result}  _targets.Count: {_targets.Count}");

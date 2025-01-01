@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IAngleLimiter AngleLimiter { get; }
         IPvPFactoryProvider FactoryProvider { get; }
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
-        IPvPTarget Parent { get; }
+        ITarget Parent { get; }
         ISoundKey SpawnerSoundKey { get; }
         ObservableCollection<IPvPBoostProvider> LocalBoostProviders { get; }
         ObservableCollection<IPvPBoostProvider> GlobalFireRateBoostProviders { get; }

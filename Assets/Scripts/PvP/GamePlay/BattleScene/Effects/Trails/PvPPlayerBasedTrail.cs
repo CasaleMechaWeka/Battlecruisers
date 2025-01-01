@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -36,13 +35,13 @@ public class PvPPlayerBasedTrail : MonoBehaviour
         }
     };
 
-    private IPvPTarget target;
+    private ITarget target;
     private TrailRenderer trailRenderer;
 
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
-        target = GetComponentInParent<IPvPTarget>();
+        target = GetComponentInParent<ITarget>();
         Assert.IsNotNull(trailRenderer, "TrailRenderer cannot be found");
         Assert.IsNotNull(target, "Target cannot be found");
 

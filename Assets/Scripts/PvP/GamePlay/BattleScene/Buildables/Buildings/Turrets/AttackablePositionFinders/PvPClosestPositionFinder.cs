@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -38,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _targetBufferInM = targetBufferInM;
         }
 
-        public Vector2 FindClosestAttackablePosition(Vector2 sourcePosition, IPvPTarget target)
+        public Vector2 FindClosestAttackablePosition(Vector2 sourcePosition, ITarget target)
         {
             if (target.Size.x <= _targetCutoffWidthInM)
             {

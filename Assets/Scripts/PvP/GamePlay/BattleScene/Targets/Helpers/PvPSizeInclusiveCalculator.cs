@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPSizeInclusiveCalculator : IPvPRangeCalculator
     {
-        public bool IsInRange(ITransform parentTransform, IPvPTarget target, float rangeInM)
+        public bool IsInRange(ITransform parentTransform, ITarget target, float rangeInM)
         {
             if (target == null || parentTransform == null)
             {//if either have been distoryed then it's not in range

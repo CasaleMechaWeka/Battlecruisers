@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             e.DestroyedBuilding.Damaged -= OnCruiserOrBuildingDamaged;
         }
 
-        private void OnCruiserOrBuildingDamaged(object sender, PvPDamagedEventArgs e)
+        private void OnCruiserOrBuildingDamaged(object sender, DamagedEventArgs e)
         {
             CruiserOrBuildingDamaged?.Invoke(this, EventArgs.Empty);
         }

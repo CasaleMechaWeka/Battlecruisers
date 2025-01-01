@@ -1,5 +1,5 @@
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly IPvPPrioritisedSoundPlayer _soundPlayer;
         private readonly IPvPTargetIndicator _targetIndicator;
 
-        public IPvPTarget UserChosenTarget => _userChosenTargetManager.HighestPriorityTarget?.Target;
+        public ITarget UserChosenTarget => _userChosenTargetManager.HighestPriorityTarget?.Target;
 
         public event EventHandler UserChosenTargetChanged;
 
@@ -65,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        public void ToggleChosenTarget(IPvPTarget target)
+        public void ToggleChosenTarget(ITarget target)
         {
             if (ReferenceEquals(UserChosenTarget, target))
             {

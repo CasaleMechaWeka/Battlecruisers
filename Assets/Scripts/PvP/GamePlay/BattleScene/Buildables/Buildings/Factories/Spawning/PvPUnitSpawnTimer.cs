@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.C
 using BattleCruisers.Utils;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning
 {
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             e.StartedUnit.Destroyed += Buildable_Destroyed;
         }
 
-        private void Buildable_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
         {
             FactoryCleared(e.DestroyedTarget.Parse<IPvPUnit>());
         }

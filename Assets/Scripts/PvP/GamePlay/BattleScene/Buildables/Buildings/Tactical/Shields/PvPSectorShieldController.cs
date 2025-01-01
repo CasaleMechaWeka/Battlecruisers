@@ -142,7 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     //float colliderRadius = c2d.bounds.extents.magnitude;
                     if ((colliderCenter - circleCenter).sqrMagnitude <= 25.0f) // 5.0f * 5.0f
                     {
-                        IPvPTarget target = c2d.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+                        ITarget target = c2d.gameObject.GetComponent<ITargetProxy>()?.Target;
                         target.SetBuildingImmunity(boo);
                     }
                 }

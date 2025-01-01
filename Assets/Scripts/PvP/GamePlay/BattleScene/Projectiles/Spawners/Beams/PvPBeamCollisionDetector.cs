@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 RaycastHit2D result = results[i];
                 Assert.IsNotNull(result.collider);
 
-                IPvPTarget target = result.collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+                ITarget target = result.collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
                 if (target != null
                     && !target.IsDestroyed

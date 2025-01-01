@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine.Assertions;
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _source = source;
         }
 
-        public bool IsMatch(IPvPTarget target)
+        public bool IsMatch(ITarget target)
         {
             return
                 (_source.FacingDirection == PvPDirection.Right
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                     && target.Position.x < _source.Position.x);
         }
 
-        public bool IsMatch(IPvPTarget target, VariantPrefab variant)
+        public bool IsMatch(ITarget target, VariantPrefab variant)
         {
             return
                 (_source.FacingDirection == PvPDirection.Right

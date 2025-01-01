@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 {
     public interface IPvPItemDetailsManager
     {
-        IPvPBroadcastingProperty<IPvPTarget> SelectedItem { get; }
+        IPvPBroadcastingProperty<ITarget> SelectedItem { get; }
 
         void ShowDetails(IPvPBuilding building);
         void ShowDetails(IPvPUnit unit);

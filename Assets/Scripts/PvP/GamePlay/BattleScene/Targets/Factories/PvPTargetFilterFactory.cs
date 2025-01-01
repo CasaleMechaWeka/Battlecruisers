@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return new PvPExactMatchTargetFilter();
         }
 
-        public IPvPExactMatchTargetFilter CreateExactMatchTargetFilter(IPvPTarget targetToMatch)
+        public IPvPExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch)
         {
             return new PvPExactMatchTargetFilter()
             {

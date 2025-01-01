@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -16,7 +17,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableO
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-    public interface IPvPCruiser : IPvPCruiserController, IPvPTarget, IPvPComparableItem, IPvPClickableEmitter
+    public interface IPvPCruiser : IPvPCruiserController, ITarget, IPvPComparableItem, IPvPClickableEmitter
     {
 
         IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }

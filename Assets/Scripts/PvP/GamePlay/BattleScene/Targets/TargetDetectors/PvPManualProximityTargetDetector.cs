@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -10,18 +10,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPManualProximityTargetDetector : IPvPManualProximityTargetDetector
     {
         private readonly ITransform _parentTransform;
-        private readonly IReadOnlyCollection<IPvPTarget> _potentialTargets;
+        private readonly IReadOnlyCollection<ITarget> _potentialTargets;
         private readonly float _detectionRange;
         private readonly IPvPRangeCalculator _rangeCalculator;
-        private readonly ISet<IPvPTarget> _currentInRangeTargets, _newInRangeTargets;
-        private readonly IList<IPvPTarget> _exitedTargets;
+        private readonly ISet<ITarget> _currentInRangeTargets, _newInRangeTargets;
+        private readonly IList<ITarget> _exitedTargets;
 
         public event EventHandler<PvPTargetEventArgs> TargetEntered;
         public event EventHandler<PvPTargetEventArgs> TargetExited;
 
         public PvPManualProximityTargetDetector(
             ITransform parentTransform,
-            IReadOnlyCollection<IPvPTarget> potentialTargets,
+            IReadOnlyCollection<ITarget> potentialTargets,
             float detectionRange,
             IPvPRangeCalculator rangeCalculator)
         {
@@ -32,20 +32,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _detectionRange = detectionRange;
             _rangeCalculator = rangeCalculator;
 
-            _currentInRangeTargets = new HashSet<IPvPTarget>();
-            _newInRangeTargets = new HashSet<IPvPTarget>();
-            _exitedTargets = new List<IPvPTarget>();
+            _currentInRangeTargets = new HashSet<ITarget>();
+            _newInRangeTargets = new HashSet<ITarget>();
+            _exitedTargets = new List<ITarget>();
 
             // Logging.Log(Tags.MANUAL_TARGET_DETECTOR, $"_potentialTargets.Count: {_potentialTargets.Count}");
         }
 
         public void Detect()
         {
-            ISet<IPvPTarget> newInRangeTargets = FindInRangeTargets();
+            ISet<ITarget> newInRangeTargets = FindInRangeTargets();
             // Logging.Verbose(Tags.MANUAL_TARGET_DETECTOR, $"Current targets: {_currentInRangeTargets.Count}  new targets: {newInRangeTargets.Count}");
 
-            IList<IPvPTarget> exitedTargets = DetectExitedTargets(newInRangeTargets);
-            foreach (IPvPTarget exitedTarget in exitedTargets)
+            IList<ITarget> exitedTargets = DetectExitedTargets(newInRangeTargets);
+            foreach (ITarget exitedTarget in exitedTargets)
             {
                 // Logging.Log(Tags.MANUAL_TARGET_DETECTOR, $"Lost target: {exitedTarget}");
 
@@ -56,13 +56,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             DetectEnteredTargets(newInRangeTargets);
         }
 
-        private ISet<IPvPTarget> FindInRangeTargets()
+        private ISet<ITarget> FindInRangeTargets()
         {
             // Logging.Verbose(Tags.MANUAL_TARGET_DETECTOR, $"_potentialTargets.Count: {_potentialTargets.Count}");
 
             _newInRangeTargets.Clear();
 
-            foreach (IPvPTarget potentialTarget in _potentialTargets)
+            foreach (ITarget potentialTarget in _potentialTargets)
             {
                 if (_rangeCalculator.IsInRange(_parentTransform, potentialTarget, _detectionRange))
                 {
@@ -73,11 +73,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return _newInRangeTargets;
         }
 
-        private IList<IPvPTarget> DetectExitedTargets(ISet<IPvPTarget> newInRangeTargets)
+        private IList<ITarget> DetectExitedTargets(ISet<ITarget> newInRangeTargets)
         {
             _exitedTargets.Clear();
 
-            foreach (IPvPTarget currentInRangeTarget in _currentInRangeTargets)
+            foreach (ITarget currentInRangeTarget in _currentInRangeTargets)
             {
                 if (!newInRangeTargets.Contains(currentInRangeTarget))
                 {
@@ -88,9 +88,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return _exitedTargets;
         }
 
-        private void DetectEnteredTargets(ISet<IPvPTarget> newInRangeTargets)
+        private void DetectEnteredTargets(ISet<ITarget> newInRangeTargets)
         {
-            foreach (IPvPTarget newInRangeTarget in newInRangeTargets)
+            foreach (ITarget newInRangeTarget in newInRangeTargets)
             {
                 if (!_currentInRangeTargets.Contains(newInRangeTarget))
                 {

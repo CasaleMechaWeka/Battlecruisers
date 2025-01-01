@@ -1,11 +1,11 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking
 {
     public class PvPRankedTarget
     {
-        public IPvPTarget Target { get; }
+        public ITarget Target { get; }
 
         /// <summary>
         /// Bigger numbers indicate higher priority.
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         /// </summary>
         public int Rank { get; }
 
-        public PvPRankedTarget(IPvPTarget target, int rank)
+        public PvPRankedTarget(ITarget target, int rank)
         {
             Target = target;
             Rank = rank;

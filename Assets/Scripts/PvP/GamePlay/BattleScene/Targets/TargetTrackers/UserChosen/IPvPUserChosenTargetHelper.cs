@@ -1,11 +1,11 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen
 {
     public interface IPvPUserChosenTargetHelper
     {
-        IPvPTarget UserChosenTarget { get; }
+        ITarget UserChosenTarget { get; }
 
         event EventHandler UserChosenTargetChanged;
 
@@ -15,6 +15,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         /// 
         /// Otherwise, sets the user chosen target to the given target.
         /// </summary>
-        void ToggleChosenTarget(IPvPTarget target);
+        void ToggleChosenTarget(ITarget target);
     }
 }

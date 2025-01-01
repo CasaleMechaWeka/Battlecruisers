@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
     }
 
-    public interface IPvPBuildable : IPvPTarget, IPvPComparableItem, IPvPClickableEmitter
+    public interface IPvPBuildable : ITarget, IPvPComparableItem, IPvPClickableEmitter
     {
         /// <summary>
         /// 0-1

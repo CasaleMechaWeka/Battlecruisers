@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours
 {
     /// <summary>
@@ -5,8 +6,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public class PvPUserTargetsColourChanger : IPvPUserTargets
     {
-        private IPvPTarget _selectedTarget;
-        public IPvPTarget SelectedTarget
+        private ITarget _selectedTarget;
+        public ITarget SelectedTarget
         {
             set
             {

@@ -175,7 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 if (isAvailable)
                 {
                     NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectID);
-                    IPvPTarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                    ITarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<ITarget>();
                     if (target != null)
                     {
                         if (team == Team.LEFT)
@@ -189,7 +189,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                     }
                     else
                     {
-                        target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<IPvPTarget>();
+                        target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<ITarget>();
                         if (target != null)
                         {
                             if (team == Team.LEFT)

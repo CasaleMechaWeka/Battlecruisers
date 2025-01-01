@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
     public interface IPvPTargetColliderHandler
     {
-        void OnTargetColliderEntered(IPvPTarget target);
-        void OnTargetColliderExited(IPvPTarget target);
+        void OnTargetColliderEntered(ITarget target);
+        void OnTargetColliderExited(ITarget target);
     }
 }

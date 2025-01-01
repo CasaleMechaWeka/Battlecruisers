@@ -1,3 +1,5 @@
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -28,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IPvPDroneFeedbackFactory _feedbackFactory;
         private readonly IPvPDroneConsumerProvider _droneConsumerProvider;
         private readonly IPvPCruiser _cruiser;
-        private readonly IDictionary<IPvPRepairable, IPvPDroneFeedback> _repairableToFeedback;
+        private readonly IDictionary<IRepairable, IPvPDroneFeedback> _repairableToFeedback;
 
         public const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
@@ -45,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _droneConsumerProvider = droneConsumerProvider;
             _cruiser = cruiser;
 
-            _repairableToFeedback = new Dictionary<IPvPRepairable, IPvPDroneFeedback>();
+            _repairableToFeedback = new Dictionary<IRepairable, IPvPDroneFeedback>();
 
             AddRepairable(_cruiser);
 
@@ -55,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)
         {
-            IPvPRepairable repairable = sender.Parse<IPvPRepairCommand>().Repairable;
+            IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
 
             // Logging.Log(Tags.REPAIR_MANAGER, $"{repairable}  repairable.RepairCommand.CanExecute: {repairable.RepairCommand.CanExecute}");
 
@@ -77,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddRepairable(e.StartedBuilding);
         }
 
-        private void _cruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _cruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             CleanUpCruiser();
         }
@@ -86,9 +88,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.Verbose(Tags.REPAIR_MANAGER, "_repairableToDroneConsumer.Count:  " + _repairableToFeedback.Count);
 
-            foreach (KeyValuePair<IPvPRepairable, IPvPDroneFeedback> pair in _repairableToFeedback)
+            foreach (KeyValuePair<IRepairable, IPvPDroneFeedback> pair in _repairableToFeedback)
             {
-                IPvPRepairable repairable = pair.Key;
+                IRepairable repairable = pair.Key;
                 IPvPDroneConsumer droneConsumer = pair.Value.DroneConsumer;
 
                 if (droneConsumer != null
@@ -111,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             RemoveRepairable(_cruiser);
         }
 
-        private void AddRepairable(IPvPRepairable repairable)
+        private void AddRepairable(IRepairable repairable)
         {
             // Logging.Log(Tags.REPAIR_MANAGER, "repairable: " + repairable);
 
@@ -131,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             repairable.RepairCommand.CanExecuteChanged += RepairCommand_CanExecuteChanged;
         }
 
-        private void RemoveRepairable(IPvPRepairable repairable)
+        private void RemoveRepairable(IRepairable repairable)
         {
             // Logging.Log(Tags.REPAIR_MANAGER, "repairable: " + repairable);
 
@@ -147,12 +149,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             repairable.RepairCommand.CanExecuteChanged -= RepairCommand_CanExecuteChanged;
         }
 
-        private void Repairable_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void Repairable_Destroyed(object sender, DestroyedEventArgs e)
         {
             RemoveRepairable(e.DestroyedTarget);
         }
 
-        public IPvPDroneConsumer GetDroneConsumer(IPvPRepairable repairable)
+        public IPvPDroneConsumer GetDroneConsumer(IRepairable repairable)
         {
             Assert.IsTrue(_repairableToFeedback.ContainsKey(repairable));
             return _repairableToFeedback[repairable].DroneConsumer;
@@ -165,9 +167,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void CleanUpCruiser()
         {
-            IList<IPvPRepairable> repairables = _repairableToFeedback.Keys.ToList();
+            IList<IRepairable> repairables = _repairableToFeedback.Keys.ToList();
 
-            foreach (IPvPRepairable repairable in repairables)
+            foreach (IRepairable repairable in repairables)
             {
                 RemoveRepairable(repairable);
             }

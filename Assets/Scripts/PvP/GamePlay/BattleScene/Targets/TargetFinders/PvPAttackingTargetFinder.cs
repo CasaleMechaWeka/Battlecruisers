@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -11,13 +11,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPAttackingTargetFinder : IPvPTargetFinder
     {
-        private readonly IPvPDamagable _parentDamagable;
+        private readonly IDamagable _parentDamagable;
         private readonly IPvPTargetFilter _targetFilter;
 
         public event EventHandler<PvPTargetEventArgs> TargetFound;
         public event EventHandler<PvPTargetEventArgs> TargetLost;
 
-        public PvPAttackingTargetFinder(IPvPDamagable parentDamagable, IPvPTargetFilter targetFilter)
+        public PvPAttackingTargetFinder(IDamagable parentDamagable, IPvPTargetFilter targetFilter)
         {
             PvPHelper.AssertIsNotNull(parentDamagable, targetFilter);
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _parentDamagable.Damaged += _parentDamagable_Damaged;
         }
 
-        private void _parentDamagable_Damaged(object sender, PvPDamagedEventArgs e)
+        private void _parentDamagable_Damaged(object sender, DamagedEventArgs e)
         {
             // Logging.Log(Tags.TARGET_FINDER, "Parent damaged by: " + e.DamageSource);
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private void AttackingTarget_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void AttackingTarget_Destroyed(object sender, DestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= AttackingTarget_Destroyed;
 

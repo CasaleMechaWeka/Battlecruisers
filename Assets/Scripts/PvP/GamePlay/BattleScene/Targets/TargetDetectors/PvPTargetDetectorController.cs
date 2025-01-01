@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using System;
 using Unity.Netcode;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                 return;
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
-            IPvPTarget target = GetTarget(collider);
+            ITarget target = GetTarget(collider);
             _targetColliderHandler.OnTargetColliderEntered(target);
         }
 
@@ -44,23 +44,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                 return;
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
-            IPvPTarget target = GetTarget(collider);
+            ITarget target = GetTarget(collider);
             _targetColliderHandler.OnTargetColliderExited(target);
         }
 
-        private IPvPTarget GetTarget(Collider2D collider)
+        private ITarget GetTarget(Collider2D collider)
         {
-            IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;
+            ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
             Assert.IsNotNull(target, "Should only collide with game objects that have a ITargetProxy component.");
             return target;
         }
 
-        public void InvokeTargetEnteredEvent(IPvPTarget target)
+        public void InvokeTargetEnteredEvent(ITarget target)
         {
             TargetEntered?.Invoke(this, new PvPTargetEventArgs(target));
         }
 
-        public void InvokeTargetExitedEvent(IPvPTarget target)
+        public void InvokeTargetExitedEvent(ITarget target)
         {
             TargetExited?.Invoke(this, new PvPTargetEventArgs(target));
         }

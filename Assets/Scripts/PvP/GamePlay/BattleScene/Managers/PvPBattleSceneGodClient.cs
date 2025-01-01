@@ -38,7 +38,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
@@ -658,7 +658,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
 
-        private void PlayerCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void PlayerCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             cameraComponents.CruiserDeathCameraFocuser.FocusOnLosingCruiser(playerCruiser);
             HandleCruiserDestroyed();
@@ -701,7 +701,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         }
 
-        private void EnemyCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void EnemyCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             cameraComponents.CruiserDeathCameraFocuser.FocusOnLosingCruiser(enemyCruiser);
             HandleCruiserDestroyed();

@@ -1,6 +1,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -23,8 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly IDataProvider _dataProvider;
         private readonly ILocTable _commonString;
 
-        private IPvPSettableBroadcastingProperty<IPvPTarget> _selectedItem;
-        public IPvPBroadcastingProperty<IPvPTarget> SelectedItem { get; }
+        private IPvPSettableBroadcastingProperty<ITarget> _selectedItem;
+        public IPvPBroadcastingProperty<ITarget> SelectedItem { get; }
 
         public PvPItemDetailsManager(IPvPInformatorPanel informator, IDataProvider dataProvider, IPvPPrefabFactory prefabFactory, ILocTable commonString)
         {
@@ -39,8 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
 
-            _selectedItem = new PvPSettableBroadcastingProperty<IPvPTarget>(initialValue: null);
-            SelectedItem = new PvPBroadcastingProperty<IPvPTarget>(_selectedItem);
+            _selectedItem = new PvPSettableBroadcastingProperty<ITarget>(initialValue: null);
+            SelectedItem = new PvPBroadcastingProperty<ITarget>(_selectedItem);
         }
 
         public void ShowDetails(IPvPBuilding building)

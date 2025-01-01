@@ -14,6 +14,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         IList<TargetType> AttackCapabilities { get; }
         float MaxRangeInM { get; }
         float MinRangeInM { get; }
-        IPvPTarget ParentTarget { get; }
+        ITarget ParentTarget { get; }
     }
 }

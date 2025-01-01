@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public abstract class PvPBeamEmitter : NetworkBehaviour, IPvPBeamEmitter
     {
         private IPvPBeamCollisionDetector _collisionDetector;
-        protected IPvPTarget _parent;
+        protected ITarget _parent;
 
         [SerializeField]
         private AudioSource _platformAudioSource;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.OnNetworkSpawn();
         }
 
-        protected void Initialise(IPvPTargetFilter targetFilter, IPvPTarget parent, ISettingsManager settingsManager)
+        protected void Initialise(IPvPTargetFilter targetFilter, ITarget parent, ISettingsManager settingsManager)
         {
             // Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             PvPHelper.AssertIsNotNull(targetFilter, parent, settingsManager);

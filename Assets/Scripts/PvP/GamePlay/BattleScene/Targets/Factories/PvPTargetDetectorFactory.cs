@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             ITransform parentTransform,
             float detectionRange,
             IPvPRangeCalculator rangeCalculator,
-            IReadOnlyCollection<IPvPTarget> potentialTargets,
+            IReadOnlyCollection<ITarget> potentialTargets,
             IPvPUpdater updater)
         {
             IPvPManualProximityTargetDetector targetDetector = new PvPManualProximityTargetDetector(parentTransform, potentialTargets, detectionRange, rangeCalculator);

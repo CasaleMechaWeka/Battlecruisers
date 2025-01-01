@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
@@ -13,10 +12,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Buildables.Repairables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public abstract class PvPTarget : PvPPrefab, IPvPTarget, IPvPTargetProxy
+    public abstract class PvPTarget : PvPPrefab, ITarget, ITargetProxy
     {
         protected IPvPHealthTracker _healthTracker;
         protected IPvPTime _time;
@@ -80,8 +80,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // For buildables ranges from 0.75 (tesla coil) to 5 (broadsides)
         private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 0.667f;
 
-        public event EventHandler<PvPDestroyedEventArgs> Destroyed;
-        public event EventHandler<PvPDamagedEventArgs> Damaged;
+        public event EventHandler<DestroyedEventArgs> Destroyed;
+        public event EventHandler<DamagedEventArgs> Damaged;
 
         public event EventHandler HealthChanged
         {
@@ -93,13 +93,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual Color Color { set { /* empty */ } }
         public bool IsInScene => gameObject.scene.IsValid();
         public float Health => _healthTracker != null ? _healthTracker.Health : maxHealth; /*IsServer ? (_healthTracker.Health >= 0f ? _healthTracker.Health : maxHealth) : (pvp_Health.Value >= 0 ? pvp_Health.Value : maxHealth);*/
-        public IPvPRepairCommand RepairCommand { get; private set; }
+        public IRepairCommand RepairCommand { get; private set; }
         public float HealthGainPerDroneS { get; protected set; }
 
         private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
-        public IPvPTarget LastDamagedSource { get; private set; }
-        IPvPTarget IPvPTargetProxy.Target => this;
+        public ITarget LastDamagedSource { get; private set; }
+        ITarget ITargetProxy.Target => this;
 
 
         protected virtual void CallRpc_SetPosition(Vector3 pos)
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _time = PvPTimeBC.Instance;
             _attackCapabilities = new List<TargetType>();
             AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
-            RepairCommand = new PvPRepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
+            RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 
             Transform = new TransformBC(transform);
@@ -185,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.Log(Tags.TARGET, $"{this} destroyed :/");
             pvp_Destroyed.Value = true;
-            Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
+            Destroyed?.Invoke(this, new DestroyedEventArgs(this));
             OnDestroyedEvent();
             CallRpc_ProgressControllerVisible(false);
         }
@@ -193,10 +193,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void OnDestroyedEvent()
         {
             if (IsClient)
-                Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
+                Destroyed?.Invoke(this, new DestroyedEventArgs(this));
         }
 
-        public void TakeDamage(float damageAmount, IPvPTarget damageSource)
+        public void TakeDamage(float damageAmount, ITarget damageSource, bool ignoreImmuneStatus = false)
         {
             if (IsBuildingImmune())
             {
@@ -211,7 +211,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnTakeDamage();
 
-                Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
                 try
                 {
                     ulong objectId = ulong.MaxValue;
@@ -301,13 +301,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsClient)
             {
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
-                IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
+                ITarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<ITarget>();
                 if (damageSource == null)
                 {
                     damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPUnit>();
                 }
                 if (damageSource != null)
-                    Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                    Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
             }
 
         }

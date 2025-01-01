@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
@@ -9,6 +9,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         IPvPTargetFinder CreateRangedTargetFinder(IPvPTargetDetector targetDetector, IPvPTargetFilter targetFilter);
         IPvPTargetFinder CreateMinRangeTargetFinder(IPvPTargetDetector maxRangeTargetDetector, IPvPTargetDetector minRangeTargetDetector, IPvPTargetFilter targetFilter);
-        IPvPTargetFinder CreateAttackingTargetFinder(IPvPDamagable parentDamagable, IPvPTargetFilter targetFilter);
+        IPvPTargetFinder CreateAttackingTargetFinder(IDamagable parentDamagable, IPvPTargetFilter targetFilter);
     }
 }

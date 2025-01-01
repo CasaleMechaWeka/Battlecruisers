@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 
@@ -6,9 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPMultipleExactMatchesTargetFilter : IPvPExactMatchTargetFilter
     {
-        private readonly HashSet<IPvPTarget> _matches;
+        private readonly HashSet<ITarget> _matches;
 
-        public IPvPTarget Target
+        public ITarget Target
         {
             set
             {
@@ -21,15 +21,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPMultipleExactMatchesTargetFilter()
         {
-            _matches = new HashSet<IPvPTarget>();
+            _matches = new HashSet<ITarget>();
         }
 
-        public virtual bool IsMatch(IPvPTarget target)
+        public virtual bool IsMatch(ITarget target)
         {
             return _matches.Contains(target);
         }
 
-        public virtual bool IsMatch(IPvPTarget target, VariantPrefab variant)
+        public virtual bool IsMatch(ITarget target, VariantPrefab variant)
         {
             return _matches.Contains(target);
         }

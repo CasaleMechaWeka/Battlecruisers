@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly IPvPTargetProcessor _targetProcessor;
         private readonly IPvPTargetFilter _isInFrontFilter;
 
-        IPvPTarget IPvPTargetConsumer.Target
+        ITarget IPvPTargetConsumer.Target
         {
             set
             {

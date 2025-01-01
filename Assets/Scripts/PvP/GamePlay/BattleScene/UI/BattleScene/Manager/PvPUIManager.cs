@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
@@ -25,10 +26,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPBuilding lastClickedBuilding;
         private IPvPUnit lastClickedUnit;
         private IPvPCruiser lastClickedCruiser;
-        private IPvPTarget lastClickedBuildable;
+        private ITarget lastClickedBuildable;
         private int lastClickedType = -1; //-1 is for nothing, 0 is for buildings and 1 is for units
 
-        private IPvPTarget _shownItem;
+        private ITarget _shownItem;
         // private IPvPExplanationPanel _explanationPanel;
         private IPvPHintDisplayer _hintDisplayer;
         public PvPHecklePanelController hecklePanelController { get; set; }
@@ -37,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         //     _explanationPanel = explanationPanelValue;
         // }
 
-        private IPvPTarget ShownItem
+        private ITarget ShownItem
         {
             set
             {
@@ -73,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             hecklePanelController = hecklePanel;
         }
-        private void _shownItem_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _shownItem_Destroyed(object sender, DestroyedEventArgs e)
         {
             HideItemDetails();
         }
