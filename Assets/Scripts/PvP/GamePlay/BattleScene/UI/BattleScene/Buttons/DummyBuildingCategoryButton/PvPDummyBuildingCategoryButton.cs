@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Tutorial.Highlighting;
 using System;
 
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPDummyBuildingCategoryButton : IPvPBuildingCategoryButton
     {
         public bool IsActiveFeedbackVisible { set { /* empty */ } }
-        public PvPBuildingCategory Category => default;
+        public BuildingCategory Category => default;
 
 #pragma warning disable 67  // Unused event
         public event EventHandler Clicked;

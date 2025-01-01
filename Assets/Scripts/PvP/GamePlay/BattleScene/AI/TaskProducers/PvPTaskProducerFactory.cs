@@ -70,20 +70,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             return iPvPKeys;
         }
 
-        private PvPBuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
+        private BuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
         {
             switch (category)
             {
                 case BuildingCategory.Ultra:
-                    return PvPBuildingCategory.Ultra;
+                    return BuildingCategory.Ultra;
                 case BuildingCategory.Tactical:
-                    return PvPBuildingCategory.Tactical;
+                    return BuildingCategory.Tactical;
                 case BuildingCategory.Factory:
-                    return PvPBuildingCategory.Factory;
+                    return BuildingCategory.Factory;
                 case BuildingCategory.Offence:
-                    return PvPBuildingCategory.Offence;
+                    return BuildingCategory.Offence;
                 case BuildingCategory.Defence:
-                    return PvPBuildingCategory.Defence;
+                    return BuildingCategory.Defence;
                 default:
                     throw new System.Exception();
             }

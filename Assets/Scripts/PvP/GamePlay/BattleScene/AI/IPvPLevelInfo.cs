@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         PvPCruiser PlayerCruiser { get; }
 
         bool CanConstructBuilding(PvPBuildingKey buildingKey);
-        IList<PvPBuildingKey> GetAvailableBuildings(PvPBuildingCategory category);
+        IList<PvPBuildingKey> GetAvailableBuildings(BuildingCategory category);
 
         //---> CODE BY ANUJ
         bool HasMastOffensive();

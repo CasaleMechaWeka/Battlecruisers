@@ -308,7 +308,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _unlockedUnits_RightPlayer.Add(key);
         }
 
-        public IList<PvPBuildingKey> GetUnlockedBuildings_LeftPlayer(PvPBuildingCategory pvpBuildingCategory)
+        public IList<PvPBuildingKey> GetUnlockedBuildings_LeftPlayer(BuildingCategory pvpBuildingCategory)
         {
             BuildingCategory buildingCategory = convertPvPBuildingCategory2PvEBuildingCategory(pvpBuildingCategory);
             IList<BuildingKey> iList = _unlockedBuildings_LeftPlayer.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
@@ -328,7 +328,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
 
-        public IList<PvPBuildingKey> GetUnlockedBuildings_RightPlayer(PvPBuildingCategory pvpBuildingCategory)
+        public IList<PvPBuildingKey> GetUnlockedBuildings_RightPlayer(BuildingCategory pvpBuildingCategory)
         {
             BuildingCategory buildingCategory = convertPvPBuildingCategory2PvEBuildingCategory(pvpBuildingCategory);
             IList<BuildingKey> iList = _unlockedBuildings_RightPlayer.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
@@ -427,39 +427,39 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        private BuildingCategory convertPvPBuildingCategory2PvEBuildingCategory(PvPBuildingCategory category)
+        private BuildingCategory convertPvPBuildingCategory2PvEBuildingCategory(BuildingCategory category)
         {
             switch (category)
             {
-                case PvPBuildingCategory.Ultra:
+                case BuildingCategory.Ultra:
                     return BuildingCategory.Ultra;
-                case PvPBuildingCategory.Tactical:
+                case BuildingCategory.Tactical:
                     return BuildingCategory.Tactical;
-                case PvPBuildingCategory.Factory:
+                case BuildingCategory.Factory:
                     return BuildingCategory.Factory;
-                case PvPBuildingCategory.Offence:
+                case BuildingCategory.Offence:
                     return BuildingCategory.Offence;
-                case PvPBuildingCategory.Defence:
+                case BuildingCategory.Defence:
                     return BuildingCategory.Defence;
                 default:
                     throw new System.Exception();
             }
         }
 
-        private PvPBuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
+        private BuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
         {
             switch (category)
             {
                 case BuildingCategory.Ultra:
-                    return PvPBuildingCategory.Ultra;
+                    return BuildingCategory.Ultra;
                 case BuildingCategory.Tactical:
-                    return PvPBuildingCategory.Tactical;
+                    return BuildingCategory.Tactical;
                 case BuildingCategory.Factory:
-                    return PvPBuildingCategory.Factory;
+                    return BuildingCategory.Factory;
                 case BuildingCategory.Offence:
-                    return PvPBuildingCategory.Offence;
+                    return BuildingCategory.Offence;
                 case BuildingCategory.Defence:
-                    return PvPBuildingCategory.Defence;
+                    return BuildingCategory.Defence;
                 default:
                     throw new System.Exception();
             }

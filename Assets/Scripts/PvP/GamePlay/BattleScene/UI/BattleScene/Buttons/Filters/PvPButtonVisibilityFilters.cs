@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPButtonVisibilityFilters : IPvPButtonVisibilityFilters
     {
         public IPvPBroadcastingFilter<IPvPBuildable> BuildableButtonVisibilityFilter { get; }
-        public IPvPBroadcastingFilter<PvPBuildingCategory> CategoryButtonVisibilityFilter { get; }
+        public IPvPBroadcastingFilter<BuildingCategory> CategoryButtonVisibilityFilter { get; }
         public IFilter<IPvPTarget> ChooseTargetButtonVisiblityFilter { get; }
         public IFilter<IPvPTarget> DeletButtonVisiblityFilter { get; }
         public IPvPBroadcastingFilter DismissButtonVisibilityFilter { get; }
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPButtonVisibilityFilters(
             IPvPBroadcastingFilter<IPvPBuildable> buildableButtonVisibilityFilter,
-            IPvPBroadcastingFilter<PvPBuildingCategory> categoryButtonVisibilityFilter,
+            IPvPBroadcastingFilter<BuildingCategory> categoryButtonVisibilityFilter,
             IFilter<IPvPTarget> chooseTargetButtonVisiblityFilter,
             IFilter<IPvPTarget> deletButtonVisiblityFilter,
             IPvPBroadcastingFilter backButtonVisibilityFilter,

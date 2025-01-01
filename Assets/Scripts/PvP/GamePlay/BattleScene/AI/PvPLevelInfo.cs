@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
@@ -53,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
         private bool HasPvPSlotType(PvPSlotType pvpSlotType)
         {
-            IList<PvPBuildingKey> offensives = GetAvailableBuildings(PvPBuildingCategory.Offence);
+            IList<PvPBuildingKey> offensives = GetAvailableBuildings(BuildingCategory.Offence);
 
             foreach (PvPBuildingKey offensive in offensives)
             {
@@ -66,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             return false;
         }
         //<---
-        public IList<PvPBuildingKey> GetAvailableBuildings(PvPBuildingCategory category)
+        public IList<PvPBuildingKey> GetAvailableBuildings(BuildingCategory category)
         {
             return AICruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.GetUnlockedBuildings_LeftPlayer(category) : _battleSceneGodTunnel.GetUnlockedBuildings_RightPlayer(category);
         }

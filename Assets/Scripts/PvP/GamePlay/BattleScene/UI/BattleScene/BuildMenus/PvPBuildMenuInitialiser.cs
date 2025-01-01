@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -65,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPBuildingMenus buildingMenus = GetComponentInChildren<PvPBuildingMenus>();
             Assert.IsNotNull(buildingMenus);
             IPvPBuildableSorter<IPvPBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
-            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
             IPvPBuildingClickHandler buildingClickHandler
                 = new PvPBuildingClickHandler(
                     uiManager,
@@ -98,9 +99,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     new AudioClipWrapper(selectorOpeningSound));
         }
 
-        private IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> ConvertGroupsToDictionary(IList<IPvPBuildingGroup> buildingGroups)
+        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> ConvertGroupsToDictionary(IList<IPvPBuildingGroup> buildingGroups)
         {
-            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
 
             foreach (IPvPBuildingGroup group in buildingGroups)
             {

@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public IList<IPvPBuildingGroup> GetBuildingGroups()
         {
-            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
             return CreateBuildingGroups(buildings, _buildingGroupFactory);
         }
 
@@ -44,42 +44,42 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             switch (bKey.BuildingCategory)
             {
                 case BuildingCategory.Defence:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvP" + bKey.PrefabName);
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvP" + bKey.PrefabName);
                 case BuildingCategory.Factory:
-                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvP" + bKey.PrefabName);
+                    return new PvPBuildingKey(BuildingCategory.Factory, "PvP" + bKey.PrefabName);
                 case BuildingCategory.Offence:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvP" + bKey.PrefabName);
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvP" + bKey.PrefabName);
                 case BuildingCategory.Tactical:
-                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvP" + bKey.PrefabName);
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvP" + bKey.PrefabName);
                 case BuildingCategory.Ultra:
-                    return new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvP" + bKey.PrefabName);
+                    return new PvPBuildingKey(BuildingCategory.Ultra, "PvP" + bKey.PrefabName);
                 default:
                     throw new NullReferenceException();
             }
         }
 
-        private PvPBuildingCategory convertToPvP(BuildingCategory category)
+        private BuildingCategory convertToPvP(BuildingCategory category)
         {
             switch (category)
             {
                 case BuildingCategory.Defence:
-                    return PvPBuildingCategory.Defence;
+                    return BuildingCategory.Defence;
                 case BuildingCategory.Factory:
-                    return PvPBuildingCategory.Factory;
+                    return BuildingCategory.Factory;
                 case BuildingCategory.Offence:
-                    return PvPBuildingCategory.Offence;
+                    return BuildingCategory.Offence;
                 case BuildingCategory.Tactical:
-                    return PvPBuildingCategory.Tactical;
+                    return BuildingCategory.Tactical;
                 case BuildingCategory.Ultra:
-                    return PvPBuildingCategory.Ultra;
+                    return BuildingCategory.Ultra;
                 default:
                     throw new NullReferenceException();
             }
         }
 
-        private IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout, IPvPPrefabFactory prefabFactory)
+        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout, IPvPPrefabFactory prefabFactory)
         {
-            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
 
             foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
             {
@@ -105,12 +105,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         private IList<IPvPBuildingGroup> CreateBuildingGroups(
-            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildingCategoryToGroups,
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildingCategoryToGroups,
             IPvPBuildingGroupFactory buildingGroupFactory)
         {
             IList<IPvPBuildingGroup> buildingGroups = new List<IPvPBuildingGroup>();
 
-            foreach (KeyValuePair<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings in buildingCategoryToGroups)
+            foreach (KeyValuePair<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings in buildingCategoryToGroups)
             {
                 IPvPBuildingGroup group = buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
                 buildingGroups.Add(group);

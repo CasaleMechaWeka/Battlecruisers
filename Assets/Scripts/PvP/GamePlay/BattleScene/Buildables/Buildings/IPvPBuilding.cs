@@ -3,14 +3,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
-    public enum PvPBuildingCategory
-    {
-        Factory, Defence, Offence, Tactical, Ultra
-    }
-
     // Explicitly set integer values, because the Unity inspector binds
     // to the integer values.  So now, if I decide to modify the enum
     // I don't need to adjust every single prefab that uses this enum.  
@@ -25,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
     public interface IPvPBuilding : IPvPBuildable, IPvPPoolable<PvPBuildingActivationArgs>
     {
-        PvPBuildingCategory Category { get; }
+        BuildingCategory Category { get; }
         IPvPSlotSpecification SlotSpecification { get; }
         Vector3 PuzzleRootPoint { get; }
 

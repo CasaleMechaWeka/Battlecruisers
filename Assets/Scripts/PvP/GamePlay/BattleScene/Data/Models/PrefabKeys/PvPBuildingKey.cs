@@ -1,5 +1,5 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys
@@ -17,9 +17,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         }
 
         [SerializeField]
-        private PvPBuildingCategory _buildingCategory;
+        private BuildingCategory _buildingCategory;
 
-        public PvPBuildingCategory BuildingCategory
+        public BuildingCategory BuildingCategory
         {
             get { return _buildingCategory; }
             private set { _buildingCategory = value; }
@@ -33,25 +33,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             }
         }
 
-        public PvPBuildingKey(PvPBuildingCategory category, string prefabFileName)
+        public PvPBuildingKey(BuildingCategory category, string prefabFileName)
             : base(prefabFileName, PvPBuildableType.Building)
         {
             BuildingCategory = category;
         }
 
-        private string BuildingCategoryToFolderName(PvPBuildingCategory buildingCategory)
+        private string BuildingCategoryToFolderName(BuildingCategory buildingCategory)
         {
             switch (buildingCategory)
             {
-                case PvPBuildingCategory.Factory:
+                case BuildingCategory.Factory:
                     return PvPBuildingFolderNames.FACTORIES;
-                case PvPBuildingCategory.Tactical:
+                case BuildingCategory.Tactical:
                     return PvPBuildingFolderNames.TACTICAL;
-                case PvPBuildingCategory.Defence:
+                case BuildingCategory.Defence:
                     return PvPBuildingFolderNames.DEFENCE;
-                case PvPBuildingCategory.Offence:
+                case BuildingCategory.Offence:
                     return PvPBuildingFolderNames.OFFENCE;
-                case PvPBuildingCategory.Ultra:
+                case BuildingCategory.Ultra:
                     return PvPBuildingFolderNames.ULTRAS;
                 default:
                     throw new ArgumentException();

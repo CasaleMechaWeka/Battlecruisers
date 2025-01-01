@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using System;
 using System.Collections.Generic;
 
@@ -6,12 +7,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBuildingGroup : IPvPBuildingGroup
     {
         public IList<IPvPBuildableWrapper<IPvPBuilding>> Buildings { get; }
-        public PvPBuildingCategory BuildingCategory { get; }
+        public BuildingCategory BuildingCategory { get; }
         public string BuildingGroupName { get; }
         public string Description { get; }
 
         public PvPBuildingGroup(
-            PvPBuildingCategory buildingCategory,
+            BuildingCategory buildingCategory,
             IList<IPvPBuildableWrapper<IPvPBuilding>> buildings,
             string groupName,
             string description)

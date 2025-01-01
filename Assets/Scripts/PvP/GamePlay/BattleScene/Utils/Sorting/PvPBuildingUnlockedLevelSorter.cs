@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
@@ -27,19 +28,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
 
-        private BattleCruisers.Buildables.Buildings.BuildingCategory convertToPvP(PvPBuildingCategory category)
+        private BattleCruisers.Buildables.Buildings.BuildingCategory convertToPvP(BuildingCategory category)
         {
             switch (category)
             {
-                case PvPBuildingCategory.Defence:
+                case BuildingCategory.Defence:
                     return BattleCruisers.Buildables.Buildings.BuildingCategory.Defence;
-                case PvPBuildingCategory.Factory:
+                case BuildingCategory.Factory:
                     return BattleCruisers.Buildables.Buildings.BuildingCategory.Factory;
-                case PvPBuildingCategory.Offence:
+                case BuildingCategory.Offence:
                     return BattleCruisers.Buildables.Buildings.BuildingCategory.Offence;
-                case PvPBuildingCategory.Tactical:
+                case BuildingCategory.Tactical:
                     return BattleCruisers.Buildables.Buildings.BuildingCategory.Tactical;
-                case PvPBuildingCategory.Ultra:
+                case BuildingCategory.Ultra:
                     return BattleCruisers.Buildables.Buildings.BuildingCategory.Ultra;
                 default:
                     throw new NullReferenceException();

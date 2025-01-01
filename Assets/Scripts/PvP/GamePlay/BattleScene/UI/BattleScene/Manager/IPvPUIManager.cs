@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public interface IPvPUIManager
     {
         void HideCurrentlyShownMenu();
-        void SelectBuildingGroup(PvPBuildingCategory buildingCategory);
+        void SelectBuildingGroup(BuildingCategory buildingCategory);
         void SelectBuildingFromMenu(IPvPBuildableWrapper<IPvPBuilding> buildingWrapper);
         void SelectBuilding(IPvPBuilding building);
         void ShowFactoryUnits(IPvPFactory factory);

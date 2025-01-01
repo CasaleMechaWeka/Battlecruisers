@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPBuildMenu : IPvPBuildMenu
     {
         private readonly IPvPBuildingCategoriesMenu _buildingCategoriesMenu;
-        private readonly IPvPBuildableMenus<PvPBuildingCategory> _buildingMenus;
+        private readonly IPvPBuildableMenus<BuildingCategory> _buildingMenus;
         private readonly IPvPBuildableMenus<PvPUnitCategory> _unitMenus;
         private readonly ISingleSoundPlayer _uiSoundPlayer;
         private readonly IAudioClipWrapper _selectorOpeningSound;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPBuildMenu(
             IPvPSlidingPanel selectorPanel,
             IPvPBuildingCategoriesMenu buildingCategoriesMenu,
-            IPvPBuildableMenus<PvPBuildingCategory> buildingMenus,
+            IPvPBuildableMenus<BuildingCategory> buildingMenus,
             IPvPBuildableMenus<PvPUnitCategory> unitMenus,
             ISingleSoundPlayer uiSoundPlayer,
             IAudioClipWrapper selectorOpeningSound)
@@ -63,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return buttons;
         }
 
-        public void ShowBuildingGroupMenu(PvPBuildingCategory buildingCategory)
+        public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
         {
             IPvPBuildablesMenu menuToShow = _buildingMenus.GetBuildablesMenu(buildingCategory);
 
@@ -122,12 +122,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public IPvPBuildingCategoryButton GetBuildingCategoryButton(PvPBuildingCategory category)
+        public IPvPBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category)
         {
             return _buildingCategoriesMenu.GetCategoryButton(category);
         }
 
-        public ReadOnlyCollection<IPvPBuildableButton> GetBuildingButtons(PvPBuildingCategory category)
+        public ReadOnlyCollection<IPvPBuildableButton> GetBuildingButtons(BuildingCategory category)
         {
             IPvPBuildablesMenu buildMenuForCategory = _buildingMenus.GetBuildablesMenu(category);
             return buildMenuForCategory.BuildableButtons;

@@ -273,59 +273,59 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             switch (_parent)
             {
                 case ParentBuildable.AirFactory:
-                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPAirFactory");
+                    return new PvPBuildingKey(BuildingCategory.Factory, "PvPAirFactory");
                 case ParentBuildable.NavalFactory:
-                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPNavalFactory");
+                    return new PvPBuildingKey(BuildingCategory.Factory, "PvPNavalFactory");
                 case ParentBuildable.EngineeringBay:
-                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay");
+                    return new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay");
                 case ParentBuildable.EngineeringBay4:
-                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay4");
+                    return new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay4");
                 case ParentBuildable.EngineeringBay8:
-                    return new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay8");
+                    return new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay8");
                 case ParentBuildable.ShieldGenerator:
-                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPShieldGenerator");
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvPShieldGenerator");
                 case ParentBuildable.StealthGenerator:
-                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPStealthGenerator");
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvPStealthGenerator");
                 case ParentBuildable.SpySatelliteLauncher:
-                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPSpySatelliteLauncher");
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvPSpySatelliteLauncher");
                 case ParentBuildable.LocalBooster:
-                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPLocalBooster");
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvPLocalBooster");
                 case ParentBuildable.ControlTower:
-                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPControlTower");
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvPControlTower");
                 case ParentBuildable.GrapheneBarrier:
-                    return new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPGrapheneBarrier");
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvPGrapheneBarrier");
                 case ParentBuildable.AntiShipTurret:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPAntiShipTurret");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPAntiShipTurret");
                 case ParentBuildable.AntiAirTurret:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPAntiAirTurret");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPAntiAirTurret");
                 case ParentBuildable.Mortar:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPMortar");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPMortar");
                 case ParentBuildable.SamSite:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPSamSite");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPSamSite");
                 case ParentBuildable.TeslaCoil:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPTeslaCoil");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPTeslaCoil");
                 case ParentBuildable.Coastguard:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPCoastguard");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPCoastguard");
                 case ParentBuildable.FlakTurret:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPFlakTurret");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPFlakTurret");
                 case ParentBuildable.CIWS:
-                    return new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPCIWS");
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvPCIWS");
                 case ParentBuildable.Artillery:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPArtillery");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPArtillery");
                 case ParentBuildable.RocketLauncher:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPRocketLauncher");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPRocketLauncher");
                 case ParentBuildable.Railgun:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPRailgun");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPRailgun");
                 case ParentBuildable.MLRS:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMLRS");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPMLRS");
                 case ParentBuildable.GatlingMortar:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPGatlingMortar");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPGatlingMortar");
                 case ParentBuildable.IonCannon:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPIonCannon");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPIonCannon");
                 case ParentBuildable.MissilePod:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMissilePod");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPMissilePod");
                 case ParentBuildable.Cannon:
-                    return new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPCannon");
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvPCannon");
 
                 case ParentBuildable.Bomber:
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBomber");

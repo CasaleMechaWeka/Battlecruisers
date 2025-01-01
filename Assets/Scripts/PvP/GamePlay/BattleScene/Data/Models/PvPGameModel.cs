@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
@@ -416,7 +416,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             }
         }
 
-        public IList<PvPBuildingKey> GetUnlockedBuildings(PvPBuildingCategory buildingCategory)
+        public IList<PvPBuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory)
         {
             return _unlockedBuildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
         }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             _units = units;
         }
 
-        public IList<PvPBuildingKey> GetBuildings(PvPBuildingCategory buildingCategory)
+        public IList<PvPBuildingKey> GetBuildings(BuildingCategory buildingCategory)
         {
             return _buildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
         }

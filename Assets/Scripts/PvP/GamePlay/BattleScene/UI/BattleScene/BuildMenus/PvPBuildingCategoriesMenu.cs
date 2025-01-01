@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBuildingCategoriesMenu : PvPPresentableController, IPvPBuildingCategoriesMenu
     {
-        private IDictionary<PvPBuildingCategory, IPvPBuildingCategoryButton> _categoryToCategoryButtons;
+        private IDictionary<BuildingCategory, IPvPBuildingCategoryButton> _categoryToCategoryButtons;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             PvPHelper.AssertIsNotNull(soundPlayer, uiManager, buttonVisibilityFilters, buildingGroups);
 
-            _categoryToCategoryButtons = new Dictionary<PvPBuildingCategory, IPvPBuildingCategoryButton>();
+            _categoryToCategoryButtons = new Dictionary<BuildingCategory, IPvPBuildingCategoryButton>();
 
             IList<PvPBuildingCategoryButton> categoryButtons = GetComponentsInChildren<PvPBuildingCategoryButton>().ToList();
             Assert.IsTrue(buildingGroups.Count <= categoryButtons.Count);
@@ -54,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public IPvPBuildingCategoryButton GetCategoryButton(PvPBuildingCategory category)
+        public IPvPBuildingCategoryButton GetCategoryButton(BuildingCategory category)
         {
             Assert.IsTrue(_categoryToCategoryButtons.ContainsKey(category));
             return _categoryToCategoryButtons[category];

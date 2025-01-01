@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
@@ -11,14 +12,14 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus
 {
-    public class PvPBuildingMenus : PvPBuildableMenus<IPvPBuilding, PvPBuildingCategory, PvPBuildingsMenuController>
+    public class PvPBuildingMenus : PvPBuildableMenus<IPvPBuilding, BuildingCategory, PvPBuildingsMenuController>
     {
         private ISpriteProvider _spriteProvider;
         private IPvPBuildingClickHandler _clickHandler;
         private bool _flipClickAndDragIcon;
 
         public void Initialise(
-            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings,
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings,
             IPvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<IPvPBuilding> buildingSorter,

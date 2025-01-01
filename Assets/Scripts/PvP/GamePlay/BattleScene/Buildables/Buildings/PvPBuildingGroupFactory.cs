@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using System;
 using System.Collections.Generic;
 
@@ -5,43 +6,43 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBuildingGroupFactory : IPvPBuildingGroupFactory
     {
-        public IPvPBuildingGroup CreateBuildingGroup(PvPBuildingCategory category, IList<IPvPBuildableWrapper<IPvPBuilding>> buildings)
+        public IPvPBuildingGroup CreateBuildingGroup(BuildingCategory category, IList<IPvPBuildableWrapper<IPvPBuilding>> buildings)
         {
             return new PvPBuildingGroup(category, buildings, GetGroupName(category), GetGroupDescription(category));
         }
 
-        private string GetGroupName(PvPBuildingCategory category)
+        private string GetGroupName(BuildingCategory category)
         {
             switch (category)
             {
-                case PvPBuildingCategory.Factory:
+                case BuildingCategory.Factory:
                     return "Factories";
-                case PvPBuildingCategory.Tactical:
+                case BuildingCategory.Tactical:
                     return "Tactical";
-                case PvPBuildingCategory.Defence:
+                case BuildingCategory.Defence:
                     return "Defence";
-                case PvPBuildingCategory.Offence:
+                case BuildingCategory.Offence:
                     return "Offence";
-                case PvPBuildingCategory.Ultra:
+                case BuildingCategory.Ultra:
                     return "Ultras";
                 default:
                     throw new ArgumentException();
             }
         }
 
-        private string GetGroupDescription(PvPBuildingCategory category)
+        private string GetGroupDescription(BuildingCategory category)
         {
             switch (category)
             {
-                case PvPBuildingCategory.Factory:
+                case BuildingCategory.Factory:
                     return "Buildings that produce units";
-                case PvPBuildingCategory.Tactical:
+                case BuildingCategory.Tactical:
                     return "Specialised buildings";
-                case PvPBuildingCategory.Defence:
+                case BuildingCategory.Defence:
                     return "Defensive buildings to protect your cruiser";
-                case PvPBuildingCategory.Offence:
+                case BuildingCategory.Offence:
                     return "Offensive buildings to destroy the enemy cruiser";
-                case PvPBuildingCategory.Ultra:
+                case BuildingCategory.Ultra:
                     return "Ridiculously awesome creations meant to end to game";
                 default:
                     throw new ArgumentException();

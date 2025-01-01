@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
@@ -41,8 +42,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public Vector3 PuzzleRootPoint { get; private set; }
 
         [Header("Other")]
-        public PvPBuildingCategory category;
-        public PvPBuildingCategory Category => category;
+        public BuildingCategory category;
+        public BuildingCategory Category => category;
 
         public virtual bool IsBoostable => false;
 

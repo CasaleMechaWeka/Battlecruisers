@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -684,7 +685,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         [ServerRpc(RequireOwnership = true)]
-        public void PvP_SelectedBuildingPrefabServerRpc(PvPBuildingCategory category, string prefabName, int variantIndex, ServerRpcParams serverRpcParams = default)
+        public void PvP_SelectedBuildingPrefabServerRpc(BuildingCategory category, string prefabName, int variantIndex, ServerRpcParams serverRpcParams = default)
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
             if (NetworkManager.ConnectedClientsIds.Contains(clientId))

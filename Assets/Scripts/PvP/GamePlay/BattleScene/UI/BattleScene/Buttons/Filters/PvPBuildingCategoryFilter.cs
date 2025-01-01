@@ -1,14 +1,14 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters
 {
-    public class PvPBuildingCategoryFilter : IPvPBroadcastingFilter<PvPBuildingCategory>, IPvPBuildingCategoryPermitter
+    public class PvPBuildingCategoryFilter : IPvPBroadcastingFilter<BuildingCategory>, IPvPBuildingCategoryPermitter
     {
         private bool _allowAll;
-        private PvPBuildingCategory? _permittedCategory;
+        private BuildingCategory? _permittedCategory;
 
         public event EventHandler PotentialMatchChange;
 
@@ -18,21 +18,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _permittedCategory = null;
         }
 
-        public bool IsMatch(PvPBuildingCategory category)
+        public bool IsMatch(BuildingCategory category)
         {
             return
                 _allowAll
                 || _permittedCategory == category;
         }
 
-        public bool IsMatch(PvPBuildingCategory category, VariantPrefab variant)
+        public bool IsMatch(BuildingCategory category, VariantPrefab variant)
         {
             return
                 _allowAll
                 || _permittedCategory == category;
         }
 
-        public void AllowSingleCategory(PvPBuildingCategory buildingCategory)
+        public void AllowSingleCategory(BuildingCategory buildingCategory)
         {
             _allowAll = false;
             _permittedCategory = buildingCategory;

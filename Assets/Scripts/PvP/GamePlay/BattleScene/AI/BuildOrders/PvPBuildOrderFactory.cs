@@ -175,10 +175,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
                     return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPNavalFactory, request.NumOfSlotsToUse);
 
                 case PvPOffensiveType.Buildings:
-                    return CreateDynamicBuildOrder(PvPBuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
+                    return CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
 
                 case PvPOffensiveType.Ultras:
-                    return CreateDynamicBuildOrder(PvPBuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, convertPvEBuildingKey2PvPBuildingKey(_staticData.AIBannedUltrakeys));
+                    return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, convertPvEBuildingKey2PvPBuildingKey(_staticData.AIBannedUltrakeys));
 
                 default:
                     throw new ArgumentException();
@@ -196,37 +196,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             return iPvPKeys;
         }
 
-        private PvPBuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
+        private BuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
         {
             switch (category)
             {
                 case BuildingCategory.Ultra:
-                    return PvPBuildingCategory.Ultra;
+                    return BuildingCategory.Ultra;
                 case BuildingCategory.Tactical:
-                    return PvPBuildingCategory.Tactical;
+                    return BuildingCategory.Tactical;
                 case BuildingCategory.Factory:
-                    return PvPBuildingCategory.Factory;
+                    return BuildingCategory.Factory;
                 case BuildingCategory.Offence:
-                    return PvPBuildingCategory.Offence;
+                    return BuildingCategory.Offence;
                 case BuildingCategory.Defence:
-                    return PvPBuildingCategory.Defence;
+                    return BuildingCategory.Defence;
                 default:
                     throw new System.Exception();
             }
         }
-        private BuildingCategory convertPvPBuildingCategory2PvEBuildingCategory(PvPBuildingCategory category)
+        private BuildingCategory convertPvPBuildingCategory2PvEBuildingCategory(BuildingCategory category)
         {
             switch (category)
             {
-                case PvPBuildingCategory.Ultra:
+                case BuildingCategory.Ultra:
                     return BuildingCategory.Ultra;
-                case PvPBuildingCategory.Tactical:
+                case BuildingCategory.Tactical:
                     return BuildingCategory.Tactical;
-                case PvPBuildingCategory.Factory:
+                case BuildingCategory.Factory:
                     return BuildingCategory.Factory;
-                case PvPBuildingCategory.Offence:
+                case BuildingCategory.Offence:
                     return BuildingCategory.Offence;
-                case PvPBuildingCategory.Defence:
+                case BuildingCategory.Defence:
                     return BuildingCategory.Defence;
                 default:
                     throw new System.Exception();
@@ -288,7 +288,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         }
 
         private IPvPDynamicBuildOrder CreateDynamicBuildOrder(
-            PvPBuildingCategory buildingCategory,
+            BuildingCategory buildingCategory,
             int size,
             IPvPLevelInfo levelInfo,
             IList<PvPBuildingKey> bannedBuildings = null)

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
@@ -53,8 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 
         private void Cruiser_BuildingCompleted(object sender, PvPBuildingCompletedEventArgs e)
         {
-            if (e.CompletedBuilding.Category == PvPBuildingCategory.Offence
-                || e.CompletedBuilding.Category == PvPBuildingCategory.Ultra)
+            if (e.CompletedBuilding.Category == BuildingCategory.Offence
+                || e.CompletedBuilding.Category == BuildingCategory.Ultra)
             {
                 EmitDangerStart();
             }

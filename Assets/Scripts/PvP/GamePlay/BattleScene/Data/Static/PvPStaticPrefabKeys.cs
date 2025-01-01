@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Collections.Generic;
@@ -11,53 +11,53 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
         public static class PvPBuildings
         {
             // Factories
-            public static PvPBuildingKey PvPAirFactory { get; } = new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPAirFactory");
-            public static PvPBuildingKey PvPNavalFactory { get; } = new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPNavalFactory");
-            public static PvPBuildingKey PvPDroneStation { get; } = new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay");
-            public static PvPBuildingKey PvPDroneStation4 { get; } = new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay4");
-            public static PvPBuildingKey PvPDroneStation6 { get; } = new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay6");
-            public static PvPBuildingKey PvPDroneStation8 { get; } = new PvPBuildingKey(PvPBuildingCategory.Factory, "PvPEngineeringBay8");
+            public static PvPBuildingKey PvPAirFactory { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPAirFactory");
+            public static PvPBuildingKey PvPNavalFactory { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPNavalFactory");
+            public static PvPBuildingKey PvPDroneStation { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay");
+            public static PvPBuildingKey PvPDroneStation4 { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay4");
+            public static PvPBuildingKey PvPDroneStation6 { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay6");
+            public static PvPBuildingKey PvPDroneStation8 { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay8");
 
             // Tactical
-            public static PvPBuildingKey PvPShieldGenerator { get; } = new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPShieldGenerator");
-            public static PvPBuildingKey PvPStealthGenerator { get; } = new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPStealthGenerator");
-            public static PvPBuildingKey PvPSpySatelliteLauncher { get; } = new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPSpySatelliteLauncher");
-            public static PvPBuildingKey PvPLocalBooster { get; } = new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPLocalBooster");
-            public static PvPBuildingKey PvPControlTower { get; } = new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPControlTower");
-            public static PvPBuildingKey PvPGrapheneBarrier { get; } = new PvPBuildingKey(PvPBuildingCategory.Tactical, "PvPGrapheneBarrier");
+            public static PvPBuildingKey PvPShieldGenerator { get; } = new PvPBuildingKey(BuildingCategory.Tactical, "PvPShieldGenerator");
+            public static PvPBuildingKey PvPStealthGenerator { get; } = new PvPBuildingKey(BuildingCategory.Tactical, "PvPStealthGenerator");
+            public static PvPBuildingKey PvPSpySatelliteLauncher { get; } = new PvPBuildingKey(BuildingCategory.Tactical, "PvPSpySatelliteLauncher");
+            public static PvPBuildingKey PvPLocalBooster { get; } = new PvPBuildingKey(BuildingCategory.Tactical, "PvPLocalBooster");
+            public static PvPBuildingKey PvPControlTower { get; } = new PvPBuildingKey(BuildingCategory.Tactical, "PvPControlTower");
+            public static PvPBuildingKey PvPGrapheneBarrier { get; } = new PvPBuildingKey(BuildingCategory.Tactical, "PvPGrapheneBarrier");
 
             // Defence
-            public static PvPBuildingKey PvPAntiShipTurret { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPAntiShipTurret");
-            public static PvPBuildingKey PvPAntiAirTurret { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPAntiAirTurret");
-            public static PvPBuildingKey PvPMortar { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPMortar");
-            public static PvPBuildingKey PvPSamSite { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPSamSite");
-            public static PvPBuildingKey PvPTeslaCoil { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPTeslaCoil");
-            public static PvPBuildingKey PvPCoastguard { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPCoastguard");
-            public static PvPBuildingKey PvPFlakTurret { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPFlakTurret");
-            public static PvPBuildingKey PvPCIWS { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPCIWS");
+            public static PvPBuildingKey PvPAntiShipTurret { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPAntiShipTurret");
+            public static PvPBuildingKey PvPAntiAirTurret { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPAntiAirTurret");
+            public static PvPBuildingKey PvPMortar { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPMortar");
+            public static PvPBuildingKey PvPSamSite { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPSamSite");
+            public static PvPBuildingKey PvPTeslaCoil { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPTeslaCoil");
+            public static PvPBuildingKey PvPCoastguard { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPCoastguard");
+            public static PvPBuildingKey PvPFlakTurret { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPFlakTurret");
+            public static PvPBuildingKey PvPCIWS { get; } = new PvPBuildingKey(BuildingCategory.Defence, "PvPCIWS");
 
             // Offence
-            public static PvPBuildingKey PvPArtillery { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPArtillery");
-            public static PvPBuildingKey PvPRocketLauncher { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPRocketLauncher");
-            public static PvPBuildingKey PvPRailgun { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPRailgun");
-            public static PvPBuildingKey PvPMLRS { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMLRS");
-            public static PvPBuildingKey PvPGatlingMortar { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPGatlingMortar");
-            public static PvPBuildingKey PvPIonCannon { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPIonCannon");
-            public static PvPBuildingKey PvPMissilePod { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMissilePod");
-            public static PvPBuildingKey PvPCannon { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPCannon");
-            public static PvPBuildingKey PvPBlastVLS { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPBlastVLS");
-            public static PvPBuildingKey PvPFirecrackerVLS { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPFirecrackerVLS");
+            public static PvPBuildingKey PvPArtillery { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPArtillery");
+            public static PvPBuildingKey PvPRocketLauncher { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPRocketLauncher");
+            public static PvPBuildingKey PvPRailgun { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPRailgun");
+            public static PvPBuildingKey PvPMLRS { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPMLRS");
+            public static PvPBuildingKey PvPGatlingMortar { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPGatlingMortar");
+            public static PvPBuildingKey PvPIonCannon { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPIonCannon");
+            public static PvPBuildingKey PvPMissilePod { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPMissilePod");
+            public static PvPBuildingKey PvPCannon { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPCannon");
+            public static PvPBuildingKey PvPBlastVLS { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPBlastVLS");
+            public static PvPBuildingKey PvPFirecrackerVLS { get; } = new PvPBuildingKey(BuildingCategory.Offence, "PvPFirecrackerVLS");
 
             // Ultras
-            public static PvPBuildingKey PvPDeathstarLauncher { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPDeathstarLauncher");
-            public static PvPBuildingKey PvPNukeLauncher { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPNukeLauncher");
-            public static PvPBuildingKey PvPUltralisk { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPUltralisk");
-            public static PvPBuildingKey PvPKamikazeSignal { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPKamikazeSignal");
-            public static PvPBuildingKey PvPBroadsides { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPBroadsides");
-            public static PvPBuildingKey PvPNovaArtillery { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPNovaArtillery");
-            public static PvPBuildingKey PvPUltraCIWS { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPUltraCIWS");
-            public static PvPBuildingKey PvPGlobeShield { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPGlobeShield");
-            public static PvPBuildingKey PvPSledgehammer { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPSledgehammer");
+            public static PvPBuildingKey PvPDeathstarLauncher { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPDeathstarLauncher");
+            public static PvPBuildingKey PvPNukeLauncher { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPNukeLauncher");
+            public static PvPBuildingKey PvPUltralisk { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPUltralisk");
+            public static PvPBuildingKey PvPKamikazeSignal { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPKamikazeSignal");
+            public static PvPBuildingKey PvPBroadsides { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPBroadsides");
+            public static PvPBuildingKey PvPNovaArtillery { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPNovaArtillery");
+            public static PvPBuildingKey PvPUltraCIWS { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPUltraCIWS");
+            public static PvPBuildingKey PvPGlobeShield { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPGlobeShield");
+            public static PvPBuildingKey PvPSledgehammer { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPSledgehammer");
 
             public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
             {

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPBuildingCategoryButton : PvPCanvasGroupButton, IPvPBuildingCategoryButton, IPvPBroadcastingFilter
     {
         private IPvPUIManager _uiManager;
-        private IPvPBroadcastingFilter<PvPBuildingCategory> _shouldBeEnabledFilter;
+        private IPvPBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
         private PvPFilterToggler _filterToggler;
 
         public Image activeFeedback;
@@ -24,8 +24,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             remove { _shouldBeEnabledFilter.PotentialMatchChange -= value; }
         }
 
-        public PvPBuildingCategory category;
-        public PvPBuildingCategory Category => category;
+        public BuildingCategory category;
+        public BuildingCategory Category => category;
 
 
         public bool IsMatch => _shouldBeEnabledFilter.IsMatch(Category);
@@ -33,9 +33,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            PvPBuildingCategory expectedBuildingCategory,
+            BuildingCategory expectedBuildingCategory,
             IPvPUIManager uiManager,
-            IPvPBroadcastingFilter<PvPBuildingCategory> shouldBeEnabledFilter)
+            IPvPBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

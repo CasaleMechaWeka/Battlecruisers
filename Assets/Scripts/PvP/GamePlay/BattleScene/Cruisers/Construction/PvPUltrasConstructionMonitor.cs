@@ -1,5 +1,5 @@
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void _buildingMonitor_BuildingStarted(object sender, PvPBuildingStartedEventArgs e)
         {
-            if (e.StartedBuilding.Category == PvPBuildingCategory.Ultra)
+            if (e.StartedBuilding.Category == BuildingCategory.Ultra)
             {
                 _debouncer.Debounce(PlayAlert);
             }

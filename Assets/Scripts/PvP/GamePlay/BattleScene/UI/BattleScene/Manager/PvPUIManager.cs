@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
@@ -112,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             lastClickedBuildable = null;
         }
 
-        public void SelectBuildingGroup(PvPBuildingCategory buildingCategory)
+        public void SelectBuildingGroup(BuildingCategory buildingCategory)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
 

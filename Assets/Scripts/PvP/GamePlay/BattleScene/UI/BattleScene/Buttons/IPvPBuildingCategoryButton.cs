@@ -1,11 +1,11 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
 {
     public interface IPvPBuildingCategoryButton : IPvPButton
     {
         bool IsActiveFeedbackVisible { set; }
-        PvPBuildingCategory Category { get; }
+        BuildingCategory Category { get; }
 
         /// <summary>
         /// For hotkeys.
