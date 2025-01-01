@@ -13,6 +13,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Buildables;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public abstract Vector2 Size { get; }
         public virtual Vector2 DroneAreaSize => Size;
 
-        public IPvPTransform Transform { get; private set; }
+        public ITransform Transform { get; private set; }
 
         public Action clickedRepairButton { get; set; }
 
@@ -138,7 +139,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             RepairCommand = new PvPRepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 
-            Transform = new PvPTransformBC(transform);
+            Transform = new TransformBC(transform);
             clickedRepairButton += OnClickedRepairButton;
         }
 

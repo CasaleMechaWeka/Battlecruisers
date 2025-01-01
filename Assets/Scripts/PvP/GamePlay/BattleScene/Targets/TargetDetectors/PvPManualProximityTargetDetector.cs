@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPManualProximityTargetDetector : IPvPManualProximityTargetDetector
     {
-        private readonly IPvPTransform _parentTransform;
+        private readonly ITransform _parentTransform;
         private readonly IReadOnlyCollection<IPvPTarget> _potentialTargets;
         private readonly float _detectionRange;
         private readonly IPvPRangeCalculator _rangeCalculator;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public event EventHandler<PvPTargetEventArgs> TargetExited;
 
         public PvPManualProximityTargetDetector(
-            IPvPTransform parentTransform,
+            ITransform parentTransform,
             IReadOnlyCollection<IPvPTarget> potentialTargets,
             float detectionRange,
             IPvPRangeCalculator rangeCalculator)

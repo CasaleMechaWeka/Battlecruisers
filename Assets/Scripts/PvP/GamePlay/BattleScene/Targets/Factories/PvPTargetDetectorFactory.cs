@@ -4,7 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.He
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
@@ -23,29 +23,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _updaterProvider = updaterProvider;
         }
 
-        public PvPManualDetectorProvider CreateEnemyShipTargetDetector(IPvPTransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
+        public PvPManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
         {
             return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _enemyTargets.Ships, _updaterProvider.SlowUpdater);
         }
 
-        public PvPManualDetectorProvider CreateFriendlyShipTargetDetector(IPvPTransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
+        public PvPManualDetectorProvider CreateFriendlyShipTargetDetector(ITransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
         {
             // Need per frame updater, otherwise friendly boats detect each other too slowly and overlap :)
             return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _friendlyTargets.Ships, _updaterProvider.PhysicsUpdater);
         }
 
-        public PvPManualDetectorProvider CreateEnemyAircraftTargetDetector(IPvPTransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
+        public PvPManualDetectorProvider CreateEnemyAircraftTargetDetector(ITransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
         {
             return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _enemyTargets.Aircraft, _updaterProvider.VerySlowUpdater);
         }
 
-        public PvPManualDetectorProvider CreateEnemyShipAndAircraftTargetDetector(IPvPTransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
+        public PvPManualDetectorProvider CreateEnemyShipAndAircraftTargetDetector(ITransform parentTransform, float detectionRange, IPvPRangeCalculator rangeCalculator)
         {
             return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _enemyTargets.ShipsAndAircraft, _updaterProvider.VerySlowUpdater);
         }
 
         private PvPManualDetectorProvider CreateTargetDetector(
-            IPvPTransform parentTransform,
+            ITransform parentTransform,
             float detectionRange,
             IPvPRangeCalculator rangeCalculator,
             IReadOnlyCollection<IPvPTarget> potentialTargets,

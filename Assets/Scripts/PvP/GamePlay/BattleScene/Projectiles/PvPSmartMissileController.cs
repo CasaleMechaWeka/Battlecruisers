@@ -20,6 +20,7 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IPvPTargetProvider,
         IPvPTargetConsumer
     {
-        private IPvPTransform _transform;
+        private ITransform _transform;
         private IDeferrer _deferrer;
         private IPvPMovementController _dummyMovementController;
         private PvPManualDetectorProvider _enemyDetectorProvider;

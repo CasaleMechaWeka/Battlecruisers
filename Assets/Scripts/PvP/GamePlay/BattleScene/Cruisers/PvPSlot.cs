@@ -17,6 +17,7 @@ using Unity.Netcode;
 using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -63,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<int> pvp_BoostProviders_Num = new NetworkVariable<int>();
         public ObservableCollection<IPvPBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; private set; }
-        public IPvPTransform Transform { get; private set; }
+        public ITransform Transform { get; private set; }
         private Vector3 _buildingPlacementPoint;
         public Vector3 BuildingPlacementPoint
         {

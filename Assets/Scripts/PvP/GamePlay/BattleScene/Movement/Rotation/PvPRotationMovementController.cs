@@ -1,15 +1,15 @@
 using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation
 {
     public class PvPRotationMovementController : IPvPRotationMovementController
     {
         private readonly IPvPRotationHelper _rotationHelper;
-        private readonly IPvPTransform _transform;
+        private readonly ITransform _transform;
         private readonly IPvPDeltaTimeProvider _time;
         private readonly float _rotateSpeedInDegreesPerS;
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public PvPRotationMovementController(
             IPvPRotationHelper rotationHelper,
-            IPvPTransform transform,
+            ITransform transform,
             IPvPDeltaTimeProvider time,
             float rotateSpeedInDegreesPerS)
         {

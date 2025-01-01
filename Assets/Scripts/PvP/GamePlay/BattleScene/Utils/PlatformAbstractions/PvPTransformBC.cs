@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions
 {
-    public class PvPTransformBC : IPvPTransform
+    public class PvPTransformBC : ITransform
     {
         public Transform PlatformObject { get; }
 
