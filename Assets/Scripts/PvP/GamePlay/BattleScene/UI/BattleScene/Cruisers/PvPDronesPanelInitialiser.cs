@@ -1,8 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Tutorial.Highlighting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public Image highlight;
 
-        public IPvPHighlightable Initialise(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
+        public IHighlightable Initialise(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
         {
             PvPHelper.AssertIsNotNull(highlight, droneManager, droneManagerMonitor);
 
@@ -29,14 +29,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _dronesDisplayer = new PvPDronesDisplayer(droneManager, droneManagerMonitor, twoDigitDisplayer, highlightGameObject);
 
-            PvPHighlightable highlightable = GetComponent<PvPHighlightable>();
+            Highlightable highlightable = GetComponent<Highlightable>();
             Assert.IsNotNull(highlightable);
             highlightable.Initialise();
             return highlightable;
         }
 
 
-        public IPvPHighlightable Initialise(PvPCruiser playerCruiser)
+        public IHighlightable Initialise(PvPCruiser playerCruiser)
         {
             PvPHelper.AssertIsNotNull(highlight);
 
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _dronesDisplayer = new PvPDronesDisplayer(playerCruiser, twoDigitDisplayer, highlightGameObject);
 
-            PvPHighlightable highlightable = GetComponent<PvPHighlightable>();
+            Highlightable highlightable = GetComponent<Highlightable>();
             Assert.IsNotNull(highlightable);
             highlightable.Initialise();
             return highlightable;

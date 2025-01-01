@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {
-    public class PvPTogglable : MonoBehaviourWrapper, IPvPTogglable, IPvPHighlightable
+    public class PvPTogglable : MonoBehaviourWrapper, IPvPTogglable, IHighlightable
     {
         protected RectTransform _rectTransform;
 

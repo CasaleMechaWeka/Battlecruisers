@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -8,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed
 {
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IPvPToggleButtonGroup speedButtonGroup = new PvPToggleButtonGroup(speedButtons.ToList<IPvPToggleButton>(), normalSpeed);
 
-            PvPHighlightable speedButtonPanel = GetComponent<PvPHighlightable>();
+            Highlightable speedButtonPanel = GetComponent<Highlightable>();
             Assert.IsNotNull(speedButtonPanel);
             speedButtonPanel.Initialise();
 

@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Tutorial.Highlighting;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public IPvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
         public IPvPCameraCalculatorSettings Settings { get; }
-        public IPvPHighlightable NavigationButtonsPanel { get; }
+        public IHighlightable NavigationButtonsPanel { get; }
 
         public PvPCameraComponents(
             IPvPCamera mainCamera,
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,
             IPvPCameraCalculatorSettings settings,
-            IPvPHighlightable navigationButtonsPanel)
+            IHighlightable navigationButtonsPanel)
         {
             PvPHelper.AssertIsNotNull(mainCamera, cameraAdjuster, cameraFocuser, cruiserDeathCameraFocuser, skybox, settings, navigationButtonsPanel);
 

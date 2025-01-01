@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
@@ -7,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 using BattleCruisers.Utils;
+using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -25,8 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(playerName, enemyName);
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
 
-            IPvPHighlightable playerLeftCruiserHealthBar;
-            IPvPHighlightable playerRightCruiserHealthBar;
+            IHighlightable playerLeftCruiserHealthBar;
+            IHighlightable playerRightCruiserHealthBar;
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
                 playerLeftHealthBarHelpLabel.text = playerName;

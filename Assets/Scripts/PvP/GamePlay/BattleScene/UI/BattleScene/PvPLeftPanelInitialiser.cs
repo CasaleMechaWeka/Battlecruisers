@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.C
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers;
@@ -22,6 +21,7 @@ using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 staticData);
             PvPHelper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
-            IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
+            IHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
             IPvPBuildMenu buildMenu
                 = SetupBuildMenuController(
                     playerCruiser,
@@ -137,12 +137,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
         }
 
-        private IPvPHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
+        private IHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
         {
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }
 
-        private IPvPHighlightable SetupDronesPanel(PvPCruiser playerCruiser)
+        private IHighlightable SetupDronesPanel(PvPCruiser playerCruiser)
         {
             return dronesPanelInitialiser.Initialise(playerCruiser);
         }

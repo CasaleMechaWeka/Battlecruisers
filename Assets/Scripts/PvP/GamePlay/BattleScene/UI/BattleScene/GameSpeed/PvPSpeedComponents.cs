@@ -1,12 +1,12 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed
 {
     public class PvPSpeedComponents : IPvPSpeedComponents
     {
-        public IPvPHighlightable SpeedButtonPanel { get; }
+        public IHighlightable SpeedButtonPanel { get; }
         public IPvPToggleButtonGroup SpeedButtonGroup { get; }
         public IPvPGameSpeedButton SlowMotionButton { get; }
         public IPvPGameSpeedButton NormalSpeedButton { get; }
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public IPvPGameSpeedButton PauseButton { get; }
 
         public PvPSpeedComponents(
-            IPvPHighlightable speedButtonPanel,
+            IHighlightable speedButtonPanel,
             IPvPToggleButtonGroup speedButtonGroup,
             IPvPGameSpeedButton slowMotionButton,
             IPvPGameSpeedButton normalSpeedButton,

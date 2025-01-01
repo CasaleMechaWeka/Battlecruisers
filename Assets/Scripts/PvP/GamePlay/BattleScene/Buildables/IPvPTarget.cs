@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public interface IPvPTarget : IPvPDamagable, IPvPRepairable, IPvPHighlightable
+    public interface IPvPTarget : IPvPDamagable, IPvPRepairable, IHighlightable
     {
         Faction Faction { get; }
         TargetType TargetType { get; }

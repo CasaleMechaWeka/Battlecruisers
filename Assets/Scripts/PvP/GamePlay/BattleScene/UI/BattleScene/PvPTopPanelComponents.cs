@@ -1,14 +1,14 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
     public class PvPTopPanelComponents
     {
-        public IPvPHighlightable PlayerLeftCruiserHealthBar { get; }
-        public IPvPHighlightable PlayerRightCruiserHealthBar { get; }
+        public IHighlightable PlayerLeftCruiserHealthBar { get; }
+        public IHighlightable PlayerRightCruiserHealthBar { get; }
 
-        public PvPTopPanelComponents(IPvPHighlightable playerLeftCruiserHealthBar, IPvPHighlightable playerRightCruiserHealthBar)
+        public PvPTopPanelComponents(IHighlightable playerLeftCruiserHealthBar, IHighlightable playerRightCruiserHealthBar)
         {
             PvPHelper.AssertIsNotNull(playerLeftCruiserHealthBar, playerRightCruiserHealthBar);
 

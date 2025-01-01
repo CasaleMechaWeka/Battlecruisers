@@ -1,14 +1,13 @@
-
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using System.Collections.ObjectModel;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -20,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         Platform = 4,
         Deck = 5
     }
-    public interface IPvPSlot : IPvPClickableEmitter, IPvPHighlightable
+    public interface IPvPSlot : IPvPClickableEmitter, IHighlightable
     {
         bool IsFree { get; }
         PvPSlotType Type { get; }

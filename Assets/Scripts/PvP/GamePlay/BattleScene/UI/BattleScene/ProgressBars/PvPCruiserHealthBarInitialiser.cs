@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -19,14 +19,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPDamageTakenIndicator damageTakenIndicator;
         private IPvPHealthStateMonitor _cruiserHealthMonitor;
 
-        public IPvPHighlightable Initialise(PvPCruiser cruiser)
+        public IHighlightable Initialise(PvPCruiser cruiser)
         {
             Assert.IsNotNull(cruiser);
 
             return SetupHealthBar(cruiser);
         }
 
-        private PvPHighlightable SetupHealthBar(PvPCruiser cruiser)
+        private Highlightable SetupHealthBar(PvPCruiser cruiser)
         {
             Image platformFillableImage = GetComponent<Image>();
             Assert.IsNotNull(platformFillableImage);
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _cruiserHealthMonitor = new PvPHealthStateMonitor(cruiser);
             _cruiserHealthMonitor.HealthStateChanged += CruiserHealthMonitor_HealthStateChanged;
 
-            PvPHighlightable highlightable = GetComponent<PvPHighlightable>();
+            Highlightable highlightable = GetComponent<Highlightable>();
             Assert.IsNotNull(highlightable);
             highlightable.Initialise();
             return highlightable;

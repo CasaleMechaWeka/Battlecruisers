@@ -1,11 +1,11 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
-    public class PvPNavigationButtonsPanel : PvPHighlightable
+    public class PvPNavigationButtonsPanel : Highlightable
     {
         private PvPFilterToggler _enabledToggler;
 
