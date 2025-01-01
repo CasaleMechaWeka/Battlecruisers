@@ -16,6 +16,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IPvPPrefabKey PlayerBCruiser { get; }
         IPvPPrefabKey AIBotCruiser { get; }
         string[] PvPHullNames { get; }
-        IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
         ILoadout GetPlayerLoadout();
         IPvPSlotFilter CreateHighlightableSlotFilter();

@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBuildMenu : IPvPBuildMenu
     {
-        private readonly IPvPBuildingCategoriesMenu _buildingCategoriesMenu;
+        private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;
         private readonly IPvPBuildableMenus<BuildingCategory> _buildingMenus;
         private readonly IPvPBuildableMenus<PvPUnitCategory> _unitMenus;
         private readonly ISingleSoundPlayer _uiSoundPlayer;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPBuildMenu(
             IPvPSlidingPanel selectorPanel,
-            IPvPBuildingCategoriesMenu buildingCategoriesMenu,
+            IBuildingCategoriesMenu buildingCategoriesMenu,
             IPvPBuildableMenus<BuildingCategory> buildingMenus,
             IPvPBuildableMenus<PvPUnitCategory> unitMenus,
             ISingleSoundPlayer uiSoundPlayer,

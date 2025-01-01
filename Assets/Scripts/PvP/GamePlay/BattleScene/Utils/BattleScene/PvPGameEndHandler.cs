@@ -10,6 +10,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private readonly IPvPUIManager _uiManager;
         private readonly IPvPTargetIndicator _targetIndicator;
         // private readonly IPvPWindManager _windManager;
-        private readonly IPvPBuildingCategoryPermitter _buildingCategoryPermitter;
+        private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
         private readonly IPvPToggleButtonGroup _speedButtonGroup;
 
         private bool _handledCruiserDeath, _handledGameEnd;

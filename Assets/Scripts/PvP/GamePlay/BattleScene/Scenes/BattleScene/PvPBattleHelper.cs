@@ -21,6 +21,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -36,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
 
         private readonly PvPBuildingCategoryFilter _buildingCategoryFilter;
-        public override IPvPBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
+        public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public PvPBattleHelper(
             IApplicationModel appModel,
