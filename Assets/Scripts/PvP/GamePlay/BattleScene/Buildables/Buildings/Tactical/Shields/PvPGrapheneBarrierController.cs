@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
-        public override PvPTargetValue TargetValue => PvPTargetValue.Low;
+        public override TargetValue TargetValue => TargetValue.Low;
         public override bool IsBoostable => true;
         private Animator animator;
 

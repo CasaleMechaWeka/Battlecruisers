@@ -40,8 +40,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
         }
 
-        public PvPTargetValue targetValue;
-        public override PvPTargetValue TargetValue => targetValue;
+        public TargetValue targetValue;
+        public override TargetValue TargetValue => targetValue;
 
         protected async override void OnBuildableCompleted()
         {

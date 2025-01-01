@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
-        public override PvPTargetValue TargetValue => PvPTargetValue.High;
+        public override TargetValue TargetValue => TargetValue.High;
 
         protected override void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,

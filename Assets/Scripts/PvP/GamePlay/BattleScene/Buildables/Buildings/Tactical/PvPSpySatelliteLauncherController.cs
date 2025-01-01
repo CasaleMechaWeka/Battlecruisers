@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override Vector3 SpawnPositionAdjustment => new Vector3(0, 0.17f, 0);
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.SpySatellite;
-        public override PvPTargetValue TargetValue => PvPTargetValue.Medium;
+        public override TargetValue TargetValue => TargetValue.Medium;
 
         protected override void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,

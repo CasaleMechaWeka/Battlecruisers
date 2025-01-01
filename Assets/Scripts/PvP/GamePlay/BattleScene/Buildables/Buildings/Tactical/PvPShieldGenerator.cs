@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPShieldController _shieldController;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
-        public override PvPTargetValue TargetValue => PvPTargetValue.Medium;
+        public override TargetValue TargetValue => TargetValue.Medium;
         public override bool IsBoostable => true;
 
         protected override void AddBuildRateBoostProviders(

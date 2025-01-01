@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public Faction Faction { get; protected set; }
         public GameObject GameObject => gameObject;
         public abstract TargetType TargetType { get; }
-        public virtual PvPTargetValue TargetValue => PvPTargetValue.Low;
+        public virtual TargetValue TargetValue => TargetValue.Low;
         public virtual Vector2 Velocity => new Vector2(0, 0);
         public abstract Vector2 Size { get; }
         public virtual Vector2 DroneAreaSize => Size;

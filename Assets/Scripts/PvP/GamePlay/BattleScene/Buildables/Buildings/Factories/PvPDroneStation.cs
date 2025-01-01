@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
-        public override PvPTargetValue TargetValue => PvPTargetValue.Medium;
+        public override TargetValue TargetValue => TargetValue.Medium;
 
         // Visibility
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
