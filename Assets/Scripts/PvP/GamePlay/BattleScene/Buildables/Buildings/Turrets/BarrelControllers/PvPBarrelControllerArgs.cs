@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public IPvPTargetPositionValidator TargetPositionValidator { get; }
-        public IPvPAngleLimiter AngleLimiter { get; }
+        public IAngleLimiter AngleLimiter { get; }
         public IPvPTarget Parent { get; }
         public ObservableCollection<IPvPBoostProvider> LocalBoostProviders { get; }
         public ObservableCollection<IPvPBoostProvider> GlobalFireRateBoostProviders { get; }
@@ -47,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IAccuracyAdjuster accuracyAdjuster,
             IPvPRotationMovementController rotationMovementController,
             IPvPTargetPositionValidator targetPositionValidator,
-            IPvPAngleLimiter angleLimiter,
+            IAngleLimiter angleLimiter,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPTarget parent,

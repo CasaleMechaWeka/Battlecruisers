@@ -1,13 +1,15 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters
 {
     public interface IPvPAngleLimiterFactory
     {
-        IPvPAngleLimiter CreateDummyLimiter();
-        IPvPAngleLimiter CreateFacingLimiter();
-        IPvPAngleLimiter CreateAntiAirLimiter();
-        IPvPAngleLimiter CreateFighterLimiter();
-        IPvPAngleLimiter CreateMissileFighterLimiter();
-        IPvPAngleLimiter CreateGravityAffectedLimiter();
-        IPvPAngleLimiter CreateCIWSLimiter();
+        IAngleLimiter CreateDummyLimiter();
+        IAngleLimiter CreateFacingLimiter();
+        IAngleLimiter CreateAntiAirLimiter();
+        IAngleLimiter CreateFighterLimiter();
+        IAngleLimiter CreateMissileFighterLimiter();
+        IAngleLimiter CreateGravityAffectedLimiter();
+        IAngleLimiter CreateCIWSLimiter();
     }
 }

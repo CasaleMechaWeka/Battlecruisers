@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter();
         }
 
-        protected override IPvPAngleLimiter CreateAngleLimiter()
+        protected override IAngleLimiter CreateAngleLimiter()
         {
             return _factoryProvider.Turrets.AngleLimiterFactory.CreateAntiAirLimiter();
         }
