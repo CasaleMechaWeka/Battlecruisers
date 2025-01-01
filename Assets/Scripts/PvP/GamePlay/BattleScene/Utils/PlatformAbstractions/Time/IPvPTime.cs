@@ -1,4 +1,4 @@
-
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time
 {
@@ -9,8 +9,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         float UnscaledTimeSinceGameStartInS { get; }
         float UnscaledDeltaTime { get; }
 
-        IPvPTimeSinceGameStartProvider TimeSinceGameStartProvider { get; }
-        IPvPTimeSinceGameStartProvider RealTimeSinceGameStartProvider { get; }
+        ITimeSinceGameStartProvider TimeSinceGameStartProvider { get; }
+        ITimeSinceGameStartProvider RealTimeSinceGameStartProvider { get; }
     }
 }
 

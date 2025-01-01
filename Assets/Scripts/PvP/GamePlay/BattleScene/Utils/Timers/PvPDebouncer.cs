@@ -1,5 +1,5 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers
@@ -10,11 +10,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public class PvPDebouncer : IPvPDebouncer
     {
-        private readonly IPvPTimeSinceGameStartProvider _time;
+        private readonly ITimeSinceGameStartProvider _time;
         private readonly float _debounceTimeInS;
         private float _lastChangeTimestamp;
 
-        public PvPDebouncer(IPvPTimeSinceGameStartProvider time, float debounceTimeInS)
+        public PvPDebouncer(ITimeSinceGameStartProvider time, float debounceTimeInS)
         {
             Assert.IsNotNull(time);
             Assert.IsTrue(debounceTimeInS > 0);

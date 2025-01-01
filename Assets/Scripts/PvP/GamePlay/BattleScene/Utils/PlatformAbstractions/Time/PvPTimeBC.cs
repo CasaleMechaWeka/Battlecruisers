@@ -1,3 +1,4 @@
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using PvPPlatformTime = UnityEngine.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time
@@ -45,8 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public float UnscaledDeltaTime => PvPPlatformTime.unscaledDeltaTime;
         public float DeltaTime => PvPPlatformTime.deltaTime;
 
-        public IPvPTimeSinceGameStartProvider TimeSinceGameStartProvider { get; }
-        public IPvPTimeSinceGameStartProvider RealTimeSinceGameStartProvider { get; }
+        public ITimeSinceGameStartProvider TimeSinceGameStartProvider { get; }
+        public ITimeSinceGameStartProvider RealTimeSinceGameStartProvider { get; }
     }
 }
 
