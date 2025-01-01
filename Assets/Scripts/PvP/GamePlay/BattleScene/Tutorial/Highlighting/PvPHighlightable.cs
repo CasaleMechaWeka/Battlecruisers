@@ -1,3 +1,4 @@
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutori
             _rectTransform = transform.Parse<RectTransform>();
         }
 
-        public PvPHighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForOnCanvasObject(_rectTransform, sizeMultiplier);
         }
