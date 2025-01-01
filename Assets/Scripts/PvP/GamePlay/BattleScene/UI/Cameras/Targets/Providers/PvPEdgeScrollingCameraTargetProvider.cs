@@ -2,8 +2,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Clamping;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using System;
 using UnityEngine;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly IPvPCamera _camera;
         private readonly IPvPCameraCalculator _cameraCalculator;
         private readonly IPvPEdgeDetector _edgeDetector;
-        private readonly IPvPClamper _cameraXPositionClamper;
+        private readonly IClamper _cameraXPositionClamper;
 
         public override int Priority => 2;
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCamera camera,
             IPvPCameraCalculator cameraCalculator,
             IPvPEdgeDetector edgeDetector,
-            IPvPClamper cameraXPositionClamper)
+            IClamper cameraXPositionClamper)
         {
             PvPHelper.AssertIsNotNull(updater, scrollCalculator, camera, cameraCalculator, edgeDetector, cameraXPositionClamper);
 

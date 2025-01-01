@@ -1,8 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Clamping;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly IPvPCameraCalculator _cameraCalculator;
         private readonly IPvPDirectionalZoom _directionalZoom;
         private readonly IPvPScrollRecogniser _scrollRecogniser;
-        private readonly IPvPClamper _cameraXPositionClamper;
+        private readonly IClamper _cameraXPositionClamper;
 
         public override int Priority => 3;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCameraCalculator cameraCalculator,
             IPvPDirectionalZoom directionalZoom,
             IPvPScrollRecogniser scrollRecogniser,
-            IPvPClamper cameraXPositionClamper)
+            IClamper cameraXPositionClamper)
         {
             PvPHelper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser, cameraXPositionClamper);
 

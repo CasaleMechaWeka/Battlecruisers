@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Clamping
 {
-    public class PvPBufferClamper : IPvPClamper
+    public class PvPBufferClamper : IClamper
     {
         private readonly float _buffer;
 
