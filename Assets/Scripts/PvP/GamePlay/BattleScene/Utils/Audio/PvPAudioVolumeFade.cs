@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Audio
 {
-    public class PvPAudioVolumeFade : IPvPAudioVolumeFade
+    public class PvPAudioVolumeFade : IAudioVolumeFade
     {
         private readonly ICoroutineStarter _coroutineStarter;
         private readonly IPvPTime _time;
