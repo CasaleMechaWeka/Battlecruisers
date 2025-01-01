@@ -14,7 +14,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -97,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             //<---
             Assert.IsNotNull(missile);
 
-            _transform = new PvPTransformBC(gameObject.transform);
+            _transform = new TransformBC(gameObject.transform);
         }
 
         public override void Activate(PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> activationArgs)

@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
@@ -245,7 +244,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 pvp_BoostProviders_Num.Value = BoostProviders.Count;
             };
 
-            Transform = new PvPTransformBC(transform);
+            Transform = new TransformBC(transform);
             _baseBuilding = new PvPSettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
             Building = new PvPBroadcastingProperty<IPvPBuilding>(_baseBuilding);
 
