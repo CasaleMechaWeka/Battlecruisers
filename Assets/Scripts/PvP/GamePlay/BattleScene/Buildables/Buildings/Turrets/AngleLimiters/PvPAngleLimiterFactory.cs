@@ -6,36 +6,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         public IAngleLimiter CreateDummyLimiter()
         {
-            return new PvPDummyAngleLimiter();
+            return new DummyAngleLimiter();
         }
 
         public IAngleLimiter CreateFacingLimiter()
         {
-            return new PvPFacingTurretAngleLimiter();
+            return new FacingTurretAngleLimiter();
         }
 
         public IAngleLimiter CreateAntiAirLimiter()
         {
-            return new PvPAntiAirAngleLimiter();
+            return new AntiAirAngleLimiter();
         }
 
         public IAngleLimiter CreateFighterLimiter()
         {
-            return new PvPFighterAngleLimiter();
+            return new FighterAngleLimiter();
         }
         public IAngleLimiter CreateMissileFighterLimiter()
         {
-            return new PvPMissileFighterAngleLimiter();
+            return new MissileFighterAngleLimiter();
         }
 
         public IAngleLimiter CreateGravityAffectedLimiter()
         {
-            return new PvPGravityAffectedTurretAngleLimiter();
+            return new GravityAffectedTurretAngleLimiter();
         }
 
         public IAngleLimiter CreateCIWSLimiter()
         {
-            return new PvPCIWSAngleLimiter();
+            return new CIWSAngleLimiter();
         }
     }
 }
