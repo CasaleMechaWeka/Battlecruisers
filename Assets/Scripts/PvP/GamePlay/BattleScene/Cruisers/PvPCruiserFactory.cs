@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
@@ -19,6 +18,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Prop
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine;
 using System.Threading.Tasks;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPHelper.AssertIsNotNull(playerACruiser, playerBCruiser,/* cameraFocuser,*/ userChosenTargetTracker);
 
             IPvPCruiserHelper helper = CreatePlayerHelper(/*_uiManager , cameraFocuser*/);
-            PvPFaction faction = PvPFaction.Blues;
+            Faction faction = Faction.Blues;
             PvPDirection facingDirection = PvPDirection.Right;
             PvPFogStrength fogStrength = PvPFogStrength.Weak;
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
@@ -127,7 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
 
             IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
-            PvPFaction faction = PvPFaction.Reds;
+            Faction faction = Faction.Reds;
             PvPDirection facingDirection = PvPDirection.Left;
             PvPFogStrength fogStrength = PvPFogStrength.Strong;
 
@@ -156,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPCruiser enemyCruiser,
             // IPvPUIManager uiManager,
             IPvPCruiserHelper helper,
-            PvPFaction faction,
+            Faction faction,
             PvPDirection facingDirection,
             PvPFogStrength fogStrength,
             IPvPSlotFilter highlightableFilter,

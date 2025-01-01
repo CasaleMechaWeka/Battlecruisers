@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -38,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             set
             {
                 _buildable = value;
-                gameObject.SetActive(_buildable != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _buildable.Faction == PvPFaction.Blues : _buildable.Faction == PvPFaction.Reds) && _buttonVisibilityFilter.IsMatch(_buildable));
+                gameObject.SetActive(_buildable != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _buildable.Faction == Faction.Blues : _buildable.Faction == Faction.Reds) && _buttonVisibilityFilter.IsMatch(_buildable));
             }
         }
 

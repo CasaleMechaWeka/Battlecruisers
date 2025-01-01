@@ -128,7 +128,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnSingleClick();
 
-            if (/* Faction == PvPFaction.Blues && */ IsClient && IsOwner)
+            if (/* Faction == Faction.Blues && */ IsClient && IsOwner)
             {
                 _uiManager.ShowFactoryUnits(this);
             }

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         /// Only targets that match the given "enemyFaction" are damaged.
         /// Ie, friendly fire is off :).
         /// </summary>
-        public IPvPDamageApplier CreateFactionSpecificAreaOfDamageApplier(IPvPDamageStats damageStats, PvPFaction enemyFaction)
+        public IPvPDamageApplier CreateFactionSpecificAreaOfDamageApplier(IPvPDamageStats damageStats, Faction enemyFaction)
         {
             IPvPTargetFilter damageTargetFilter = _filterFacotry.CreateTargetFilter(enemyFaction);
             return new PvPAreaOfEffectDamageApplier(damageStats, damageTargetFilter);

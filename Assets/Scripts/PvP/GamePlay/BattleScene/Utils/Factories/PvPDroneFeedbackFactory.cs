@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
@@ -11,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly IPvPPool<IPvPDroneController, PvPDroneActivationArgs> _dronePool;
         private readonly IPvPSpawnPositionFinder _spawnPositionFinder;
-        private readonly PvPFaction _faction;
+        private readonly Faction _faction;
 
         public PvPDroneFeedbackFactory(
             IPvPPool<IPvPDroneController, PvPDroneActivationArgs> dronePool,
             IPvPSpawnPositionFinder spawnPositionFinder,
-            PvPFaction faction)
+            Faction faction)
         {
             PvPHelper.AssertIsNotNull(dronePool, spawnPositionFinder, faction);
 

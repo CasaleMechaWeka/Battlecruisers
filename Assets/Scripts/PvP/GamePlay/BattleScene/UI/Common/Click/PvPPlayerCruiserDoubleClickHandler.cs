@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         public void OnDoubleClick(IPvPCruiser playerCruiser)
         {
-            /*       Assert.AreEqual(PvPFaction.Blues, playerCruiser.Faction);*/
+            /*       Assert.AreEqual(Faction.Blues, playerCruiser.Faction);*/
 
             // Toggle repair drone consumer focus
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             {
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                 {
-                    if (playerCruiser.Faction == PvPFaction.Blues)
+                    if (playerCruiser.Faction == Faction.Blues)
                     {
                         if (playerCruiser.RepairCommand.CanExecute)
                         {
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 }
                 else
                 {
-                    if (playerCruiser.Faction == PvPFaction.Blues)
+                    if (playerCruiser.Faction == Faction.Blues)
                     {
                         PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerCruiser);
                     }

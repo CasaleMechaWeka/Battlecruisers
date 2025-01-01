@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
@@ -153,7 +154,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         // SyncFaction
-        protected override void CallRpc_SyncFaction(PvPFaction faction)
+        protected override void CallRpc_SyncFaction(Faction faction)
         {
             OnSyncFationClientRpc(faction);
         }
@@ -289,7 +290,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnSyncFationClientRpc(PvPFaction faction)
+        private void OnSyncFationClientRpc(Faction faction)
         {
             if (!IsHost)
                 Faction = faction;

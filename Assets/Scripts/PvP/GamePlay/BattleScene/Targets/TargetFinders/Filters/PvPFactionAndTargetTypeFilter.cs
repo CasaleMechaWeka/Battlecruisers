@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         private readonly IList<TargetType> _targetTypes;
 
-        public PvPFactionAndTargetTypeFilter(PvPFaction factionToDetect, IList<TargetType> targetTypes)
+        public PvPFactionAndTargetTypeFilter(Faction factionToDetect, IList<TargetType> targetTypes)
             : base(factionToDetect)
         {
             _targetTypes = targetTypes;

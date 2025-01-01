@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return null;
         }
 
-        public async Task<TPoolable> GetItem(TArgs activationArgs, PvPFaction faction)
+        public async Task<TPoolable> GetItem(TArgs activationArgs, Faction faction)
         {
             TPoolable item = _items.Count != 0 ? _items.Pop() : await CreateItem();
             item.Activate(activationArgs, faction);

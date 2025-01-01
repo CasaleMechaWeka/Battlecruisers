@@ -107,7 +107,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.Activate(activationArgs);
             _haveDroppedBombOnRun = false;
             _isAtCruisingHeight = false;
-            PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
+            Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
             IPvPTargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             // apply variant stats

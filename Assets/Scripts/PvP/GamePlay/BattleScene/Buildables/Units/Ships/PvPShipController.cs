@@ -163,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private IPvPTargetProcessor SetupTargetProcessorWrapper()
         {
-            PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
+            Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
 
             // Do not want to stop ship from moving if it encounters aircraft
             IList<TargetType> targetProcessorTargetTypes = AttackCapabilities.ToList();

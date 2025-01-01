@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPCruiserArgs : IPvPCruiserArgs
     {
-        public PvPFaction Faction { get; }
+        public Faction Faction { get; }
         public IPvPCruiser EnemyCruiser { get; }
         public IPvPUIManager UiManager { get; }
         public IPvPDroneManager DroneManager { get; }
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPBroadcastingProperty<bool> HasActiveDrones { get; }
 
         public PvPCruiserArgs(
-            PvPFaction faction,
+            Faction faction,
             IPvPCruiser enemyCruiser,
             IPvPUIManager uiManager,
             IPvPDroneManager droneManager,
@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         public PvPCruiserArgs(
-            PvPFaction faction,
+            Faction faction,
             IPvPCruiser enemyCruiser,
             // IPvPUIManager uiManager,
             IPvPDroneManager droneManager,

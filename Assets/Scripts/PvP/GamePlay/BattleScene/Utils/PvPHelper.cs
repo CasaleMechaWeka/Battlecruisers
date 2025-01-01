@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -14,9 +14,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         private const float Y_DEGREES_MIRRORED = 180;
         private const float Y_DEGREES_NOT_MIRRORED = 0;
 
-        public static PvPFaction GetOppositeFaction(PvPFaction faction)
+        public static Faction GetOppositeFaction(Faction faction)
         {
-            return faction == PvPFaction.Blues ? PvPFaction.Reds : PvPFaction.Blues;
+            return faction == Faction.Blues ? Faction.Reds : Faction.Blues;
         }
 
         public static List<IPvPPatrolPoint> ConvertVectorsToPatrolPoints(IList<Vector2> positions)

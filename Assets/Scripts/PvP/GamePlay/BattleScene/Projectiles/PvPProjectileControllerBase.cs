@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode.Components;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Buildables;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
@@ -136,7 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (needToTeleport && GetComponent<NetworkTransform>() != null)
                 GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
         }
-        public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
+        public void Activate(TPvPActivationArgs activationArgs, Faction faction)
         {
         }
 

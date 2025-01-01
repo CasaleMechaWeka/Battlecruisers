@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             return
                 target != null
-                /*     && SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT? target.Faction == PvPFaction.Blues : target.Faction == PvPFaction.Reds*/
+                /*     && SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT? target.Faction == Faction.Blues : target.Faction == Faction.Reds*/
                 && target.TargetType == TargetType.Buildings
                 && target.IsInScene;
         }

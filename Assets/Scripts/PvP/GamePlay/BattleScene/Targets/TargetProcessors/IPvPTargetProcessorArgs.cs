@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         IPvPTargetFactoriesProvider TargetFactories { get; }
-        PvPFaction EnemyFaction { get; }
+        Faction EnemyFaction { get; }
         IList<TargetType> AttackCapabilities { get; }
         float MaxRangeInM { get; }
         float MinRangeInM { get; }

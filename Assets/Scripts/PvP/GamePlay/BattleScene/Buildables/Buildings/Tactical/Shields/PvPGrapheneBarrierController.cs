@@ -12,6 +12,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -194,7 +195,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             PvP_RepairableButtonClickedServerRpc();
         }
-        protected override void CallRpc_SyncFaction(PvPFaction faction)
+        protected override void CallRpc_SyncFaction(Faction faction)
         {
             OnSyncFationClientRpc(faction);
         }
@@ -333,7 +334,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnSyncFationClientRpc(PvPFaction faction)
+        private void OnSyncFationClientRpc(Faction faction)
         {
             if (!IsHost)
                 Faction = faction;

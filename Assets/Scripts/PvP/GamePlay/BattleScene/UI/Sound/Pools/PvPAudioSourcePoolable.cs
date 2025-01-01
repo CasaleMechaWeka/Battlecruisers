@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             _realTimeDeferrer.Defer(CleanUp, activationArgs.Sound.Length);
         }
 
-        public void Activate(AudioSourceActivationArgs activationArgs, PvPFaction faction)
+        public void Activate(AudioSourceActivationArgs activationArgs, Faction faction)
         {
         }
 

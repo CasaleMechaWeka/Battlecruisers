@@ -1,5 +1,5 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools
 {
@@ -9,6 +9,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         void Activate(TArgs activationArgs);
 
-        void Activate(TArgs activationArgs, PvPFaction faction);
+        void Activate(TArgs activationArgs, Faction faction);
     }
 }

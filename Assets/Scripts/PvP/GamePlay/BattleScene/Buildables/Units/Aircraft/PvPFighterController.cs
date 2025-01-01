@@ -110,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
 
-                PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
+                Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
                 IPvPTarget parent = this;
                 IPvPUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
 
@@ -169,7 +169,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     Transform,
                     enemyFollowDetectionRangeInM,
                     _targetFactories.RangeCalculatorProvider.BasicCalculator);
-            PvPFaction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
+            Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
             IList<TargetType> targetTypesToFollow = new List<TargetType>() { TargetType.Aircraft };
             IPvPTargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
             _followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);

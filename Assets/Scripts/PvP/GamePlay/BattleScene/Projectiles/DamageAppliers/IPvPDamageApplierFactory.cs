@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers
@@ -8,6 +8,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IPvPDamageStats CreateDamageStats(float damage, float damageRadiusInM);
         IPvPDamageApplier CreateSingleDamageApplier(IPvPDamageStats damageStats);
         IPvPDamageApplier CreateAreaOfDamageApplier(IPvPDamageStats damageStats);
-        IPvPDamageApplier CreateFactionSpecificAreaOfDamageApplier(IPvPDamageStats damageStats, PvPFaction enemyFaction);
+        IPvPDamageApplier CreateFactionSpecificAreaOfDamageApplier(IPvPDamageStats damageStats, Faction enemyFaction);
     }
 }

@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public float MaxHealth => maxHealth;
         public bool IsDestroyed => IsServer ? Health == 0 : pvp_Health.Value == 0;
-        public PvPFaction Faction { get; protected set; }
+        public Faction Faction { get; protected set; }
         public GameObject GameObject => gameObject;
         public abstract TargetType TargetType { get; }
         public virtual PvPTargetValue TargetValue => PvPTargetValue.Low;

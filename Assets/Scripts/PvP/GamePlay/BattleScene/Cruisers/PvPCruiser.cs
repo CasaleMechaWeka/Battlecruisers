@@ -177,7 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (NetworkManager.Singleton.IsServer)
                 _healthTracker.SetMaxHealth();
 
-            if (Faction == PvPFaction.Blues)
+            if (Faction == Faction.Blues)
             {
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * (float)maxHealth);
                 PvPBattleSceneGodTunnel._playerACruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[stringKeyBase];
@@ -501,21 +501,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 if (IsServer)
                 {
-                    if (Faction == PvPFaction.Blues)
+                    if (Faction == Faction.Blues)
                     {
                         PvPBattleSceneGodServer.AddPlayedTime_Left(TargetType.PlayedTime, Time.deltaTime);
                     }
-                    if (Faction == PvPFaction.Reds)
+                    if (Faction == Faction.Reds)
                     {
                         PvPBattleSceneGodServer.AddPlayedTime_Right(TargetType.PlayedTime, Time.deltaTime);
                     }
                 }
             }
-            if (Faction == PvPFaction.Blues)
+            if (Faction == Faction.Blues)
             {
                 PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += Time.deltaTime;
             }
-            if (Faction == PvPFaction.Reds)
+            if (Faction == Faction.Reds)
             {
                 PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += Time.deltaTime;
             }
@@ -534,7 +534,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             base.OnDestroyed();
             _CruiserHasActiveDrones.ValueChanged -= CruiserHasActiveDrones_ValueChanged;
-            if (Faction == PvPFaction.Reds)
+            if (Faction == Faction.Reds)
             {
                 PvPBattleSceneGodServer.AddDeadBuildable_Left(TargetType, (int)(maxHealth));
             }
@@ -561,7 +561,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 PvPBattleSceneGodClient.Instance.RemoveNetworkObject(GetComponent<NetworkObject>());
             base.OnNetworkDespawn();
 
-            if (Faction == PvPFaction.Blues)
+            if (Faction == Faction.Blues)
             {
                 Image fillableImage = GameObject.Find("HUDCanvas/HealthBarPanel/PlayerLeftCruiserHealth/Foreground")?.GetComponent<Image>();
                 if (fillableImage != null)
@@ -598,7 +598,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         protected override void OnDestroyedEvent()
         {
-            if (Faction == PvPFaction.Blues)
+            if (Faction == Faction.Blues)
             {
                 PvPCaptainExoHUDController.Instance.DoLeftAngry();
                 PvPCaptainExoHUDController.Instance.DoRightHappy();
@@ -696,7 +696,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         [ClientRpc]
-        private void PvP_SetFactionClientRpc(PvPFaction faction)
+        private void PvP_SetFactionClientRpc(Faction faction)
         {
             Faction = faction;
         }

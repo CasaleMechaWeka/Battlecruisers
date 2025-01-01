@@ -8,11 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public enum PvPFaction
-    {
-        Blues, Reds
-    }
-
     /// <summary>
     /// Used for prioritising targets, so do NOT change order!
     /// </summary>
@@ -23,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
     public interface IPvPTarget : IPvPDamagable, IPvPRepairable, IPvPHighlightable
     {
-        PvPFaction Faction { get; }
+        Faction Faction { get; }
         TargetType TargetType { get; }
         Vector2 Velocity { get; }
         ReadOnlyCollection<TargetType> AttackCapabilities { get; }

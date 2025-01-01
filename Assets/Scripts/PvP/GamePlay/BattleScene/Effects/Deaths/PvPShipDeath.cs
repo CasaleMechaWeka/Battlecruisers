@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -66,14 +66,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             }
         }
 
-        public void Activate(Vector3 activationArgs, PvPFaction faction)
+        public void Activate(Vector3 activationArgs, Faction faction)
         {
             // Logging.LogMethod(Tags.DEATHS);
 
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
             Vector3 pos = _shipDeathController.Position;
-            if (faction == PvPFaction.Reds)
+            if (faction == Faction.Reds)
             {
                 Vector3 newScale = _shipDeathController.transform.localScale;
                 newScale.x *= -1;

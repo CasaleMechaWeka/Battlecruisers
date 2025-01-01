@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                         {
                             if (IsServer)
                             {
-                                if (Faction == PvPFaction.Blues)
+                                if (Faction == Faction.Blues)
                                 {
                                     PvPBattleSceneGodServer.AddPlayedTime_Left(PvPTargetType.PlayedTime, _time.DeltaTime);                    
                                 }
@@ -51,11 +51,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                                 }
                             }
 
-                            if (Faction == PvPFaction.Blues)
+                            if (Faction == Faction.Blues)
                             {
                                 PvPBattleSceneGodTunnel._playerALevelTimeInSeconds += _time.DeltaTime;
                             }
-                            if (Faction == PvPFaction.Reds)
+                            if (Faction == Faction.Reds)
                             {
                                 PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds += _time.DeltaTime;
                             }

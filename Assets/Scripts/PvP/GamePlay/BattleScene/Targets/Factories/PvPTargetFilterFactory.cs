@@ -8,12 +8,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPTargetFilterFactory : IPvPTargetFilterFactory
     {
-        public IPvPTargetFilter CreateTargetFilter(PvPFaction faction)
+        public IPvPTargetFilter CreateTargetFilter(Faction faction)
         {
             return new PvPFactionTargetFilter(faction);
         }
 
-        public IPvPTargetFilter CreateTargetFilter(PvPFaction faction, IList<TargetType> targetTypes)
+        public IPvPTargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
         {
             return new PvPFactionAndTargetTypeFilter(faction, targetTypes);
         }

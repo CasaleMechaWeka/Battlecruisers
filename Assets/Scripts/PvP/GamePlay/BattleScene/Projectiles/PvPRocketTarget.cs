@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private Vector2 _size;
         public override Vector2 Size => _size;
 
-        public void Initialise(ILocTable commonStrings, PvPFaction faction, Rigidbody2D rigidBody, IRemovable parentProjectile)
+        public void Initialise(ILocTable commonStrings, Faction faction, Rigidbody2D rigidBody, IRemovable parentProjectile)
         {
             Helper.AssertIsNotNull(rigidBody, parentProjectile);
 

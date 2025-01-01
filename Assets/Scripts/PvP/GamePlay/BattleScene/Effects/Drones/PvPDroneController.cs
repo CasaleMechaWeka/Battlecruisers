@@ -1,5 +1,5 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public ParticleSystem _animatedDrone;
         public ParticleSystem _droneSpark;
 
-        public PvPFaction Faction { get; private set; }
+        public Faction Faction { get; private set; }
 
         public event EventHandler Activated;
         public event EventHandler Deactivated;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Activate(PvPDroneActivationArgs activationArgs, PvPFaction faction)
+        public void Activate(PvPDroneActivationArgs activationArgs, Faction faction)
         {
 
         }
@@ -102,7 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         }
 
         [ClientRpc]
-        private void OnSetFactionClientRpc(PvPFaction faction)
+        private void OnSetFactionClientRpc(Faction faction)
         {
             if (!IsHost)
                 Faction = faction;

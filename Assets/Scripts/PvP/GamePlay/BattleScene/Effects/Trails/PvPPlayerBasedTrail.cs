@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -45,7 +46,7 @@ public class PvPPlayerBasedTrail : MonoBehaviour
         Assert.IsNotNull(trailRenderer, "TrailRenderer cannot be found");
         Assert.IsNotNull(target, "Target cannot be found");
 
-        if (target.Faction == PvPFaction.Blues)
+        if (target.Faction == Faction.Blues)
             trailRenderer.colorGradient = playerColors;
         else
             trailRenderer.colorGradient = enemyColors;

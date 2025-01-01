@@ -9,6 +9,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
 
         public IPvPFactoryManager CreateNavalFactoryManager(PvPCruiser aiCruiser)
         {
-            IList<PvPUnitKey> availableShipKeys = aiCruiser.Faction == PvPFaction.Blues ? _battleSceneGodTunnel.GetUnlockedUnits_LeftPlayer(PvPUnitCategory.Naval) : _battleSceneGodTunnel.GetUnlockedUnits_RightPlayer(PvPUnitCategory.Naval);
+            IList<PvPUnitKey> availableShipKeys = aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.GetUnlockedUnits_LeftPlayer(PvPUnitCategory.Naval) : _battleSceneGodTunnel.GetUnlockedUnits_RightPlayer(PvPUnitCategory.Naval);
             IList<IPvPBuildableWrapper<IPvPUnit>> availableShips =
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
@@ -48,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
 
         public IPvPFactoryManager CreateAirfactoryManager(PvPCruiser aiCruiser)
         {
-            Assert.IsTrue(aiCruiser.Faction == PvPFaction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(DEFAULT_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(DEFAULT_PLANE_KEY), "Default plane should always be available.");
+            Assert.IsTrue(aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(DEFAULT_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(DEFAULT_PLANE_KEY), "Default plane should always be available.");
             IPvPBuildableWrapper<IPvPUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
             IPvPBuildableWrapper<IPvPUnit> lategamePlane;
             if (_battleSceneGodTunnel.currentLevelNum >= 25)
@@ -61,12 +62,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             }
 
             IPvPBuildableWrapper<IPvPUnit> antiAirPlane =
-                (aiCruiser.Faction == PvPFaction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(ANTI_AIR_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(ANTI_AIR_PLANE_KEY)) ?
+                (aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(ANTI_AIR_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(ANTI_AIR_PLANE_KEY)) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
                 defaultPlane;
 
             IPvPBuildableWrapper<IPvPUnit> antiNavalPlane =
-              (aiCruiser.Faction == PvPFaction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(ANTI_NAVAL_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(ANTI_NAVAL_PLANE_KEY)) ?
+              (aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(ANTI_NAVAL_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(ANTI_NAVAL_PLANE_KEY)) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
                 defaultPlane;
 

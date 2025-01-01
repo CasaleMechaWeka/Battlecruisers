@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             }
         }
 
-        private bool ShowButton => Target != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _target.Faction == PvPFaction.Reds : _target.Faction == PvPFaction.Blues) && _buttonVisibilityFilter.IsMatch(Target);
+        private bool ShowButton => Target != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _target.Faction == Faction.Reds : _target.Faction == Faction.Blues) && _buttonVisibilityFilter.IsMatch(Target);
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,

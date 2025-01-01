@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         Task AddCapacity(int capacityToAdd);
         Task<TPoolable> GetItem(TArgs activationArgs);
-        Task<TPoolable> GetItem(TArgs activationArgs, PvPFaction faction);
+        Task<TPoolable> GetItem(TArgs activationArgs, Faction faction);
         void SetMaxLimit(int amount);
     }
 }

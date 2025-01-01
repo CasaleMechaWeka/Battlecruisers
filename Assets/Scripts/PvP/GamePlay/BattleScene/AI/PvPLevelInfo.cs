@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
@@ -27,14 +28,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             AICruiser = aiCruiser;
             PlayerCruiser = playerCruiser;
             _battleSceneGodTunnel = battleSceneGodTunnel;
-            _prefabFactory = prefabFactory;           
+            _prefabFactory = prefabFactory;
         }
 
         public bool CanConstructBuilding(PvPBuildingKey buildingKey)
         {
             IPvPBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
             return
-                AICruiser.Faction == Buildables.PvPFaction.Blues ?
+                AICruiser.Faction == Faction.Blues ?
                 _battleSceneGodTunnel.IsBuildingUnlocked_LeftPlayer(buildingKey) : _battleSceneGodTunnel.IsBuildingUnlocked_RightPlayer(buildingKey)
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
         }
@@ -67,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         //<---
         public IList<PvPBuildingKey> GetAvailableBuildings(PvPBuildingCategory category)
         {
-            return AICruiser.Faction == Buildables.PvPFaction.Blues? _battleSceneGodTunnel.GetUnlockedBuildings_LeftPlayer(category) : _battleSceneGodTunnel.GetUnlockedBuildings_RightPlayer(category);             
+            return AICruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.GetUnlockedBuildings_LeftPlayer(category) : _battleSceneGodTunnel.GetUnlockedBuildings_RightPlayer(category);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPTargetTracker Initialise(
             IPvPTargetFactoriesProvider targetFactoriesProvider,
             IPvPTargetTrackerFactory targetTrackerFactory,
-            PvPFaction enemyFaction)
+            Faction enemyFaction)
         {
             Helper.AssertIsNotNull(targetFactoriesProvider, targetTrackerFactory);
 

@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -42,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             {
                 return
                     Repairable != null && SynchedServerData.Instance != null &&
-                      (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? Repairable.Faction == PvPFaction.Blues : Repairable.Faction == PvPFaction.Reds) &&
+                      (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? Repairable.Faction == Faction.Blues : Repairable.Faction == Faction.Reds) &&
                       Repairable.RepairCommand.CanExecute;
             }
         }

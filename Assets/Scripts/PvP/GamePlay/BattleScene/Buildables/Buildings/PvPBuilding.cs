@@ -261,7 +261,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _doubleClickHandler.OnDoubleClick(this);
         }
 
-        public void Activate(PvPBuildingActivationArgs activationArgs, PvPFaction faction)
+        public void Activate(PvPBuildingActivationArgs activationArgs, Faction faction)
         {
         }
 

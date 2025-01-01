@@ -444,7 +444,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _cumulativeBuildProgressInDroneS = 0;
         }
 
-        public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
+        public void Activate(TPvPActivationArgs activationArgs, Faction faction)
         {
         }
 
@@ -603,7 +603,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
-            if (Faction == PvPFaction.Blues)
+            if (Faction == Faction.Blues)
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
             else
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
@@ -617,7 +617,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
             ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
-            if (Faction == PvPFaction.Blues)
+            if (Faction == Faction.Blues)
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
             else
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
@@ -688,7 +688,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             CallRpc_PlayDeathSound();
 
-            if (Faction == PvPFaction.Reds)
+            if (Faction == Faction.Reds)
             {
                 int val = (int)_cumulativeBuildProgressInDroneS;
                 PvPBattleSceneGodServer.AddDeadBuildable_Left(TargetType, val);
@@ -758,7 +758,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
                 //   _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
 
-                if (Faction == PvPFaction.Reds)
+                if (Faction == Faction.Reds)
                 {
                     if (TargetType == TargetType.Ships)
                     {
@@ -801,7 +801,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         }
 
-        protected virtual void CallRpc_SyncFaction(PvPFaction faction)
+        protected virtual void CallRpc_SyncFaction(Faction faction)
         {
 
         }

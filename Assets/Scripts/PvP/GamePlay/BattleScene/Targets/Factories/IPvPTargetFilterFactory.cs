@@ -8,8 +8,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public interface IPvPTargetFilterFactory
     {
-        IPvPTargetFilter CreateTargetFilter(PvPFaction faction);
-        IPvPTargetFilter CreateTargetFilter(PvPFaction faction, IList<TargetType> targetTypes);
+        IPvPTargetFilter CreateTargetFilter(Faction faction);
+        IPvPTargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes);
         IPvPTargetFilter CreateDummyTargetFilter(bool isMatchResult);
         IPvPTargetFilter CreateTargetInFrontFilter(IPvPUnit source);
         IPvPExactMatchTargetFilter CreateExactMatchTargetFilter();

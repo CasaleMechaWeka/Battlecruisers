@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones
@@ -6,9 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public struct PvPDroneActivationArgs
     {
         public Vector2 Position { get; }
-        public PvPFaction Faction { get; }
+        public Faction Faction { get; }
 
-        public PvPDroneActivationArgs(Vector2 position, PvPFaction faction)
+        public PvPDroneActivationArgs(Vector2 position, Faction faction)
         {
             Position = position;
             Faction = faction;

@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions
 {
@@ -54,10 +54,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _explosionController.IsVisible = true;
             _explosionController.Position = position;
 
-        //    Play();   // server does not need to play effects  :)
+            //    Play();   // server does not need to play effects  :)
         }
 
-        public void Activate(Vector3 position, PvPFaction faction)
+        public void Activate(Vector3 position, Faction faction)
         {
         }
     }

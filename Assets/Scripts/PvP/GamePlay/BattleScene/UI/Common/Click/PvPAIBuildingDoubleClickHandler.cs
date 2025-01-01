@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using UnityEngine.Assertions;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public void OnDoubleClick(IPvPBuilding aiBuliding)
         {
-            Assert.AreEqual(PvPFaction.Reds, aiBuliding.Faction);
+            Assert.AreEqual(Faction.Reds, aiBuliding.Faction);
             _userChosenTargetHelper.ToggleChosenTarget(aiBuliding);
         }
     }

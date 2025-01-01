@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -10,11 +10,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         public void OnDoubleClick(IPvPBuilding playerBuliding)
         {
-            /*   Assert.AreEqual(PvPFaction.Blues, playerBuliding.Faction);*/
+            /*   Assert.AreEqual(Faction.Blues, playerBuliding.Faction);*/
 
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
-                if (playerBuliding.Faction == PvPFaction.Blues)
+                if (playerBuliding.Faction == Faction.Blues)
                 {
                     if (playerBuliding.ToggleDroneConsumerFocusCommand.CanExecute)
                     {
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             }
             else
             {
-                if (playerBuliding.Faction == PvPFaction.Blues)
+                if (playerBuliding.Faction == Faction.Blues)
                 {
                     PvPBattleSceneGodClient.Instance.userChosenTargetHelper.ToggleChosenTarget(playerBuliding);
                 }

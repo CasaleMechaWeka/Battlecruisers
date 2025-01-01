@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public IPvPTargetFactoriesProvider TargetFactories { get; }
-        public PvPFaction EnemyFaction { get; }
+        public Faction EnemyFaction { get; }
         public IList<TargetType> AttackCapabilities { get; }
         public float MaxRangeInM { get; }
         public float MinRangeInM { get; }
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public PvPTargetProcessorArgs(
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPTargetFactoriesProvider targetFactories,
-            PvPFaction enemyFaction,
+            Faction enemyFaction,
             IList<TargetType> attackCapabilities,
             float maxRangeInM,
             float minRangeInM = 0,
