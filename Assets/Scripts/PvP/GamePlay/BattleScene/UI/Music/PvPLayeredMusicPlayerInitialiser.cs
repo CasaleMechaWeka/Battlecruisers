@@ -1,6 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Audio;
+using BattleCruisers.Utils.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 
             return
                 new PvPLayeredMusicPlayer(
-                    new PvPAudioVolumeFade(coroutineStarter, PvPTimeBC.Instance),
+                    new AudioVolumeFade(coroutineStarter, PvPTimeBC.Instance),
                     primary,
                     secondary,
                     settingsManager);
