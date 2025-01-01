@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public ITransform Transform { get; private set; }
 
-        public Action PvPClickedRepairButton { get; set; }
+        public Action clickedRepairButton { get; set; }
 
         private const float NotZero = 99999f;
 
@@ -139,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 
             Transform = new TransformBC(transform);
-            PvPClickedRepairButton += OnClickedRepairButton;
+            clickedRepairButton += OnClickedRepairButton;
         }
 
         private void OnClickedRepairButton()
@@ -162,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void Destroy()
         {
-            PvPClickedRepairButton -= OnClickedRepairButton;
+            clickedRepairButton -= OnClickedRepairButton;
             DestroyMe();
         }
 
