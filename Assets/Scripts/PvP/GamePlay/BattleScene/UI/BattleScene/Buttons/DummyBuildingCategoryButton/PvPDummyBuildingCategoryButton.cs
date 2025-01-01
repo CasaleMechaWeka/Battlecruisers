@@ -1,10 +1,11 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.BattleScene.Buttons;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
 {
-    public class PvPDummyBuildingCategoryButton : IPvPBuildingCategoryButton
+    public class PvPDummyBuildingCategoryButton : IBuildingCategoryButton
     {
         public bool IsActiveFeedbackVisible { set { /* empty */ } }
         public BuildingCategory Category => default;

@@ -1,6 +1,7 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Buttons;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -38,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         }
 
         // Locked buttons may have been destroyed, so replace these with a dummy button
-        private IPvPBuildingCategoryButton UseNullButtonIfNeeded(PvPBuildingCategoryButton realButton)
+        private IBuildingCategoryButton UseNullButtonIfNeeded(PvPBuildingCategoryButton realButton)
         {
             // Destroyed Monobehaviour == null. Destroyed interface (eg: ), != null. => Need Monobehaviour (BuildableButtonController)
             if (realButton != null)

@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         IReadOnlyCollection<IPvPBuildableButton> BuildableButtons { get; }
 
-        IPvPBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category);
+        IBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category);
         ReadOnlyCollection<IPvPBuildableButton> GetBuildingButtons(BuildingCategory category);
     }
 }

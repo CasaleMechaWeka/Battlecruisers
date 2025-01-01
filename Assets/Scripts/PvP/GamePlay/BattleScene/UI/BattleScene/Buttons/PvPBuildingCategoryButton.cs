@@ -2,6 +2,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
 {
-    public class PvPBuildingCategoryButton : PvPCanvasGroupButton, IPvPBuildingCategoryButton, IPvPBroadcastingFilter
+    public class PvPBuildingCategoryButton : PvPCanvasGroupButton, IBuildingCategoryButton, IPvPBroadcastingFilter
     {
         private IPvPUIManager _uiManager;
         private IPvPBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;

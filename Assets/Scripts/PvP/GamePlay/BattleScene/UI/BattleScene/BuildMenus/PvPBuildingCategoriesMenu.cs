@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Sound.Players;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBuildingCategoriesMenu : PvPPresentableController, IPvPBuildingCategoriesMenu
     {
-        private IDictionary<BuildingCategory, IPvPBuildingCategoryButton> _categoryToCategoryButtons;
+        private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             PvPHelper.AssertIsNotNull(soundPlayer, uiManager, buttonVisibilityFilters, buildingGroups);
 
-            _categoryToCategoryButtons = new Dictionary<BuildingCategory, IPvPBuildingCategoryButton>();
+            _categoryToCategoryButtons = new Dictionary<BuildingCategory, IBuildingCategoryButton>();
 
             IList<PvPBuildingCategoryButton> categoryButtons = GetComponentsInChildren<PvPBuildingCategoryButton>().ToList();
             Assert.IsTrue(buildingGroups.Count <= categoryButtons.Count);
@@ -55,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public IPvPBuildingCategoryButton GetCategoryButton(BuildingCategory category)
+        public IBuildingCategoryButton GetCategoryButton(BuildingCategory category)
         {
             Assert.IsTrue(_categoryToCategoryButtons.ContainsKey(category));
             return _categoryToCategoryButtons[category];

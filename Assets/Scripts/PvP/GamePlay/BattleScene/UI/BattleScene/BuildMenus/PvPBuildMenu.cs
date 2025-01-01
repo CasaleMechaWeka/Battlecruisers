@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
@@ -122,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public IPvPBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category)
+        public IBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category)
         {
             return _buildingCategoriesMenu.GetCategoryButton(category);
         }

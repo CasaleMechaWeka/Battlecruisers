@@ -1,5 +1,5 @@
 using BattleCruisers.Hotkeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 
@@ -8,15 +8,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
     public class PvPBuildingCategoryHotkeyListener : IPvPManagedDisposable
     {
         private readonly IHotkeyDetector _hotkeyDetector;
-        private readonly IPvPBuildingCategoryButton _factoriesButton, _defensivesButton, _offensivesButton, _tacticalsButton, _ultrasButton;
+        private readonly IBuildingCategoryButton _factoriesButton, _defensivesButton, _offensivesButton, _tacticalsButton, _ultrasButton;
 
         public PvPBuildingCategoryHotkeyListener(
             IHotkeyDetector hotkeyDetector,
-            IPvPBuildingCategoryButton factoriesButton,
-            IPvPBuildingCategoryButton defensivesButton,
-            IPvPBuildingCategoryButton offensivesButton,
-            IPvPBuildingCategoryButton tacticalsButton,
-            IPvPBuildingCategoryButton ultrasButton)
+            IBuildingCategoryButton factoriesButton,
+            IBuildingCategoryButton defensivesButton,
+            IBuildingCategoryButton offensivesButton,
+            IBuildingCategoryButton tacticalsButton,
+            IBuildingCategoryButton ultrasButton)
         {
             PvPHelper.AssertIsNotNull(hotkeyDetector, factoriesButton, defensivesButton, offensivesButton, tacticalsButton, ultrasButton);
 
