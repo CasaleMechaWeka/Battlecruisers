@@ -13,13 +13,14 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
     public abstract class PvPTarget : PvPPrefab, ITarget, ITargetProxy
     {
         protected IPvPHealthTracker _healthTracker;
-        protected IPvPTime _time;
+        protected ITime _time;
 
         public float maxHealth;
 

@@ -16,7 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound;
@@ -290,7 +290,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected virtual IPvPRotationMovementController CreateRotationMovementController(IPvPBarrelController barrel, IPvPDeltaTimeProvider deltaTimeProvider)
+        protected virtual IPvPRotationMovementController CreateRotationMovementController(IPvPBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return
                 _factoryProvider.MovementControllerFactory.CreateRotationMovementController(

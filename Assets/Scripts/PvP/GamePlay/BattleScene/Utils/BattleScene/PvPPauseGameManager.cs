@@ -1,6 +1,6 @@
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScen
 {
     public class PvPPauseGameManager : IPvPPauseGameManager
     {
-        private readonly IPvPTime _time;
+        private readonly ITime _time;
         private float _prePauseTimeScale;
 
         private bool IsGamePaused
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScen
         public event EventHandler GamePaused;
         public event EventHandler GameResumed;
 
-        public PvPPauseGameManager(IPvPTime time)
+        public PvPPauseGameManager(ITime time)
         {
             Assert.IsNotNull(time);
 

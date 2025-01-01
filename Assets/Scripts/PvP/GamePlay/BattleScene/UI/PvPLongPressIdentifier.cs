@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
     public class PvPLongPressIdentifier : IPvPLongPressIdentifier
     {
         private readonly IPvPPointerUpDownEmitter _button;
-        private readonly IPvPTime _time;
+        private readonly ITime _time;
         private readonly IPvPUpdater _updater;
         private readonly float _intervalLengthS;
         private float _longPressDurationS;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 
         public PvPLongPressIdentifier(
             IPvPPointerUpDownEmitter button,
-            IPvPTime time,
+            ITime time,
             IPvPUpdater updater,
             float intervalLengthS)
         {

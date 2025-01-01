@@ -1,11 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning
 {
     public class PvPSpawnDeciderFactory : IPvPSpawnDeciderFactory
     {
-        private readonly IPvPTime _time;
+        private readonly ITime _time;
 
         public PvPSpawnDeciderFactory()
         {

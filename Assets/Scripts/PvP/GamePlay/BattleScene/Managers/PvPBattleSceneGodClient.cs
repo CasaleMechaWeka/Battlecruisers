@@ -50,6 +50,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -74,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPBattleSceneHelper pvpBattleHelper;
         private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
-        private IPvPTime time;
+        private ITime time;
         private IPvPPauseGameManager pauseGameManager;
         private IPvPDebouncer _debouncer;
         private PvPBuildableButtonColourController _buildableButtonColourController;

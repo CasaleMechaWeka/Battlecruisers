@@ -1,9 +1,9 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
-    public interface IPvPUpdater : IPvPDeltaTimeProvider
+    public interface IPvPUpdater : IDeltaTimeProvider
     {
         event EventHandler Updated;
     }

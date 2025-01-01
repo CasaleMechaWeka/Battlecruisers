@@ -4,13 +4,14 @@ using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity
 {
     public abstract class PvPMovementController : IPvPMovementController
     {
         protected readonly IPvPVelocityProvider _maxVelocityProvider;
-        protected readonly IPvPTime _time;
+        protected readonly ITime _time;
 
         public abstract Vector2 Velocity { get; set; }
 

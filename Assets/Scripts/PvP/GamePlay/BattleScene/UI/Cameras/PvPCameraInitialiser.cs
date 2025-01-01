@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Clamping;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private IPvPStaticCameraTargetProvider defaultCameraTargetProvider;
         private IPvPStaticCameraTargetProvider trumpCameraTargetProvider;
         private IPvPCameraTargets targets;
-        private IPvPTime time;
+        private ITime time;
         private PvPCameraTransitionSpeedManager cameraTransitionSpeedManager;
 
         private PvPCruiser _playerCruiser;

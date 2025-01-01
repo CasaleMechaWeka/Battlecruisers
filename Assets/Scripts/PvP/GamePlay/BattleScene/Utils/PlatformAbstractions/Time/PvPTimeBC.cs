@@ -3,12 +3,12 @@ using PvPPlatformTime = UnityEngine.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time
 {
-    public class PvPTimeBC : IPvPTime
+    public class PvPTimeBC : ITime
     {
         private readonly float _defaultFixedDeltaTime;
 
-        private static IPvPTime _instance;
-        public static IPvPTime Instance
+        private static ITime _instance;
+        public static ITime Instance
         {
             get
             {

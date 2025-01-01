@@ -6,7 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             IDeferrer deferrer,
-            IPvPTime time,
+            ITime time,
             IPvPBattleCompletionHandler battleCompletionHandler,
             IPvPCruiserDamageMonitor playerCruiserDamageMonitor,
             IPvPGameObject popLimitReachedFeedback)
@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private PvPCruiserEventMonitor CreateCruiserEventMonitor(
             PvPCruiser playerCruiser,
-            IPvPTime time,
+            ITime time,
             IPvPCruiserDamageMonitor playerCruiserDamageMonitor)
         {
             return
@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
-        private PvPUltrasConstructionMonitor CreateUltrasConstructionMonitor(IPvPCruiser aiCruiser, IPvPTime time)
+        private PvPUltrasConstructionMonitor CreateUltrasConstructionMonitor(IPvPCruiser aiCruiser, ITime time)
         {
             return
                 new PvPUltrasConstructionMonitor(
@@ -87,7 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
-        /*        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, IPvPTime time, IPvPGameObject popLimitReachedFeedback)
+        /*        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, ITime time, IPvPGameObject popLimitReachedFeedback)
                 {
                     return
                         new PvPPopulationLimitAnnouncer(
@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                             popLimitReachedFeedback*//*);
                 }*/
 
-        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, IPvPTime time, IPvPGameObject popLimitReachedFeedback)
+        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, ITime time, IPvPGameObject popLimitReachedFeedback)
         {
             return
                 new PvPPopulationLimitAnnouncer(

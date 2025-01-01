@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPSmoothPositionAdjuster : IPvPSmoothPositionAdjuster
     {
         private readonly IPvPCamera _camera;
-        private readonly IPvPTime _time;
+        private readonly ITime _time;
         private readonly IPvPCameraSmoothTimeProvider _smoothTimeProvider;
         private Vector3 _cameraPositionChangeVelocity;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private const float MIN_SMOOTH_TIME = 0;
         private const float MAX_SPEED = 1000;
 
-        public PvPSmoothPositionAdjuster(IPvPCamera camera, IPvPTime time, IPvPCameraSmoothTimeProvider smoothTimeProvider)
+        public PvPSmoothPositionAdjuster(IPvPCamera camera, ITime time, IPvPCameraSmoothTimeProvider smoothTimeProvider)
         {
             PvPHelper.AssertIsNotNull(camera, time, smoothTimeProvider);
 

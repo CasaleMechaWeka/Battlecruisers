@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation
@@ -7,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     {
         private float _rotateSpeedInDegreesPerS;
         private Transform _transform;
-        private IPvPTime _time;
+        private ITime _time;
 
         public PvPConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform)
         {

@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public class PvPInvisibleDirectFireBarrelWrapper : PvPDirectFireBarrelWrapper
     {
-        protected override IPvPRotationMovementController CreateRotationMovementController(IPvPBarrelController barrel, IPvPDeltaTimeProvider deltaTimeProvider)
+        protected override IPvPRotationMovementController CreateRotationMovementController(IPvPBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
         }

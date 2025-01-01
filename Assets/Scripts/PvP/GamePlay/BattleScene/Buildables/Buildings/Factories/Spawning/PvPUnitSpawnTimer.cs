@@ -2,20 +2,20 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Utils;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning
 {
     public class PvPUnitSpawnTimer : IPvPUnitSpawnTimer
     {
-        private readonly IPvPTime _time;
+        private readonly ITime _time;
         private float _timeWhenFactoryWasClearInS, _timeWhenUnitWasChosenInS;
 
         public float TimeSinceFactoryWasClearInS => _time.TimeSinceGameStartInS - _timeWhenFactoryWasClearInS;
         public float TimeSinceUnitWasChosenInS => _time.TimeSinceGameStartInS - _timeWhenUnitWasChosenInS;
 
-        public PvPUnitSpawnTimer(IPvPFactory factory, IPvPTime time)
+        public PvPUnitSpawnTimer(IPvPFactory factory, ITime time)
         {
             _time = time;
             _timeWhenFactoryWasClearInS = float.MinValue;

@@ -24,6 +24,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Buildables;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -215,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
             droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
 
-            IPvPTime time = PvPTimeBC.Instance;
+            ITime time = PvPTimeBC.Instance;
             _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
             _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
@@ -336,7 +337,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
             droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
 
-            IPvPTime time = PvPTimeBC.Instance;
+            ITime time = PvPTimeBC.Instance;
             _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
             _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;

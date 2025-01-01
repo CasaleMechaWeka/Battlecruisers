@@ -1,5 +1,5 @@
 using System.Collections;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
@@ -11,10 +11,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPAudioVolumeFade : IAudioVolumeFade
     {
         private readonly ICoroutineStarter _coroutineStarter;
-        private readonly IPvPTime _time;
+        private readonly ITime _time;
         private bool _shouldFade;
 
-        public PvPAudioVolumeFade(ICoroutineStarter coroutineStarter, IPvPTime time)
+        public PvPAudioVolumeFade(ICoroutineStarter coroutineStarter, ITime time)
         {
             PvPHelper.AssertIsNotNull(coroutineStarter, time);
 

@@ -1,7 +1,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPScrollCalculator : IPvPScrollCalculator
     {
         private readonly IPvPCamera _camera;
-        private readonly IPvPTime _time;
+        private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
         private readonly IPvPLevelToMultiplierConverter _scrollLevelConverter;
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public PvPScrollCalculator(
             IPvPCamera camera,
-            IPvPTime time,
+            ITime time,
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
             IPvPLevelToMultiplierConverter scrollLevelConverter,

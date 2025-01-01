@@ -1,5 +1,5 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
@@ -9,14 +9,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public class PvPMultiFrameUpdater : IPvPUpdater
     {
-        private readonly IPvPDeltaTimeProvider _timeProvider;
+        private readonly IDeltaTimeProvider _timeProvider;
         private readonly float _intervalInS;
 
         public float DeltaTime { get; private set; }
 
         public event EventHandler Updated;
 
-        public PvPMultiFrameUpdater(IPvPUpdater perFrameUpdater, IPvPDeltaTimeProvider timeProvider, float intervalInS)
+        public PvPMultiFrameUpdater(IPvPUpdater perFrameUpdater, IDeltaTimeProvider timeProvider, float intervalInS)
         {
             PvPHelper.AssertIsNotNull(perFrameUpdater, timeProvider);
             Assert.IsTrue(intervalInS > 0);

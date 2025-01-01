@@ -5,7 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Pa
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private float _damagePerS;
         private PvPLaserImpact _laserImpact;
         private IPvPParticleSystemGroup _laserMuzzleEffect;
-        private IPvPDeltaTimeProvider _deltaTimeProvider;
+        private IDeltaTimeProvider _deltaTimeProvider;
 
         private IPvPSettableBroadcastingProperty<bool> _isLaserFiring;
         public IPvPBroadcastingProperty<bool> IsLaserFiring { get; private set; }
@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             float damagePerS,
             ITarget parent,
             ISettingsManager settingsManager,
-            IPvPDeltaTimeProvider deltaTimeProvider,
+            IDeltaTimeProvider deltaTimeProvider,
             IDeferrer timeScaleDeferrer)
         {
             base.Initialise(targetFilter, parent, settingsManager);
