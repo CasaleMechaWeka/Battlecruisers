@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -257,7 +256,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return pvp_Health.Value < maxHealth;
         }
 
-        public HighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForInGameObject(Position, MaskHighlightableSize);
         }

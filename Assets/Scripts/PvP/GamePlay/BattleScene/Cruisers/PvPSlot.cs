@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.Feedback;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.ObjectModel;
@@ -329,7 +328,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             SlotBuilding = null;
         }
 
-        public HighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForInGameObject(Transform.Position, _size);
         }

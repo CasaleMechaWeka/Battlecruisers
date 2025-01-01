@@ -4,6 +4,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutori
 {
     public interface IPvPHighlightable
     {
-        HighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory);
+        HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory);
     }
 }

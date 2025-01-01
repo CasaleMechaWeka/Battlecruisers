@@ -93,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
             }
         }
 
-        public HighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForOnCanvasObject(_rectTransform, highlightSizeMultiplier);
         }

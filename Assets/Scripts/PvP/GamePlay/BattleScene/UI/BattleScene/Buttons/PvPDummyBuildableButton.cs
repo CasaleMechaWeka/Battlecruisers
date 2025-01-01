@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting;
 using System;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public event EventHandler Dismissed;
 #pragma warning restore 67  // Unused event
 
-        public HighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
             return null;
         }
