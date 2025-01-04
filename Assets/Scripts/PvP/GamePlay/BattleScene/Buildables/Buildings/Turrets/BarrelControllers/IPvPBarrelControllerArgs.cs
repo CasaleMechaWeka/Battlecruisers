@@ -9,9 +9,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using System.Collections.ObjectModel;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPBarrelControllerArgs
     {
         IPvPUpdater Updater { get; }
-        IPvPTargetFilter TargetFilter { get; }
+        ITargetFilter TargetFilter { get; }
         IPvPTargetPositionPredictor TargetPositionPredictor { get; }
         IAngleCalculator AngleCalculator { get; }
         IPvPAttackablePositionFinder AttackablePositionFinder { get; }

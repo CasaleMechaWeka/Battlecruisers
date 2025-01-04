@@ -2,7 +2,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         }
 
         public async Task InitialiseAsync(
-            IPvPTargetFilter targetFilter,
+            ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
             ISettingsManager settingsManager,

@@ -3,8 +3,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPShipBlockingFriendlyProvider : PvPBroadcastingTargetProvider
     {
         private readonly IPvPTargetFinder _friendFinder;
-        private readonly IPvPTargetFilter _isInFrontFilter;
+        private readonly ITargetFilter _isInFrontFilter;
 
         public PvPShipBlockingFriendlyProvider(
             IPvPTargetFactoriesProvider targetsFactories,
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _isInFrontFilter = targetsFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
-            IPvPTargetFilter friendFilter = targetsFactories.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
+            ITargetFilter friendFilter = targetsFactories.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
             _friendFinder = targetsFactories.FinderFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
 
             _friendFinder.TargetFound += OnFriendFound;

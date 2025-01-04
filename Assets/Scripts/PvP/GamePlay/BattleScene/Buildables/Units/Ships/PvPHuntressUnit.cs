@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -109,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Vector2 collisionPoint = new Vector2(0, 0);
             IPvPDamageStats damageStats = new PvPDamageStats(2000, 25);
-            IPvPTargetFilter targetFilter = new PvPDummyTargetFilter(isMatchResult: true);
+            ITargetFilter targetFilter = new PvPDummyTargetFilter(isMatchResult: true);
 
             _areaDamageApplier = new PvPAreaOfEffectDamageApplier(damageStats, targetFilter);
             _areaDamageApplier

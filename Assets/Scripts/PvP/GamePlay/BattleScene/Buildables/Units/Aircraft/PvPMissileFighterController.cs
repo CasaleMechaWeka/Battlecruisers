@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -14,6 +13,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
@@ -156,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _followableEnemyDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                 Transform, enemyFollowDetectionRangeInM, _targetFactories.RangeCalculatorProvider.BasicCalculator);
 
-            IPvPTargetFilter followTargetFilter = _targetFactories.FilterFactory.CreateTargetFilter(
+            ITargetFilter followTargetFilter = _targetFactories.FilterFactory.CreateTargetFilter(
                 PvPHelper.GetOppositeFaction(Faction), new List<TargetType> { TargetType.Aircraft, TargetType.Ships });
 
             _followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(
@@ -171,7 +171,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _shootableEnemyDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                 Transform, Mathf.Max(_barrelControllers[0].pvpTurretStats.RangeInM), _targetFactories.RangeCalculatorProvider.BasicCalculator);
 
-            IPvPTargetFilter shootableTargetFilter = _targetFactories.FilterFactory.CreateMulitpleExactMatchTargetFilter();
+            ITargetFilter shootableTargetFilter = _targetFactories.FilterFactory.CreateMulitpleExactMatchTargetFilter();
 
             _shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(
                 _shootableEnemyDetectorProvider.TargetDetector, shootableTargetFilter);

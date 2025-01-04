@@ -1,19 +1,19 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
     public class PvPTargetFilterFactory : IPvPTargetFilterFactory
     {
-        public IPvPTargetFilter CreateTargetFilter(Faction faction)
+        public ITargetFilter CreateTargetFilter(Faction faction)
         {
             return new PvPFactionTargetFilter(faction);
         }
 
-        public IPvPTargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
+        public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
         {
             return new PvPFactionAndTargetTypeFilter(faction, targetTypes);
         }
@@ -36,12 +36,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return new PvPMultipleExactMatchesTargetFilter();
         }
 
-        public IPvPTargetFilter CreateDummyTargetFilter(bool isMatchResult)
+        public ITargetFilter CreateDummyTargetFilter(bool isMatchResult)
         {
             return new PvPDummyTargetFilter(isMatchResult);
         }
 
-        public IPvPTargetFilter CreateTargetInFrontFilter(IPvPUnit source)
+        public ITargetFilter CreateTargetInFrontFilter(IPvPUnit source)
         {
             return new PvPTargetInFrontFilter(source);
         }

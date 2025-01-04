@@ -1,11 +1,11 @@
-using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPKamikazeController : MonoBehaviour
     {
         private IPvPUnit _parentAircraft;
-        private IPvPTargetFilter _targetFilter;
+        private ITargetFilter _targetFilter;
         private IPvPDamageApplier _damageApplier;
         private IPvPExplosionPoolProvider _explosionPoolProvider;
         private ITarget _initialTarget;

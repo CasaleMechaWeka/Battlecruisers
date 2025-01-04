@@ -1,4 +1,6 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
@@ -6,18 +8,16 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.Data.Static;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IPvPParticleSystemGroup _muzzleFlash;
         protected IPvPAnimation _barrelAnimation;
         private ITarget _parent;
-        protected IPvPTargetFilter _targetFilter;
+        protected ITargetFilter _targetFilter;
         protected IPvPFireIntervalManager _fireIntervalManager;
 
         protected IPvPProjectileStats _projectileStats;

@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,9 +9,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public class PvPBombSpawner : PvPProjectileSpawner<PvPBombController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>
     {
-        protected IPvPTargetFilter _targetFilter;
+        protected ITargetFilter _targetFilter;
 
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, IPvPTargetFilter targetFilter)
+        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, ITargetFilter targetFilter)
         {
             await base.InitialiseAsync(args, firingSound: null);
 

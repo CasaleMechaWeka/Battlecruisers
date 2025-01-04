@@ -1,15 +1,14 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -25,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPShipBlockingEnemyProvider : PvPBroadcastingTargetProvider, IPvPTargetConsumer
     {
         private readonly IPvPTargetProcessor _targetProcessor;
-        private readonly IPvPTargetFilter _isInFrontFilter;
+        private readonly ITargetFilter _isInFrontFilter;
 
         ITarget IPvPTargetConsumer.Target
         {
@@ -52,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = PvPHelper.GetOppositeFaction(parentUnit.Faction);
-            IPvPTargetFilter enemyDetectionFilter = targetsFactories.FilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
+            ITargetFilter enemyDetectionFilter = targetsFactories.FilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
             IPvPTargetFinder enemyFinder = targetsFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             IPvPTargetRanker targetRanker = targetsFactories.RankerFactory.EqualTargetRanker;

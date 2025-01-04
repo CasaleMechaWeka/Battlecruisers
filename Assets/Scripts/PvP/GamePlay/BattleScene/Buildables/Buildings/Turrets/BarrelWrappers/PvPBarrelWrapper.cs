@@ -1,3 +1,7 @@
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
@@ -8,22 +12,19 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Buildables;
+
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -141,7 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _cruiserSpecificFactories = cruiserSpecificFactories;
             //Debug.Log(_enemyFaction);
             // Shared by all barrels
-            IPvPTargetFilter targetFilter = CreateTargetFilter();
+            ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
             IPvPAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
 
@@ -208,7 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
             IPvPBarrelController barrel,
             IPvPBuildable parent,
-            IPvPTargetFilter targetFilter,
+            ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
             IPvPAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
@@ -264,7 +265,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             barrel.InitialiseAsync_PvPClient(args);
         }
 
-        protected virtual IPvPTargetFilter CreateTargetFilter()
+        protected virtual ITargetFilter CreateTargetFilter()
         {
             return _factoryProvider.Targets.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }

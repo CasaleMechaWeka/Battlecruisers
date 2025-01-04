@@ -2,6 +2,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPSmartProjectileStats _smartProjectileStats;
         private PvPSmartMissileSpawner _missileSpawner;
-        private IPvPTargetFilter _targetFilter;
+        private ITargetFilter _targetFilter;
 
         public override Vector3 ProjectileSpawnerPosition => _missileSpawner.transform.position;
         public override bool CanFireWithoutTarget => true;

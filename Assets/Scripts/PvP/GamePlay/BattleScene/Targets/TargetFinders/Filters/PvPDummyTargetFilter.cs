@@ -1,9 +1,10 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters
 {
-    public class PvPDummyTargetFilter : IPvPTargetFilter
+    public class PvPDummyTargetFilter : ITargetFilter
     {
         private readonly bool _isMatchResult;
 

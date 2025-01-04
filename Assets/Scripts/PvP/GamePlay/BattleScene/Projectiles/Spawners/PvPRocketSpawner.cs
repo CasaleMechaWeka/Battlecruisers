@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await base.InitialiseAsync(args, firingSound);
         }
 
-        public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, IPvPTargetFilter targetFilter)
+        public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
         {
             // Logging.Log(Tags.PROJECTILE_SPAWNER, $"spawn position: {transform.position}");
 

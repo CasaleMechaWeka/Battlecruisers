@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders
@@ -12,12 +12,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPAttackingTargetFinder : IPvPTargetFinder
     {
         private readonly IDamagable _parentDamagable;
-        private readonly IPvPTargetFilter _targetFilter;
+        private readonly ITargetFilter _targetFilter;
 
         public event EventHandler<PvPTargetEventArgs> TargetFound;
         public event EventHandler<PvPTargetEventArgs> TargetLost;
 
-        public PvPAttackingTargetFinder(IDamagable parentDamagable, IPvPTargetFilter targetFilter)
+        public PvPAttackingTargetFinder(IDamagable parentDamagable, ITargetFilter targetFilter)
         {
             PvPHelper.AssertIsNotNull(parentDamagable, targetFilter);
 

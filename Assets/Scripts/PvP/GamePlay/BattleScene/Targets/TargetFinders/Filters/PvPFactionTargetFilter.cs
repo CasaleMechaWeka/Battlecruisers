@@ -1,11 +1,11 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters
 {
-    public class PvPFactionTargetFilter : IPvPTargetFilter
+    public class PvPFactionTargetFilter : ITargetFilter
     {
         private readonly Faction _factionToDetect;
 

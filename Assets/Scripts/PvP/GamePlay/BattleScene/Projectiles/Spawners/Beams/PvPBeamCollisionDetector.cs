@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,11 +8,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public class PvPBeamCollisionDetector : IPvPBeamCollisionDetector
     {
         private readonly ContactFilter2D _contactFilter;
-        private readonly IPvPTargetFilter _targetFilter;
+        private readonly ITargetFilter _targetFilter;
 
         private const int NUM_OF_COLLIDERS_TO_RAYCAST = 25;
 
-        public PvPBeamCollisionDetector(ContactFilter2D contactFilter, IPvPTargetFilter targetFilter)
+        public PvPBeamCollisionDetector(ContactFilter2D contactFilter, ITargetFilter targetFilter)
         {
             Assert.IsNotNull(targetFilter);
 

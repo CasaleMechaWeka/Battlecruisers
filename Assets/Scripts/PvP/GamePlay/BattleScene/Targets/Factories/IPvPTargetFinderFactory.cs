@@ -1,14 +1,14 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
     public interface IPvPTargetFinderFactory
     {
-        IPvPTargetFinder CreateRangedTargetFinder(IPvPTargetDetector targetDetector, IPvPTargetFilter targetFilter);
-        IPvPTargetFinder CreateMinRangeTargetFinder(IPvPTargetDetector maxRangeTargetDetector, IPvPTargetDetector minRangeTargetDetector, IPvPTargetFilter targetFilter);
-        IPvPTargetFinder CreateAttackingTargetFinder(IDamagable parentDamagable, IPvPTargetFilter targetFilter);
+        IPvPTargetFinder CreateRangedTargetFinder(IPvPTargetDetector targetDetector, ITargetFilter targetFilter);
+        IPvPTargetFinder CreateMinRangeTargetFinder(IPvPTargetDetector maxRangeTargetDetector, IPvPTargetDetector minRangeTargetDetector, ITargetFilter targetFilter);
+        IPvPTargetFinder CreateAttackingTargetFinder(IDamagable parentDamagable, ITargetFilter targetFilter);
     }
 }

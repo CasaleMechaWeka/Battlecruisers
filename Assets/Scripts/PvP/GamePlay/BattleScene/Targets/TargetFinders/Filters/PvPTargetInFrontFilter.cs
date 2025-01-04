@@ -1,11 +1,12 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters
 {
-    public class PvPTargetInFrontFilter : IPvPTargetFilter
+    public class PvPTargetInFrontFilter : ITargetFilter
     {
         private readonly IPvPUnit _source;
 

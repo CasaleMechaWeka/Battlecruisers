@@ -6,20 +6,20 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
-using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Threading;
-using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private void SetupTargetProcessor(PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> activationArgs)
         {
-            IPvPTargetFilter targetFilter
+            ITargetFilter targetFilter
                 = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(
                     activationArgs.EnempCruiser.Faction,
                     activationArgs.ProjectileStats.AttackCapabilities);

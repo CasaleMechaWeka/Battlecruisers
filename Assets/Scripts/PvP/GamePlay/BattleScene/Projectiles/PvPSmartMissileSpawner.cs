@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await base.InitialiseAsync(args, firingSound);
         }
 
-        public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, IPvPTargetFilter targetFilter)
+        public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITargetFilter targetFilter)
         {
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
             PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> activationArgs

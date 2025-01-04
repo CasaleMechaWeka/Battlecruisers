@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         /// </summary>
         public IPvPDamageApplier CreateAreaOfDamageApplier(IPvPDamageStats damageStats)
         {
-            IPvPTargetFilter damageTargetFilter = _filterFacotry.CreateDummyTargetFilter(isMatchResult: true);
+            ITargetFilter damageTargetFilter = _filterFacotry.CreateDummyTargetFilter(isMatchResult: true);
             return new PvPAreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         /// </summary>
         public IPvPDamageApplier CreateFactionSpecificAreaOfDamageApplier(IPvPDamageStats damageStats, Faction enemyFaction)
         {
-            IPvPTargetFilter damageTargetFilter = _filterFacotry.CreateTargetFilter(enemyFaction);
+            ITargetFilter damageTargetFilter = _filterFacotry.CreateTargetFilter(enemyFaction);
             return new PvPAreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
     }

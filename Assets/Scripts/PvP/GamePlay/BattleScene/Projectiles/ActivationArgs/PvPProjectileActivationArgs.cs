@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public Vector3 Position { get; }
         public TPvPStats ProjectileStats { get; }
         public Vector2 InitialVelocityInMPerS { get; }
-        public IPvPTargetFilter TargetFilter { get; }
+        public ITargetFilter TargetFilter { get; }
         public ITarget Parent { get; }
         public IAudioClipWrapper ImpactSound { get; }
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Vector3 position,
             TPvPStats projectileStats,
             Vector2 initialVelocityInMPerS,
-            IPvPTargetFilter targetFilter,
+            ITargetFilter targetFilter,
             ITarget parent,
             IAudioClipWrapper impactSound)
         {

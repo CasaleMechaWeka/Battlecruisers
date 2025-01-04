@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 
@@ -10,10 +9,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public class PvPAreaOfEffectDamageApplier : IPvPDamageApplier
     {
         private readonly IPvPDamageStats _damageStats;
-        private readonly IPvPTargetFilter _targetFilter;
+        private readonly ITargetFilter _targetFilter;
         private readonly LayerMask _targetLayerMask;
 
-        public PvPAreaOfEffectDamageApplier(IPvPDamageStats damageStats, IPvPTargetFilter targetFilter, LayerMask targetLayerMask = default)
+        public PvPAreaOfEffectDamageApplier(IPvPDamageStats damageStats, ITargetFilter targetFilter, LayerMask targetLayerMask = default)
         {
             PvPHelper.AssertIsNotNull(damageStats, targetFilter);
 

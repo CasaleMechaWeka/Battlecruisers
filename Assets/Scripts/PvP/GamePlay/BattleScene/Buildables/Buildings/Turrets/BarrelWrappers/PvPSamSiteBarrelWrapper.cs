@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             samSiteBarrel.InitialiseAsync(exatMatchTargetFilter, args);
         }
 
-        protected override IPvPTargetFilter CreateTargetFilter()
+        protected override ITargetFilter CreateTargetFilter()
         {
             return _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter();
         }

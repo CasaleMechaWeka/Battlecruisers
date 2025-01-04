@@ -5,9 +5,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.V
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
             where TPvPStats : IPvPProjectileStats
     {
-        private IPvPTargetFilter _targetFilter;
+        private ITargetFilter _targetFilter;
         private IPvPDamageApplier _damageApplier;
         private IPvPDamageApplier _singleDamageApplier;
         private ITarget _parent;

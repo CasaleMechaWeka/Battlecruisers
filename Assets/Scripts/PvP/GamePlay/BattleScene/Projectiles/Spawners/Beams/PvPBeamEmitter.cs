@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
@@ -9,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using System;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.OnNetworkSpawn();
         }
 
-        protected void Initialise(IPvPTargetFilter targetFilter, ITarget parent, ISettingsManager settingsManager)
+        protected void Initialise(ITargetFilter targetFilter, ITarget parent, ISettingsManager settingsManager)
         {
             // Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             PvPHelper.AssertIsNotNull(targetFilter, parent, settingsManager);
