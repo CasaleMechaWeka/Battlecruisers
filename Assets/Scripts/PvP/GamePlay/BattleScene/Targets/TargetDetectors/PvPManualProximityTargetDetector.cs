@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly ITransform _parentTransform;
         private readonly IReadOnlyCollection<ITarget> _potentialTargets;
         private readonly float _detectionRange;
-        private readonly IPvPRangeCalculator _rangeCalculator;
+        private readonly IRangeCalculator _rangeCalculator;
         private readonly ISet<ITarget> _currentInRangeTargets, _newInRangeTargets;
         private readonly IList<ITarget> _exitedTargets;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             ITransform parentTransform,
             IReadOnlyCollection<ITarget> potentialTargets,
             float detectionRange,
-            IPvPRangeCalculator rangeCalculator)
+            IRangeCalculator rangeCalculator)
         {
             PvPHelper.AssertIsNotNull(parentTransform, potentialTargets, rangeCalculator);
 

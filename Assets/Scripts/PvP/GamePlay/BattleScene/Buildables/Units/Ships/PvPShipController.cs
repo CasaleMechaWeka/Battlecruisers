@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
@@ -21,6 +20,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.Helpers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -185,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private IPvPMovementDecider SetupMovementDecider(IPvPTargetFinder inRangeTargetFinder)
         {
-            IPvPRangeCalculator rangeCalculator = _factoryProvider.Targets.RangeCalculatorProvider.SizeInclusiveCalculator;
+            IRangeCalculator rangeCalculator = _factoryProvider.Targets.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,
