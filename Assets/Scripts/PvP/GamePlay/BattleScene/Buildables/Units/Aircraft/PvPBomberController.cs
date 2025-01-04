@@ -3,12 +3,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +24,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
-    public class PvPBomberController : PvPAircraftController, IPvPTargetConsumer
+    public class PvPBomberController : PvPAircraftController, ITargetConsumer
     {
         private PvPBombSpawner _bombSpawner;
         private IPvPProjectileStats _bombStats;

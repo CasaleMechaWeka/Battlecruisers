@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
+using BattleCruisers.Targets;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     /// <summary>
     /// Moves along the x-axis until we are on the same y-axis as the target.
     /// </summary>
-    public class PvPFollowingXAxisMovementController : PvPTargetVelocityMovementController, IPvPTargetConsumer
+    public class PvPFollowingXAxisMovementController : PvPTargetVelocityMovementController, ITargetConsumer
     {
         public ITarget Target { private get; set; }
 

@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-
+using BattleCruisers.Targets;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors
 {
@@ -9,10 +9,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetProcessor : IPvPManagedDisposable
     {
         /// <exception cref="ArgumentException">If the target consumer is already added.</exception>
-        void AddTargetConsumer(IPvPTargetConsumer targetConsumer);
+        void AddTargetConsumer(ITargetConsumer targetConsumer);
 
         /// <exception cref="ArgumentException">If the target consumer was not added first.</exception>
-        void RemoveTargetConsumer(IPvPTargetConsumer targetConsumer);
+        void RemoveTargetConsumer(ITargetConsumer targetConsumer);
     }
 }
 

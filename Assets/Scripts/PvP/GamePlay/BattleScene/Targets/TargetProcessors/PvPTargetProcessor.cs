@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
+using BattleCruisers.Targets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPTargetProcessor : IPvPTargetProcessor
     {
         private readonly IPvPRankedTargetTracker _rankedTargetTracker;
-        private readonly IList<IPvPTargetConsumer> _targetConsumers;
+        private readonly IList<ITargetConsumer> _targetConsumers;
 
         private ITarget HighestPriorityTarget
         {
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public PvPTargetProcessor(IPvPRankedTargetTracker rankedTargetTracker)
         {
             _rankedTargetTracker = rankedTargetTracker;
-            _targetConsumers = new List<IPvPTargetConsumer>();
+            _targetConsumers = new List<ITargetConsumer>();
 
             _rankedTargetTracker.HighestPriorityTargetChanged += _rankedTargetTracker_HighestPriorityTargetChanged;
         }
@@ -40,13 +41,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             // PERF  Copying list to avoid modification while enumeration exception :P
             // Copy list to avoid Add-/Remove- TargetConsumer during this method 
             // causing an enumerable modified while iterating exception (AntiAirBalancingTests)
-            foreach (IPvPTargetConsumer consumer in _targetConsumers.ToList())
+            foreach (ITargetConsumer consumer in _targetConsumers.ToList())
             {
                 consumer.Target = HighestPriorityTarget;
             }
         }
 
-        public void AddTargetConsumer(IPvPTargetConsumer targetConsumer)
+        public void AddTargetConsumer(ITargetConsumer targetConsumer)
         {
             Assert.IsFalse(_targetConsumers.Contains(targetConsumer));
 
@@ -55,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             targetConsumer.Target = HighestPriorityTarget;
         }
 
-        public void RemoveTargetConsumer(IPvPTargetConsumer targetConsumer)
+        public void RemoveTargetConsumer(ITargetConsumer targetConsumer)
         {
             Assert.IsTrue(_targetConsumers.Contains(targetConsumer));
 

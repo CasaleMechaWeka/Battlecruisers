@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
@@ -12,6 +11,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
@@ -26,7 +26,7 @@ using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
-    public class PvPSteamCopterController : PvPAircraftController, IPvPTargetConsumer
+    public class PvPSteamCopterController : PvPAircraftController, ITargetConsumer
     {
         private PvPFollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IPvPBarrelWrapper _barrelWrapper;

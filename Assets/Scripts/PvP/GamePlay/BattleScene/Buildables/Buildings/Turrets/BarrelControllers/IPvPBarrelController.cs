@@ -1,12 +1,12 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets;
+using BattleCruisers.Targets;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
-    public interface IPvPBarrelController : IPvPTargetConsumer
+    public interface IPvPBarrelController : ITargetConsumer
     {
         Transform Transform { get; }
         ITurretStats pvpTurretStats { get; }

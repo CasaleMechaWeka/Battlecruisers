@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors
@@ -13,12 +14,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _target = target;
         }
 
-        public void AddTargetConsumer(IPvPTargetConsumer targetConsumer)
+        public void AddTargetConsumer(ITargetConsumer targetConsumer)
         {
             targetConsumer.Target = _target;
         }
 
-        public void RemoveTargetConsumer(IPvPTargetConsumer targetConsumer) { }
+        public void RemoveTargetConsumer(ITargetConsumer targetConsumer) { }
         public void DisposeManagedState() { }
     }
 }
