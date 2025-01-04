@@ -1,9 +1,10 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.Helpers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
-    public class PvPRangeCalculatorProvider : IPvPRangeCalculatorProvider
+    public class PvPRangeCalculatorProvider : IRangeCalculatorProvider
     {
         public PvPRangeCalculatorProvider()
         {
