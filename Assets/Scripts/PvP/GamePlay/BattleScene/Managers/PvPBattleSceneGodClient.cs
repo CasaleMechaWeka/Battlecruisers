@@ -114,6 +114,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public bool IsConnectedClient = false;   // this is only for Host
         public bool WasLeftMatch = false;
         private bool IsAIBotMode = false;
+        public GameObject countdownGameObject;
+        private Animator countdownAnimator;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -512,6 +514,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             isReadyToShowCaptainExo = true;
             await Task.Delay(1000);
             await LoadAllCaptains();
+            countdownAnimator = countdownGameObject.GetComponent<Animator>();
+            if (countdownAnimator == null)
+                Debug.LogError("CountdownGameObject is missing the animator component");
             // pvp
             PvPHeckleMessageManager.Instance.Initialise(dataProvider, factoryProvider.Sound.UISoundPlayer);
             MatchmakingScreenController.Instance.FoundCompetitor();
@@ -892,6 +897,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             MatchmakingScreenController.Instance.animator.SetBool("Completed", false);
             MatchmakingScreenController.Instance.DisableAllAnimatedGameObjects();
             sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
+            PlayCountDownAnimation();
             if (SynchedServerData.Instance != null)
             {
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
@@ -936,6 +942,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         )
         {
             return new PvPBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+        }
+        private void PlayCountDownAnimation()
+        {
+            if (countdownGameObject == null || countdownAnimator == null) return;
+
+            countdownGameObject.SetActive(true);
+
+            countdownAnimator.Play(0);
+
+            StartCoroutine(WaitForAnimationToEnd());
+        }
+        private IEnumerator WaitForAnimationToEnd()
+        {
+            yield return new WaitForSeconds(countdownAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+            countdownGameObject.SetActive(false);
         }
     }
 }
