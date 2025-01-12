@@ -145,7 +145,7 @@ namespace BattleCruisers.Data.Static
             // Ranks
             public static RankData rank00 { get; } = new RankData("Rank00BoatThief", "00", "Rank0");
             public static RankData rank01 { get; } = new RankData("Rank01Wrecker", "01", "Rank1");
-            public static RankData rank02 { get; } = new RankData("Rank02Saboteur", "002", "Rank2");
+            public static RankData rank02 { get; } = new RankData("Rank02Saboteur", "02", "Rank2");
             public static RankData rank03 { get; } = new RankData("Rank03Pirate", "03", "Rank3");
             public static RankData rank04 { get; } = new RankData("Rank04Recruit", "04", "Rank4");
             public static RankData rank05 { get; } = new RankData("Rank05Apprentice", "05", "Rank5");
