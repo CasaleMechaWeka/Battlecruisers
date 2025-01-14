@@ -26,7 +26,7 @@ namespace BattleCruisers.Data.Serialization
         private readonly BinaryFormatter _binaryFormatter;
         private const int NUM_OF_CAPTAINS = 51;
         private const int NUM_OF_VARIANTS = 131;
-        private const int NUM_OF_Bodykits = 50;
+        private const int NUM_OF_Bodykits = 51;
 
         public Serializer(IModelFilePathProvider modelFilePathProvider)
         {
