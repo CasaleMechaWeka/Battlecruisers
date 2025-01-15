@@ -34,6 +34,7 @@ namespace BattleCruisers.Data.Static
         IReadOnlyList<CaptainData> Captains { get; }
         IReadOnlyList<BodykitData> Bodykits { get; }
         IReadOnlyList<VariantData> Variants { get; }
+        IReadOnlyList<IAPData> IAPs { get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
         ILevelStrategies SideQuestStrategies { get; }

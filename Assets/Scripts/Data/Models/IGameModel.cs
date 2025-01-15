@@ -26,7 +26,6 @@ namespace BattleCruisers.Data.Models
         int MinCPUFreq { get; set; }
         int MaxLatency { get; set; }
         Dictionary<string, int> GameConfigs { get; set; }
-        List<IAPData> IAPs { get; set; }
         List<HeckleData> OutstandingHeckleTransactions { get; set; }
         List<CaptainData> OutstandingCaptainTransactions { get; set; }
         List<BodykitData> OutstandingBodykitTransactions { get; set; }

@@ -168,14 +168,6 @@ namespace BattleCruisers.Data.Models
             get => _gameConfigs;
             set => _gameConfigs = value;
         }
-
-        public List<IAPData> _iaps;
-        public List<IAPData> IAPs
-        {
-            get => _iaps;
-            set => _iaps = value;
-        }
-
         public List<HeckleData> _outstandingHeckleTransactions;
         public List<HeckleData> OutstandingHeckleTransactions
         {
@@ -515,13 +507,6 @@ namespace BattleCruisers.Data.Models
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
             _sideQuest = null;
-
-            _iaps = new List<IAPData> {
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins100Name", iapDescriptionKeybase: "Coins100Description", iapIconName: "Coins100Pack", 0.99f, 100),
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins500Name", iapDescriptionKeybase: "Coins500Description", iapIconName: "Coins500Pack", 1.99f, 500),
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Name", iapDescriptionKeybase: "Coins1000Description", iapIconName: "Coins1000Pack", 2.99f, 1000),
-                    new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Name", iapDescriptionKeybase: "Coins5000Description", iapIconName: "Coins5000Pack", 3.99f, 5000)
-            };
 
             _purchasedExos = new List<int> { 0 };
             _purchasedHeckles = new List<int>();
