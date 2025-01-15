@@ -24,7 +24,6 @@ namespace BattleCruisers.Data.Serialization
     {
         private readonly IModelFilePathProvider _modelFilePathProvider;
         private readonly BinaryFormatter _binaryFormatter;
-        private const int NUM_OF_CAPTAINS = 51;
         private const int NUM_OF_VARIANTS = 131;
         private const int NUM_OF_Bodykits = 51;
 
@@ -80,11 +79,29 @@ namespace BattleCruisers.Data.Serialization
                 Debug.LogError("Error while reading \"PurchasedHeckles\" property from save data:\n" + ex.Message);
             }
 
+            bool compatibleExos = false;
+            try
+            {
+                var purchasedExosProperty = output.GetType().GetProperty("PurchasedExos");
+                if (purchasedExosProperty != null)
+                    if (purchasedExosProperty.GetValue(output) is List<int>)
+                        compatibleExos = true;
+                    else
+                        Debug.LogWarning("Property \"PurchasedExos\" was not in the expected format: List<int>");
+                else
+                    Debug.Log("Property \"PurchasedExos\" was not found");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while reading \"PurchasedExos\" property from save data:\n" + ex.Message);
+            }
+
+
             Loadout loadout = (Loadout)plo;
 
             if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || compatibleHeckles == false ||
             ((GameModel)output).Variants.Count < NUM_OF_VARIANTS || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
-            ((GameModel)output).Captains.Count < NUM_OF_CAPTAINS || ((GameModel)output).Bodykits.Count < NUM_OF_Bodykits)
+            compatibleExos == false || ((GameModel)output).Bodykits.Count < NUM_OF_Bodykits)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -197,13 +214,36 @@ namespace BattleCruisers.Data.Serialization
                 Debug.LogError("Error when processing \"PurchasedHeckles\": " + ex.Message);
             }
 
-            if (gameData.GetType().GetProperty("Captains").GetValue(gameData) != null && (gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>).Count != 0)
-                foreach (CaptainData captain in gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>)
-                    if (captain.IsOwned)
-                    {
-                        compatibleGameModel.AddExo(captain.index);
-                        compatibleGameModel._captains[captain.index].isOwned = true;
-                    }
+            try
+            {
+                var purchasedExosProperty = gameData.GetType().GetProperty("PurchasedExos");
+                if (purchasedExosProperty != null)
+                {
+                    if (purchasedExosProperty.GetValue(gameData) is List<int> purchasedExos && purchasedExos.Count > 0)
+                        foreach (int index in purchasedExos)
+                            compatibleGameModel.AddExo(index);
+                    else
+                        Debug.LogError("Property \"PurchasedExos\" was not in the expected format List<int>");
+                }
+                else
+                    Debug.LogWarning("Property \"PurchasedExos\" is null in save data");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error when processing \"PurchasedExos\": " + ex.Message);
+            }
+
+            var exos = gameData.GetType().GetProperty("Captains").GetValue(gameData) as IList<object>;
+            if (exos != null)
+                for (int i = 0; i < exos.Count; i++)
+                {
+                    var exo = exos[i];
+                    if (exo == null) continue;
+                    var isOwnedProperty = exo.GetType().GetProperty("isOwned");
+                    if (isOwnedProperty == null) continue;
+                    if (isOwnedProperty.GetValue(exo) is bool isOwned && isOwned)
+                        compatibleGameModel.AddExo(i);
+                }
 
             var heckles = gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IList<object>;
             if (heckles != null)
@@ -492,7 +532,7 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.Captains[index].isOwned = true;
+                        dataProvider.GameModel.AddExo(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
@@ -518,7 +558,7 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.Captains[index].isOwned = true;
+                        dataProvider.GameModel.AddExo(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {

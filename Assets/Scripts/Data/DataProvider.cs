@@ -235,14 +235,9 @@ namespace BattleCruisers.Data
 
         public void MigrateInventory()
         {
-            // captain exo
-            for (int i = 0; i < _gameModel.Captains.Count; i++)
-            {
-                if (_gameModel.Captains[i].isOwned)
-                {
-                    _gameModel.AddExo(i);
-                }
-            }
+            //captain exos
+            for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
+                _gameModel.AddExo(i);
 
             // heckles
             for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
@@ -269,15 +264,9 @@ namespace BattleCruisers.Data
 
         public async Task SyncInventroyV2()
         {
-            // captain exo
-            for (int i = 0; i < _gameModel.GetExos().Count; i++)
-            {
-                int index = _gameModel.GetExos()[i];
-                if (!_gameModel.Captains[index].isOwned)
-                {
-                    _gameModel.Captains[index].isOwned = true;
-                }
-            }
+            // captain exos
+            for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
+                _gameModel.AddExo(i);
 
             // heckles
             for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
@@ -418,7 +407,7 @@ namespace BattleCruisers.Data
                                 int index = StaticPrefabKeys.CaptainItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        _gameModel.Captains[index].captainCost = cost.amount;
+                                        StaticData.Captains[index].captainCost = cost.amount;
                             }
                             if (reward.id.Contains("HECKLE"))
                             {
@@ -454,8 +443,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[0].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                if (i < _gameModel.Captains.Count)
-                    _gameModel.Captains[i].captainCost = iCoins;
+                if (i < StaticData.Captains.Count)
+                    StaticData.Captains[i].captainCost = iCoins;
             }
             // heckles cost sync
             for (int i = 0; i < ecoConfig.categories[1].items.Count; i++)
@@ -538,7 +527,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
             await Task.Yield();
-            int iCoins = _gameModel.Captains[index].CaptainCost;
+            int iCoins = StaticData.Captains[index].CaptainCost;
             _gameModel.Coins -= iCoins;
             SaveGame();
             await SyncCoinsToCloud();
@@ -815,7 +804,6 @@ namespace BattleCruisers.Data
                 bool result = await PurchaseCaptainV2(txn.index);
                 if (result)
                 {
-                    GameModel.Captains[txn.index].isOwned = true;
                     GameModel.AddExo(txn.index);
                     GameModel.CoinsChange += txn.captainCost;
                 }
@@ -846,7 +834,6 @@ namespace BattleCruisers.Data
                 else
                 {
                     Debug.Log("Reverting purchase of Captain " + txn.index);
-                    GameModel.Captains[txn.index].isOwned = false;
                     GameModel.RemoveExo(txn.index);
                 }
             }
@@ -861,7 +848,6 @@ namespace BattleCruisers.Data
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Captains[cpt].isOwned = true;
                         GameModel.AddExo(cpt);
                     }
                 }

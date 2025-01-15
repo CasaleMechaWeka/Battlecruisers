@@ -92,9 +92,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 blackMarketButton.gameObject.SetActive(false);
 #endif
 
-            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
+            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.StaticData.Captains.Count - 1, 1, 1);
 #if UNITY_EDITOR
-            exoBaseList = GenerateFullList(_dataProvider.GameModel.Captains.Count);
+            exoBaseList = GenerateFullList(_dataProvider.StaticData.Captains.Count);
 #endif
             foreach (int index in exoBaseList)
             {
@@ -528,7 +528,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                 captainExo.gameObject.SetActive(false);
                 captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
-                captainItem.GetComponent<CaptainItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, _dataProvider.GameModel.Captains[index], captainsContainer, ii);
+                captainItem.GetComponent<CaptainItemController>().StaticInitialise(
+                    _soundPlayer, captainExo.CaptainExoImage, _dataProvider.StaticData.Captains[index], captainsContainer, ii, _dataProvider.GameModel.PurchasedExos.Contains(index));
 
                 if (ii == 0)  // the first item should be clicked :)
                 {
@@ -538,11 +539,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (index == 0)
                     {
                         captainsContainer.captainPrice.text = "0"; // CaptainExo000 is default item. :)
-                        captainsContainer.captainName.text = commonStrings.GetString(_dataProvider.GameModel.Captains[0].nameStringKeyBase);
-                        captainsContainer.captainDescription.text = commonStrings.GetString(_dataProvider.GameModel.Captains[0].descriptionKeyBase);
+                        captainsContainer.captainName.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].nameStringKeyBase);
+                        captainsContainer.captainDescription.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].descriptionKeyBase);
                     }
                     captainExo.gameObject.SetActive(true);
-                    if (_dataProvider.GameModel.Captains[index].IsOwned)
+                    if (_dataProvider.GameModel.PurchasedExos.Contains(index))
                     {
                         captainsContainer.btnBuy.SetActive(false);
                         captainsContainer.priceLabel.SetActive(false);

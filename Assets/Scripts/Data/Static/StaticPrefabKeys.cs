@@ -332,7 +332,7 @@ namespace BattleCruisers.Data.Static
                 return new CaptainExoKey("CaptainExo" + index.ToString("000"));
             }
 
-            public static int CaptainExoCount => ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Captains.Count;
+            public static int CaptainExoCount => ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Captains.Count;
 
             public static IList<IPrefabKey> AllKeys
             {

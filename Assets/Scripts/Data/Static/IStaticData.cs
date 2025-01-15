@@ -28,6 +28,7 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         IReadOnlyList<HeckleData> Heckles { get; }
+        IReadOnlyList<CaptainData> Captains { get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
         ILevelStrategies SideQuestStrategies { get; }

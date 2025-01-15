@@ -176,19 +176,13 @@ namespace BattleCruisers.Data.Models
                         // Add
                         int index = _purchasedExos[i];
                         if (!currentList.Contains(index))
-                        {
                             game.AddExo(index);
-                            game.Captains[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
                 List<int> entriesToRemove = currentList.Except(_purchasedExos).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveExo(entry);
-                    game.Captains[entry].isOwned = false;
-                }
             }
             // Heckles
             if (_purchasedHeckles != null)
