@@ -541,8 +541,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (index == 0)
                     {
                         captainsContainer.captainPrice.text = "0"; // CaptainExo000 is default item. :)
-                        captainsContainer.captainName.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].nameStringKeyBase);
-                        captainsContainer.captainDescription.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].descriptionKeyBase);
+                        captainsContainer.captainName.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].NameStringKeyBase);
+                        captainsContainer.captainDescription.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].DescriptionKeyBase);
                     }
                     captainExo.gameObject.SetActive(true);
                     if (_dataProvider.GameModel.PurchasedExos.Contains(index))

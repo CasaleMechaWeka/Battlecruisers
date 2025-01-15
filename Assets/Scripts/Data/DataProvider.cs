@@ -383,7 +383,7 @@ namespace BattleCruisers.Data
                                 int index = StaticPrefabKeys.CaptainItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        StaticData.Captains[index].captainCost = cost.amount;
+                                        StaticData.Captains[index].CaptainCost = cost.amount;
                             }
                             if (reward.id.Contains("HECKLE"))
                             {
@@ -420,7 +420,7 @@ namespace BattleCruisers.Data
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
                 if (i < StaticData.Captains.Count)
-                    StaticData.Captains[i].captainCost = iCoins;
+                    StaticData.Captains[i].CaptainCost = iCoins;
             }
             // heckles cost sync
             for (int i = 0; i < ecoConfig.categories[1].items.Count; i++)
@@ -773,16 +773,16 @@ namespace BattleCruisers.Data
             // Captains
             foreach (CaptainData txn in GameModel.OutstandingCaptainTransactions)
             {
-                Debug.Log("Purchasing Captain " + txn.index);
-                bool result = await PurchaseCaptainV2(txn.index);
+                Debug.Log("Purchasing Captain " + txn.Index);
+                bool result = await PurchaseCaptainV2(txn.Index);
                 if (result)
                 {
-                    GameModel.AddExo(txn.index);
-                    GameModel.CoinsChange += txn.captainCost;
+                    GameModel.AddExo(txn.Index);
+                    GameModel.CoinsChange += txn.CaptainCost;
                 }
                 else
                 {
-                    Debug.LogWarning("FAILED: Purchasing Captain " + txn.index + ", will retry next time the game is run.");
+                    Debug.LogWarning("FAILED: Purchasing Captain " + txn.Index + ", will retry next time the game is run.");
                     RetryCaptains.Add(txn);
                 }
             }
@@ -799,15 +799,15 @@ namespace BattleCruisers.Data
 
             foreach (CaptainData txn in GameModel.OutstandingCaptainTransactions)
             {
-                if (runningCoinTotal - txn.captainCost >= 0)
+                if (runningCoinTotal - txn.CaptainCost >= 0)
                 {
-                    runningCoinTotal -= txn.captainCost;
-                    GoodCaptains.Add(txn.index);
+                    runningCoinTotal -= txn.CaptainCost;
+                    GoodCaptains.Add(txn.Index);
                 }
                 else
                 {
-                    Debug.Log("Reverting purchase of Captain " + txn.index);
-                    GameModel.RemoveExo(txn.index);
+                    Debug.Log("Reverting purchase of Captain " + txn.Index);
+                    GameModel.RemoveExo(txn.Index);
                 }
             }
             GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
