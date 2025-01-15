@@ -15,81 +15,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class GameModel : IGameModel, IPlayerModel
+    public class GameModel : IGameModel
     {
-        // Player properties - for determining ROGUE player strength
-
-        private int _totalUpgrades;
-        public int TotalUpgrades
-        {
-            get => _totalUpgrades;
-            set => _totalUpgrades = value;
-        }
-
-        private int _totalPerks;
-        public int TotalPerks
-        {
-            get => _totalPerks;
-            set => _totalPerks = value;
-        }
-
-        private int _totalBuildables;
-        public int TotalBuildables
-        {
-            get => _totalBuildables;
-            set => _totalBuildables = value;
-        }
-
-        private int _playerBounty;
-        public int PlayerBounty
-        {
-            get => _playerBounty;
-            set => _playerBounty = value;
-        }
-
-        private int _playerLevel;
-        public int PlayerLevel
-        {
-            get => _playerLevel;
-            set => _playerLevel = value;
-        }
-
-        private int _currentLuck;
-        public int CurrentLuck
-        {
-            get => _currentLuck;
-            set => _currentLuck = value;
-        }
-
-        private int _baseLuck;
-        public int BaseLuck
-        {
-            get => _baseLuck;
-            set => _baseLuck = value;
-        }
-
-        private int _extraDrones;
-        public int ExtraDrones
-        {
-            get => _extraDrones;
-            set => _extraDrones = value;
-        }
-
-        private int _currentHP;
-        public int CurrentHP
-        {
-            get => _currentHP;
-            set => _currentHP = value;
-        }
-
-        private int _maxHP;
-
-        public int MaxHP
-        {
-            get => _maxHP;
-            set => _maxHP = value;
-        }
-
         private long _credits;
         public long Credits
         {
@@ -102,13 +29,6 @@ namespace BattleCruisers.Data.Models
         {
             get => _coins;
             set => _coins = value;
-        }
-
-        private int _totalVoyages;
-        public int TotalVoyages
-        {
-            get => _totalVoyages;
-            set => _totalVoyages = value;
         }
 
         private float _battleWinScore;
