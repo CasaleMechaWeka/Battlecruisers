@@ -156,19 +156,6 @@ namespace BattleCruisers.Data.Models
             set { _battleWinScore = value; if (_battleWinScore < 0) _battleWinScore = 0; }
         }
 
-        private List<int> _captainExoList;
-        public List<int> CaptainExoList
-        {
-            get => _captainExoList;
-            set => _captainExoList = value;
-        }
-
-        private List<int> _heckleList;
-        public List<int> HeckleList
-        {
-            get => _heckleList;
-            set => _heckleList = value;
-        }
         public List<Arena> _arenas;
         public List<Arena> Arenas
         {
@@ -528,9 +515,6 @@ namespace BattleCruisers.Data.Models
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
             _sideQuest = null;
-
-            _captainExoList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-            _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
 
             _iaps = new List<IAPData> {
                     new IAPData(iapType: 0, iapNameKeyBase: "Coins100Name", iapDescriptionKeybase: "Coins100Description", iapIconName: "Coins100Pack", 0.99f, 100),
