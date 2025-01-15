@@ -15,46 +15,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class GameModel : IGameModel, IVoyageModel, IPlayerModel
+    public class GameModel : IGameModel, IPlayerModel
     {
-
-        // Voyage properties - These are for ROGUE voyages, currently unused.
-
-        private int _voyageNumber;
-        public int VoyageNumber
-        {
-            get => _voyageNumber;
-            set => _voyageNumber = value;
-        }
-
-        private int _legNumber;
-        public int LegNumber
-        {
-            get => _legNumber;
-            set => _legNumber = value;
-        }
-
-        private int _battleNumber;
-        public int BattleNumber
-        {
-            get => _battleNumber;
-            set => _battleNumber = value;
-        }
-
-        private int _battlesWon;
-        public int BattlesWon
-        {
-            get => _battlesWon;
-            set => _battlesWon = value;
-        }
-
-        private bool _voyageInProgress;
-        public bool VoyageInProgress
-        {
-            get => _voyageInProgress;
-            set => _voyageInProgress = value;
-        }
-
         // Player properties - for determining ROGUE player strength
 
         private int _totalUpgrades;

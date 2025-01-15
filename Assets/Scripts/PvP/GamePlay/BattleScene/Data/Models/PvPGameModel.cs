@@ -15,48 +15,10 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     [Serializable]
-    public class GameModel : IPvPGameModel, IPvPVoyageModel, IPvPPlayerModel
+    public class GameModel : IPvPGameModel, IPvPPlayerModel
     {
-        private int _voyageNumber;
-        public int VoyageNumber
-        {
-            get => _voyageNumber;
-            set => _voyageNumber = value;
-        }
-
-        // Voyage properties
-
-        private int _legNumber;
-        public int LegNumber
-        {
-            get => _legNumber;
-            set => _legNumber = value;
-        }
-
-        private int _battleNumber;
-        public int BattleNumber
-        {
-            get => _battleNumber;
-            set => _battleNumber = value;
-        }
-
-        private int _battlesWon;
-        public int BattlesWon
-        {
-            get => _battlesWon;
-            set => _battlesWon = value;
-        }
-
-        private bool _voyageInProgress;
-        public bool VoyageInProgress
-        {
-            get => _voyageInProgress;
-            set => _voyageInProgress = value;
-        }
 
         // Player properties
-
-
         private int _totalUpgrades;
         public int TotalUpgrades
         {
