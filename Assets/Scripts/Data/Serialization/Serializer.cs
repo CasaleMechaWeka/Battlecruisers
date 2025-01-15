@@ -57,7 +57,6 @@ namespace BattleCruisers.Data.Serialization
             // Not having a captain set causes the game to hang on the first load screen, so this is a good test now.
             // It should be changed to a version check though.
             var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
-            var vts = output.GetType().GetProperty("Variants").GetValue(output);
 
             bool compatibleHeckles = false;
             try
@@ -129,7 +128,7 @@ namespace BattleCruisers.Data.Serialization
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || vts == null || compatibleHeckles == false ||
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || compatibleHeckles == false ||
             compatibleVariants == false || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
             compatibleExos == false || compatibleBodykits == false)
             {
