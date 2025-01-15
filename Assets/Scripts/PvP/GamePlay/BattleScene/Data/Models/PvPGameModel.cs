@@ -74,16 +74,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         private PvPHotkeysModel _hotkeys;
         public PvPHotkeysModel Hotkeys => _hotkeys;
 
-        [SerializeField]
-        private int _version;
-        public int Version
-        {
-            get => _version;
-            set => _version = value;
-        }
-
-
-
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
         public bool HasAttemptedTutorial

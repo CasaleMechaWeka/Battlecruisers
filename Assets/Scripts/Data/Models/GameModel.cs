@@ -148,11 +148,8 @@ namespace BattleCruisers.Data.Models
         public List<int> PurchasedVariants { get => _purchasedVariants; }
 
         private List<int> _purchasedExos;
-
         private List<int> _purchasedHeckles;
-
         private List<int> _purchasedBodykits;
-
         private List<int> _purchasedVariants;
 
 
@@ -169,17 +166,6 @@ namespace BattleCruisers.Data.Models
                     get => _rankData;
                     set => _rankData = value;
                 }*/
-        // Pre-Rogue stuff
-
-        public class ModelVersion
-        {
-            public const int PreShowHelpLabel = 0;
-            public const int WithShowHelpLabel = 1;
-            public const int RemovedShowHelpLabel = 2;// Voyage properties
-
-            private int _stageNumber;
-            public int StageNumber;
-        }
 
         [SerializeField]
         private bool _hasAttemptedTutorial;
@@ -250,14 +236,6 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private HotkeysModel _hotkeys;
         public HotkeysModel Hotkeys => _hotkeys;
-
-        [SerializeField]
-        private int _version;
-        public int Version
-        {
-            get => _version;
-            set => _version = value;
-        }
 
         public int NumOfLevelsCompleted => _completedLevels.Count;
         public int NumOfSideQuestsCompleted
@@ -604,11 +582,6 @@ namespace BattleCruisers.Data.Models
             if (_hotkeys == null)
             {
                 _hotkeys = new HotkeysModel();
-            }
-
-            if (_version != ModelVersion.RemovedShowHelpLabel)
-            {
-                _version = ModelVersion.RemovedShowHelpLabel;
             }
         }
 
