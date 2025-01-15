@@ -621,10 +621,10 @@ namespace BattleCruisers.Data.Static
         });
         public IReadOnlyList<IAPData> IAPs { get; } = new ReadOnlyCollection<IAPData>(new IAPData[]
         {
-            new IAPData(iapType: 0, iapNameKeyBase: "Coins100Name", iapDescriptionKeybase: "Coins100Description", iapIconName: "Coins100Pack", 0.99f, 100),
-            new IAPData(iapType: 0, iapNameKeyBase: "Coins500Name", iapDescriptionKeybase: "Coins500Description", iapIconName: "Coins500Pack", 1.99f, 500),
-            new IAPData(iapType: 0, iapNameKeyBase: "Coins1000Name", iapDescriptionKeybase: "Coins1000Description", iapIconName: "Coins1000Pack", 2.99f, 1000),
-            new IAPData(iapType: 0, iapNameKeyBase: "Coins5000Name", iapDescriptionKeybase: "Coins5000Description", iapIconName: "Coins5000Pack", 3.99f, 5000)
+            new IAPData(0, 0.99f, 100),
+            new IAPData(0, 1.99f, 500),
+            new IAPData(0, 2.99f, 1000),
+            new IAPData(0, 3.99f, 5000)
         });
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
