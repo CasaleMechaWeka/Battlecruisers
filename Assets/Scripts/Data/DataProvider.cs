@@ -237,15 +237,15 @@ namespace BattleCruisers.Data
         {
             //captain exos
             for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
-                _gameModel.AddExo(i);
+                _gameModel.AddExo(_gameModel.PurchasedExos[i]);
 
             // heckles
             for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
-                _gameModel.AddHeckle(i);
+                _gameModel.AddHeckle(_gameModel.PurchasedHeckles[i]);
 
             // bodykits
             for (int i = 0; i < _gameModel.PurchasedBodykits.Count; i++)
-                _gameModel.AddBodykit(i);
+                _gameModel.AddBodykit(_gameModel.PurchasedBodykits[i]);
             // variants
             for (int i = 0; i < _gameModel.Variants.Count; i++)
             {
@@ -260,17 +260,17 @@ namespace BattleCruisers.Data
         {
             // captain exos
             for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
-                _gameModel.AddExo(i);
+                _gameModel.AddExo(_gameModel.PurchasedExos[i]);
 
             // heckles
             for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
-                _gameModel.AddHeckle(i);
+                _gameModel.AddHeckle(_gameModel.PurchasedHeckles[i]);
 
             // bodykits
             try
             {
                 for (int i = 0; i < _gameModel.PurchasedBodykits.Count; i++)
-                    _gameModel.AddBodykit(i);
+                    _gameModel.AddBodykit(_gameModel.PurchasedBodykits[i]);
             }
             catch (Exception ex)
             {

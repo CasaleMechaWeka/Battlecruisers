@@ -90,9 +90,9 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits = ComputeUnlockedUnits(game.UnlockedUnits);
 
             // IAPs:
-            _purchasedExos = game.GetExos().Distinct().ToList();
-            _purchasedHeckles = game.GetHeckles().Distinct().ToList();
-            _purchasedBodykits = game.GetBodykits().Distinct().ToList();
+            _purchasedExos = game.PurchasedExos.Distinct().ToList();
+            _purchasedHeckles = game.PurchasedHeckles.Distinct().ToList();
+            _purchasedBodykits = game.PurchasedBodykits.Distinct().ToList();
             _purchasedVariants = game.GetVariants().Distinct().ToList();
 
             // Loadout fields:
@@ -168,57 +168,59 @@ namespace BattleCruisers.Data.Models
             // Exos
             if (_purchasedExos != null)
             {
-                List<int> currentList = game.GetExos();
+                List<int> currentExos = game.PurchasedExos;
                 if (_purchasedExos.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedExos.Count - 1; i++)
                     {
                         // Add
                         int index = _purchasedExos[i];
-                        if (!currentList.Contains(index))
+                        if (!currentExos.Contains(index))
                             game.AddExo(index);
                     }
                 }
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentList.Except(_purchasedExos).ToList();
+                List<int> entriesToRemove = currentExos.Except(_purchasedExos).ToList();
                 foreach (int entry in entriesToRemove)
                     game.RemoveExo(entry);
             }
             // Heckles
             if (_purchasedHeckles != null)
             {
-                List<int> currentList = game.GetHeckles();
+                List<int> currentBodykits = game.PurchasedHeckles;
                 if (_purchasedHeckles.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
                     {
                         // Add
                         int index = _purchasedHeckles[i];
-                        if (!currentList.Contains(index))
+                        if (!currentBodykits.Contains(index))
                             game.AddHeckle(index);
                     }
                 }
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentList.Except(_purchasedHeckles).ToList();
+                List<int> entriesToRemove = currentBodykits.Except(_purchasedHeckles).ToList();
                 foreach (int entry in entriesToRemove)
                     game.RemoveHeckle(entry);
             }
             // Bodykits
             if (_purchasedBodykits != null)
             {
-                List<int> currentList = game.GetBodykits();
+                Debug.Log("CLOUDBODYKITS: " + _purchasedBodykits.Count);
+                List<int> currentBodykits = game.PurchasedBodykits;
+                Debug.Log("LOCALBODYKITS: " + currentBodykits.Count);
                 if (_purchasedBodykits.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
                     {
                         // Add
                         int index = _purchasedBodykits[i];
-                        if (!currentList.Contains(index))
+                        if (!currentBodykits.Contains(index))
                             game.AddBodykit(index);
                     }
                 }
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentList.Except(_purchasedBodykits).ToList();
+                List<int> entriesToRemove = currentBodykits.Except(_purchasedBodykits).ToList();
                 foreach (int entry in entriesToRemove)
                     game.RemoveBodykit(entry);
             }
@@ -380,7 +382,7 @@ namespace BattleCruisers.Data.Models
             {
                 game.PlayerLoadout.CurrentHeckles = _currentHeckles;
                 foreach (int i in _currentHeckles)
-                    game.AddHeckle(i);
+                    game.AddHeckle(_currentHeckles[i]);
             }
             else
             {
