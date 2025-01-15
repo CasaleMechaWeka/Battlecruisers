@@ -829,10 +829,6 @@ namespace BattleCruisers.Data.Models
         {
             _purchasedExos.RemoveAll(x => x == id);
         }
-        public List<int> GetExos()
-        {
-            return _purchasedExos;
-        }
         public void AddHeckle(int index)
         {
             if (_purchasedHeckles != null)
@@ -848,10 +844,6 @@ namespace BattleCruisers.Data.Models
         public void RemoveHeckle(int id)
         {
             _purchasedHeckles.RemoveAll(x => x == id);
-        }
-        public List<int> GetHeckles()
-        {
-            return _purchasedHeckles;
         }
         public void AddBodykit(int index)
         {
@@ -869,10 +861,6 @@ namespace BattleCruisers.Data.Models
         {
             _purchasedBodykits.RemoveAll(x => x == id);
         }
-        public List<int> GetBodykits()
-        {
-            return _purchasedBodykits;
-        }
         public void AddVariant(int index)
         {
             if (_purchasedVariants != null)
@@ -888,10 +876,6 @@ namespace BattleCruisers.Data.Models
         public void RemoveVariant(int id)
         {
             _purchasedVariants.RemoveAll(x => x == id);
-        }
-        public List<int> GetVariants()
-        {
-            return _purchasedVariants;
         }
     }
 }

@@ -81,23 +81,15 @@ namespace BattleCruisers.Data.Models
         bool IsBuildingUnlocked(BuildingKey buildingKey);
 
         void AddExo(int index);
-
-        List<int> GetExos();
         void RemoveExo(int id);
 
         void AddHeckle(int index);
         void RemoveHeckle(int id);
 
-        List<int> GetHeckles();
-
         void AddBodykit(int index);
         void RemoveBodykit(int id);
 
-        List<int> GetBodykits();
-
         void AddVariant(int index);
         void RemoveVariant(int id);
-
-        List<int> GetVariants();
     }
 }

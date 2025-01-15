@@ -93,7 +93,7 @@ namespace BattleCruisers.Data.Models
             _purchasedExos = game.PurchasedExos.Distinct().ToList();
             _purchasedHeckles = game.PurchasedHeckles.Distinct().ToList();
             _purchasedBodykits = game.PurchasedBodykits.Distinct().ToList();
-            _purchasedVariants = game.GetVariants().Distinct().ToList();
+            _purchasedVariants = game.PurchasedVariants.Distinct().ToList();
 
             // Loadout fields:
             _currentHullKey = game.PlayerLoadout.Hull.PrefabName;
@@ -227,7 +227,7 @@ namespace BattleCruisers.Data.Models
             // Variants
             if (_purchasedVariants != null)
             {
-                List<int> currentList = game.GetVariants();
+                List<int> currentList = game.PurchasedVariants;
                 if (_purchasedVariants.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedVariants.Count - 1; i++)

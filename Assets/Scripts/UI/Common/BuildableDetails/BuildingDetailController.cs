@@ -203,23 +203,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void CollectUnlockedBuildingVariant()
         {
             _unlockedVariants = new Dictionary<IBuilding, List<int>>();
-            for (int i = 0; i < _dataProvider.GameModel.GetVariants().Count; i++)
+            for (int i = 0; i < _dataProvider.GameModel.PurchasedVariants.Count; i++)
             {
-                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.GetVariants()[i]));
+                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.PurchasedVariants[i]));
                 if (variant != null)
-                {
                     if (!variant.IsUnit())
-                    {
                         if (_unlockedVariants.ContainsKey(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)))
-                        {
-                            _unlockedVariants[variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)].Add(_dataProvider.GameModel.GetVariants()[i]);
-                        }
+                            _unlockedVariants[variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)].Add(_dataProvider.GameModel.PurchasedVariants[i]);
                         else
-                        {
-                            _unlockedVariants[variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)] = new List<int> { _dataProvider.GameModel.GetVariants()[i] };
-                        }
-                    }
-                }
+                            _unlockedVariants[variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory)] = new List<int> { _dataProvider.GameModel.PurchasedVariants[i] };
             }
         }
     }

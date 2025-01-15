@@ -18,6 +18,7 @@ using System.Linq;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
+using System;
 
 namespace BattleCruisers.Data.Static
 {
@@ -696,10 +697,10 @@ namespace BattleCruisers.Data.Static
                 // are always effective.
                 Buildings.Ultralisk
         });
-        public IReadOnlyList<HeckleData> Heckles { get => _heckles; }
-        public IReadOnlyList<CaptainData> Captains { get => _captains; }
-        public IReadOnlyList<BodykitData> Bodykits { get => _bodykits; }
-        public IReadOnlyList<VariantData> Variants { get => _variants; }
+        public IReadOnlyList<HeckleData> Heckles { get => Array.AsReadOnly(_heckles); }
+        public IReadOnlyList<CaptainData> Captains { get => Array.AsReadOnly(_captains); }
+        public IReadOnlyList<BodykitData> Bodykits { get => Array.AsReadOnly(_bodykits); }
+        public IReadOnlyList<VariantData> Variants { get => Array.AsReadOnly(_variants); }
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
         public ILevelStrategies SideQuestStrategies { get; }
