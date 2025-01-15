@@ -25,7 +25,6 @@ namespace BattleCruisers.Data.Serialization
         private readonly IModelFilePathProvider _modelFilePathProvider;
         private readonly BinaryFormatter _binaryFormatter;
         private const int NUM_OF_VARIANTS = 131;
-        private const int NUM_OF_Bodykits = 51;
 
         public Serializer(IModelFilePathProvider modelFilePathProvider)
         {
@@ -59,7 +58,6 @@ namespace BattleCruisers.Data.Serialization
             // Not having a captain set causes the game to hang on the first load screen, so this is a good test now.
             // It should be changed to a version check though.
             var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
-            var bks = output.GetType().GetProperty("Bodykits").GetValue(output);
             var vts = output.GetType().GetProperty("Variants").GetValue(output);
 
             bool compatibleHeckles = false;
@@ -96,12 +94,29 @@ namespace BattleCruisers.Data.Serialization
                 Debug.LogError("Error while reading \"PurchasedExos\" property from save data:\n" + ex.Message);
             }
 
+            bool compatibleBodykits = false;
+            try
+            {
+                var purchasedBodykitsProperty = output.GetType().GetProperty("PurchasedBodykits");
+                if (purchasedBodykitsProperty != null)
+                    if (purchasedBodykitsProperty.GetValue(output) is List<int>)
+                        compatibleBodykits = true;
+                    else
+                        Debug.LogWarning("Property \"PurchasedBodykits\" was not in the expected format: List<int>");
+                else
+                    Debug.Log("Property \"PurchasedBodykits\" was not found");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while reading \"PurchasedBodykits\" property from save data:\n" + ex.Message);
+            }
+
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || compatibleHeckles == false ||
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || vts == null || compatibleHeckles == false ||
             ((GameModel)output).Variants.Count < NUM_OF_VARIANTS || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
-            compatibleExos == false || ((GameModel)output).Bodykits.Count < NUM_OF_Bodykits)
+            compatibleExos == false || compatibleBodykits == false)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -114,7 +129,7 @@ namespace BattleCruisers.Data.Serialization
 
 #if PREMIUM_EDITION
             game.PremiumEdition = true;
-            game._bodykits[0].isOwned = true;
+            game.AddBodykit(0);
 #endif
 
             file.Close();
@@ -257,13 +272,17 @@ namespace BattleCruisers.Data.Serialization
                         compatibleGameModel.AddHeckle(i);
                 }
 
-            if (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) != null && (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>).Count != 0)
-                foreach (BodykitData bodykit in gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>)
-                    if (bodykit.IsOwned)
-                    {
-                        compatibleGameModel.AddBodykit(bodykit.index);
-                        compatibleGameModel._bodykits[bodykit.index].isOwned = true;
-                    }
+            var bodykits = gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IList<object>;
+            if (bodykits != null)
+                for (int i = 0; i < bodykits.Count; i++)
+                {
+                    var bodykit = bodykits[i];
+                    if (bodykit == null) continue;
+                    var isOwnedProperty = bodykit.GetType().GetProperty("isOwned");
+                    if (isOwnedProperty == null) continue;
+                    if (isOwnedProperty.GetValue(bodykit) is bool isOwned && isOwned)
+                        compatibleGameModel.AddBodykit(i);
+                }
 
             if (gameData.GetType().GetProperty("Variants").GetValue(gameData) != null && (gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>).Count != 0)
                 foreach (VariantData variant in gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>)
@@ -542,7 +561,7 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.Bodykits[index].isOwned = true;
+                        dataProvider.GameModel.AddBodykit(index);
                     }
                 }
                 dataProvider.SaveGame();
@@ -568,7 +587,7 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.Bodykits[index].isOwned = true;
+                        dataProvider.GameModel.AddBodykit(index);
                     }
                 }
                 dataProvider.SaveGame();

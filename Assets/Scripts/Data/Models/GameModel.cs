@@ -182,13 +182,6 @@ namespace BattleCruisers.Data.Models
             set => _gameConfigs = value;
         }
 
-        public List<BodykitData> _bodykits;
-        public List<BodykitData> Bodykits
-        {
-            get => _bodykits;
-            set => _bodykits = value;
-        }
-
         public List<VariantData> _variants;
         public List<VariantData> Variants
         {
@@ -545,60 +538,6 @@ namespace BattleCruisers.Data.Models
 
             _captainExoList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-
-            _bodykits = new List<BodykitData> {
-                    new BodykitData(nameBase: "Bodykit000", descriptionBase : "BodykitDescription000", cost: 999999, owned : false, id: 0),
-                    new BodykitData(nameBase: "Bodykit001", descriptionBase : "BodykitDescription001", cost: 480, owned : false, id: 1),
-                    new BodykitData(nameBase: "Bodykit002", descriptionBase : "BodykitDescription002", cost: 1000, owned : false, id: 2),
-                    new BodykitData(nameBase: "Bodykit003", descriptionBase : "BodykitDescription003", cost: 480, owned : false, id: 3),
-                    new BodykitData(nameBase: "Bodykit004", descriptionBase : "BodykitDescription004", cost: 500, owned : false, id: 4),
-                    new BodykitData(nameBase: "Bodykit005", descriptionBase : "BodykitDescription005", cost: 1250, owned : false, id: 5),
-                    new BodykitData(nameBase: "Bodykit006", descriptionBase : "BodykitDescription006", cost: 300, owned : false, id: 6),
-                    new BodykitData(nameBase: "Bodykit007", descriptionBase : "BodykitDescription007", cost: 450, owned : false, id: 7),
-                    new BodykitData(nameBase: "Bodykit008", descriptionBase : "BodykitDescription008", cost: 1000, owned : false, id: 8),
-                    new BodykitData(nameBase: "Bodykit009", descriptionBase : "BodykitDescription009", cost: 1000, owned : false, id: 9),
-                    new BodykitData(nameBase: "Bodykit010", descriptionBase : "BodykitDescription010", cost: 800, owned : false, id: 10),
-                    new BodykitData(nameBase: "Bodykit011", descriptionBase : "BodykitDescription011", cost: 1150, owned : false, id: 11),
-                    new BodykitData(nameBase: "Bodykit012", descriptionBase : "BodykitDescription012", cost: 650, owned : false, id: 12),
-                    new BodykitData(nameBase: "Bodykit013", descriptionBase : "BodykitDescription013", cost: 800, owned : false, id: 13),
-                    new BodykitData(nameBase: "Bodykit014", descriptionBase : "BodykitDescription014", cost: 450, owned : false, id: 14),
-                    new BodykitData(nameBase: "Bodykit015", descriptionBase : "BodykitDescription015", cost: 800, owned : false, id: 15),
-                    new BodykitData(nameBase: "Bodykit016", descriptionBase : "BodykitDescription016", cost: 300, owned : false, id: 16),
-                    new BodykitData(nameBase: "Bodykit017", descriptionBase : "BodykitDescription017", cost: 600, owned : false, id: 17),
-                    new BodykitData(nameBase: "Bodykit018", descriptionBase : "BodykitDescription018", cost: 900, owned : false, id: 18),
-                    new BodykitData(nameBase: "Bodykit019", descriptionBase : "BodykitDescription019", cost: 300, owned : false, id: 19),
-                    new BodykitData(nameBase: "Bodykit020", descriptionBase : "BodykitDescription020", cost: 700, owned : false, id: 20),
-                    new BodykitData(nameBase: "Bodykit021", descriptionBase : "BodykitDescription021", cost: 750, owned : false, id: 21),
-                    new BodykitData(nameBase: "Bodykit022", descriptionBase : "BodykitDescription022", cost: 600, owned : false, id: 22),
-                    new BodykitData(nameBase: "Bodykit023", descriptionBase : "BodykitDescription023", cost: 700, owned : false, id: 23),
-                    new BodykitData(nameBase: "Bodykit024", descriptionBase : "BodykitDescription024", cost: 1150, owned : false, id: 24),
-                    new BodykitData(nameBase: "Bodykit025", descriptionBase : "BodykitDescription025", cost: 1150, owned : false, id: 25),
-                    new BodykitData(nameBase: "Bodykit026", descriptionBase : "BodykitDescription026", cost: 1100, owned : false, id: 26),
-                    new BodykitData(nameBase: "Bodykit027", descriptionBase : "BodykitDescription027", cost: 1300, owned : false, id: 27),
-                    new BodykitData(nameBase: "Bodykit028", descriptionBase : "BodykitDescription028", cost: 900, owned : false, id: 28),
-                    new BodykitData(nameBase: "Bodykit029", descriptionBase : "BodykitDescription029", cost: 1100, owned : false, id: 29),
-                    new BodykitData(nameBase: "Bodykit030", descriptionBase : "BodykitDescription030", cost: 450, owned : false, id: 30),
-                    new BodykitData(nameBase: "Bodykit031", descriptionBase : "BodykitDescription031", cost: 500, owned : false, id: 31),
-                    new BodykitData(nameBase: "Bodykit032", descriptionBase : "BodykitDescription032", cost: 1300, owned : false, id: 32),
-                    new BodykitData(nameBase: "Bodykit033", descriptionBase : "BodykitDescription033", cost: 1100, owned : false, id: 33),
-                    new BodykitData(nameBase: "Bodykit034", descriptionBase : "BodykitDescription034", cost: 1000, owned : false, id: 34),
-                    new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 1050, owned : false, id: 35),
-                    new BodykitData(nameBase: "Bodykit036", descriptionBase : "BodykitDescription036", cost: 1500, owned : false, id: 36),
-                    new BodykitData(nameBase: "Bodykit037", descriptionBase : "BodykitDescription037", cost: 720, owned : false, id: 37),
-                    new BodykitData(nameBase: "Bodykit038", descriptionBase : "BodykitDescription038", cost: 1040, owned : false, id: 38),
-                    new BodykitData(nameBase: "Bodykit039", descriptionBase : "BodykitDescription039", cost: 960, owned : false, id: 39),
-                    new BodykitData(nameBase: "Bodykit040", descriptionBase : "BodykitDescription040", cost: 1040, owned : false, id: 40),
-                    new BodykitData(nameBase: "Bodykit041", descriptionBase : "BodykitDescription041", cost: 1040, owned : false, id: 41),
-                    new BodykitData(nameBase: "Bodykit042", descriptionBase : "BodykitDescription042", cost: 1040, owned : false, id: 42),
-                    new BodykitData(nameBase: "Bodykit043", descriptionBase : "BodykitDescription043", cost: 1040, owned : false, id: 43),
-                    new BodykitData(nameBase: "Bodykit044", descriptionBase : "BodykitDescription044", cost: 960, owned : false, id: 44),
-                    new BodykitData(nameBase: "Bodykit045", descriptionBase : "BodykitDescription045", cost: 960, owned : false, id: 45),
-                    new BodykitData(nameBase: "Bodykit046", descriptionBase : "BodykitDescription046", cost: 850, owned : false, id: 46),
-                    new BodykitData(nameBase: "Bodykit047", descriptionBase : "BodykitDescription047", cost: 1650, owned : false, id: 47),
-                    new BodykitData(nameBase: "Bodykit048", descriptionBase : "BodykitDescription048", cost: 1120, owned : false, id: 48),
-                    new BodykitData(nameBase: "Bodykit049", descriptionBase : "BodykitDescription049", cost: 1000, owned : false, id: 49),
-                    new BodykitData(nameBase: "Bodykit050", descriptionBase : "BodykitDescription050", cost: 1400, owned : false, id: 50)
-            };
 
             _variants = new List<VariantData>
             {

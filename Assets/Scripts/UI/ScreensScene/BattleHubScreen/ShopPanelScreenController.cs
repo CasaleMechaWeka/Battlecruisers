@@ -111,7 +111,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             //bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
 
-            bodykitList = GenerateFullList(_dataProvider.GameModel.Bodykits.Count);
+            bodykitList = GenerateFullList(_dataProvider.StaticData.Bodykits.Count);
 
             foreach (int index in bodykitList)
             {
@@ -391,17 +391,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer);
                 Bodykit bodykit = bodykits[ii]/*await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index])*/;
-                bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(_soundPlayer, bodykit.bodykitImage, _dataProvider.GameModel.Bodykits[index], bodykitsContainer, _dataProvider, _prefabFactory, ii);
+                bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(
+                    _soundPlayer, bodykit.bodykitImage, _dataProvider.StaticData.Bodykits[index], bodykitsContainer, _dataProvider, _prefabFactory, ii, _dataProvider.GameModel.PurchasedBodykits.Contains(index));
                 if (ii == 0)
                 {
                     bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
                     bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
                     bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
-                    bodykitsContainer.bodykitPrice.text = _dataProvider.GameModel.Bodykits[index].bodykitCost.ToString();
-                    bodykitsContainer.bodykitName.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].nameStringKeyBase);
-                    bodykitsContainer.bodykitDescription.text = commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].descriptionKeyBase);
-                    bodykitsContainer.currentBodykitData = _dataProvider.GameModel.Bodykits[index];
-                    if (_dataProvider.GameModel.Bodykits[index].isOwned)
+                    bodykitsContainer.bodykitPrice.text = _dataProvider.StaticData.Bodykits[index].bodykitCost.ToString();
+                    bodykitsContainer.bodykitName.text = commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].nameStringKeyBase);
+                    bodykitsContainer.bodykitDescription.text = commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].descriptionKeyBase);
+                    bodykitsContainer.currentBodykitData = _dataProvider.StaticData.Bodykits[index];
+                    if (_dataProvider.GameModel.PurchasedBodykits.Contains(index))
                     {
                         bodykitsContainer.btnBuy.SetActive(false);
                         bodykitsContainer.priceLabel.SetActive(false);
@@ -459,7 +460,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
                 heckleItem.GetComponent<HeckleItemController>().StaticInitialise(
-                    _soundPlayer, _dataProvider.StaticData.Heckles[index], hecklesContainer, ii, _dataProvider.GameModel.PurchasedHeckles.Contains(ii));
+                    _soundPlayer, _dataProvider.StaticData.Heckles[index], hecklesContainer, ii, _dataProvider.GameModel.PurchasedHeckles.Contains(index));
                 if (ii == 0)
                 {
                     heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);

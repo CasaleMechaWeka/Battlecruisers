@@ -360,7 +360,7 @@ namespace BattleCruisers.Data.Static
                 get
                 {
                     List<IPrefabKey> bodykitKeys = new List<IPrefabKey>();
-                    int bodykitCount = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits.Count;
+                    int bodykitCount = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits.Count;
 
                     for (int i = 0; i < bodykitCount; i++)
                         bodykitKeys.Add(GetBodykitKey(i));

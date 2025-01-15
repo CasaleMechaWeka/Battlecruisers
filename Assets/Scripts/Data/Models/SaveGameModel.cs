@@ -214,19 +214,13 @@ namespace BattleCruisers.Data.Models
                         // Add
                         int index = _purchasedBodykits[i];
                         if (!currentList.Contains(index))
-                        {
                             game.AddBodykit(index);
-                            game.Bodykits[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
                 List<int> entriesToRemove = currentList.Except(_purchasedBodykits).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveBodykit(entry);
-                    game.Bodykits[entry].isOwned = false;
-                }
             }
             // Variants
             if (_purchasedVariants != null)
@@ -372,7 +366,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // current bodykit
-            if (_currentBodykit == -1 || game.Bodykits[_currentBodykit].isOwned)
+            if (_currentBodykit == -1 || game.PurchasedBodykits.Contains(_currentBodykit))
             {
                 game.PlayerLoadout.SelectedBodykit = _currentBodykit;
             }

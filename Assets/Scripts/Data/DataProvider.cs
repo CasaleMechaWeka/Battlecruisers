@@ -61,7 +61,7 @@ namespace BattleCruisers.Data
                 }
                 if (_gameModel.PremiumEdition)
                 {
-                    _gameModel.Bodykits[0].isOwned = true;  // Trident Bodykit000
+                    _gameModel.AddBodykit(0);  // Trident Bodykit000
                     SaveGame();
                 }
             }
@@ -244,14 +244,8 @@ namespace BattleCruisers.Data
                 _gameModel.AddHeckle(i);
 
             // bodykits
-            for (int i = 0; i < _gameModel.Bodykits.Count; i++)
-            {
-                if (_gameModel.Bodykits[i].isOwned)
-                {
-                    _gameModel.AddBodykit(i);
-                }
-            }
-
+            for (int i = 0; i < _gameModel.PurchasedBodykits.Count; i++)
+                _gameModel.AddBodykit(i);
             // variants
             for (int i = 0; i < _gameModel.Variants.Count; i++)
             {
@@ -275,17 +269,8 @@ namespace BattleCruisers.Data
             // bodykits
             try
             {
-                for (int i = 0; i < _gameModel.GetBodykits().Count; i++)
-                {
-                    int index = _gameModel.GetBodykits()[i];
-                    if (index < _gameModel.Bodykits.Count)
-                    {
-                        if (!_gameModel.Bodykits[index].IsOwned)
-                            _gameModel.Bodykits[index].isOwned = true;
-                    }
-                    else
-                        throw new Exception("Not all bodykits could be loaded. " + index.ToString() + " Bodykits were loaded successfully.");
-                }
+                for (int i = 0; i < _gameModel.PurchasedBodykits.Count; i++)
+                    _gameModel.AddBodykit(i);
             }
             catch (Exception ex)
             {
@@ -421,7 +406,7 @@ namespace BattleCruisers.Data
                                 int index = StaticPrefabKeys.BodykitItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        _gameModel.Bodykits[index].bodykitCost = cost.amount;
+                                        StaticData.Bodykits[index].bodykitCost = cost.amount;
                             }
                         }
                     }
@@ -461,8 +446,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[2].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                if (i < _gameModel.Bodykits.Count)
-                    _gameModel.Bodykits[i].bodykitCost = iCoins;
+                if (i < StaticData.Bodykits.Count)
+                    StaticData.Bodykits[i].bodykitCost = iCoins;
             }
             // variant cost async
             for (int i = 0; i < ecoConfig.categories[3].items.Count; i++)
@@ -470,7 +455,7 @@ namespace BattleCruisers.Data
                 string credits = ecoConfig.categories[3].items[i].credits;
                 int iCredits = 0;
                 int.TryParse(credits, out iCredits);
-                if (i < _gameModel.Bodykits.Count)
+                if (i < StaticData.Bodykits.Count)
                     _gameModel.Variants[i].variantCredits = iCredits;
             }
             SaveGame();
@@ -584,7 +569,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index > 0); // 0 is trident for premium
             await Task.Yield();
-            int iCoins = _gameModel.Bodykits[index].bodykitCost;
+            int iCoins = StaticData.Bodykits[index].bodykitCost;
             _gameModel.Coins -= iCoins;
             SaveGame();
             await SyncCoinsToCloud();
@@ -738,7 +723,6 @@ namespace BattleCruisers.Data
                 bool result = await PurchaseBodykitV2(txn.index);
                 if (result)
                 {
-                    GameModel.Bodykits[txn.index].isOwned = true;
                     GameModel.AddBodykit(txn.index);
                     GameModel.CoinsChange += txn.bodykitCost;
                 }
@@ -769,7 +753,6 @@ namespace BattleCruisers.Data
                 else
                 {
                     Debug.Log("Reverting purchase of Bodykit " + txn.index);
-                    GameModel.Bodykits[txn.index].isOwned = false;
                     GameModel.RemoveBodykit(txn.index);
                 }
             }
@@ -784,7 +767,6 @@ namespace BattleCruisers.Data
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Bodykits[bdk].isOwned = true;
                         GameModel.AddBodykit(bdk);
                     }
                 }
