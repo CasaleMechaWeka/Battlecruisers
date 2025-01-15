@@ -1,4 +1,3 @@
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -11,6 +10,7 @@ using BattleCruisers.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
 using System;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IList<IItemButton> buttons = new List<IItemButton>();
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamiltyTracker;
-        private IGameModel _gameModel;
+        private IDataProvider _dataProvider;
         private IBroadcastingProperty<HullKey> _selectedHull;
         private ISingleSoundPlayer _soundPlayer;
         private IPrefabFactory _prefabFactory;
@@ -53,12 +53,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public void AddHeckle(IHeckleData heckleData)
         {
-            if (heckleData.IsOwned)
+            if (_dataProvider.GameModel.PurchasedHeckles.Contains(heckleData.Index))
             {
                 HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
                 heckleContainer.heckleData = heckleData;
                 heckleContainer.toggleSelectionButton = toggleHeckleSelectionButton;
-                IItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, _gameModel, _selectedHull, _soundPlayer, _prefabFactory);
+                IItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, _dataProvider.GameModel, _selectedHull, _soundPlayer, _prefabFactory);
                 buttons.Add(button);
                 heckleContainer.gameObject.SetActive(true);
             }
@@ -67,16 +67,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
-            IGameModel gameModel,
+            IDataProvider dataProvider,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, prefabFactory);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, dataProvider, selectedHull, prefabFactory);
 
             _itemDetailsManager = itemDetailsManager;
             _comparingFamiltyTracker = comparingFamiltyTracker;
-            _gameModel = gameModel;
+            _dataProvider = dataProvider;
             _selectedHull = selectedHull;
             _soundPlayer = soundPlayer;
             _prefabFactory = prefabFactory;
@@ -86,7 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             if (itemType == ItemType.Heckle)
             {
                 HasUnlockedItem = true;
-                foreach (IHeckleData heckleData in gameModel.Heckles)
+                foreach (IHeckleData heckleData in _dataProvider.StaticData.Heckles)
                 {
                     AddHeckle(heckleData);
                 }
@@ -104,7 +104,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
                 foreach (ItemContainer itemContainer in itemContainers)
                 {
-                    IItemButton button = itemContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
+                    IItemButton button = itemContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, _dataProvider.GameModel, selectedHull, soundPlayer, prefabFactory);
                     buttons.Add(button);
                     HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
                     itemContainer.gameObject.SetActive(button.IsUnlocked);

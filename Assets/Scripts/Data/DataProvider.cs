@@ -245,13 +245,8 @@ namespace BattleCruisers.Data
             }
 
             // heckles
-            for (int i = 0; i < _gameModel.Heckles.Count; i++)
-            {
-                if (_gameModel.Heckles[i].isOwned)
-                {
-                    _gameModel.AddHeckle(i);
-                }
-            }
+            for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
+                _gameModel.AddHeckle(i);
 
             // bodykits
             for (int i = 0; i < _gameModel.Bodykits.Count; i++)
@@ -285,14 +280,8 @@ namespace BattleCruisers.Data
             }
 
             // heckles
-            for (int i = 0; i < _gameModel.GetHeckles().Count; i++)
-            {
-                int index = _gameModel.GetHeckles()[i];
-                if (!_gameModel.Heckles[index].isOwned)
-                {
-                    _gameModel.Heckles[index].isOwned = true;
-                }
-            }
+            for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
+                _gameModel.AddHeckle(i);
 
             // bodykits
             try
@@ -436,7 +425,7 @@ namespace BattleCruisers.Data
                                 int index = StaticPrefabKeys.HeckleItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        _gameModel.Heckles[index].heckleCost = cost.amount;
+                                        StaticData.Heckles[index].heckleCost = cost.amount;
                             }
                             if (reward.id.Contains("BODYKIT"))
                             {
@@ -474,8 +463,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[1].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                if (i < _gameModel.Heckles.Count)
-                    _gameModel.Heckles[i].heckleCost = iCoins;
+                if (i < StaticData.Heckles.Count)
+                    StaticData.Heckles[i].heckleCost = iCoins;
             }
             // bodykits cost sync
             for (int i = 0; i < ecoConfig.categories[2].items.Count; i++)
@@ -514,7 +503,7 @@ namespace BattleCruisers.Data
                                 var costs = ParseEconomyItems(purchaseDef.Costs);
                                 foreach (ItemAndAmountSpec spec in costs)
                                     if (spec.id == "COIN")
-                                        _gameModel.Heckles[i + 3].heckleCost = spec.amount;
+                                        StaticData.Heckles[i + 3].heckleCost = spec.amount;
                             }
                         }
                     }
@@ -578,7 +567,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index >= 0);
             await Task.Yield();
-            int iCoins = _gameModel.Heckles[index].heckleCost;
+            int iCoins = StaticData.Heckles[index].heckleCost;
             _gameModel.Coins -= iCoins;
             SaveGame();
             await SyncCoinsToCloud();
@@ -893,7 +882,6 @@ namespace BattleCruisers.Data
                 if (result)
                 {
 
-                    GameModel.Heckles[txn.index].isOwned = true;
                     GameModel.AddHeckle(txn.index);
                     GameModel.CoinsChange += txn.heckleCost;
                 }
@@ -914,33 +902,31 @@ namespace BattleCruisers.Data
         {
             List<int> GoodHeckles = new List<int>();
 
-            foreach (HeckleData txn in GameModel.OutstandingHeckleTransactions)
+            foreach (HeckleData heckle in GameModel.OutstandingHeckleTransactions)
             {
-                if (runningCoinTotal - txn.heckleCost >= 0)
+                if (runningCoinTotal - heckle.heckleCost >= 0)
                 {
-                    runningCoinTotal -= txn.heckleCost;
-                    GoodHeckles.Add(txn.index);
+                    runningCoinTotal -= heckle.heckleCost;
+                    GoodHeckles.Add(heckle.index);
                 }
                 else
                 {
-                    Debug.Log("Reverting purchase of Heckle " + txn.index);
-                    GameModel.Heckles[txn.index].isOwned = false;
-                    GameModel.RemoveHeckle(txn.index);
+                    Debug.Log("Reverting purchase of Heckle " + heckle.index);
+                    GameModel.RemoveHeckle(heckle.index);
                 }
             }
             GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
 
             if (GoodHeckles != null && GoodHeckles.Count > 0)
             {
-                foreach (int hkl in GoodHeckles)
+                foreach (int heckle in GoodHeckles)
                 {
-                    Debug.Log("Purchasing Heckle " + hkl);
-                    bool result = await PurchaseHeckleV2(hkl);
+                    Debug.Log("Purchasing Heckle " + heckle);
+                    bool result = await PurchaseHeckleV2(heckle);
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Heckles[hkl].isOwned = true;
-                        GameModel.AddHeckle(hkl);
+                        GameModel.AddHeckle(heckle);
                     }
                 }
             }

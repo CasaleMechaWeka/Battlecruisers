@@ -57,14 +57,12 @@ namespace BattleCruisers.Data.Models
 
         // Player properties - for determining ROGUE player strength
 
-
         private int _totalUpgrades;
         public int TotalUpgrades
         {
             get => _totalUpgrades;
             set => _totalUpgrades = value;
         }
-
 
         private int _totalPerks;
         public int TotalPerks
@@ -73,14 +71,12 @@ namespace BattleCruisers.Data.Models
             set => _totalPerks = value;
         }
 
-
         private int _totalBuildables;
         public int TotalBuildables
         {
             get => _totalBuildables;
             set => _totalBuildables = value;
         }
-
 
         private int _playerBounty;
         public int PlayerBounty
@@ -89,14 +85,12 @@ namespace BattleCruisers.Data.Models
             set => _playerBounty = value;
         }
 
-
         private int _playerLevel;
         public int PlayerLevel
         {
             get => _playerLevel;
             set => _playerLevel = value;
         }
-
 
         private int _currentLuck;
         public int CurrentLuck
@@ -105,14 +99,12 @@ namespace BattleCruisers.Data.Models
             set => _currentLuck = value;
         }
 
-
         private int _baseLuck;
         public int BaseLuck
         {
             get => _baseLuck;
             set => _baseLuck = value;
         }
-
 
         private int _extraDrones;
         public int ExtraDrones
@@ -121,14 +113,12 @@ namespace BattleCruisers.Data.Models
             set => _extraDrones = value;
         }
 
-
         private int _currentHP;
         public int CurrentHP
         {
             get => _currentHP;
             set => _currentHP = value;
         }
-
 
         private int _maxHP;
 
@@ -137,7 +127,6 @@ namespace BattleCruisers.Data.Models
             get => _maxHP;
             set => _maxHP = value;
         }
-
 
         private long _credits;
         public long Credits
@@ -179,13 +168,6 @@ namespace BattleCruisers.Data.Models
         {
             get => _heckleList;
             set => _heckleList = value;
-        }
-
-        public List<HeckleData> _heckles;
-        public List<HeckleData> Heckles
-        {
-            get => _heckles;
-            set => _heckles = value;
         }
         public List<Arena> _arenas;
         public List<Arena> Arenas
@@ -319,6 +301,11 @@ namespace BattleCruisers.Data.Models
             get => _playerName;
             set => _playerName = value;
         }
+
+        public List<int> PurchasedExos { get => _purchasedExos; }
+        public List<int> PurchasedHeckles { get => _purchasedHeckles; }
+        public List<int> PurchasedBodykits { get => _purchasedBodykits; }
+        public List<int> PurchasedVariants { get => _purchasedVariants; }
 
         private List<int> _purchasedExos;
 
@@ -565,65 +552,6 @@ namespace BattleCruisers.Data.Models
 
             _captainExoList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             _heckleList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-
-            _heckles = new List<HeckleData> {
-                   new HeckleData("Heckle000", id: 0), new HeckleData("Heckle001",id: 1), new HeckleData("Heckle002", id: 2), new HeckleData("Heckle003",id: 3), new HeckleData("Heckle004",id: 4),
-                   new HeckleData("Heckle005",id: 5), new HeckleData("Heckle006",id: 6), new HeckleData("Heckle007",id: 7), new HeckleData("Heckle008",id: 8), new HeckleData("Heckle009",id: 9),
-                   new HeckleData("Heckle010",id:10), new HeckleData("Heckle011",id: 11), new HeckleData("Heckle012",id: 12), new HeckleData("Heckle013",id: 13), new HeckleData("Heckle014",id: 14),
-                   new HeckleData("Heckle015",id: 15), new HeckleData("Heckle016",id: 16), new HeckleData("Heckle017",id: 17), new HeckleData("Heckle018",id: 18), new HeckleData("Heckle019",id: 19),
-                   new HeckleData("Heckle020",id: 20), new HeckleData("Heckle021",id: 21), new HeckleData("Heckle022",id: 22), new HeckleData("Heckle023",id: 23), new HeckleData("Heckle024",id: 24),
-                   new HeckleData("Heckle025",id: 25), new HeckleData("Heckle026",id: 26), new HeckleData("Heckle027",id: 27), new HeckleData("Heckle028",id: 28), new HeckleData("Heckle029",id: 29),
-                   new HeckleData("Heckle030",id: 30), new HeckleData("Heckle031",id: 31), new HeckleData("Heckle032",id: 32), new HeckleData("Heckle033",id: 33), new HeckleData("Heckle034",id: 34),
-                   new HeckleData("Heckle035",id: 35), new HeckleData("Heckle036",id: 36), new HeckleData("Heckle037",id: 37), new HeckleData("Heckle038",id: 38), new HeckleData("Heckle039",id: 39),
-                   new HeckleData("Heckle040",id: 40), new HeckleData("Heckle041",id: 41), new HeckleData("Heckle042",id: 42), new HeckleData("Heckle043",id: 43), new HeckleData("Heckle044",id: 44),
-                   new HeckleData("Heckle045",id: 45), new HeckleData("Heckle046",id: 46), new HeckleData("Heckle047",id: 47), new HeckleData("Heckle048",id: 48), new HeckleData("Heckle049",id: 49),
-                   new HeckleData("Heckle050",id: 50), new HeckleData("Heckle051",id: 51), new HeckleData("Heckle052",id: 52), new HeckleData("Heckle053",id: 53), new HeckleData("Heckle054",id: 54),
-                   new HeckleData("Heckle055",id: 55), new HeckleData("Heckle056",id: 56), new HeckleData("Heckle057",id: 57), new HeckleData("Heckle058",id: 58), new HeckleData("Heckle059",id: 59),
-                   new HeckleData("Heckle060",id: 60), new HeckleData("Heckle061",id: 61), new HeckleData("Heckle062",id: 62), new HeckleData("Heckle063",id: 63), new HeckleData("Heckle064",id: 64),
-                   new HeckleData("Heckle065",id: 65), new HeckleData("Heckle066",id: 66), new HeckleData("Heckle067",id: 67), new HeckleData("Heckle068",id: 68), new HeckleData("Heckle069",id: 69),
-                   new HeckleData("Heckle070",id: 70), new HeckleData("Heckle071",id: 71), new HeckleData("Heckle072",id: 72), new HeckleData("Heckle073",id: 73), new HeckleData("Heckle074",id: 74),
-                   new HeckleData("Heckle075",id: 75), new HeckleData("Heckle076",id: 76), new HeckleData("Heckle077",id: 77), new HeckleData("Heckle078",id: 78), new HeckleData("Heckle079",id: 79),
-                   new HeckleData("Heckle080",id: 80), new HeckleData("Heckle081",id: 81), new HeckleData("Heckle082",id: 82), new HeckleData("Heckle083",id: 83), new HeckleData("Heckle084",id: 84),
-                   new HeckleData("Heckle085",id: 85), new HeckleData("Heckle086",id: 86), new HeckleData("Heckle087",id: 87), new HeckleData("Heckle088",id: 88), new HeckleData("Heckle089",id: 89),
-                   new HeckleData("Heckle090",id: 90), new HeckleData("Heckle091",id: 91), new HeckleData("Heckle092",id: 92), new HeckleData("Heckle093",id: 93), new HeckleData("Heckle094",id: 94),
-                   new HeckleData("Heckle095",id: 95), new HeckleData("Heckle096",id: 96), new HeckleData("Heckle097",id: 97), new HeckleData("Heckle098",id: 98), new HeckleData("Heckle099",id: 99),
-                   new HeckleData("Heckle100",id: 100), new HeckleData("Heckle101",id: 101), new HeckleData("Heckle102",id: 102), new HeckleData("Heckle103",id: 103), new HeckleData("Heckle104",id: 104),
-                   new HeckleData("Heckle105",id: 105), new HeckleData("Heckle106",id: 106), new HeckleData("Heckle107",id: 107), new HeckleData("Heckle108",id: 108), new HeckleData("Heckle109",id: 109),
-                   new HeckleData("Heckle110",id: 110), new HeckleData("Heckle111",id: 111), new HeckleData("Heckle112",id: 112), new HeckleData("Heckle113",id: 113), new HeckleData("Heckle114",id: 114),
-                   new HeckleData("Heckle115",id: 115), new HeckleData("Heckle116",id: 116), new HeckleData("Heckle117",id: 117), new HeckleData("Heckle118",id: 118), new HeckleData("Heckle119",id: 119),
-                   new HeckleData("Heckle120",id: 120), new HeckleData("Heckle121",id: 121), new HeckleData("Heckle122",id: 122), new HeckleData("Heckle123",id: 123), new HeckleData("Heckle124",id: 124),
-                   new HeckleData("Heckle125",id: 125), new HeckleData("Heckle126",id: 126), new HeckleData("Heckle127",id: 127), new HeckleData("Heckle128",id: 128), new HeckleData("Heckle129",id: 129),
-                   new HeckleData("Heckle130",id: 130), new HeckleData("Heckle131",id: 131), new HeckleData("Heckle132",id: 132), new HeckleData("Heckle133",id: 133), new HeckleData("Heckle134",id: 134),
-                   new HeckleData("Heckle135",id: 135), new HeckleData("Heckle136",id: 136), new HeckleData("Heckle137",id: 137), new HeckleData("Heckle138",id: 138), new HeckleData("Heckle139",id: 139),
-                   new HeckleData("Heckle140",id: 140), new HeckleData("Heckle141",id: 141), new HeckleData("Heckle142",id: 142), new HeckleData("Heckle143",id: 143), new HeckleData("Heckle144",id: 144),
-                   new HeckleData("Heckle145",id: 145), new HeckleData("Heckle146",id: 146), new HeckleData("Heckle147",id: 147), new HeckleData("Heckle148",id: 148), new HeckleData("Heckle149",id: 149),
-                   new HeckleData("Heckle150",id: 150), new HeckleData("Heckle151",id: 151), new HeckleData("Heckle152",id: 152), new HeckleData("Heckle153",id: 153), new HeckleData("Heckle154",id: 154),
-                   new HeckleData("Heckle155",id: 155), new HeckleData("Heckle156",id: 156), new HeckleData("Heckle157",id: 157), new HeckleData("Heckle158",id: 158), new HeckleData("Heckle159",id: 159),
-                   new HeckleData("Heckle160",id: 160), new HeckleData("Heckle161",id: 161), new HeckleData("Heckle162",id: 162), new HeckleData("Heckle163",id: 163), new HeckleData("Heckle164",id: 164),
-                   new HeckleData("Heckle165",id: 165), new HeckleData("Heckle166",id: 166), new HeckleData("Heckle167",id: 167), new HeckleData("Heckle168",id: 168), new HeckleData("Heckle169",id: 169),
-                   new HeckleData("Heckle170",id: 170), new HeckleData("Heckle171",id: 171), new HeckleData("Heckle172",id: 172), new HeckleData("Heckle173",id: 173), new HeckleData("Heckle174",id: 174),
-                   new HeckleData("Heckle175",id: 175), new HeckleData("Heckle176",id: 176), new HeckleData("Heckle177",id: 177), new HeckleData("Heckle178",id: 178), new HeckleData("Heckle179",id: 179),
-                   new HeckleData("Heckle180",id: 180), new HeckleData("Heckle181",id: 181), new HeckleData("Heckle182",id: 182), new HeckleData("Heckle183",id: 183), new HeckleData("Heckle184",id: 184),
-                   new HeckleData("Heckle185",id: 185), new HeckleData("Heckle186",id: 186), new HeckleData("Heckle187",id: 187), new HeckleData("Heckle188",id: 188), new HeckleData("Heckle189",id: 189),
-                   new HeckleData("Heckle190",id: 190), new HeckleData("Heckle191",id: 191), new HeckleData("Heckle192",id: 192), new HeckleData("Heckle193",id: 193), new HeckleData("Heckle194",id: 194),
-                   new HeckleData("Heckle195",id: 195), new HeckleData("Heckle196",id: 196), new HeckleData("Heckle197",id: 197), new HeckleData("Heckle198",id: 198), new HeckleData("Heckle199",id: 199),
-                   new HeckleData("Heckle200",id: 200), new HeckleData("Heckle201",id: 201), new HeckleData("Heckle202",id: 202), new HeckleData("Heckle203",id: 203), new HeckleData("Heckle204",id: 204),
-                   new HeckleData("Heckle205",id: 205), new HeckleData("Heckle206",id: 206), new HeckleData("Heckle207",id: 207), new HeckleData("Heckle208",id: 208), new HeckleData("Heckle209",id: 209),
-                   new HeckleData("Heckle210",id: 210), new HeckleData("Heckle211",id: 211), new HeckleData("Heckle212",id: 212), new HeckleData("Heckle213",id: 213), new HeckleData("Heckle214",id: 214),
-                   new HeckleData("Heckle215",id: 215), new HeckleData("Heckle216",id: 216), new HeckleData("Heckle217",id: 217), new HeckleData("Heckle218",id: 218), new HeckleData("Heckle219",id: 219),
-                   new HeckleData("Heckle220",id: 220), new HeckleData("Heckle221",id: 221), new HeckleData("Heckle222",id: 222), new HeckleData("Heckle223",id: 223), new HeckleData("Heckle224",id: 224),
-                   new HeckleData("Heckle225",id: 225), new HeckleData("Heckle226",id: 226), new HeckleData("Heckle227",id: 227), new HeckleData("Heckle228",id: 228), new HeckleData("Heckle229",id: 229),
-                   new HeckleData("Heckle230",id: 230), new HeckleData("Heckle231",id: 231), new HeckleData("Heckle232",id: 232), new HeckleData("Heckle233",id: 233), new HeckleData("Heckle234",id: 234),
-                   new HeckleData("Heckle235",id: 235), new HeckleData("Heckle236",id: 236), new HeckleData("Heckle237",id: 237), new HeckleData("Heckle238",id: 238), new HeckleData("Heckle239",id: 239),
-                   new HeckleData("Heckle240",id: 240), new HeckleData("Heckle241",id: 241), new HeckleData("Heckle242",id: 242), new HeckleData("Heckle243",id: 243), new HeckleData("Heckle244",id: 244),
-                   new HeckleData("Heckle245",id: 245), new HeckleData("Heckle246",id: 246), new HeckleData("Heckle247",id: 247), new HeckleData("Heckle248",id: 248), new HeckleData("Heckle249",id: 249),
-                   new HeckleData("Heckle250",id: 250), new HeckleData("Heckle251",id: 251), new HeckleData("Heckle252",id: 252), new HeckleData("Heckle253",id: 253), new HeckleData("Heckle254",id: 254),
-                   new HeckleData("Heckle255",id: 255), new HeckleData("Heckle256",id: 256), new HeckleData("Heckle257",id: 257), new HeckleData("Heckle258",id: 258), new HeckleData("Heckle259",id: 259),
-                   new HeckleData("Heckle260",id: 260), new HeckleData("Heckle261",id: 261), new HeckleData("Heckle262",id: 262), new HeckleData("Heckle263",id: 263), new HeckleData("Heckle264",id: 264),
-                   new HeckleData("Heckle265",id: 265), new HeckleData("Heckle266",id: 266), new HeckleData("Heckle267",id: 267), new HeckleData("Heckle268",id: 268), new HeckleData("Heckle269",id: 269),
-                   new HeckleData("Heckle270",id: 270), new HeckleData("Heckle271",id: 271), new HeckleData("Heckle272",id: 272), new HeckleData("Heckle273",id: 273), new HeckleData("Heckle274",id: 274),
-                   new HeckleData("Heckle275",id: 275), new HeckleData("Heckle276",id: 276), new HeckleData("Heckle277",id: 277), new HeckleData("Heckle278",id: 278), new HeckleData("Heckle279",id: 279),
-                };
 
             _captains = new List<CaptainData> {
                     new CaptainData(nameBase:"CaptainExo000",descriptionBase: "CaptainDescription000",owned : true, id: 0),new CaptainData(nameBase:"CaptainExo001",descriptionBase: "CaptainDescription001",id: 1),new CaptainData(nameBase : "CaptainExo002",descriptionBase : "CaptainDescription002",id: 2), new CaptainData(nameBase : "CaptainExo003",descriptionBase : "CaptainDescription003", id: 3), new CaptainData(nameBase : "CaptainExo004",descriptionBase: "CaptainDescription004",id: 4),

@@ -5,6 +5,8 @@ using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Data.Static
@@ -25,6 +27,7 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<UnitKey> UnitKeys { get; }
         ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
+        IReadOnlyList<HeckleData> Heckles { get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
         ILevelStrategies SideQuestStrategies { get; }

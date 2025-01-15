@@ -171,17 +171,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
             bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
             variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
-            
+
             // Change text and icon color to red
             variantsButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
             variantsButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
-            
+
             captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
@@ -191,17 +191,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
             bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
             variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
-            
+
             // Change text and icon color to red
             bodykitButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
             bodykitButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
-            
+
             captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
@@ -211,17 +211,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
             bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
             variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
-            
+
             // Change text and icon color to red
             captainsButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
             captainsButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
-            
+
             hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
@@ -232,17 +232,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
             bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
             variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
-            
+
             // Change text and icon color to red
             hecklesButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
             hecklesButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
-            
+
             captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
-            
+
             variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
             variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
         }
@@ -450,26 +450,27 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
             captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
 
-            List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.GameModel.Heckles.Count - 1, 10);
+            List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.StaticData.Heckles.Count - 1, 10);
 #if UNITY_EDITOR
-            heckleBaseList = GenerateFullList(_dataProvider.GameModel.Heckles.Count);
+            heckleBaseList = GenerateFullList(_dataProvider.StaticData.Heckles.Count);
 #endif
             byte ii = 0;
             foreach (int index in heckleBaseList)
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
-                heckleItem.GetComponent<HeckleItemController>().StaticInitialise(_soundPlayer, _dataProvider.GameModel.Heckles[index], hecklesContainer, ii);
+                heckleItem.GetComponent<HeckleItemController>().StaticInitialise(
+                    _soundPlayer, _dataProvider.StaticData.Heckles[index], hecklesContainer, ii, _dataProvider.GameModel.PurchasedHeckles.Contains(ii));
                 if (ii == 0)
                 {
                     heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);
                     hecklesContainer.currentItem = heckleItem.GetComponent<HeckleItemController>();
 
                     heckleItem.GetComponent<HeckleItemController>().OnClicked();
-                    hecklesContainer.hecklePrice.text = _dataProvider.GameModel.Heckles[index].heckleCost.ToString();
-                    hecklesContainer.currentHeckleData = _dataProvider.GameModel.Heckles[index];
+                    hecklesContainer.hecklePrice.text = _dataProvider.StaticData.Heckles[index].heckleCost.ToString();
+                    hecklesContainer.currentHeckleData = _dataProvider.StaticData.Heckles[index];
                     //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(_dataProvider.GameModel.Heckles[index].StringKeyBase);
 
-                    if (_dataProvider.GameModel.Heckles[index].IsOwned)
+                    if (_dataProvider.GameModel.PurchasedHeckles.Contains(index))
                     {
                         hecklesContainer.hecklePrice.text = "0";
                         hecklesContainer.btnBuy.SetActive(false);

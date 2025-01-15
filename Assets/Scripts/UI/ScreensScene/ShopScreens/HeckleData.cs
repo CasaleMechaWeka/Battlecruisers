@@ -11,18 +11,13 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
 
         public string stringKeyBase;
         public string StringKeyBase => stringKeyBase;
-
-        public bool isOwned;
-        public bool IsOwned => isOwned;
-
         public int index;
         public int Index => index;
 
-        public HeckleData(string keyBase = "Heckle000", int cost = 0, bool owned = false, int id = 0)
+        public HeckleData(string keyBase = "Heckle000", int cost = 0, int id = 0)
         {
             stringKeyBase = keyBase;
             heckleCost = cost;
-            isOwned = owned;
             index = id;
         }
     }

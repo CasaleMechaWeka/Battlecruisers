@@ -201,19 +201,13 @@ namespace BattleCruisers.Data.Models
                         // Add
                         int index = _purchasedHeckles[i];
                         if (!currentList.Contains(index))
-                        {
                             game.AddHeckle(index);
-                            game.Heckles[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
                 List<int> entriesToRemove = currentList.Except(_purchasedHeckles).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveHeckle(entry);
-                    game.Heckles[entry].isOwned = false;
-                }
             }
             // Bodykits
             if (_purchasedBodykits != null)
@@ -398,7 +392,7 @@ namespace BattleCruisers.Data.Models
             {
                 game.PlayerLoadout.CurrentHeckles = _currentHeckles;
                 foreach (int i in _currentHeckles)
-                    game._heckles[i].isOwned = true;
+                    game.AddHeckle(i);
             }
             else
             {
@@ -471,7 +465,6 @@ namespace BattleCruisers.Data.Models
                 int unlockHeckle = UnityEngine.Random.Range(0, 279);
                 if (!unlockedHeckles.Contains(unlockHeckle))
                 {
-                    game._heckles[unlockHeckle].isOwned = true;
                     unlockedHeckles.Add(unlockHeckle);
                 }
             }

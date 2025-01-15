@@ -63,9 +63,26 @@ namespace BattleCruisers.Data.Serialization
             var bks = output.GetType().GetProperty("Bodykits").GetValue(output);
             var vts = output.GetType().GetProperty("Variants").GetValue(output);
 
+            bool compatibleHeckles = false;
+            try
+            {
+                var purchasedHecklesProperty = output.GetType().GetProperty("PurchasedHeckles");
+                if (purchasedHecklesProperty != null)
+                    if (purchasedHecklesProperty.GetValue(output) is List<int>)
+                        compatibleHeckles = true;
+                    else
+                        Debug.LogWarning("Property \"PurchasedHeckles\" was not in the expected format: List<int>");
+                else
+                    Debug.Log("Property \"PurchasedHeckles\" was not found");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while reading \"PurchasedHeckles\" property from save data:\n" + ex.Message);
+            }
+
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null ||
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null || compatibleHeckles == false ||
             ((GameModel)output).Variants.Count < NUM_OF_VARIANTS || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
             ((GameModel)output).Captains.Count < NUM_OF_CAPTAINS || ((GameModel)output).Bodykits.Count < NUM_OF_Bodykits)
             {
@@ -161,6 +178,25 @@ namespace BattleCruisers.Data.Serialization
             //foreach (PropertyInfo propertyInfo in properties)
             //    Debug.Log(propertyInfo.Name);
 
+            try
+            {
+                var purchasedHecklesProperty = gameData.GetType().GetProperty("PurchasedHeckles");
+                if (purchasedHecklesProperty != null)
+                {
+                    if (purchasedHecklesProperty.GetValue(gameData) is List<int> purchasedHeckles && purchasedHeckles.Count > 0)
+                        foreach (int index in purchasedHeckles)
+                            compatibleGameModel.AddHeckle(index);
+                    else
+                        Debug.LogError("Property \"PurchasedHeckles\" was not in the expected format List<int>");
+                }
+                else
+                    Debug.LogWarning("Property \"PurchasedHeckles\" is null in save data");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error when processing \"PurchasedHeckles\": " + ex.Message);
+            }
+
             if (gameData.GetType().GetProperty("Captains").GetValue(gameData) != null && (gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>).Count != 0)
                 foreach (CaptainData captain in gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>)
                     if (captain.IsOwned)
@@ -169,13 +205,17 @@ namespace BattleCruisers.Data.Serialization
                         compatibleGameModel._captains[captain.index].isOwned = true;
                     }
 
-            if (gameData.GetType().GetProperty("Heckles").GetValue(gameData) != null && (gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IReadOnlyCollection<HeckleData>).Count != 0)
-                foreach (HeckleData heckle in gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IReadOnlyCollection<HeckleData>)
-                    if (heckle.IsOwned)
-                    {
-                        compatibleGameModel.AddHeckle(heckle.index);
-                        compatibleGameModel._heckles[heckle.index].isOwned = true;
-                    }
+            var heckles = gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IList<object>;
+            if (heckles != null)
+                for (int i = 0; i < heckles.Count; i++)
+                {
+                    var heckle = heckles[i];
+                    if (heckle == null) continue;
+                    var isOwnedProperty = heckle.GetType().GetProperty("isOwned");
+                    if (isOwnedProperty == null) continue;
+                    if (isOwnedProperty.GetValue(heckle) is bool isOwned && isOwned)
+                        compatibleGameModel.AddHeckle(i);
+                }
 
             if (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) != null && (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>).Count != 0)
                 foreach (BodykitData bodykit in gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>)
@@ -439,7 +479,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncInventoryFromCloud(IDataProvider dataProivder)
+        public async Task<bool> SyncInventoryFromCloud(IDataProvider dataProvider)
         {
             GetInventoryResult inventoryResult = null;
             try
@@ -452,20 +492,20 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProivder.GameModel.Captains[index].isOwned = true;
+                        dataProvider.GameModel.Captains[index].isOwned = true;
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProivder.GameModel.Heckles[index].isOwned = true;
+                        dataProvider.GameModel.AddHeckle(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProivder.GameModel.Bodykits[index].isOwned = true;
+                        dataProvider.GameModel.Bodykits[index].isOwned = true;
                     }
                 }
-                dataProivder.SaveGame();
+                dataProvider.SaveGame();
                 return true;
             }
             catch (EconomyRateLimitedException e)
@@ -478,20 +518,20 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProivder.GameModel.Captains[index].isOwned = true;
+                        dataProvider.GameModel.Captains[index].isOwned = true;
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProivder.GameModel.Heckles[index].isOwned = true;
+                        dataProvider.GameModel.AddHeckle(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProivder.GameModel.Bodykits[index].isOwned = true;
+                        dataProvider.GameModel.Bodykits[index].isOwned = true;
                     }
                 }
-                dataProivder.SaveGame();
+                dataProvider.SaveGame();
                 return true;
             }
             catch (Exception e)

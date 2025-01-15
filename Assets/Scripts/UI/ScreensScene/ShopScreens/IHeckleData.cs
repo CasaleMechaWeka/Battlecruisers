@@ -4,7 +4,6 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
     {
         int HeckleCost { get; }
         string StringKeyBase { get; }
-        bool IsOwned { get; }
         int Index { get; }
     }
 }
