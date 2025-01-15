@@ -247,13 +247,8 @@ namespace BattleCruisers.Data
             for (int i = 0; i < _gameModel.PurchasedBodykits.Count; i++)
                 _gameModel.AddBodykit(_gameModel.PurchasedBodykits[i]);
             // variants
-            for (int i = 0; i < _gameModel.Variants.Count; i++)
-            {
-                if (_gameModel.Variants[i].isOwned)
-                {
-                    _gameModel.AddVariant(i);
-                }
-            }
+            for (int i = 0; i < _gameModel.PurchasedVariants.Count; i++)
+                _gameModel.AddVariant(_gameModel.PurchasedVariants[i]);
         }
 
         public async Task SyncInventroyV2()
@@ -278,13 +273,9 @@ namespace BattleCruisers.Data
             }
 
             // variants
-            for (int i = 0; i < _gameModel.GetVariants().Count; i++)
-            {
-                int index = _gameModel.GetVariants()[i];
-                if (!_gameModel.Variants[index].isOwned)
-                    _gameModel.Variants[index].isOwned = true;
+            for (int i = 0; i < _gameModel.PurchasedVariants.Count; i++)
+                _gameModel.AddVariant(_gameModel.PurchasedVariants[i]);
 
-            }
             await Task.CompletedTask;
         }
         private async Task FetchConfigs()
@@ -324,9 +315,9 @@ namespace BattleCruisers.Data
                 string credits = ecoConfig.categories[3].items[i].credits;
                 int iCredits = 0;
                 int.TryParse(credits, out iCredits);
-                if (i < _gameModel.Variants.Count)
+                if (i < StaticData.Variants.Count)
                 {
-                    _gameModel.Variants[i].variantCredits = iCredits;
+                    StaticData.Variants[i].variantCredits = iCredits;
                     //Debug.Log($"Updated GameModel Variant {i} Price: {iCredits}");
                 }
             }
@@ -455,8 +446,8 @@ namespace BattleCruisers.Data
                 string credits = ecoConfig.categories[3].items[i].credits;
                 int iCredits = 0;
                 int.TryParse(credits, out iCredits);
-                if (i < StaticData.Bodykits.Count)
-                    _gameModel.Variants[i].variantCredits = iCredits;
+                if (i < StaticData.Variants.Count)
+                    StaticData.Variants[i].variantCredits = iCredits;
             }
             SaveGame();
         }
@@ -580,7 +571,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index >= 0);
             await Task.Yield();
-            int iCredits = _gameModel.Variants[index].variantCredits;
+            int iCredits = StaticData.Variants[index].variantCredits;
             _gameModel.Credits -= iCredits;
             SaveGame();
             await SyncCreditsToCloud();
@@ -912,8 +903,6 @@ namespace BattleCruisers.Data
                 bool result = await PurchaseVariant(txn.index);
                 if (result)
                 {
-
-                    GameModel.Variants[txn.index].isOwned = true;
                     GameModel.AddVariant(txn.index);
                     GameModel.CreditsChange += txn.variantCredits;
                 }
@@ -944,7 +933,6 @@ namespace BattleCruisers.Data
                 else
                 {
                     Debug.Log("Reverting purchase of Variant " + txn.index);
-                    GameModel.Variants[txn.index].isOwned = false;
                     GameModel.RemoveVariant(txn.index);
                 }
             }
@@ -959,7 +947,6 @@ namespace BattleCruisers.Data
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Variants[vnt].isOwned = true;
                         GameModel.AddVariant(vnt);
                     }
                 }

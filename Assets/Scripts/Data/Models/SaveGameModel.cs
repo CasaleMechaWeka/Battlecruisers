@@ -235,19 +235,13 @@ namespace BattleCruisers.Data.Models
                         // Add
                         int index = _purchasedVariants[i];
                         if (!currentList.Contains(index))
-                        {
                             game.AddVariant(index);
-                            game.Variants[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
                 List<int> entriesToRemove = currentList.Except(_purchasedVariants).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveVariant(entry);
-                    game.Variants[entry].isOwned = false;
-                }
             }
 
             // levels completed

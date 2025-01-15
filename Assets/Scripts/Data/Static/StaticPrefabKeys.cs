@@ -382,7 +382,7 @@ namespace BattleCruisers.Data.Static
                 get
                 {
                     List<IPrefabKey> variantKeys = new List<IPrefabKey>();
-                    int variantCount = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Variants.Count;
+                    int variantCount = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Variants.Count;
 
                     for (int i = 0; i < variantCount; i++)
                         variantKeys.Add(GetVariantKey(i));

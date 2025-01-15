@@ -7,7 +7,6 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         string VariantPrefabName { get; }
         string VariantNameStringKeyBase { get; }
         string VariantDescriptionStringKeyBase { get; }
-        bool IsOwned { get; }
         int Index { get; }
     }
 }

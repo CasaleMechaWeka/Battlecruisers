@@ -301,7 +301,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     VariantPrefab variant = variants[ii]; // Use the variant list index ii
                     Sprite parentSprite = variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).Sprite : variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory).Sprite;
 
-                    int variantPrice = _dataProvider.GameModel.Variants[variant.variantIndex].variantCredits;
+                    int variantPrice = _dataProvider.StaticData.Variants[variant.variantIndex].variantCredits;
                     // Debug.Log($"Variant {variant.variantIndex} Price: {variantPrice}");
 
                     variantItem.GetComponent<VariantItemController>().StaticInitialise(
@@ -309,10 +309,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         parentSprite,
                         variant.variantSprite,
                         variant.GetParentName(ScreensSceneGod.Instance._prefabFactory),
-                        _dataProvider.GameModel.Variants[variant.variantIndex],
+                        _dataProvider.StaticData.Variants[variant.variantIndex],
                         variantsContainer,
                         variant,
-                        variant.variantIndex
+                        variant.variantIndex,
+                        _dataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex)
                     );
 
                     if (ii == 0)
@@ -329,10 +330,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         variantsContainer.ParentImage.sprite = parentSprite;
                         variantsContainer.VariantPrice.text = variantPrice.ToString();
                         variantsContainer.variantIcon.sprite = variant.variantSprite;
-                        variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.GameModel.Variants[variant.variantIndex].variantNameStringKeyBase);
-                        variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.GameModel.Variants[variant.variantIndex].variantDescriptionStringKeyBase);
+                        variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].variantNameStringKeyBase);
+                        variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].variantDescriptionStringKeyBase);
                         variantsContainer.ParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-                        variantsContainer.currentVariantData = _dataProvider.GameModel.Variants[variant.variantIndex];
+                        variantsContainer.currentVariantData = _dataProvider.StaticData.Variants[variant.variantIndex];
 
                         if (variant.IsUnit())
                         {
@@ -347,7 +348,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                             variantsContainer.buildingStatsController.ShowStatsOfVariant(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), variant);
                         }
 
-                        if (_dataProvider.GameModel.Variants[variant.variantIndex].isOwned)
+                        if (_dataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex))
                         {
                             variantsContainer.btnBuy.SetActive(false);
                             variantsContainer.priceLabel.SetActive(false);
@@ -592,7 +593,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 buildablePrefabNames.Add(unitKeys[i].PrefabName);
 
 
-            for (int i = 0; i < _dataProvider.GameModel.Variants.Count; i++)
+            for (int i = 0; i < _dataProvider.StaticData.Variants.Count; i++)
             {
                 VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
 

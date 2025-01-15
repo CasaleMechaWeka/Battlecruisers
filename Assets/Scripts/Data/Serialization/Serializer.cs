@@ -24,7 +24,6 @@ namespace BattleCruisers.Data.Serialization
     {
         private readonly IModelFilePathProvider _modelFilePathProvider;
         private readonly BinaryFormatter _binaryFormatter;
-        private const int NUM_OF_VARIANTS = 131;
 
         public Serializer(IModelFilePathProvider modelFilePathProvider)
         {
@@ -111,11 +110,27 @@ namespace BattleCruisers.Data.Serialization
                 Debug.LogError("Error while reading \"PurchasedBodykits\" property from save data:\n" + ex.Message);
             }
 
+            bool compatibleVariants = false;
+            try
+            {
+                var purchasedVariantsProperty = output.GetType().GetProperty("PurchasedVariants");
+                if (purchasedVariantsProperty != null)
+                    if (purchasedVariantsProperty.GetValue(output) is List<int>)
+                        compatibleVariants = true;
+                    else
+                        Debug.LogWarning("Property \"PurchasedVariants\" was not in the expected format: List<int>");
+                else
+                    Debug.Log("Property \"PurchasedVariants\" was not found");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while reading \"PurchasedVariants\" property from save data:\n" + ex.Message);
+            }
 
             Loadout loadout = (Loadout)plo;
 
             if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || vts == null || compatibleHeckles == false ||
-            ((GameModel)output).Variants.Count < NUM_OF_VARIANTS || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
+            compatibleVariants == false || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
             compatibleExos == false || compatibleBodykits == false)
             {
                 // make GameModel as compatible as possible
@@ -267,6 +282,25 @@ namespace BattleCruisers.Data.Serialization
                 Debug.LogError("Error when processing \"PurchasedBodykits\": " + ex.Message);
             }
 
+            try
+            {
+                var purchasedVariantsProperty = gameData.GetType().GetProperty("PurchasedVariants");
+                if (purchasedVariantsProperty != null)
+                {
+                    if (purchasedVariantsProperty.GetValue(gameData) is List<int> purchasedVariants && purchasedVariants.Count > 0)
+                        foreach (int i in purchasedVariants)
+                            compatibleGameModel.AddVariant(purchasedVariants[i]);
+                    else
+                        Debug.LogError("Property \"PurchasedVariants\" was not in the expected format List<int>");
+                }
+                else
+                    Debug.LogWarning("Property \"PurchasedVariants\" is null in save data");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error when processing \"PurchasedVariants\": " + ex.Message);
+            }
+
             var exos = gameData.GetType().GetProperty("Captains").GetValue(gameData) as IList<object>;
             if (exos != null)
                 for (int i = 0; i < exos.Count; i++)
@@ -312,13 +346,20 @@ namespace BattleCruisers.Data.Serialization
                         compatibleGameModel.AddBodykit(index);
                 }
 
-            if (gameData.GetType().GetProperty("Variants").GetValue(gameData) != null && (gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>).Count != 0)
-                foreach (VariantData variant in gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>)
-                    if (variant.IsOwned)
-                    {
-                        compatibleGameModel.AddVariant(variant.index);
-                        compatibleGameModel._variants[variant.index].isOwned = true;
-                    }
+            var variants = gameData.GetType().GetProperty("Variants").GetValue(gameData) as IList<object>;
+            if (variants != null)
+                for (int i = 0; i < variants.Count; i++)
+                {
+                    var variant = variants[i];
+                    if (variant == null) continue;
+                    var isOwnedProperty = variant.GetType().GetProperty("isOwned");
+                    if (isOwnedProperty == null) continue;
+                    var indexProperty = variant.GetType().GetProperty("index");
+                    if (indexProperty == null) continue;
+                    if (isOwnedProperty.GetValue(variant) is bool isOwned && isOwned
+                        && indexProperty.GetValue(variant) is int index)
+                        compatibleGameModel.AddVariant(index);
+                }
 
             if (gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData) != null)
                 compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);

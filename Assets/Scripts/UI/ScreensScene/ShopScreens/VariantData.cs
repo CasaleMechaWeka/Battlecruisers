@@ -21,13 +21,10 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         public string variantDescriptionStringKeyBase;
         public string VariantDescriptionStringKeyBase => variantDescriptionStringKeyBase;
 
-        public bool isOwned;
-        public bool IsOwned => isOwned;
-
         public int index;
         public int Index => index;
 
-        public VariantData(string prefabName = "Variant000", string variantNameBase = "Variant000", string variantDescriptionBase = "VariantDescription000", int coins = 0, int credits = 0, bool owned = false, int id = 0)
+        public VariantData(string prefabName = "Variant000", string variantNameBase = "Variant000", string variantDescriptionBase = "VariantDescription000", int coins = 0, int credits = 0, int id = 0)
         {
             variantPrefabName = prefabName;
             variantCoins = coins;
@@ -35,7 +32,6 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
             variantNameStringKeyBase = variantNameBase;
             variantDescriptionStringKeyBase = variantDescriptionBase;
             index = id;
-            isOwned = owned;
         }
     }
 }

@@ -16,6 +16,9 @@ namespace BattleCruisers.Data.Static
     /// 
     /// This is in contrast to the GameModel, which changes as the player
     /// progresses and unlocks new prefabs.
+    /// 
+    /// Heckles, Captains, Bodykits, Variants only have their prices adjusted
+    /// at launch, so during gameplay this stays constant as well
     /// </summary>
     public interface IStaticData
     {
@@ -30,6 +33,7 @@ namespace BattleCruisers.Data.Static
         IReadOnlyList<HeckleData> Heckles { get; }
         IReadOnlyList<CaptainData> Captains { get; }
         IReadOnlyList<BodykitData> Bodykits { get; }
+        IReadOnlyList<VariantData> Variants { get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
         ILevelStrategies SideQuestStrategies { get; }

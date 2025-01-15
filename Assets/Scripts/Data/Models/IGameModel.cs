@@ -28,7 +28,6 @@ namespace BattleCruisers.Data.Models
         Dictionary<string, int> GameConfigs { get; set; }
         List<int> CaptainExoList { get; set; }
         List<int> HeckleList { get; set; }
-        List<VariantData> Variants { get; set; }
         List<IAPData> IAPs { get; set; }
         List<HeckleData> OutstandingHeckleTransactions { get; set; }
         List<CaptainData> OutstandingCaptainTransactions { get; set; }
