@@ -301,7 +301,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     VariantPrefab variant = variants[ii]; // Use the variant list index ii
                     Sprite parentSprite = variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).Sprite : variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory).Sprite;
 
-                    int variantPrice = _dataProvider.StaticData.Variants[variant.variantIndex].variantCredits;
+                    int variantPrice = _dataProvider.StaticData.Variants[variant.variantIndex].VariantCredits;
                     // Debug.Log($"Variant {variant.variantIndex} Price: {variantPrice}");
 
                     variantItem.GetComponent<VariantItemController>().StaticInitialise(
@@ -330,8 +330,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         variantsContainer.ParentImage.sprite = parentSprite;
                         variantsContainer.VariantPrice.text = variantPrice.ToString();
                         variantsContainer.variantIcon.sprite = variant.variantSprite;
-                        variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].variantNameStringKeyBase);
-                        variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].variantDescriptionStringKeyBase);
+                        variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantNameStringKeyBase);
+                        variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantDescriptionStringKeyBase);
                         variantsContainer.ParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
                         variantsContainer.currentVariantData = _dataProvider.StaticData.Variants[variant.variantIndex];
 

@@ -317,7 +317,7 @@ namespace BattleCruisers.Data
                 int.TryParse(credits, out iCredits);
                 if (i < StaticData.Variants.Count)
                 {
-                    StaticData.Variants[i].variantCredits = iCredits;
+                    StaticData.Variants[i].VariantCredits = iCredits;
                     //Debug.Log($"Updated GameModel Variant {i} Price: {iCredits}");
                 }
             }
@@ -447,7 +447,7 @@ namespace BattleCruisers.Data
                 int iCredits = 0;
                 int.TryParse(credits, out iCredits);
                 if (i < StaticData.Variants.Count)
-                    StaticData.Variants[i].variantCredits = iCredits;
+                    StaticData.Variants[i].VariantCredits = iCredits;
             }
             SaveGame();
         }
@@ -571,7 +571,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index >= 0);
             await Task.Yield();
-            int iCredits = StaticData.Variants[index].variantCredits;
+            int iCredits = StaticData.Variants[index].VariantCredits;
             _gameModel.Credits -= iCredits;
             SaveGame();
             await SyncCreditsToCloud();
@@ -899,16 +899,16 @@ namespace BattleCruisers.Data
 
             foreach (VariantData txn in GameModel.OutstandingVariantTransactions)
             {
-                Debug.Log("Purchasing Variant " + txn.index);
-                bool result = await PurchaseVariant(txn.index);
+                Debug.Log("Purchasing Variant " + txn.Index);
+                bool result = await PurchaseVariant(txn.Index);
                 if (result)
                 {
-                    GameModel.AddVariant(txn.index);
-                    GameModel.CreditsChange += txn.variantCredits;
+                    GameModel.AddVariant(txn.Index);
+                    GameModel.CreditsChange += txn.VariantCredits;
                 }
                 else
                 {
-                    Debug.LogWarning("FAILED: Purchasing Variant " + txn.index + ", will retry next time the game is run.");
+                    Debug.LogWarning("FAILED: Purchasing Variant " + txn.Index + ", will retry next time the game is run.");
                     RetryVariants.Add(txn);
                 }
             }
@@ -925,15 +925,15 @@ namespace BattleCruisers.Data
 
             foreach (VariantData txn in GameModel.OutstandingVariantTransactions)
             {
-                if (runningCreditTotal - txn.variantCredits >= 0)
+                if (runningCreditTotal - txn.VariantCredits >= 0)
                 {
-                    runningCreditTotal -= txn.variantCredits;
-                    GoodVariants.Add(txn.index);
+                    runningCreditTotal -= txn.VariantCredits;
+                    GoodVariants.Add(txn.Index);
                 }
                 else
                 {
-                    Debug.Log("Reverting purchase of Variant " + txn.index);
-                    GameModel.RemoveVariant(txn.index);
+                    Debug.Log("Reverting purchase of Variant " + txn.Index);
+                    GameModel.RemoveVariant(txn.Index);
                 }
             }
             GameModel.OutstandingVariantTransactions = new List<VariantData>();

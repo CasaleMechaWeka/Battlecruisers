@@ -142,7 +142,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             variantName.text = _commonStrings.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
             variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-            variantDescription.text = _commonStrings.GetString(_dataProvider.StaticData.Variants[index].variantDescriptionStringKeyBase);
+            variantDescription.text = _commonStrings.GetString(_dataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
             variantStats.ShowStatsOfVariant(_selectedUnit, variant);
         }
 
