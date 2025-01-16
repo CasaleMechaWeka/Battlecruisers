@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Reflection;
 using System;
+using System.Runtime.InteropServices;
 
 public class UniClipboard
 {
