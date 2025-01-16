@@ -626,6 +626,9 @@ namespace BattleCruisers.Data.Static
             new IAPData(0, 2.99f, 1000),
             new IAPData(0, 3.99f, 5000)
         });
+        public int MinCPUCores { get; set; }
+        public int MinCPUFrequency { get; set; }
+        public int MaxLatency { get; set; }
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
         public ILevelStrategies SideQuestStrategies { get; }

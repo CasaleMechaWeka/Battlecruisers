@@ -343,9 +343,9 @@ namespace BattleCruisers.Data
             var sysReqsJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_REQUIREMENTS");
             Debug.Log($"Fetched PVP_REQUIREMENTS: {sysReqsJson}");
             PvPSysReqs sysReqs = JsonConvert.DeserializeObject<PvPSysReqs>(sysReqsJson);
-            _gameModel.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
-            _gameModel.MinCPUFreq = sysReqs.PvPSystemReqs.MinCPUFreq;
-            _gameModel.MaxLatency = sysReqs.PvPSystemReqs.MaxLatency;
+            StaticData.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
+            StaticData.MinCPUFrequency = sysReqs.PvPSystemReqs.MinCPUFreq;
+            StaticData.MaxLatency = sysReqs.PvPSystemReqs.MaxLatency;
 
             // Save the updated game model
             SaveGame();

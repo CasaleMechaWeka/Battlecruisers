@@ -22,9 +22,6 @@ namespace BattleCruisers.Data.Models
         float BattleWinScore { get; set; }
         string QueueName { get; set; }
         List<Arena> Arenas { get; set; }
-        int MinCPUCores { get; set; }
-        int MinCPUFreq { get; set; }
-        int MaxLatency { get; set; }
         Dictionary<string, int> GameConfigs { get; set; }
         List<HeckleData> OutstandingHeckleTransactions { get; set; }
         List<CaptainData> OutstandingCaptainTransactions { get; set; }

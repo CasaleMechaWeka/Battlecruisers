@@ -468,8 +468,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             //test and figure out CPU core and frequency thresholds
             if (SystemInfo.processorCount > 0 && SystemInfo.processorFrequency > 0)
             {
-                k_minCPUCores = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MinCPUCores;
-                k_minCPUFreq = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MinCPUFreq;
+                k_minCPUCores = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MinCPUCores;
+                k_minCPUFreq = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MinCPUFrequency;
                 k_meetsCPUReq = SystemInfo.processorCount > k_minCPUCores && SystemInfo.processorFrequency > k_minCPUFreq;
             }
             else

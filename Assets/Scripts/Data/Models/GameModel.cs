@@ -113,28 +113,6 @@ namespace BattleCruisers.Data.Models
             set => _queueName = value;
         }
 
-        // MinCPuCores and MinCPuFreq are used for setting which devices are allowed to host in pvp
-        private int minCPUCores;
-        public int MinCPUCores
-        {
-            get => minCPUCores;
-            set => minCPUCores = value;
-        }
-
-        private int minCPUFreq;
-        public int MinCPUFreq
-        {
-            get => minCPUFreq;
-            set => minCPUFreq = value;
-        }
-
-        private int maxLatency;
-        public int MaxLatency
-        {
-            get => maxLatency;
-            set => maxLatency = value;
-        }
-
         private string _playerName;
         public String PlayerName
         {
@@ -294,7 +272,6 @@ namespace BattleCruisers.Data.Models
             get { return _selectedPvPLevel; }
             set
             {
-
                 if (value < 0) { _selectedPvPLevel = 0; return; }
                 if (value >= StaticData.NUM_OF_PvPLEVELS) { _selectedPvPLevel = StaticData.NUM_OF_PvPLEVELS - 1; return; }
                 _selectedPvPLevel = value;
@@ -306,7 +283,6 @@ namespace BattleCruisers.Data.Models
             get { return _selectedSideQuestID; }
             set
             {
-
                 if (value < 0) { _selectedSideQuestID = 0; return; }
                 if (value >= StaticData.NUM_OF_SIDEQUESTS) { _selectedSideQuestID = StaticData.NUM_OF_SIDEQUESTS - 1; return; }
                 _selectedSideQuestID = value;
