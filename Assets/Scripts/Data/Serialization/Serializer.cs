@@ -15,7 +15,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Models.PrefabKeys;
 using System.Linq;
 using System.Reflection;
-using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 
 namespace BattleCruisers.Data.Serialization
@@ -58,79 +57,34 @@ namespace BattleCruisers.Data.Serialization
             // It should be changed to a version check though.
             var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
 
-            bool compatibleHeckles = false;
-            try
+            string[] purchasableCategories = new string[]
             {
-                var purchasedHecklesProperty = output.GetType().GetProperty("PurchasedHeckles");
-                if (purchasedHecklesProperty != null)
-                    if (purchasedHecklesProperty.GetValue(output) is List<int>)
-                        compatibleHeckles = true;
-                    else
-                        Debug.LogWarning("Property \"PurchasedHeckles\" was not in the expected format: List<int>");
-                else
-                    Debug.Log("Property \"PurchasedHeckles\" was not found");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error while reading \"PurchasedHeckles\" property from save data:\n" + ex.Message);
-            }
+                "Heckles", "Exos", "Bodykits", "Variants"
+            };
 
-            bool compatibleExos = false;
-            try
-            {
-                var purchasedExosProperty = output.GetType().GetProperty("PurchasedExos");
-                if (purchasedExosProperty != null)
-                    if (purchasedExosProperty.GetValue(output) is List<int>)
-                        compatibleExos = true;
-                    else
-                        Debug.LogWarning("Property \"PurchasedExos\" was not in the expected format: List<int>");
-                else
-                    Debug.Log("Property \"PurchasedExos\" was not found");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error while reading \"PurchasedExos\" property from save data:\n" + ex.Message);
-            }
+            byte compatiblePurchasables = 0;
 
-            bool compatibleBodykits = false;
-            try
-            {
-                var purchasedBodykitsProperty = output.GetType().GetProperty("PurchasedBodykits");
-                if (purchasedBodykitsProperty != null)
-                    if (purchasedBodykitsProperty.GetValue(output) is List<int>)
-                        compatibleBodykits = true;
+            foreach (string purchasableCategory in purchasableCategories)
+                try
+                {
+                    var purchasableProperty = output.GetType().GetProperty("Purchased" + purchasableCategory);
+                    if (purchasableProperty != null)
+                        if (purchasableProperty.GetValue(output) is List<int>)
+                            compatiblePurchasables++;
+                        else
+                            Debug.LogWarning("Property \"Purchased" + purchasableCategory + "\" was not in the expected format: List<int>");
                     else
-                        Debug.LogWarning("Property \"PurchasedBodykits\" was not in the expected format: List<int>");
-                else
-                    Debug.Log("Property \"PurchasedBodykits\" was not found");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error while reading \"PurchasedBodykits\" property from save data:\n" + ex.Message);
-            }
-
-            bool compatibleVariants = false;
-            try
-            {
-                var purchasedVariantsProperty = output.GetType().GetProperty("PurchasedVariants");
-                if (purchasedVariantsProperty != null)
-                    if (purchasedVariantsProperty.GetValue(output) is List<int>)
-                        compatibleVariants = true;
-                    else
-                        Debug.LogWarning("Property \"PurchasedVariants\" was not in the expected format: List<int>");
-                else
-                    Debug.Log("Property \"PurchasedVariants\" was not found");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error while reading \"PurchasedVariants\" property from save data:\n" + ex.Message);
-            }
+                        Debug.Log("Property \"Purchased" + purchasableCategory + "\" was not found");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Error while reading \"Purchased" + purchasableCategory + "\" property from save data:\n" + ex.Message);
+                }
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || compatibleHeckles == false ||
-            compatibleVariants == false || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
-            compatibleExos == false || compatibleBodykits == false)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || compatiblePurchasables != purchasableCategories.Length ||
+            ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -224,141 +178,61 @@ namespace BattleCruisers.Data.Serialization
             //foreach (PropertyInfo propertyInfo in properties)
             //    Debug.Log(propertyInfo.Name);
 
-            try
+            string[] purchasableCategories = new string[]
             {
-                var purchasedHecklesProperty = gameData.GetType().GetProperty("PurchasedHeckles");
-                if (purchasedHecklesProperty != null)
+                "Heckles", "Exos", "Bodykits", "Variants"
+            };
+
+            Action<int>[] purchasableOperations = new Action<int>[]
+            {
+                compatibleGameModel.AddHeckle,
+                compatibleGameModel.AddExo,
+                compatibleGameModel.AddBodykit,
+                compatibleGameModel.AddVariant
+            };
+
+            for (int i = 0; i < purchasableCategories.Length; i++)
+                try
                 {
-                    if (purchasedHecklesProperty.GetValue(gameData) is List<int> purchasedHeckles && purchasedHeckles.Count > 0)
-                        foreach (int i in purchasedHeckles)
-                            compatibleGameModel.AddHeckle(purchasedHeckles[i]);
+                    var purchasableProperty = gameData.GetType().GetProperty("Purchased" + purchasableCategories[i]);
+                    if (purchasableProperty != null)
+                    {
+                        if (purchasableProperty.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
+                            foreach (int j in purchasableItems)
+                                purchasableOperations[i](purchasableItems[j]);
+                        else
+                            Debug.LogError("Property \"Purchased" + purchasableCategories[i] + "\" was not in the expected format List<int>");
+                    }
                     else
-                        Debug.LogError("Property \"PurchasedHeckles\" was not in the expected format List<int>");
+                        Debug.LogWarning("Property \"Purchased" + purchasableCategories[i] + "\" is null in save data");
                 }
-                else
-                    Debug.LogWarning("Property \"PurchasedHeckles\" is null in save data");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error when processing \"PurchasedHeckles\": " + ex.Message);
-            }
-
-            try
-            {
-                var purchasedExosProperty = gameData.GetType().GetProperty("PurchasedExos");
-                if (purchasedExosProperty != null)
+                catch (Exception ex)
                 {
-                    if (purchasedExosProperty.GetValue(gameData) is List<int> purchasedExos && purchasedExos.Count > 0)
-                        foreach (int i in purchasedExos)
-                            compatibleGameModel.AddExo(purchasedExos[i]);
-                    else
-                        Debug.LogError("Property \"PurchasedExos\" was not in the expected format List<int>");
-                }
-                else
-                    Debug.LogWarning("Property \"PurchasedExos\" is null in save data");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error when processing \"PurchasedExos\": " + ex.Message);
-            }
-
-            try
-            {
-                var purchasedBodykitsProperty = gameData.GetType().GetProperty("PurchasedBodykits");
-                if (purchasedBodykitsProperty != null)
-                {
-                    if (purchasedBodykitsProperty.GetValue(gameData) is List<int> purchasedBodykits && purchasedBodykits.Count > 0)
-                        foreach (int i in purchasedBodykits)
-                            compatibleGameModel.AddExo(purchasedBodykits[i]);
-                    else
-                        Debug.LogError("Property \"PurchasedBodykits\" was not in the expected format List<int>");
-                }
-                else
-                    Debug.LogWarning("Property \"PurchasedBodykits\" is null in save data");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error when processing \"PurchasedBodykits\": " + ex.Message);
-            }
-
-            try
-            {
-                var purchasedVariantsProperty = gameData.GetType().GetProperty("PurchasedVariants");
-                if (purchasedVariantsProperty != null)
-                {
-                    if (purchasedVariantsProperty.GetValue(gameData) is List<int> purchasedVariants && purchasedVariants.Count > 0)
-                        foreach (int i in purchasedVariants)
-                            compatibleGameModel.AddVariant(purchasedVariants[i]);
-                    else
-                        Debug.LogError("Property \"PurchasedVariants\" was not in the expected format List<int>");
-                }
-                else
-                    Debug.LogWarning("Property \"PurchasedVariants\" is null in save data");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error when processing \"PurchasedVariants\": " + ex.Message);
-            }
-
-            var exos = gameData.GetType().GetProperty("Captains").GetValue(gameData) as IList<object>;
-            if (exos != null)
-                for (int i = 0; i < exos.Count; i++)
-                {
-                    var exo = exos[i];
-                    if (exo == null) continue;
-                    var isOwnedProperty = exo.GetType().GetProperty("isOwned");
-                    if (isOwnedProperty == null) continue;
-                    var indexProperty = exo.GetType().GetProperty("index");
-                    if (indexProperty == null) continue;
-                    if (isOwnedProperty.GetValue(exo) is bool isOwned && isOwned
-                        && indexProperty.GetValue(exo) is int index)
-                        compatibleGameModel.AddExo(index);
+                    Debug.LogError("Error when processing  \"Purchased" + purchasableCategories[i] + "\": " + ex.Message);
                 }
 
-            var heckles = gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IList<object>;
-            if (heckles != null)
-                for (int i = 0; i < heckles.Count; i++)
-                {
-                    var heckle = heckles[i];
-                    if (heckle == null) continue;
-                    var isOwnedProperty = heckle.GetType().GetProperty("isOwned");
-                    if (isOwnedProperty == null) continue;
-                    var indexProperty = heckle.GetType().GetProperty("index");
-                    if (indexProperty == null) continue;
-                    if (isOwnedProperty.GetValue(heckle) is bool isOwned && isOwned
-                        && indexProperty.GetValue(heckle) is int index)
-                        compatibleGameModel.AddHeckle(index);
-                }
+            string[] purchasableCategoriesLegacy = new string[]
+            {
+                "Heckles", "Captains", "Bodykits", "Variants"
+            };
 
-            var bodykits = gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IList<object>;
-            if (bodykits != null)
-                for (int i = 0; i < bodykits.Count; i++)
-                {
-                    var bodykit = bodykits[i];
-                    if (bodykit == null) continue;
-                    var isOwnedProperty = bodykit.GetType().GetProperty("isOwned");
-                    if (isOwnedProperty == null) continue;
-                    var indexProperty = bodykit.GetType().GetProperty("index");
-                    if (indexProperty == null) continue;
-                    if (isOwnedProperty.GetValue(bodykit) is bool isOwned && isOwned
-                        && indexProperty.GetValue(bodykit) is int index)
-                        compatibleGameModel.AddBodykit(index);
-                }
-
-            var variants = gameData.GetType().GetProperty("Variants").GetValue(gameData) as IList<object>;
-            if (variants != null)
-                for (int i = 0; i < variants.Count; i++)
-                {
-                    var variant = variants[i];
-                    if (variant == null) continue;
-                    var isOwnedProperty = variant.GetType().GetProperty("isOwned");
-                    if (isOwnedProperty == null) continue;
-                    var indexProperty = variant.GetType().GetProperty("index");
-                    if (indexProperty == null) continue;
-                    if (isOwnedProperty.GetValue(variant) is bool isOwned && isOwned
-                        && indexProperty.GetValue(variant) is int index)
-                        compatibleGameModel.AddVariant(index);
-                }
+            for (int i = 0; i < purchasableCategoriesLegacy.Length; i++)
+            {
+                var purchasableCategory = gameData.GetType().GetProperty(purchasableCategoriesLegacy[i]).GetValue(gameData) as IList<object>;
+                if (purchasableCategory != null)
+                    for (int j = 0; j < purchasableCategory.Count; j++)
+                    {
+                        var purchasable = purchasableCategory[i];
+                        if (purchasable == null) continue;
+                        var isOwnedProperty = purchasable.GetType().GetProperty("isOwned");
+                        if (isOwnedProperty == null) continue;
+                        var indexProperty = purchasable.GetType().GetProperty("index");
+                        if (indexProperty == null) continue;
+                        if (isOwnedProperty.GetValue(purchasable) is bool isOwned && isOwned
+                        && indexProperty.GetValue(purchasable) is int index)
+                            purchasableOperations[i](index);
+                    }
+            }
 
             if (gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData) != null)
                 compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);
@@ -377,9 +251,7 @@ namespace BattleCruisers.Data.Serialization
 
             // Variants
             if (_playerLoadout.SelectedVariants == null)
-            {
                 _playerLoadout.SelectedVariants = new List<int>();
-            }
 
             // Player Name
             string _playerName = gameData.GetType().GetProperty("PlayerName").GetValue(gameData) as string;
@@ -405,7 +277,7 @@ namespace BattleCruisers.Data.Serialization
             List<int> completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
 
             //needs to be hardcoded since otherwise access to StaticData.cs would be required
-            //update this whenever loot unlock requirements are modified 
+            //update this whenever loot unlock requirements are modified
 
             if (_unlockedBuildings.Contains(StaticPrefabKeys.Buildings.NovaArtillery) && !completedSideQuestIDs.Contains(0))
                 compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(0, Settings.Difficulty.Hard));
@@ -427,9 +299,7 @@ namespace BattleCruisers.Data.Serialization
                 compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(8, Settings.Difficulty.Hard));
 
             if (compatibleGameModel.CompletedLevels != null && compatibleGameModel.CompletedLevels.Count > 0)
-            {
                 compatibleGameModel.HasAttemptedTutorial = true;
-            }
 
             return compatibleGameModel;
         }
