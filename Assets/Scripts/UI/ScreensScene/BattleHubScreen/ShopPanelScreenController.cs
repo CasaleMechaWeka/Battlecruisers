@@ -459,15 +459,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
                 heckleItem.GetComponent<HeckleItemController>().StaticInitialise(_soundPlayer, _dataProvider.GameModel.Heckles[index], hecklesContainer, ii);
+
+
+                heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(false);
+
                 if (ii == 0)
                 {
-                    heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);
+                    // heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);
                     hecklesContainer.currentItem = heckleItem.GetComponent<HeckleItemController>();
 
                     heckleItem.GetComponent<HeckleItemController>().OnClicked();
                     hecklesContainer.hecklePrice.text = _dataProvider.GameModel.Heckles[index].heckleCost.ToString();
                     hecklesContainer.currentHeckleData = _dataProvider.GameModel.Heckles[index];
-                    //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(_dataProvider.GameModel.Heckles[index].StringKeyBase);
 
                     if (_dataProvider.GameModel.Heckles[index].IsOwned)
                     {
