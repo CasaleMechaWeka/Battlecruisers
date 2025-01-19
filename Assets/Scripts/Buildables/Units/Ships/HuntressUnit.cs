@@ -30,6 +30,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         public AudioSource[] audioSources;
         public BarrelWrapper minigun, _samSite;
         public ProjectileStats minigunStats;
+
+        public ProjectileStats samSiteStats;
+
         public GameObject bones;
         //public AudioSource bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource;
 
