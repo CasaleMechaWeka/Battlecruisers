@@ -34,7 +34,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             buildTime.ShowResult((item.BuildTimeInS * item.NumOfDronesRequired * 0.5f).ToString(), _lowerIsBetterComparer.CompareStats((item.BuildTimeInS * item.NumOfDronesRequired), (itemToCompareTo.BuildTimeInS * itemToCompareTo.NumOfDronesRequired)));
 
             int healthStars = _buildableHealthConverter.ConvertValueToStars(item.MaxHealth);
-            Debug.Log($"Health Stars: {healthStars} for item.MaxHealth: {item.MaxHealth}");
             health.ShowResult(healthStars, _higherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             ShowDamageStat(cruiserDamage, GetAntiCruiserDamage(item), GetAntiCruiserDamage(itemToCompareTo), _antiCruiserConverter);
@@ -92,7 +91,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             if (shouldShowRow)
             {
                 int damageStars = converter.ConvertValueToStars(damagePerS);
-                Debug.Log($"Damage Stars: {damageStars} for damagePerS: {damagePerS}");
                 damageStatsRow.ShowResult(damageStars, _higherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
             }
         }
