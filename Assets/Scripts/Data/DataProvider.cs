@@ -297,7 +297,7 @@ namespace BattleCruisers.Data
             var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
             Debug.Log($"Fetched GAME_CONFIG: {gameConfigsJson}");
             GameConfig gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigsJson);
-            _gameModel.GameConfigs = gameConfig.gameconfigs;
+            StaticData.GameConfigs = gameConfig.gameconfigs;
 
             // Fetch and deserialize SHOP_CONFIG
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");

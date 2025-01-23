@@ -168,14 +168,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             }
 
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditdivider", out creditDivider);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
-            applicationModel.DataProvider.GameModel.GameConfigs.TryGetValue("creditmax", out creditMax);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
+            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
 
 
             PopulateScreen();

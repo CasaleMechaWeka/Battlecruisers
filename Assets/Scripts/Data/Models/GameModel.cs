@@ -38,12 +38,6 @@ namespace BattleCruisers.Data.Models
             set { _battleWinScore = value; if (_battleWinScore < 0) _battleWinScore = 0; }
         }
 
-        public Dictionary<String, int> _gameConfigs;
-        public Dictionary<String, int> GameConfigs
-        {
-            get => _gameConfigs;
-            set => _gameConfigs = value;
-        }
         public List<HeckleData> _outstandingHeckleTransactions;
         public List<HeckleData> OutstandingHeckleTransactions
         {
@@ -352,17 +346,6 @@ namespace BattleCruisers.Data.Models
             ID_Bodykit_AIbot = -1;
 
             _queueName = "bc-1vs1-queue";
-
-            _gameConfigs = new Dictionary<string, int>() { { "scoredivider", 10 },
-                { "creditdivider", 100 },
-                { "coin1threshold", 1000 },
-                { "coin2threshold", 2000 },
-                { "coin3threshold", 3000 },
-                { "coin4threshold", 4000 },
-                { "coin5threshold", 5000 },
-                { "creditmax", 1250 }
-            };
-
             _battleWinScore = 0;
         }
 

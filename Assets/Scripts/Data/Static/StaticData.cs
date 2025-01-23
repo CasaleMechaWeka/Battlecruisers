@@ -639,6 +639,17 @@ namespace BattleCruisers.Data.Static
                 new Arena("UACUltimate", costcoins: 10000, prizecredits:20000),
                 new Arena("MercenaryOne", costcoins:50, prizecredits:50000, prizenukes: 1)
         };
+        public Dictionary<string, int> GameConfigs { get; set; } = new Dictionary<string, int>
+        {
+            { "scoredivider", 10 },
+            { "creditdivider", 100 },
+            { "coin1threshold", 1000 },
+            { "coin2threshold", 2000 },
+            { "coin3threshold", 3000 },
+            { "coin4threshold", 4000 },
+            { "coin5threshold", 5000 },
+            { "creditmax", 1250 }
+        };
         public int MinCPUCores { get; set; }
         public int MinCPUFrequency { get; set; }
         public int MaxLatency { get; set; }

@@ -36,6 +36,7 @@ namespace BattleCruisers.Data.Static
         IReadOnlyList<VariantData> Variants { get; }
         IReadOnlyList<IAPData> IAPs { get; }
         List<Arena> Arenas { get; set; }
+        Dictionary<string, int> GameConfigs { get; set; }
         int MinCPUCores { get; set; }
         int MinCPUFrequency { get; set; }
         int MaxLatency { get; set; }
