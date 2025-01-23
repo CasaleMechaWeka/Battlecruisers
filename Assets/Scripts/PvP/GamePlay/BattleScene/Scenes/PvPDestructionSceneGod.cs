@@ -705,7 +705,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private int CalculateCoins(long score)
         {
             int result = 0;
-            Arena arena = applicationModel.DataProvider.GameModel.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+            Arena arena = applicationModel.DataProvider.StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
 
             if (levelTimeInSeconds > 60)
             {
@@ -758,7 +758,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private long CalculateCredits()
         {
             long creditsAward = 0;
-            Arena arena = applicationModel.DataProvider.GameModel.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+            Arena arena = applicationModel.DataProvider.StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
 
             if (levelTimeInSeconds > 60)
             {

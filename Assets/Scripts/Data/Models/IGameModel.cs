@@ -21,7 +21,6 @@ namespace BattleCruisers.Data.Models
         int GameMap { get; set; }
         float BattleWinScore { get; set; }
         string QueueName { get; set; }
-        List<Arena> Arenas { get; set; }
         Dictionary<string, int> GameConfigs { get; set; }
         List<HeckleData> OutstandingHeckleTransactions { get; set; }
         List<CaptainData> OutstandingCaptainTransactions { get; set; }

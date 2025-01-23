@@ -251,7 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             else
                             {
                                 int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
-                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Arenas[_iMap + 1].costcredits)
+                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Arenas[_iMap + 1].costcredits)
                                 {
                                     var regions = new List<string>();
                                     regions.Add(Region);
