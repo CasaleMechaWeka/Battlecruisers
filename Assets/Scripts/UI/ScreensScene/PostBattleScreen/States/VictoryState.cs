@@ -69,8 +69,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             {
                 //completed a side quest that unlocks new loot
                 if (desiredBehaviour == PostBattleScreenBehaviour.Victory_SideQuest_LootUnlocked ||
-                    desiredBehaviour == PostBattleScreenBehaviour.Default
-                    && appModel.Mode == GameMode.SideQuest && _lootManager.ShouldShowSideQuestLoot(battleResult.LevelNum))
+                    (desiredBehaviour == PostBattleScreenBehaviour.Default
+                    && appModel.Mode == GameMode.SideQuest && _lootManager.ShouldShowSideQuestLoot(battleResult.LevelNum)))
                 {
                     postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
                     postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
@@ -81,16 +81,18 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
                 }
                 else
-                if (appModel.Mode == GameMode.CoinBattle)
                 {
-                    postBattleScreen.victoryNoLootMessage.gameObject.SetActive(true);
-                    postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
-                    musicPlayer.PlayVictoryMusic();
-                }
-                else
-                {
-                    postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
-                    postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer);
+                    if (appModel.Mode == GameMode.CoinBattle)
+                    {
+                        postBattleScreen.victoryNoLootMessage.gameObject.SetActive(true);
+                        postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
+                        musicPlayer.PlayVictoryMusic();
+                    }
+                    else
+                    {
+                        postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+                        postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer);
+                    }
                 }
 
             }
