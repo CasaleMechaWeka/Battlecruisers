@@ -136,7 +136,10 @@ namespace BattleCruisers.Scenes
 #endif
 
             if (Instance == null)
+            {
                 Instance = this;
+            }
+
             LogToScreen(Application.platform.ToString());
             messagebox.HideMessage();
             Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);

@@ -39,12 +39,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public override async void Fire(float angleInDegrees)
 		{
             Logging.Log(Tags.BARREL_CONTROLLER, $"{this}  angleInDegrees: " + angleInDegrees);
-            await Task.Delay((int)(delayInS * 1000f));
-            _missileSpawners.Next().SpawnMissile(
-                angleInDegrees,
-                IsSourceMirrored,
-                Target,
-                _targetFilter);
+            if (Target == null)
+            {
+                Logging.Log(Tags.BARREL_CONTROLLER, $"Target was null");
+
+            }
+            else
+            {
+                await Task.Delay((int)(delayInS * 1000f));
+                _missileSpawners.Next().SpawnMissile(
+                    angleInDegrees,
+                    IsSourceMirrored,
+                    Target,
+                    _targetFilter);
+            }
 		}
 	}
 }
