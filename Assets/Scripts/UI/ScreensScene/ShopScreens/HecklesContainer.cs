@@ -65,7 +65,6 @@ namespace BattleCruisers.UI.ScreensScene
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
                             _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
@@ -123,7 +122,6 @@ namespace BattleCruisers.UI.ScreensScene
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.Heckles[currentHeckleData.Index].isOwned = true;
                         _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
@@ -143,7 +141,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CoinsChange -= currentHeckleData.HeckleCost;
-                        HeckleData heckle = _dataProvider.GameModel.Heckles[currentHeckleData.Index];
+                        HeckleData heckle = _dataProvider.StaticData.Heckles[currentHeckleData.Index];
                         if (_dataProvider.GameModel.OutstandingHeckleTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
@@ -182,7 +180,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentItem = (HeckleItemController)sender;
             currentHeckleData = e.heckleData;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
-            if (e.heckleData.IsOwned)
+            if (_dataProvider.GameModel.PurchasedHeckles.Contains(e.heckleData.Index))
             {
                 priceLabel.SetActive(false);
                 btnBuy.SetActive(false);

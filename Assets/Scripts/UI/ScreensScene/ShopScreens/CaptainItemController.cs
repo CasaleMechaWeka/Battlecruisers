@@ -20,14 +20,13 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
-            /*IPrefabFactory prefabFactory,*/
             Sprite spriteCaptain,
             ICaptainData captainData,
             CaptainsContainer captainsContainer,
-            int index
-            )
+            int index,
+            bool isOwned)
         {
-            Helper.AssertIsNotNull(soundPlayer, /*prefabFactory, */captainData, _captainImage, clickingArea, _ownedItemMark, _clickedFeedback, captainsContainer);
+            Helper.AssertIsNotNull(soundPlayer, captainData, _captainImage, clickingArea, _ownedItemMark, _clickedFeedback, captainsContainer);
             _captainData = captainData;
             _soundPlayer = soundPlayer;
             _captainsContainer = captainsContainer;
@@ -37,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene
             _captainImage.sprite = _captainSprite;
             _clickedFeedback.SetActive(false);
 
-            _ownedItemMark.SetActive(_captainData.IsOwned);
+            _ownedItemMark.SetActive(isOwned);
             clickingArea.Initialise(_soundPlayer, OnClicked);
         }
 

@@ -23,8 +23,8 @@ namespace BattleCruisers.UI.ScreensScene
             ISingleSoundPlayer soundPlayer,
             IHeckleData heckleData,
             HecklesContainer hecklesContainer,
-            int index
-            )
+            int index,
+            bool isOwned)
         {
             Helper.AssertIsNotNull(soundPlayer, /*prefabFactory, */heckleData, clickingArea, _ownedItemMark, _clickedFeedback, hecklesContainer);
 
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             _clickedFeedback.SetActive(false);
 
-            _ownedItemMark.SetActive(_heckleData.IsOwned);
+            _ownedItemMark.SetActive(isOwned);
             clickingArea.Initialise(_soundPlayer, OnClicked);
             heckleNameText.text = Mathf.Max(108, 217 * index).ToString().Substring(0, 3);
         }

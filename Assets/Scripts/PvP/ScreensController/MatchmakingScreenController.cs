@@ -207,7 +207,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull.PrefabName))
                 {
-                    leftCruiserName.text = _commonStrings.GetString(dataProvider.GameModel.Bodykits[id_bodykitA].NameStringKeyBase);
+                    leftCruiserName.text = _commonStrings.GetString(dataProvider.StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     leftCruiserImage.sprite = bodykit.BodykitImage;
                 }
             }
@@ -501,7 +501,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
                 {
-                    leftCruiserName.text = _commonStrings.GetString(dataProvider.GameModel.Bodykits[id_bodykitA].NameStringKeyBase);
+                    leftCruiserName.text = _commonStrings.GetString(dataProvider.StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     leftCruiserImage.sprite = bodykit.bodykitImage;
                 }
             }
@@ -517,7 +517,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerBPrefabName.Value))
                 {
-                    rightCruiserName.text = _commonStrings.GetString(dataProvider.GameModel.Bodykits[id_bodykitB].NameStringKeyBase);
+                    rightCruiserName.text = _commonStrings.GetString(dataProvider.StaticData.Bodykits[id_bodykitB].NameStringKeyBase);
                     rightCruiserImage.sprite = bodykit.bodykitImage;
                 }
             }
