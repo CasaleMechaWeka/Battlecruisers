@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         string IAPNameKeyBase { get; }
         string IAPDescriptionKeyBase { get; }
         string IAPIconName { get; }
-        float IAPCost { get; }
+        float IAPCost { get; set; }
         int IAPCoins { get; }
 
     }

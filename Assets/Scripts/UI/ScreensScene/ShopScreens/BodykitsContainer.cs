@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void OnEnable()
         {
-            if (_dataProvider.GameModel.Bodykits[0].IsOwned)
+            if (_dataProvider.GameModel.PurchasedBodykits.Contains(0))
             {
                 priceLabel.SetActive(false);
                 premiumButton.gameObject.SetActive(false);
@@ -87,7 +87,6 @@ namespace BattleCruisers.UI.ScreensScene
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.Bodykits[currentBodykitData.Index].isOwned = true;
                             _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
@@ -118,7 +117,6 @@ namespace BattleCruisers.UI.ScreensScene
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.Bodykits[currentBodykitData.Index].isOwned = true;
                         _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("BodykitPurchased") + " " + commonStrings.GetString(currentBodykitData.NameStringKeyBase));
@@ -130,7 +128,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CoinsChange -= currentBodykitData.BodykitCost;
-                        BodykitData bodykit = _dataProvider.GameModel.Bodykits[currentBodykitData.Index];
+                        BodykitData bodykit = _dataProvider.StaticData.Bodykits[currentBodykitData.Index];
                         if (_dataProvider.GameModel.OutstandingBodykitTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingBodykitTransactions = new List<BodykitData>();
@@ -207,7 +205,7 @@ namespace BattleCruisers.UI.ScreensScene
             btnBuy.transform.parent.gameObject.SetActive(true);
             premiumButton.gameObject.SetActive(false);
 
-            if (e.bodykitData.IsOwned)
+            if (_dataProvider.GameModel.PurchasedBodykits.Contains(e.bodykitData.Index))
             {
                 btnBuy.SetActive(false);
                 priceLabel.SetActive(false);

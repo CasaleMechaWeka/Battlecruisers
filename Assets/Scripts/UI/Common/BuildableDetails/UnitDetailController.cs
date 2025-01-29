@@ -139,10 +139,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             variantIcon.gameObject.SetActive(true);
             variantName.gameObject.SetActive(true);
             VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-            variantName.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
+            variantName.text = _commonStrings.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
             variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-            variantDescription.text = _commonStrings.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+            variantDescription.text = _commonStrings.GetString(_dataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
             variantStats.ShowStatsOfVariant(_selectedUnit, variant);
         }
 
@@ -203,23 +203,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void CollectUnlockedUnitVariant()
         {
             _unlockedVariants = new Dictionary<IUnit, List<int>>();
-            for (int i = 0; i < _dataProvider.GameModel.GetVariants().Count; i++)
+            for (int i = 0; i < _dataProvider.GameModel.PurchasedVariants.Count; i++)
             {
-                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.GetVariants()[i]));
+                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.PurchasedVariants[i]));
                 if (variant != null)
-                {
                     if (variant.IsUnit())
-                    {
                         if (_unlockedVariants.ContainsKey(variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)))
-                        {
-                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)].Add(_dataProvider.GameModel.GetVariants()[i]);
-                        }
+                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)].Add(_dataProvider.GameModel.PurchasedVariants[i]);
                         else
-                        {
-                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)] = new List<int> { _dataProvider.GameModel.GetVariants()[i] };
-                        }
-                    }
-                }
+                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)] = new List<int> { _dataProvider.GameModel.PurchasedVariants[i] };
             }
         }
     }

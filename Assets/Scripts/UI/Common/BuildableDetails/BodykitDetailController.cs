@@ -183,8 +183,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             if (index < 0)
                 return;
             Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
-            GetComponent<ComparableCruiserDetailsController>().itemName.text = _commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].NameStringKeyBase);
-            GetComponent<ComparableCruiserDetailsController>().itemDescription.text = _commonStrings.GetString(_dataProvider.GameModel.Bodykits[index].DescriptionKeyBase);
+            GetComponent<ComparableCruiserDetailsController>().itemName.text = _commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].NameStringKeyBase);
+            GetComponent<ComparableCruiserDetailsController>().itemDescription.text = _commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
             GetComponent<ComparableCruiserDetailsController>().itemImage.sprite = bodykit.BodykitImage;
         }
 
@@ -208,7 +208,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 case "Flea":
                     return HullType.Flea;
                 case "Goatherd":
-                    return HullType.Goatherd;  
+                    return HullType.Goatherd;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":
@@ -239,9 +239,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void CollectUnlockedBodykits()
         {
             _unlockedBodykits = new Dictionary<HullType, List<int>>();
-            for (int i = 0; i < _dataProvider.GameModel.Bodykits.Count; i++)
+            for (int i = 0; i < _dataProvider.StaticData.Bodykits.Count; i++)
             {
-                if (_dataProvider.GameModel.Bodykits[i].isOwned)
+                if (_dataProvider.GameModel.PurchasedBodykits.Contains(i))
                 {
                     Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i));
                     if (_unlockedBodykits.ContainsKey(bodykit.cruiserType))

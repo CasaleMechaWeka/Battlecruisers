@@ -5,7 +5,6 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         int BodykitCost { get; }
         string NameStringKeyBase { get; }
         string DescriptionKeyBase { get; }
-        bool IsOwned { get; }
         int Index { get; }
     }
 }

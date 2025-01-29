@@ -90,10 +90,10 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits = ComputeUnlockedUnits(game.UnlockedUnits);
 
             // IAPs:
-            _purchasedExos = game.GetExos().Distinct().ToList();
-            _purchasedHeckles = game.GetHeckles().Distinct().ToList();
-            _purchasedBodykits = game.GetBodykits().Distinct().ToList();
-            _purchasedVariants = game.GetVariants().Distinct().ToList();
+            _purchasedExos = game.PurchasedExos.Distinct().ToList();
+            _purchasedHeckles = game.PurchasedHeckles.Distinct().ToList();
+            _purchasedBodykits = game.PurchasedBodykits.Distinct().ToList();
+            _purchasedVariants = game.PurchasedVariants.Distinct().ToList();
 
             // Loadout fields:
             _currentHullKey = game.PlayerLoadout.Hull.PrefabName;
@@ -168,82 +168,66 @@ namespace BattleCruisers.Data.Models
             // Exos
             if (_purchasedExos != null)
             {
-                List<int> currentList = game.GetExos();
+                List<int> currentExos = game.PurchasedExos;
                 if (_purchasedExos.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedExos.Count - 1; i++)
                     {
                         // Add
                         int index = _purchasedExos[i];
-                        if (!currentList.Contains(index))
-                        {
+                        if (!currentExos.Contains(index))
                             game.AddExo(index);
-                            game.Captains[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentList.Except(_purchasedExos).ToList();
+                List<int> entriesToRemove = currentExos.Except(_purchasedExos).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveExo(entry);
-                    game.Captains[entry].isOwned = false;
-                }
             }
             // Heckles
             if (_purchasedHeckles != null)
             {
-                List<int> currentList = game.GetHeckles();
+                List<int> currentBodykits = game.PurchasedHeckles;
                 if (_purchasedHeckles.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
                     {
                         // Add
                         int index = _purchasedHeckles[i];
-                        if (!currentList.Contains(index))
-                        {
+                        if (!currentBodykits.Contains(index))
                             game.AddHeckle(index);
-                            game.Heckles[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentList.Except(_purchasedHeckles).ToList();
+                List<int> entriesToRemove = currentBodykits.Except(_purchasedHeckles).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveHeckle(entry);
-                    game.Heckles[entry].isOwned = false;
-                }
             }
             // Bodykits
             if (_purchasedBodykits != null)
             {
-                List<int> currentList = game.GetBodykits();
+                Debug.Log("CLOUDBODYKITS: " + _purchasedBodykits.Count);
+                List<int> currentBodykits = game.PurchasedBodykits;
+                Debug.Log("LOCALBODYKITS: " + currentBodykits.Count);
                 if (_purchasedBodykits.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
                     {
                         // Add
                         int index = _purchasedBodykits[i];
-                        if (!currentList.Contains(index))
-                        {
+                        if (!currentBodykits.Contains(index))
                             game.AddBodykit(index);
-                            game.Bodykits[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentList.Except(_purchasedBodykits).ToList();
+                List<int> entriesToRemove = currentBodykits.Except(_purchasedBodykits).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveBodykit(entry);
-                    game.Bodykits[entry].isOwned = false;
-                }
             }
             // Variants
             if (_purchasedVariants != null)
             {
-                List<int> currentList = game.GetVariants();
+                List<int> currentList = game.PurchasedVariants;
                 if (_purchasedVariants.Count > 0)
                 {
                     for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
@@ -251,19 +235,13 @@ namespace BattleCruisers.Data.Models
                         // Add
                         int index = _purchasedVariants[i];
                         if (!currentList.Contains(index))
-                        {
                             game.AddVariant(index);
-                            game.Variants[index].isOwned = true;
-                        }
                     }
                 }
                 // Remove if they're not in the cloud save data:
                 List<int> entriesToRemove = currentList.Except(_purchasedVariants).ToList();
                 foreach (int entry in entriesToRemove)
-                {
                     game.RemoveVariant(entry);
-                    game.Variants[entry].isOwned = false;
-                }
             }
 
             // levels completed
@@ -384,7 +362,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // current bodykit
-            if (_currentBodykit == -1 || game.Bodykits[_currentBodykit].isOwned)
+            if (_currentBodykit == -1 || game.PurchasedBodykits.Contains(_currentBodykit))
             {
                 game.PlayerLoadout.SelectedBodykit = _currentBodykit;
             }
@@ -398,7 +376,7 @@ namespace BattleCruisers.Data.Models
             {
                 game.PlayerLoadout.CurrentHeckles = _currentHeckles;
                 foreach (int i in _currentHeckles)
-                    game._heckles[i].isOwned = true;
+                    game.AddHeckle(_currentHeckles[i]);
             }
             else
             {
@@ -471,7 +449,6 @@ namespace BattleCruisers.Data.Models
                 int unlockHeckle = UnityEngine.Random.Range(0, 279);
                 if (!unlockedHeckles.Contains(unlockHeckle))
                 {
-                    game._heckles[unlockHeckle].isOwned = true;
                     unlockedHeckles.Add(unlockHeckle);
                 }
             }

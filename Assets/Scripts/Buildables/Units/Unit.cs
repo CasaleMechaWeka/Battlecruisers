@@ -127,8 +127,8 @@ namespace BattleCruisers.Buildables.Units
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     variantIndex = randomID;
-                    Name = _commonStrings.GetString(dataProvider.GameModel.Variants[randomID].VariantNameStringKeyBase);
-                    Description = _commonStrings.GetString(dataProvider.GameModel.Variants[randomID].VariantDescriptionStringKeyBase);
+                    Name = _commonStrings.GetString(dataProvider.StaticData.Variants[randomID].VariantNameStringKeyBase);
+                    Description = _commonStrings.GetString(dataProvider.StaticData.Variants[randomID].VariantDescriptionStringKeyBase);
 
                     // apply variant stats for building (maxhealth, numof drones required, build time)
                     ApplyVariantStats(variant.statVariant);
@@ -146,7 +146,7 @@ namespace BattleCruisers.Buildables.Units
             int variant_ID = -1;
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             List<int> ids = new List<int>();
-            for (int i = 0; i < dataProvider.GameModel.Variants.Count; i++)
+            for (int i = 0; i < dataProvider.StaticData.Variants.Count; i++)
             {
                 VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
                 if (variant != null)
@@ -176,8 +176,8 @@ namespace BattleCruisers.Buildables.Units
                 HealthBar.variantIcon.enabled = true;
                 int index = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
                 variantIndex = index;
-                Name = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
-                Description = _commonStrings.GetString(applicationModel.DataProvider.GameModel.Variants[index].VariantDescriptionStringKeyBase);
+                Name = _commonStrings.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
+                Description = _commonStrings.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
 
                 // apply max health, num of drone required, build time
                 ApplyVariantStats(variant.statVariant);
