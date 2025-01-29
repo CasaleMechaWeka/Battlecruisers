@@ -6,26 +6,32 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
     [Serializable]
     public class IAPData : IIAPData
     {
-        public int IAPType { get; }
+        public int _IAPType;
+        public int IAPType => _IAPType;
 
-        public string IAPNameKeyBase { get; }
+        public string _IAPNameKeyBase;
+        public string IAPNameKeyBase => _IAPNameKeyBase;
 
-        public string IAPDescriptionKeyBase { get; }
+        public string _IAPDescriptionKeyBase;
+        public string IAPDescriptionKeyBase => _IAPDescriptionKeyBase;
 
-        public string IAPIconName { get; }
+        public string _IAPIconName;
+        public string IAPIconName => _IAPIconName;
 
-        public float IAPCost { get; set; }
+        public float _IAPCost;
+        public float IAPCost => _IAPCost;
 
-        public int IAPCoins { get; }
+        public int _IAPCoins;
+        public int IAPCoins => _IAPCoins;
 
-        public IAPData(int iapType = 0, float iapCost = 0.99f, int iapCoins = 100)
+        public IAPData(int iapType = 0, string iapNameKeyBase = "Coins100Name", string iapDescriptionKeybase = "Coins100Description", string iapIconName = "Coins100Pack", float iapCost = 0.99f, int iapCoins = 100)
         {
-            IAPType = iapType;
-            IAPCost = iapCost;
-            IAPCoins = iapCoins;
-            IAPNameKeyBase = "Coins" + IAPCoins + "Name";
-            IAPDescriptionKeyBase = "Coins" + IAPCoins + "Description";
-            IAPIconName = "Coins" + IAPCoins + "Pack";
+            _IAPType = iapType;
+            _IAPNameKeyBase = iapNameKeyBase;
+            _IAPDescriptionKeyBase = iapDescriptionKeybase;
+            _IAPIconName = iapIconName;
+            _IAPCost = iapCost;
+            _IAPCoins = iapCoins;
         }
     }
 }

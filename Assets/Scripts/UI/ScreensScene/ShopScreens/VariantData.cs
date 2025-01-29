@@ -6,27 +6,36 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
     [Serializable]
     public class VariantData : IVariantData
     {
-        public int VariantCoins { get; set; }
+        public int variantCoins;
+        public int VariantCoins => variantCoins;
 
-        public int VariantCredits { get; set; }
+        public int variantCredits;
+        public int VariantCredits => variantCredits;
 
-        public string VariantPrefabName { get; }
+        public string variantPrefabName;
+        public string VariantPrefabName => variantPrefabName;
 
-        public string VariantNameStringKeyBase { get; }
+        public string variantNameStringKeyBase;
+        public string VariantNameStringKeyBase => variantNameStringKeyBase;
 
-        public string VariantDescriptionStringKeyBase { get; }
+        public string variantDescriptionStringKeyBase;
+        public string VariantDescriptionStringKeyBase => variantDescriptionStringKeyBase;
 
-        public int Index { get; }
+        public bool isOwned;
+        public bool IsOwned => isOwned;
 
-        public VariantData(string variantNameBase, int coins = 0, int credits = 0, int id = 0)
+        public int index;
+        public int Index => index;
+
+        public VariantData(string prefabName = "Variant000", string variantNameBase = "Variant000", string variantDescriptionBase = "VariantDescription000", int coins = 0, int credits = 0, bool owned = false, int id = 0)
         {
-
-            VariantCoins = coins;
-            VariantCredits = credits;
-            Index = id;
-            VariantPrefabName = "Variant" + Index.ToString("D3");
-            VariantNameStringKeyBase = variantNameBase;
-            VariantDescriptionStringKeyBase = VariantNameStringKeyBase + "Description";
+            variantPrefabName = prefabName;
+            variantCoins = coins;
+            variantCredits = credits;
+            variantNameStringKeyBase = variantNameBase;
+            variantDescriptionStringKeyBase = variantDescriptionBase;
+            index = id;
+            isOwned = owned;
         }
     }
 }

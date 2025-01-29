@@ -6,22 +6,28 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
     [Serializable]
     public class CaptainData : ICaptainData
     {
-        public int CaptainCost { get; set; }
+        public int captainCost;
+        public int CaptainCost => captainCost;
 
-        public string NameStringKeyBase { get; }
+        public string nameStringKeyBase;
+        public string NameStringKeyBase => nameStringKeyBase;
 
-        public int Index { get; }
+        public bool isOwned;
+        public bool IsOwned => isOwned;
 
-        public string DescriptionKeyBase { get; }
+        public int index;
+        public int Index => index;
 
-        public CaptainData(int cost = 0, int id = 0)
+        public string descriptionKeyBase;
+        public string DescriptionKeyBase => descriptionKeyBase;
+
+        public CaptainData(string nameBase = "CaptainExo000", string descriptionBase = "CaptainDescription000", int cost = 0, bool owned = false, int id = 0)
         {
-            CaptainCost = cost;
-            Index = id;
-            //this formats it to CaptainExo000, CaptainExo0001, ...
-            NameStringKeyBase = "CaptainExo" + Index.ToString("D3");
-            //this formats it to CaptainDescription000, CaptainDescription0001, ...
-            DescriptionKeyBase = "CaptainDescription" + Index.ToString("D3");
+            nameStringKeyBase = nameBase;
+            captainCost = cost;
+            isOwned = owned;
+            index = id;
+            descriptionKeyBase = descriptionBase;
         }
     }
 }

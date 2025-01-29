@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     _itemDetailsManager,
                     ItemType.Hull,
                     _comparingFamilyTracker,
-                    dataProvider,
+                    dataProvider.GameModel,
                     selectCruiserButton.SelectedHull,
                     soundPlayer,
                     prefabFactory);

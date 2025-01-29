@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void Initialize()
         {
-            _selectedItem = new SettableBroadcastingProperty<IHeckleData>(initialValue: ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Heckles[0]); // Heckle000 is default;
+            _selectedItem = new SettableBroadcastingProperty<IHeckleData>(initialValue: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Heckles[0]); // Heckle000 is default;
             SelectedItem = new BroadcastingProperty<IHeckleData>(_selectedItem);
         }
 

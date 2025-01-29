@@ -194,6 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         }
 
+
         private async Task LoadBodykit(int index)
         {
             Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
@@ -201,8 +202,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                 // should update Name and Description for Bodykit
-                Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
-                Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
+                Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[index].NameStringKeyBase);
+                Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[index].DescriptionKeyBase);
             }
         }
 

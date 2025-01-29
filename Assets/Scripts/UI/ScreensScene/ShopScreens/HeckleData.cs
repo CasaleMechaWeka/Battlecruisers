@@ -6,16 +6,24 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
     [Serializable]
     public class HeckleData : IHeckleData
     {
-        public int HeckleCost { get; set; }
-        public string StringKeyBase { get; }
-        public int Index { get; }
+        public int heckleCost;
+        public int HeckleCost => heckleCost;
 
-        public HeckleData(int cost = 0, int id = 0)
+        public string stringKeyBase;
+        public string StringKeyBase => stringKeyBase;
+
+        public bool isOwned;
+        public bool IsOwned => isOwned;
+
+        public int index;
+        public int Index => index;
+
+        public HeckleData(string keyBase = "Heckle000", int cost = 0, bool owned = false, int id = 0)
         {
-            HeckleCost = cost;
-            Index = id;
-            //this formats it to Heckle000, Heckle0001, ...
-            StringKeyBase = "Heckle" + Index.ToString("D3");
+            stringKeyBase = keyBase;
+            heckleCost = cost;
+            isOwned = owned;
+            index = id;
         }
     }
 }

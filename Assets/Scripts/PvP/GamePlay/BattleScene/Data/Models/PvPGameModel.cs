@@ -15,8 +15,158 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     [Serializable]
-    public class GameModel : IPvPGameModel
+    public class GameModel : IPvPGameModel, IPvPVoyageModel, IPvPPlayerModel
     {
+        private int _voyageNumber;
+        public int VoyageNumber
+        {
+            get => _voyageNumber;
+            set => _voyageNumber = value;
+        }
+
+        // Voyage properties
+
+        private int _legNumber;
+        public int LegNumber
+        {
+            get => _legNumber;
+            set => _legNumber = value;
+        }
+
+        private int _battleNumber;
+        public int BattleNumber
+        {
+            get => _battleNumber;
+            set => _battleNumber = value;
+        }
+
+        private int _battlesWon;
+        public int BattlesWon
+        {
+            get => _battlesWon;
+            set => _battlesWon = value;
+        }
+
+        private bool _voyageInProgress;
+        public bool VoyageInProgress
+        {
+            get => _voyageInProgress;
+            set => _voyageInProgress = value;
+        }
+
+        // Player properties
+
+
+        private int _totalUpgrades;
+        public int TotalUpgrades
+        {
+            get => _totalUpgrades;
+            set => _totalUpgrades = value;
+        }
+
+
+        private int _totalPerks;
+        public int TotalPerks
+        {
+            get => _totalPerks;
+            set => _totalPerks = value;
+        }
+
+
+        private int _totalBuildables;
+        public int TotalBuildables
+        {
+            get => _totalBuildables;
+            set => _totalBuildables = value;
+        }
+
+
+        private int _playerBounty;
+        public int PlayerBounty
+        {
+            get => _playerBounty;
+            set => _playerBounty = value;
+        }
+
+
+        private int _playerLevel;
+        public int PlayerLevel
+        {
+            get => _playerLevel;
+            set => _playerLevel = value;
+        }
+
+
+        private int _currentLuck;
+        public int CurrentLuck
+        {
+            get => _currentLuck;
+            set => _currentLuck = value;
+        }
+
+
+        private int _baseLuck;
+        public int BaseLuck
+        {
+            get => _baseLuck;
+            set => _baseLuck = value;
+        }
+
+
+        private int _extraDrones;
+        public int ExtraDrones
+        {
+            get => _extraDrones;
+            set => _extraDrones = value;
+        }
+
+
+        private int _currentHP;
+        public int CurrentHP
+        {
+            get => _currentHP;
+            set => _currentHP = value;
+        }
+
+
+        private int _maxHP;
+
+        public int MaxHP
+        {
+            get => _maxHP;
+            set => _maxHP = value;
+        }
+
+
+        private int _credits;
+        public int Credits
+        {
+            get => _credits;
+            set => _credits = value;
+        }
+
+
+        private int _totalVoyages;
+        public int TotalVoyages
+        {
+            get => _totalVoyages;
+            set => _totalVoyages = value;
+        }
+
+        // Pre-Rogue stuff
+
+        public class ModelVersion
+        {
+            public const int PreShowHelpLabel = 0;
+            public const int WithShowHelpLabel = 1;
+            public const int RemovedShowHelpLabel = 2;// Voyage properties
+
+            private int _stageNumber;
+            public int StageNumber;
+
+
+        }
+
         [SerializeField]
         private bool _hasAttemptedTutorial;
 
@@ -73,6 +223,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         [SerializeField]
         private PvPHotkeysModel _hotkeys;
         public PvPHotkeysModel Hotkeys => _hotkeys;
+
+        [SerializeField]
+        private int _version;
+        public int Version
+        {
+            get => _version;
+            set => _version = value;
+        }
+
+
 
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
@@ -293,6 +453,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             if (_hotkeys == null)
             {
                 _hotkeys = new PvPHotkeysModel();
+            }
+
+            if (_version != ModelVersion.RemovedShowHelpLabel)
+            {
+                _version = ModelVersion.RemovedShowHelpLabel;
             }
         }
 

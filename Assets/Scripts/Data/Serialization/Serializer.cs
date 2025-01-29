@@ -15,6 +15,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Models.PrefabKeys;
 using System.Linq;
 using System.Reflection;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 
 namespace BattleCruisers.Data.Serialization
@@ -23,6 +24,9 @@ namespace BattleCruisers.Data.Serialization
     {
         private readonly IModelFilePathProvider _modelFilePathProvider;
         private readonly BinaryFormatter _binaryFormatter;
+        private const int NUM_OF_CAPTAINS = 51;
+        private const int NUM_OF_VARIANTS = 131;
+        private const int NUM_OF_Bodykits = 51;
 
         public Serializer(IModelFilePathProvider modelFilePathProvider)
         {
@@ -56,35 +60,14 @@ namespace BattleCruisers.Data.Serialization
             // Not having a captain set causes the game to hang on the first load screen, so this is a good test now.
             // It should be changed to a version check though.
             var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
-
-            string[] purchasableCategories = new string[]
-            {
-                "Heckles", "Exos", "Bodykits", "Variants"
-            };
-
-            byte compatiblePurchasables = 0;
-
-            foreach (string purchasableCategory in purchasableCategories)
-                try
-                {
-                    var purchasableProperty = output.GetType().GetProperty("Purchased" + purchasableCategory);
-                    if (purchasableProperty != null)
-                        if (purchasableProperty.GetValue(output) is List<int>)
-                            compatiblePurchasables++;
-                        else
-                            Debug.LogWarning("Property \"Purchased" + purchasableCategory + "\" was not in the expected format: List<int>");
-                    else
-                        Debug.Log("Property \"Purchased" + purchasableCategory + "\" was not found");
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError("Error while reading \"Purchased" + purchasableCategory + "\" property from save data:\n" + ex.Message);
-                }
+            var bks = output.GetType().GetProperty("Bodykits").GetValue(output);
+            var vts = output.GetType().GetProperty("Variants").GetValue(output);
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || compatiblePurchasables != purchasableCategories.Length ||
-            ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || bks == null || vts == null ||
+            ((GameModel)output).Variants.Count < NUM_OF_VARIANTS || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS ||
+            ((GameModel)output).Captains.Count < NUM_OF_CAPTAINS || ((GameModel)output).Bodykits.Count < NUM_OF_Bodykits)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -97,7 +80,7 @@ namespace BattleCruisers.Data.Serialization
 
 #if PREMIUM_EDITION
             game.PremiumEdition = true;
-            game.AddBodykit(0);
+            game._bodykits[0].isOwned = true;
 #endif
 
             file.Close();
@@ -178,61 +161,37 @@ namespace BattleCruisers.Data.Serialization
             //foreach (PropertyInfo propertyInfo in properties)
             //    Debug.Log(propertyInfo.Name);
 
-            string[] purchasableCategories = new string[]
-            {
-                "Heckles", "Exos", "Bodykits", "Variants"
-            };
-
-            Action<int>[] purchasableOperations = new Action<int>[]
-            {
-                compatibleGameModel.AddHeckle,
-                compatibleGameModel.AddExo,
-                compatibleGameModel.AddBodykit,
-                compatibleGameModel.AddVariant
-            };
-
-            for (int i = 0; i < purchasableCategories.Length; i++)
-                try
-                {
-                    var purchasableProperty = gameData.GetType().GetProperty("Purchased" + purchasableCategories[i]);
-                    if (purchasableProperty != null)
+            if (gameData.GetType().GetProperty("Captains").GetValue(gameData) != null && (gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>).Count != 0)
+                foreach (CaptainData captain in gameData.GetType().GetProperty("Captains").GetValue(gameData) as IReadOnlyCollection<CaptainData>)
+                    if (captain.IsOwned)
                     {
-                        if (purchasableProperty.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
-                            foreach (int j in purchasableItems)
-                                purchasableOperations[i](purchasableItems[j]);
-                        else
-                            Debug.LogError("Property \"Purchased" + purchasableCategories[i] + "\" was not in the expected format List<int>");
+                        compatibleGameModel.AddExo(captain.index);
+                        compatibleGameModel._captains[captain.index].isOwned = true;
                     }
-                    else
-                        Debug.LogWarning("Property \"Purchased" + purchasableCategories[i] + "\" is null in save data");
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError("Error when processing  \"Purchased" + purchasableCategories[i] + "\": " + ex.Message);
-                }
 
-            string[] purchasableCategoriesLegacy = new string[]
-            {
-                "Heckles", "Captains", "Bodykits", "Variants"
-            };
-
-            for (int i = 0; i < purchasableCategoriesLegacy.Length; i++)
-            {
-                var purchasableCategory = gameData.GetType().GetProperty(purchasableCategoriesLegacy[i]).GetValue(gameData) as IList<object>;
-                if (purchasableCategory != null)
-                    for (int j = 0; j < purchasableCategory.Count; j++)
+            if (gameData.GetType().GetProperty("Heckles").GetValue(gameData) != null && (gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IReadOnlyCollection<HeckleData>).Count != 0)
+                foreach (HeckleData heckle in gameData.GetType().GetProperty("Heckles").GetValue(gameData) as IReadOnlyCollection<HeckleData>)
+                    if (heckle.IsOwned)
                     {
-                        var purchasable = purchasableCategory[i];
-                        if (purchasable == null) continue;
-                        var isOwnedProperty = purchasable.GetType().GetProperty("isOwned");
-                        if (isOwnedProperty == null) continue;
-                        var indexProperty = purchasable.GetType().GetProperty("index");
-                        if (indexProperty == null) continue;
-                        if (isOwnedProperty.GetValue(purchasable) is bool isOwned && isOwned
-                        && indexProperty.GetValue(purchasable) is int index)
-                            purchasableOperations[i](index);
+                        compatibleGameModel.AddHeckle(heckle.index);
+                        compatibleGameModel._heckles[heckle.index].isOwned = true;
                     }
-            }
+
+            if (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) != null && (gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>).Count != 0)
+                foreach (BodykitData bodykit in gameData.GetType().GetProperty("Bodykits").GetValue(gameData) as IReadOnlyCollection<BodykitData>)
+                    if (bodykit.IsOwned)
+                    {
+                        compatibleGameModel.AddBodykit(bodykit.index);
+                        compatibleGameModel._bodykits[bodykit.index].isOwned = true;
+                    }
+
+            if (gameData.GetType().GetProperty("Variants").GetValue(gameData) != null && (gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>).Count != 0)
+                foreach (VariantData variant in gameData.GetType().GetProperty("Variants").GetValue(gameData) as IReadOnlyCollection<VariantData>)
+                    if (variant.IsOwned)
+                    {
+                        compatibleGameModel.AddVariant(variant.index);
+                        compatibleGameModel._variants[variant.index].isOwned = true;
+                    }
 
             if (gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData) != null)
                 compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);
@@ -251,7 +210,9 @@ namespace BattleCruisers.Data.Serialization
 
             // Variants
             if (_playerLoadout.SelectedVariants == null)
+            {
                 _playerLoadout.SelectedVariants = new List<int>();
+            }
 
             // Player Name
             string _playerName = gameData.GetType().GetProperty("PlayerName").GetValue(gameData) as string;
@@ -277,7 +238,7 @@ namespace BattleCruisers.Data.Serialization
             List<int> completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
 
             //needs to be hardcoded since otherwise access to StaticData.cs would be required
-            //update this whenever loot unlock requirements are modified
+            //update this whenever loot unlock requirements are modified 
 
             if (_unlockedBuildings.Contains(StaticPrefabKeys.Buildings.NovaArtillery) && !completedSideQuestIDs.Contains(0))
                 compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(0, Settings.Difficulty.Hard));
@@ -299,7 +260,9 @@ namespace BattleCruisers.Data.Serialization
                 compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(8, Settings.Difficulty.Hard));
 
             if (compatibleGameModel.CompletedLevels != null && compatibleGameModel.CompletedLevels.Count > 0)
+            {
                 compatibleGameModel.HasAttemptedTutorial = true;
+            }
 
             return compatibleGameModel;
         }
@@ -476,7 +439,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncInventoryFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncInventoryFromCloud(IDataProvider dataProivder)
         {
             GetInventoryResult inventoryResult = null;
             try
@@ -489,20 +452,20 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddExo(index);
+                        dataProivder.GameModel.Captains[index].isOwned = true;
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddHeckle(index);
+                        dataProivder.GameModel.Heckles[index].isOwned = true;
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddBodykit(index);
+                        dataProivder.GameModel.Bodykits[index].isOwned = true;
                     }
                 }
-                dataProvider.SaveGame();
+                dataProivder.SaveGame();
                 return true;
             }
             catch (EconomyRateLimitedException e)
@@ -515,20 +478,20 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddExo(index);
+                        dataProivder.GameModel.Captains[index].isOwned = true;
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddHeckle(index);
+                        dataProivder.GameModel.Heckles[index].isOwned = true;
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddBodykit(index);
+                        dataProivder.GameModel.Bodykits[index].isOwned = true;
                     }
                 }
-                dataProvider.SaveGame();
+                dataProivder.SaveGame();
                 return true;
             }
             catch (Exception e)
