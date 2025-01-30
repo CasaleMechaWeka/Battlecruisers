@@ -22,6 +22,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         public IPool<IExplosion, Vector3> HugeExplosionsPool { get; }
         public IPool<IExplosion, Vector3> FirecrackerExplosionsPool { get; }
         public IPool<IExplosion, Vector3> MFExplosionsPool { get; }
+        public IPool<IExplosion, Vector3> FiveShellClusterExplosionsPool { get; }
 
 
         public ExplosionPoolProvider(IPrefabFactory prefabFactory)
@@ -41,6 +42,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             HugeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion500);
             FirecrackerExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.ExplosionFirecracker);
             MFExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.ExplosionMF);
+            FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.FiveShellClusterExplosion);
         }
 
         private IPool<IExplosion, Vector3> CreateExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
@@ -67,6 +69,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             RocketShellImpactPool.AddCapacity(InitialCapacity.MEDIUM);
             HugeExplosionsPool.AddCapacity(InitialCapacity.HUGE);
             MFExplosionsPool.AddCapacity(InitialCapacity.MEDIUM);
+            FiveShellClusterExplosionsPool.AddCapacity(InitialCapacity.MEDIUM);
         }
     }
 }

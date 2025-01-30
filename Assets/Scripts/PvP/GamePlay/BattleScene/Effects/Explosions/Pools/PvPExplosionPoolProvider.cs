@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public IPvPPool<IPvPExplosion, Vector3> FirecrackerExplosionsPool { get; }
         public IPvPPool<IPvPExplosion, Vector3> LargeExplosionsPool { get; }
         public IPvPPool<IPvPExplosion, Vector3> HugeExplosionsPool { get; }
-
+        public IPvPPool<IPvPExplosion, Vector3> FiveShellClusterExplosionsPool { get; }
 
         public PvPExplosionPoolProvider(IPvPPrefabFactory prefabFactory)
         {
@@ -42,6 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             FirecrackerExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFirecracker);
             LargeExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion150);
             HugeExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion500);
+            FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPFiveShellClusterExplosion);
         }
 
         private IPvPPool<IPvPExplosion, Vector3> CreateExplosionPool(IPvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
@@ -68,6 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await NovaShellImpactPool.AddCapacity(1);
             await RocketShellImpactPool.AddCapacity(1);
             await HugeExplosionsPool.AddCapacity(1);
+            await FiveShellClusterExplosionsPool.AddCapacity(1);
         }
 
         public async Task SetInitialCapacity_Rest()
@@ -85,6 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             await NovaShellImpactPool.AddCapacity(PvPInitialCapacity.LARGE - 1);
             await RocketShellImpactPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
             await HugeExplosionsPool.AddCapacity(PvPInitialCapacity.HUGE - 1);
+            await FiveShellClusterExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
         }
     }
 }

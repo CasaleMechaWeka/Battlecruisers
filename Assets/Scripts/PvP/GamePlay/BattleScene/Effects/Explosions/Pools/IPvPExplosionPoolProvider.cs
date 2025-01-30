@@ -43,6 +43,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         // Radius 5m    => Nuke
         IPvPPool<IPvPExplosion, Vector3> HugeExplosionsPool { get; }
 
+        // Radius 1.5m  => Five shell cluster
+        IPvPPool<IPvPExplosion, Vector3> FiveShellClusterExplosionsPool { get; }
+
 
     }
 }

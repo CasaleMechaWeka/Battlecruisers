@@ -44,6 +44,9 @@ namespace BattleCruisers.Effects.Explosions.Pools
         // Radius 5m    => Nuke
         IPool<IExplosion, Vector3> HugeExplosionsPool { get; }
 
+        // Radius 1.5m  => Five shell cluster
+        IPool<IExplosion, Vector3> FiveShellClusterExplosionsPool { get; }
+
 
     }
 }

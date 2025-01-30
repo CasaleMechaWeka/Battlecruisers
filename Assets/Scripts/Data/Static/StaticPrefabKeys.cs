@@ -411,12 +411,13 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey Explosion150 { get; } = new ExplosionKey("Explosion1.5");
             public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
             public static ExplosionKey ExplosionMF { get; } = new ExplosionKey("ExplosionMF");
+            public static ExplosionKey FiveShellClusterExplosion { get; } = new ExplosionKey("FiveShellClusterExplosion");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, RocketShellImpact,
                 BombExplosion, FlakExplosion, Explosion75, Explosion100, ExplosionFirecracker,
-                Explosion150, Explosion500, ExplosionMF
+                Explosion150, Explosion500, ExplosionMF, FiveShellClusterExplosion
             });
         }
 
