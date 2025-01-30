@@ -213,8 +213,8 @@ namespace BattleCruisers.Cruisers
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                         // should update Name and Description for Bodykit
-                        Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                        Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                        Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
+                        Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
                         isUsingBodykit = true;
                     }
                 }
@@ -246,8 +246,8 @@ namespace BattleCruisers.Cruisers
                         if (bodykit.cruiserType == hullType)
                         {
                             GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                            Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                            Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                            Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].NameStringKeyBase);
+                            Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[id_bodykit].DescriptionKeyBase);
                             isUsingBodykit = true;
                         }
                     }

@@ -32,8 +32,8 @@ namespace BattleCruisers.UI.ScreensScene
             IVariantData variantData,
             VariantsContainer variantsContainer,
             VariantPrefab variant,
-            int index,
-            bool isOwned)
+            int index
+            )
         {
             Helper.AssertIsNotNull(soundPlayer, variantData, spriteParent, spriteVariant, parentName, clickingArea, _ownedItemMark, _clickedFeedback, variantsContainer, variant);
             _variantData = variantData;
@@ -47,8 +47,8 @@ namespace BattleCruisers.UI.ScreensScene
             _parentImage.sprite = _parentSprite;
             _variantImage.sprite = _variantSprite;
             _clickedFeedback.SetActive(false);
-            _clickedFeedbackVariantImage.color = new Color(_clickedFeedbackVariantImage.color.r, _clickedFeedbackVariantImage.color.g, _clickedFeedbackVariantImage.color.b, 64f / 255);
-            _ownedItemMark.SetActive(isOwned);
+            _clickedFeedbackVariantImage.color = new Color(_clickedFeedbackVariantImage.color.r, _clickedFeedbackVariantImage.color.g, _clickedFeedbackVariantImage.color.b, 64f/255);
+            _ownedItemMark.SetActive(_variantData.IsOwned);
             clickingArea.Initialise(_soundPlayer, OnClicked);
         }
 

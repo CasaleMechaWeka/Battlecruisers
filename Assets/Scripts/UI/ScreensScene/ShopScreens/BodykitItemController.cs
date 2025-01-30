@@ -23,7 +23,6 @@ namespace BattleCruisers.UI.ScreensScene
         private Sprite _bodykitSprite;
         public int _index;
         private bool isCruiserOwned = false;
-        private bool _isOwned;
 
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
@@ -32,8 +31,9 @@ namespace BattleCruisers.UI.ScreensScene
             BodykitsContainer bodykitContainer,
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory,
-            int index,
-            bool isOwned)
+
+            int index
+            )
         {
             Helper.AssertIsNotNull(soundPlayer, bodykitData, _bodyKitImage, clickingArea, _ownedItemMark, _clickedFeedback, bodykitContainer);
             _bodykitData = bodykitData;
@@ -41,12 +41,11 @@ namespace BattleCruisers.UI.ScreensScene
             _bodykitContainer = bodykitContainer;
             _bodykitSprite = spriteBodykit;
             _index = index;
-            _isOwned = isOwned;
 
             _bodyKitImage.sprite = _bodykitSprite;
             _clickedFeedback.SetActive(false);
 
-            _ownedItemMark.SetActive(_isOwned);
+            _ownedItemMark.SetActive(_bodykitData.IsOwned);
 
             IHullNameToKey hullNameToKey = new HullNameToKey(dataProvider.StaticData.HullKeys, prefabFactory);
 
@@ -67,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene
                 {
                     bodykitData = _bodykitData,
                     bodykitImage = _bodykitSprite,
-                    purchasable = isCruiserOwned && !_isOwned
+                    purchasable = isCruiserOwned && !_bodykitData.IsOwned
                 });
             }
         }
