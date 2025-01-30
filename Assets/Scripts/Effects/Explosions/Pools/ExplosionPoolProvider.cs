@@ -42,7 +42,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             HugeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion500);
             FirecrackerExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.ExplosionFirecracker);
             MFExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.ExplosionMF);
-            FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.FiveShellClusterExplosion);
+            FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.ExplosionFiveShellCluster);
         }
 
         private IPool<IExplosion, Vector3> CreateExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
