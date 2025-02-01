@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
+using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
@@ -68,6 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public ILoot UnlockLevelLoot(int levelCompleted)
         {
+            Debug.Log($"UnlockLevelLoot called for level: {levelCompleted}");
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)
@@ -81,6 +83,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public ILoot UnlockSideQuestLoot(int sideQuestID)
         {
+            Debug.Log($"UnlockSideQuestLoot called for sideQuestID: {sideQuestID}");
             ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
 
             if (unlockedLoot.Items.Count != 0)

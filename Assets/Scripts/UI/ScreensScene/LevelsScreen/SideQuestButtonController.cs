@@ -69,6 +69,7 @@ public class SideQuestButtonController : ElementWithClickSound
     protected override void OnClicked()
     {
         base.OnClicked();
+        Debug.Log($"SideQuestButton clicked for sideQuestID: {sideQuestID}");
 
         int firstLevelOfStage = -1;
         if (levelsSetController != null)

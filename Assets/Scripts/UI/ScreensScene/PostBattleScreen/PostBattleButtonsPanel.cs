@@ -4,6 +4,7 @@ using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
+using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
@@ -19,6 +20,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             bool wasVictory,
             IDataProvider dataProvider)
         {
+            Debug.Log($"Initializing PostBattleButtonsPanel with SelectedLevel: {dataProvider.GameModel.SelectedLevel}, Mode: {ApplicationModelProvider.ApplicationModel.Mode}");
+
             base.Initialise(postBattleScreen, soundPlayer);
 
             Helper.AssertIsNotNull(nextCommand, clockedGameButton);
