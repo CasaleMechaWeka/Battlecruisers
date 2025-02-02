@@ -270,6 +270,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IEnumerator TimedSelfDestroy()
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer, autoDetonationTimer * 1.5f));
+            _isActiveAndAlive = false;
             ShowExplosion();
             DestroyProjectile();
         }
