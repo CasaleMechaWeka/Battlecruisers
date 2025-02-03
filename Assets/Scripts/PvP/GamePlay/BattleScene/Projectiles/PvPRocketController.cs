@@ -104,6 +104,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected override void DestroyProjectile()
         {
+            enabled = false;
+            _rocketTarget.GameObject.SetActive(false);
+            if (IsHost)
+                SetRocketVisibleClientRpc(false);
             base.DestroyProjectile();
             DestroyProjectileClientRpc();
         }
