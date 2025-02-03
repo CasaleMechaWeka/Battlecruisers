@@ -49,9 +49,6 @@ namespace BattleCruisers.Projectiles
 
         private IMovementController _movementController;
         public float autoDetonationTimer = 0f;
-        public int maxHitCount = 1;
-        private int hitCount = 0;
-
         protected IMovementController MovementController
         {
             get { return _movementController; }
@@ -113,7 +110,6 @@ namespace BattleCruisers.Projectiles
 
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
-            hitCount = 0;
             _isActiveAndAlive = true;
 
             if (gameObject.activeInHierarchy && autoDetonationTimer > 0f)
@@ -145,21 +141,15 @@ namespace BattleCruisers.Projectiles
 
             if (_targetToDamage != null)
             {
-                hitCount++;
-                if (hitCount >= maxHitCount)
-                    DestroyProjectile();
+                DestroyProjectile();
                 //if (_targetToDamage.IsShield())
                 //{
                 //    _singleDamageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
                 //}
                 //else{
                 _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
-                ShowExplosion();
                 //}
-                if (_targetToDamage.Health == 0)
-                    _targetToDamage = null;
-                if (hitCount >= maxHitCount)
-                    _isActiveAndAlive = false;
+                _isActiveAndAlive = false;
             }
             else if (MovementController != null)
             {
@@ -190,6 +180,7 @@ namespace BattleCruisers.Projectiles
         {
             Logging.LogMethod(Tags.SHELLS);
 
+            ShowExplosion();
             RemoveFromScene();
         }
 
@@ -237,9 +228,8 @@ namespace BattleCruisers.Projectiles
         IEnumerator TimedSelfDestroy()
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer, autoDetonationTimer * 1.5f));
-            _isActiveAndAlive = false;
-            ShowExplosion();
             DestroyProjectile();
+            _isActiveAndAlive = false;
         }
     }
 }
