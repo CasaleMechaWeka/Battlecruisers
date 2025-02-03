@@ -88,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _rocketTarget.GameObject.SetActive(true);
             isVisible = true;
             timeStamp = Time.time;
-            SetRocketTargetVisibleClientRpc(true);
+            SetRocketVisibleClientRpc(true);
             _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
 
             if (rocketSprite != null)
@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             base.OnImpactCleanUp();
             _rocketTarget.GameObject.SetActive(false);
-            SetRocketTargetVisibleClientRpc(false);
+            SetRocketVisibleClientRpc(false);
 
             if (rocketSprite != null)
             {
@@ -331,7 +331,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         // rocket
         [ClientRpc]
-        private void SetRocketTargetVisibleClientRpc(bool visible)
+        private void SetRocketVisibleClientRpc(bool visible)
         {
             if (!IsHost)
             {
