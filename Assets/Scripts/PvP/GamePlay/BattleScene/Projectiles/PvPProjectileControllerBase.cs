@@ -200,6 +200,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected void ShowExplosion()
         {
+            if (_explosionPool == null)
+                _explosionPool = GetComponent<IPvPExplosionPoolChooser>().ChoosePool(_factoryProvider.PoolProviders.ExplosionPoolProvider);
             _explosionPool.GetItem(transform.position);
             OnPlayExplosionSound(SoundType.Explosions, _impactSound.AudioClip.name, transform.position);
         }
