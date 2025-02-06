@@ -102,6 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             OnActiveClientRpc(velocity, gravityScale, isAlive);
         }
 
+        /*
         protected override void DestroyProjectile()
         {
             enabled = false;
@@ -111,6 +112,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.DestroyProjectile();
             DestroyProjectileClientRpc();
         }
+        */
+
         protected override void OnImpactCleanUp()
         {
             base.OnImpactCleanUp();
