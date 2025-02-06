@@ -19,6 +19,7 @@ using UnityEngine.Assertions;
 using Unity.Netcode.Components;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Buildables;
+using Unity.Netcode;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
@@ -171,8 +172,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             if (gameObject.activeInHierarchy && autoDetonationTimer > 0f)
             {
-                IEnumerator timedSelfDestroy = TimedSelfDestroy();
-                StartCoroutine(timedSelfDestroy);
+                if(IsHost)
+                {
+                    StartCoroutine(TimedSelfDestroy());
+                }
+                else
+                {
+                    TimedSelfDestroyClientRpc();
+                }
             }
         }
 
@@ -264,6 +271,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer, autoDetonationTimer * 1.5f));
             DestroyProjectile();
             _isActiveAndAlive = false;
+        }
+
+        [ClientRpc]
+        void TimedSelfDestroyClientRpc()
+        {
+            StartCoroutine(TimedSelfDestroy());
         }
     }
 }

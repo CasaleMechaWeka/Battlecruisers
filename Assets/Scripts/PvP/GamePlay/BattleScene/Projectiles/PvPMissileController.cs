@@ -118,6 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 SetMissileVisibleClientRpc(false);
             Target.Destroyed -= Target_Destroyed;
             base.DestroyProjectile();
+            DestroyProjectileClientRpc();
         }
 
 
@@ -133,8 +134,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (IsClient)
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
-            if (!IsHost)
-                _factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
+            //if (!IsHost)
+                //_factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
         }
         public override void OnNetworkDespawn()
         {
@@ -206,6 +207,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         }
 
         //----------------------------- Rpcs -----------------------------
+        [ClientRpc]
+        private void DestroyProjectileClientRpc()
+        {
+            if (!IsHost)
+            {
+                _rigidBody.velocity = Vector2.zero;
+                MovementController = null;
+            }
+        }
 
         [ClientRpc]
         private void OnTargetDestroyedClientRpc()
