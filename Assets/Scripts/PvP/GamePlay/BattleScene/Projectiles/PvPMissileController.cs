@@ -16,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Movement;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -134,8 +135,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (IsClient)
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
-            //if (!IsHost)
-                //_factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
+            if (!IsHost)
+                _factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
         }
         public override void OnNetworkDespawn()
         {
