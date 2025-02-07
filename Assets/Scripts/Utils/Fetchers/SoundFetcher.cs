@@ -16,7 +16,6 @@ namespace BattleCruisers.Utils.Fetchers
         public async Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
         {
             string soundPath = CreateSoundPath(soundKey);
-            AudioClip clip = null;
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
             try
             {
@@ -27,9 +26,9 @@ namespace BattleCruisers.Utils.Fetchers
                     if (validateAddress.Result.Count > 0)
                     {
                         handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
-                        clip = await handle.Task;
+                        await handle.Task;
 
-                        if (handle.Status != AsyncOperationStatus.Succeeded || clip == null)
+                        if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
                         {
                             throw new ArgumentException("Failed to retrieve sound");
                         }
@@ -46,7 +45,7 @@ namespace BattleCruisers.Utils.Fetchers
             }
 
 
-            return new AudioClipWrapper(clip);
+            return new AudioClipWrapper(handle.Result, handle);
         }
 
         private string CreateSoundPath(ISoundKey soundKey)
