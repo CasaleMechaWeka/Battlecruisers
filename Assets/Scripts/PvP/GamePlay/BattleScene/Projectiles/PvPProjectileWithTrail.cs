@@ -96,13 +96,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         }
 
         private void OnTrailsDoneCleanup()
-        {
-            Debug.Log("[PvPProjectileWithTrail] OnTrailsDoneCleanup() initiated.");
-            // Logging.LogMethod(Tags.SHELLS);
-            OnSetPosition_Visible(Position, false);
-            gameObject.SetActive(false);
-            Debug.Log("[PvPProjectileWithTrail] Projectile deactivated and removed from scene.");
-            InvokeDeactivated();
+{
+    if (this == null || gameObject == null)
+    {
+        Debug.LogWarning("[PvPProjectileWithTrail] OnTrailsDoneCleanup aborted because the object is destroyed.");
+        return;
         }
+
+    Debug.Log("[PvPProjectileWithTrail] OnTrailsDoneCleanup called. Proceeding with cleanup.");
+    OnSetPosition_Visible(Position, false);
+    gameObject.SetActive(false);
+    InvokeDeactivated();
+}
     }
 }

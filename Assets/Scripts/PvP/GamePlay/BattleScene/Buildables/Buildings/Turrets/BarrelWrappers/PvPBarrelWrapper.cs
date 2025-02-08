@@ -53,12 +53,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             set
             {
                 // When Unity game object is destroyed need to null check it, even though it is not truly null.
-                // Logging.Log(Tags.BARREL_WRAPPER, $"Parent: {_parent}  _target: {PrintTarget(_target)} > {PrintTarget(value)}");
+                Debug.Log("[PvPBarrelWrapper] Target set to: " + value);
                 _target = value;
                 foreach (IPvPBarrelController barrel in _barrels)
                 {
                     barrel.Target = _target;
                 }
+
             }
         }
 
