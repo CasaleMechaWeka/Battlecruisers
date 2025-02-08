@@ -9,7 +9,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
-using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -17,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Movement;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -53,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             base.Activate(activationArgs);
 
-            Logging.Log(Tags.MISSILE, $"Rotation: {transform.rotation.eulerAngles}");
+            Debug.Log("[PvPMissileController] Activate() called. Rotation: " + transform.rotation.eulerAngles + ", Target: " + activationArgs.Target);
 
             Target = activationArgs.Target;
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
@@ -79,6 +79,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     targetProvider,
                     _factoryProvider.TargetPositionPredictorFactory);
 
+            Debug.Log("[PvPMissileController] Movement controller created. Missile sprite enabled: " + missile.enabled);
+
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;
 
@@ -103,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private void ConditionalDestroy()
         {
-            if (gameObject.activeSelf)
+            if (gameObject != null && gameObject.activeSelf)
             {
                 DestroyProjectile();
             }
@@ -163,6 +165,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private async void PlayExplosionSound()
         {
+            Debug.Log("[PvPMissileController] PlayExplosionSound invoked with Type: " + _type + ", Name: " + _name + ", Position: " + _pos);
             await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
@@ -229,6 +232,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (!IsHost)
             {
+                Debug.Log("[PvPMissileController] OnAddMoveControllerToClientRpc called with objectID: " + objectID + ", MaxVelocity: " + MaxVelocityInMPerS);
                 NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectID);
                 if (obj != null)
                 {
