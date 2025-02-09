@@ -903,14 +903,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PlayCountDownAnimation();
             if (SynchedServerData.Instance != null)
             {
+                // Optionally focus based on team...
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                     cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();
                 else if (SynchedServerData.Instance.GetTeam() == Team.RIGHT)
-                {
-                    MatchmakingScreenController.Instance.isProcessing = false;
-                    MatchmakingScreenController.Instance.isLoaded = true;
                     cameraComponents.CameraFocuser.FocusOnRightPlayerCruiser();
-                }
+
+                // In either case, mark loading as done.
+                MatchmakingScreenController.Instance.isProcessing = false;
+                MatchmakingScreenController.Instance.isLoaded = true;
                 components.UpdaterProvider.SwitchableUpdater.Enabled = true;
             }
         }
