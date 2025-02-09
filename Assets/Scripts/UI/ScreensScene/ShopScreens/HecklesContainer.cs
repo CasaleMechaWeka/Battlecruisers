@@ -8,7 +8,6 @@ using BattleCruisers.Utils.Localisation;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
@@ -88,17 +87,6 @@ namespace BattleCruisers.UI.ScreensScene
 #endif
                             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                             Dictionary<string, object> transactionDetails = new Dictionary<string, object>() { { "heckleIndex", currentHeckleData.Index } };
-                            try
-                            {
-                                AnalyticsService.Instance.CustomData("Shop_Heckle_Bought", transactionDetails);
-                                AnalyticsService.Instance.Flush();
-                            }
-                            catch (ConsentCheckException ex)
-                            {
-                                Debug.Log(ex.Message);
-                            }
-
-
                         }
                         else
                         {
@@ -168,8 +156,8 @@ namespace BattleCruisers.UI.ScreensScene
                 // Execute this line if it's a Windows build
                 ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), null, null);
 #else
-        // Execute the original line for non-Windows builds
-        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+                // Execute the original line for non-Windows builds
+                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
 #endif
             }
             Debug.Log(_dataProvider.GameModel.Coins);

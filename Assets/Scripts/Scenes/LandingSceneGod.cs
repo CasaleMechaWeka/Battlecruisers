@@ -12,7 +12,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Unity.Services.Analytics;
 using Unity.Services.Authentication;
 using Unity.Services.Core.Environments;
 using UnityEngine;
@@ -209,12 +208,8 @@ namespace BattleCruisers.Scenes
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
 #endif
-                if (InternetConnectivity.Value)
-                {
-                    List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
-                }
             }
-            catch (ConsentCheckException e)
+            catch (Exception e)
             {
                 // do nothing
                 Debug.Log(e.Message);
