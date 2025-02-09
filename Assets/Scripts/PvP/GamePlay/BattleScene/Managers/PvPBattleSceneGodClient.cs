@@ -778,6 +778,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             if (null != obj_ToolTipActivator)
                 obj_ToolTipActivator.SetActive(false);
+
+            if (null != countdownGameObject)
+                countdownGameObject.SetActive(false);
         }
 
         public void OnTunnelBattleCompleted_ValueChanged(/*Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal*/)
