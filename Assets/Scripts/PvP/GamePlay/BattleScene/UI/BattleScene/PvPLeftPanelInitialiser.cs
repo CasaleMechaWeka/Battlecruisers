@@ -1,7 +1,7 @@
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
                     IPvPPrioritisedSoundPlayer eventSoundPlayer,
                     IPvPSingleSoundPlayer uiSoundPlayer,
-                    IPvPPopulationLimitMonitor populationLimitMonitor,
+                    IPopulationLimitMonitor populationLimitMonitor,
                     IStaticData staticData)
                 {
                     PvPHelper.AssertIsNotNull(
@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPvPPopulationLimitMonitor populationLimitMonitor,
+            IPopulationLimitMonitor populationLimitMonitor,
             IStaticData staticData,
             bool flipClickAndDragIcon)
         {
@@ -157,7 +157,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPvPPopulationLimitMonitor populationLimitMonitor,
+            IPopulationLimitMonitor populationLimitMonitor,
             IStaticData staticData,
             bool flipClickAndDragIcon)
         {

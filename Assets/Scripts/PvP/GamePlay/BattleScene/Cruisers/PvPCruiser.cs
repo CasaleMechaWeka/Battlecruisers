@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -136,7 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPDroneFocuser DroneFocuser { get; private set; }
         public IPvPCruiserBuildingMonitor BuildingMonitor { get; private set; }
         public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }
-        public IPvPPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
+        public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
         public IPvPUnitTargets UnitTargets { get; private set; }
         public IPvPTargetTracker BlockedShipsTracker { get; private set; }
 

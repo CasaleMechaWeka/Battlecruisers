@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public interface IPvPCruiserController
     {
         bool IsAlive { get; }
-      
+
         IPvPSlotAccessor SlotAccessor { get; }
         IPvPSlotHighlighter SlotHighlighter { get; }
         IPvPSlotNumProvider SlotNumProvider { get; }
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPDroneFocuser DroneFocuser { get; }
         IPvPCruiserBuildingMonitor BuildingMonitor { get; }
         IPvPCruiserUnitMonitor UnitMonitor { get; }
-        IPvPPopulationLimitMonitor PopulationLimitMonitor { get; }
+        IPopulationLimitMonitor PopulationLimitMonitor { get; }
         IPvPUnitTargets UnitTargets { get; }
         IPvPTargetTracker BlockedShipsTracker { get; }
 

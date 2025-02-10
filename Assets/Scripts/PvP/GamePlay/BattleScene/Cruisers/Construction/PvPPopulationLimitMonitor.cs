@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.Properties;
@@ -5,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
-    public class PvPPopulationLimitMonitor : IPvPPopulationLimitMonitor
+    public class PvPPopulationLimitMonitor : IPopulationLimitMonitor
     {
         private readonly IPvPCruiserUnitMonitor _unitMonitor;
 
