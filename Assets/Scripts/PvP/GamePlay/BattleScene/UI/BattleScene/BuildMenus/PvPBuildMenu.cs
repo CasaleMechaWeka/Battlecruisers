@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private readonly IPvPBuildableMenus<PvPUnitCategory> _unitMenus;
         private readonly ISingleSoundPlayer _uiSoundPlayer;
         private readonly IAudioClipWrapper _selectorOpeningSound;
-        private IPvPMenu _currentMenu, _lastShownMenu;
+        private IMenu _currentMenu, _lastShownMenu;
 
         public IPvPSlidingPanel SelectorPanel { get; }
         public IReadOnlyCollection<IPvPBuildableButton> BuildableButtons { get; }
@@ -90,7 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         /// This is because the activation parameter may have changed.  Ie, the user may be 
         /// switching from the aircraft units menu for one factory to another factory.
         /// </summary>
-		private void ShowMenu(IPvPMenu menu, object activationParameter = null)
+		private void ShowMenu(IMenu menu, object activationParameter = null)
         {
             if (_currentMenu == null)
             {
