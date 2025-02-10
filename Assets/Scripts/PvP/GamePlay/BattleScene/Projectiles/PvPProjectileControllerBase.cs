@@ -177,7 +177,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 MovementController = null;
                 DestroyProjectile();
-                _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+                if (_damageApplier != null && _targetToDamage != null && _parent != null)
+                {
+                    _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+                }
+                else
+                {
+                    Debug.LogError("Cannot apply damage because _damageApplier, _targetToDamage, or _parent is null.");
+                }
                 _isActiveAndAlive = false;
             }
             else if (MovementController != null)
