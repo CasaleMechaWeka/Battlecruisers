@@ -202,7 +202,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 && _targetFilter.IsMatch(target)
                 && _targetToDamage == null)
             {
-                Debug.Log("[PvPProjectileControllerBase] Target found: " + target);
+                //Debug.Log("[PvPProjectileControllerBase] Target found: " + target);
                 _targetToDamage = target;
             }
         }
@@ -216,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 Debug.LogWarning("DestroyProjectile");
             }
 
-            Debug.Log("[PvPProjectileControllerBase] DestroyProjectile() called.");
+            //Debug.Log("[PvPProjectileControllerBase] DestroyProjectile() called.");
         }
 
         protected void ShowExplosion()
