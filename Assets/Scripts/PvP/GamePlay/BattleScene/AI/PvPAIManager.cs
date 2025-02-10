@@ -14,6 +14,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.AI.Tasks;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
@@ -62,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.AICruiser);
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
-            IPvPTaskFactory taskFactory = new PvPTaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
+            ITaskFactory taskFactory = new PvPTaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             IPvPTaskProducerFactory taskProducerFactory
                 = new PvPTaskProducerFactory(
                     levelInfo.AICruiser,

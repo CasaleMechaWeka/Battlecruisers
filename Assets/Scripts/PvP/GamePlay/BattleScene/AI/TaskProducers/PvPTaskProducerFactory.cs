@@ -1,7 +1,6 @@
 using BattleCruisers.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
@@ -12,6 +11,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.AI.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     {
         private readonly IPvPCruiserController _aiCruiser;
         private readonly IPvPPrefabFactory _prefabFactory;
-        private readonly IPvPTaskFactory _taskFactory;
+        private readonly ITaskFactory _taskFactory;
         private readonly IPvPSlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IStaticData _staticData;
         private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         public PvPTaskProducerFactory(
             IPvPCruiserController aiCruiser,
             IPvPPrefabFactory prefabFactory,
-            IPvPTaskFactory taskFactory,
+            ITaskFactory taskFactory,
             IPvPSlotNumCalculatorFactory slotNumCalculatorFactory,
             IStaticData staticData,
             IPvPThreatMonitorFactory threatMonitorFactory)

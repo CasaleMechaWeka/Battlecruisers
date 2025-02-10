@@ -7,7 +7,7 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks
 {
-    public class PvPTaskFactory : IPvPTaskFactory
+    public class PvPTaskFactory : ITaskFactory
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPvPCruiserController _cruiser;
