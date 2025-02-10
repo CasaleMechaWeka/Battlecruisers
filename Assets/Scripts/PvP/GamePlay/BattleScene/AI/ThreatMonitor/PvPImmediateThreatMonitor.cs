@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
     /// <summary>
     /// Immediately emits threat level changes, in contrast to DelayedThreatMonitor.
     /// </summary>
-    public abstract class PvPImmediateThreatMonitor : PvPBaseThreatMonitor
+    public abstract class PvPImmediateThreatMonitor : BaseThreatMonitor
     {
         protected readonly IPvPCruiserController _enemyCruiser;
         protected readonly IThreatEvaluator _threatEvaluator;
