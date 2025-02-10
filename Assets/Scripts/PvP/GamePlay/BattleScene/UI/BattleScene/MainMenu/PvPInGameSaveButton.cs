@@ -1,6 +1,5 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -13,8 +12,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private IPvPMainMenuManager _mainMenuManager;
         private ISettingsManager _settingsManager;
-        private IPvPBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
-        private IPvPBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
+        private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
+        private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<bool> _showToolTips;
         // public BattleSceneGod god;
 
@@ -25,14 +24,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             ISingleSoundPlayer soundPlayer,
             IPvPMainMenuManager mainMenuManager,
             ISettingsManager settingsManager,
-            IPvPBroadcastingProperty<float> musicVolume,
-            IPvPBroadcastingProperty<float> effectVolume,
-            IPvPBroadcastingProperty<int> zoomSpeedLevel,
-            IPvPBroadcastingProperty<int> scrollSpeedLevel,
-            IPvPBroadcastingProperty<float> masterVolume,
-            IPvPBroadcastingProperty<float> alertVolume,
-            IPvPBroadcastingProperty<float> interfaceVolume,
-            IPvPBroadcastingProperty<float> ambientVolume,
+            IBroadcastingProperty<float> musicVolume,
+            IBroadcastingProperty<float> effectVolume,
+            IBroadcastingProperty<int> zoomSpeedLevel,
+            IBroadcastingProperty<int> scrollSpeedLevel,
+            IBroadcastingProperty<float> masterVolume,
+            IBroadcastingProperty<float> alertVolume,
+            IBroadcastingProperty<float> interfaceVolume,
+            IBroadcastingProperty<float> ambientVolume,
             IBroadcastingProperty<bool> showToolTips)
         {
             base.Initialise(soundPlayer, parent: mainMenuManager);

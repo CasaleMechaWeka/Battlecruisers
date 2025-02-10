@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.HelpLabels;
+using BattleCruisers.UI.BattleScene.HelpLabels;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
@@ -8,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPHelpButton : PvPCanvasGroupButton
     {
         //private Image _leverOff, _leverOn;
-        private IPvPHelpLabelManager _helpLabelManager;
+        private IHelpLabelManager _helpLabelManager;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPHelpLabelManager helpLabelManager)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IHelpLabelManager helpLabelManager)
         {
             base.Initialise(soundPlayer);
 

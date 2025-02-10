@@ -4,10 +4,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.D
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.UI.Music;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -18,21 +20,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     public class PvPAudioInitialiser
     {
         private readonly PvPLevelMusicPlayer _levelMusicPlayer;
-        private readonly IPvPManagedDisposable _droneEventSoundPlayer;
+        private readonly IManagedDisposable _droneEventSoundPlayer;
         private readonly PvPCruiserEventMonitor _cruiserEventMonitor;
         private readonly PvPUltrasConstructionMonitor _ultrasConstructionMonitor;
         private readonly PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
 
         public PvPAudioInitialiser(
             IPvPBattleSceneHelper helper,
-            IPvPLayeredMusicPlayer musicPlayer,
+            ILayeredMusicPlayer musicPlayer,
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             IDeferrer deferrer,
             ITime time,
             IPvPBattleCompletionHandler battleCompletionHandler,
             IPvPCruiserDamageMonitor playerCruiserDamageMonitor,
-            IPvPGameObject popLimitReachedFeedback)
+            IGameObject popLimitReachedFeedback)
         {
             PvPHelper.AssertIsNotNull(helper, musicPlayer, playerCruiser, enemyCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor, popLimitReachedFeedback);
 
@@ -44,13 +46,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
         private PvPLevelMusicPlayer CreateLevelMusicPlayer(
-            IPvPLayeredMusicPlayer musicPlayer,
+            ILayeredMusicPlayer musicPlayer,
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             IDeferrer deferrer,
             IPvPBattleCompletionHandler battleCompletionHandler)
         {
-            IPvPDangerMonitor dangerMonitor
+            IDangerMonitor dangerMonitor
                 = new PvPDangerMonitor
                 (
                     deferrer,
@@ -61,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new PvPLevelMusicPlayer(
                     musicPlayer,
-                    new PvPDangerMonitorSummariser(dangerMonitor),
+                    new DangerMonitorSummariser(dangerMonitor),
                     battleCompletionHandler);
         }
 
@@ -87,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
-        /*        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, ITime time, IPvPGameObject popLimitReachedFeedback)
+        /*        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, ITime time, IGameObject popLimitReachedFeedback)
                 {
                     return
                         new PvPPopulationLimitAnnouncer(
@@ -98,7 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                             popLimitReachedFeedback*//*);
                 }*/
 
-        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, ITime time, IPvPGameObject popLimitReachedFeedback)
+        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, ITime time, IGameObject popLimitReachedFeedback)
         {
             return
                 new PvPPopulationLimitAnnouncer(

@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _commonStrings = commonStrings;
         }
 
-        public IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPvPPrefabKey buildingKey)
+        public IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
             return _prefabCache.GetBuilding(buildingKey);
         }
@@ -59,12 +59,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return CreateBuildingBuildable(buildingWrapperPrefab.UnityObject, factoryProvider, clientID);
         }
 
-        public IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPvPPrefabKey unitKey)
+        public IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
         {
             return _prefabCache.GetUnit(unitKey);
         }
 
-        public PvPBuildableOutlineController GetOutline(IPvPPrefabKey outlineKey)
+        public PvPBuildableOutlineController GetOutline(IPrefabKey outlineKey)
         {
             return _prefabCache.GetOutline(outlineKey);
         }
@@ -112,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return buildableWrapper.Buildable;
         }
 
-        public PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey)
+        public PvPCruiser GetCruiserPrefab(IPrefabKey hullKey)
         {
             return _prefabCache.GetCruiser(hullKey);
         }

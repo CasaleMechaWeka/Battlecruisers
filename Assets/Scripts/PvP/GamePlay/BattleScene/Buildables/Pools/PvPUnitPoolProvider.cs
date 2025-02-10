@@ -1,5 +1,5 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -110,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             FlakTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFlakTurtle);
         }
 
-        private IPvPPool<PvPUnit, PvPBuildableActivationArgs> CreatePool(IPvPPrefabKey unitKey)
+        private IPvPPool<PvPUnit, PvPBuildableActivationArgs> CreatePool(IPrefabKey unitKey)
         {
             IPvPPool<PvPUnit, PvPBuildableActivationArgs> pool
                 = new PvPPool<PvPUnit, PvPBuildableActivationArgs>(

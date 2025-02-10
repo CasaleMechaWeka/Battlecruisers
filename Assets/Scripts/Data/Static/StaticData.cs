@@ -17,6 +17,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
+using BattleCruisers.UI.ScreensScene.ShopScreen;
+using System;
 
 namespace BattleCruisers.Data.Static
 {
@@ -419,6 +421,238 @@ namespace BattleCruisers.Data.Static
                 // are always effective.
                 Buildings.Ultralisk
         });
+        public IReadOnlyList<HeckleData> Heckles { get; } = new ReadOnlyCollection<HeckleData>(new HeckleData[]
+        {
+            new HeckleData(id: 0), new HeckleData(id: 1), new HeckleData( id: 2), new HeckleData(id: 3), new HeckleData(id: 4),
+            new HeckleData(id: 5), new HeckleData(id: 6), new HeckleData(id: 7), new HeckleData(id: 8), new HeckleData(id: 9),
+            new HeckleData(id: 10), new HeckleData(id: 11), new HeckleData(id: 12), new HeckleData(id: 13), new HeckleData(id: 14),
+            new HeckleData(id: 15), new HeckleData(id: 16), new HeckleData(id: 17), new HeckleData(id: 18), new HeckleData(id: 19),
+            new HeckleData(id: 20), new HeckleData(id: 21), new HeckleData(id: 22), new HeckleData(id: 23), new HeckleData(id: 24),
+            new HeckleData(id: 25), new HeckleData(id: 26), new HeckleData(id: 27), new HeckleData(id: 28), new HeckleData(id: 29),
+            new HeckleData(id: 30), new HeckleData(id: 31), new HeckleData(id: 32), new HeckleData(id: 33), new HeckleData(id: 34),
+            new HeckleData(id: 35), new HeckleData(id: 36), new HeckleData(id: 37), new HeckleData(id: 38), new HeckleData(id: 39),
+            new HeckleData(id: 40), new HeckleData(id: 41), new HeckleData(id: 42), new HeckleData(id: 43), new HeckleData(id: 44),
+            new HeckleData(id: 45), new HeckleData(id: 46), new HeckleData(id: 47), new HeckleData(id: 48), new HeckleData(id: 49),
+            new HeckleData(id: 50), new HeckleData(id: 51), new HeckleData(id: 52), new HeckleData(id: 53), new HeckleData(id: 54),
+            new HeckleData(id: 55), new HeckleData(id: 56), new HeckleData(id: 57), new HeckleData(id: 58), new HeckleData(id: 59),
+            new HeckleData(id: 60), new HeckleData(id: 61), new HeckleData(id: 62), new HeckleData(id: 63), new HeckleData(id: 64),
+            new HeckleData(id: 65), new HeckleData(id: 66), new HeckleData(id: 67), new HeckleData(id: 68), new HeckleData(id: 69),
+            new HeckleData(id: 70), new HeckleData(id: 71), new HeckleData(id: 72), new HeckleData(id: 73), new HeckleData(id: 74),
+            new HeckleData(id: 75), new HeckleData(id: 76), new HeckleData(id: 77), new HeckleData(id: 78), new HeckleData(id: 79),
+            new HeckleData(id: 80), new HeckleData(id: 81), new HeckleData(id: 82), new HeckleData(id: 83), new HeckleData(id: 84),
+            new HeckleData(id: 85), new HeckleData(id: 86), new HeckleData(id: 87), new HeckleData(id: 88), new HeckleData(id: 89),
+            new HeckleData(id: 90), new HeckleData(id: 91), new HeckleData(id: 92), new HeckleData(id: 93), new HeckleData(id: 94),
+            new HeckleData(id: 95), new HeckleData(id: 96), new HeckleData(id: 97), new HeckleData(id: 98), new HeckleData(id: 99),
+            new HeckleData(id: 100), new HeckleData(id: 101), new HeckleData(id: 102), new HeckleData(id: 103), new HeckleData(id: 104),
+            new HeckleData(id: 105), new HeckleData(id: 106), new HeckleData(id: 107), new HeckleData(id: 108), new HeckleData(id: 109),
+            new HeckleData(id: 110), new HeckleData(id: 111), new HeckleData(id: 112), new HeckleData(id: 113), new HeckleData(id: 114),
+            new HeckleData(id: 115), new HeckleData(id: 116), new HeckleData(id: 117), new HeckleData(id: 118), new HeckleData(id: 119),
+            new HeckleData(id: 120), new HeckleData(id: 121), new HeckleData(id: 122), new HeckleData(id: 123), new HeckleData(id: 124),
+            new HeckleData(id: 125), new HeckleData(id: 126), new HeckleData(id: 127), new HeckleData(id: 128), new HeckleData(id: 129),
+            new HeckleData(id: 130), new HeckleData(id: 131), new HeckleData(id: 132), new HeckleData(id: 133), new HeckleData(id: 134),
+            new HeckleData(id: 135), new HeckleData(id: 136), new HeckleData(id: 137), new HeckleData(id: 138), new HeckleData(id: 139),
+            new HeckleData(id: 140), new HeckleData(id: 141), new HeckleData(id: 142), new HeckleData(id: 143), new HeckleData(id: 144),
+            new HeckleData(id: 145), new HeckleData(id: 146), new HeckleData(id: 147), new HeckleData(id: 148), new HeckleData(id: 149),
+            new HeckleData(id: 150), new HeckleData(id: 151), new HeckleData(id: 152), new HeckleData(id: 153), new HeckleData(id: 154),
+            new HeckleData(id: 155), new HeckleData(id: 156), new HeckleData(id: 157), new HeckleData(id: 158), new HeckleData(id: 159),
+            new HeckleData(id: 160), new HeckleData(id: 161), new HeckleData(id: 162), new HeckleData(id: 163), new HeckleData(id: 164),
+            new HeckleData(id: 165), new HeckleData(id: 166), new HeckleData(id: 167), new HeckleData(id: 168), new HeckleData(id: 169),
+            new HeckleData(id: 170), new HeckleData(id: 171), new HeckleData(id: 172), new HeckleData(id: 173), new HeckleData(id: 174),
+            new HeckleData(id: 175), new HeckleData(id: 176), new HeckleData(id: 177), new HeckleData(id: 178), new HeckleData(id: 179),
+            new HeckleData(id: 180), new HeckleData(id: 181), new HeckleData(id: 182), new HeckleData(id: 183), new HeckleData(id: 184),
+            new HeckleData(id: 185), new HeckleData(id: 186), new HeckleData(id: 187), new HeckleData(id: 188), new HeckleData(id: 189),
+            new HeckleData(id: 190), new HeckleData(id: 191), new HeckleData(id: 192), new HeckleData(id: 193), new HeckleData(id: 194),
+            new HeckleData(id: 195), new HeckleData(id: 196), new HeckleData(id: 197), new HeckleData(id: 198), new HeckleData(id: 199),
+            new HeckleData(id: 200), new HeckleData(id: 201), new HeckleData(id: 202), new HeckleData(id: 203), new HeckleData(id: 204),
+            new HeckleData(id: 205), new HeckleData(id: 206), new HeckleData(id: 207), new HeckleData(id: 208), new HeckleData(id: 209),
+            new HeckleData(id: 210), new HeckleData(id: 211), new HeckleData(id: 212), new HeckleData(id: 213), new HeckleData(id: 214),
+            new HeckleData(id: 215), new HeckleData(id: 216), new HeckleData(id: 217), new HeckleData(id: 218), new HeckleData(id: 219),
+            new HeckleData(id: 220), new HeckleData(id: 221), new HeckleData(id: 222), new HeckleData(id: 223), new HeckleData(id: 224),
+            new HeckleData(id: 225), new HeckleData(id: 226), new HeckleData(id: 227), new HeckleData(id: 228), new HeckleData(id: 229),
+            new HeckleData(id: 230), new HeckleData(id: 231), new HeckleData(id: 232), new HeckleData(id: 233), new HeckleData(id: 234),
+            new HeckleData(id: 235), new HeckleData(id: 236), new HeckleData(id: 237), new HeckleData(id: 238), new HeckleData(id: 239),
+            new HeckleData(id: 240), new HeckleData(id: 241), new HeckleData(id: 242), new HeckleData(id: 243), new HeckleData(id: 244),
+            new HeckleData(id: 245), new HeckleData(id: 246), new HeckleData(id: 247), new HeckleData(id: 248), new HeckleData(id: 249),
+            new HeckleData(id: 250), new HeckleData(id: 251), new HeckleData(id: 252), new HeckleData(id: 253), new HeckleData(id: 254),
+            new HeckleData(id: 255), new HeckleData(id: 256), new HeckleData(id: 257), new HeckleData(id: 258), new HeckleData(id: 259),
+            new HeckleData(id: 260), new HeckleData(id: 261), new HeckleData(id: 262), new HeckleData(id: 263), new HeckleData(id: 264),
+            new HeckleData(id: 265), new HeckleData(id: 266), new HeckleData(id: 267), new HeckleData(id: 268), new HeckleData(id: 269),
+            new HeckleData(id: 270), new HeckleData(id: 271), new HeckleData(id: 272), new HeckleData(id: 273), new HeckleData(id: 274),
+            new HeckleData(id: 275), new HeckleData(id: 276), new HeckleData(id: 277), new HeckleData(id: 278), new HeckleData(id: 279),
+        });
+        public IReadOnlyList<CaptainData> Captains { get; } = new ReadOnlyCollection<CaptainData>(new CaptainData[]
+        {
+            new CaptainData(id: 0), new CaptainData(id: 1), new CaptainData(id: 2), new CaptainData( id: 3),
+            new CaptainData(id: 4), new CaptainData(id: 5), new CaptainData(id: 6), new CaptainData(id: 7),
+            new CaptainData(id: 8), new CaptainData(id: 9), new CaptainData(id: 10), new CaptainData(id: 11),
+            new CaptainData(id: 12), new CaptainData(id: 13), new CaptainData(id: 14), new CaptainData(id: 15),
+            new CaptainData(id: 16), new CaptainData(id: 17), new CaptainData(id: 18), new CaptainData(id: 19),
+            new CaptainData(id: 20), new CaptainData(id: 21), new CaptainData(id: 22), new CaptainData(id: 23),
+            new CaptainData(id: 24), new CaptainData(id: 25), new CaptainData(id: 26), new CaptainData(id: 27),
+            new CaptainData(id: 28), new CaptainData(id: 29), new CaptainData(id: 30), new CaptainData(id: 31),
+            new CaptainData(id: 32), new CaptainData(id: 33), new CaptainData(id: 34), new CaptainData(id: 35),
+            new CaptainData(id: 36), new CaptainData(id: 37), new CaptainData(id: 38), new CaptainData(id: 39),
+            new CaptainData(id: 40), new CaptainData(id: 41), new CaptainData(id: 42), new CaptainData(id: 43),
+            new CaptainData(id: 44), new CaptainData(id: 45), new CaptainData(id: 47), new CaptainData(id: 48),
+            new CaptainData(id: 49), new CaptainData(id: 50)
+        });
+        public IReadOnlyList<BodykitData> Bodykits { get; } = new ReadOnlyCollection<BodykitData>(new BodykitData[]
+        {
+            new BodykitData(nameBase: "Bodykit000", descriptionBase : "BodykitDescription000", cost: 999999, id: 0),
+            new BodykitData(nameBase: "Bodykit001", descriptionBase : "BodykitDescription001", cost: 480, id: 1),
+            new BodykitData(nameBase: "Bodykit002", descriptionBase : "BodykitDescription002", cost: 1000, id: 2),
+            new BodykitData(nameBase: "Bodykit003", descriptionBase : "BodykitDescription003", cost: 480, id: 3),
+            new BodykitData(nameBase: "Bodykit004", descriptionBase : "BodykitDescription004", cost: 500, id: 4),
+            new BodykitData(nameBase: "Bodykit005", descriptionBase : "BodykitDescription005", cost: 1250, id: 5),
+            new BodykitData(nameBase: "Bodykit006", descriptionBase : "BodykitDescription006", cost: 300, id: 6),
+            new BodykitData(nameBase: "Bodykit007", descriptionBase : "BodykitDescription007", cost: 450, id: 7),
+            new BodykitData(nameBase: "Bodykit008", descriptionBase : "BodykitDescription008", cost: 1000, id: 8),
+            new BodykitData(nameBase: "Bodykit009", descriptionBase : "BodykitDescription009", cost: 1000, id: 9),
+            new BodykitData(nameBase: "Bodykit010", descriptionBase : "BodykitDescription010", cost: 800, id: 10),
+            new BodykitData(nameBase: "Bodykit011", descriptionBase : "BodykitDescription011", cost: 1150, id: 11),
+            new BodykitData(nameBase: "Bodykit012", descriptionBase : "BodykitDescription012", cost: 650, id: 12),
+            new BodykitData(nameBase: "Bodykit013", descriptionBase : "BodykitDescription013", cost: 800, id: 13),
+            new BodykitData(nameBase: "Bodykit014", descriptionBase : "BodykitDescription014", cost: 450, id: 14),
+            new BodykitData(nameBase: "Bodykit015", descriptionBase : "BodykitDescription015", cost: 800, id: 15),
+            new BodykitData(nameBase: "Bodykit016", descriptionBase : "BodykitDescription016", cost: 300, id: 16),
+            new BodykitData(nameBase: "Bodykit017", descriptionBase : "BodykitDescription017", cost: 600, id: 17),
+            new BodykitData(nameBase: "Bodykit018", descriptionBase : "BodykitDescription018", cost: 900, id: 18),
+            new BodykitData(nameBase: "Bodykit019", descriptionBase : "BodykitDescription019", cost: 300, id: 19),
+            new BodykitData(nameBase: "Bodykit020", descriptionBase : "BodykitDescription020", cost: 700, id: 20),
+            new BodykitData(nameBase: "Bodykit021", descriptionBase : "BodykitDescription021", cost: 750, id: 21),
+            new BodykitData(nameBase: "Bodykit022", descriptionBase : "BodykitDescription022", cost: 600, id: 22),
+            new BodykitData(nameBase: "Bodykit023", descriptionBase : "BodykitDescription023", cost: 700, id: 23),
+            new BodykitData(nameBase: "Bodykit024", descriptionBase : "BodykitDescription024", cost: 1150, id: 24),
+            new BodykitData(nameBase: "Bodykit025", descriptionBase : "BodykitDescription025", cost: 1150, id: 25),
+            new BodykitData(nameBase: "Bodykit026", descriptionBase : "BodykitDescription026", cost: 1100, id: 26),
+            new BodykitData(nameBase: "Bodykit027", descriptionBase : "BodykitDescription027", cost: 1300, id: 27),
+            new BodykitData(nameBase: "Bodykit028", descriptionBase : "BodykitDescription028", cost: 900, id: 28),
+            new BodykitData(nameBase: "Bodykit029", descriptionBase : "BodykitDescription029", cost: 1100, id: 29),
+            new BodykitData(nameBase: "Bodykit030", descriptionBase : "BodykitDescription030", cost: 450, id: 30),
+            new BodykitData(nameBase: "Bodykit031", descriptionBase : "BodykitDescription031", cost: 500, id: 31),
+            new BodykitData(nameBase: "Bodykit032", descriptionBase : "BodykitDescription032", cost: 1300, id: 32),
+            new BodykitData(nameBase: "Bodykit033", descriptionBase : "BodykitDescription033", cost: 1100, id: 33),
+            new BodykitData(nameBase: "Bodykit034", descriptionBase : "BodykitDescription034", cost: 1000, id: 34),
+            new BodykitData(nameBase: "Bodykit035", descriptionBase : "BodykitDescription035", cost: 1050, id: 35),
+            new BodykitData(nameBase: "Bodykit036", descriptionBase : "BodykitDescription036", cost: 1500, id: 36),
+            new BodykitData(nameBase: "Bodykit037", descriptionBase : "BodykitDescription037", cost: 720, id: 37),
+            new BodykitData(nameBase: "Bodykit038", descriptionBase : "BodykitDescription038", cost: 1040, id: 38),
+            new BodykitData(nameBase: "Bodykit039", descriptionBase : "BodykitDescription039", cost: 960, id: 39),
+            new BodykitData(nameBase: "Bodykit040", descriptionBase : "BodykitDescription040", cost: 1040, id: 40),
+            new BodykitData(nameBase: "Bodykit041", descriptionBase : "BodykitDescription041", cost: 1040, id: 41),
+            new BodykitData(nameBase: "Bodykit042", descriptionBase : "BodykitDescription042", cost: 1040, id: 42),
+            new BodykitData(nameBase: "Bodykit043", descriptionBase : "BodykitDescription043", cost: 1040, id: 43),
+            new BodykitData(nameBase: "Bodykit044", descriptionBase : "BodykitDescription044", cost: 960, id: 44),
+            new BodykitData(nameBase: "Bodykit045", descriptionBase : "BodykitDescription045", cost: 960, id: 45),
+            new BodykitData(nameBase: "Bodykit046", descriptionBase : "BodykitDescription046", cost: 850, id: 46),
+            new BodykitData(nameBase: "Bodykit047", descriptionBase : "BodykitDescription047", cost: 1650, id: 47),
+            new BodykitData(nameBase: "Bodykit048", descriptionBase : "BodykitDescription048", cost: 1120, id: 48),
+            new BodykitData(nameBase: "Bodykit049", descriptionBase : "BodykitDescription049", cost: 1000, id: 49),
+            new BodykitData(nameBase: "Bodykit050", descriptionBase : "BodykitDescription050", cost: 1400, id: 50)
+        });
+        public IReadOnlyList<VariantData> Variants { get; } = new ReadOnlyCollection<VariantData>(new VariantData[]
+        {
+            new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 0), new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 1),
+            new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 2), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 3),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 4), new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 5),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 6), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 7),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 8), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 9),
+            new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 10), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 11),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 12), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 13),
+            new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 14), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 15),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 16), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 17),
+            new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 18), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 19),
+            new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 20), new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 21),
+            new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 22), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 23),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 24), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 25),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 26), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 27),
+            new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 28), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 29),
+            new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 30), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 31),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 32), new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 33),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 34), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 35),
+            new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 36), new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 37),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 38), new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 39),
+            new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 40), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 41),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 42), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 43),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 44), new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 45),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 46), new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 47),
+            new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 48), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 49),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 50), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 51),
+            new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 52), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 53),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 54), new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 55),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 56), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 57),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 58), new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 59),
+            new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 60), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 61),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 62), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 63),
+            new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 64), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 65),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 66), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 67),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 68), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 69),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 70), new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 71),
+            new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 72), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 73),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 74), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 75),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 76), new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 77),
+            new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 78), new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 79),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 80), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 81),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 82), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 83),
+            new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 84), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 85),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 86), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 87),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 88), new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 89),
+            new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 90), new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 91),
+            new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 92), new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 93),
+            new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 94), new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 95),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 96), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 97),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 98), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 99),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 100), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 101),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 102), new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 103),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 104), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 105),
+            new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 106), new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 107),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 108), new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 109),
+            new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 110), new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 111),
+            new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 112), new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 113),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 114), new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 115),
+            new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 116), new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 117),
+            new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 118), new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 119),
+            new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 120), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 121),
+            new VariantData(variantNameBase: "LongRange", coins: 0, credits: 662, id: 122), new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 123),
+            new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 124), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 125),
+            new VariantData(variantNameBase: "RapidFire", coins: 0, credits: 662, id: 126), new VariantData(variantNameBase: "Refined", coins: 0, credits: 662, id: 127),
+            new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 128), new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 129),
+            new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 130)
+        });
+        public IReadOnlyList<IAPData> IAPs { get; } = new ReadOnlyCollection<IAPData>(new IAPData[]
+        {
+            new IAPData(0, 0.99f, 100),
+            new IAPData(0, 1.99f, 500),
+            new IAPData(0, 2.99f, 1000),
+            new IAPData(0, 3.99f, 5000)
+        });
+        public List<Arena> Arenas { get; set; } = new List<Arena>
+        {
+                new Arena(),
+                new Arena("PracticeWreckyards", prizecredits: 100),
+                new Arena("OzPenitentiary", prizecoins:1),
+                new Arena("SanFranciscoFightClub", costcoins:1, prizecoins:3, prizecredits: 500),
+                new Arena("UACBattleNight", costcredits:100, prizecredits: 500),
+                new Arena("NuclearDome", costcoins:3, prizecoins:4,prizecredits:400, prizenukes: 1, consolationnukes: 1),
+                new Arena("UACArena", costcredits:1500, prizecredits: 400),
+                new Arena("RioBattlesport", costcoins:10, prizecoins:15, prizecredits:2000, consolationcredits:2000),
+                new Arena("UACUltimate", costcoins: 10000, prizecredits:20000),
+                new Arena("MercenaryOne", costcoins:50, prizecredits:50000, prizenukes: 1)
+        };
+        public Dictionary<string, int> GameConfigs { get; set; } = new Dictionary<string, int>
+        {
+            { "scoredivider", 10 },
+            { "creditdivider", 100 },
+            { "coin1threshold", 1000 },
+            { "coin2threshold", 2000 },
+            { "coin3threshold", 3000 },
+            { "coin4threshold", 4000 },
+            { "coin5threshold", 5000 },
+            { "creditmax", 1250 }
+        };
+        public int MinCPUCores { get; set; }
+        public int MinCPUFrequency { get; set; }
+        public int MaxLatency { get; set; }
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
         public ILevelStrategies SideQuestStrategies { get; }
@@ -468,10 +702,7 @@ namespace BattleCruisers.Data.Static
                 );
 
             foreach (int i in playerLoadout.CurrentHeckles)
-            {
-                game._heckles[i].isOwned = true;
                 game.AddHeckle(i);
-            }
 
             return game;
             //unlockedHulls: AllHullKeys(),

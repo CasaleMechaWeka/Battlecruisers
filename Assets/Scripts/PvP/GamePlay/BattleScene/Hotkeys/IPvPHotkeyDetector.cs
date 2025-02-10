@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys
 {
-    public interface IPvPHotkeyDetector : IPvPManagedDisposable
+    public interface IPvPHotkeyDetector : IManagedDisposable
     {
         // Navigation
         event EventHandler PlayerCruiser, Overview, EnemyCruiser;

@@ -1,6 +1,7 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
 using System;
 
@@ -9,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPPopulationLimitAnnouncer
     {
         private PvPCruiser _playerCruiser;
-        private readonly IPvPPopulationLimitMonitor _populationLimitMonitor;
-        private readonly IPvPPrioritisedSoundPlayer _soundPlayer;
+        private readonly IPopulationLimitMonitor _populationLimitMonitor;
+        private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _debouncer;
-        private readonly IPvPGameObject _popLimitReachedFeedback;
+        private readonly IGameObject _popLimitReachedFeedback;
 
         public PvPPopulationLimitAnnouncer(
             PvPCruiser playerCruiser,
-            IPvPPopulationLimitMonitor populationLimitMonitor
+            IPopulationLimitMonitor populationLimitMonitor
             )
         {
             PvPHelper.AssertIsNotNull(populationLimitMonitor);
@@ -27,10 +28,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         public PvPPopulationLimitAnnouncer(
-            IPvPPopulationLimitMonitor populationLimitMonitor,
-            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPopulationLimitMonitor populationLimitMonitor,
+            IPrioritisedSoundPlayer soundPlayer,
             IDebouncer debouncer,
-            IPvPGameObject popLimitReachedFeedback)
+            IGameObject popLimitReachedFeedback)
         {
             PvPHelper.AssertIsNotNull(populationLimitMonitor, soundPlayer, debouncer, popLimitReachedFeedback);
 

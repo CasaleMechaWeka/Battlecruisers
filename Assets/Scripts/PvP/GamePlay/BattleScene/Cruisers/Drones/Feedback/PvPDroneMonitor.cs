@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
 
@@ -20,11 +20,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _playerACruiserHasActiveDrones;
-        public IPvPBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
+        private readonly ISettableBroadcastingProperty<bool> _playerACruiserHasActiveDrones;
+        public IBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
-        public IPvPBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
+        private readonly ISettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
+        public IBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
 
         public PvPDroneMonitor(IPvPDroneFactory droneFactory)
         {
@@ -40,11 +40,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             };
             FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
 
-            _playerACruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
-            PlayerACruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
+            _playerACruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
+            PlayerACruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
 
-            _playerBCruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
-            PlayerBCruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
+            _playerBCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
+            PlayerBCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
         }
 
         private void _droneFactory_DroneCreated(object sender, PvPDroneCreatedEventArgs e)

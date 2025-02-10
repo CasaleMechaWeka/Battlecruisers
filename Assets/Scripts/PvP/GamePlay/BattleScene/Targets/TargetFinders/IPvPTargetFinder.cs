@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// <summary>
     /// Finds targets to feed to a ITargeProcessor.
     /// </summary>
-    public interface IPvPTargetFinder : IPvPManagedDisposable
+    public interface IPvPTargetFinder : IManagedDisposable
     {
         // When a target is found (eg, started being built, or comes within range)
         event EventHandler<PvPTargetEventArgs> TargetFound;

@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Explanation
 {
-    public interface IPvPExplanationPanel : IPvPGameObject
+    public interface IPvPExplanationPanel : IGameObject
     {
         IPvPTextDisplayer TextDisplayer { get; }
         IPvPExplanationDismissButton OkButton { get; }

@@ -1,9 +1,9 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
@@ -42,22 +42,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             IList<Task> retrievePrefabsTasks = new List<Task>();
 
-            IDictionary<IPvPPrefabKey, PvPBuildableWrapper<IPvPBuilding>> keyToBuilding = new ConcurrentDictionary<IPvPPrefabKey, PvPBuildableWrapper<IPvPBuilding>>();
+            IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>> keyToBuilding = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPBuildings.AllKeys, keyToBuilding));
 
-            IDictionary<IPvPPrefabKey, PvPBuildableWrapper<IPvPUnit>> keyToUnit = new ConcurrentDictionary<IPvPPrefabKey, PvPBuildableWrapper<IPvPUnit>>();
+            IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>> keyToUnit = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPUnits.AllKeys, keyToUnit));
 
-            IDictionary<IPvPPrefabKey, PvPCruiser> keyToCruiser = new ConcurrentDictionary<IPvPPrefabKey, PvPCruiser>();
+            IDictionary<IPrefabKey, PvPCruiser> keyToCruiser = new ConcurrentDictionary<IPrefabKey, PvPCruiser>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPHulls.AllKeys, keyToCruiser));
 
-            IDictionary<IPvPPrefabKey, PvPExplosionController> keyToExplosion = new ConcurrentDictionary<IPvPPrefabKey, PvPExplosionController>();
+            IDictionary<IPrefabKey, PvPExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, PvPExplosionController>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPExplosions.AllKeys, keyToExplosion));
 
-            IDictionary<IPvPPrefabKey, PvPShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPvPPrefabKey, PvPShipDeathInitialiser>();
+            IDictionary<IPrefabKey, PvPShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, PvPShipDeathInitialiser>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPShipDeaths.AllKeys, keyToDeath));
 
-            IDictionary<IPvPPrefabKey, PvPProjectile> keyToProjectile = new ConcurrentDictionary<IPvPPrefabKey, PvPProjectile>();
+            IDictionary<IPrefabKey, PvPProjectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, PvPProjectile>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPProjectiles.AllKeys, keyToProjectile));
 
             Container<PvPDroneController> droneContainer = new Container<PvPDroneController>();
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Container<PvPAudioSourceInitialiser> audioSourceContainer = new Container<PvPAudioSourceInitialiser>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, PvPStaticPrefabKeys.AudioSource, audioSourceContainer));
 
-            IDictionary<IPvPPrefabKey, PvPBuildableOutlineController> keyToOutline = new ConcurrentDictionary<IPvPPrefabKey, PvPBuildableOutlineController>();
+            IDictionary<IPrefabKey, PvPBuildableOutlineController> keyToOutline = new ConcurrentDictionary<IPrefabKey, PvPBuildableOutlineController>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPBuildableOutlines.AllKeys, keyToOutline));
 
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
@@ -88,8 +88,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private async Task GetPrefabs<TPrefab>(
             IPvPPrefabFetcher prefabFetcher,
-            IList<IPvPPrefabKey> prefabKeys,
-            IDictionary<IPvPPrefabKey, TPrefab> keyToPrefab)
+            IList<IPrefabKey> prefabKeys,
+            IDictionary<IPrefabKey, TPrefab> keyToPrefab)
                 where TPrefab : class, IPvPPrefab
         {
             IEnumerable<Task> prefabTasks = prefabKeys.Select(prefabKey => GetPrefab(prefabFetcher, keyToPrefab, prefabKey));
@@ -98,8 +98,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private async Task GetPrefab<TPrefab>(
             IPvPPrefabFetcher prefabFetcher,
-            IDictionary<IPvPPrefabKey, TPrefab> keyToPrefab,
-            IPvPPrefabKey prefabKey)
+            IDictionary<IPrefabKey, TPrefab> keyToPrefab,
+            IPrefabKey prefabKey)
                 where TPrefab : class, IPvPPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private async Task GetPrefab<TPrefab>(
             IPvPPrefabFetcher prefabFetcher,
-            IPvPPrefabKey prefabKey,
+            IPrefabKey prefabKey,
             Container<TPrefab> prefabContainer)
                 where TPrefab : class, IPvPPrefab
         {

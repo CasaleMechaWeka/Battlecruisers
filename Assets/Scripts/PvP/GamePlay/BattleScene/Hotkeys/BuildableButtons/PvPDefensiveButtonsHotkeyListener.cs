@@ -1,11 +1,12 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons
 {
-    public class PvPDefensiveButtonsHotkeyListener : PvPBuildableButtonHotkeyListener, IPvPManagedDisposable
+    public class PvPDefensiveButtonsHotkeyListener : PvPBuildableButtonHotkeyListener, IManagedDisposable
     {
         private readonly IPvPBuildableButton _shipTurretButton, _airTurretButton, _mortarButton, _samSiteButton, _teslaCoilButton;
 

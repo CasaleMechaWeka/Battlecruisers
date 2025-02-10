@@ -13,8 +13,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         public ISoundFetcher SoundFetcher { get; }
         public IPvPSoundPlayer SoundPlayer { get; set; }
-        public IPvPPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
-        public IPvPPrioritisedSoundPlayer DummySoundPlayer { get; }
+        public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
+        public IPrioritisedSoundPlayer DummySoundPlayer { get; }
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
 

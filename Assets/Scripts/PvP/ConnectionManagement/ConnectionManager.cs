@@ -152,14 +152,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
 #if UNITY_EDITOR
             LatencyLimit = 2000;
-            Debug.Log("Running in editor mode, latency limit set to 2000. Remote Config latency limit would be " + ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MaxLatency);
+            Debug.Log("Running in editor mode, latency limit set to 2000. Remote Config latency limit would be " + ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MaxLatency);
 #else
-            LatencyLimit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MaxLatency;
+            LatencyLimit = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MaxLatency;
             if(LatencyLimit == 0) // Just in case 
             {
                 LatencyLimit = 300;
             }
-            Debug.Log("Remote Config latency limit set to " + ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.MaxLatency);
+            Debug.Log("Remote Config latency limit set to " + ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MaxLatency);
 #endif
 
 

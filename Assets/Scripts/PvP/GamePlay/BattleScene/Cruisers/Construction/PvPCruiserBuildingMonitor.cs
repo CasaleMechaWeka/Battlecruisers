@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
-    public class PvPCruiserBuildingMonitor : IPvPCruiserBuildingMonitor, IPvPManagedDisposable
+    public class PvPCruiserBuildingMonitor : IPvPCruiserBuildingMonitor, IManagedDisposable
     {
         private readonly IPvPCruiserController _cruiser;
 

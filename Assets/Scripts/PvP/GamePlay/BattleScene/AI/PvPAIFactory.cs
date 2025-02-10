@@ -1,3 +1,5 @@
+using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
@@ -34,11 +36,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         /// 1. Follows a base strategy (eg:  balanced, boom or rush)
         /// 2. Replaces destroyed buildings
         /// </summary>
-        public IPvPArtificialIntelligence CreateBasicAI(IPvPLevelInfo levelInfo)
+        public IArtificialIntelligence CreateBasicAI(IPvPLevelInfo levelInfo)
         {
-            IPvPTaskList tasks = new PvPTaskList();
+            ITaskList tasks = new PvPTaskList();
 
-            IList<IPvPTaskProducer> taskProducers = new List<IPvPTaskProducer>();
+            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
             IPvPDynamicBuildOrder basicBuildOrder = _buildOrderFactory.CreateBasicBuildOrder(levelInfo);
             taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder));
@@ -54,10 +56,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         /// 2. Responds to threats (eg: air, naval)
         /// 3. Replaces destroyed buildings
         /// </summary>
-        public IPvPArtificialIntelligence CreateAdaptiveAI(IPvPLevelInfo levelInfo)
+        public IArtificialIntelligence CreateAdaptiveAI(IPvPLevelInfo levelInfo)
         {
-            IPvPTaskList tasks = new PvPTaskList();
-            IList<IPvPTaskProducer> taskProducers = new List<IPvPTaskProducer>();
+            ITaskList tasks = new PvPTaskList();
+            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
             // Base build order, main strategy
             IPvPDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
@@ -88,9 +90,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
-        private IPvPArtificialIntelligence CreateAI(IPvPCruiserController aiCruiser, IPvPTaskList tasks, IList<IPvPTaskProducer> taskProducers)
+        private IArtificialIntelligence CreateAI(IPvPCruiserController aiCruiser, ITaskList tasks, IList<ITaskProducer> taskProducers)
         {
-            PvPTaskConsumer taskConsumer = new PvPTaskConsumer(tasks);
+            TaskConsumer taskConsumer = new TaskConsumer(tasks);
             PvPDroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);
 
             return new PvPArtificialIntelligence(taskConsumer, taskProducers, focusManager);

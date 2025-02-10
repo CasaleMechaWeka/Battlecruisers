@@ -1,17 +1,18 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using BattleCruisers.UI.Music;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
     public class PvPLevelMusicPlayer
     {
-        private readonly IPvPLayeredMusicPlayer _musicPlayer;
-        private readonly IPvPDangerMonitorSummariser _dangerMonitorSummariser;
+        private readonly ILayeredMusicPlayer _musicPlayer;
+        private readonly IDangerMonitorSummariser _dangerMonitorSummariser;
 
         public PvPLevelMusicPlayer(
-            IPvPLayeredMusicPlayer musicPlayer,
-            IPvPDangerMonitorSummariser dangerMonitorSummariser,
+            ILayeredMusicPlayer musicPlayer,
+            IDangerMonitorSummariser dangerMonitorSummariser,
             IPvPBattleCompletionHandler battleCompletionHandler)
         {
             PvPHelper.AssertIsNotNull(musicPlayer, dangerMonitorSummariser, battleCompletionHandler);

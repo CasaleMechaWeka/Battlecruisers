@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind
 {
-    public interface IPvPWindManager : IPvPManagedDisposable
+    public interface IPvPWindManager : IManagedDisposable
     {
         void Play();
         void Stop();

@@ -6,26 +6,27 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
-    public class PvPLaserEmitter : PvPBeamEmitter, IPvPLaserEmitter
+    public class PvPLaserEmitter : PvPBeamEmitter, ILaserEmitter
     {
         private IPvPLaserRenderer _laserRenderer;
-        private IPvPLaserSoundPlayer _laserSoundPlayer;
+        private ILaserSoundPlayer _laserSoundPlayer;
         private float _damagePerS;
         private PvPLaserImpact _laserImpact;
         private IPvPParticleSystemGroup _laserMuzzleEffect;
         private IDeltaTimeProvider _deltaTimeProvider;
 
-        private IPvPSettableBroadcastingProperty<bool> _isLaserFiring;
-        public IPvPBroadcastingProperty<bool> IsLaserFiring { get; private set; }
+        private ISettableBroadcastingProperty<bool> _isLaserFiring;
+        public IBroadcastingProperty<bool> IsLaserFiring { get; private set; }
 
         public PvPArchonBattleshipController archonBattleShip;
 
@@ -42,8 +43,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             IPvPParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = transform.FindNamedComponent<IPvPParticleSystemGroupInitialiser>("LaserMuzzleEffect");
             _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
 
-            _isLaserFiring = new PvPSettableBroadcastingProperty<bool>(false);
-            IsLaserFiring = new PvPBroadcastingProperty<bool>(_isLaserFiring);
+            _isLaserFiring = new SettableBroadcastingProperty<bool>(false);
+            IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
         }
 
         public async Task InitialiseAsync(

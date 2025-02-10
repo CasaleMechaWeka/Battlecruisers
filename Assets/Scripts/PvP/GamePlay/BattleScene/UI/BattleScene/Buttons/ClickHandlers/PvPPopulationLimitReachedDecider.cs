@@ -1,15 +1,15 @@
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers
 {
     public class PvPPopulationLimitReachedDecider : IPvPPopulationLimitReachedDecider
     {
-        private readonly IPvPPopulationLimitMonitor _populationLimitMonitor;
+        private readonly IPopulationLimitMonitor _populationLimitMonitor;
 
-        public PvPPopulationLimitReachedDecider(IPvPPopulationLimitMonitor populationLimitMonitor)
+        public PvPPopulationLimitReachedDecider(IPopulationLimitMonitor populationLimitMonitor)
         {
             Assert.IsNotNull(populationLimitMonitor);
             _populationLimitMonitor = populationLimitMonitor;

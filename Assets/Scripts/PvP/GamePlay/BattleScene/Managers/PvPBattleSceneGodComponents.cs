@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
@@ -18,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.BattleScene.Lifetime;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public IDeferrer Deferrer { get; private set; }
         public IDeferrer RealTimeDeferrer { get; private set; }
 
-        public IPvPLifetimeEventBroadcaster LifetimeEvents { get; private set; }
+        public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private PvPUpdaterProvider _updaterProvider;
         public IPvPUpdaterProvider UpdaterProvider => _updaterProvider;
@@ -83,7 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);
 
-            PvPLifetimeEventBroadcaster lifetimeEvents = GetComponent<PvPLifetimeEventBroadcaster>();
+            LifetimeEventBroadcaster lifetimeEvents = GetComponent<LifetimeEventBroadcaster>();
             Assert.IsNotNull(lifetimeEvents);
             LifetimeEvents = lifetimeEvents;
             targetIndicator.Initialise();

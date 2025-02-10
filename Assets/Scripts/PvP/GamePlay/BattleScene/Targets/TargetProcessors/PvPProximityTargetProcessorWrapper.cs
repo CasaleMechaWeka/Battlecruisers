@@ -4,13 +4,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking.Wrappers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors
 {
-    public class PvPProximityTargetProcessorWrapper : PvPTargetProcessorWrapper, IPvPManagedDisposable
+    public class PvPProximityTargetProcessorWrapper : PvPTargetProcessorWrapper, IManagedDisposable
     {
         private IPvPTargetFinder _targetFinder;
         private IPvPRankedTargetTracker _targetTracker;

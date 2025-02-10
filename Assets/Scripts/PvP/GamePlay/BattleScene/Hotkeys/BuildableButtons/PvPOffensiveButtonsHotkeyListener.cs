@@ -1,11 +1,12 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons
 {
-    public class PvPOffensiveButtonsHotkeyListener : PvPBuildableButtonHotkeyListener, IPvPManagedDisposable
+    public class PvPOffensiveButtonsHotkeyListener : PvPBuildableButtonHotkeyListener, IManagedDisposable
     {
         private readonly IPvPBuildableButton _artilleryButton, _railgunButton, _rocketLauncherButton, _MLRSButton, _gatlingMortarButton;
 

@@ -11,12 +11,13 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.UI.Music;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
     public class PvPLayeredMusicPlayerInitialiser : MonoBehaviour
     {
-        public async Task<IPvPLayeredMusicPlayer> CreatePlayerAsync(
+        public async Task<ILayeredMusicPlayer> CreatePlayerAsync(
             ISoundFetcher soundFetcher,
             SoundKeyPair soundKeys,
             ISettingsManager settingsManager)
@@ -42,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
             Assert.IsNotNull(coroutineStarter);
 
             return
-                new PvPLayeredMusicPlayer(
+                new LayeredMusicPlayer(
                     new AudioVolumeFade(coroutineStarter, PvPTimeBC.Instance),
                     primary,
                     secondary,

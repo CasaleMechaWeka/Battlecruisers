@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public void Show(int heckleIndex)
         {
-            message.text = heckleStrings.GetString(_dataProvider.GameModel.Heckles[heckleIndex].stringKeyBase);
+            message.text = heckleStrings.GetString(_dataProvider.StaticData.Heckles[heckleIndex].StringKeyBase);
             messageFrame.localScale = Vector3.zero;
             messageFrame.DOScale(Vector3.one * 1.5f, 0.2f);
             Invoke("Hide", hideTime);

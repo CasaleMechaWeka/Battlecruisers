@@ -1,6 +1,6 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.Targets;
 using System;
 
 
@@ -21,12 +21,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private readonly IPvPCameraFocuser _coreFocuser;
         private readonly IPvPCamera _camera;
-        private readonly IPvPCameraTargetTracker _overviewTargetTracker;
+        private readonly ICameraTargetTracker _overviewTargetTracker;
         private PvPIndirectFocusTarget _indirectFocusTarget;
 
         public const float INDIRECTION_BUFFER_IN_M = 10;
 
-        public PvPIndirectCameraFocuser(IPvPCameraFocuser coreFocuser, IPvPCamera camera, IPvPCameraTargetTracker overviewTargetTracker)
+        public PvPIndirectCameraFocuser(IPvPCameraFocuser coreFocuser, IPvPCamera camera, ICameraTargetTracker overviewTargetTracker)
         {
             PvPHelper.AssertIsNotNull(coreFocuser, camera, overviewTargetTracker);
 

@@ -1,3 +1,5 @@
+using BattleCruisers.AI.ThreatMonitors;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
     public class PvPThreatEvaluator : IPvPThreatEvaluator
@@ -9,17 +11,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
             _valueRequiredForHighThreatLevel = valueRequiredForHighThreatLevel;
         }
 
-        public PvPThreatLevel FindThreatLevel(float value)
+        public ThreatLevel FindThreatLevel(float value)
         {
             if (value <= 0)
             {
-                return PvPThreatLevel.None;
+                return ThreatLevel.None;
             }
             else if (value < _valueRequiredForHighThreatLevel)
             {
-                return PvPThreatLevel.Low;
+                return ThreatLevel.Low;
             }
-            return PvPThreatLevel.High;
+            return ThreatLevel.High;
         }
     }
 }

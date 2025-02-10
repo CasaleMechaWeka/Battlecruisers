@@ -81,7 +81,6 @@ namespace BattleCruisers.UI.ScreensScene
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.Variants[currentVariantData.Index].isOwned = true;
                             _dataProvider.GameModel.AddVariant(currentVariantData.Index);
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
@@ -114,7 +113,6 @@ namespace BattleCruisers.UI.ScreensScene
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.Variants[currentVariantData.Index].isOwned = true;
                         _dataProvider.GameModel.AddVariant(currentVariantData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
@@ -126,7 +124,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CreditsChange -= currentVariantData.VariantCredits;
-                        VariantData variant = _dataProvider.GameModel.Variants[currentVariantData.Index];
+                        VariantData variant = _dataProvider.StaticData.Variants[currentVariantData.Index];
                         if (_dataProvider.GameModel.OutstandingVariantTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
@@ -169,7 +167,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentVariant = e.varint;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
 
-            if (e.variantData.IsOwned)
+            if (_dataProvider.GameModel.PurchasedVariants.Contains(e.variantData.Index))
             {
                 priceLabel.SetActive(false);
                 btnBuy.SetActive(false);

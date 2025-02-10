@@ -1,7 +1,7 @@
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
@@ -10,16 +10,15 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
 using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Tutorial.Highlighting;
 
@@ -48,9 +47,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     IPvPSpriteProvider spriteProvider,
                     IPvPButtonVisibilityFilters buttonVisibilityFilters,
                     IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
-                    IPvPPrioritisedSoundPlayer eventSoundPlayer,
+                    IPrioritisedSoundPlayer eventSoundPlayer,
                     IPvPSingleSoundPlayer uiSoundPlayer,
-                    IPvPPopulationLimitMonitor populationLimitMonitor,
+                    IPopulationLimitMonitor populationLimitMonitor,
                     IStaticData staticData)
                 {
                     PvPHelper.AssertIsNotNull(
@@ -85,7 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
                     makeLeftBackgroundPanelFit();
 
-                    return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
+                    return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
                 }*/
 
         public PvPLeftPanelComponents Initialise(
@@ -96,9 +95,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             ISpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPvPPrioritisedSoundPlayer eventSoundPlayer,
+            IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPvPPopulationLimitMonitor populationLimitMonitor,
+            IPopulationLimitMonitor populationLimitMonitor,
             IStaticData staticData,
             bool flipClickAndDragIcon)
         {
@@ -134,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             MakeLeftBackgroundPanelFit();
 
-            return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
+            return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
         }
 
         private IHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
@@ -155,9 +154,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             ISpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPvPPrioritisedSoundPlayer eventSoundPlayer,
+            IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPvPPopulationLimitMonitor populationLimitMonitor,
+            IPopulationLimitMonitor populationLimitMonitor,
             IStaticData staticData,
             bool flipClickAndDragIcon)
         {

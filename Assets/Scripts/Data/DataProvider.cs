@@ -61,7 +61,7 @@ namespace BattleCruisers.Data
                 }
                 if (_gameModel.PremiumEdition)
                 {
-                    _gameModel.Bodykits[0].isOwned = true;  // Trident Bodykit000
+                    _gameModel.AddBodykit(0);  // Trident Bodykit000
                     SaveGame();
                 }
             }
@@ -235,79 +235,37 @@ namespace BattleCruisers.Data
 
         public void MigrateInventory()
         {
-            // captain exo
-            for (int i = 0; i < _gameModel.Captains.Count; i++)
-            {
-                if (_gameModel.Captains[i].isOwned)
-                {
-                    _gameModel.AddExo(i);
-                }
-            }
+            //captain exos
+            for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
+                _gameModel.AddExo(_gameModel.PurchasedExos[i]);
 
             // heckles
-            for (int i = 0; i < _gameModel.Heckles.Count; i++)
-            {
-                if (_gameModel.Heckles[i].isOwned)
-                {
-                    _gameModel.AddHeckle(i);
-                }
-            }
+            for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
+                _gameModel.AddHeckle(_gameModel.PurchasedHeckles[i]);
 
             // bodykits
-            for (int i = 0; i < _gameModel.Bodykits.Count; i++)
-            {
-                if (_gameModel.Bodykits[i].isOwned)
-                {
-                    _gameModel.AddBodykit(i);
-                }
-            }
-
+            for (int i = 0; i < _gameModel.PurchasedBodykits.Count; i++)
+                _gameModel.AddBodykit(_gameModel.PurchasedBodykits[i]);
             // variants
-            for (int i = 0; i < _gameModel.Variants.Count; i++)
-            {
-                if (_gameModel.Variants[i].isOwned)
-                {
-                    _gameModel.AddVariant(i);
-                }
-            }
+            for (int i = 0; i < _gameModel.PurchasedVariants.Count; i++)
+                _gameModel.AddVariant(_gameModel.PurchasedVariants[i]);
         }
 
         public async Task SyncInventroyV2()
         {
-            // captain exo
-            for (int i = 0; i < _gameModel.GetExos().Count; i++)
-            {
-                int index = _gameModel.GetExos()[i];
-                if (!_gameModel.Captains[index].isOwned)
-                {
-                    _gameModel.Captains[index].isOwned = true;
-                }
-            }
+            // captain exos
+            for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
+                _gameModel.AddExo(_gameModel.PurchasedExos[i]);
 
             // heckles
-            for (int i = 0; i < _gameModel.GetHeckles().Count; i++)
-            {
-                int index = _gameModel.GetHeckles()[i];
-                if (!_gameModel.Heckles[index].isOwned)
-                {
-                    _gameModel.Heckles[index].isOwned = true;
-                }
-            }
+            for (int i = 0; i < _gameModel.PurchasedHeckles.Count; i++)
+                _gameModel.AddHeckle(_gameModel.PurchasedHeckles[i]);
 
             // bodykits
             try
             {
-                for (int i = 0; i < _gameModel.GetBodykits().Count; i++)
-                {
-                    int index = _gameModel.GetBodykits()[i];
-                    if (index < _gameModel.Bodykits.Count)
-                    {
-                        if (!_gameModel.Bodykits[index].IsOwned)
-                            _gameModel.Bodykits[index].isOwned = true;
-                    }
-                    else
-                        throw new Exception("Not all bodykits could be loaded. " + index.ToString() + " Bodykits were loaded successfully.");
-                }
+                for (int i = 0; i < _gameModel.PurchasedBodykits.Count; i++)
+                    _gameModel.AddBodykit(_gameModel.PurchasedBodykits[i]);
             }
             catch (Exception ex)
             {
@@ -315,13 +273,9 @@ namespace BattleCruisers.Data
             }
 
             // variants
-            for (int i = 0; i < _gameModel.GetVariants().Count; i++)
-            {
-                int index = _gameModel.GetVariants()[i];
-                if (!_gameModel.Variants[index].isOwned)
-                    _gameModel.Variants[index].isOwned = true;
+            for (int i = 0; i < _gameModel.PurchasedVariants.Count; i++)
+                _gameModel.AddVariant(_gameModel.PurchasedVariants[i]);
 
-            }
             await Task.CompletedTask;
         }
         private async Task FetchConfigs()
@@ -343,7 +297,7 @@ namespace BattleCruisers.Data
             var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
             Debug.Log($"Fetched GAME_CONFIG: {gameConfigsJson}");
             GameConfig gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigsJson);
-            _gameModel.GameConfigs = gameConfig.gameconfigs;
+            StaticData.GameConfigs = gameConfig.gameconfigs;
 
             // Fetch and deserialize SHOP_CONFIG
             var shopCategoriesConfigJson = RemoteConfigService.Instance.appConfig.GetJson("SHOP_CONFIG");
@@ -361,9 +315,9 @@ namespace BattleCruisers.Data
                 string credits = ecoConfig.categories[3].items[i].credits;
                 int iCredits = 0;
                 int.TryParse(credits, out iCredits);
-                if (i < _gameModel.Variants.Count)
+                if (i < StaticData.Variants.Count)
                 {
-                    _gameModel.Variants[i].variantCredits = iCredits;
+                    StaticData.Variants[i].VariantCredits = iCredits;
                     //Debug.Log($"Updated GameModel Variant {i} Price: {iCredits}");
                 }
             }
@@ -379,7 +333,7 @@ namespace BattleCruisers.Data
             }
             if (rcArenas != null && rcArenas.Count > 0)
             {
-                _gameModel.Arenas = rcArenas;
+                StaticData.Arenas = rcArenas;
             }
 
             var pvpQueueName = "bcqueuname"; //RemoteConfigService.Instance.appConfig.GetString("PvP_QUEUE");
@@ -389,9 +343,9 @@ namespace BattleCruisers.Data
             var sysReqsJson = RemoteConfigService.Instance.appConfig.GetJson("PVP_REQUIREMENTS");
             Debug.Log($"Fetched PVP_REQUIREMENTS: {sysReqsJson}");
             PvPSysReqs sysReqs = JsonConvert.DeserializeObject<PvPSysReqs>(sysReqsJson);
-            _gameModel.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
-            _gameModel.MinCPUFreq = sysReqs.PvPSystemReqs.MinCPUFreq;
-            _gameModel.MaxLatency = sysReqs.PvPSystemReqs.MaxLatency;
+            StaticData.MinCPUCores = sysReqs.PvPSystemReqs.MinCPUCores;
+            StaticData.MinCPUFrequency = sysReqs.PvPSystemReqs.MinCPUFreq;
+            StaticData.MaxLatency = sysReqs.PvPSystemReqs.MaxLatency;
 
             // Save the updated game model
             SaveGame();
@@ -429,21 +383,21 @@ namespace BattleCruisers.Data
                                 int index = StaticPrefabKeys.CaptainItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        _gameModel.Captains[index].captainCost = cost.amount;
+                                        StaticData.Captains[index].CaptainCost = cost.amount;
                             }
                             if (reward.id.Contains("HECKLE"))
                             {
                                 int index = StaticPrefabKeys.HeckleItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        _gameModel.Heckles[index].heckleCost = cost.amount;
+                                        StaticData.Heckles[index].HeckleCost = cost.amount;
                             }
                             if (reward.id.Contains("BODYKIT"))
                             {
                                 int index = StaticPrefabKeys.BodykitItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        _gameModel.Bodykits[index].bodykitCost = cost.amount;
+                                        StaticData.Bodykits[index].bodykitCost = cost.amount;
                             }
                         }
                     }
@@ -465,8 +419,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[0].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                if (i < _gameModel.Captains.Count)
-                    _gameModel.Captains[i].captainCost = iCoins;
+                if (i < StaticData.Captains.Count)
+                    StaticData.Captains[i].CaptainCost = iCoins;
             }
             // heckles cost sync
             for (int i = 0; i < ecoConfig.categories[1].items.Count; i++)
@@ -474,8 +428,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[1].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                if (i < _gameModel.Heckles.Count)
-                    _gameModel.Heckles[i].heckleCost = iCoins;
+                if (i < StaticData.Heckles.Count)
+                    StaticData.Heckles[i].HeckleCost = iCoins;
             }
             // bodykits cost sync
             for (int i = 0; i < ecoConfig.categories[2].items.Count; i++)
@@ -483,8 +437,8 @@ namespace BattleCruisers.Data
                 string coins = ecoConfig.categories[2].items[i].coins;
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
-                if (i < _gameModel.Bodykits.Count)
-                    _gameModel.Bodykits[i].bodykitCost = iCoins;
+                if (i < StaticData.Bodykits.Count)
+                    StaticData.Bodykits[i].bodykitCost = iCoins;
             }
             // variant cost async
             for (int i = 0; i < ecoConfig.categories[3].items.Count; i++)
@@ -492,8 +446,8 @@ namespace BattleCruisers.Data
                 string credits = ecoConfig.categories[3].items[i].credits;
                 int iCredits = 0;
                 int.TryParse(credits, out iCredits);
-                if (i < _gameModel.Bodykits.Count)
-                    _gameModel.Variants[i].variantCredits = iCredits;
+                if (i < StaticData.Variants.Count)
+                    StaticData.Variants[i].VariantCredits = iCredits;
             }
             SaveGame();
         }
@@ -514,7 +468,7 @@ namespace BattleCruisers.Data
                                 var costs = ParseEconomyItems(purchaseDef.Costs);
                                 foreach (ItemAndAmountSpec spec in costs)
                                     if (spec.id == "COIN")
-                                        _gameModel.Heckles[i + 3].heckleCost = spec.amount;
+                                        StaticData.Heckles[i + 3].HeckleCost = spec.amount;
                             }
                         }
                     }
@@ -549,7 +503,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
             await Task.Yield();
-            int iCoins = _gameModel.Captains[index].CaptainCost;
+            int iCoins = StaticData.Captains[index].CaptainCost;
             _gameModel.Coins -= iCoins;
             SaveGame();
             await SyncCoinsToCloud();
@@ -578,7 +532,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index >= 0);
             await Task.Yield();
-            int iCoins = _gameModel.Heckles[index].heckleCost;
+            int iCoins = StaticData.Heckles[index].HeckleCost;
             _gameModel.Coins -= iCoins;
             SaveGame();
             await SyncCoinsToCloud();
@@ -606,7 +560,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index > 0); // 0 is trident for premium
             await Task.Yield();
-            int iCoins = _gameModel.Bodykits[index].bodykitCost;
+            int iCoins = StaticData.Bodykits[index].bodykitCost;
             _gameModel.Coins -= iCoins;
             SaveGame();
             await SyncCoinsToCloud();
@@ -617,7 +571,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index >= 0);
             await Task.Yield();
-            int iCredits = _gameModel.Variants[index].variantCredits;
+            int iCredits = StaticData.Variants[index].VariantCredits;
             _gameModel.Credits -= iCredits;
             SaveGame();
             await SyncCreditsToCloud();
@@ -760,7 +714,6 @@ namespace BattleCruisers.Data
                 bool result = await PurchaseBodykitV2(txn.index);
                 if (result)
                 {
-                    GameModel.Bodykits[txn.index].isOwned = true;
                     GameModel.AddBodykit(txn.index);
                     GameModel.CoinsChange += txn.bodykitCost;
                 }
@@ -791,7 +744,6 @@ namespace BattleCruisers.Data
                 else
                 {
                     Debug.Log("Reverting purchase of Bodykit " + txn.index);
-                    GameModel.Bodykits[txn.index].isOwned = false;
                     GameModel.RemoveBodykit(txn.index);
                 }
             }
@@ -806,7 +758,6 @@ namespace BattleCruisers.Data
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Bodykits[bdk].isOwned = true;
                         GameModel.AddBodykit(bdk);
                     }
                 }
@@ -822,17 +773,16 @@ namespace BattleCruisers.Data
             // Captains
             foreach (CaptainData txn in GameModel.OutstandingCaptainTransactions)
             {
-                Debug.Log("Purchasing Captain " + txn.index);
-                bool result = await PurchaseCaptainV2(txn.index);
+                Debug.Log("Purchasing Captain " + txn.Index);
+                bool result = await PurchaseCaptainV2(txn.Index);
                 if (result)
                 {
-                    GameModel.Captains[txn.index].isOwned = true;
-                    GameModel.AddExo(txn.index);
-                    GameModel.CoinsChange += txn.captainCost;
+                    GameModel.AddExo(txn.Index);
+                    GameModel.CoinsChange += txn.CaptainCost;
                 }
                 else
                 {
-                    Debug.LogWarning("FAILED: Purchasing Captain " + txn.index + ", will retry next time the game is run.");
+                    Debug.LogWarning("FAILED: Purchasing Captain " + txn.Index + ", will retry next time the game is run.");
                     RetryCaptains.Add(txn);
                 }
             }
@@ -849,16 +799,15 @@ namespace BattleCruisers.Data
 
             foreach (CaptainData txn in GameModel.OutstandingCaptainTransactions)
             {
-                if (runningCoinTotal - txn.captainCost >= 0)
+                if (runningCoinTotal - txn.CaptainCost >= 0)
                 {
-                    runningCoinTotal -= txn.captainCost;
-                    GoodCaptains.Add(txn.index);
+                    runningCoinTotal -= txn.CaptainCost;
+                    GoodCaptains.Add(txn.Index);
                 }
                 else
                 {
-                    Debug.Log("Reverting purchase of Captain " + txn.index);
-                    GameModel.Captains[txn.index].isOwned = false;
-                    GameModel.RemoveExo(txn.index);
+                    Debug.Log("Reverting purchase of Captain " + txn.Index);
+                    GameModel.RemoveExo(txn.Index);
                 }
             }
             GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
@@ -872,7 +821,6 @@ namespace BattleCruisers.Data
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Captains[cpt].isOwned = true;
                         GameModel.AddExo(cpt);
                     }
                 }
@@ -888,18 +836,17 @@ namespace BattleCruisers.Data
 
             foreach (HeckleData txn in GameModel.OutstandingHeckleTransactions)
             {
-                Debug.Log("Purchasing Heckle " + txn.index);
-                bool result = await PurchaseHeckleV2(txn.index);
+                Debug.Log("Purchasing Heckle " + txn.Index);
+                bool result = await PurchaseHeckleV2(txn.Index);
                 if (result)
                 {
 
-                    GameModel.Heckles[txn.index].isOwned = true;
-                    GameModel.AddHeckle(txn.index);
-                    GameModel.CoinsChange += txn.heckleCost;
+                    GameModel.AddHeckle(txn.Index);
+                    GameModel.CoinsChange += txn.HeckleCost;
                 }
                 else
                 {
-                    Debug.LogWarning("FAILED: Purchasing Heckle " + txn.index + ", will retry next time the game is run.");
+                    Debug.LogWarning("FAILED: Purchasing Heckle " + txn.Index + ", will retry next time the game is run.");
                     RetryHeckles.Add(txn);
                 }
             }
@@ -914,33 +861,31 @@ namespace BattleCruisers.Data
         {
             List<int> GoodHeckles = new List<int>();
 
-            foreach (HeckleData txn in GameModel.OutstandingHeckleTransactions)
+            foreach (HeckleData heckle in GameModel.OutstandingHeckleTransactions)
             {
-                if (runningCoinTotal - txn.heckleCost >= 0)
+                if (runningCoinTotal - heckle.HeckleCost >= 0)
                 {
-                    runningCoinTotal -= txn.heckleCost;
-                    GoodHeckles.Add(txn.index);
+                    runningCoinTotal -= heckle.HeckleCost;
+                    GoodHeckles.Add(heckle.Index);
                 }
                 else
                 {
-                    Debug.Log("Reverting purchase of Heckle " + txn.index);
-                    GameModel.Heckles[txn.index].isOwned = false;
-                    GameModel.RemoveHeckle(txn.index);
+                    Debug.Log("Reverting purchase of Heckle " + heckle.Index);
+                    GameModel.RemoveHeckle(heckle.Index);
                 }
             }
             GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
 
             if (GoodHeckles != null && GoodHeckles.Count > 0)
             {
-                foreach (int hkl in GoodHeckles)
+                foreach (int heckle in GoodHeckles)
                 {
-                    Debug.Log("Purchasing Heckle " + hkl);
-                    bool result = await PurchaseHeckleV2(hkl);
+                    Debug.Log("Purchasing Heckle " + heckle);
+                    bool result = await PurchaseHeckleV2(heckle);
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Heckles[hkl].isOwned = true;
-                        GameModel.AddHeckle(hkl);
+                        GameModel.AddHeckle(heckle);
                     }
                 }
             }
@@ -954,18 +899,16 @@ namespace BattleCruisers.Data
 
             foreach (VariantData txn in GameModel.OutstandingVariantTransactions)
             {
-                Debug.Log("Purchasing Variant " + txn.index);
-                bool result = await PurchaseVariant(txn.index);
+                Debug.Log("Purchasing Variant " + txn.Index);
+                bool result = await PurchaseVariant(txn.Index);
                 if (result)
                 {
-
-                    GameModel.Variants[txn.index].isOwned = true;
-                    GameModel.AddVariant(txn.index);
-                    GameModel.CreditsChange += txn.variantCredits;
+                    GameModel.AddVariant(txn.Index);
+                    GameModel.CreditsChange += txn.VariantCredits;
                 }
                 else
                 {
-                    Debug.LogWarning("FAILED: Purchasing Variant " + txn.index + ", will retry next time the game is run.");
+                    Debug.LogWarning("FAILED: Purchasing Variant " + txn.Index + ", will retry next time the game is run.");
                     RetryVariants.Add(txn);
                 }
             }
@@ -982,16 +925,15 @@ namespace BattleCruisers.Data
 
             foreach (VariantData txn in GameModel.OutstandingVariantTransactions)
             {
-                if (runningCreditTotal - txn.variantCredits >= 0)
+                if (runningCreditTotal - txn.VariantCredits >= 0)
                 {
-                    runningCreditTotal -= txn.variantCredits;
-                    GoodVariants.Add(txn.index);
+                    runningCreditTotal -= txn.VariantCredits;
+                    GoodVariants.Add(txn.Index);
                 }
                 else
                 {
-                    Debug.Log("Reverting purchase of Variant " + txn.index);
-                    GameModel.Variants[txn.index].isOwned = false;
-                    GameModel.RemoveVariant(txn.index);
+                    Debug.Log("Reverting purchase of Variant " + txn.Index);
+                    GameModel.RemoveVariant(txn.Index);
                 }
             }
             GameModel.OutstandingVariantTransactions = new List<VariantData>();
@@ -1005,7 +947,6 @@ namespace BattleCruisers.Data
                     if (result)
                     {
                         //    await SyncCurrencyFromCloud();
-                        GameModel.Variants[vnt].isOwned = true;
                         GameModel.AddVariant(vnt);
                     }
                 }

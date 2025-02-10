@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using BattleCruisers.AI;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
@@ -18,13 +17,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.C
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -448,14 +448,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         public void RegisterAIOfLeftPlayer()
         {
-            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, UnityEngine.Random.Range(0, 40));
-            //     IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 current level num);
+            IArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, UnityEngine.Random.Range(0, 40));
+            //     IArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 current level num);
             _gameEndMonitor.RegisterAIOfLeftPlayer(ai_LeftPlayer);
         }
 
         public void RegisterAIOfRightPlayer()
         {
-            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, UnityEngine.Random.Range(20, 40));
+            IArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, UnityEngine.Random.Range(20, 40));
             _gameEndMonitor.RegisterAIOfRightPlayer(ai_RightPlayer);
         }
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)

@@ -1,7 +1,6 @@
-using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
@@ -10,9 +9,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         public IHighlightable NumberOfDronesHighlightable { get; }
         public IPvPBuildMenu BuildMenu { get; }
-        public IPvPGameObject PopLimitReachedFeedback { get; }
+        public IGameObject PopLimitReachedFeedback { get; }
 
-        public PvPLeftPanelComponents(IHighlightable numberOfDronesHighlightable, IPvPBuildMenu buildMenu, IPvPGameObject popLimitReachedFeedback)
+        public PvPLeftPanelComponents(IHighlightable numberOfDronesHighlightable, IPvPBuildMenu buildMenu, IGameObject popLimitReachedFeedback)
         {
             PvPHelper.AssertIsNotNull(numberOfDronesHighlightable, buildMenu, popLimitReachedFeedback);
 

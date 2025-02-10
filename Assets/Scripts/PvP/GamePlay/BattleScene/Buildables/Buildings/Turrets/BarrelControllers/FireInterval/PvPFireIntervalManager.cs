@@ -1,10 +1,11 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
-    public class PvPFireIntervalManager : IPvPFireIntervalManager
+    public class PvPFireIntervalManager : IFireIntervalManager
     {
         private IPvPState _currentState;
         private IPvPState CurrentState
@@ -18,16 +19,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private readonly PvPSettableBroadcastingProperty<bool> _shouldFire;
-        public IPvPBroadcastingProperty<bool> ShouldFire { get; }
+        private readonly SettableBroadcastingProperty<bool> _shouldFire;
+        public IBroadcastingProperty<bool> ShouldFire { get; }
 
         public PvPFireIntervalManager(IPvPState startingState)
         {
             Assert.IsNotNull(startingState);
 
             _currentState = startingState;
-            _shouldFire = new PvPSettableBroadcastingProperty<bool>(_currentState.ShouldFire);
-            ShouldFire = new PvPBroadcastingProperty<bool>(_shouldFire);
+            _shouldFire = new SettableBroadcastingProperty<bool>(_currentState.ShouldFire);
+            ShouldFire = new BroadcastingProperty<bool>(_shouldFire);
         }
 
         public void OnFired()

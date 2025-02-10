@@ -10,10 +10,11 @@ using Unity.Netcode;
 using System;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Projectiles.Spawners.Beams;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
 {
-    public abstract class PvPBeamEmitter : NetworkBehaviour, IPvPBeamEmitter
+    public abstract class PvPBeamEmitter : NetworkBehaviour, IBeamEmitter
     {
         private IPvPBeamCollisionDetector _collisionDetector;
         protected ITarget _parent;

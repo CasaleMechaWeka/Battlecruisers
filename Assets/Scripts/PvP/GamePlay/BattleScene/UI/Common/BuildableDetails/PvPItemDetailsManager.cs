@@ -6,9 +6,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
@@ -23,8 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly IDataProvider _dataProvider;
         private readonly ILocTable _commonString;
 
-        private IPvPSettableBroadcastingProperty<ITarget> _selectedItem;
-        public IPvPBroadcastingProperty<ITarget> SelectedItem { get; }
+        private ISettableBroadcastingProperty<ITarget> _selectedItem;
+        public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
         public PvPItemDetailsManager(IPvPInformatorPanel informator, IDataProvider dataProvider, IPvPPrefabFactory prefabFactory, ILocTable commonString)
         {
@@ -39,8 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
 
-            _selectedItem = new PvPSettableBroadcastingProperty<ITarget>(initialValue: null);
-            SelectedItem = new PvPBroadcastingProperty<ITarget>(_selectedItem);
+            _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
+            SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
         }
 
         public void ShowDetails(IPvPBuilding building)
@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IPvPBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                 _buildingDetails.ShowItemDetails(staticBuilding, variant);
-                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
+                _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
                 //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 IPvPUnit staticUnit = variant.GetUnit(_prefabFactory);
                 _unitDetails.ShowItemDetails(staticUnit, variant);
-                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
+                _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
                 //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(_dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                 _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;

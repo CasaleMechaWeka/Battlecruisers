@@ -65,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public void Play(bool isSpatial = true, bool loop = false)
         {
-            Debug.Log($"Playing audio. Spatial: {isSpatial}, Loop: {loop}");
+            //Debug.Log($"Playing audio. Spatial: {isSpatial}, Loop: {loop}");
             _audioSource.spatialBlend = isSpatial ? MAX_BLEND : MIN_BLEND;
             _audioSource.loop = loop;
             _audioSource.Play();

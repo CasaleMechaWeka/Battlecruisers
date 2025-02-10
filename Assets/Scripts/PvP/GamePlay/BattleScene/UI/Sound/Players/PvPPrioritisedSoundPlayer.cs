@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     /// If a sound is requested while another sound is in progress, only plays
     /// the new sound if it has higher priority than the current sound.
     /// </summary>
-    public class PvPPrioritisedSoundPlayer : IPvPPrioritisedSoundPlayer
+    public class PvPPrioritisedSoundPlayer : IPrioritisedSoundPlayer
     {
         private readonly ISingleSoundPlayer _soundPlayer;
         private PrioritisedSoundKey _lastSoundKey;

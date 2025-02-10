@@ -1,31 +1,32 @@
 using System;
+using BattleCruisers.AI;
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
     public class PvPAntiThreatTaskProducer : PvPTaskProducer
     {
         private readonly IPvPDynamicBuildOrder _antiThreatBuildOrder;
-        private readonly IPvPThreatMonitor _threatMonitor;
+        private readonly IThreatMonitor _threatMonitor;
         private readonly IPvPSlotNumCalculator _slotNumCalculator;
 
         private int _targetNumOfSlotsToUse;
         private int _numOfTasksCompleted;
-        private IPvPPrioritisedTask _currentTask;
+        private IPrioritisedTask _currentTask;
 
         public PvPAntiThreatTaskProducer(
-            IPvPTaskList tasks,
+            ITaskList tasks,
             IPvPCruiserController cruiser,
             IPvPPrefabFactory prefabFactory,
-            IPvPTaskFactory taskFactory,
+            ITaskFactory taskFactory,
             IPvPDynamicBuildOrder antiThreatBuildOrder,
-            IPvPThreatMonitor threatMonitor,
+            IThreatMonitor threatMonitor,
             IPvPSlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
@@ -54,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
                 && _targetNumOfSlotsToUse > _numOfTasksCompleted
                 && _antiThreatBuildOrder.MoveNext())
             {
-                _currentTask = _taskFactory.CreateConstructBuildingTask(PvPTaskPriority.Normal, _antiThreatBuildOrder.Current);
+                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _antiThreatBuildOrder.Current);
                 _currentTask.Completed += _currentTask_Completed;
                 _tasks.Add(_currentTask);
             }

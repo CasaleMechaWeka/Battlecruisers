@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     /// </summary>
     public class PvPBuildableButtonColourController
     {
-        private readonly IPvPBroadcastingProperty<ITarget> _selectedItem;
+        private readonly IBroadcastingProperty<ITarget> _selectedItem;
         private readonly IDictionary<ITarget, IPvPBuildableButton> _buildableToButton;
 
         private IPvPBuildableButton _selectedButton;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public PvPBuildableButtonColourController(IPvPBroadcastingProperty<ITarget> selectedItem, IReadOnlyCollection<IPvPBuildableButton> buttons)
+        public PvPBuildableButtonColourController(IBroadcastingProperty<ITarget> selectedItem, IReadOnlyCollection<IPvPBuildableButton> buttons)
         {
             PvPHelper.AssertIsNotNull(selectedItem, buttons);
 

@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Utils;
 using System;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -16,6 +15,7 @@ using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Properties;
 using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
@@ -80,8 +80,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
         public Vector2 Position => transform.position;
 
-        private IPvPSettableBroadcastingProperty<IPvPBuilding> _baseBuilding;
-        public IPvPBroadcastingProperty<IPvPBuilding> Building { get; private set; }
+        private ISettableBroadcastingProperty<IPvPBuilding> _baseBuilding;
+        public IBroadcastingProperty<IPvPBuilding> Building { get; private set; }
 
         private Transform _buildingPlacementFeedback;
         private Transform _buildingPlacementBeacon;
@@ -245,8 +245,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             };
 
             Transform = new TransformBC(transform);
-            _baseBuilding = new PvPSettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
-            Building = new PvPBroadcastingProperty<IPvPBuilding>(_baseBuilding);
+            _baseBuilding = new SettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
+            Building = new BroadcastingProperty<IPvPBuilding>(_baseBuilding);
 
             PvPSlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<PvPSlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);

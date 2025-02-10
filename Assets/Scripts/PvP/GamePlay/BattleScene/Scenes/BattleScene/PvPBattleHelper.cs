@@ -1,3 +1,4 @@
+using BattleCruisers.AI;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
@@ -11,7 +12,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Models;
@@ -20,6 +20,8 @@ using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 
@@ -125,7 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPStaticBroadcastingFilter(isMatch: true));
         }
 
-        public override IPvPPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser)
+        public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser)
         {
             return playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer;
         }
@@ -138,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager);
         }
 
-        public override IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum)
+        public override IArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum)
         {
             IPvPLevelInfo levelInfo = new PvPLevelInfo(aiCruiser, playerCruiser, PvPBattleSceneGodServer.Instance._battleSceneGodTunnel, _prefabFactory);
             IPvPStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
@@ -148,7 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager,
-            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator)
         {
             PvPHelper.AssertIsNotNull(playerCruiserUserChosenTargetManager);
@@ -157,7 +159,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
 
-        public override IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer)
+        public override IManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer)
         {
             return
                 new PvPDroneEventSoundPlayer(

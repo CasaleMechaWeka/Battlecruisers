@@ -1,12 +1,13 @@
+using BattleCruisers.AI.Tasks;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks
 {
-    public class PvPTaskFactory : IPvPTaskFactory
+    public class PvPTaskFactory : ITaskFactory
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPvPCruiserController _cruiser;
@@ -29,15 +30,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             delayProvider = new PvPDelayProvider(DEFAULT_DELAY_IN_S);
         }
 
-        public IPvPPrioritisedTask CreateConstructBuildingTask(PvPTaskPriority priority, IPvPPrefabKey buildingKey)
+        public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
         {
             IPvPTask constructBuildingTask = new PvPConstructBuildingTask(buildingKey, _prefabFactory, _cruiser);
             return CreatePrioritisedTask(constructBuildingTask, priority);
         }
 
-        private IPvPPrioritisedTask CreatePrioritisedTask(IPvPTask task, PvPTaskPriority priority)
+        private IPrioritisedTask CreatePrioritisedTask(IPvPTask task, TaskPriority priority)
         {
-            IPvPPrioritisedTask prioritisedTask = new PvPPrioritisedTask(priority, task);
+            IPrioritisedTask prioritisedTask = new PvPPrioritisedTask(priority, task);
             return new PvPDeferredPrioritisedTask(prioritisedTask, _deferrer, delayProvider);
         }
     }

@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
+using BattleCruisers.AI;
+using BattleCruisers.AI.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
@@ -14,23 +15,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     /// same priority, and I want to maintain their order when I add
     /// or remove an task.
     /// </summary>
-    public class PvPTaskList : IPvPTaskList
+    public class PvPTaskList : ITaskList
     {
-        private readonly IList<IPvPPrioritisedTask> _tasks;
+        private readonly IList<IPrioritisedTask> _tasks;
 
         public bool IsEmpty => _tasks.Count == 0;
 
-        public IPvPPrioritisedTask HighestPriorityTask => _tasks.LastOrDefault();
+        public IPrioritisedTask HighestPriorityTask => _tasks.LastOrDefault();
 
         public event EventHandler HighestPriorityTaskChanged;
         public event EventHandler IsEmptyChanged;
 
         public PvPTaskList()
         {
-            _tasks = new List<IPvPPrioritisedTask>();
+            _tasks = new List<IPrioritisedTask>();
         }
 
-        public void Add(IPvPPrioritisedTask taskToAdd)
+        public void Add(IPrioritisedTask taskToAdd)
         {
             //  Logging.Log(Tags.AI, taskToAdd.ToString());
             Assert.IsFalse(_tasks.Contains(taskToAdd));
@@ -61,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             }
         }
 
-        public void Remove(IPvPPrioritisedTask taskToRemove)
+        public void Remove(IPrioritisedTask taskToRemove)
         {
             //    Logging.Log(Tags.AI, taskToRemove.ToString());
             Assert.IsTrue(_tasks.Contains(taskToRemove));

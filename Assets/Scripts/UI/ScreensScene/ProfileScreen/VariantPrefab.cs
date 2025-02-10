@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 return null;
             }
 
-            IPvPPrefabKey buildingKey = GetPvPPrefabKey();
+            IPrefabKey buildingKey = GetPvPPrefabKey();
             if (buildingKey == null)
             {
                 Debug.LogError("PvP Building key is null");
@@ -268,7 +268,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
 
 
-        public IPvPPrefabKey GetPvPPrefabKey()
+        public IPrefabKey GetPvPPrefabKey()
         {
             switch (_parent)
             {

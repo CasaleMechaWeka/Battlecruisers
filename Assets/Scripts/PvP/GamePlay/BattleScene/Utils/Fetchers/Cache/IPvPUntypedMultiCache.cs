@@ -1,12 +1,12 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections.Generic;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
 {
     public interface IPvPUntypedMultiCache<TBase> where TBase : class
     {
-        TChild GetPrefab<TChild>(IPvPPrefabKey prefabKey) where TChild : class, TBase;
-        ICollection<IPvPPrefabKey> GetKeys();
+        TChild GetPrefab<TChild>(IPrefabKey prefabKey) where TChild : class, TBase;
+        ICollection<IPrefabKey> GetKeys();
         ICollection<TBase> GetValues();
     }
 }

@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public async Task<IPvPPrefabContainer<PvPBackgroundImageStats>> GetStatsAsync(int levelNum)
         {
-            IPvPPrefabKey key = new PvPBackgroundImageStatsKey(levelNum);
+            IPrefabKey key = new PvPBackgroundImageStatsKey(levelNum);
             return await _prefabFetcher.GetPrefabAsync<PvPBackgroundImageStats>(key);
         }
     }

@@ -1,3 +1,4 @@
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -23,13 +24,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     /// making those lasers useless :P  Hence wait slightly before trying to rebuild
     /// a building.
     /// </summary>
-    public class PvPDeferredPrioritisedTask : IPvPPrioritisedTask
+    public class PvPDeferredPrioritisedTask : IPrioritisedTask
     {
-        private readonly IPvPPrioritisedTask _baseTask;
+        private readonly IPrioritisedTask _baseTask;
         private readonly IDeferrer _deferrer;
         private readonly IPvPDelayProvider _delayProvider;
 
-        public PvPTaskPriority Priority => _baseTask.Priority;
+        public TaskPriority Priority => _baseTask.Priority;
 
         public event EventHandler<EventArgs> Completed
         {
@@ -37,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             remove { _baseTask.Completed -= value; }
         }
 
-        public PvPDeferredPrioritisedTask(IPvPPrioritisedTask baseTask, IDeferrer deferrer, IPvPDelayProvider delayProvider)
+        public PvPDeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer, IPvPDelayProvider delayProvider)
         {
             PvPHelper.AssertIsNotNull(baseTask, deferrer, delayProvider);
 

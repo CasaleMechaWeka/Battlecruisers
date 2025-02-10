@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Escape
 {
-    public interface IPvPEscapeDetector : IPvPManagedDisposable
+    public interface IPvPEscapeDetector : IManagedDisposable
     {
         event EventHandler EscapePressed;
     }

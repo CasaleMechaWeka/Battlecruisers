@@ -2,6 +2,7 @@ using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private PvPDummyBuildingCategoryButton _nullButton;
 
         // Keep references to avoid garbage collection
-        private IPvPManagedDisposable _buildingCategoryHotkeyListener;
+        private IManagedDisposable _buildingCategoryHotkeyListener;
 
         public PvPBuildingCategoryButton factoriesButton, defensivesButton, offensivesButton, tacticalsButton, ultrasButton;
 

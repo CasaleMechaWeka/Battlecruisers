@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -20,7 +21,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
@@ -31,14 +31,15 @@ using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
 
@@ -58,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private IAudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private IPvPManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
+        private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public string stringKeyBase;
@@ -117,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPFactoryProvider FactoryProvider { get; private set; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private PvPFogOfWar _fog;
-        public IPvPGameObject Fog => _fog;
+        public IGameObject Fog => _fog;
         public IPvPRepairManager RepairManager { get; private set; }
         public int NumOfDrones => numOfDrones;
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; private set; }
@@ -136,7 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPDroneFocuser DroneFocuser { get; private set; }
         public IPvPCruiserBuildingMonitor BuildingMonitor { get; private set; }
         public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }
-        public IPvPPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
+        public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
         public IPvPUnitTargets UnitTargets { get; private set; }
         public IPvPTargetTracker BlockedShipsTracker { get; private set; }
 
@@ -155,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool>();
         public NetworkVariable<byte> pvp_IsVictory = new NetworkVariable<byte>();
 
-        private IPvPBroadcastingProperty<bool> _CruiserHasActiveDrones;
+        private IBroadcastingProperty<bool> _CruiserHasActiveDrones;
         private bool IsAIBotMode = false;
 
         protected virtual void Start()
@@ -194,7 +195,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         }
 
-
         private async Task LoadBodykit(int index)
         {
             Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
@@ -202,8 +202,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                 // should update Name and Description for Bodykit
-                Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[index].NameStringKeyBase);
-                Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Bodykits[index].DescriptionKeyBase);
+                Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
+                Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
             }
         }
 

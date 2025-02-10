@@ -1,10 +1,11 @@
 using System;
+using BattleCruisers.AI;
+using BattleCruisers.AI.Tasks;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using UnityEngine.Assertions;
 
@@ -18,10 +19,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         private readonly IPvPDynamicBuildOrder _buildOrder;
 
         public PvPBasicTaskProducer(
-            IPvPTaskList tasks,
+            ITaskList tasks,
             IPvPCruiserController cruiser,
             IPvPPrefabFactory prefabFactory,
-            IPvPTaskFactory taskFactory,
+            ITaskFactory taskFactory,
             IPvPDynamicBuildOrder buildOrder)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
@@ -39,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
             if (_tasks.IsEmpty)
             {
-                IPvPPrioritisedTask newTask = CreateTask();
+                IPrioritisedTask newTask = CreateTask();
 
                 if (newTask != null)
                 {
@@ -56,16 +57,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         /// <returns>
         /// The next task, or null, if we have run out of building keys to create tasks from.
         /// </returns>
-        private IPvPPrioritisedTask CreateTask()
+        private IPrioritisedTask CreateTask()
         {
             while (_buildOrder.MoveNext())
             {
-                IPvPPrefabKey buildingKey = _buildOrder.Current;
+                IPrefabKey buildingKey = _buildOrder.Current;
                 IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
                 if (CanConstructBuilding(buildingWrapper.Buildable))
                 {
-                    return _taskFactory.CreateConstructBuildingTask(PvPTaskPriority.Low, buildingKey);
+                    return _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, buildingKey);
                 }
             }
 

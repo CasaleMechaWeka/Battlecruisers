@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// should not be cleaned up by calling code itself!  (Tired offensive bug, where 
     /// GlobalTargetProcessor was being cleaned up on individual offensive deaths.)
     /// </summary>
-    public abstract class PvPTargetProcessorWrapper : MonoBehaviour, IPvPManagedDisposable
+    public abstract class PvPTargetProcessorWrapper : MonoBehaviour, IManagedDisposable
     {
         private IPvPTargetProcessor _targetProcessor;
 

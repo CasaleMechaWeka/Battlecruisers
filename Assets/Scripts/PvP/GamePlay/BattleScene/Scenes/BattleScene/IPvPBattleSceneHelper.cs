@@ -1,30 +1,30 @@
-using System.Threading.Tasks;
+using BattleCruisers.AI;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
     public interface IPvPBattleSceneHelper
     {
-        IPvPPrefabKey PlayerACruiser { get; }
-        IPvPPrefabKey PlayerBCruiser { get; }
-        IPvPPrefabKey AIBotCruiser { get; }
+        IPrefabKey PlayerACruiser { get; }
+        IPrefabKey PlayerBCruiser { get; }
+        IPrefabKey AIBotCruiser { get; }
         string[] PvPHullNames { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
@@ -37,19 +37,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         void InitialiseUIManager(PvPManagerArgs args);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IPvPDroneManager droneManager);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
-        IPvPPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
+        IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
         IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
                              IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
-                             // IPvPPrioritisedSoundPlayer soundPlayer,
+                             // IPrioritisedSoundPlayer soundPlayer,
                              //  IPvPTargetIndicator targetIndicator
                              );
         IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager,
-            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator
                                 );
-        IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
-        IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer);
+        IArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
+        IManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer);
         Task<IPvPPrefabContainer<PvPBackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
     }
 }

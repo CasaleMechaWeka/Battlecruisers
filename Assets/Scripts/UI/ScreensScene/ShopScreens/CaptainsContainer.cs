@@ -85,7 +85,6 @@ namespace BattleCruisers.UI.ScreensScene
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
                             _dataProvider.GameModel.AddExo(currentCaptainData.Index);
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
@@ -123,7 +122,6 @@ namespace BattleCruisers.UI.ScreensScene
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.Captains[currentCaptainData.Index].isOwned = true;
                         _dataProvider.GameModel.AddExo(currentCaptainData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
@@ -135,7 +133,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CoinsChange -= currentCaptainData.CaptainCost;
-                        CaptainData captain = _dataProvider.GameModel.Captains[currentCaptainData.Index];
+                        CaptainData captain = _dataProvider.StaticData.Captains[currentCaptainData.Index];
                         if (_dataProvider.GameModel.OutstandingCaptainTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
@@ -184,7 +182,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentCaptainData = e.captainData;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
             ShopBuyControls.SetActive(true);
-            if (e.captainData.IsOwned)
+            if (_dataProvider.GameModel.PurchasedExos.Contains(e.captainData.Index))
             {
                 priceLabel.SetActive(false);
                 btnBuy.SetActive(false);

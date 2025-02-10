@@ -14,8 +14,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using System.Threading.Tasks;
 using BattleCruisers.Buildables;
@@ -164,7 +164,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPRankedTargetTracker userChosenTargetTracker,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
-            IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones,
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
             bool isPlayerCruiser)
         {
 
@@ -212,7 +212,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             cruiser.Initialise(cruiserArgs);
         }
 
-        private IPvPDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IPvPDroneManager droneManager /*, IPvPPrioritisedSoundPlayer soundPlayer */)
+        private IPvPDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IPvPDroneManager droneManager /*, IPrioritisedSoundPlayer soundPlayer */)
         {
             if (isPlayerCruiser)
             {

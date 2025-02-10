@@ -1,11 +1,12 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
-    public class PvPUnitReadySignal : IPvPManagedDisposable
+    public class PvPUnitReadySignal : IManagedDisposable
     {
         private readonly IPvPCruiserUnitMonitor _unitMonitor;
         private readonly IAudioSource _navalAudioSource, _aircraftAudioSource;

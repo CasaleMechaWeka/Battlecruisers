@@ -88,9 +88,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _commonStrings = commonStrings;
             _factoryProvider = factoryProvider;
 
-            Debug.Log("[PvPProjectileControllerBase] Initialise() started.");
+            //Debug.Log("[PvPProjectileControllerBase] Initialise() started.");
             _rigidBody = GetComponent<Rigidbody2D>();
-            Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
+            //Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
             Assert.IsNotNull(_rigidBody);
 
             IPvPExplosionPoolChooser explosionPoolChooser = GetComponent<IPvPExplosionPoolChooser>();
@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
-            Debug.Log("[PvPProjectileControllerBase] Activate() called. Position: " + activationArgs.Position + ", InitialVelocity: " + activationArgs.InitialVelocityInMPerS + ", ImpactSound: " + (activationArgs.ImpactSound != null && activationArgs.ImpactSound.AudioClip != null ? activationArgs.ImpactSound.AudioClip.name : "null"));
+            //Debug.Log("[PvPProjectileControllerBase] Activate() called. Position: " + activationArgs.Position + ", InitialVelocity: " + activationArgs.InitialVelocityInMPerS + ", ImpactSound: " + (activationArgs.ImpactSound != null && activationArgs.ImpactSound.AudioClip != null ? activationArgs.ImpactSound.AudioClip.name : "null"));
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
@@ -126,7 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _impactSound = activationArgs.ImpactSound;
 
             _rigidBody.velocity = activationArgs.InitialVelocityInMPerS;
-            Debug.Log("[PvPProjectileControllerBase] Setting Rigidbody velocity to: " + activationArgs.InitialVelocityInMPerS + " and gravityScale to: " + activationArgs.ProjectileStats.GravityScale);
+            //Debug.Log("[PvPProjectileControllerBase] Setting Rigidbody velocity to: " + activationArgs.InitialVelocityInMPerS + " and gravityScale to: " + activationArgs.ProjectileStats.GravityScale);
             _rigidBody.gravityScale = activationArgs.ProjectileStats.GravityScale;
             _targetToDamage = null;
 
@@ -194,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             AdjustGameObjectDirection();
             PositionChanged?.Invoke(this, EventArgs.Empty);
 
-            Debug.Log("[PvPProjectileControllerBase] FixedUpdate() running. isActiveAndAlive: " + _isActiveAndAlive + ", Rigidbody velocity: " + _rigidBody.velocity);
+            //Debug.Log("[PvPProjectileControllerBase] FixedUpdate() running. isActiveAndAlive: " + _isActiveAndAlive + ", Rigidbody velocity: " + _rigidBody.velocity);
         }
 
         void OnTriggerEnter2D(Collider2D collider)
@@ -209,21 +209,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 && _targetFilter.IsMatch(target)
                 && _targetToDamage == null)
             {
-                Debug.Log("[PvPProjectileControllerBase] Target found: " + target);
+                //Debug.Log("[PvPProjectileControllerBase] Target found: " + target);
                 _targetToDamage = target;
             }
         }
 
         protected virtual void DestroyProjectile()
         {
-            if(IsHost)
+            if (IsHost)
             {
                 ShowExplosion();
                 RemoveFromScene();
                 Debug.LogWarning("DestroyProjectile");
             }
 
-            Debug.Log("[PvPProjectileControllerBase] DestroyProjectile() called.");
+            //Debug.Log("[PvPProjectileControllerBase] DestroyProjectile() called.");
         }
 
         protected void ShowExplosion()
@@ -233,17 +233,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _explosionPool.GetItem(transform.position);
             OnPlayExplosionSound(SoundType.Explosions, _impactSound.AudioClip.name, transform.position);
 
-            Debug.Log("[PvPProjectileControllerBase] Showing explosion at position: " + transform.position + " with sound: " + (_impactSound != null && _impactSound.AudioClip != null ? _impactSound.AudioClip.name : "null"));
+            //Debug.Log("[PvPProjectileControllerBase] Showing explosion at position: " + transform.position + " with sound: " + (_impactSound != null && _impactSound.AudioClip != null ? _impactSound.AudioClip.name : "null"));
         }
 
         private void AdjustGameObjectDirection()
         {
             Logging.Verbose(Tags.SHELLS, $"_rigidBody.velocity: {_rigidBody.velocity}");
-            Debug.Log("[PvPProjectileControllerBase] AdjustGameObjectDirection() called with Rigidbody velocity: " + _rigidBody.velocity);
+            //Debug.Log("[PvPProjectileControllerBase] AdjustGameObjectDirection() called with Rigidbody velocity: " + _rigidBody.velocity);
             if (_rigidBody.velocity != Vector2.zero)
             {
                 transform.right = _rigidBody.velocity;
-                Debug.Log("[PvPProjectileControllerBase] New transform.right set to: " + transform.right);
+                //Debug.Log("[PvPProjectileControllerBase] New transform.right set to: " + transform.right);
             }
         }
 

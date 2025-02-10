@@ -1,11 +1,12 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources
 {
-    public abstract class PvPVolumeAwareAudioSource : IPvPManagedDisposable, IAudioSource
+    public abstract class PvPVolumeAwareAudioSource : IManagedDisposable, IAudioSource
     {
         private readonly IAudioSource _audioSource;
         private readonly ISettingsManager _settingsManager;

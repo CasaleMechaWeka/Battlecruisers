@@ -1,5 +1,5 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -12,12 +12,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPUnitFactory : IPvPPoolableFactory<PvPUnit, PvPBuildableActivationArgs>
     {
         private readonly IPvPPrefabFactory _prefabFactory;
-        private readonly IPvPPrefabKey _unitKey;
+        private readonly IPrefabKey _unitKey;
         // private readonly IPvPUIManager _uiManager;
         private readonly IPvPFactoryProvider _factoryProvider;
         private readonly IPvPBuildableWrapper<IPvPUnit> _unitPrefab;
 
-        public PvPUnitFactory(IPvPPrefabFactory prefabFactory, IPvPPrefabKey unitKey, /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
+        public PvPUnitFactory(IPvPPrefabFactory prefabFactory, IPrefabKey unitKey, /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
         {
             PvPHelper.AssertIsNotNull(prefabFactory, unitKey, factoryProvider);
 

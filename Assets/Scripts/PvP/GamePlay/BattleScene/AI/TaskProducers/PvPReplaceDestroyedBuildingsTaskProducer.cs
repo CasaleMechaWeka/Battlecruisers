@@ -1,4 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
+using BattleCruisers.AI;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -8,6 +9,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
+using BattleCruisers.AI.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
@@ -40,10 +42,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         private const float TASK_DELAY_IN_S = 1;
 
         public PvPReplaceDestroyedBuildingsTaskProducer(
-            IPvPTaskList tasks,
+            ITaskList tasks,
             IPvPCruiserController cruiser,
             IPvPPrefabFactory prefabFactory,
-            IPvPTaskFactory taskFactory,
+            ITaskFactory taskFactory,
             IList<PvPBuildingKey> buildingKeys)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
@@ -73,8 +75,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
             Assert.IsTrue(_buildingNamesToKeys.ContainsKey(e.DestroyedBuilding.keyName));
 
-            IPvPPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.keyName];
-            PvPTaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? PvPTaskPriority.High : PvPTaskPriority.Normal;
+            IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.keyName];
+            TaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? TaskPriority.High : TaskPriority.Normal;
             _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
         }
 

@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private PvPLaserTurretStats _laserTurretStats;
         private PvPLaserEmitter _laserEmitter;
-        private IPvPManagedDisposable _laserCooldownEffect;
+        private IManagedDisposable _laserCooldownEffect;
 
         public override Vector3 ProjectileSpawnerPosition => _laserEmitter.transform.position;
         public override bool CanFireWithoutTarget => false;
@@ -37,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _laserTurretStats;
         }
 
-        protected override IPvPFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
+        protected override IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
             PvPLaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPLaserFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);

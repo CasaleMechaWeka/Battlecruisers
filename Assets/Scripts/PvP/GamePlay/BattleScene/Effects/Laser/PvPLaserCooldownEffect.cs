@@ -1,14 +1,15 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using BattleCruisers.Utils.Timers;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
-    public class PvPLaserCooldownEffect : IPvPManagedDisposable
+    public class PvPLaserCooldownEffect : IManagedDisposable
     {
-        private readonly IPvPBroadcastingProperty<bool> _isLaserFiring;
+        private readonly IBroadcastingProperty<bool> _isLaserFiring;
         private readonly IPvPLaserFlap _laserFlap;
         private readonly IPvPParticleSystemGroup _overheatingSmoke;
         private readonly IDebouncer _laserStoppdDebouncer;
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         }
 
         public PvPLaserCooldownEffect(
-            IPvPBroadcastingProperty<bool> isLaserFiring,
+            IBroadcastingProperty<bool> isLaserFiring,
             IPvPLaserFlap laserFlap,
             IPvPParticleSystemGroup overheatingSmoke,
             IDebouncer laserStoppedDebouncer)

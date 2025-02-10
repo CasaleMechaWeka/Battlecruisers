@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -49,8 +49,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
             }
         }
 
-        private IPvPSettableBroadcastingProperty<PvPPanelState> _state;
-        public IPvPBroadcastingProperty<PvPPanelState> State { get; private set; }
+        private ISettableBroadcastingProperty<PvPPanelState> _state;
+        public IBroadcastingProperty<PvPPanelState> State { get; private set; }
 
         public float shownPositionYDelta = 500;
         public float showSmoothTimeInS = 0.05f;
@@ -79,8 +79,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
 
             _hiddenScale = transform.localScale;
 
-            _state = new PvPSettableBroadcastingProperty<PvPPanelState>(initialValue: PvPPanelState.Sliding);
-            State = new PvPBroadcastingProperty<PvPPanelState>(_state);
+            _state = new SettableBroadcastingProperty<PvPPanelState>(initialValue: PvPPanelState.Sliding);
+            State = new BroadcastingProperty<PvPPanelState>(_state);
             TargetState = PvPPanelState.Hidden;
 
             _isInitialised = true;

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data
     {
         int Num { get; }
 
-        IPvPPrefabKey Hull { get; }
+        IPrefabKey Hull { get; }
         SoundKeyPair MusicKeys { get; }
         string SkyMaterialName { get; }
     }
