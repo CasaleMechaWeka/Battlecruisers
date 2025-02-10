@@ -1,4 +1,5 @@
 using System;
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 
         private int _targetNumOfSlotsToUse;
         private int _numOfTasksCompleted;
-        private IPvPPrioritisedTask _currentTask;
+        private IPrioritisedTask _currentTask;
 
         public PvPAntiThreatTaskProducer(
             IPvPTaskList tasks,
@@ -54,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
                 && _targetNumOfSlotsToUse > _numOfTasksCompleted
                 && _antiThreatBuildOrder.MoveNext())
             {
-                _currentTask = _taskFactory.CreateConstructBuildingTask(PvPTaskPriority.Normal, _antiThreatBuildOrder.Current);
+                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _antiThreatBuildOrder.Current);
                 _currentTask.Completed += _currentTask_Completed;
                 _tasks.Add(_currentTask);
             }

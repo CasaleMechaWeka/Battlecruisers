@@ -1,5 +1,6 @@
-using System;
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States;
+using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks
 {
@@ -14,16 +15,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     /// + IInternalTask.Stop()  => Only called if started or resumed
     /// + IInternalTask.Resume()=> Only called if stopped
     /// </summary>
-    public class PvPPrioritisedTask : IPvPPrioritisedTask, IPvPCompletedEventEmitter
+    public class PvPPrioritisedTask : IPrioritisedTask, IPvPCompletedEventEmitter
     {
         private readonly IPvPTask _task;
         private IPvPState _currentState;
 
-        public PvPTaskPriority Priority { get; }
+        public TaskPriority Priority { get; }
 
         public event EventHandler<EventArgs> Completed;
 
-        public PvPPrioritisedTask(PvPTaskPriority priority, IPvPTask task)
+        public PvPPrioritisedTask(TaskPriority priority, IPvPTask task)
         {
             Priority = priority;
             _task = task;

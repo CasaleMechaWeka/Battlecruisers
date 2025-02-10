@@ -1,5 +1,5 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
@@ -14,8 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     {
         private readonly IPvPTaskList _tasks;
 
-        private IPvPPrioritisedTask _currentTask;
-        private IPvPPrioritisedTask CurrentTask
+        private IPrioritisedTask _currentTask;
+        private IPrioritisedTask CurrentTask
         {
             get { return _currentTask; }
             set
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
                 if (_currentTask != null)
                 {
-                  //  Logging.Log(Tags.AI, _currentTask.ToString());
+                    //  Logging.Log(Tags.AI, _currentTask.ToString());
                     _currentTask.Completed += _currentTask_Completed;
                     _currentTask.Start();
                 }
