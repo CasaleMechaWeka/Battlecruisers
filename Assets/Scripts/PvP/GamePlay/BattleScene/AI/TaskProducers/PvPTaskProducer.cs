@@ -1,4 +1,5 @@
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -6,7 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
-    public abstract class PvPTaskProducer : IPvPTaskProducer
+    public abstract class PvPTaskProducer : ITaskProducer
     {
         protected readonly ITaskList _tasks;
         protected readonly IPvPCruiserController _cruiser;

@@ -1,17 +1,18 @@
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
     public interface IPvPTaskProducerFactory
     {
-        IPvPTaskProducer CreateBasicTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder buildOrder);
-        IPvPTaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks);
+        ITaskProducer CreateBasicTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder buildOrder);
+        ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks);
 
         // Anti-<threat type> task producers
-        IPvPTaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiAirBuildOrder);
-        IPvPTaskProducer CreateAntiNavalTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiNavalBuildOrder);
-        IPvPTaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiRocketLauncherBuildOrder);
-        IPvPTaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiStealthBuildOrder);
+        ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiAirBuildOrder);
+        ITaskProducer CreateAntiNavalTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiNavalBuildOrder);
+        ITaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiRocketLauncherBuildOrder);
+        ITaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiStealthBuildOrder);
     }
 }

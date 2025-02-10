@@ -12,6 +12,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.AI.Tasks;
+using BattleCruisers.AI.TaskProducers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
@@ -49,12 +50,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public IPvPTaskProducer CreateBasicTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder buildOrder)
+        public ITaskProducer CreateBasicTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder buildOrder)
         {
             return new PvPBasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
         }
 
-        public IPvPTaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
+        public ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
         {
             return new PvPReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, convertPvEBuildingKey2PvPBuildingKey(_staticData.BuildingKeys));
         }
@@ -88,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
                     throw new System.Exception();
             }
         }
-        public IPvPTaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiAirBuildOrder)
+        public ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiAirBuildOrder)
         {
             IPvPThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
 
@@ -98,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             return new PvPAntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
         }
 
-        public IPvPTaskProducer CreateAntiNavalTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiNavalBuildOrder)
+        public ITaskProducer CreateAntiNavalTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiNavalBuildOrder)
         {
             IPvPThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
 
@@ -108,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             return new PvPAntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
         }
 
-        public IPvPTaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiRocketLauncherBuildOrder)
+        public ITaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiRocketLauncherBuildOrder)
         {
             IPvPThreatMonitor rocketLauncherThreatMonitor = _threatMonitorFactory.CreateRocketThreatMonitor();
             IPvPSlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);
@@ -116,7 +117,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             return new PvPAntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
         }
 
-        public IPvPTaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiStealthBuildOrder)
+        public ITaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IPvPDynamicBuildOrder antiStealthBuildOrder)
         {
             IPvPThreatMonitor stealthThreatMonitor = _threatMonitorFactory.CreateStealthThreatMonitor();
             IPvPSlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);

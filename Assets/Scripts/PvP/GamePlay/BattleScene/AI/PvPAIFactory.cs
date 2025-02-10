@@ -1,4 +1,5 @@
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
@@ -39,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         {
             ITaskList tasks = new PvPTaskList();
 
-            IList<IPvPTaskProducer> taskProducers = new List<IPvPTaskProducer>();
+            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
             IPvPDynamicBuildOrder basicBuildOrder = _buildOrderFactory.CreateBasicBuildOrder(levelInfo);
             taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder));
@@ -58,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         public IArtificialIntelligence CreateAdaptiveAI(IPvPLevelInfo levelInfo)
         {
             ITaskList tasks = new PvPTaskList();
-            IList<IPvPTaskProducer> taskProducers = new List<IPvPTaskProducer>();
+            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
             // Base build order, main strategy
             IPvPDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
@@ -89,7 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
-        private IArtificialIntelligence CreateAI(IPvPCruiserController aiCruiser, ITaskList tasks, IList<IPvPTaskProducer> taskProducers)
+        private IArtificialIntelligence CreateAI(IPvPCruiserController aiCruiser, ITaskList tasks, IList<ITaskProducer> taskProducers)
         {
             TaskConsumer taskConsumer = new TaskConsumer(tasks);
             PvPDroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);

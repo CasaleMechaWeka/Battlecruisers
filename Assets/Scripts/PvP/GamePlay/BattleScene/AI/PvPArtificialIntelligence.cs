@@ -1,6 +1,6 @@
 using BattleCruisers.AI;
+using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System.Collections.Generic;
 
@@ -15,10 +15,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     public class PvPArtificialIntelligence : IArtificialIntelligence
     {
         private readonly TaskConsumer _taskConsumer;
-        private readonly IList<IPvPTaskProducer> _taskProducers;
+        private readonly IList<ITaskProducer> _taskProducers;
         private readonly PvPDroneConsumerFocusManager _focusManager;
 
-        public PvPArtificialIntelligence(TaskConsumer taskConsumer, IList<IPvPTaskProducer> taskProducers, PvPDroneConsumerFocusManager focusManager)
+        public PvPArtificialIntelligence(TaskConsumer taskConsumer, IList<ITaskProducer> taskProducers, PvPDroneConsumerFocusManager focusManager)
         {
             PvPHelper.AssertIsNotNull(taskConsumer, taskProducers, focusManager);
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             _taskConsumer.DisposeManagedState();
             _focusManager.DisposeManagedState();
 
-            foreach (IPvPTaskProducer taskProducer in _taskProducers)
+            foreach (ITaskProducer taskProducer in _taskProducers)
             {
                 taskProducer.DisposeManagedState();
             }
