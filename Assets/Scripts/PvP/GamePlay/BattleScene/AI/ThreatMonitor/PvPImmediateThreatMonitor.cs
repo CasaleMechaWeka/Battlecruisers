@@ -1,3 +1,4 @@
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using UnityEngine.Assertions;
 
@@ -9,9 +10,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
     public abstract class PvPImmediateThreatMonitor : PvPBaseThreatMonitor
     {
         protected readonly IPvPCruiserController _enemyCruiser;
-        protected readonly IPvPThreatEvaluator _threatEvaluator;
+        protected readonly IThreatEvaluator _threatEvaluator;
 
-        public PvPImmediateThreatMonitor(IPvPCruiserController enemyCruiser, IPvPThreatEvaluator threatEvaluator)
+        public PvPImmediateThreatMonitor(IPvPCruiserController enemyCruiser, IThreatEvaluator threatEvaluator)
         {
             Assert.IsNotNull(enemyCruiser);
             Assert.IsNotNull(threatEvaluator);

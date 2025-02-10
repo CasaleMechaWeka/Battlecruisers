@@ -1,3 +1,4 @@
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
 
         private const float BUILD_PROGRESS_CONSIDERED_THREAT = 0.5f;
 
-        public PvPBuildingThreatMonitor(IPvPCruiserController enemyCruiser, IPvPThreatEvaluator threatEvaluator)
+        public PvPBuildingThreatMonitor(IPvPCruiserController enemyCruiser, IThreatEvaluator threatEvaluator)
             : base(enemyCruiser, threatEvaluator)
         {
             _buildings = new List<TBuilding>();

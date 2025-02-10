@@ -2,7 +2,7 @@ using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
-    public class PvPThreatEvaluator : IPvPThreatEvaluator
+    public class PvPThreatEvaluator : IThreatEvaluator
     {
         private readonly float _valueRequiredForHighThreatLevel;
 
