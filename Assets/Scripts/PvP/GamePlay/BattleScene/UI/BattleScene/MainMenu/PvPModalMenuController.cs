@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPInGameSettingsPanel settingsPanel;
         public PvPGameSpeedButton[] speedButtons;
 
-        private IPvPSettableBroadcastingProperty<bool> _isVisible;
+        private ISettableBroadcastingProperty<bool> _isVisible;
         public IBroadcastingProperty<bool> IsVisible { get; private set; }
 
         public void Initialise(

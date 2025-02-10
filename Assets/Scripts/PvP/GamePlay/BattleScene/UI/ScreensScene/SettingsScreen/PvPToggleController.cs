@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
 {
     public class PvPToggleController : MonoBehaviour
     {
-        private IPvPSettableBroadcastingProperty<bool> _isChecked;
+        private ISettableBroadcastingProperty<bool> _isChecked;
         public IBroadcastingProperty<bool> IsChecked { get; private set; }
         private Toggle toggle;
 

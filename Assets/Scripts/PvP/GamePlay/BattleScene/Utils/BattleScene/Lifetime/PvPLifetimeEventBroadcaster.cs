@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPLifetimeEventBroadcaster : MonoBehaviour, ILifetimeEventBroadcaster
     {
-        private IPvPSettableBroadcastingProperty<bool> _isPaused;
+        private ISettableBroadcastingProperty<bool> _isPaused;
         public IBroadcastingProperty<bool> IsPaused { get; private set; }
 
         void Awake()

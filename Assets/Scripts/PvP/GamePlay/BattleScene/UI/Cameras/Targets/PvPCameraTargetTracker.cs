@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly IPvPCameraTarget _target;
         private readonly IPvPCameraTargetEqualityCalculator _equalityCalculator;
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _isOnTarget;
+        private readonly ISettableBroadcastingProperty<bool> _isOnTarget;
         public IBroadcastingProperty<bool> IsOnTarget { get; }
 
         public PvPCameraTargetTracker(

@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly IDataProvider _dataProvider;
         private readonly ILocTable _commonString;
 
-        private IPvPSettableBroadcastingProperty<ITarget> _selectedItem;
+        private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
         public PvPItemDetailsManager(IPvPInformatorPanel informator, IDataProvider dataProvider, IPvPPrefabFactory prefabFactory, ILocTable commonString)

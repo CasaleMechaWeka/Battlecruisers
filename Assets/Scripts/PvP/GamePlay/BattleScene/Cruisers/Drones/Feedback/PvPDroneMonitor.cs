@@ -21,10 +21,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _playerACruiserHasActiveDrones;
+        private readonly ISettableBroadcastingProperty<bool> _playerACruiserHasActiveDrones;
         public IBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
+        private readonly ISettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
         public IBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
 
         public PvPDroneMonitor(IPvPDroneFactory droneFactory)

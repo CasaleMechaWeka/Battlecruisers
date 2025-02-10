@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPBroadcastingProperty<T> : IBroadcastingProperty<T>
     {
-        private readonly IPvPSettableBroadcastingProperty<T> _baseProperty;
+        private readonly ISettableBroadcastingProperty<T> _baseProperty;
 
         public T Value => _baseProperty.Value;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             remove { _baseProperty.ValueChanged -= value; }
         }
 
-        public PvPBroadcastingProperty(IPvPSettableBroadcastingProperty<T> baseProperty)
+        public PvPBroadcastingProperty(ISettableBroadcastingProperty<T> baseProperty)
         {
             Assert.IsNotNull(baseProperty);
             _baseProperty = baseProperty;

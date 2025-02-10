@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
         private IRange<int> _validRange;
         private Slider _slider;
 
-        private IPvPSettableBroadcastingProperty<int> _sliderValue;
+        private ISettableBroadcastingProperty<int> _sliderValue;
         public IBroadcastingProperty<int> SliderValue { get; private set; }
         public GameObject sliderTextLabel;
         private Text textSliderValue;

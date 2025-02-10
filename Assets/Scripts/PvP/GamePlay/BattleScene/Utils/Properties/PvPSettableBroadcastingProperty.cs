@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties
 {
-    public class PvPSettableBroadcastingProperty<T> : IPvPSettableBroadcastingProperty<T>
+    public class PvPSettableBroadcastingProperty<T> : ISettableBroadcastingProperty<T>
     {
         private T _value;
         public T Value

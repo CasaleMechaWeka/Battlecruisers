@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
             }
         }
 
-        private IPvPSettableBroadcastingProperty<PvPPanelState> _state;
+        private ISettableBroadcastingProperty<PvPPanelState> _state;
         public IBroadcastingProperty<PvPPanelState> State { get; private set; }
 
         public float shownPositionYDelta = 500;

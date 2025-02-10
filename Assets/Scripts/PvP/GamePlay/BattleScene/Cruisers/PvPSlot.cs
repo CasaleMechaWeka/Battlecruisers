@@ -81,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
         public Vector2 Position => transform.position;
 
-        private IPvPSettableBroadcastingProperty<IPvPBuilding> _baseBuilding;
+        private ISettableBroadcastingProperty<IPvPBuilding> _baseBuilding;
         public IBroadcastingProperty<IPvPBuilding> Building { get; private set; }
 
         private Transform _buildingPlacementFeedback;

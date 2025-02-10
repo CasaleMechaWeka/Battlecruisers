@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPParticleSystemGroup _laserMuzzleEffect;
         private IDeltaTimeProvider _deltaTimeProvider;
 
-        private IPvPSettableBroadcastingProperty<bool> _isLaserFiring;
+        private ISettableBroadcastingProperty<bool> _isLaserFiring;
         public IBroadcastingProperty<bool> IsLaserFiring { get; private set; }
 
         public PvPArchonBattleshipController archonBattleShip;

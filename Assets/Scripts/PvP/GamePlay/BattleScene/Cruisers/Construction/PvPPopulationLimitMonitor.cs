@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly IPvPCruiserUnitMonitor _unitMonitor;
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _isPopulationLimitReached;
+        private readonly ISettableBroadcastingProperty<bool> _isPopulationLimitReached;
         public IBroadcastingProperty<bool> IsPopulationLimitReached { get; }
 
         public PvPPopulationLimitMonitor(IPvPCruiserUnitMonitor unitMonitor)
