@@ -209,7 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void DestroyProjectile()
         {
-            if(IsHost)
+            if (IsHost)
             {
                 ShowExplosion();
                 RemoveFromScene();
@@ -232,7 +232,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void AdjustGameObjectDirection()
         {
             Logging.Verbose(Tags.SHELLS, $"_rigidBody.velocity: {_rigidBody.velocity}");
-            Debug.Log("[PvPProjectileControllerBase] AdjustGameObjectDirection() called with Rigidbody velocity: " + _rigidBody.velocity);
+            //Debug.Log("[PvPProjectileControllerBase] AdjustGameObjectDirection() called with Rigidbody velocity: " + _rigidBody.velocity);
             if (_rigidBody.velocity != Vector2.zero)
             {
                 transform.right = _rigidBody.velocity;
