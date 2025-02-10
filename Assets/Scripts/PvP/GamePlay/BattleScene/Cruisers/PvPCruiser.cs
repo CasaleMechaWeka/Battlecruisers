@@ -31,10 +31,10 @@ using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
@@ -155,7 +155,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool>();
         public NetworkVariable<byte> pvp_IsVictory = new NetworkVariable<byte>();
 
-        private IPvPBroadcastingProperty<bool> _CruiserHasActiveDrones;
+        private IBroadcastingProperty<bool> _CruiserHasActiveDrones;
         private bool IsAIBotMode = false;
 
         protected virtual void Start()

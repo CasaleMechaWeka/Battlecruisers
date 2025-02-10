@@ -9,6 +9,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
@@ -24,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly ILocTable _commonString;
 
         private IPvPSettableBroadcastingProperty<ITarget> _selectedItem;
-        public IPvPBroadcastingProperty<ITarget> SelectedItem { get; }
+        public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
         public PvPItemDetailsManager(IPvPInformatorPanel informator, IDataProvider dataProvider, IPvPPrefabFactory prefabFactory, ILocTable commonString)
         {

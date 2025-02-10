@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IDeltaTimeProvider _deltaTimeProvider;
 
         private IPvPSettableBroadcastingProperty<bool> _isLaserFiring;
-        public IPvPBroadcastingProperty<bool> IsLaserFiring { get; private set; }
+        public IBroadcastingProperty<bool> IsLaserFiring { get; private set; }
 
         public PvPArchonBattleshipController archonBattleShip;
 

@@ -2,7 +2,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPDroneSoundFeedbackInitialiser : MonoBehaviour
     {
         public PvPDroneSoundFeedback Initialise(
-            IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones,
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
             ISettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(parentCruiserHasActiveDrones, settingsManager);

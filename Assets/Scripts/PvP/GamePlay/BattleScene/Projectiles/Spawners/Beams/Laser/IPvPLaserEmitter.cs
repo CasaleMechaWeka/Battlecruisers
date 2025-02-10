@@ -1,11 +1,11 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Projectiles.Spawners.Beams;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
     public interface IPvPLaserEmitter : IBeamEmitter
     {
-        IPvPBroadcastingProperty<bool> IsLaserFiring { get; }
+        IBroadcastingProperty<bool> IsLaserFiring { get; }
 
         void StopLaser();
     }

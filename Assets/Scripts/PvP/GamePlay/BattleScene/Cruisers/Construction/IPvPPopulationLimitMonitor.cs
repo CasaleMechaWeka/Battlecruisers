@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
     public interface IPvPPopulationLimitMonitor
     {
-        IPvPBroadcastingProperty<bool> IsPopulationLimitReached { get; }
+        IBroadcastingProperty<bool> IsPopulationLimitReached { get; }
     }
 }

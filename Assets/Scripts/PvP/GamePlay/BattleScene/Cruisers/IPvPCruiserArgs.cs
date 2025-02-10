@@ -10,8 +10,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -34,6 +34,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
         IPvPDoubleClickHandler<IPvPCruiser> CruiserDoubleClickHandler { get; }
         IManagedDisposable FogOfWarManager { get; }
-        IPvPBroadcastingProperty<bool> HasActiveDrones { get; }
+        IBroadcastingProperty<bool> HasActiveDrones { get; }
     }
 }

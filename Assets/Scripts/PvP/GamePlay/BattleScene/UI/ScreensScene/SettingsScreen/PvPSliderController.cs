@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
         private Slider _slider;
 
         private IPvPSettableBroadcastingProperty<int> _sliderValue;
-        public IPvPBroadcastingProperty<int> SliderValue { get; private set; }
+        public IBroadcastingProperty<int> SliderValue { get; private set; }
         public GameObject sliderTextLabel;
         private Text textSliderValue;
 

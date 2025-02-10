@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
         }
 
         private IPvPSettableBroadcastingProperty<PvPPanelState> _state;
-        public IPvPBroadcastingProperty<PvPPanelState> State { get; private set; }
+        public IBroadcastingProperty<PvPPanelState> State { get; private set; }
 
         public float shownPositionYDelta = 500;
         public float showSmoothTimeInS = 0.05f;

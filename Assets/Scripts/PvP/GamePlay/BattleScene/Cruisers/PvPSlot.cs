@@ -16,6 +16,7 @@ using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Properties;
 using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
@@ -81,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Vector2 Position => transform.position;
 
         private IPvPSettableBroadcastingProperty<IPvPBuilding> _baseBuilding;
-        public IPvPBroadcastingProperty<IPvPBuilding> Building { get; private set; }
+        public IBroadcastingProperty<IPvPBuilding> Building { get; private set; }
 
         private Transform _buildingPlacementFeedback;
         private Transform _buildingPlacementBeacon;

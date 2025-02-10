@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.Properties;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties
 {
-    public class PvPBroadcastingProperty<T> : IPvPBroadcastingProperty<T>
+    public class PvPBroadcastingProperty<T> : IBroadcastingProperty<T>
     {
         private readonly IPvPSettableBroadcastingProperty<T> _baseProperty;
 

@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets
 {
     public interface IPvPCameraTargetTracker
     {
-        IPvPBroadcastingProperty<bool> IsOnTarget { get; }
+        IBroadcastingProperty<bool> IsOnTarget { get; }
     }
 }

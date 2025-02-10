@@ -1,17 +1,17 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils.Properties;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours
 {
     public class PvPUserTargetTracker
     {
-        private readonly IPvPBroadcastingProperty<ITarget> _itemShownInInformator;
+        private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
         private readonly IPvPUserTargets _userTargets;
 
         public PvPUserTargetTracker(
-            IPvPBroadcastingProperty<ITarget> itemShownInInformator,
+            IBroadcastingProperty<ITarget> itemShownInInformator,
             IPvPUserTargets userTargets)
         {
             PvPHelper.AssertIsNotNull(itemShownInInformator, userTargets);

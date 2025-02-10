@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IPvPCruiserUnitMonitor _unitMonitor;
 
         private readonly IPvPSettableBroadcastingProperty<bool> _isPopulationLimitReached;
-        public IPvPBroadcastingProperty<bool> IsPopulationLimitReached { get; }
+        public IBroadcastingProperty<bool> IsPopulationLimitReached { get; }
 
         public PvPPopulationLimitMonitor(IPvPCruiserUnitMonitor unitMonitor)
         {

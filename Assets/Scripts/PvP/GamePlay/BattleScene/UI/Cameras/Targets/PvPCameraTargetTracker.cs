@@ -1,7 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
+using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets
 {
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly IPvPCameraTargetEqualityCalculator _equalityCalculator;
 
         private readonly IPvPSettableBroadcastingProperty<bool> _isOnTarget;
-        public IPvPBroadcastingProperty<bool> IsOnTarget { get; }
+        public IBroadcastingProperty<bool> IsOnTarget { get; }
 
         public PvPCameraTargetTracker(
             IPvPCamera camera,

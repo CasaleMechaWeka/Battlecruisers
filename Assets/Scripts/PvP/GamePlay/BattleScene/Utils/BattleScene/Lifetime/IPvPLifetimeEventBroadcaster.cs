@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime
 {
     public interface IPvPLifetimeEventBroadcaster
     {
-        IPvPBroadcastingProperty<bool> IsPaused { get; }
+        IBroadcastingProperty<bool> IsPaused { get; }
     }
 }

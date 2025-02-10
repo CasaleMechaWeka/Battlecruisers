@@ -4,9 +4,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Properties;
 using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// </summary>
         PvPBuildingFunction BuildingFunctionAffinity { get; }
         PvPDirection Direction { get; }
-        IPvPBroadcastingProperty<IPvPBuilding> Building { get; }
+        IBroadcastingProperty<IPvPBuilding> Building { get; }
         ObservableCollection<IPvPBoostProvider> BoostProviders { get; }
         bool IsVisibleRederer { get; set; }
 

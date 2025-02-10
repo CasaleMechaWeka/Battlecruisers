@@ -10,8 +10,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
         public IPvPDoubleClickHandler<IPvPCruiser> CruiserDoubleClickHandler { get; }
         public IManagedDisposable FogOfWarManager { get; }
-        public IPvPBroadcastingProperty<bool> HasActiveDrones { get; }
+        public IBroadcastingProperty<bool> HasActiveDrones { get; }
 
         public PvPCruiserArgs(
             Faction faction,
@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
             IManagedDisposable fogOfWarManager,
-            IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones)
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser,
@@ -113,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
             IManagedDisposable fogOfWarManager,
-            IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones)
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser,

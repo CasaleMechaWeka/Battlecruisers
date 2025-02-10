@@ -1,5 +1,6 @@
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
         private int _activeDangerEventCount;
 
         private readonly IPvPSettableBroadcastingProperty<bool> _isInDanger;
-        public IPvPBroadcastingProperty<bool> IsInDanger { get; }
+        public IBroadcastingProperty<bool> IsInDanger { get; }
 
         public PvPDangerMonitorSummariser(IPvPDangerMonitor dangerMonitor)
         {

@@ -1,10 +1,11 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
-using UnityEngine;
-using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.Properties;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPGameSpeedButton[] speedButtons;
 
         private IPvPSettableBroadcastingProperty<bool> _isVisible;
-        public IPvPBroadcastingProperty<bool> IsVisible { get; private set; }
+        public IBroadcastingProperty<bool> IsVisible { get; private set; }
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,

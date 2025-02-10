@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
 
@@ -21,10 +22,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
         private readonly IPvPSettableBroadcastingProperty<bool> _playerACruiserHasActiveDrones;
-        public IPvPBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
+        public IBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
 
         private readonly IPvPSettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
-        public IPvPBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
+        public IBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
 
         public PvPDroneMonitor(IPvPDroneFactory droneFactory)
         {
