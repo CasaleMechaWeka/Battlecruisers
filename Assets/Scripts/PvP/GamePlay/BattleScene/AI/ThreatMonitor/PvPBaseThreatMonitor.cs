@@ -1,11 +1,12 @@
 using System;
+using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
-    public abstract class PvPBaseThreatMonitor : IPvPThreatMonitor
+    public abstract class PvPBaseThreatMonitor : IThreatMonitor
     {
-        private PvPThreatLevel _currentThreatLevel;
-        public PvPThreatLevel CurrentThreatLevel
+        private ThreatLevel _currentThreatLevel;
+        public ThreatLevel CurrentThreatLevel
         {
             get { return _currentThreatLevel; }
             protected set
@@ -23,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
 
         public PvPBaseThreatMonitor()
         {
-            CurrentThreatLevel = PvPThreatLevel.None;
+            CurrentThreatLevel = ThreatLevel.None;
         }
     }
 }

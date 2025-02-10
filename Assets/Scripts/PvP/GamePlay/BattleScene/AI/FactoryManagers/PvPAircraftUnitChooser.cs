@@ -1,5 +1,5 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -19,8 +19,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
     {
         private readonly IPvPBuildableWrapper<IPvPUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane;
         private readonly IPvPDroneManager _droneManager;
-        private readonly IPvPThreatMonitor _airThreatMonitor, _navalThreatMonitor;
-        private readonly PvPThreatLevel _threatLevelThreshold;
+        private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
+        private readonly ThreatLevel _threatLevelThreshold;
 
         public PvPAircraftUnitChooser(
             IPvPBuildableWrapper<IPvPUnit> defaultPlane,
@@ -28,9 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             IPvPBuildableWrapper<IPvPUnit> antiAirPlane,
             IPvPBuildableWrapper<IPvPUnit> antiNavalPlane,
             IPvPDroneManager droneManager,
-            IPvPThreatMonitor airThreatMonitor,
-            IPvPThreatMonitor navalThreatMonitor,
-            PvPThreatLevel threatLevelThreshold)
+            IThreatMonitor airThreatMonitor,
+            IThreatMonitor navalThreatMonitor,
+            ThreatLevel threatLevelThreshold)
         {
             PvPHelper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, droneManager, airThreatMonitor, navalThreatMonitor);
 

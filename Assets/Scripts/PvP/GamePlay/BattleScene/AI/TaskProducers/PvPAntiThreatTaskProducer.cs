@@ -3,17 +3,17 @@ using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
     public class PvPAntiThreatTaskProducer : PvPTaskProducer
     {
         private readonly IPvPDynamicBuildOrder _antiThreatBuildOrder;
-        private readonly IPvPThreatMonitor _threatMonitor;
+        private readonly IThreatMonitor _threatMonitor;
         private readonly IPvPSlotNumCalculator _slotNumCalculator;
 
         private int _targetNumOfSlotsToUse;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             IPvPPrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             IPvPDynamicBuildOrder antiThreatBuildOrder,
-            IPvPThreatMonitor threatMonitor,
+            IThreatMonitor threatMonitor,
             IPvPSlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {

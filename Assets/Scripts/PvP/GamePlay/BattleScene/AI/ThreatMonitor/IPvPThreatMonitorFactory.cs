@@ -1,13 +1,15 @@
+using BattleCruisers.AI.ThreatMonitors;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
     public interface IPvPThreatMonitorFactory
     {
-        IPvPThreatMonitor CreateAirThreatMonitor();
-        IPvPThreatMonitor CreateNavalThreatMonitor();
+        IThreatMonitor CreateAirThreatMonitor();
+        IThreatMonitor CreateNavalThreatMonitor();
 
-        IPvPThreatMonitor CreateRocketThreatMonitor();
-        IPvPThreatMonitor CreateStealthThreatMonitor();
+        IThreatMonitor CreateRocketThreatMonitor();
+        IThreatMonitor CreateStealthThreatMonitor();
 
-        IPvPThreatMonitor CreateDelayedThreatMonitor(IPvPThreatMonitor coreMonitor);
+        IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor);
     }
 }

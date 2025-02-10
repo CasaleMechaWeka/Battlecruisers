@@ -4,6 +4,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
     /// </summary>
     public class PvPDelayedThreatMonitor : PvPBaseThreatMonitor, IManagedDisposable
     {
-        private readonly IPvPThreatMonitor _coreThreatMonitor;
+        private readonly IThreatMonitor _coreThreatMonitor;
         private readonly ITime _time;
         private readonly IDeferrer _deferrer;
         private readonly float _delayInS;
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
         private const float DEFAULT_DELAY_IN_S = 5;
         private const float MIN_DELAY_IN_S = 0;
 
-        public PvPDelayedThreatMonitor(IPvPThreatMonitor coreThreatMonitor, ITime time, IDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
+        public PvPDelayedThreatMonitor(IThreatMonitor coreThreatMonitor, ITime time, IDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
         {
             PvPHelper.AssertIsNotNull(coreThreatMonitor, time, deferrer);
             Assert.IsTrue(delayInS >= MIN_DELAY_IN_S);

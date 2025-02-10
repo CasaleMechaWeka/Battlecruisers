@@ -1,13 +1,14 @@
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
     public class PvPThreatChangeSnapshot
     {
-        public PvPThreatLevel ThreatLevel { get; }
+        public ThreatLevel ThreatLevel { get; }
         public float ChangeTimeSinceGameStartInS { get; }
 
-        public PvPThreatChangeSnapshot(PvPThreatLevel threatLevel, float changeTimeSinceGameStartInS)
+        public PvPThreatChangeSnapshot(ThreatLevel threatLevel, float changeTimeSinceGameStartInS)
         {
             ThreatLevel = threatLevel;
             ChangeTimeSinceGameStartInS = changeTimeSinceGameStartInS;

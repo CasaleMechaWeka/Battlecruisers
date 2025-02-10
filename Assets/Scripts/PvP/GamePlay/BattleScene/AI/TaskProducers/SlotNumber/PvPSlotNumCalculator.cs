@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
+using BattleCruisers.AI.ThreatMonitors;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber
@@ -7,20 +7,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     public abstract class PvPSlotNumCalculator : IPvPSlotNumCalculator
     {
         private readonly int _roofSlotNum;
-        private readonly IDictionary<PvPThreatLevel, int> _threatLevelsToSlotNumbers;
+        private readonly IDictionary<ThreatLevel, int> _threatLevelsToSlotNumbers;
 
         protected PvPSlotNumCalculator(int roofSlotNum, int slotsForNoThreat, int slotsForLowThreat, int slotsForHighThreat)
         {
             _roofSlotNum = roofSlotNum;
-            _threatLevelsToSlotNumbers = new Dictionary<PvPThreatLevel, int>()
+            _threatLevelsToSlotNumbers = new Dictionary<ThreatLevel, int>()
             {
-                { PvPThreatLevel.None, slotsForNoThreat },
-                { PvPThreatLevel.Low, slotsForLowThreat },
-                { PvPThreatLevel.High, slotsForHighThreat}
+                { ThreatLevel.None, slotsForNoThreat },
+                { ThreatLevel.Low, slotsForLowThreat },
+                { ThreatLevel.High, slotsForHighThreat}
             };
         }
 
-        public int FindSlotNum(PvPThreatLevel threatLevel)
+        public int FindSlotNum(ThreatLevel threatLevel)
         {
             Assert.IsTrue(_threatLevelsToSlotNumbers.ContainsKey(threatLevel));
 
