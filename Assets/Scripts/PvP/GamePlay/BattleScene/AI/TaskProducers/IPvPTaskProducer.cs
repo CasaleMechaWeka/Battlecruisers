@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
-    public interface IPvPTaskProducer : IPvPManagedDisposable
+    public interface IPvPTaskProducer : IManagedDisposable
     {
         // Empty
     }

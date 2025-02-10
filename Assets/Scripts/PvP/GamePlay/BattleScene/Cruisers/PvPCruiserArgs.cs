@@ -9,9 +9,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.H
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils;
 using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; }
         public IPvPDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
         public IPvPDoubleClickHandler<IPvPCruiser> CruiserDoubleClickHandler { get; }
-        public IPvPManagedDisposable FogOfWarManager { get; }
+        public IManagedDisposable FogOfWarManager { get; }
         public IPvPBroadcastingProperty<bool> HasActiveDrones { get; }
 
         public PvPCruiserArgs(
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPBuildProgressCalculator buildProgressCalculator,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
-            IPvPManagedDisposable fogOfWarManager,
+            IManagedDisposable fogOfWarManager,
             IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
             BCUtils.Helper.AssertIsNotNull(
@@ -112,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPBuildProgressCalculator buildProgressCalculator,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
-            IPvPManagedDisposable fogOfWarManager,
+            IManagedDisposable fogOfWarManager,
             IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
             BCUtils.Helper.AssertIsNotNull(

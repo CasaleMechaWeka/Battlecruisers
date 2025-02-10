@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
     /// hogging drones after having produced some units (so that other buildings
     /// can be built).
     /// </summary>
-    public class PvPDroneConsumerFocusManager : IPvPManagedDisposable
+    public class PvPDroneConsumerFocusManager : IManagedDisposable
     {
         private readonly IPvPDroneFocusingStrategy _strategy;
         private readonly IPvPCruiserBuildingMonitor _aiBuildingMonitor;

@@ -1,11 +1,12 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons
 {
-    public class PvPBuildingCategoryHotkeyListener : IPvPManagedDisposable
+    public class PvPBuildingCategoryHotkeyListener : IManagedDisposable
     {
         private readonly IHotkeyDetector _hotkeyDetector;
         private readonly IBuildingCategoryButton _factoriesButton, _defensivesButton, _offensivesButton, _tacticalsButton, _ultrasButton;

@@ -1,7 +1,7 @@
 using System;
 using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     /// priority task changes, stops the current task and starts
     /// the new highest priority task.
     /// </summary>
-    public class PvPTaskConsumer : IPvPManagedDisposable
+    public class PvPTaskConsumer : IManagedDisposable
     {
         private readonly ITaskList _tasks;
 

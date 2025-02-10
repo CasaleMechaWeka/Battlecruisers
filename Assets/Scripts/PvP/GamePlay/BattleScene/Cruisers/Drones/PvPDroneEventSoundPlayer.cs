@@ -1,12 +1,13 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones
 {
-    public class PvPDroneEventSoundPlayer : IPvPManagedDisposable
+    public class PvPDroneEventSoundPlayer : IManagedDisposable
     {
         private readonly IPvPDroneManagerMonitor _droneManagerMonitor;
         private readonly IPvPPrioritisedSoundPlayer _soundPlayer;

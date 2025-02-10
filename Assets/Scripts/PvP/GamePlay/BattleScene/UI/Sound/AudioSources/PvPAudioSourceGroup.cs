@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources
 {
-    public class PvPAudioSourceGroup : IPvPManagedDisposable
+    public class PvPAudioSourceGroup : IManagedDisposable
     {
         private readonly ISettingsManager _settingsManager;
         private readonly IList<IAudioSource> _audioSources;

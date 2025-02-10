@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private IAudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private IPvPManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
+        private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public string stringKeyBase;

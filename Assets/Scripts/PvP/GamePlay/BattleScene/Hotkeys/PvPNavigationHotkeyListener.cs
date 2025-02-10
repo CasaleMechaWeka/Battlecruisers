@@ -2,11 +2,12 @@ using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys
 {
-    public class PvPNavigationHotkeyListener : IPvPManagedDisposable
+    public class PvPNavigationHotkeyListener : IManagedDisposable
     {
         private readonly IHotkeyDetector _hotkeyDetector;
         private readonly IPvPCameraFocuser _cameraFocuser;

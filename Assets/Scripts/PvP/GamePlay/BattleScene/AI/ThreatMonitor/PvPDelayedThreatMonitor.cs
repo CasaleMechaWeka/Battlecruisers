@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
     /// thos drones (so AI wastes resources buidling defences it may
     /// never need).
     /// </summary>
-    public class PvPDelayedThreatMonitor : PvPBaseThreatMonitor, IPvPManagedDisposable
+    public class PvPDelayedThreatMonitor : PvPBaseThreatMonitor, IManagedDisposable
     {
         private readonly IPvPThreatMonitor _coreThreatMonitor;
         private readonly ITime _time;

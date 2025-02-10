@@ -12,7 +12,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors
 {
-    public class PvPInProgressBuildingMonitor : IPvPInProgressBuildingMonitor, IPvPManagedDisposable
+    public class PvPInProgressBuildingMonitor : IPvPInProgressBuildingMonitor, IManagedDisposable
     {
         private readonly IPvPCruiserController _cruiser;
         private readonly IList<IPvPBuilding> _inProgressBuildings;

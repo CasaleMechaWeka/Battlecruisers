@@ -11,7 +11,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors
 {
-    public class PvPFactoriesMonitor : IPvPFactoriesMonitor, IPvPManagedDisposable
+    public class PvPFactoriesMonitor : IPvPFactoriesMonitor, IManagedDisposable
     {
         private readonly IPvPCruiserBuildingMonitor _bulidingMonitor;
         private readonly IPvPFactoryMonitorFactory _monitorFactory;

@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPUnitReadySignalInitialiser : MonoBehaviour
     {
-        public IPvPManagedDisposable CreateSignal(IPvPCruiser parentCruiser)
+        public IManagedDisposable CreateSignal(IPvPCruiser parentCruiser)
         {
             Assert.IsNotNull(parentCruiser);
 

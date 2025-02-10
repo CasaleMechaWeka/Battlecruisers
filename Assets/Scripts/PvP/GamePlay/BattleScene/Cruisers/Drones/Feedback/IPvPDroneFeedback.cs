@@ -1,8 +1,8 @@
+using BattleCruisers.Utils;
 
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback
 {
-    public interface IPvPDroneFeedback : IPvPManagedDisposable
+    public interface IPvPDroneFeedback : IManagedDisposable
     {
         IPvPDroneConsumer DroneConsumer { get; }
     }

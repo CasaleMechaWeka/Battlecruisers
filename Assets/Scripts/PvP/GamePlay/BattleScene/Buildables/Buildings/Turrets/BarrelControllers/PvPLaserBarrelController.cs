@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private PvPLaserTurretStats _laserTurretStats;
         private PvPLaserEmitter _laserEmitter;
-        private IPvPManagedDisposable _laserCooldownEffect;
+        private IManagedDisposable _laserCooldownEffect;
 
         public override Vector3 ProjectileSpawnerPosition => _laserEmitter.transform.position;
         public override bool CanFireWithoutTarget => false;

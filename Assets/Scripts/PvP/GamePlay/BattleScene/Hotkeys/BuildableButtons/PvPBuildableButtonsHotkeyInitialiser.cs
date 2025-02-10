@@ -1,6 +1,7 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         // Keep references to avoid garbage collection
         // all buttons are assigned in the editor (PvPBattlescene -> PvPBattleSceneGod -> Hotkeys)
 
-        private IPvPManagedDisposable _factoriesListener, _defensivesListener, _offensivesListener, _tacticalsListener, _ultrasListener, _aircraftListener, _shipsListener;
+        private IManagedDisposable _factoriesListener, _defensivesListener, _offensivesListener, _tacticalsListener, _ultrasListener, _aircraftListener, _shipsListener;
 
         [Header("Factories")]
         public PvPBuildingButtonController droneStationButton;

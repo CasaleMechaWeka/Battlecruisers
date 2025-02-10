@@ -9,7 +9,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
-    public class PvPCruiserUnitMonitor : IPvPCruiserUnitMonitor, IPvPManagedDisposable
+    public class PvPCruiserUnitMonitor : IPvPCruiserUnitMonitor, IManagedDisposable
     {
         private readonly IPvPCruiserBuildingMonitor _buildingMonitor;
 

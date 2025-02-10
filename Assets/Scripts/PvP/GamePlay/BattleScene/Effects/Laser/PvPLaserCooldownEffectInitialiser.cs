@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         public float laserStoppedDebounceTimeInS = 0.5f;
 
-        public IPvPManagedDisposable CreateLaserCooldownEffect(IPvPLaserEmitter laserEmitter)
+        public IManagedDisposable CreateLaserCooldownEffect(IPvPLaserEmitter laserEmitter)
         {
             Assert.IsNotNull(laserEmitter);
 

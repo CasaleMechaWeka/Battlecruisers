@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// <summary>
     /// Determines when to re-evalute whether fog of war should be enabled or not.
     /// </summary>
-    public class PvPFogOfWarManager : IPvPManagedDisposable
+    public class PvPFogOfWarManager : IManagedDisposable
     {
         private readonly IPvPGameObject _fog;
         private readonly IPvPFogVisibilityDecider _visibilityDecider;

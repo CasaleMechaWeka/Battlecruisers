@@ -2,11 +2,12 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
-    public class PvPUltrasConstructionMonitor : IPvPManagedDisposable
+    public class PvPUltrasConstructionMonitor : IManagedDisposable
     {
         private readonly IPvPCruiserBuildingMonitor _cruiserBuildingMonitor;
         private readonly IPvPCruiserUnitMonitor _cruiserUnitMonitor;

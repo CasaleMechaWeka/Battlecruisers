@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// Manual target detection requires two components that always work together.
     /// This class groups those two components.
     /// </summary>
-    public class PvPManualDetectorProvider : IPvPManagedDisposable
+    public class PvPManualDetectorProvider : IManagedDisposable
     {
         private readonly PvPManualDetectorPoller _detectorPoller;
 

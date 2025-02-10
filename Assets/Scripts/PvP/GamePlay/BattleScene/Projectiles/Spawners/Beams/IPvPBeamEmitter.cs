@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
 {
-    public interface IPvPBeamEmitter : IPvPManagedDisposable
+    public interface IPvPBeamEmitter : IManagedDisposable
     {
         void FireBeam(float angleInDegrees, bool isSourceMirrored);
     }

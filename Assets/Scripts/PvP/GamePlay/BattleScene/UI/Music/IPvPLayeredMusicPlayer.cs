@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
-    public interface IPvPLayeredMusicPlayer : IPvPManagedDisposable
+    public interface IPvPLayeredMusicPlayer : IManagedDisposable
     {
         void Play();
         void PlaySecondary();

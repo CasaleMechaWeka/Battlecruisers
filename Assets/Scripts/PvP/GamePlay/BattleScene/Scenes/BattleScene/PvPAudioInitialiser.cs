@@ -7,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     public class PvPAudioInitialiser
     {
         private readonly PvPLevelMusicPlayer _levelMusicPlayer;
-        private readonly IPvPManagedDisposable _droneEventSoundPlayer;
+        private readonly IManagedDisposable _droneEventSoundPlayer;
         private readonly PvPCruiserEventMonitor _cruiserEventMonitor;
         private readonly PvPUltrasConstructionMonitor _ultrasConstructionMonitor;
         private readonly PvPPopulationLimitAnnouncer _populationLimitAnnouncer;

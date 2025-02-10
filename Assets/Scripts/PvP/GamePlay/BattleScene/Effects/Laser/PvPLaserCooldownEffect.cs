@@ -1,12 +1,13 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
-    public class PvPLaserCooldownEffect : IPvPManagedDisposable
+    public class PvPLaserCooldownEffect : IManagedDisposable
     {
         private readonly IPvPBroadcastingProperty<bool> _isLaserFiring;
         private readonly IPvPLaserFlap _laserFlap;
