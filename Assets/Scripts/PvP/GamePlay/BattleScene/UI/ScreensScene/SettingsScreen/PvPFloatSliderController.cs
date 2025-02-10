@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -28,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
             AssertIsValidValue(selectedValue);
 
             _sliderValue = new SettableBroadcastingProperty<float>(selectedValue);
-            SliderValue = new PvPBroadcastingProperty<float>(_sliderValue);
+            SliderValue = new BroadcastingProperty<float>(_sliderValue);
 
             _slider = GetComponent<Slider>();
             Assert.IsNotNull(_slider);

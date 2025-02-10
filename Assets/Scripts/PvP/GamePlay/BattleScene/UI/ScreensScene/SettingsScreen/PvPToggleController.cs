@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -15,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
         public void Initialise(bool isChecked)
         {
             _isChecked = new SettableBroadcastingProperty<bool>(isChecked);
-            IsChecked = new PvPBroadcastingProperty<bool>(_isChecked);
+            IsChecked = new BroadcastingProperty<bool>(_isChecked);
 
             toggle = GetComponentInChildren<Toggle>();
             Assert.IsNotNull(toggle);

@@ -1,6 +1,5 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Properties;
@@ -36,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             settingsPanel.Initialise(soundPlayer, menuManager, settingsManager);
 
             _isVisible = new SettableBroadcastingProperty<bool>(initialValue: false);
-            IsVisible = new PvPBroadcastingProperty<bool>(_isVisible);
+            IsVisible = new BroadcastingProperty<bool>(_isVisible);
 
             HideMenu();
         }

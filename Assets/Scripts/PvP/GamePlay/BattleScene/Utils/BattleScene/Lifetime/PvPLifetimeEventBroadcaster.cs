@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         void Awake()
         {
             _isPaused = new SettableBroadcastingProperty<bool>(initialValue: false);
-            IsPaused = new PvPBroadcastingProperty<bool>(_isPaused);
+            IsPaused = new BroadcastingProperty<bool>(_isPaused);
         }
 
         void OnApplicationFocus(bool hasFocus)

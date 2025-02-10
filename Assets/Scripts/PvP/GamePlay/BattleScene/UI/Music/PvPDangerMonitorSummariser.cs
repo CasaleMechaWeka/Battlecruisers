@@ -1,5 +1,4 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
@@ -20,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 
             _dangerMonitor = dangerMonitor;
             _isInDanger = new SettableBroadcastingProperty<bool>(initialValue: false);
-            IsInDanger = new PvPBroadcastingProperty<bool>(_isInDanger);
+            IsInDanger = new BroadcastingProperty<bool>(_isInDanger);
 
             _dangerMonitor.DangerStart += _dangerMonitor_DangerStart;
             _dangerMonitor.DangerEnd += _dangerMonitor_DangerEnd;

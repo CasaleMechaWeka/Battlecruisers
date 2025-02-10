@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
@@ -29,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _currentState = startingState;
             _shouldFire = new SettableBroadcastingProperty<bool>(_currentState.ShouldFire);
-            ShouldFire = new PvPBroadcastingProperty<bool>(_shouldFire);
+            ShouldFire = new BroadcastingProperty<bool>(_shouldFire);
         }
 
         public void OnFired()

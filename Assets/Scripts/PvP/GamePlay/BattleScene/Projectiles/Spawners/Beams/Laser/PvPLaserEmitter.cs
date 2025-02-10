@@ -7,7 +7,6 @@ using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Properties;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -45,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
 
             _isLaserFiring = new SettableBroadcastingProperty<bool>(false);
-            IsLaserFiring = new PvPBroadcastingProperty<bool>(_isLaserFiring);
+            IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
         }
 
         public async Task InitialiseAsync(

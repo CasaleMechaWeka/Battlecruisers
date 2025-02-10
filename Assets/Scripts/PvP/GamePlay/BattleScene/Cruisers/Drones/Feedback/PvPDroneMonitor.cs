@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
@@ -42,10 +41,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
 
             _playerACruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            PlayerACruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
+            PlayerACruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
 
             _playerBCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            PlayerBCruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
+            PlayerBCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
         }
 
         private void _droneFactory_DroneCreated(object sender, PvPDroneCreatedEventArgs e)

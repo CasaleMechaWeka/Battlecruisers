@@ -1,6 +1,5 @@
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
@@ -18,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(unitMonitor);
 
             _isPopulationLimitReached = new SettableBroadcastingProperty<bool>(initialValue: false);
-            IsPopulationLimitReached = new PvPBroadcastingProperty<bool>(_isPopulationLimitReached);
+            IsPopulationLimitReached = new BroadcastingProperty<bool>(_isPopulationLimitReached);
 
             _unitMonitor = unitMonitor;
             _unitMonitor.UnitCompleted += _unitMonitor_UnitCompleted;

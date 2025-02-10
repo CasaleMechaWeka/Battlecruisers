@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Properties;
@@ -41,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _dataProvider = dataProvider;
 
             _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
-            SelectedItem = new PvPBroadcastingProperty<ITarget>(_selectedItem);
+            SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
         }
 
         public void ShowDetails(IPvPBuilding building)

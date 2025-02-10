@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Utils;
 using System;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -247,7 +246,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             Transform = new TransformBC(transform);
             _baseBuilding = new SettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
-            Building = new PvPBroadcastingProperty<IPvPBuilding>(_baseBuilding);
+            Building = new BroadcastingProperty<IPvPBuilding>(_baseBuilding);
 
             PvPSlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<PvPSlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);

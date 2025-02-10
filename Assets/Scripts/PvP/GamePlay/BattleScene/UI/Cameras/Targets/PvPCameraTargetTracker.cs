@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Utils.Properties;
 using System;
 
@@ -27,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _equalityCalculator = equalityCalculator;
 
             _isOnTarget = new SettableBroadcastingProperty<bool>(initialValue: FindIfOnTarget());
-            IsOnTarget = new PvPBroadcastingProperty<bool>(_isOnTarget);
+            IsOnTarget = new BroadcastingProperty<bool>(_isOnTarget);
 
             _camera.PositionChanged += CameraChanged;
             _camera.OrthographicSizeChanged += CameraChanged;
