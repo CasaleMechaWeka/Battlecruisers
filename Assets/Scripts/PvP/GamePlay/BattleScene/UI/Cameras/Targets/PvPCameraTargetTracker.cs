@@ -1,11 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils.Properties;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets
 {
-    public class PvPCameraTargetTracker : IPvPCameraTargetTracker
+    public class PvPCameraTargetTracker : ICameraTargetTracker
     {
         private readonly IPvPCamera _camera;
         private readonly IPvPCameraTarget _target;
