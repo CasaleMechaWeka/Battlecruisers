@@ -80,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
 
             _hiddenScale = transform.localScale;
 
-            _state = new PvPSettableBroadcastingProperty<PvPPanelState>(initialValue: PvPPanelState.Sliding);
+            _state = new SettableBroadcastingProperty<PvPPanelState>(initialValue: PvPPanelState.Sliding);
             State = new PvPBroadcastingProperty<PvPPanelState>(_state);
             TargetState = PvPPanelState.Hidden;
 

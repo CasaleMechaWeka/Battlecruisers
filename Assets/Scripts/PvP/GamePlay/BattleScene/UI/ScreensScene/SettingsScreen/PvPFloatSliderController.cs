@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
 
             AssertIsValidValue(selectedValue);
 
-            _sliderValue = new PvPSettableBroadcastingProperty<float>(selectedValue);
+            _sliderValue = new SettableBroadcastingProperty<float>(selectedValue);
             SliderValue = new PvPBroadcastingProperty<float>(_sliderValue);
 
             _slider = GetComponent<Slider>();

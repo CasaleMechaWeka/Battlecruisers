@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             IPvPParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = transform.FindNamedComponent<IPvPParticleSystemGroupInitialiser>("LaserMuzzleEffect");
             _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
 
-            _isLaserFiring = new PvPSettableBroadcastingProperty<bool>(false);
+            _isLaserFiring = new SettableBroadcastingProperty<bool>(false);
             IsLaserFiring = new PvPBroadcastingProperty<bool>(_isLaserFiring);
         }
 

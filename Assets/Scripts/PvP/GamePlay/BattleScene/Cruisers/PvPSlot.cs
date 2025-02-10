@@ -246,7 +246,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             };
 
             Transform = new TransformBC(transform);
-            _baseBuilding = new PvPSettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
+            _baseBuilding = new SettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
             Building = new PvPBroadcastingProperty<IPvPBuilding>(_baseBuilding);
 
             PvPSlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<PvPSlotBoostFeedbackMonitorInitialiser>();

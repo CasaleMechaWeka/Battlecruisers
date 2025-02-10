@@ -41,10 +41,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             };
             FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
 
-            _playerACruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
+            _playerACruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
             PlayerACruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
 
-            _playerBCruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
+            _playerBCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
             PlayerBCruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
         }
 

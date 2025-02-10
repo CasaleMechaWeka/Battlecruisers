@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
             Assert.IsNotNull(dangerMonitor);
 
             _dangerMonitor = dangerMonitor;
-            _isInDanger = new PvPSettableBroadcastingProperty<bool>(initialValue: false);
+            _isInDanger = new SettableBroadcastingProperty<bool>(initialValue: false);
             IsInDanger = new PvPBroadcastingProperty<bool>(_isInDanger);
 
             _dangerMonitor.DangerStart += _dangerMonitor_DangerStart;

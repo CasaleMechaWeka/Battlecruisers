@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private readonly PvPSettableBroadcastingProperty<bool> _shouldFire;
+        private readonly SettableBroadcastingProperty<bool> _shouldFire;
         public IBroadcastingProperty<bool> ShouldFire { get; }
 
         public PvPFireIntervalManager(IPvPState startingState)
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(startingState);
 
             _currentState = startingState;
-            _shouldFire = new PvPSettableBroadcastingProperty<bool>(_currentState.ShouldFire);
+            _shouldFire = new SettableBroadcastingProperty<bool>(_currentState.ShouldFire);
             ShouldFire = new PvPBroadcastingProperty<bool>(_shouldFire);
         }
 

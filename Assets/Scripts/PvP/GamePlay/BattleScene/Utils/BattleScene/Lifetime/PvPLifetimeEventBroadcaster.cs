@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         void Awake()
         {
-            _isPaused = new PvPSettableBroadcastingProperty<bool>(initialValue: false);
+            _isPaused = new SettableBroadcastingProperty<bool>(initialValue: false);
             IsPaused = new PvPBroadcastingProperty<bool>(_isPaused);
         }
 

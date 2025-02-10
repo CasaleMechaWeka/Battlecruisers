@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsNotNull(unitMonitor);
 
-            _isPopulationLimitReached = new PvPSettableBroadcastingProperty<bool>(initialValue: false);
+            _isPopulationLimitReached = new SettableBroadcastingProperty<bool>(initialValue: false);
             IsPopulationLimitReached = new PvPBroadcastingProperty<bool>(_isPopulationLimitReached);
 
             _unitMonitor = unitMonitor;

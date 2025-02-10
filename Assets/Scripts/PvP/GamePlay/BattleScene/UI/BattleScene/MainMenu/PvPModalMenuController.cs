@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             buttonsPanel.Initialise(soundPlayer, isTutorial, menuManager);
             settingsPanel.Initialise(soundPlayer, menuManager, settingsManager);
 
-            _isVisible = new PvPSettableBroadcastingProperty<bool>(initialValue: false);
+            _isVisible = new SettableBroadcastingProperty<bool>(initialValue: false);
             IsVisible = new PvPBroadcastingProperty<bool>(_isVisible);
 
             HideMenu();

@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _target = target;
             _equalityCalculator = equalityCalculator;
 
-            _isOnTarget = new PvPSettableBroadcastingProperty<bool>(initialValue: FindIfOnTarget());
+            _isOnTarget = new SettableBroadcastingProperty<bool>(initialValue: FindIfOnTarget());
             IsOnTarget = new PvPBroadcastingProperty<bool>(_isOnTarget);
 
             _camera.PositionChanged += CameraChanged;

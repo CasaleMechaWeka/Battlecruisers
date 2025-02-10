@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
 
-            _selectedItem = new PvPSettableBroadcastingProperty<ITarget>(initialValue: null);
+            _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
             SelectedItem = new PvPBroadcastingProperty<ITarget>(_selectedItem);
         }
 

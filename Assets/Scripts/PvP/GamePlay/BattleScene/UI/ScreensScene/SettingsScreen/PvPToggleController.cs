@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Scr
 
         public void Initialise(bool isChecked)
         {
-            _isChecked = new PvPSettableBroadcastingProperty<bool>(isChecked);
+            _isChecked = new SettableBroadcastingProperty<bool>(isChecked);
             IsChecked = new PvPBroadcastingProperty<bool>(_isChecked);
 
             toggle = GetComponentInChildren<Toggle>();
