@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions
 {
-    public class PvPGameObjectBC : IPvPGameObject
+    public class PvPGameObjectBC : IGameObject
     {
         public GameObject _platformObject;
 

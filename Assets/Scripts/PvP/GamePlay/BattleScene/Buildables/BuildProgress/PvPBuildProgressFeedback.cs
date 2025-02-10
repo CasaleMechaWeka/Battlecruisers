@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBuildProgressFeedback : IPvPBuildProgressFeedback
     {
         private readonly IPvPFillableImage _buildProgressImage;
-        private readonly IPvPGameObject _pausedFeedback;
+        private readonly IGameObject _pausedFeedback;
         private Image _unitImage;
 
         private IPvPBuildable _currentBuildable;
@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public PvPBuildProgressFeedback(IPvPFillableImage buildProgressImage, IPvPGameObject pausedFeedback, Image unitImage)
+        public PvPBuildProgressFeedback(IPvPFillableImage buildProgressImage, IGameObject pausedFeedback, Image unitImage)
         {
             PvPHelper.AssertIsNotNull(buildProgressImage, pausedFeedback);
 

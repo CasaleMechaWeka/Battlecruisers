@@ -1,19 +1,20 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Movement
 {
     public class PvPShipMovementEffect : IPvPMovementEffect
     {
-        private readonly IPvPGameObject _gameObject;
+        private readonly IGameObject _gameObject;
         private readonly IPvPAnimator _animator;
         private readonly IPvPBroadcastingParticleSystem _particleSystem;
 
         public const string MOVEMENT_ANIMATION_STATE = "MovementAnimation";
 
         public PvPShipMovementEffect(
-            IPvPGameObject gameObject,
+            IGameObject gameObject,
             IPvPAnimator animator,
             IPvPBroadcastingParticleSystem particleSystem)
         {

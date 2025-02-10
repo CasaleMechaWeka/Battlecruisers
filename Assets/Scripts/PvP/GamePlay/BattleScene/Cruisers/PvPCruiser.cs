@@ -21,7 +21,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
@@ -40,6 +39,7 @@ using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
 
@@ -118,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPFactoryProvider FactoryProvider { get; private set; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private PvPFogOfWar _fog;
-        public IPvPGameObject Fog => _fog;
+        public IGameObject Fog => _fog;
         public IPvPRepairManager RepairManager { get; private set; }
         public int NumOfDrones => numOfDrones;
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; private set; }

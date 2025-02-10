@@ -1,11 +1,11 @@
 using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.Feedback
 {
     public class PvPBoostFeedback : IPvPBoostFeedback
     {
-        private readonly IPvPGameObject _singleBoostEffect, _doubleBoostEffect;
+        private readonly IGameObject _singleBoostEffect, _doubleBoostEffect;
 
         private PvPBoostState _state;
         public PvPBoostState State
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public PvPBoostFeedback(IPvPGameObject singleBoostEffect, IPvPGameObject doubleBoostEffect)
+        public PvPBoostFeedback(IGameObject singleBoostEffect, IGameObject doubleBoostEffect)
         {
             Helper.AssertIsNotNull(singleBoostEffect, doubleBoostEffect);
 

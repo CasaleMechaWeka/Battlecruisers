@@ -5,8 +5,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// </summary>
     public class PvPFogOfWarManager : IManagedDisposable
     {
-        private readonly IPvPGameObject _fog;
+        private readonly IGameObject _fog;
         private readonly IPvPFogVisibilityDecider _visibilityDecider;
         private readonly IPvPCruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly IPvPCruiserUnitMonitor _enemyUnitMonitor;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IList<IPvPSpyPlaneController> _enemySpyPlanes;
 
         public PvPFogOfWarManager(
-            IPvPGameObject fog,
+            IGameObject fog,
             IPvPFogVisibilityDecider visibilityDecider,
             IPvPCruiserBuildingMonitor friendlyBuildingMonitor,
             IPvPCruiserBuildingMonitor enemyBuildingMonitor,

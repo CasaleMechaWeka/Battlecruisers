@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
-    public class PvPMonoBehaviourWrapper : PvPPrefab, IPvPGameObject
+    public class PvPMonoBehaviourWrapper : PvPPrefab, IGameObject
     {
         public Vector3 Position
         {
