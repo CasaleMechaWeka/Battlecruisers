@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
             Assert.IsNotNull(coroutineStarter);
 
             return
-                new PvPLayeredMusicPlayer(
+                new LayeredMusicPlayer(
                     new AudioVolumeFade(coroutineStarter, PvPTimeBC.Instance),
                     primary,
                     secondary,
