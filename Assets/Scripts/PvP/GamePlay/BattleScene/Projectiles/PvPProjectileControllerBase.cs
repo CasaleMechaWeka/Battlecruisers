@@ -88,9 +88,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _commonStrings = commonStrings;
             _factoryProvider = factoryProvider;
 
-            Debug.Log("[PvPProjectileControllerBase] Initialise() started.");
+            //Debug.Log("[PvPProjectileControllerBase] Initialise() started.");
             _rigidBody = GetComponent<Rigidbody2D>();
-            Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
+            //Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
             Assert.IsNotNull(_rigidBody);
 
             IPvPExplosionPoolChooser explosionPoolChooser = GetComponent<IPvPExplosionPoolChooser>();
