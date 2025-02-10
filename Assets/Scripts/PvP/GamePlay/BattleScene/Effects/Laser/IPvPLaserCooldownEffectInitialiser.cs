@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
     public interface IPvPLaserCooldownEffectInitialiser
     {
-        IManagedDisposable CreateLaserCooldownEffect(IPvPLaserEmitter laserEmitter);
+        IManagedDisposable CreateLaserCooldownEffect(ILaserEmitter laserEmitter);
     }
 }

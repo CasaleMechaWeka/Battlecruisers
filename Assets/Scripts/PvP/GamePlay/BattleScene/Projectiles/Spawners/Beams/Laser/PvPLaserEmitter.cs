@@ -13,10 +13,11 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
-    public class PvPLaserEmitter : PvPBeamEmitter, IPvPLaserEmitter
+    public class PvPLaserEmitter : PvPBeamEmitter, ILaserEmitter
     {
         private IPvPLaserRenderer _laserRenderer;
         private IPvPLaserSoundPlayer _laserSoundPlayer;

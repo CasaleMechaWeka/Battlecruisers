@@ -1,11 +1,10 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
@@ -13,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         public float laserStoppedDebounceTimeInS = 0.5f;
 
-        public IManagedDisposable CreateLaserCooldownEffect(IPvPLaserEmitter laserEmitter)
+        public IManagedDisposable CreateLaserCooldownEffect(ILaserEmitter laserEmitter)
         {
             Assert.IsNotNull(laserEmitter);
 
