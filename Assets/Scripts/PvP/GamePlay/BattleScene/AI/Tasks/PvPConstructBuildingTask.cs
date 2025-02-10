@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using System;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 {
     public class PvPConstructBuildingTask : IPvPTask
     {
-        private readonly IPvPPrefabKey _buildingToConstruct;
+        private readonly IPrefabKey _buildingToConstruct;
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPvPCruiserController _parentCruiser;
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 
         public event EventHandler Completed;
 
-        public PvPConstructBuildingTask(IPvPPrefabKey buildingToconstruct, IPvPPrefabFactory prefabFactory, IPvPCruiserController parentCruiser)
+        public PvPConstructBuildingTask(IPrefabKey buildingToconstruct, IPvPPrefabFactory prefabFactory, IPvPCruiserController parentCruiser)
         {
             PvPHelper.AssertIsNotNull(buildingToconstruct, prefabFactory, parentCruiser);
 

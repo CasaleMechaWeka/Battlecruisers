@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPGlobeShield { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPGlobeShield");
             public static PvPBuildingKey PvPSledgehammer { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPSledgehammer");
 
-            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 // Factories
                 PvPAirFactory, PvPNavalFactory, PvPDroneStation, PvPDroneStation4, PvPDroneStation6, PvPDroneStation8,
@@ -101,7 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPUnitKey PvPRocketTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPRocketTurtle");
             public static PvPUnitKey PvPFlakTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPFlakTurtle");
 
-            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 // Aircraft
                 PvPBomber, PvPFighter, PvPGunship, PvPSteamCopter, PvPBroadsword, PvPStratBomber, PvPSpyPlane, PvPTestAircraft, PvPSpySatellite, PvPMissileFighter, PvPDeathstar,
@@ -133,7 +134,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPHullKey PvPGoatherd { get; } = new PvPHullKey("PvPGoatherd");
             public static PvPHullKey PvPMegalith { get; } = new PvPHullKey("PvPMegalith");
 
-            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ 
                 PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith
@@ -162,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPExplosionKey PvPExplosion500 { get; } = new PvPExplosionKey("PvPExplosion5.0");
             public static PvPExplosionKey PvPExplosionFiveShellCluster { get; } = new PvPExplosionKey("PvPExplosionFiveShellCluster");
 
-            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion,
                 PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosionMF, PvPExplosionFirecracker, PvPExplosion150, PvPExplosion500, PvPExplosionFiveShellCluster
@@ -192,7 +193,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPProjectileKey PvPRocket { get; } = new PvPProjectileKey("PvPRocket");
             public static PvPProjectileKey PvPRocketSmall { get; } = new PvPProjectileKey("PvPRocketSmall");
 
-            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPFiveShellCluster, PvPRocketShell,
                 PvPMissileSmall, PvPMissileMedium, PvPMissileMF, PvPMissileFirecracker, PvPMissileLarge, PvPMissileSmart,
@@ -212,13 +213,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPShipDeathKey PvPGunBoat { get; } = new PvPShipDeathKey("PvPGunBoat");
             public static PvPShipDeathKey PvPTurtle { get; } = new PvPShipDeathKey("PvPTurtle");
 
-            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 PvPAttackBoat, PvPFrigate, PvPDestroyer, PvPArchon, PvPAttackRIB, PvPSiegeDestroyer, PvPGlassCannoneer, PvPGunBoat, PvPTurtle
             });
         }
 
-        public static IPvPPrefabKey AudioSource { get; } = new PvPGenericKey("PvPAudioSource", "UI/Sound");
+        public static IPrefabKey AudioSource { get; } = new PvPGenericKey("PvPAudioSource", "UI/Sound");
 
         public static class PvPBuildableOutlines
         {
@@ -262,7 +263,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildableOutlineKey PvPBlastVLSOutline { get; } = new PvPBuildableOutlineKey("PvPBlastVLSOutline");
             public static PvPBuildableOutlineKey PvPFirecrackerVLSOutline { get; } = new PvPBuildableOutlineKey("PvPFirecrackerVLSOutline");
 
-            public static ReadOnlyCollection<IPvPPrefabKey> AllKeys = new ReadOnlyCollection<IPvPPrefabKey>(new List<IPvPPrefabKey>()
+            public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 PvPAirFactoryOutline, PvPAntiAirTurretOutline, PvPAntiShipTurretOutline, PvPArtilleryOutline, PvPBroadsidesOutline,
                 PvPControlTowerOutline, PvPDeathstarLauncherOutline, PvPEngineeringBay4Outline, PvPEngineeringBay6Outline, PvPEngineeringBay8Outline,

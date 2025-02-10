@@ -1,10 +1,10 @@
 using System;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using UnityEngine.Assertions;
 
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
             while (_buildOrder.MoveNext())
             {
-                IPvPPrefabKey buildingKey = _buildOrder.Current;
+                IPrefabKey buildingKey = _buildOrder.Current;
                 IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
                 if (CanConstructBuilding(buildingWrapper.Buildable))

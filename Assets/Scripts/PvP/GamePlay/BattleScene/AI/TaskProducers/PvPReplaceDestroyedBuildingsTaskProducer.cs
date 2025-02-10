@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
@@ -73,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
             Assert.IsTrue(_buildingNamesToKeys.ContainsKey(e.DestroyedBuilding.keyName));
 
-            IPvPPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.keyName];
+            IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.keyName];
             PvPTaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? PvPTaskPriority.High : PvPTaskPriority.Normal;
             _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
         }

@@ -1,10 +1,11 @@
 using System;
+using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys
 {
     [Serializable]
-    public abstract class PvPPrefabKey : IPvPPrefabKey
+    public abstract class PvPPrefabKey : IPrefabKey
     {
         [SerializeField]
         private string _prefabName;

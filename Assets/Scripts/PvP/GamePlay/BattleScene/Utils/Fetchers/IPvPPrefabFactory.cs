@@ -22,15 +22,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public interface IPvPPrefabFactory
     {
-        IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPvPPrefabKey buildingKey);
+        IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey);
         PvPBuildableOutlineController CreateOutline(PvPBuildableOutlineController outlinePrefab);
         IPvPBuilding CreateBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab, IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider, ulong clientID);
 
-        IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPvPPrefabKey unitKey);
-        PvPBuildableOutlineController GetOutline(IPvPPrefabKey unitKey);
+        IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPrefabKey unitKey);
+        PvPBuildableOutlineController GetOutline(IPrefabKey unitKey);
         Task<IPvPUnit> CreateUnit(IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab, /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider);
 
-        PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey);
+        PvPCruiser GetCruiserPrefab(IPrefabKey hullKey);
         PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x);
         PvPCruiser CreateAIBotCruiser(PvPCruiser cruiserPrefab, float x);
         PvPCruiser CreateCruiser(string prefabName, ulong ClientNetworkId, float x);

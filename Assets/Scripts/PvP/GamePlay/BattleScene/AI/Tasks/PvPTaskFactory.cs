@@ -1,5 +1,5 @@
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             delayProvider = new PvPDelayProvider(DEFAULT_DELAY_IN_S);
         }
 
-        public IPvPPrioritisedTask CreateConstructBuildingTask(PvPTaskPriority priority, IPvPPrefabKey buildingKey)
+        public IPvPPrioritisedTask CreateConstructBuildingTask(PvPTaskPriority priority, IPrefabKey buildingKey)
         {
             IPvPTask constructBuildingTask = new PvPConstructBuildingTask(buildingKey, _prefabFactory, _cruiser);
             return CreatePrioritisedTask(constructBuildingTask, priority);

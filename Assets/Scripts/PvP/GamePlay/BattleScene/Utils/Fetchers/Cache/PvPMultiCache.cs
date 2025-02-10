@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,15 +7,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPMultiCache<TPrefab> : IPvPMultiCache<TPrefab> where TPrefab : class
     {
-        private readonly IDictionary<IPvPPrefabKey, TPrefab> _prefabs;
+        private readonly IDictionary<IPrefabKey, TPrefab> _prefabs;
 
-        public PvPMultiCache(IDictionary<IPvPPrefabKey, TPrefab> prefabs)
+        public PvPMultiCache(IDictionary<IPrefabKey, TPrefab> prefabs)
         {
             Assert.IsNotNull(prefabs);
             _prefabs = prefabs;
         }
 
-        public TPrefab GetPrefab(IPvPPrefabKey prefabKey)
+        public TPrefab GetPrefab(IPrefabKey prefabKey)
         {
 
             Assert.IsNotNull(prefabKey);
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _prefabs[prefabKey];
         }
 
-        public ICollection<IPvPPrefabKey> GetKeys()
+        public ICollection<IPrefabKey> GetKeys()
         {
             return _prefabs.Keys;
         }

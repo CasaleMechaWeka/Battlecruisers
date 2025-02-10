@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
@@ -22,9 +22,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 {
     public interface IPvPBattleSceneHelper
     {
-        IPvPPrefabKey PlayerACruiser { get; }
-        IPvPPrefabKey PlayerBCruiser { get; }
-        IPvPPrefabKey AIBotCruiser { get; }
+        IPrefabKey PlayerACruiser { get; }
+        IPrefabKey PlayerBCruiser { get; }
+        IPrefabKey AIBotCruiser { get; }
         string[] PvPHullNames { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
