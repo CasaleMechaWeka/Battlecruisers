@@ -1,6 +1,6 @@
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using System;
@@ -16,13 +16,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly IPvPHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private readonly IPvPCruiserDamageMonitor _cruiserDamageMonitor;
-        private readonly IPvPPrioritisedSoundPlayer _soundPlayer;
+        private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _damagedDebouncer;
 
         public PvPCruiserEventMonitor(
             IPvPHealthThresholdMonitor cruiserHealthThresholdMonitor,
             IPvPCruiserDamageMonitor cruiserDamageMonitor,
-            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer soundPlayer,
             IDebouncer damagedDebouncer)
         {
             PvPHelper.AssertIsNotNull(cruiserHealthThresholdMonitor, cruiserDamageMonitor, soundPlayer, damagedDebouncer);

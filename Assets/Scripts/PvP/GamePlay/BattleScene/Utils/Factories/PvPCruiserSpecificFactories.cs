@@ -6,8 +6,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPCruiserSpecificFactories : IPvPCruiserSpecificFactories
     {
         public IPvPAircraftProvider AircraftProvider { get; }
-        public IPvPPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
+        public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public IPvPDroneFeedbackFactory DroneFeedbackFactory { get; }
         public IPvPGlobalBoostProviders GlobalBoostProviders { get; }
         public IPvPTurretStatsFactory TurretStatsFactory { get; }

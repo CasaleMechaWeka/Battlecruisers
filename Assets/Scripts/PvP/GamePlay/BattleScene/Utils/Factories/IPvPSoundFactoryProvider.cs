@@ -14,8 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         /// Plays a single sound at a time.  Used by in game events, such as
         /// building completed or cruiser events.
         /// </summary>
-        IPvPPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
-        IPvPPrioritisedSoundPlayer DummySoundPlayer { get; }
+        IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
+        IPrioritisedSoundPlayer DummySoundPlayer { get; }
         ISingleSoundPlayer UISoundPlayer { get; }
         ISoundPlayerFactory SoundPlayerFactory { get; }
     }

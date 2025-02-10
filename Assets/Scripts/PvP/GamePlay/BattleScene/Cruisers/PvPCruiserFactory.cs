@@ -212,7 +212,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             cruiser.Initialise(cruiserArgs);
         }
 
-        private IPvPDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IPvPDroneManager droneManager /*, IPvPPrioritisedSoundPlayer soundPlayer */)
+        private IPvPDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IPvPDroneManager droneManager /*, IPrioritisedSoundPlayer soundPlayer */)
         {
             if (isPlayerCruiser)
             {

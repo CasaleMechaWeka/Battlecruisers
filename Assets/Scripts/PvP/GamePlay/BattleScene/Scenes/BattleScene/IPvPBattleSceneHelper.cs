@@ -10,8 +10,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Utils.Threading;
@@ -37,15 +37,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         void InitialiseUIManager(PvPManagerArgs args);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IPvPDroneManager droneManager);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
-        IPvPPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
+        IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
         IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
                              IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
-                             // IPvPPrioritisedSoundPlayer soundPlayer,
+                             // IPrioritisedSoundPlayer soundPlayer,
                              //  IPvPTargetIndicator targetIndicator
                              );
         IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager,
-            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator
                                 );
         IArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);

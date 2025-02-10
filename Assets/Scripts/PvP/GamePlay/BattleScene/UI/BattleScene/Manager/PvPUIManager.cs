@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private PvPCruiser _playerCruiser, _enemyCruiser;
         private IPvPBuildMenu _buildMenu;
         private IPvPItemDetailsManager _detailsManager;
-        private IPvPPrioritisedSoundPlayer _soundPlayer;
+        private IPrioritisedSoundPlayer _soundPlayer;
         private ISingleSoundPlayer _uiSoundPlayer;
         private IPvPBuilding lastClickedBuilding;
         private IPvPUnit lastClickedUnit;

@@ -1,6 +1,6 @@
 using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
 using System;
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private PvPCruiser _playerCruiser;
         private readonly IPopulationLimitMonitor _populationLimitMonitor;
-        private readonly IPvPPrioritisedSoundPlayer _soundPlayer;
+        private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _debouncer;
         private readonly IGameObject _popLimitReachedFeedback;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPPopulationLimitAnnouncer(
             IPopulationLimitMonitor populationLimitMonitor,
-            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer soundPlayer,
             IDebouncer debouncer,
             IGameObject popLimitReachedFeedback)
         {
