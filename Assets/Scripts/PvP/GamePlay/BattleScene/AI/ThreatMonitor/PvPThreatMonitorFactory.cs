@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
 
         public IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor)
         {
-            return new PvPDelayedThreatMonitor(coreMonitor, _time, _deferrer);
+            return new DelayedThreatMonitor(coreMonitor, _time, _deferrer);
         }
     }
 }
