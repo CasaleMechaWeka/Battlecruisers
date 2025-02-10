@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Threading;
 using System;
 
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
     /// + An ultra is completed
     /// + A cruiser drops below 1/3 health
     /// </summary>
-    public class PvPDangerMonitor : IPvPDangerMonitor
+    public class PvPDangerMonitor : IDangerMonitor
     {
         private readonly IDeferrer _timeScaleDeferrer;
         private readonly IPvPCruiserController _playerCruiser, _enemyCruiser;

@@ -8,13 +8,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 {
     public class PvPDangerMonitorSummariser : IDangerMonitorSummariser
     {
-        private readonly IPvPDangerMonitor _dangerMonitor;
+        private readonly IDangerMonitor _dangerMonitor;
         private int _activeDangerEventCount;
 
         private readonly ISettableBroadcastingProperty<bool> _isInDanger;
         public IBroadcastingProperty<bool> IsInDanger { get; }
 
-        public PvPDangerMonitorSummariser(IPvPDangerMonitor dangerMonitor)
+        public PvPDangerMonitorSummariser(IDangerMonitor dangerMonitor)
         {
             Assert.IsNotNull(dangerMonitor);
 

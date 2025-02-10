@@ -9,6 +9,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.UI.Music;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -51,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IDeferrer deferrer,
             IPvPBattleCompletionHandler battleCompletionHandler)
         {
-            IPvPDangerMonitor dangerMonitor
+            IDangerMonitor dangerMonitor
                 = new PvPDangerMonitor
                 (
                     deferrer,
