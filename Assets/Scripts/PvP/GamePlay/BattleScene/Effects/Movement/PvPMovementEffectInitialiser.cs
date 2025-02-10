@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             IPvPMovementEffect shipMovementEffect
                 = new PvPShipMovementEffect(
-                    new PvPGameObjectBC(gameObject),
+                    new GameObjectBC(gameObject),
                     new PvPAnimatorBC(animator),
                     (IPvPBroadcastingParticleSystem)particleSystem ?? new PvPDummyBroadcastingParticleSystem());
 

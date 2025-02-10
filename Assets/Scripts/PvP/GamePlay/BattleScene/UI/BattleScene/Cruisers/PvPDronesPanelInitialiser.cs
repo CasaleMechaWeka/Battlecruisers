@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             PvPHelper.AssertIsNotNull(highlight, droneManager, droneManagerMonitor);
 
-            IGameObject highlightGameObject = new PvPGameObjectBC(highlight.gameObject);
+            IGameObject highlightGameObject = new GameObjectBC(highlight.gameObject);
 
             PvPNumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<PvPNumOfDronesPanelInitialiser>();
             IPvPNumberDisplay twoDigitDisplayer = numOfDronesPanel.CreateTwoDigitDisplay();
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             PvPHelper.AssertIsNotNull(highlight);
 
-            IGameObject highlightGameObject = new PvPGameObjectBC(highlight.gameObject);
+            IGameObject highlightGameObject = new GameObjectBC(highlight.gameObject);
 
             PvPNumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<PvPNumOfDronesPanelInitialiser>();
             IPvPNumberDisplay twoDigitDisplayer = numOfDronesPanel.CreateTwoDigitDisplay();

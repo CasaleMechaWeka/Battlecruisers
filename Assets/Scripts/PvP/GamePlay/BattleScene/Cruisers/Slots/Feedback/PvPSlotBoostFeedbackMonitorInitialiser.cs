@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -19,8 +19,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     slot,
                     new PvPBoostStateFinder(),
                     new PvPBoostFeedback(
-                        new PvPGameObjectBC(singleBoostEffect.gameObject),
-                        new PvPGameObjectBC(doubleBoostEffect.gameObject)),
+                        new GameObjectBC(singleBoostEffect.gameObject),
+                        new GameObjectBC(doubleBoostEffect.gameObject)),
                     isHost);
         }
     }
