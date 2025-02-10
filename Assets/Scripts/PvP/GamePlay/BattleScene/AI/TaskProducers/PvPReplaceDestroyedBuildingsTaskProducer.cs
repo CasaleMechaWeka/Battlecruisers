@@ -1,3 +1,4 @@
+using BattleCruisers.AI;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
@@ -42,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         private const float TASK_DELAY_IN_S = 1;
 
         public PvPReplaceDestroyedBuildingsTaskProducer(
-            IPvPTaskList tasks,
+            ITaskList tasks,
             IPvPCruiserController cruiser,
             IPvPPrefabFactory prefabFactory,
             IPvPTaskFactory taskFactory,

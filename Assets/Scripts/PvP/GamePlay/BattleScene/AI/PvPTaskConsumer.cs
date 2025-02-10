@@ -1,4 +1,5 @@
 using System;
+using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     /// </summary>
     public class PvPTaskConsumer : IPvPManagedDisposable
     {
-        private readonly IPvPTaskList _tasks;
+        private readonly ITaskList _tasks;
 
         private IPrioritisedTask _currentTask;
         private IPrioritisedTask CurrentTask
@@ -42,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             }
         }
 
-        public PvPTaskConsumer(IPvPTaskList tasks)
+        public PvPTaskConsumer(ITaskList tasks)
         {
             _tasks = tasks;
             CurrentTask = _tasks.HighestPriorityTask;

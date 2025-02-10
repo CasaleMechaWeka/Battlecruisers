@@ -1,4 +1,5 @@
 using System;
+using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         private readonly IPvPDynamicBuildOrder _buildOrder;
 
         public PvPBasicTaskProducer(
-            IPvPTaskList tasks,
+            ITaskList tasks,
             IPvPCruiserController cruiser,
             IPvPPrefabFactory prefabFactory,
             IPvPTaskFactory taskFactory,

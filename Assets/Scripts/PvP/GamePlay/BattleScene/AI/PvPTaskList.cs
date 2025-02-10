@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
 using UnityEngine.Assertions;
 
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     /// same priority, and I want to maintain their order when I add
     /// or remove an task.
     /// </summary>
-    public class PvPTaskList : IPvPTaskList
+    public class PvPTaskList : ITaskList
     {
         private readonly IList<IPrioritisedTask> _tasks;
 
