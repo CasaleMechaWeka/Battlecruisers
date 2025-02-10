@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public PvPAudioInitialiser(
             IPvPBattleSceneHelper helper,
-            IPvPLayeredMusicPlayer musicPlayer,
+            ILayeredMusicPlayer musicPlayer,
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             IDeferrer deferrer,
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
         private PvPLevelMusicPlayer CreateLevelMusicPlayer(
-            IPvPLayeredMusicPlayer musicPlayer,
+            ILayeredMusicPlayer musicPlayer,
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             IDeferrer deferrer,

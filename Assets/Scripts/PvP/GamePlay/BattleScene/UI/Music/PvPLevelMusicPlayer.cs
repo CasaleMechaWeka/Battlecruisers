@@ -7,11 +7,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 {
     public class PvPLevelMusicPlayer
     {
-        private readonly IPvPLayeredMusicPlayer _musicPlayer;
+        private readonly ILayeredMusicPlayer _musicPlayer;
         private readonly IDangerMonitorSummariser _dangerMonitorSummariser;
 
         public PvPLevelMusicPlayer(
-            IPvPLayeredMusicPlayer musicPlayer,
+            ILayeredMusicPlayer musicPlayer,
             IDangerMonitorSummariser dangerMonitorSummariser,
             IPvPBattleCompletionHandler battleCompletionHandler)
         {

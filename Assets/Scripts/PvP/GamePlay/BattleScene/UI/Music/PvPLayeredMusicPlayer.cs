@@ -1,5 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -7,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
-    public class PvPLayeredMusicPlayer : IPvPLayeredMusicPlayer
+    public class PvPLayeredMusicPlayer : ILayeredMusicPlayer
     {
         private readonly IAudioVolumeFade _audioVolumeFade;
         private readonly IAudioSource _primarySource, _secondarySource;

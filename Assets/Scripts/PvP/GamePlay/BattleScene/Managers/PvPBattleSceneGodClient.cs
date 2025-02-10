@@ -33,7 +33,6 @@ using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -51,6 +50,7 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.UI.Music;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -471,7 +471,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             pvpBattleHelper.InitialiseUIManager(args);
             _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager, rightPanelComponents.HacklePanelController);
             // Audio
-            IPvPLayeredMusicPlayer layeredMusicPlayer
+            ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
