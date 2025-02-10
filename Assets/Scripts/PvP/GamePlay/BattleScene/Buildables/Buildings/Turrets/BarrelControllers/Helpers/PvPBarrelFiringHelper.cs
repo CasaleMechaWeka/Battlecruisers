@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers
@@ -8,13 +8,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private readonly IPvPBarrelController _barrelController;
         private readonly IAccuracyAdjuster _accuracyAdjuster;
-        private readonly IPvPFireIntervalManager _fireIntervalManager;
+        private readonly IFireIntervalManager _fireIntervalManager;
         private readonly IPvPBarrelFirer _barrelFirer;
 
         public PvPBarrelFiringHelper(
             IPvPBarrelController barrelController,
             IAccuracyAdjuster accuracyAdjuster,
-            IPvPFireIntervalManager fireIntervalManager,
+            IFireIntervalManager fireIntervalManager,
             IPvPBarrelFirer barrelFirer)
         {
             PvPHelper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager, barrelFirer);

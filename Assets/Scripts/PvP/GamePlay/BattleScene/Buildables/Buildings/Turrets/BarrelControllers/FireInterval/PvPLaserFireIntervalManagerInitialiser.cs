@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPLaserFireIntervalManagerInitialiser : MonoBehaviour
     {
-        public IPvPFireIntervalManager Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider)
+        public IFireIntervalManager Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider)
         {
             PvPHelper.AssertIsNotNull(waitingDurationProvider, firingDurationProvider);
 
