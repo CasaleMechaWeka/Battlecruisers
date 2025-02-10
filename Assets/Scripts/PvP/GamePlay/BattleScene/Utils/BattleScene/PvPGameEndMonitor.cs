@@ -1,5 +1,5 @@
+using BattleCruisers.AI;
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using System;
@@ -77,12 +77,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             }
             return ds;
         }
-        public void RegisterAIOfLeftPlayer(IPvPArtificialIntelligence ai_LeftPlayer)
+        public void RegisterAIOfLeftPlayer(IArtificialIntelligence ai_LeftPlayer)
         {
             _gameEndHandler.RegisterAIOfLeftPlayer(ai_LeftPlayer);
         }
 
-        public void RegisterAIOfRightPlayer(IPvPArtificialIntelligence ai_RightPlayer)
+        public void RegisterAIOfRightPlayer(IArtificialIntelligence ai_RightPlayer)
         {
             _gameEndHandler.RegisterAIOfRightPlayer(ai_RightPlayer);
         }

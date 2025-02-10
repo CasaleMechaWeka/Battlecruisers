@@ -1,3 +1,4 @@
+using BattleCruisers.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers;
@@ -56,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             _factoryMonitorFactory = new PvPFactoryMonitorFactory(RandomGenerator.Instance);
         }
 
-        public IPvPArtificialIntelligence CreateAI(IPvPLevelInfo levelInfo, Difficulty difficulty)
+        public IArtificialIntelligence CreateAI(IPvPLevelInfo levelInfo, Difficulty difficulty)
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )

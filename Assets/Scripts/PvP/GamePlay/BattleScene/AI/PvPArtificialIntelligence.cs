@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     /// 2. Provides a way to dispose the ITaskConsumer and all ITaskProducers, 
     ///     cleaning up their event handlers.
     /// </summary>
-    public class PvPArtificialIntelligence : IPvPArtificialIntelligence
+    public class PvPArtificialIntelligence : IArtificialIntelligence
     {
         private readonly TaskConsumer _taskConsumer;
         private readonly IList<IPvPTaskProducer> _taskProducers;
