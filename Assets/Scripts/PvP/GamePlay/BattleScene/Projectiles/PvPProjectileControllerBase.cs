@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
-            Debug.Log("[PvPProjectileControllerBase] Activate() called. Position: " + activationArgs.Position + ", InitialVelocity: " + activationArgs.InitialVelocityInMPerS + ", ImpactSound: " + (activationArgs.ImpactSound != null && activationArgs.ImpactSound.AudioClip != null ? activationArgs.ImpactSound.AudioClip.name : "null"));
+            //Debug.Log("[PvPProjectileControllerBase] Activate() called. Position: " + activationArgs.Position + ", InitialVelocity: " + activationArgs.InitialVelocityInMPerS + ", ImpactSound: " + (activationArgs.ImpactSound != null && activationArgs.ImpactSound.AudioClip != null ? activationArgs.ImpactSound.AudioClip.name : "null"));
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
@@ -126,7 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _impactSound = activationArgs.ImpactSound;
 
             _rigidBody.velocity = activationArgs.InitialVelocityInMPerS;
-            Debug.Log("[PvPProjectileControllerBase] Setting Rigidbody velocity to: " + activationArgs.InitialVelocityInMPerS + " and gravityScale to: " + activationArgs.ProjectileStats.GravityScale);
+            //Debug.Log("[PvPProjectileControllerBase] Setting Rigidbody velocity to: " + activationArgs.InitialVelocityInMPerS + " and gravityScale to: " + activationArgs.ProjectileStats.GravityScale);
             _rigidBody.gravityScale = activationArgs.ProjectileStats.GravityScale;
             _targetToDamage = null;
 
