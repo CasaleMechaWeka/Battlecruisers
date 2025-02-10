@@ -17,7 +17,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
             set
             {
                 _audioClip = value;
-                _audioSource.clip = value?.AudioClip;
+                if (_audioSource != null)
+                    _audioSource.clip = value?.AudioClip;
             }
         }
 
@@ -46,8 +47,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
             }
         }
 
-        public bool IsActive 
-        { 
+        public bool IsActive
+        {
             get => _audioSource.gameObject.activeSelf;
             set
             {
@@ -81,7 +82,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
         {
             if (_audioClip != null)
             {
-                Addressables.Release(_audioClip.Handle);
+                if (_audioClip.Handle.IsValid())
+                    Addressables.Release(_audioClip.Handle);
                 _audioClip = null;
             }
         }
