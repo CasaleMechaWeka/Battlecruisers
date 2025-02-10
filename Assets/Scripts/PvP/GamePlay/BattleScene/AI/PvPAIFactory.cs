@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
         private IPvPArtificialIntelligence CreateAI(IPvPCruiserController aiCruiser, ITaskList tasks, IList<IPvPTaskProducer> taskProducers)
         {
-            PvPTaskConsumer taskConsumer = new PvPTaskConsumer(tasks);
+            TaskConsumer taskConsumer = new TaskConsumer(tasks);
             PvPDroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);
 
             return new PvPArtificialIntelligence(taskConsumer, taskProducers, focusManager);

@@ -1,3 +1,4 @@
+using BattleCruisers.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -13,11 +14,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
     /// </summary>
     public class PvPArtificialIntelligence : IPvPArtificialIntelligence
     {
-        private readonly PvPTaskConsumer _taskConsumer;
+        private readonly TaskConsumer _taskConsumer;
         private readonly IList<IPvPTaskProducer> _taskProducers;
         private readonly PvPDroneConsumerFocusManager _focusManager;
 
-        public PvPArtificialIntelligence(PvPTaskConsumer taskConsumer, IList<IPvPTaskProducer> taskProducers, PvPDroneConsumerFocusManager focusManager)
+        public PvPArtificialIntelligence(TaskConsumer taskConsumer, IList<IPvPTaskProducer> taskProducers, PvPDroneConsumerFocusManager focusManager)
         {
             PvPHelper.AssertIsNotNull(taskConsumer, taskProducers, focusManager);
 
