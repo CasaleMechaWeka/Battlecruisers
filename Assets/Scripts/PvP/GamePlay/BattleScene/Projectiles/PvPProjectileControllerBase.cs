@@ -187,7 +187,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             AdjustGameObjectDirection();
             PositionChanged?.Invoke(this, EventArgs.Empty);
 
-            Debug.Log("[PvPProjectileControllerBase] FixedUpdate() running. isActiveAndAlive: " + _isActiveAndAlive + ", Rigidbody velocity: " + _rigidBody.velocity);
+            //Debug.Log("[PvPProjectileControllerBase] FixedUpdate() running. isActiveAndAlive: " + _isActiveAndAlive + ", Rigidbody velocity: " + _rigidBody.velocity);
         }
 
         void OnTriggerEnter2D(Collider2D collider)
