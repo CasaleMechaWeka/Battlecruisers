@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.BattleScene.Lifetime;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -52,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public IDeferrer Deferrer { get; private set; }
         public IDeferrer RealTimeDeferrer { get; private set; }
 
-        public IPvPLifetimeEventBroadcaster LifetimeEvents { get; private set; }
+        public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private PvPUpdaterProvider _updaterProvider;
         public IPvPUpdaterProvider UpdaterProvider => _updaterProvider;

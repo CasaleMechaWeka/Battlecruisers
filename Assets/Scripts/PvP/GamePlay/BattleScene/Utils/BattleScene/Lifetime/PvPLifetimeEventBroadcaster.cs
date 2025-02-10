@@ -1,10 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime
 {
-    public class PvPLifetimeEventBroadcaster : MonoBehaviour, IPvPLifetimeEventBroadcaster
+    public class PvPLifetimeEventBroadcaster : MonoBehaviour, ILifetimeEventBroadcaster
     {
         private IPvPSettableBroadcastingProperty<bool> _isPaused;
         public IBroadcastingProperty<bool> IsPaused { get; private set; }
