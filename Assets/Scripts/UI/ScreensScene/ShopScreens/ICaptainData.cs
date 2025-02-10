@@ -2,10 +2,9 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     public interface ICaptainData
     {
-        int CaptainCost { get; }
+        int CaptainCost { get; set; }
         string NameStringKeyBase { get; }
         string DescriptionKeyBase { get; }
-        bool IsOwned { get; }
         int Index { get; }
     }
 }

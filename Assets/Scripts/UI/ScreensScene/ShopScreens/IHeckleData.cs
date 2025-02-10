@@ -2,9 +2,8 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     public interface IHeckleData
     {
-        int HeckleCost { get; }
+        int HeckleCost { get; set; }
         string StringKeyBase { get; }
-        bool IsOwned { get; }
         int Index { get; }
     }
 }
