@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
         private readonly IDeferrer _deferrer;
         private readonly float _delayInS;
 
-        private PvPThreatChangeSnapshot _lastThreatChange;
+        private ThreatChangeSnapshot _lastThreatChange;
 
         private const float DEFAULT_DELAY_IN_S = 5;
         private const float MIN_DELAY_IN_S = 0;
@@ -46,13 +46,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
 
         private void _coreThreatMonitor_ThreatLevelChanged(object sender, EventArgs e)
         {
-            PvPThreatChangeSnapshot cachedSnapshot = new PvPThreatChangeSnapshot(_coreThreatMonitor.CurrentThreatLevel, _time.TimeSinceGameStartInS);
+            ThreatChangeSnapshot cachedSnapshot = new ThreatChangeSnapshot(_coreThreatMonitor.CurrentThreatLevel, _time.TimeSinceGameStartInS);
             _lastThreatChange = cachedSnapshot;
 
             _deferrer.Defer(() => DelayedThreatEvaluation(cachedSnapshot), _delayInS);
         }
 
-        private void DelayedThreatEvaluation(PvPThreatChangeSnapshot originalThreatSnapshot)
+        private void DelayedThreatEvaluation(ThreatChangeSnapshot originalThreatSnapshot)
         {
             if (originalThreatSnapshot.Equals(_lastThreatChange))
             {
