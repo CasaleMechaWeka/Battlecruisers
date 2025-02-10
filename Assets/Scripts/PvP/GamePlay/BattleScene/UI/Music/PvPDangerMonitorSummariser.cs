@@ -1,11 +1,12 @@
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
-    public class PvPDangerMonitorSummariser : IPvPDangerMonitorSummariser
+    public class PvPDangerMonitorSummariser : IDangerMonitorSummariser
     {
         private readonly IPvPDangerMonitor _dangerMonitor;
         private int _activeDangerEventCount;
