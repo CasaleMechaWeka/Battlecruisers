@@ -2,6 +2,7 @@
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
+
 namespace BattleCruisers.UI.Music
 {
     public class DangerMonitorSummariser : IDangerMonitorSummariser

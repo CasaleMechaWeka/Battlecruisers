@@ -63,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new PvPLevelMusicPlayer(
                     musicPlayer,
-                    new PvPDangerMonitorSummariser(dangerMonitor),
+                    new DangerMonitorSummariser(dangerMonitor),
                     battleCompletionHandler);
         }
 
