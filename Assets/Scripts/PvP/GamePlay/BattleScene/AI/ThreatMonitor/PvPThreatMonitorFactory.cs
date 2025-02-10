@@ -31,25 +31,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
 
         public IThreatMonitor CreateAirThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new PvPThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
+            IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
             return new PvPFactoryThreatMonitor(_playerCruiser, threatEvaluator, PvPUnitCategory.Aircraft);
         }
 
         public IThreatMonitor CreateNavalThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new PvPThreatEvaluator(NAVAL_HIGH_THREAT_DRONE_NUM);
+            IThreatEvaluator threatEvaluator = new ThreatEvaluator(NAVAL_HIGH_THREAT_DRONE_NUM);
             return new PvPFactoryThreatMonitor(_playerCruiser, threatEvaluator, PvPUnitCategory.Naval);
         }
 
         public IThreatMonitor CreateRocketThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new PvPThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
+            IThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
             return new PvPBuildingThreatMonitor<PvPRocketLauncherController>(_playerCruiser, threatEvaluator);
         }
 
         public IThreatMonitor CreateStealthThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new PvPThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
+            IThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
             return new PvPBuildingThreatMonitor<IPvPStealthGenerator>(_playerCruiser, threatEvaluator);
         }
 
