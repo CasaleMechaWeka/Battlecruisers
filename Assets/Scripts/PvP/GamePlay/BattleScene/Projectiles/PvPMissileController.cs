@@ -53,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             base.Activate(activationArgs);
 
-            Debug.Log("[PvPMissileController] Activate() called. Rotation: " + transform.rotation.eulerAngles + ", Target: " + activationArgs.Target);
+            //Debug.Log("[PvPMissileController] Activate() called. Rotation: " + transform.rotation.eulerAngles + ", Target: " + activationArgs.Target);
 
             Target = activationArgs.Target;
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
@@ -79,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     targetProvider,
                     _factoryProvider.TargetPositionPredictorFactory);
 
-            Debug.Log("[PvPMissileController] Movement controller created. Missile sprite enabled: " + missile.enabled);
+            //Debug.Log("[PvPMissileController] Movement controller created. Missile sprite enabled: " + missile.enabled);
 
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;

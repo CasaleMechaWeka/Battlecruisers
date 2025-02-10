@@ -226,7 +226,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _explosionPool.GetItem(transform.position);
             OnPlayExplosionSound(SoundType.Explosions, _impactSound.AudioClip.name, transform.position);
 
-            Debug.Log("[PvPProjectileControllerBase] Showing explosion at position: " + transform.position + " with sound: " + (_impactSound != null && _impactSound.AudioClip != null ? _impactSound.AudioClip.name : "null"));
+            //Debug.Log("[PvPProjectileControllerBase] Showing explosion at position: " + transform.position + " with sound: " + (_impactSound != null && _impactSound.AudioClip != null ? _impactSound.AudioClip.name : "null"));
         }
 
         private void AdjustGameObjectDirection()
