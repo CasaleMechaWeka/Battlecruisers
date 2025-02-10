@@ -236,7 +236,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (_rigidBody.velocity != Vector2.zero)
             {
                 transform.right = _rigidBody.velocity;
-                Debug.Log("[PvPProjectileControllerBase] New transform.right set to: " + transform.right);
+                //Debug.Log("[PvPProjectileControllerBase] New transform.right set to: " + transform.right);
             }
         }
 
