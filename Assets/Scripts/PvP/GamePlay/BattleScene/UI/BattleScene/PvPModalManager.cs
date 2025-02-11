@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private readonly IPvPNavigationPermitterManager _navigationPermitterManager;
         protected readonly IPauseGameManager _pauseGameManager;
 
-        private PvPNavigationPermittersState _stateOnShowMenu;
+        private NavigationPermittersState _stateOnShowMenu;
 
         protected PvPModalManager(
             IPvPNavigationPermitterManager navigationPermitterManager,

@@ -1,3 +1,4 @@
+using BattleCruisers.UI.BattleScene.Navigation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
@@ -12,10 +13,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _navigationPermitters = navigationPermitters;
         }
 
-        public PvPNavigationPermittersState PauseNavigation()
+        public NavigationPermittersState PauseNavigation()
         {
-            PvPNavigationPermittersState prePauseState
-                = new PvPNavigationPermittersState(
+            NavigationPermittersState prePauseState
+                = new NavigationPermittersState(
                     _navigationPermitters.NavigationFilter.IsMatch,
                     _navigationPermitters.NavigationButtonsFilter.IsMatch,
                     _navigationPermitters.ScrollWheelAndPinchZoomFilter.IsMatch,
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return prePauseState;
         }
 
-        public void RestoreNavigation(PvPNavigationPermittersState state)
+        public void RestoreNavigation(NavigationPermittersState state)
         {
             Assert.IsNotNull(state);
 
