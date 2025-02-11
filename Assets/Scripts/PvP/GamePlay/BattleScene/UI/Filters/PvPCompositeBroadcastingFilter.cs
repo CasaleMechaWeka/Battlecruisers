@@ -1,9 +1,10 @@
+using BattleCruisers.UI.Filters;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 {
-    public class PvPCompositeBroadcastingFilter : IPvPBroadcastingFilter, IPvPPermitter
+    public class PvPCompositeBroadcastingFilter : IBroadcastingFilter, IPvPPermitter
     {
         private readonly PvPBroadcastingFilter[] _filters;
 

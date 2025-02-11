@@ -1,14 +1,14 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters
 {
-    public class PvPAffordableBuildableFilter : IPvPBroadcastingFilter<IPvPBuildable>
+    public class PvPAffordableBuildableFilter : IBroadcastingFilter<IPvPBuildable>
     {
         private readonly IPvPDroneManager _droneManager;
 

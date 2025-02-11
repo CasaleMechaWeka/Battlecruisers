@@ -1,28 +1,28 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters
 {
     public class PvPButtonVisibilityFilters : IPvPButtonVisibilityFilters
     {
-        public IPvPBroadcastingFilter<IPvPBuildable> BuildableButtonVisibilityFilter { get; }
-        public IPvPBroadcastingFilter<BuildingCategory> CategoryButtonVisibilityFilter { get; }
+        public IBroadcastingFilter<IPvPBuildable> BuildableButtonVisibilityFilter { get; }
+        public IBroadcastingFilter<BuildingCategory> CategoryButtonVisibilityFilter { get; }
         public IFilter<ITarget> ChooseTargetButtonVisiblityFilter { get; }
         public IFilter<ITarget> DeletButtonVisiblityFilter { get; }
-        public IPvPBroadcastingFilter DismissButtonVisibilityFilter { get; }
-        public IPvPBroadcastingFilter SpeedButtonsEnabledFilter { get; }
+        public IBroadcastingFilter DismissButtonVisibilityFilter { get; }
+        public IBroadcastingFilter SpeedButtonsEnabledFilter { get; }
 
         public PvPButtonVisibilityFilters(
-            IPvPBroadcastingFilter<IPvPBuildable> buildableButtonVisibilityFilter,
-            IPvPBroadcastingFilter<BuildingCategory> categoryButtonVisibilityFilter,
+            IBroadcastingFilter<IPvPBuildable> buildableButtonVisibilityFilter,
+            IBroadcastingFilter<BuildingCategory> categoryButtonVisibilityFilter,
             IFilter<ITarget> chooseTargetButtonVisiblityFilter,
             IFilter<ITarget> deletButtonVisiblityFilter,
-            IPvPBroadcastingFilter backButtonVisibilityFilter,
-            IPvPBroadcastingFilter speedButtonEnabledFilter)
+            IBroadcastingFilter backButtonVisibilityFilter,
+            IBroadcastingFilter speedButtonEnabledFilter)
         {
             PvPHelper.AssertIsNotNull(
                 buildableButtonVisibilityFilter,

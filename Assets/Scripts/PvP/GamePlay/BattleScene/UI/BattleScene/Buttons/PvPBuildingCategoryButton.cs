@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
@@ -10,10 +10,10 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
 {
-    public class PvPBuildingCategoryButton : PvPCanvasGroupButton, IBuildingCategoryButton, IPvPBroadcastingFilter
+    public class PvPBuildingCategoryButton : PvPCanvasGroupButton, IBuildingCategoryButton, IBroadcastingFilter
     {
         private IPvPUIManager _uiManager;
-        private IPvPBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
+        private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
         private PvPFilterToggler _filterToggler;
 
         public Image activeFeedback;
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             ISingleSoundPlayer soundPlayer,
             BuildingCategory expectedBuildingCategory,
             IPvPUIManager uiManager,
-            IPvPBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
+            IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

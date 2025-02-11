@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.Filters;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
@@ -6,9 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public class PvPTogglableDragTracker : PvPDragTracker
     {
-        private IPvPBroadcastingFilter _enabledFilter;
+        private IBroadcastingFilter _enabledFilter;
 
-        public void Initialise(IPvPBroadcastingFilter enabledFilter)
+        public void Initialise(IBroadcastingFilter enabledFilter)
         {
             Assert.IsNotNull(enabledFilter);
             _enabledFilter = enabledFilter;

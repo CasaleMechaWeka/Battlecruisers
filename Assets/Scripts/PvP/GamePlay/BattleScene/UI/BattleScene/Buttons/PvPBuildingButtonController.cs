@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.Filters;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             ISingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapper,
             IPvPBuildingClickHandler clickHandler,
-            IPvPBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
+            IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
             bool flipClickAndDragIcon)
         {
             base.ApplyVariantIfExist(buildingWrapper.Buildable);

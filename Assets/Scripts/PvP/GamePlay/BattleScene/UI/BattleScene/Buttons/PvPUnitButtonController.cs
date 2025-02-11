@@ -3,8 +3,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
@@ -56,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPUnit> unitWrapper,
-            IPvPBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
+            IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
             IPvPUnitClickHandler unitClickHandler)
         {
             PvPHelper.AssertIsNotNull(unitWrapper, unitClickHandler);

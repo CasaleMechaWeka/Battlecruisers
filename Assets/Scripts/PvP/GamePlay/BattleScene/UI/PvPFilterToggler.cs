@@ -1,15 +1,15 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Filters;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {
     public class PvPFilterToggler
     {
-        private readonly IPvPBroadcastingFilter _shouldBeEnabledFilter;
+        private readonly IBroadcastingFilter _shouldBeEnabledFilter;
         private readonly IPvPTogglable[] _togglables;
 
-        public PvPFilterToggler(IPvPBroadcastingFilter shouldBeEnabledFilter, params IPvPTogglable[] togglables)
+        public PvPFilterToggler(IBroadcastingFilter shouldBeEnabledFilter, params IPvPTogglable[] togglables)
         {
             PvPHelper.AssertIsNotNull(shouldBeEnabledFilter, togglables);
 

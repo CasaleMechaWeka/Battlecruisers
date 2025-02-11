@@ -1,14 +1,13 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Escape;
-// using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.HelpLabels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Filters;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys
@@ -27,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IHotkeyList hotkeyList,
             IPvPInput input,
             IPvPUpdater updater,
-            IPvPBroadcastingFilter hotkeyFilter,
+            IBroadcastingFilter hotkeyFilter,
             IPvPCameraFocuser cameraFocuser,
             //            IPvPSpeedComponents speedComponents,
             IPvPMainMenuManager mainMenuManager,
@@ -49,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _escapeHandler = new PvPEscapeHandler(escapeDetector, mainMenuManager);
         }
 
-        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IPvPInput input, IPvPUpdater updater, IPvPBroadcastingFilter hotkeyFilter, IPvPUIManager uiManager)
+        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IPvPInput input, IPvPUpdater updater, IBroadcastingFilter hotkeyFilter, IPvPUIManager uiManager)
         {
             if (PvPSystemInfoBC.Instance.IsHandheld)
             {

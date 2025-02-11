@@ -1,9 +1,10 @@
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 {
-    public class PvPStaticBroadcastingFilter : IPvPBroadcastingFilter
+    public class PvPStaticBroadcastingFilter : IBroadcastingFilter
     {
         public bool IsMatch { get; }
 
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Fil
         }
     }
 
-    public class StaticBroadcastingFilter<TElement> : IPvPBroadcastingFilter<TElement>
+    public class StaticBroadcastingFilter<TElement> : IBroadcastingFilter<TElement>
     {
         private readonly bool _isMatch;
 

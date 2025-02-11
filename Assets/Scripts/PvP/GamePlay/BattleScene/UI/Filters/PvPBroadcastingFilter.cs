@@ -1,8 +1,9 @@
+using BattleCruisers.UI.Filters;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 {
-    public class PvPBroadcastingFilter : IPvPBroadcastingFilter, IPvPPermitter
+    public class PvPBroadcastingFilter : IBroadcastingFilter, IPvPPermitter
     {
         private bool _isMatch;
         public bool IsMatch

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.Filters;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,13 +7,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPTogglableUpdater : MonoBehaviour, IPvPUpdater
     {
-        private IPvPBroadcastingFilter _enabledFilter;
+        private IBroadcastingFilter _enabledFilter;
 
         public float DeltaTime => Time.deltaTime;
 
         public event EventHandler Updated;
 
-        public void Initialise(IPvPBroadcastingFilter enabledFilter)
+        public void Initialise(IBroadcastingFilter enabledFilter)
         {
             Assert.IsNotNull(enabledFilter);
             _enabledFilter = enabledFilter;

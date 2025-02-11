@@ -7,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
@@ -19,9 +20,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
 {
-    public abstract class PvPBuildableButtonController : PvPClickablePresentableController, IPvPBuildableButton, IPvPBroadcastingFilter
+    public abstract class PvPBuildableButtonController : PvPClickablePresentableController, IPvPBuildableButton, IBroadcastingFilter
     {
-        private IPvPBroadcastingFilter<IPvPBuildable> _shouldBeEnabledFilter;
+        private IBroadcastingFilter<IPvPBuildable> _shouldBeEnabledFilter;
         private PvPFilterToggler _isEnabledToggler;
 
         public Image buildableImage;
@@ -115,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         public bool isSelected = false;
-        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPBuildable buildable, IPvPBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPBuildable buildable, IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

@@ -3,8 +3,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Filters;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         where TBuildable : class, IPvPBuildable
     {
         protected IPvPUIManager _uiManager;
-        protected IPvPBroadcastingFilter<IPvPBuildable> _shouldBeEnabledFilter;
+        protected IBroadcastingFilter<IPvPBuildable> _shouldBeEnabledFilter;
 
         public ReadOnlyCollection<IPvPBuildableButton> BuildableButtons { get; private set; }
 
