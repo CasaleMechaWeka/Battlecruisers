@@ -444,7 +444,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             factoryProvider.Sound.PrioritisedSoundPlayer,
                             components.TargetIndicator);
 
-            PvPNavigationPermitterManager navigationPermitterManager = new PvPNavigationPermitterManager(navigationPermitters);
+            NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
             PvPRightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.Initialise(
                     applicationModel,
