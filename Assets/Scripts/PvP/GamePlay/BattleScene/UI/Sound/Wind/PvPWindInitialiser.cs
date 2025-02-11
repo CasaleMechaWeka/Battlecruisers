@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     {
         public AudioSource audioSource;
 
-        public IPvPWindManager Initialise(
+        public IWindManager Initialise(
             IPvPCamera camera,
             IPvPCameraCalculatorSettings cameraCalculatorSettings,
             ISettingsManager settingsManager)

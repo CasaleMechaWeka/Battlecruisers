@@ -7,7 +7,7 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind
 {
-    public class PvPWindManager : IPvPWindManager
+    public class PvPWindManager : IWindManager
     {
         private readonly IAudioSource _audioSource;
         private readonly IPvPCamera _camera;

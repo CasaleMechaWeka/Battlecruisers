@@ -51,6 +51,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound.Wind;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -80,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IDebouncer _debouncer;
         private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
-        private IPvPWindManager windManager;
+        private IWindManager windManager;
         ISceneNavigator sceneNavigator;
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
