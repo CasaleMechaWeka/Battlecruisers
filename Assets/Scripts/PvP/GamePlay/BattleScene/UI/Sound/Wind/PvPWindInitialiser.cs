@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             PvPHelper.AssertIsNotNull(camera, cameraCalculatorSettings, settingsManager);
 
             return
-                new PvPWindManager(
+                new WindManager(
                     new AudioSourceBC(audioSource),
                     camera,
                     new VolumeCalculator(
