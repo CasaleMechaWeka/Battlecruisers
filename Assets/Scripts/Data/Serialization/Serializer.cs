@@ -217,22 +217,31 @@ namespace BattleCruisers.Data.Serialization
             };
 
             for (int i = 0; i < purchasableCategoriesLegacy.Length; i++)
-            {
-                var purchasableCategory = gameData.GetType().GetProperty(purchasableCategoriesLegacy[i]).GetValue(gameData) as IList<object>;
-                if (purchasableCategory != null)
-                    for (int j = 0; j < purchasableCategory.Count; j++)
-                    {
-                        var purchasable = purchasableCategory[i];
-                        if (purchasable == null) continue;
-                        var isOwnedProperty = purchasable.GetType().GetProperty("isOwned");
-                        if (isOwnedProperty == null) continue;
-                        var indexProperty = purchasable.GetType().GetProperty("index");
-                        if (indexProperty == null) continue;
-                        if (isOwnedProperty.GetValue(purchasable) is bool isOwned && isOwned
-                        && indexProperty.GetValue(purchasable) is int index)
-                            purchasableOperations[i](index);
-                    }
-            }
+                try
+                {
+                    var purchasableProperty = gameData.GetType().GetProperty(purchasableCategoriesLegacy[i]);
+                    if (purchasableProperty != null)
+                        if (purchasableProperty.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
+                            foreach (int? j in purchasableItems)
+                            {
+                                if (j == null) continue;
+                                var isOwnedProperty = j.GetType().GetProperty("isOwned");
+                                if (isOwnedProperty == null) continue;
+                                var indexProperty = j.GetType().GetProperty("index");
+                                if (indexProperty == null) continue;
+                                if (isOwnedProperty.GetValue(j) is bool isOwned && isOwned
+                                && indexProperty.GetValue(j) is int index)
+                                    purchasableOperations[i](index);
+                            }
+                        else
+                            Debug.LogError("Property \"Purchased" + purchasableCategoriesLegacy[i] + "\" was not in the expected format List<int>");
+                    else
+                        Debug.LogWarning("Property \"Purchased" + purchasableCategoriesLegacy[i] + "\" is null in save data");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Error when processing  \"Purchased" + purchasableCategoriesLegacy[i] + "\": " + ex.Message);
+                }
 
             if (gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData) != null)
                 compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);
