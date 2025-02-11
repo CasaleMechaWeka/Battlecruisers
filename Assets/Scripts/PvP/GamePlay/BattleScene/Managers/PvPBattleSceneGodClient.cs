@@ -52,6 +52,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -63,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPCruiserDeathManager _cruiserDeathManager;
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private IApplicationModel applicationModel;
-        private PvPNavigationPermitters navigationPermitters;
+        private NavigationPermitters navigationPermitters;
         private ISpriteProvider spriteProvider;
         private IPvPCameraComponents cameraComponents;
 
@@ -334,7 +335,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             prefabFactory = PvPBattleSceneGodServer.Instance.prefabFactory;
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            navigationPermitters = new PvPNavigationPermitters();
+            navigationPermitters = new NavigationPermitters();
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
@@ -369,7 +370,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
 
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            navigationPermitters = new PvPNavigationPermitters();
+            navigationPermitters = new NavigationPermitters();
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
@@ -942,7 +943,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer,
-            PvPNavigationPermitters navigationPermitters,
+            NavigationPermitters navigationPermitters,
             ILocTable storyStrings
         )
         {

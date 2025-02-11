@@ -5,9 +5,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPNavigationPermitterManager : INavigationPermitterManager
     {
-        private readonly PvPNavigationPermitters _navigationPermitters;
+        private readonly NavigationPermitters _navigationPermitters;
 
-        public PvPNavigationPermitterManager(PvPNavigationPermitters navigationPermitters)
+        public PvPNavigationPermitterManager(NavigationPermitters navigationPermitters)
         {
             Assert.IsNotNull(navigationPermitters);
             _navigationPermitters = navigationPermitters;

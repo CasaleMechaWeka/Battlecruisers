@@ -20,6 +20,7 @@ using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -63,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ISettingsManager settingsManager,
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
-            PvPNavigationPermitters navigationPermitters,
+            NavigationPermitters navigationPermitters,
             IPvPSwitchableUpdater switchableUpdater,
             ISingleSoundPlayer uiSoundPlayer,
             Team team)
@@ -247,7 +248,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
-            PvPNavigationPermitters navigationPermitters,
+            NavigationPermitters navigationPermitters,
             IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
             IPvPStaticCameraTargetProvider defaultCameraTargetProvider)
         {
@@ -417,7 +418,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _cameraAdjuster.AdjustCamera();
         }
 
-        public PvPCameraComponents UpdateCamera(ISettingsManager settingsManager, PvPNavigationPermitters navigationPermitters)
+        public PvPCameraComponents UpdateCamera(ISettingsManager settingsManager, NavigationPermitters navigationPermitters)
         {
             ICameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
