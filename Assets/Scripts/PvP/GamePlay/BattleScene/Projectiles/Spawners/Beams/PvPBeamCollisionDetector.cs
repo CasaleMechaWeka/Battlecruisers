@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     && !target.IsDestroyed
                     && _targetFilter.IsMatch(target))
                 {
-                    return new PvPBeamCollision(target, result.point);
+                    return new BeamCollision(target, result.point);
                 }
             }
 
