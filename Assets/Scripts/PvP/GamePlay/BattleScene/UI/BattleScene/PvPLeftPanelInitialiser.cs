@@ -21,6 +21,7 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -136,7 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
         }
 
-        private IHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
+        private IHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }

@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -8,14 +9,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPDronesDisplayer
     {
         private readonly IPvPDroneManager _droneManager;
-        private readonly IPvPDroneManagerMonitor _droneManagerMonitor;
+        private readonly IDroneManagerMonitor _droneManagerMonitor;
         private readonly IPvPNumberDisplay _numberDisplay;
         private readonly IGameObject _idleFeedback;
         private PvPCruiser _playerCruiser;
 
         public PvPDronesDisplayer(
             IPvPDroneManager droneManager,
-            IPvPDroneManagerMonitor droneManagerMonitor,
+            IDroneManagerMonitor droneManagerMonitor,
             IPvPNumberDisplay numberDisplay,
             IGameObject idleFeedback)
         {

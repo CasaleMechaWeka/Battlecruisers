@@ -1,12 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Tutorial.Highlighting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers
 {
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public Image highlight;
 
-        public IHighlightable Initialise(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
+        public IHighlightable Initialise(IPvPDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
             PvPHelper.AssertIsNotNull(highlight, droneManager, droneManagerMonitor);
 

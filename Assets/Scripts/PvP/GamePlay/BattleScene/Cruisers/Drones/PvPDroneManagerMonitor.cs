@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones
 {
-    public class PvPDroneManagerMonitor : IPvPDroneManagerMonitor, IManagedDisposable
+    public class PvPDroneManagerMonitor : IDroneManagerMonitor, IManagedDisposable
     {
         private readonly IPvPDroneManager _droneManager;
         private readonly IDeferrer _deferrer;

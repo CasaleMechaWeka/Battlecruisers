@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Sound.Players;
@@ -9,11 +10,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPDroneEventSoundPlayer : IManagedDisposable
     {
-        private readonly IPvPDroneManagerMonitor _droneManagerMonitor;
+        private readonly IDroneManagerMonitor _droneManagerMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _idleDronesDebouncer;
 
-        public PvPDroneEventSoundPlayer(IPvPDroneManagerMonitor droneManagerMonitor, IPrioritisedSoundPlayer soundPlayer, IDebouncer idleDronesDebouncer)
+        public PvPDroneEventSoundPlayer(IDroneManagerMonitor droneManagerMonitor, IPrioritisedSoundPlayer soundPlayer, IDebouncer idleDronesDebouncer)
         {
             PvPHelper.AssertIsNotNull(droneManagerMonitor, soundPlayer, idleDronesDebouncer);
 
