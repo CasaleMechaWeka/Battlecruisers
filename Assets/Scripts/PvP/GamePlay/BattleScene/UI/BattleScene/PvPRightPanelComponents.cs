@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.MainMenu;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         public IPvPInformatorPanel InformatorPanel { get; }
         public IPvPMainMenuManager MainMenuManager { get; }
-        public IPvPModalMenu MainMenu { get; }
+        public IModalMenu MainMenu { get; }
         // public PvPSpeedComponents SpeedComponents { get; }
         public PvPHelpButton HelpButton { get; }
         public PvPHecklePanelController HacklePanelController { get; }
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPRightPanelComponents(
             IPvPInformatorPanel informatorPanel,
             IPvPMainMenuManager mainMenuManager,
-            IPvPModalMenu mainMenu,
+            IModalMenu mainMenu,
             //   PvPSpeedComponents speedComponents,
             PvPHecklePanelController pvPHecklePanelController,
             PvPHelpButton helpButton)

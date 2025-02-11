@@ -5,10 +5,11 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.BattleScene.MainMenu;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
-    public class PvPModalMenuController : MonoBehaviour, IPvPModalMenu
+    public class PvPModalMenuController : MonoBehaviour, IModalMenu
     {
         private Canvas _canvas;
 

@@ -1,13 +1,14 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
     public class PvPMainMenuManager : PvPModalManager, IPvPMainMenuManager
     {
-        private readonly IPvPModalMenu _modalMenu;
+        private readonly IModalMenu _modalMenu;
         private readonly IPvPBattleCompletionHandler _battleCompletionHandler;
 
         public bool IsShown => _modalMenu.IsVisible.Value;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPMainMenuManager(
             IPvPNavigationPermitterManager navigationPermitterManager,
             IPvPPauseGameManager pauseGameManager,
-            IPvPModalMenu modalMenu,
+            IModalMenu modalMenu,
             IPvPBattleCompletionHandler battleCompletionHandler)
             : base(navigationPermitterManager, pauseGameManager)
         {
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPMainMenuManager(
             // IPvPNavigationPermitterManager navigationPermitterManager,
             // IPvPPauseGameManager pauseGameManager,
-            IPvPModalMenu modalMenu,
+            IModalMenu modalMenu,
             IPvPBattleCompletionHandler battleCompletionHandler)
             : base()
         {
