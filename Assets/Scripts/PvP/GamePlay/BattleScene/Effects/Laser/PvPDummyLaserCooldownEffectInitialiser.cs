@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -9,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         public IManagedDisposable CreateLaserCooldownEffect(ILaserEmitter laserEmitter)
         {
-            return new PvPDummyManagedDisposable();
+            return new DummyManagedDisposable();
         }
     }
 }

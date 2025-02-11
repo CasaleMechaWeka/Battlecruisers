@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
@@ -16,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (!parentCruiser.IsPlayerCruiser)
             {
                 // Only play unit ready sounds for player cruiser
-                return new PvPDummyManagedDisposable();
+                return new DummyManagedDisposable();
             }
 
             AudioSource navalAudioSource = transform.FindNamedComponent<AudioSource>("NavalAudioSource");
