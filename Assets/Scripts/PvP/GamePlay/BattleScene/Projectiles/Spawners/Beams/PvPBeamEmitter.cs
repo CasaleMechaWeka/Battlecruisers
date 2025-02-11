@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 layerMask = unitsLayerMask.value | shieldsLayerMask.value,
                 useTriggers = true
             };
-            _collisionDetector = new PvPBeamCollisionDetector(contactFilter, targetFilter);
+            _collisionDetector = new BeamCollisionDetector(contactFilter, targetFilter);
 
             constantSparks.Play();
             PlaySparks_PvP();
