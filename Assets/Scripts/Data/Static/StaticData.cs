@@ -493,8 +493,8 @@ namespace BattleCruisers.Data.Static
             new CaptainData(id: 32), new CaptainData(id: 33), new CaptainData(id: 34), new CaptainData(id: 35),
             new CaptainData(id: 36), new CaptainData(id: 37), new CaptainData(id: 38), new CaptainData(id: 39),
             new CaptainData(id: 40), new CaptainData(id: 41), new CaptainData(id: 42), new CaptainData(id: 43),
-            new CaptainData(id: 44), new CaptainData(id: 45), new CaptainData(id: 47), new CaptainData(id: 48),
-            new CaptainData(id: 49), new CaptainData(id: 50)
+            new CaptainData(id: 44), new CaptainData(id: 45), new CaptainData(id: 46), new CaptainData(id: 47),
+            new CaptainData(id: 48), new CaptainData(id: 49), new CaptainData(id: 50)
         });
         public IReadOnlyList<BodykitData> Bodykits { get; } = new ReadOnlyCollection<BodykitData>(new BodykitData[]
         {
