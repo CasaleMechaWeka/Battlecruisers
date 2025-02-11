@@ -1,11 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.UI.Filters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
     public class PvPNavigationPermitters
     {
-        public PvPCompositeBroadcastingFilter NavigationFilter { get; }
+        public CompositeBroadcastingFilter NavigationFilter { get; }
         public BroadcastingFilter NavigationButtonsFilter { get; }
         public BroadcastingFilter ScrollWheelAndPinchZoomFilter { get; }
         public BroadcastingFilter SwipeFilter { get; }
@@ -17,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             ScrollWheelAndPinchZoomFilter = new BroadcastingFilter(isMatch: true);
             SwipeFilter = new BroadcastingFilter(isMatch: true);
             HotkeyFilter = new BroadcastingFilter(isMatch: true);
-            NavigationFilter = new PvPCompositeBroadcastingFilter(true, NavigationButtonsFilter, ScrollWheelAndPinchZoomFilter, SwipeFilter, HotkeyFilter);
+            NavigationFilter = new CompositeBroadcastingFilter(true, NavigationButtonsFilter, ScrollWheelAndPinchZoomFilter, SwipeFilter, HotkeyFilter);
         }
     }
 }
