@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public abstract class PvPBeamEmitter : NetworkBehaviour, IBeamEmitter
     {
-        private IPvPBeamCollisionDetector _collisionDetector;
+        private IBeamCollisionDetector _collisionDetector;
         protected ITarget _parent;
 
         [SerializeField]
@@ -82,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             // Logging.LogMethod(Tags.BEAM);
 
-            IPvPBeamCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
+            IBeamCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
             if (collision == null)
             {
                 // Logging.Warn(Tags.BEAM, "Beam should only be fired if there is a target in our sights, so should always get a collision :/");
@@ -93,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             HandleCollision(collision);
         }
 
-        protected abstract void HandleCollision(IPvPBeamCollision collision);
+        protected abstract void HandleCollision(IBeamCollision collision);
 
         public virtual void DisposeManagedState()
         {

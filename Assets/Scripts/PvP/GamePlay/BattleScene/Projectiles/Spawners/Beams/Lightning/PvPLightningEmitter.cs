@@ -5,6 +5,7 @@ using DigitalRuby.LightningBolt;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using UnityEngine;
+using BattleCruisers.Projectiles.Spawners.Beams;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Lightning
 {
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _damage = damage;
         }
 
-        protected override void HandleCollision(IPvPBeamCollision collision)
+        protected override void HandleCollision(IBeamCollision collision)
         {
             lightningBolt.StartPosition = transform.position;
             lightningBolt.EndPosition = collision.CollisionPoint;

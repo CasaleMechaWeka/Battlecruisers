@@ -1,11 +1,12 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.Spawners.Beams;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
 {
-    public class PvPBeamCollisionDetector : IPvPBeamCollisionDetector
+    public class PvPBeamCollisionDetector : IBeamCollisionDetector
     {
         private readonly ContactFilter2D _contactFilter;
         private readonly ITargetFilter _targetFilter;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _targetFilter = targetFilter;
         }
 
-        public IPvPBeamCollision FindCollision(Vector2 source, float angleInDegrees, bool isSourceMirrored)
+        public IBeamCollision FindCollision(Vector2 source, float angleInDegrees, bool isSourceMirrored)
         {
             // Logging.VerboseMethod(Tags.BEAM);
 
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             return new Vector2(xComponent, yComponent);
         }
 
-        private IPvPBeamCollision GetMatchingTarget(RaycastHit2D[] results, int numOfResults)
+        private IBeamCollision GetMatchingTarget(RaycastHit2D[] results, int numOfResults)
         {
             // Logging.Verbose(Tags.BEAM, $"Number of collisions: {numOfResults}");
 
