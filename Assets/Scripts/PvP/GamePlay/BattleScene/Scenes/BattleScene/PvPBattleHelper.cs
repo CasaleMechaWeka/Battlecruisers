@@ -25,6 +25,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.Filters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -112,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     _buildingCategoryFilter,
                     new PvPChooseTargetButtonVisibilityFilter(),
                     new PvPDeleteButtonVisibilityFilter(),
-                    new PvPBroadcastingFilter(isMatch: true),
+                    new BroadcastingFilter(isMatch: true),
                     new PvPStaticBroadcastingFilter(isMatch: true));
         }
 
@@ -124,7 +125,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     _buildingCategoryFilter,
                     new PvPChooseTargetButtonVisibilityFilter(),
                     new PvPDeleteButtonVisibilityFilter(),
-                    new PvPBroadcastingFilter(isMatch: true),
+                    new BroadcastingFilter(isMatch: true),
                     new PvPStaticBroadcastingFilter(isMatch: true));
         }
 

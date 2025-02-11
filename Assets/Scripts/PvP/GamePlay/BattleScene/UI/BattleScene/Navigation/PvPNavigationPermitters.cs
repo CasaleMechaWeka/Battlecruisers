@@ -1,21 +1,22 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
+using BattleCruisers.UI.Filters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
     public class PvPNavigationPermitters
     {
         public PvPCompositeBroadcastingFilter NavigationFilter { get; }
-        public PvPBroadcastingFilter NavigationButtonsFilter { get; }
-        public PvPBroadcastingFilter ScrollWheelAndPinchZoomFilter { get; }
-        public PvPBroadcastingFilter SwipeFilter { get; }
-        public PvPBroadcastingFilter HotkeyFilter { get; }
+        public BroadcastingFilter NavigationButtonsFilter { get; }
+        public BroadcastingFilter ScrollWheelAndPinchZoomFilter { get; }
+        public BroadcastingFilter SwipeFilter { get; }
+        public BroadcastingFilter HotkeyFilter { get; }
 
         public PvPNavigationPermitters()
         {
-            NavigationButtonsFilter = new PvPBroadcastingFilter(isMatch: true);
-            ScrollWheelAndPinchZoomFilter = new PvPBroadcastingFilter(isMatch: true);
-            SwipeFilter = new PvPBroadcastingFilter(isMatch: true);
-            HotkeyFilter = new PvPBroadcastingFilter(isMatch: true);
+            NavigationButtonsFilter = new BroadcastingFilter(isMatch: true);
+            ScrollWheelAndPinchZoomFilter = new BroadcastingFilter(isMatch: true);
+            SwipeFilter = new BroadcastingFilter(isMatch: true);
+            HotkeyFilter = new BroadcastingFilter(isMatch: true);
             NavigationFilter = new PvPCompositeBroadcastingFilter(true, NavigationButtonsFilter, ScrollWheelAndPinchZoomFilter, SwipeFilter, HotkeyFilter);
         }
     }

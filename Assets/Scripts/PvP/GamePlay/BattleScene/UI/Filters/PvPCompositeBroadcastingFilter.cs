@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Fil
 {
     public class PvPCompositeBroadcastingFilter : IBroadcastingFilter, IPermitter
     {
-        private readonly PvPBroadcastingFilter[] _filters;
+        private readonly BroadcastingFilter[] _filters;
 
         private bool _isMatch;
         public bool IsMatch
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Fil
                 {
                     _isMatch = value;
 
-                    foreach (PvPBroadcastingFilter filter in _filters)
+                    foreach (BroadcastingFilter filter in _filters)
                     {
                         filter.IsMatch = value;
                     }
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Fil
 
         public event EventHandler PotentialMatchChange;
 
-        public PvPCompositeBroadcastingFilter(bool isMatch, params PvPBroadcastingFilter[] filters)
+        public PvPCompositeBroadcastingFilter(bool isMatch, params BroadcastingFilter[] filters)
         {
             Assert.IsNotNull(filters);
             Assert.IsTrue(filters.Length > 1);
