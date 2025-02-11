@@ -1,7 +1,7 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils.BattleScene;
 using System;
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public event EventHandler Dismissed;
 
         public PvPMainMenuManager(
-            IPvPNavigationPermitterManager navigationPermitterManager,
+            INavigationPermitterManager navigationPermitterManager,
             IPauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             IPvPBattleCompletionHandler battleCompletionHandler)

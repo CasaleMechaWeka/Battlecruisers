@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
-    public class PvPNavigationPermitterManager : IPvPNavigationPermitterManager
+    public class PvPNavigationPermitterManager : INavigationPermitterManager
     {
         private readonly PvPNavigationPermitters _navigationPermitters;
 
