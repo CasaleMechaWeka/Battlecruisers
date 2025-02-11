@@ -9,15 +9,15 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-    public interface IPvPCruiser : IPvPCruiserController, ITarget, IPvPComparableItem, IPvPClickableEmitter
+    public interface IPvPCruiser : IPvPCruiserController, ITarget, IComparableItem, IPvPClickableEmitter
     {
 
         IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }

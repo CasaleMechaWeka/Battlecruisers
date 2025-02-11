@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 using UnityEngine;
@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
     public abstract class PvPItemDetails<TItem> : MonoBehaviour, IPvPComparableItemDetails<TItem>, IPvPHidable
-        where TItem : class, ITarget, IPvPComparableItem
+        where TItem : class, ITarget, IComparableItem
     {
         public Text itemName, itemDescription;
         public Image itemImage;
