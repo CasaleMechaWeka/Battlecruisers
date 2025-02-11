@@ -24,6 +24,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -162,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public override IManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer)
         {
             return
-                new PvPDroneEventSoundPlayer(
+                new DroneEventSoundPlayer(
                     new PvPDroneManagerMonitor(playerCruiser.DroneManager, deferrer),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
