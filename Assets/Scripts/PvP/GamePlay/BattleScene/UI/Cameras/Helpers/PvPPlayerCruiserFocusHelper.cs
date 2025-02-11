@@ -2,8 +2,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public class PvPPlayerCruiserFocusHelper : IPvPPlayerCruiserFocusHelper
     {
-        private readonly IPvPCamera _camera;
+        private readonly ICamera _camera;
         private readonly IPvPCameraFocuser _cameraFocuser;
         private readonly IPvPCruiser _playerCruiser;
         private readonly bool _isTutorial;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public const float BOW_SLOT_CAMERA_MARGIN_IN_M = 1;
 
         public PvPPlayerCruiserFocusHelper(
-            IPvPCamera camera,
+            ICamera camera,
             IPvPCameraFocuser cameraFocuser,
             IPvPCruiser playerCruiser,
             bool isTutorial)

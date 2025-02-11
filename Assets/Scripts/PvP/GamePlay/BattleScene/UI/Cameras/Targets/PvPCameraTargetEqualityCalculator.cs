@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _orthographicSizeEqualityMargin = orthographicSizeEqualityMargin;
         }
 
-        public bool IsOnTarget(IPvPCameraTarget target, IPvPCamera camera)
+        public bool IsOnTarget(IPvPCameraTarget target, ICamera camera)
         {
             return
                 camera.OrthographicSize - target.OrthographicSize < _orthographicSizeEqualityMargin

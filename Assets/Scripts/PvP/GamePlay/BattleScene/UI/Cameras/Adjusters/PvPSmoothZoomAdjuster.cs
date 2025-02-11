@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public class PvPSmoothZoomAdjuster : IPvPSmoothZoomAdjuster
     {
-        private readonly IPvPCamera _camera;
+        private readonly ICamera _camera;
         private readonly ITime _time;
         private readonly IPvPCameraSmoothTimeProvider _smoothTimeProvider;
         private float _cameraOrthographicSizeChangeVelocity;
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
         private const float MAX_SPEED = 1000;
 
-        public PvPSmoothZoomAdjuster(IPvPCamera camera, ITime time, IPvPCameraSmoothTimeProvider smoothTimeProvider)
+        public PvPSmoothZoomAdjuster(ICamera camera, ITime time, IPvPCameraSmoothTimeProvider smoothTimeProvider)
         {
             PvPHelper.AssertIsNotNull(camera, time, smoothTimeProvider);
 

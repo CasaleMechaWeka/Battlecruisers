@@ -1,10 +1,11 @@
 using System;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions
 {
-    public class PvPCameraBC : IPvPCamera
+    public class PvPCameraBC : ICamera
     {
         private readonly Camera _platformCamera;
 

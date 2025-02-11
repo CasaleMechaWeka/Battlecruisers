@@ -2,15 +2,15 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
     public class PvPCameraComponents : IPvPCameraComponents
     {
-        public IPvPCamera MainCamera { get; }
+        public ICamera MainCamera { get; }
         public IPvPCameraAdjuster CameraAdjuster { get; }
         public IPvPCameraFocuser CameraFocuser { get; }
         public IPvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public IHighlightable NavigationButtonsPanel { get; }
 
         public PvPCameraComponents(
-            IPvPCamera mainCamera,
+            ICamera mainCamera,
             IPvPCameraAdjuster cameraAdjuster,
             IPvPCameraFocuser cameraFocuser,
             IPvPCruiserDeathCameraFocuser cruiserDeathCameraFocuser,

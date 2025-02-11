@@ -1,9 +1,9 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
 {
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly ITime _time;
         private readonly ISettingsManager _settingsManager;
         private readonly IPvPLevelToMultiplierConverter _scrollLevelConverter;
-        private readonly IPvPCamera _camera;
+        private readonly ICamera _camera;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly float _scrollMultiplier;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ITime time,
             ISettingsManager settingsManager,
             IPvPLevelToMultiplierConverter scrollLevelConverter,
-            IPvPCamera camera,
+            ICamera camera,
             IRange<float> validOrthographicSizes,
             float scrollMultiplier)
         {

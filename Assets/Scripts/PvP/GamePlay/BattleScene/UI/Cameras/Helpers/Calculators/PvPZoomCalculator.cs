@@ -1,21 +1,21 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
 {
     public class PvPZoomCalculator : IPvPZoomCalculator
     {
-        private readonly IPvPCamera _camera;
+        private readonly ICamera _camera;
         private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly float _zoomScale, _zoomSettingsMultiplier;
 
         public PvPZoomCalculator(
-            IPvPCamera camera,
+            ICamera camera,
             ITime time,
             IRange<float> validOrthographicSizes,
             float zoomScale,

@@ -18,6 +18,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -46,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         [Header("Smooth Time")]
         public float normalCameraSmoothTime = 0.15f;
         public float slowCameraSmoothTime = 0.5f;
-        private IPvPCamera icamera;
+        private ICamera icamera;
         private IPvPCameraFocuser cameraFocuser;
         private IPvPStaticCameraTargetProvider defaultCameraTargetProvider;
         private IPvPStaticCameraTargetProvider trumpCameraTargetProvider;
@@ -241,7 +242,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     navigationButtonsPanel);
         }
         private IPvPCameraTargetProvider CreateCameraTargetProvider(
-            IPvPCamera camera,
+            ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             IPvPCameraCalculatorSettings settings,
@@ -270,7 +271,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
 
         private IPvPCameraTargetProvider CreateCameraTargetProvider(
-            IPvPCamera camera,
+            ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             IPvPCameraCalculatorSettings settings,
@@ -299,7 +300,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         }
 
         private IList<IPvPUserInputCameraTargetProvider> CreateCameraTargetProviders(
-            IPvPCamera camera,
+            ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             IPvPCameraCalculatorSettings settings,
