@@ -44,9 +44,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.Activate(activationArgs);
             _collider.enabled = true;
             _trail.ShowAllEffects();
-            Debug.Log("[PvPProjectileWithTrail] Activate() called at Position: " + activationArgs.Position + ", Initial Velocity: " + activationArgs.InitialVelocityInMPerS);
+            //Debug.Log("[PvPProjectileWithTrail] Activate() called at Position: " + activationArgs.Position + ", Initial Velocity: " + activationArgs.InitialVelocityInMPerS);
             ShowAllEffectsOfClient();
-            Debug.Log("[PvPProjectileWithTrail] Collider and trail effects enabled.");
+            //Debug.Log("[PvPProjectileWithTrail] Collider and trail effects enabled.");
         }
 
         protected virtual void ShowAllEffectsOfClient()
@@ -96,17 +96,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         }
 
         private void OnTrailsDoneCleanup()
-{
-    if (this == null || gameObject == null)
-    {
-        Debug.LogWarning("[PvPProjectileWithTrail] OnTrailsDoneCleanup aborted because the object is destroyed.");
-        return;
-        }
+        {
+            if (this == null || gameObject == null)
+            {
+                Debug.LogWarning("[PvPProjectileWithTrail] OnTrailsDoneCleanup aborted because the object is destroyed.");
+                return;
+            }
 
-    Debug.Log("[PvPProjectileWithTrail] OnTrailsDoneCleanup called. Proceeding with cleanup.");
-    OnSetPosition_Visible(Position, false);
-    gameObject.SetActive(false);
-    InvokeDeactivated();
-}
+            Debug.Log("[PvPProjectileWithTrail] OnTrailsDoneCleanup called. Proceeding with cleanup.");
+            OnSetPosition_Visible(Position, false);
+            gameObject.SetActive(false);
+            InvokeDeactivated();
+        }
     }
 }
