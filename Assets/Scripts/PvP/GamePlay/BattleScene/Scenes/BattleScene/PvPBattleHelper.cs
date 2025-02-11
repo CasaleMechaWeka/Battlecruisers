@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         protected IDataProvider DataProvider => _appModel.DataProvider;
 
 
-        private readonly PvPBuildingCategoryFilter _buildingCategoryFilter;
+        private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public PvPBattleHelper(
@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
 
             // For the real game want to enable all building categories :)
-            _buildingCategoryFilter = new PvPBuildingCategoryFilter();
+            _buildingCategoryFilter = new BuildingCategoryFilter();
             _buildingCategoryFilter.AllowAllCategories();
         }
 
