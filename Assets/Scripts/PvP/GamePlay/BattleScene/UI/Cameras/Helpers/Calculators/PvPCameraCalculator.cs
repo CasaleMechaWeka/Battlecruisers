@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -9,9 +10,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPCameraCalculator : IPvPCameraCalculator
     {
         private readonly ICamera _camera;
-        private readonly IPvPCameraCalculatorSettings _settings;
+        private readonly ICameraCalculatorSettings _settings;
 
-        public PvPCameraCalculator(ICamera camera, IPvPCameraCalculatorSettings settings)
+        public PvPCameraCalculator(ICamera camera, ICameraCalculatorSettings settings)
         {
             PvPHelper.AssertIsNotNull(camera, settings);
 

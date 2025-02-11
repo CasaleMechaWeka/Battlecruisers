@@ -1,6 +1,6 @@
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
         public IWindManager Initialise(
             ICamera camera,
-            IPvPCameraCalculatorSettings cameraCalculatorSettings,
+            ICameraCalculatorSettings cameraCalculatorSettings,
             ISettingsManager settingsManager)
         {
             Assert.IsNotNull(audioSource);

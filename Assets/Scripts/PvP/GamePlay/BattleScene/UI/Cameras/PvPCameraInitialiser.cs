@@ -19,6 +19,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -75,7 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             icamera = new PvPCameraBC(mainCamera);
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
-            IPvPCameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
+            ICameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
             trumpCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 6);
             _playerCruiser = playerCruiser;
@@ -175,7 +176,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             icamera = new PvPCameraBC(mainCamera);
             // dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
-            IPvPCameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
+            ICameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
             trumpCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 6);
 
@@ -245,7 +246,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
-            IPvPCameraCalculatorSettings settings,
+            ICameraCalculatorSettings settings,
             PvPNavigationPermitters navigationPermitters,
             IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
             IPvPStaticCameraTargetProvider defaultCameraTargetProvider)
@@ -274,7 +275,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
-            IPvPCameraCalculatorSettings settings,
+            ICameraCalculatorSettings settings,
             // PvPNavigationPermitters navigationPermitters,
             IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
             IPvPStaticCameraTargetProvider defaultCameraTargetProvider
@@ -303,7 +304,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
-            IPvPCameraCalculatorSettings settings,
+            ICameraCalculatorSettings settings,
             PvPTogglableUpdater updater,
             IPvPStaticCameraTargetProvider trumpCameraTargetProvider)
         {
@@ -418,7 +419,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public PvPCameraComponents UpdateCamera(ISettingsManager settingsManager, PvPNavigationPermitters navigationPermitters)
         {
-            IPvPCameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
+            ICameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
             IPvPCameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(

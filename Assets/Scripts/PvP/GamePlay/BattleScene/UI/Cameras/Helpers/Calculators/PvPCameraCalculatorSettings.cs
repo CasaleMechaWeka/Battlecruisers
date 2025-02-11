@@ -1,10 +1,11 @@
 using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
 {
-    public class PvPCameraCalculatorSettings : IPvPCameraCalculatorSettings
+    public class PvPCameraCalculatorSettings : ICameraCalculatorSettings
     {
         private readonly ISettingsManager _settingsManager;
 

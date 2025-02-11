@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         IPvPCameraFocuser CameraFocuser { get; }
         IPvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         Skybox Skybox { get; }
-        IPvPCameraCalculatorSettings Settings { get; }
+        ICameraCalculatorSettings Settings { get; }
         IHighlightable NavigationButtonsPanel { get; }
     }
 }
