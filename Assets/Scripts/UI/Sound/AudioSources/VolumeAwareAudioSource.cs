@@ -21,11 +21,14 @@ namespace BattleCruisers.UI.Sound.AudioSources
             Helper.AssertIsNotNull(audioSource, settingsManager);
 
             _audioSource = audioSource;
-            _settingsManager = settingsManager;
+
+            if (settingsManager != null)
+            {
+                _settingsManager = settingsManager;
+                _settingsManager.SettingsSaved += _settingsManager_SettingsSaved;
+            }
 
             SetVolume();
-
-            _settingsManager.SettingsSaved += _settingsManager_SettingsSaved;
         }
 
         private void _settingsManager_SettingsSaved(object sender, System.EventArgs e)
