@@ -261,8 +261,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             InvokeDestroyed();
             InvokeDeactivated();
 
-            Debug.Log("[PvPProjectileControllerBase] RemoveFromScene() invoked.");
-            Debug.Log("[PvPProjectileControllerBase] GameObject deactivated and removed from scene.");
+            //Debug.Log("[PvPProjectileControllerBase] RemoveFromScene() invoked.");
+            //Debug.Log("[PvPProjectileControllerBase] GameObject deactivated and removed from scene.");
         }
 
         protected void InvokeDestroyed()
