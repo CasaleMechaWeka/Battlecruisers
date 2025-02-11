@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 {
-    public class PvPCompositeBroadcastingFilter : IBroadcastingFilter, IPvPPermitter
+    public class PvPCompositeBroadcastingFilter : IBroadcastingFilter, IPermitter
     {
         private readonly PvPBroadcastingFilter[] _filters;
 

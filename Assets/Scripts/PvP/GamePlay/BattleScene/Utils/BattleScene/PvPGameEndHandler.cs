@@ -8,8 +8,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
 using UnityEngine;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IDeferrer _deferrer;
         private readonly IPvPCruiserDeathCameraFocuser _cameraFocuser;
-        private readonly IPvPPermitter _navigationPermitter;
+        private readonly IPermitter _navigationPermitter;
         private readonly IPvPUIManager _uiManager;
         private readonly IPvPTargetIndicator _targetIndicator;
         // private readonly IPvPWindManager _windManager;

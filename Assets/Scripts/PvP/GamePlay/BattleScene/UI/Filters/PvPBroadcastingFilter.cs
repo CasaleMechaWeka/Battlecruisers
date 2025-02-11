@@ -3,7 +3,7 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 {
-    public class PvPBroadcastingFilter : IBroadcastingFilter, IPvPPermitter
+    public class PvPBroadcastingFilter : IBroadcastingFilter, IPermitter
     {
         private bool _isMatch;
         public bool IsMatch
