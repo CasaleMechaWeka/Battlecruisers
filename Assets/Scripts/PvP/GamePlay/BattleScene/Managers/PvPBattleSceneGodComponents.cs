@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
@@ -73,11 +72,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             PrioritisedSoundPlayerAudioSource
                 = new PvPEffectVolumeAudioSource(
-                    new PvPAudioSourceBC(prioritisedSoundPlayerAudioSource),
+                    new AudioSourceBC(prioritisedSoundPlayerAudioSource),
                     settingsManager, 0);
             UISoundsAudioSource
                 = new PvPEffectVolumeAudioSource(
-                    new PvPAudioSourceBC(uiSoundsAudioSource),
+                    new AudioSourceBC(uiSoundsAudioSource),
                     settingsManager, 1);
 
             SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();

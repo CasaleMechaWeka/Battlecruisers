@@ -3,7 +3,6 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -40,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (IsClient)
                 _audioSource
                     = new PvPEffectVolumeAudioSource(
-                        new PvPAudioSourceBC(_platformAudioSource),
+                        new AudioSourceBC(_platformAudioSource),
                         PvPBattleSceneGodClient.Instance.dataProvider.SettingsManager);
 
             base.OnNetworkSpawn();

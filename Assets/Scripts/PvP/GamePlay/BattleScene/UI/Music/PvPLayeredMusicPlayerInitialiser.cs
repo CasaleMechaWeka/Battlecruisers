@@ -1,7 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
@@ -26,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
             IAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);
-            IAudioSource primary = new PvPAudioSourceBC(primarySource)
+            IAudioSource primary = new AudioSourceBC(primarySource)
             {
                 AudioClip = primaryClip
             };
@@ -34,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
             AudioSource secondarySource = transform.FindNamedComponent<AudioSource>("SecondaryAudioSource");
             IAudioClipWrapper secondaryClip = await soundFetcher.GetSoundAsync(soundKeys.SecondaryKey);
             secondarySource.clip = secondaryClip.AudioClip;
-            IAudioSource secondary = new PvPAudioSourceBC(secondarySource)
+            IAudioSource secondary = new AudioSourceBC(secondarySource)
             {
                 AudioClip = secondaryClip
             };

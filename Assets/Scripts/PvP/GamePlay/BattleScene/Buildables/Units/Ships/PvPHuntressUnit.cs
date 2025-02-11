@@ -12,7 +12,6 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +20,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -72,10 +72,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise( /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(/* uiManager,*/ factoryProvider);
-            PvPAudioSourceBC[] sources = new PvPAudioSourceBC[audioSources.Length];
+            AudioSourceBC[] sources = new AudioSourceBC[audioSources.Length];
             for (int i = 0; i < sources.Length; i++)
             {
-                sources[i] = new PvPAudioSourceBC(audioSources[i]);
+                sources[i] = new AudioSourceBC(audioSources[i]);
             }
             // _unfurlAudioGroup
             //     = new PvPAudioSourceGroup(

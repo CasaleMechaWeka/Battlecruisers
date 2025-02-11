@@ -7,7 +7,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.A
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -75,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AudioSource engineAudioSource = transform.FindNamedComponent<AudioSource>("EngineAudioSource");
             Assert.IsNotNull(engineAudioSource);
             Assert.IsNotNull(engineAudioSource.clip);
-            _coreEngineAudioSource = new PvPAudioSourceBC(engineAudioSource);
+            _coreEngineAudioSource = new AudioSourceBC(engineAudioSource);
 
             Name = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Description");

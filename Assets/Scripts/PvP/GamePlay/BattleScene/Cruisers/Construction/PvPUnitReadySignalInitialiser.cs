@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
@@ -26,10 +26,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 new PvPUnitReadySignal(
                     parentCruiser.UnitMonitor,
                     new PvPEffectVolumeAudioSource(
-                        new PvPAudioSourceBC(navalAudioSource),
+                        new AudioSourceBC(navalAudioSource),
                         parentCruiser.FactoryProvider.SettingsManager),
                     new PvPEffectVolumeAudioSource(
-                        new PvPAudioSourceBC(aircraftAudioSource),
+                        new AudioSourceBC(aircraftAudioSource),
                         parentCruiser.FactoryProvider.SettingsManager));
         }
     }
