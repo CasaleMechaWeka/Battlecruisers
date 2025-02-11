@@ -51,6 +51,7 @@ using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Wind;
+using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -76,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
         private ITime time;
-        private IPvPPauseGameManager pauseGameManager;
+        private IPauseGameManager pauseGameManager;
         private IDebouncer _debouncer;
         private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
@@ -428,7 +429,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     dataProvider.StaticData,
                     SynchedServerData.Instance.GetTeam() == Team.RIGHT);
             time = PvPTimeBC.Instance;
-            IPvPPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
+            IPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
             _debouncer = new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
             playerCruiser.pvp_popLimitReachedFeedback.OnValueChanged += IsPopulationLimitReached_ValueChanged;
             playerCruiser.pvp_DroneNumIncreased.OnValueChanged += DroneNumIncreased_ValueChanged;

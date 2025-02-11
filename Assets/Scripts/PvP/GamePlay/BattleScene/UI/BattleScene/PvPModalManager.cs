@@ -1,19 +1,19 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
     public abstract class PvPModalManager
     {
         private readonly IPvPNavigationPermitterManager _navigationPermitterManager;
-        protected readonly IPvPPauseGameManager _pauseGameManager;
+        protected readonly IPauseGameManager _pauseGameManager;
 
         private PvPNavigationPermittersState _stateOnShowMenu;
 
         protected PvPModalManager(
             IPvPNavigationPermitterManager navigationPermitterManager,
-            IPvPPauseGameManager pauseGameManager)
+            IPauseGameManager pauseGameManager)
         {
             PvPHelper.AssertIsNotNull(pauseGameManager, navigationPermitterManager);
 

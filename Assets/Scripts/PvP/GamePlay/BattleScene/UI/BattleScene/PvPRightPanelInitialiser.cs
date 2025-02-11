@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -40,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPUpdater perFrameUpdater,
-            IPvPPauseGameManager pauseGameManager,
+            IPauseGameManager pauseGameManager,
             IPvPBattleCompletionHandler battleCompletionHandler,
             ISingleSoundPlayer soundPlayer,
             IPvPNavigationPermitterManager navigationPermitterManager

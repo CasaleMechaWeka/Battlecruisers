@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.Utils.BattleScene;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPMainMenuManager(
             IPvPNavigationPermitterManager navigationPermitterManager,
-            IPvPPauseGameManager pauseGameManager,
+            IPauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             IPvPBattleCompletionHandler battleCompletionHandler)
             : base(navigationPermitterManager, pauseGameManager)
