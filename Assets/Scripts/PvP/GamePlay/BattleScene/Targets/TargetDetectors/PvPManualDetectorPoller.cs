@@ -1,15 +1,16 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using System;
+using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
     public class PvPManualDetectorPoller : IManagedDisposable
     {
-        private readonly IPvPManualDetector _manualDetector;
+        private readonly IManualDetector _manualDetector;
         private readonly IPvPUpdater _updater;
 
-        public PvPManualDetectorPoller(IPvPManualDetector manualDetector, IPvPUpdater updater)
+        public PvPManualDetectorPoller(IManualDetector manualDetector, IPvPUpdater updater)
         {
             Helper.AssertIsNotNull(manualDetector, updater);
 
