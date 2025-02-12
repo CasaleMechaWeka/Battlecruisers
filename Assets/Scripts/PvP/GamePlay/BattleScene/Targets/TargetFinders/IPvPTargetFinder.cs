@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using System;
 
@@ -10,10 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetFinder : IManagedDisposable
     {
         // When a target is found (eg, started being built, or comes within range)
-        event EventHandler<PvPTargetEventArgs> TargetFound;
+        event EventHandler<TargetEventArgs> TargetFound;
 
         // When an existing target is lost (eg, because it is destroyed or
         // moves out of range)
-        event EventHandler<PvPTargetEventArgs> TargetLost;
+        event EventHandler<TargetEventArgs> TargetLost;
     }
 }

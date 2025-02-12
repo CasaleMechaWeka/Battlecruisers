@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
+using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
@@ -16,8 +17,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly ISet<ITarget> _currentInRangeTargets, _newInRangeTargets;
         private readonly IList<ITarget> _exitedTargets;
 
-        public event EventHandler<PvPTargetEventArgs> TargetEntered;
-        public event EventHandler<PvPTargetEventArgs> TargetExited;
+        public event EventHandler<TargetEventArgs> TargetEntered;
+        public event EventHandler<TargetEventArgs> TargetExited;
 
         public PvPManualProximityTargetDetector(
             ITransform parentTransform,
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                 // Logging.Log(Tags.MANUAL_TARGET_DETECTOR, $"Lost target: {exitedTarget}");
 
                 _currentInRangeTargets.Remove(exitedTarget);
-                TargetExited?.Invoke(this, new PvPTargetEventArgs(exitedTarget));
+                TargetExited?.Invoke(this, new TargetEventArgs(exitedTarget));
             }
 
             DetectEnteredTargets(newInRangeTargets);
@@ -97,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                     // Logging.Log(Tags.MANUAL_TARGET_DETECTOR, $"Found new target: {newInRangeTarget}");
 
                     _currentInRangeTargets.Add(newInRangeTarget);
-                    TargetEntered?.Invoke(this, new PvPTargetEventArgs(newInRangeTarget));
+                    TargetEntered?.Invoke(this, new TargetEventArgs(newInRangeTarget));
                 }
             }
         }

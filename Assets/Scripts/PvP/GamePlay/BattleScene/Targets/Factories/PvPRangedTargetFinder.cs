@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 
@@ -11,13 +11,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPRangedTargetFinder : IPvPTargetFinder
     {
-        private readonly IPvPTargetDetector _enemyDetector;
+        private readonly ITargetDetector _enemyDetector;
         private readonly ITargetFilter _targetFilter;
 
-        public event EventHandler<PvPTargetEventArgs> TargetFound;
-        public event EventHandler<PvPTargetEventArgs> TargetLost;
+        public event EventHandler<TargetEventArgs> TargetFound;
+        public event EventHandler<TargetEventArgs> TargetLost;
 
-        public PvPRangedTargetFinder(IPvPTargetDetector enemyDetector, ITargetFilter targetFilter)
+        public PvPRangedTargetFinder(ITargetDetector enemyDetector, ITargetFilter targetFilter)
         {
             PvPHelper.AssertIsNotNull(enemyDetector, targetFilter);
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _enemyDetector.StartDetecting();
         }
 
-        private void OnEnemyEntered(object sender, PvPTargetEventArgs args)
+        private void OnEnemyEntered(object sender, TargetEventArgs args)
         {
             // Logging.Verbose(Tags.TARGET_FINDER, args.Target.ToString());
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private void OnEnemyExited(object sender, PvPTargetEventArgs args)
+        private void OnEnemyExited(object sender, TargetEventArgs args)
         {
             // Logging.Verbose(Tags.TARGET_FINDER, args.Target.ToString());
 

@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 
@@ -14,8 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly IDamagable _parentDamagable;
         private readonly ITargetFilter _targetFilter;
 
-        public event EventHandler<PvPTargetEventArgs> TargetFound;
-        public event EventHandler<PvPTargetEventArgs> TargetLost;
+        public event EventHandler<TargetEventArgs> TargetFound;
+        public event EventHandler<TargetEventArgs> TargetLost;
 
         public PvPAttackingTargetFinder(IDamagable parentDamagable, ITargetFilter targetFilter)
         {
@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             {
                 e.DamageSource.Destroyed += AttackingTarget_Destroyed;
 
-                TargetFound?.Invoke(this, new PvPTargetEventArgs(e.DamageSource));
+                TargetFound?.Invoke(this, new TargetEventArgs(e.DamageSource));
             }
         }
 
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         {
             e.DestroyedTarget.Destroyed -= AttackingTarget_Destroyed;
 
-            TargetLost?.Invoke(this, new PvPTargetEventArgs(e.DestroyedTarget));
+            TargetLost?.Invoke(this, new TargetEventArgs(e.DestroyedTarget));
         }
 
         public void DisposeManagedState()

@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
@@ -25,12 +25,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return new PvPStaticTargetProvider(target);
         }
 
-        public IPvPBroadcastingTargetProvider CreateShipBlockingEnemyProvider(IPvPTargetDetector enemyDetector, IPvPUnit parentUnit)
+        public IPvPBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IPvPUnit parentUnit)
         {
             return new PvPShipBlockingEnemyProvider(_cruiserSpecificFactories, _targetFactoriesProvider, enemyDetector, parentUnit);
         }
 
-        public IPvPBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(IPvPTargetDetector friendlyDetector, IPvPUnit parentUnit)
+        public IPvPBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IPvPUnit parentUnit)
         {
             return new PvPShipBlockingFriendlyProvider(_targetFactoriesProvider, friendlyDetector, parentUnit);
         }

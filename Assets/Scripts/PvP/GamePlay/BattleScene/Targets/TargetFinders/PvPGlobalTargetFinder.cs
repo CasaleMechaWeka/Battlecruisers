@@ -3,11 +3,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
+using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders
 {
@@ -27,8 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         private const float BUILD_PROGRESS_CONSIDERED_TARGET = 0.5f;
 
-        public event EventHandler<PvPTargetEventArgs> TargetFound;
-        public event EventHandler<PvPTargetEventArgs> TargetLost;
+        public event EventHandler<TargetEventArgs> TargetFound;
+        public event EventHandler<TargetEventArgs> TargetLost;
 
         public PvPGlobalTargetFinder(IPvPCruiser enemyCruiser)
         {
@@ -89,13 +89,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private void InvokeTargetFoundEvent(ITarget targetFound)
         {
             // Logging.Log(Tags.GLOBAL_TARGET_FINDER, $"Found target: {targetFound}  Target faction: {targetFound.Faction}  Enemy cruiser faction: {_enemyCruiser.Faction}");
-            TargetFound?.Invoke(this, new PvPTargetEventArgs(targetFound));
+            TargetFound?.Invoke(this, new TargetEventArgs(targetFound));
         }
 
         private void InvokeTargetLostEvent(ITarget targetLost)
         {
             // Logging.Log(Tags.GLOBAL_TARGET_FINDER, $"Lost target: {targetLost}  Target faction: {targetLost.Faction}  Enemy cruiser faction: {_enemyCruiser.Faction}");
-            TargetLost?.Invoke(this, new PvPTargetEventArgs(targetLost));
+            TargetLost?.Invoke(this, new TargetEventArgs(targetLost));
         }
 
         public override string ToString()

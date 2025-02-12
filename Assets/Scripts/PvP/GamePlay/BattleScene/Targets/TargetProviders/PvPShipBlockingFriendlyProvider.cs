@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPShipBlockingFriendlyProvider(
             IPvPTargetFactoriesProvider targetsFactories,
-            IPvPTargetDetector friendDetector,
+            ITargetDetector friendDetector,
             IPvPUnit parentUnit)
         {
             PvPHelper.AssertIsNotNull(targetsFactories, friendDetector, parentUnit);
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _friendFinder.TargetLost += OnFriendLost;
         }
 
-        private void OnFriendFound(object sender, PvPTargetEventArgs args)
+        private void OnFriendFound(object sender, TargetEventArgs args)
         {
             // Logging.LogMethod(Tags.TARGET_PROVIDERS);
 
@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private void OnFriendLost(object sender, PvPTargetEventArgs args)
+        private void OnFriendLost(object sender, TargetEventArgs args)
         {
             // Logging.LogMethod(Tags.TARGET_PROVIDERS);
 

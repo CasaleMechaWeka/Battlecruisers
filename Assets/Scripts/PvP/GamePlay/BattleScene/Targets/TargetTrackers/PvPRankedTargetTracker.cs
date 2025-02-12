@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetDetectors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _targetFinder.TargetLost += TargetFinder_TargetLost;
         }
 
-        private void TargetFinder_TargetFound(object sender, PvPTargetEventArgs e)
+        private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
         {
             // Logging.Verbose(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}  Target found: {e.Target}");
 
@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return insertionIndex;
         }
 
-        private void TargetFinder_TargetLost(object sender, PvPTargetEventArgs e)
+        private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
         {
             // Logging.Verbose(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}  Target lost: {e.Target}");
 

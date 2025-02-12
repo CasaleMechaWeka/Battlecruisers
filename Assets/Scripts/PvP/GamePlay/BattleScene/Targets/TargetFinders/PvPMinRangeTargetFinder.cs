@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 
@@ -11,15 +11,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPMinRangeTargetFinder : IPvPTargetFinder
     {
-        private readonly IPvPTargetDetector _maxRangeDetector, _minRangeDetector;
+        private readonly ITargetDetector _maxRangeDetector, _minRangeDetector;
         private readonly ITargetFilter _targetFilter;
 
-        public event EventHandler<PvPTargetEventArgs> TargetFound;
-        public event EventHandler<PvPTargetEventArgs> TargetLost;
+        public event EventHandler<TargetEventArgs> TargetFound;
+        public event EventHandler<TargetEventArgs> TargetLost;
 
         public PvPMinRangeTargetFinder(
-            IPvPTargetDetector maxRangeDetector,
-            IPvPTargetDetector minRangeDetector,
+            ITargetDetector maxRangeDetector,
+            ITargetDetector minRangeDetector,
             ITargetFilter targetFilter)
         {
             PvPHelper.AssertIsNotNull(maxRangeDetector, minRangeDetector, targetFilter);
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _minRangeDetector.StartDetecting();
         }
 
-        private void OnTargetFound(object sender, PvPTargetEventArgs args)
+        private void OnTargetFound(object sender, TargetEventArgs args)
         {
             //Debug.Log("Found");
             if (!args.Target.IsDestroyed
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private void OnTargetLost(object sender, PvPTargetEventArgs args)
+        private void OnTargetLost(object sender, TargetEventArgs args)
         {
             //Debug.Log("Lost");
             if (_targetFilter.IsMatch(args.Target))

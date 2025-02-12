@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using System;
 using Unity.Netcode;
@@ -7,12 +8,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
-    public class PvPTargetDetectorController : MonoBehaviour, IPvPTargetDetector, IPvPTargetDetectorEventEmitter
+    public class PvPTargetDetectorController : MonoBehaviour, ITargetDetector, IPvPTargetDetectorEventEmitter
     {
         private IPvPTargetColliderHandler _targetColliderHandler;
 
-        public event EventHandler<PvPTargetEventArgs> TargetEntered;
-        public event EventHandler<PvPTargetEventArgs> TargetExited;
+        public event EventHandler<TargetEventArgs> TargetEntered;
+        public event EventHandler<TargetEventArgs> TargetExited;
 
         protected virtual void Start()
         {
@@ -57,12 +58,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public void InvokeTargetEnteredEvent(ITarget target)
         {
-            TargetEntered?.Invoke(this, new PvPTargetEventArgs(target));
+            TargetEntered?.Invoke(this, new TargetEventArgs(target));
         }
 
         public void InvokeTargetExitedEvent(ITarget target)
         {
-            TargetExited?.Invoke(this, new PvPTargetEventArgs(target));
+            TargetExited?.Invoke(this, new TargetEventArgs(target));
         }
     }
 }

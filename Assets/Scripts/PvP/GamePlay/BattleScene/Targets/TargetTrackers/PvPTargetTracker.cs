@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetTrackers;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _targetFinder.TargetLost += _targetFinder_TargetLost;
         }
 
-        private void _targetFinder_TargetFound(object sender, PvPTargetEventArgs e)
+        private void _targetFinder_TargetFound(object sender, TargetEventArgs e)
         {
             // Logging.Log(Tags.TARGET_TRACKER, e.Target.ToString());
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private void _targetFinder_TargetLost(object sender, PvPTargetEventArgs e)
+        private void _targetFinder_TargetLost(object sender, TargetEventArgs e)
         {
             // Logging.Log(Tags.TARGET_TRACKER, e.Target.ToString());
 

@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetDetectors;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetProviderFactory
     {
         IPvPTargetProvider CreateStaticTargetProvider(ITarget target);
-        IPvPBroadcastingTargetProvider CreateShipBlockingEnemyProvider(IPvPTargetDetector enemyDetector, IPvPUnit parentUnit);
-        IPvPBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(IPvPTargetDetector friendlyDetector, IPvPUnit parentUnit);
+        IPvPBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IPvPUnit parentUnit);
+        IPvPBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IPvPUnit parentUnit);
     }
 }
