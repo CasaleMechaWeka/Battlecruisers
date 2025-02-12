@@ -8,7 +8,7 @@ using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
-    public class PvPManualProximityTargetDetector : IPvPManualProximityTargetDetector
+    public class PvPManualProximityTargetDetector : IManualProximityTargetDetector
     {
         private readonly ITransform _parentTransform;
         private readonly IReadOnlyCollection<ITarget> _potentialTargets;

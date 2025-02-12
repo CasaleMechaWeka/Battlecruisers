@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
@@ -11,9 +11,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         private readonly PvPManualDetectorPoller _detectorPoller;
 
-        public IPvPManualProximityTargetDetector TargetDetector { get; }
+        public IManualProximityTargetDetector TargetDetector { get; }
 
-        public PvPManualDetectorProvider(PvPManualDetectorPoller detectorPoller, IPvPManualProximityTargetDetector targetDetector)
+        public PvPManualDetectorProvider(PvPManualDetectorPoller detectorPoller, IManualProximityTargetDetector targetDetector)
         {
             Helper.AssertIsNotNull(detectorPoller, targetDetector);
 

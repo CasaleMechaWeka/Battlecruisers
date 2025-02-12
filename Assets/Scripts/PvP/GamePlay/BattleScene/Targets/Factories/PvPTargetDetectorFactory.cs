@@ -6,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
+using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
@@ -51,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             IReadOnlyCollection<ITarget> potentialTargets,
             IPvPUpdater updater)
         {
-            IPvPManualProximityTargetDetector targetDetector = new PvPManualProximityTargetDetector(parentTransform, potentialTargets, detectionRange, rangeCalculator);
+            IManualProximityTargetDetector targetDetector = new PvPManualProximityTargetDetector(parentTransform, potentialTargets, detectionRange, rangeCalculator);
             PvPManualDetectorPoller poller = new PvPManualDetectorPoller(targetDetector, updater);
             return new PvPManualDetectorProvider(poller, targetDetector);
         }
