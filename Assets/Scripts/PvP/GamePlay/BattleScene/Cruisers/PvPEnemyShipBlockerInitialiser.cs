@@ -1,9 +1,8 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPEnemyShipBlockerInitialiser : MonoBehaviour
     {
-        public IPvPTargetTracker Initialise(
+        public ITargetTracker Initialise(
             IPvPTargetFactoriesProvider targetFactoriesProvider,
             IPvPTargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)

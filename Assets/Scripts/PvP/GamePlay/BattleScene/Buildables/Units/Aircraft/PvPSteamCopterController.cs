@@ -7,12 +7,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.V
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using System;
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelWrapper _barrelWrapper;
         private IPvPTargetProcessor _followingTargetProcessor;
         private IPvPTargetFinder _inRangeTargetFinder;
-        private IPvPTargetTracker _inRangeTargetTracker;
+        private ITargetTracker _inRangeTargetTracker;
         private bool _isAtCruisingHeight;
         private PvPManualDetectorProvider _hoverTargetDetectorProvider;
         public List<Sprite> allSprites = new List<Sprite>();

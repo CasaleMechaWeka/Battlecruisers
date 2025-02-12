@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.Targets.TargetTrackers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
@@ -16,12 +17,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             UserChosenTargetTracker = userChosenTargetTracker;
         }
 
-        public IPvPTargetTracker CreateTargetTracker(IPvPTargetFinder targetFinder)
+        public ITargetTracker CreateTargetTracker(IPvPTargetFinder targetFinder)
         {
             return new PvPTargetTracker(targetFinder);
         }
 
-        public IPvPRankedTargetTracker CreateUserChosenInRangeTargetTracker(IPvPTargetTracker inRangeTargetTracker)
+        public IPvPRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
         {
             return new PvPUserChosenInRangeTargetTracker(inRangeTargetTracker, UserChosenTargetTracker);
         }

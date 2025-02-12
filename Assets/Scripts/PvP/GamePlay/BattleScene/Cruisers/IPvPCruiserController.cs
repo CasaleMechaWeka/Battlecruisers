@@ -4,7 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPCruiserUnitMonitor UnitMonitor { get; }
         IPopulationLimitMonitor PopulationLimitMonitor { get; }
         IPvPUnitTargets UnitTargets { get; }
-        IPvPTargetTracker BlockedShipsTracker { get; }
+        ITargetTracker BlockedShipsTracker { get; }
 
         event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;
 

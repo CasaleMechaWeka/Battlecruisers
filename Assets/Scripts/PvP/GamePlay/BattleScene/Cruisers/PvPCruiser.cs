@@ -32,6 +32,7 @@ using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.UI;
@@ -138,7 +139,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }
         public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
         public IPvPUnitTargets UnitTargets { get; private set; }
-        public IPvPTargetTracker BlockedShipsTracker { get; private set; }
+        public ITargetTracker BlockedShipsTracker { get; private set; }
 
         public event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<PvPBuildingCompletedEventArgs> BuildingCompleted;

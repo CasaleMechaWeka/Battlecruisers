@@ -8,8 +8,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.V
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using System.Collections.Generic;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using BattleCruisers.Utils.DataStrctures;
@@ -123,8 +123,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             IPvPShip ship,
             IPvPBroadcastingTargetProvider blockingEnemyTargetProvider,
             IPvPBroadcastingTargetProvider blockingFriendTargetProvider,
-            IPvPTargetTracker inRangeTargetTracker,
-            IPvPTargetTracker shipBlockerTargetTracker,
+            ITargetTracker inRangeTargetTracker,
+            ITargetTracker shipBlockerTargetTracker,
             IPvPTargetRangeHelper rangeHelper)
         {
             return new PvPShipMovementDecider(ship, blockingEnemyTargetProvider, blockingFriendTargetProvider, inRangeTargetTracker, shipBlockerTargetTracker, rangeHelper);

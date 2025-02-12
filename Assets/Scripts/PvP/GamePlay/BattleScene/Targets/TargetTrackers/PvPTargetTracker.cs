@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetTrackers;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// <summary>
     /// Keeps track of all targets found by the given ITargetFinder.
     /// </summary>
-    public class PvPTargetTracker : IPvPTargetTracker
+    public class PvPTargetTracker : ITargetTracker
     {
         private readonly IPvPTargetFinder _targetFinder;
         private readonly IList<ITarget> _targets;
