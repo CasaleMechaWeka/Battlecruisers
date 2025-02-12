@@ -8,6 +8,7 @@ using System;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders
 {
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// 
     /// Also has the enemy cruiser as a target.
     /// </summary>
-    public class PvPGlobalTargetFinder : IPvPTargetFinder
+    public class PvPGlobalTargetFinder : ITargetFinder
     {
         private IPvPCruiser _enemyCruiser;
 

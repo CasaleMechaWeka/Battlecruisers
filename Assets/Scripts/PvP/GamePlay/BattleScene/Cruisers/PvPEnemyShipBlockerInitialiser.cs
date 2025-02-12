@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 TargetType.Ships
             };
 
-            IPvPTargetFinder targetFinder
+            ITargetFinder targetFinder
                 = targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(
                     targetDetectorController,
                     targetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));

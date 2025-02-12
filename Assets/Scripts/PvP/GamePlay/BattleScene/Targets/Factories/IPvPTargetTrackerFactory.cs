@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetFinders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
@@ -10,10 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         // Highest priority trackers
         IPvPRankedTargetTracker UserChosenTargetTracker { get; }
         IPvPRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker);
-        IPvPRankedTargetTracker CreateRankedTargetTracker(IPvPTargetFinder targetFinder, IPvPTargetRanker targetRanker);
+        IPvPRankedTargetTracker CreateRankedTargetTracker(ITargetFinder targetFinder, IPvPTargetRanker targetRanker);
         IPvPRankedTargetTracker CreateCompositeTracker(params IPvPRankedTargetTracker[] targetTrackers);
 
         // Trackers
-        ITargetTracker CreateTargetTracker(IPvPTargetFinder targetFinder);
+        ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);
     }
 }

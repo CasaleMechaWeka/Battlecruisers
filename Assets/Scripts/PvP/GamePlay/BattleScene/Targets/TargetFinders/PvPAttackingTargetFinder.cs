@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// <summary>
     /// Tracks the highest priority target that is attacking us.
     /// </summary>
-    public class PvPAttackingTargetFinder : IPvPTargetFinder
+    public class PvPAttackingTargetFinder : ITargetFinder
     {
         private readonly IDamagable _parentDamagable;
         private readonly ITargetFilter _targetFilter;

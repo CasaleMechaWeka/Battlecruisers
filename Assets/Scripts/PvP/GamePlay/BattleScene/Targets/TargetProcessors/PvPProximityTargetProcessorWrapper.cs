@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking.Wrappers;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPProximityTargetProcessorWrapper : PvPTargetProcessorWrapper, IManagedDisposable
     {
-        private IPvPTargetFinder _targetFinder;
+        private ITargetFinder _targetFinder;
         private IPvPRankedTargetTracker _targetTracker;
 
         public bool considerUserChosenTarget;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return targetRankerWrapper.CreateTargetRanker(rankerFactory);
         }
 
-        protected virtual IPvPTargetFinder CreateTargetFinder(IPvPTargetProcessorArgs args)
+        protected virtual ITargetFinder CreateTargetFinder(IPvPTargetProcessorArgs args)
         {
             PvPCircleTargetDetectorController enemyDetector = gameObject.GetComponentInChildren<PvPCircleTargetDetectorController>();
             Assert.IsNotNull(enemyDetector);

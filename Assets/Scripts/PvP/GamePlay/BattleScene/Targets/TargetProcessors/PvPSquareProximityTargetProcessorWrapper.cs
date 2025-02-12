@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPSquareProximityTargetProcessorWrapper : PvPProximityTargetProcessorWrapper
     {
-        protected override IPvPTargetFinder CreateTargetFinder(IPvPTargetProcessorArgs args)
+        protected override ITargetFinder CreateTargetFinder(IPvPTargetProcessorArgs args)
         {
             PvPTargetDetectorController enemyDetector = GetComponentInChildren<PvPTargetDetectorController>();
             Assert.IsNotNull(enemyDetector);

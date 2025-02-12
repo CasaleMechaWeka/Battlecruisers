@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPRankedTargetTracker : IPvPRankedTargetTracker
     {
-        private readonly IPvPTargetFinder _targetFinder;
+        private readonly ITargetFinder _targetFinder;
         private readonly IPvPTargetRanker _targetRanker;
         // List of targets, in decreasing priority
         private readonly IList<PvPRankedTarget> _targets;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public event EventHandler HighestPriorityTargetChanged;
 
-        public PvPRankedTargetTracker(IPvPTargetFinder targetFinder, IPvPTargetRanker targetRanker)
+        public PvPRankedTargetTracker(ITargetFinder targetFinder, IPvPTargetRanker targetRanker)
         {
             PvPHelper.AssertIsNotNull(targetFinder, targetRanker);
 

@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// Target zone is a circle/rectangle.  Targets are found as they enter this circle/rectangle
     /// and lost as they exit.
     /// </summary>
-    public class PvPRangedTargetFinder : IPvPTargetFinder
+    public class PvPRangedTargetFinder : ITargetFinder
     {
         private readonly ITargetDetector _enemyDetector;
         private readonly ITargetFilter _targetFilter;

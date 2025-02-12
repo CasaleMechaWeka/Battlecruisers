@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPShipBlockingFriendlyProvider : PvPBroadcastingTargetProvider
     {
-        private readonly IPvPTargetFinder _friendFinder;
+        private readonly ITargetFinder _friendFinder;
         private readonly ITargetFilter _isInFrontFilter;
 
         public PvPShipBlockingFriendlyProvider(

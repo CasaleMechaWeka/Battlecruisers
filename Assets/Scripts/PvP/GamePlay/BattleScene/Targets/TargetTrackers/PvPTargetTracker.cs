@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetTrackers;
 using System;
 using System.Collections.Generic;
@@ -13,12 +13,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPTargetTracker : ITargetTracker
     {
-        private readonly IPvPTargetFinder _targetFinder;
+        private readonly ITargetFinder _targetFinder;
         private readonly IList<ITarget> _targets;
 
         public event EventHandler TargetsChanged;
 
-        public PvPTargetTracker(IPvPTargetFinder targetFinder)
+        public PvPTargetTracker(ITargetFinder targetFinder)
         {
             Assert.IsNotNull(targetFinder);
 
