@@ -52,10 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public event EventHandler Destroyed;
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
-        public float autoDetonationTimer = 0f;
-        public float effectivenessDuration = 0f;
-
-        bool isActive;
+        public NetworkVariable<float> autoDetonationTimer = new NetworkVariable<float>(0f);
 
         private IPvPMovementController _movementController;
         protected IPvPMovementController MovementController
@@ -138,9 +135,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
-            isActive = true;
 
-            if (gameObject.activeInHierarchy && autoDetonationTimer > 0f)
+            if (gameObject.activeInHierarchy && autoDetonationTimer.Value > 0f)
             {
                 if (IsHost)
                 {
@@ -149,18 +145,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 else
                 {
                     TimedSelfDestroyClientRpc();
-                }
-            }
-
-            if (gameObject.activeInHierarchy && effectivenessDuration > 0f)
-            {
-                if (IsHost)
-                {
-                    StartCoroutine(TimeDamageLoss());
-                }
-                else
-                {
-                    TimedDamageLossClientRpc();
                 }
             }
 
@@ -189,7 +173,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 return;
             }
-            if (_targetToDamage != null && isActive)
+            if (_targetToDamage != null)
             {
                 MovementController = null;
                 DestroyProjectile();
@@ -312,7 +296,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         IEnumerator TimedSelfDestroy()
         {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer, autoDetonationTimer * 1.5f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer.Value, autoDetonationTimer.Value * 1.5f));
             DestroyProjectile();
             _isActiveAndAlive = false;
         }
@@ -321,18 +305,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         void TimedSelfDestroyClientRpc()
         {
             StartCoroutine(TimedSelfDestroy());
-        }
-
-        IEnumerator TimeDamageLoss()
-        {
-            yield return new WaitForSeconds(effectivenessDuration);
-            isActive = false;
-        }
-
-        [ClientRpc]
-        void TimedDamageLossClientRpc()
-        {
-            StartCoroutine(TimeDamageLoss());
         }
     }
 }
