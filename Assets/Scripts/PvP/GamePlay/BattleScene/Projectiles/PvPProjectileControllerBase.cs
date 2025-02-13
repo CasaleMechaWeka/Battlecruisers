@@ -52,7 +52,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public event EventHandler Destroyed;
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
-        public NetworkVariable<float> autoDetonationTimer = new NetworkVariable<float>(0f);
+        NetworkVariable<float> autoDetonationTimer = new NetworkVariable<float>(0f);
+        public float AutoDetonationTimer = 0f;
 
         private IPvPMovementController _movementController;
         protected IPvPMovementController MovementController
@@ -135,6 +136,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
+
+            autoDetonationTimer.Value = AutoDetonationTimer;
 
             if (gameObject.activeInHierarchy && autoDetonationTimer.Value > 0f)
             {
