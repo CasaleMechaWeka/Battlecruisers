@@ -549,8 +549,8 @@ namespace BattleCruisers.Data.Static
             new BodykitData(nameBase: "Bodykit048", descriptionBase : "BodykitDescription048", cost: 1120, id: 48),
             new BodykitData(nameBase: "Bodykit049", descriptionBase : "BodykitDescription049", cost: 1000, id: 49),
             new BodykitData(nameBase: "Bodykit050", descriptionBase : "BodykitDescription050", cost: 1400, id: 50),
-            new BodykitData(nameBase: "Bodykit051", descriptionBase : "BodykitDescription051", cost: 1000, id: 50),
-            new BodykitData(nameBase: "Bodykit052", descriptionBase : "BodykitDescription052", cost: 1200, id: 50),
+            new BodykitData(nameBase: "Bodykit051", descriptionBase : "BodykitDescription051", cost: 1000, id: 51),
+            new BodykitData(nameBase: "Bodykit052", descriptionBase : "BodykitDescription052", cost: 1200, id: 52),
         });
         public IReadOnlyList<VariantData> Variants { get; } = new ReadOnlyCollection<VariantData>(new VariantData[]
         {
