@@ -49,6 +49,10 @@ namespace BattleCruisers.Projectiles
 
         private IMovementController _movementController;
         public float autoDetonationTimer = 0f;
+        public float effectivenessDuration = 0f;
+
+        bool isActive = true;
+
         protected IMovementController MovementController
         {
             get { return _movementController; }
@@ -112,10 +116,18 @@ namespace BattleCruisers.Projectiles
             _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
 
+            isActive = true;
+
             if (gameObject.activeInHierarchy && autoDetonationTimer > 0f)
             {
                 IEnumerator timedSelfDestroy = TimedSelfDestroy();
                 StartCoroutine(timedSelfDestroy);
+            }
+
+            if (gameObject.activeInHierarchy && effectivenessDuration > 0f)
+            {
+                IEnumerator timedDamageLoss = TimedDamageLoss();
+                StartCoroutine(timedDamageLoss);
             }
         }
 
@@ -139,7 +151,7 @@ namespace BattleCruisers.Projectiles
                 return;
             }
 
-            if (_targetToDamage != null)
+            if (_targetToDamage != null && isActive)
             {
                 DestroyProjectile();
                 //if (_targetToDamage.IsShield())
@@ -230,6 +242,12 @@ namespace BattleCruisers.Projectiles
             yield return new WaitForSeconds(UnityEngine.Random.Range(autoDetonationTimer, autoDetonationTimer * 1.5f));
             DestroyProjectile();
             _isActiveAndAlive = false;
+        }
+
+        IEnumerator TimedDamageLoss()
+        {
+            yield return new WaitForSeconds(effectivenessDuration);
+            isActive = false;
         }
     }
 }
