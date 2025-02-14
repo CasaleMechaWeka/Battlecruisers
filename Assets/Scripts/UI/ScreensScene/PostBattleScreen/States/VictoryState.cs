@@ -18,7 +18,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public const string VICTORY_TITLE_NO_LOOT_KEY = "UI/PostBattleScreen/Title/VictoryNoLoot";
         private const string VICTORY_TITLE_LOOT_KEY = "UI/PostBattleScreen/Title/VictoryLoot";
-        private const int VICTORY_TITLE_LOOT_FONT_SIZE = 125;
 
         public VictoryState(
             PostBattleScreenController postBattleScreen,
@@ -59,7 +58,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 && _lootManager.ShouldShowLevelLoot(battleResult.LevelNum)))
             {
                 postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
-                postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                 postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
@@ -73,7 +71,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                     && appModel.Mode == GameMode.SideQuest && _lootManager.ShouldShowSideQuestLoot(battleResult.LevelNum)))
                 {
                     postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
-                    postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
 
                     _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                     postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
