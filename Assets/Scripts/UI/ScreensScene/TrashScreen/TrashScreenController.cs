@@ -68,11 +68,51 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             homeButton.Initialise(soundPlayer, Cancel);
         }
 
+        private void PlayTauntAnimationOnCaptains()
+        {
+            foreach (Transform child in containerCaptains)
+            {
+                Animator animator = child.GetComponent<Animator>();
+                if (animator == null)
+                {
+                    animator = child.GetComponentInChildren<Animator>();
+                }
+                if (animator != null)
+                {
+                    Debug.Log($"Setting taunt trigger for captain: {child.name}");
+                    animator.SetTrigger("taunt");
+                }
+                else
+                {
+                    Debug.LogWarning($"No Animator component found on captain or its children: {child.name}");
+                }
+            }
+
+            foreach (Transform child in containerCharlie)
+            {
+                Animator animator = child.GetComponent<Animator>();
+                if (animator == null)
+                {
+                    animator = child.GetComponentInChildren<Animator>();
+                }
+                if (animator != null)
+                {
+                    Debug.Log($"Setting taunt trigger for charlie: {child.name}");
+                    animator.SetTrigger("taunt");
+                }
+                else
+                {
+                    Debug.LogWarning($"No Animator component found on charlie or its children: {child.name}");
+                }
+            }
+        }
+
         public async override void OnPresenting(object activationParameter)
         {
             characterCamera.SetActive(true);
             containerCharlie.GetChild(0).gameObject.SetActive(true);
             base.OnPresenting(activationParameter);
+
 
             ITrashTalkData trashTalkData;
             ICruiser enemyCruiserPrefab;
@@ -108,6 +148,9 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             sky.sprite = skySprite.Sprite;
 
             _musicPlayer.PlayTrashMusic();
+            
+            // Play taunt animation on captains
+            PlayTauntAnimationOnCaptains();
         }
 
         private void SetupEnemyCharacter(ITrashTalkData trashTalkData)
@@ -117,7 +160,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             containerCaptains.transform.parent.gameObject.SetActive(true);
             enemyModel = Instantiate(enemyPrefab, containerCaptains.position, Quaternion.identity, containerCaptains);
             enemyModel.transform.localScale = new Vector3(-.5f, .5f, 1f);
-            enemyCharacter.localPosition = trashTalkData.EnemyPosition;
         }
 
         private void StartBattle()
