@@ -48,23 +48,24 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         }
 
         //have to do when SideQuest data is stored in StaticData
-        public bool ShouldShowSideQuestLoot(int sideQuestCompleted)
+        public bool ShouldShowSideQuestLoot(int sideQuestID)
         {
-            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestCompleted);
+            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
+            
+            bool containsNewLoot = unlockedLoot.Items.Any(item => !item.IsUnlocked(_dataProvider.GameModel));
 
-            bool containsNewLoot = false;
-            if (unlockedLoot.Items.Count != 0)
-                for (int i = 0; i < unlockedLoot.Items.Count; i++)
-                    if (!unlockedLoot.Items[i].IsUnlocked(_dataProvider.GameModel))
-                        containsNewLoot = true;
-
-            if (_dataProvider.GameModel.CompletedSideQuests == null || _dataProvider.GameModel.CompletedSideQuests.Count == 0)
+            // If there are no completed sidequests recorded, simply return based on new loot found.
+            if (_dataProvider.GameModel.CompletedSideQuests == null ||
+                !_dataProvider.GameModel.CompletedSideQuests.Any())
+            {
                 return containsNewLoot;
+            }
 
-            List<int> completedSideQuestIDs = _dataProvider.GameModel.CompletedSideQuests.Select(completedSQ
-            => completedSQ.LevelNum).ToList();
+            List<int> completedSideQuestIDs = _dataProvider.GameModel.CompletedSideQuests
+                .Select(completedSQ => completedSQ.LevelNum)  // Ensure LevelNum here really represents sidequest ID.
+                .ToList();
 
-            return containsNewLoot || !completedSideQuestIDs.Contains(sideQuestCompleted);
+            return containsNewLoot || !completedSideQuestIDs.Contains(sideQuestID);
         }
 
         public ILoot UnlockLevelLoot(int levelCompleted)
