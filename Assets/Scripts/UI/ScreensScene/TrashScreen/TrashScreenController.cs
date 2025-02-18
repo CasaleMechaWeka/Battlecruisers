@@ -159,7 +159,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             enemyPrefab = trashTalkData.EnemyPrefab;
             containerCaptains.transform.parent.gameObject.SetActive(true);
             enemyModel = Instantiate(enemyPrefab, containerCaptains.position, Quaternion.identity, containerCaptains);
-            enemyModel.transform.localScale = new Vector3(-.5f, .5f, 1f);
+            enemyModel.transform.localScale = new Vector3(-1f, 1f, 1f);
         }
 
         private void StartBattle()

@@ -466,7 +466,7 @@ namespace BattleCruisers.Scenes
             }
             CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
-            charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
+            charlie.gameObject.transform.localScale = Vector3.one * 1; //0.5f
             characterOfCharlie = charlie.gameObject;
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
