@@ -203,15 +203,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
         public static class PvPShipDeaths
         {
-            public static PvPShipDeathKey PvPAttackBoat { get; } = new PvPShipDeathKey("PvPAttackBoat");
-            public static PvPShipDeathKey PvPAttackRIB { get; } = new PvPShipDeathKey("PvPAttackRIB");
-            public static PvPShipDeathKey PvPFrigate { get; } = new PvPShipDeathKey("PvPFrigate");
-            public static PvPShipDeathKey PvPDestroyer { get; } = new PvPShipDeathKey("PvPDestroyer");
-            public static PvPShipDeathKey PvPSiegeDestroyer { get; } = new PvPShipDeathKey("PvPSiegeDestroyer");
-            public static PvPShipDeathKey PvPArchon { get; } = new PvPShipDeathKey("PvPArchon");
-            public static PvPShipDeathKey PvPGlassCannoneer { get; } = new PvPShipDeathKey("PvPGlassCannoneer");
-            public static PvPShipDeathKey PvPGunBoat { get; } = new PvPShipDeathKey("PvPGunBoat");
-            public static PvPShipDeathKey PvPTurtle { get; } = new PvPShipDeathKey("PvPTurtle");
+            public static PvPShipDeathKey PvPAttackBoat { get; } = new PvPShipDeathKey("PvPShipDeathAttackBoat");
+            public static PvPShipDeathKey PvPAttackRIB { get; } = new PvPShipDeathKey("PvPShipDeathAttackRIB");
+            public static PvPShipDeathKey PvPFrigate { get; } = new PvPShipDeathKey("PvPShipDeathFrigate");
+            public static PvPShipDeathKey PvPDestroyer { get; } = new PvPShipDeathKey("PvPShipDeathDestroyer");
+            public static PvPShipDeathKey PvPSiegeDestroyer { get; } = new PvPShipDeathKey("PvPShipDeathSiegeDestroyer");
+            public static PvPShipDeathKey PvPArchon { get; } = new PvPShipDeathKey("PvPShipDeathMannOWar");
+            public static PvPShipDeathKey PvPGlassCannoneer { get; } = new PvPShipDeathKey("PvPShipDeathGlassCannoneer");
+            public static PvPShipDeathKey PvPGunBoat { get; } = new PvPShipDeathKey("PvPShipDeathGunBoat");
+            public static PvPShipDeathKey PvPTurtle { get; } = new PvPShipDeathKey("PvPShipDeathTurtle");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
