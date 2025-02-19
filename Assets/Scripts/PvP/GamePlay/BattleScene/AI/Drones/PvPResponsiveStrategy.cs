@@ -1,3 +1,5 @@
+using BattleCruisers.AI.Drones.Strategies;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.Strategies
 {
 
@@ -10,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
     /// 
     /// Hence good to use with a conservative IUnitChooser.
     /// </summary>
-    public class PvPResponsiveStrategy : IPvPDroneFocusingStrategy
+    public class PvPResponsiveStrategy : IDroneFocusingStrategy
     {
         public bool EvaluateWhenBuildingStarted { get; }
         public bool EvaluateWhenUnitStarted { get; }
