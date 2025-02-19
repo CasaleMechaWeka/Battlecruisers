@@ -1,9 +1,9 @@
 using BattleCruisers.AI;
+using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.Strategies;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -115,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
             return
                 new PvPDroneConsumerFocusManager(
-                    new PvPResponsiveStrategy(),
+                    new ResponsiveStrategy(),
                     aiCruiser,
                     focusHelper);
         }
