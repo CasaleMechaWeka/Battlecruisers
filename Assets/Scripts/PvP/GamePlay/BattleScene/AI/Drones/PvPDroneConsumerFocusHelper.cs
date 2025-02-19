@@ -1,10 +1,11 @@
+using BattleCruisers.AI.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones
 {
-    public class PvPDroneConsumerFocusHelper : IPvPDroneConsumerFocusHelper
+    public class PvPDroneConsumerFocusHelper : IDroneConsumerFocusHelper
     {
         private readonly IPvPDroneManager _droneManager;
         private readonly IPvPFactoryAnalyzer _factoryAnalyzer;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
 
         public void FocusOnNonFactoryDroneConsumer(bool forceInProgressBuildingToFocused)
         {
-           // Logging.LogMethod(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
+            // Logging.LogMethod(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
 
             if (!_factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones)
             {

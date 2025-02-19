@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
 using BattleCruisers.AI.Drones.Strategies;
+using BattleCruisers.AI.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones
 {
@@ -30,12 +31,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
         private readonly IPvPCruiserBuildingMonitor _aiBuildingMonitor;
         private readonly IPvPDroneManager _droneManager;
         private readonly IList<IPvPFactory> _completedFactories;
-        private readonly IPvPDroneConsumerFocusHelper _focusHelper;
+        private readonly IDroneConsumerFocusHelper _focusHelper;
 
         public PvPDroneConsumerFocusManager(
             IDroneFocusingStrategy strategy,
             IPvPCruiserController aiCruiser,
-            IPvPDroneConsumerFocusHelper focusHelper)
+            IDroneConsumerFocusHelper focusHelper)
         {
             PvPHelper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, focusHelper);
 

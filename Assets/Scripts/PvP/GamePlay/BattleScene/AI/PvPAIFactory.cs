@@ -1,4 +1,5 @@
 using BattleCruisers.AI;
+using BattleCruisers.AI.Drones;
 using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
@@ -107,7 +108,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
             IPvPInProgressBuildingMonitor inProgressBuildingMonitor = new PvPInProgressBuildingMonitor(aiCruiser);
 
-            IPvPDroneConsumerFocusHelper focusHelper
+            IDroneConsumerFocusHelper focusHelper
                 = new PvPDroneConsumerFocusHelper(
                     aiCruiser.DroneManager,
                     factoryAnalyzer,
