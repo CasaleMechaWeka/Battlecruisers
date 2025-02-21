@@ -36,7 +36,12 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
         private GameObject enemyModel;
-        [SerializeField]
+        private Camera _cameraOfCaptains;
+
+        public void SetCamera(Camera camera)
+        {
+            _cameraOfCaptains = camera;
+        }
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -113,6 +118,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             containerCharlie.GetChild(0).gameObject.SetActive(true);
             base.OnPresenting(activationParameter);
 
+            if (_cameraOfCaptains != null)
+            {
+                _cameraOfCaptains.orthographicSize = 8;
+            }
 
             ITrashTalkData trashTalkData;
             ICruiser enemyCruiserPrefab;
@@ -182,6 +191,11 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             else
             {
                 _screensSceneGod.GoToLevelsScreen();
+            }
+
+            if (_cameraOfCaptains != null)
+            {
+                _cameraOfCaptains.orthographicSize = 5;
             }
         }
     }
