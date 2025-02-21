@@ -8,6 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         float ZRotation { get; }
         Vector3 PositionAt4to3 { get; }
         float YPositionAt16to9 { get; }
+        float YPositionAt24to10 { get; }
 
         // Sprite
         Sprite Sprite { get; }

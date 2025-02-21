@@ -18,6 +18,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public float yPositionAt16to9;
         public float YPositionAt16to9 => yPositionAt16to9;
 
+        [Header("Y position for 24:10 aspect ratio")]
+        public float yPositionAt24to10;
+        public float YPositionAt24to10 => yPositionAt24to10;
+
         [Header("Sprite (leave empty if no background for this level)")]
         public Sprite sprite;
         public Sprite Sprite => sprite;
