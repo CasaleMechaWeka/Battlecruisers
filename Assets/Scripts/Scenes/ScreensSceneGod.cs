@@ -349,6 +349,11 @@ namespace BattleCruisers.Scenes
 
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
+            Camera captainsCamera = cameraOfCaptains.GetComponent<Camera>();
+            if (captainsCamera != null)
+            {
+                trashScreen.SetCamera(captainsCamera);
+            }
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, IsInternetAccessable);
