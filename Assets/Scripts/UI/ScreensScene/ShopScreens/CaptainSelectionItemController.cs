@@ -4,6 +4,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 namespace BattleCruisers.UI.ScreensScene
@@ -13,6 +14,7 @@ namespace BattleCruisers.UI.ScreensScene
         public Image _captainImage;
         public CanvasGroupButton clickingArea;
         public GameObject _clickedFeedback;
+        public TextMeshProUGUI CaptainName;
         private ICaptainData _captainData;
         private ISingleSoundPlayer _soundPlayer;
         private Sprite _captainSprite;
@@ -41,6 +43,7 @@ namespace BattleCruisers.UI.ScreensScene
         private void OnClicked()
         {
             _clickedFeedback.SetActive(true);
+            CaptainName.gameObject.SetActive(false);
             _captainSelectorPanel.visualOfCaptains[_index].SetActive(true);
             _captainSelectorPanel.captainDataChanged.Invoke(this, new CaptainDataEventArgs
             {

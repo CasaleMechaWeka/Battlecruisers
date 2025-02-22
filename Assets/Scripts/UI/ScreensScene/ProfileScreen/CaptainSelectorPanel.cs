@@ -91,8 +91,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public void ShowCurrentCaptain()
         {
-            CaptainExo chaliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-            CaptainExo charlie = Instantiate(chaliePrefab, captainCamContainer);
+            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charlie = Instantiate(charliePrefab, captainCamContainer);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             visualOfCaptains.Add(charlie.gameObject);
         }
@@ -103,6 +103,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             {
                 currentItem._clickedFeedback.SetActive(false);
                 visualOfCaptains[currentItem._index].SetActive(false);
+                currentItem.CaptainName.gameObject.SetActive(false);
             }
             else
             {
@@ -113,6 +114,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             }
             currentItem = (CaptainSelectionItemController)sender;
             currentCaptainData = e.captainData;
+            currentItem.CaptainName.gameObject.SetActive(true);
         }
 
         public async Task<bool> SaveCurrentItem()
