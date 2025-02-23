@@ -9,7 +9,7 @@ using BattleCruisers.UI.ScreensScene.LevelsScreen;
 
 public class SideQuestButtonController : ElementWithClickSound
 {
-    private bool enabled;
+    private bool isButtonEnabled;
     private IScreensSceneGod _screensSceneGod;
     private IStaticData _staticData;
     public int sideQuestID;
@@ -46,23 +46,23 @@ public class SideQuestButtonController : ElementWithClickSound
         completed = dataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
 
         if (requiredSideQuestID != -1)
-            enabled = (numOfLevelsUnlocked >= requiredLevel) && dataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
+            isButtonEnabled = (numOfLevelsUnlocked >= requiredLevel) && dataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
         else
-            enabled = numOfLevelsUnlocked >= requiredLevel;
+            isButtonEnabled = numOfLevelsUnlocked >= requiredLevel;
 
-        Enabled = enabled;
+        Enabled = isButtonEnabled;
         checkmark = transform.Find("Checked").gameObject;
-        checkmark.SetActive(completed && enabled);
+        checkmark.SetActive(completed && isButtonEnabled);
         buttonImages = transform.Find("ButtonImages");
         checkbox = transform.Find("Unchecked").gameObject;
-        checkbox.SetActive(enabled);
+        checkbox.SetActive(isButtonEnabled);
 
         if (buttonImages != null)
         {
             sideQuestCompleted = buttonImages.transform.Find("CompleteSideQuest").gameObject;
-            sideQuestCompleted.SetActive(completed && enabled);
+            sideQuestCompleted.SetActive(completed && isButtonEnabled);
             sideQuestIncomplete = buttonImages.transform.Find("IncompleteSideQuest").gameObject;
-            sideQuestIncomplete.SetActive(!completed && enabled);
+            sideQuestIncomplete.SetActive(!completed && isButtonEnabled);
         }
     }
 
