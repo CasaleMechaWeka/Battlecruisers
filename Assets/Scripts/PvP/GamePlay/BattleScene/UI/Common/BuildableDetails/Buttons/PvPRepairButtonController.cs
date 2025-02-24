@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     public class PvPRepairButtonController : PvPCanvasGroupButton
     {
         private IPvPDroneFocuser _droneFocuser;
-        private IPvPRepairManager _repairManager;
+        private IRepairManager _repairManager;
 
         private ITarget _repairable;
         public ITarget Repairable
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             }
         }
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPDroneFocuser droneFocuser, IPvPRepairManager repairManager)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPDroneFocuser droneFocuser, IRepairManager repairManager)
         {
             base.Initialise(soundPlayer);
 

@@ -1,11 +1,11 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -119,7 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private PvPFogOfWar _fog;
         public IGameObject Fog => _fog;
-        public IPvPRepairManager RepairManager { get; private set; }
+        public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones => numOfDrones;
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;

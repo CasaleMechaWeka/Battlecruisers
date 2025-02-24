@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public PvPDirection FacingDirection { get; }
-        public IPvPRepairManager RepairManager { get; }
+        public IRepairManager RepairManager { get; }
         public PvPFogStrength FogStrength { get; }
         public IPvPCruiserHelper Helper { get; }
         public IPvPSlotFilter HighlightableFilter { get; }
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
            PvPDirection facingDirection,
-            IPvPRepairManager repairManager,
+            IRepairManager repairManager,
             PvPFogStrength fogStrength,
             IPvPCruiserHelper helper,
             IPvPSlotFilter highlightableFilter,
@@ -106,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             PvPDirection facingDirection,
-            IPvPRepairManager repairManager,
+            IRepairManager repairManager,
             PvPFogStrength fogStrength,
             IPvPCruiserHelper helper,
             IPvPSlotFilter highlightableFilter,

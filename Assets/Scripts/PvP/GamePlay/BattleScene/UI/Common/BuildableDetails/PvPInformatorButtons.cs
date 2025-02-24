@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public void Initialise(
             IPvPDroneFocuser droneFocuser,
-            IPvPRepairManager repairManager,
+            IRepairManager repairManager,
             IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             ISingleSoundPlayer soundPlayer,

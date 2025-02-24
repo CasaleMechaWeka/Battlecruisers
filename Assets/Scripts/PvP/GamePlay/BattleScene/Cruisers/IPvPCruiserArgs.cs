@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPFactoryProvider FactoryProvider { get; }
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         PvPDirection FacingDirection { get; }
-        IPvPRepairManager RepairManager { get; }
+        IRepairManager RepairManager { get; }
         PvPFogStrength FogStrength { get; }
         IPvPCruiserHelper Helper { get; }
         IPvPSlotFilter HighlightableFilter { get; }

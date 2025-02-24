@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// When the repairable is no longer repairable (ie, fully repaired), releases 
     /// their consumer (removes the consumer from the drone manager).
     /// </summary>
-    public class PvPRepairManager : IPvPRepairManager
+    public class PvPRepairManager : IRepairManager
     {
         private readonly IPvPDroneFeedbackFactory _feedbackFactory;
         private readonly IPvPDroneConsumerProvider _droneConsumerProvider;

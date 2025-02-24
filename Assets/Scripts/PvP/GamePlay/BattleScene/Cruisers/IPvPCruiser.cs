@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         float YAdjustmentInM { get; }
         Vector2 TrashTalkScreenPosition { get; }
         IGameObject Fog { get; }
-        IPvPRepairManager RepairManager { get; }
+        IRepairManager RepairManager { get; }
         int NumOfDrones { get; }
         IPvPBuildProgressCalculator BuildProgressCalculator { get; }
         IPvPFactoryProvider FactoryProvider { get; }
