@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback
 {
-    public class PvPDroneFeedbackFactory : IPvPDroneFeedbackFactory
+    public class PvPDroneFeedbackFactory : IDroneFeedbackFactory
     {
         private readonly IPvPPool<IPvPDroneController, PvPDroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;

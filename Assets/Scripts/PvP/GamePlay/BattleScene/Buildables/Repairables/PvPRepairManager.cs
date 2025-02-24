@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
 using System;
@@ -29,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public class PvPRepairManager : IRepairManager
     {
-        private readonly IPvPDroneFeedbackFactory _feedbackFactory;
+        private readonly IDroneFeedbackFactory _feedbackFactory;
         private readonly IPvPDroneConsumerProvider _droneConsumerProvider;
         private readonly IPvPCruiser _cruiser;
         private readonly IDictionary<IRepairable, IDroneFeedback> _repairableToFeedback;
@@ -39,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Code smell :D  ICruiser contains DroneConsumerProvider property, but this is not set
         // until cruiser has been initialised.  Hence directly pass drone consumer provider.
         public PvPRepairManager(
-            IPvPDroneFeedbackFactory feedbackFactory,
+            IDroneFeedbackFactory feedbackFactory,
             IPvPDroneConsumerProvider droneConsumerProvider,
             IPvPCruiser cruiser)
         {
