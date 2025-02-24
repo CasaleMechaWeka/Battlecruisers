@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _faction = faction;
         }
 
-        public IPvPDroneFeedback CreateFeedback(IDroneConsumer droneConsumer, Vector2 position, Vector2 size)
+        public IDroneFeedback CreateFeedback(IDroneConsumer droneConsumer, Vector2 position, Vector2 size)
         {
             Assert.IsNotNull(droneConsumer);
             return
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _faction);
         }
 
-        public IPvPDroneFeedback CreateDummyFeedback()
+        public IDroneFeedback CreateDummyFeedback()
         {
             return new PvPDummyDroneFeedback();
         }
