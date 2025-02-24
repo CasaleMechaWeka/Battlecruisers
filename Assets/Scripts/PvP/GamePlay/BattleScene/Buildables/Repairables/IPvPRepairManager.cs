@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 
 
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPRepairManager : IManagedDisposable
     {
         void Repair(float deltaTimeInS);
-        IPvPDroneConsumer GetDroneConsumer(IRepairable repairable);
+        IDroneConsumer GetDroneConsumer(IRepairable repairable);
 
         //void AddCruiser(ICruiser cruiser);
     }

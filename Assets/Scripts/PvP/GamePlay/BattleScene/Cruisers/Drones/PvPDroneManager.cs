@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         // Consumers are in descending order of priority.  Ie, the first consumer 
         // has the highest priority and the last consumer has the lowest priority.
-        private readonly ObservableCollection<IPvPDroneConsumer> _droneConsumers;
-        public ReadOnlyObservableCollection<IPvPDroneConsumer> DroneConsumers { get; }
+        private readonly ObservableCollection<IDroneConsumer> _droneConsumers;
+        public ReadOnlyObservableCollection<IDroneConsumer> DroneConsumers { get; }
 
         private int _numOfDrones;
         public int NumOfDrones
@@ -54,17 +55,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
                     _numOfDrones = value;
 
-                    DroneNumChanged?.Invoke(this, new PvPDroneNumChangedEventArgs(_numOfDrones));
+                    DroneNumChanged?.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
                 }
             }
         }
 
-        public event EventHandler<PvPDroneNumChangedEventArgs> DroneNumChanged;
+        public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         public PvPDroneManager()
         {
-            _droneConsumers = new ObservableCollection<IPvPDroneConsumer>();
-            DroneConsumers = new ReadOnlyObservableCollection<IPvPDroneConsumer>(_droneConsumers);
+            _droneConsumers = new ObservableCollection<IDroneConsumer>();
+            DroneConsumers = new ReadOnlyObservableCollection<IDroneConsumer>(_droneConsumers);
             _numOfDrones = 0;
         }
 
@@ -86,7 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// OR
         /// 3. All existing consumers are paused (ie, because we can no longer afford them).
         /// </summary>
-        public void AddDroneConsumer(IPvPDroneConsumer consumerToAdd)
+        public void AddDroneConsumer(IDroneConsumer consumerToAdd)
         {
             // Logging.Log(Tags.DRONE_MANAGER, "NumOfDroneConsumers: " + _droneConsumers.Count);
 
@@ -94,7 +95,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsFalse(_droneConsumers.Contains(consumerToAdd), "Drone consumer has already been added.  Should not be added again!");
 
             bool wereAllConsumersNotIdle = AllConsumersAreNotIdle();
-            IPvPDroneConsumer focusedConsumer = GetFocusedConsumer();
+            IDroneConsumer focusedConsumer = GetFocusedConsumer();
 
             // Make new consumer have the lowest priority
             _droneConsumers.Add(consumerToAdd);
@@ -114,20 +115,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             return
                 _droneConsumers
-                    .All(consumer => consumer.State != PvPDroneConsumerState.Idle);
+                    .All(consumer => consumer.State != DroneConsumerState.Idle);
         }
 
         private bool AllConsumersAreIdle()
         {
             return
                 _droneConsumers
-                    .All(consumer => consumer.State == PvPDroneConsumerState.Idle);
+                    .All(consumer => consumer.State == DroneConsumerState.Idle);
         }
 
         /// <summary>
         /// Remove the given consumer and reassign their drones (if they had any).
         /// </summary>
-        public void RemoveDroneConsumer(IPvPDroneConsumer consumerToRemove)
+        public void RemoveDroneConsumer(IDroneConsumer consumerToRemove)
         {
             // Logging.Log(Tags.DRONE_MANAGER, "NumOfDroneConsumers: " + _droneConsumers.Count);
 
@@ -152,7 +153,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// 	a) => More Focused, if not all drones are working on this consumer
         /// 	b) => Active (Can remain Focused if there are no other drone consumers.)
         /// </summary>
-        public void ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer)
+        public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer)
         {
             // Logging.Log(Tags.DRONE_MANAGER, "NumOfDroneConsumers: " + _droneConsumers.Count);
 
@@ -164,13 +165,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             switch (droneConsumer.State)
             {
                 // Idle => Active
-                case PvPDroneConsumerState.Idle:
+                case DroneConsumerState.Idle:
                     SetMaxPriority(droneConsumer);
                     ProvideRequiredDrones(droneConsumer);
                     break;
 
                 // Active => Focused
-                case PvPDroneConsumerState.Active:
+                case DroneConsumerState.Active:
                     SetMaxPriority(droneConsumer);
                     if (droneConsumer.NumOfDronesRequired != NumOfDrones)
                     {
@@ -178,8 +179,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     }
                     break;
 
-                case PvPDroneConsumerState.Focused:
-                case PvPDroneConsumerState.AllFocused://TODO update test
+                case DroneConsumerState.Focused:
+                case DroneConsumerState.AllFocused://TODO update test
                     if (droneConsumer.NumOfDrones < NumOfDrones)
                     {
                         // Focused => More Focused
@@ -200,7 +201,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private void AssignAllDronesToConsumer(IPvPDroneConsumer droneConsumer)
+        private void AssignAllDronesToConsumer(IDroneConsumer droneConsumer)
         {
             int numOfFreedDrones = FreeUpDrones(NumOfDrones);
             Assert.AreEqual(numOfFreedDrones, NumOfDrones);
@@ -227,7 +228,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsTrue(_droneConsumers.Count != 0);
 
-            IPvPDroneConsumer focusedConsumer = GetFocusedConsumer();
+            IDroneConsumer focusedConsumer = GetFocusedConsumer();
             if (focusedConsumer != null)
             {
                 focusedConsumer.NumOfDrones += numOfSpareDrones;
@@ -245,16 +246,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void AssignToHighestPriorityNonIdleConsumer(int numOfSpareDrones)
         {
             // Consumer priority:  High => Low
-            foreach (IPvPDroneConsumer droneConsumer in _droneConsumers)
+            foreach (IDroneConsumer droneConsumer in _droneConsumers)
             {
-                if (droneConsumer.State == PvPDroneConsumerState.Idle)
+                if (droneConsumer.State == DroneConsumerState.Idle)
                 {
                     // We do not have enough drones to activate this consumer
                     Assert.IsTrue(numOfSpareDrones < droneConsumer.NumOfDronesRequired);
                     continue;
                 }
 
-                if (droneConsumer.State == PvPDroneConsumerState.Active)
+                if (droneConsumer.State == DroneConsumerState.Active)
                 {
                     // Adding drones will make this consumer focused, so it
                     // should have the highest priority.
@@ -272,9 +273,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private int MakeConsumersActive(int numOfSpareDrones)
         {
             // Consumer priority:  High => Low
-            foreach (IPvPDroneConsumer droneConsumer in _droneConsumers)
+            foreach (IDroneConsumer droneConsumer in _droneConsumers)
             {
-                if (droneConsumer.State == PvPDroneConsumerState.Idle
+                if (droneConsumer.State == DroneConsumerState.Idle
                     && droneConsumer.NumOfDronesRequired <= numOfSpareDrones)
                 {
                     droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
@@ -294,7 +295,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// Ensures the given drone consumer has the highest priority, by placing
         /// them at the top of the list of drone consumers.
         /// </summary>
-        private void SetMaxPriority(IPvPDroneConsumer droneConsumer)
+        private void SetMaxPriority(IDroneConsumer droneConsumer)
         {
             if (GetHighestPriorityConsumer() == droneConsumer)
             {
@@ -314,7 +315,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// 
         /// Assigns any spare drones.
         /// </summary>
-        private void ProvideRequiredDrones(IPvPDroneConsumer droneConsumer)
+        private void ProvideRequiredDrones(IDroneConsumer droneConsumer)
         {
             int numOfFreeDrones = FreeUpDrones(droneConsumer.NumOfDronesRequired);
             droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
@@ -347,7 +348,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (numOfFreedDrones < minDronesToFree)
             {
                 // Remove drones from focused consuemr
-                IPvPDroneConsumer focusedConsumer = GetFocusedConsumer();
+                IDroneConsumer focusedConsumer = GetFocusedConsumer();
 
                 if (focusedConsumer != null)
                 {
@@ -371,7 +372,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 {
                     for (int i = _droneConsumers.Count - 1; i >= 0; --i)
                     {
-                        IPvPDroneConsumer droneConsumer = _droneConsumers[i];
+                        IDroneConsumer droneConsumer = _droneConsumers[i];
 
                         numOfFreedDrones += droneConsumer.NumOfDrones;
                         droneConsumer.NumOfDrones = 0;
@@ -405,12 +406,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return NumOfDrones - numOfDronesUsed;
         }
 
-        private IPvPDroneConsumer GetFocusedConsumer()
+        private IDroneConsumer GetFocusedConsumer()
         {
-            IPvPDroneConsumer potentiallyFocusedConsumer = GetHighestPriorityConsumer();
+            IDroneConsumer potentiallyFocusedConsumer = GetHighestPriorityConsumer();
 
             if (potentiallyFocusedConsumer != null
-                && potentiallyFocusedConsumer.State == PvPDroneConsumerState.Focused)
+                && potentiallyFocusedConsumer.State == DroneConsumerState.Focused)
             {
                 return potentiallyFocusedConsumer;
             }
@@ -418,12 +419,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return null;
         }
 
-        private IPvPDroneConsumer GetHighestPriorityConsumer()
+        private IDroneConsumer GetHighestPriorityConsumer()
         {
             return _droneConsumers.FirstOrDefault();
         }
 
-        public bool HasDroneConsumer(IPvPDroneConsumer droneConsumer)
+        public bool HasDroneConsumer(IDroneConsumer droneConsumer)
         {
             return _droneConsumers.Contains(droneConsumer);
         }

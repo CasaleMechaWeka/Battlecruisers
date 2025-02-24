@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly Faction _faction;
         private readonly IList<IPvPDroneController> _drones;
 
-        public IPvPDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
+        public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
 
         public PvPDroneFeedback(
             IPvPDroneConsumerInfo droneConsumerInfo,
@@ -37,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             AddDronesIfNeeded(_droneConsumerInfo.DroneConsumer.NumOfDrones);
         }
 
-        private void DroneConsumer_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
             Assert.IsTrue(e.NewNumOfDrones >= 0, $"It does not make sense to have a negative number of drones: {e.NewNumOfDrones}");
 

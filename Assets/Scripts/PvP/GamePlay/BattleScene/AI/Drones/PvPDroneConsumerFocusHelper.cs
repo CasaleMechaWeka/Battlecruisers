@@ -1,4 +1,5 @@
 using BattleCruisers.AI.Drones;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -38,16 +39,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
             }
 
             //  Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Going to focus on: " + affordableBuilding);
-            IPvPDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
+            IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
 
             // Try to upgrade: Idle => Active
-            if (affordableDroneConsumer.State == PvPDroneConsumerState.Idle)
+            if (affordableDroneConsumer.State == DroneConsumerState.Idle)
             {
                 _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);
             }
 
             // Try to upgrade: Active => Focused
-            if (affordableDroneConsumer.State == PvPDroneConsumerState.Active
+            if (affordableDroneConsumer.State == DroneConsumerState.Active
                 && forceInProgressBuildingToFocused)
             {
                 _droneManager.ToggleDroneConsumerFocus(affordableDroneConsumer);

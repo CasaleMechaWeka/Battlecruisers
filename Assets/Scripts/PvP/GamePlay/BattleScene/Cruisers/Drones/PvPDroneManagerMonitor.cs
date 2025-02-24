@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             ((INotifyCollectionChanged)_droneManager.DroneConsumers).CollectionChanged += DroneManagerMonitor_CollectionChanged;
         }
 
-        private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
             if (e.NewNumOfDrones > _previousNumOfDrones)
             {
@@ -92,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             return
                 _droneManager.DroneConsumers
-                    .All(droneConsumer => droneConsumer.State == PvPDroneConsumerState.Idle);
+                    .All(droneConsumer => droneConsumer.State == DroneConsumerState.Idle);
         }
 
         public void DisposeManagedState()

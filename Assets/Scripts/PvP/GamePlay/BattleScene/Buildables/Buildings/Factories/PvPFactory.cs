@@ -15,6 +15,7 @@ using Unity.Netcode;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -302,7 +303,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// keeps hold of a drone consumer for the current unit, so simply pass
         /// on the factory's drone consumer.
         /// </summary>
-        public IPvPDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
+        public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
         {
             // Logging.LogMethod(Tags.FACTORY);
 
@@ -311,9 +312,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return DroneConsumer;
         }
 
-        public void ActivateDroneConsumer(IPvPDroneConsumer droneConsumer) { }
+        public void ActivateDroneConsumer(IDroneConsumer droneConsumer) { }
 
-        public void ReleaseDroneConsumer(IPvPDroneConsumer droneConsumer) { }
+        public void ReleaseDroneConsumer(IDroneConsumer droneConsumer) { }
 
         protected override void OnDestroyed()
         {
@@ -434,7 +435,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.LogMethod(Tags.FACTORY);
 
-            if (DroneConsumer.State == PvPDroneConsumerState.Idle)
+            if (DroneConsumer.State == DroneConsumerState.Idle)
             {
                 ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: false);
             }

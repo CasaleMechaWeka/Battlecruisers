@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Sound;
 using System;
 using UnityEngine.Assertions;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _droneManager = droneManager;
         }
 
-        public PrioritisedSoundKey ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer, bool isTriggeredByPlayer)
+        public PrioritisedSoundKey ToggleDroneConsumerFocus(IDroneConsumer droneConsumer, bool isTriggeredByPlayer)
         {
             _droneManager.ToggleDroneConsumerFocus(droneConsumer);
             return null;

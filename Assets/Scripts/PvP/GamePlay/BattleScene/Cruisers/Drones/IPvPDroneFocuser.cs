@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Sound;
 using System;
 
@@ -6,6 +7,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public interface IPvPDroneFocuser
     {
         event EventHandler PlayerTriggeredRepair;
-        PrioritisedSoundKey ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer, bool isTriggeredByPlayer);
+        PrioritisedSoundKey ToggleDroneConsumerFocus(IDroneConsumer droneConsumer, bool isTriggeredByPlayer);
     }
 }

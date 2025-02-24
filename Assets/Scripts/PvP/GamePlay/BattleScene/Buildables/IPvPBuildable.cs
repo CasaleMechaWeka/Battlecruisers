@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         PvPBuildableState BuildableState { get; }
         int NumOfDronesRequired { get; }
         float BuildTimeInS { get; }
-        IPvPDroneConsumer DroneConsumer { get; }
+        IDroneConsumer DroneConsumer { get; }
         IPvPCommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
         ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; }
@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         event EventHandler StartedConstruction;
         event EventHandler CompletedBuildable;
         event EventHandler<PvPBuildProgressEventArgs> BuildableProgress;
-        event EventHandler<PvPDroneNumChangedEventArgs> DroneNumChanged;
+        event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings);
         void StaticInitialise(GameObject parent, PvPHealthBarController healthBar);

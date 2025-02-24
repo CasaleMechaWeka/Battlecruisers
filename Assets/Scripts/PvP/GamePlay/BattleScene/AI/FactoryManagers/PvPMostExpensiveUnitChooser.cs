@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             ChooseUnit();
         }
 
-        private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
             ChooseUnit();
         }

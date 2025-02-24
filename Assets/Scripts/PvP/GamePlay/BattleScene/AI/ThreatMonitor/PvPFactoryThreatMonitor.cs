@@ -1,10 +1,10 @@
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
             EvaluateThreatLevel();
         }
 
-        private void Factory_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        private void Factory_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
             EvaluateThreatLevel();
         }

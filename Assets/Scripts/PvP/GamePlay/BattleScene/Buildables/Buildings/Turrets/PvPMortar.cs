@@ -1,6 +1,6 @@
-﻿using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables;
@@ -264,7 +264,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ServerRpc(RequireOwnership = true)]
         private void PvP_RepairableButtonClickedServerRpc()
         {
-            IPvPDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
+            IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
             ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 

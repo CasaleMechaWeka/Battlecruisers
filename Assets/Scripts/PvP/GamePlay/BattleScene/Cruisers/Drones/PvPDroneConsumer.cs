@@ -1,9 +1,10 @@
+using BattleCruisers.Cruisers.Drones;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones
 {
-    public class PvPDroneConsumer : IPvPDroneConsumer
+    public class PvPDroneConsumer : IDroneConsumer
     {
         private readonly IPvPDroneManager _droneManager;
 
@@ -24,13 +25,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     //Debug.Log($"required: {NumOfDronesRequired}   actual: {value}");
                     _numOfDrones = value;
 
-                    DroneNumChanged?.Invoke(this, new PvPDroneNumChangedEventArgs(_numOfDrones));
+                    DroneNumChanged?.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
 
-                    PvPDroneConsumerState newState = FindDroneState(_numOfDrones, NumOfDronesRequired);
+                    DroneConsumerState newState = FindDroneState(_numOfDrones, NumOfDronesRequired);
 
                     if (newState != State)
                     {
-                        DroneStateChanged?.Invoke(this, new PvPDroneStateChangedEventArgs(State, newState));
+                        DroneStateChanged?.Invoke(this, new DroneStateChangedEventArgs(State, newState));
                         State = newState;
                     }
                 }
@@ -39,10 +40,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public int NumOfDronesRequired { get; set; }
         public int NumOfSpareDrones => NumOfDrones - NumOfDronesRequired;
-        public PvPDroneConsumerState State { get; private set; }
+        public DroneConsumerState State { get; private set; }
 
-        public event EventHandler<PvPDroneNumChangedEventArgs> DroneNumChanged;
-        public event EventHandler<PvPDroneStateChangedEventArgs> DroneStateChanged;
+        public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
+        public event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 
         public PvPDroneConsumer(int numOfDronesRequired, IPvPDroneManager droneManager)
         {
@@ -55,26 +56,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _droneManager = droneManager;
             NumOfDronesRequired = numOfDronesRequired;
             NumOfDrones = 0;
-            State = PvPDroneConsumerState.Idle;
+            State = DroneConsumerState.Idle;
         }
 
-        private PvPDroneConsumerState FindDroneState(int numOfDrones, int numOfDronesRequired)
+        private DroneConsumerState FindDroneState(int numOfDrones, int numOfDronesRequired)
         {
             if (numOfDrones == _droneManager.NumOfDrones)
             {
-                return PvPDroneConsumerState.AllFocused;
+                return DroneConsumerState.AllFocused;
             }
             else if (numOfDrones > numOfDronesRequired)
             {
-                return PvPDroneConsumerState.Focused;
+                return DroneConsumerState.Focused;
             }
             else if (numOfDrones == numOfDronesRequired)
             {
-                return PvPDroneConsumerState.Active;
+                return DroneConsumerState.Active;
             }
             else if (numOfDrones == 0)
             {
-                return PvPDroneConsumerState.Idle;
+                return DroneConsumerState.Idle;
             }
             throw new InvalidProgramException();
         }

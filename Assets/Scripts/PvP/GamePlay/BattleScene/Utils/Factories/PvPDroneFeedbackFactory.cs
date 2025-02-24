@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _faction = faction;
         }
 
-        public IPvPDroneFeedback CreateFeedback(IPvPDroneConsumer droneConsumer, Vector2 position, Vector2 size)
+        public IPvPDroneFeedback CreateFeedback(IDroneConsumer droneConsumer, Vector2 position, Vector2 size)
         {
             Assert.IsNotNull(droneConsumer);
             return

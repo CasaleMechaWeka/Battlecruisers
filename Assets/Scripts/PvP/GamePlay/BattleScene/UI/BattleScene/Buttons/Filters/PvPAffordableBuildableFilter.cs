@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         }
 
-        private void _droneManager_DroneNumChanged(int oldVal, int newVal /*object sender, PvPDroneNumChangedEventArgs e*/)
+        private void _droneManager_DroneNumChanged(int oldVal, int newVal /*object sender, DroneNumChangedEventArgs e*/)
         {
             PotentialMatchChange?.Invoke(this, EventArgs.Empty);
         }

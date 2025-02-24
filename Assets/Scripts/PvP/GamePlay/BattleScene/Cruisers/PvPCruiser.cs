@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -15,7 +16,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -311,7 +311,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return _slotWrapperController;
         }
 
-        private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
             pvp_NumOfDrones.Value = DroneManager.NumOfDrones;
         }
@@ -705,7 +705,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ServerRpc(RequireOwnership = true)]
         private void PvP_RepairableButtonClickedServerRpc()
         {
-            IPvPDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
+            IDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
             PrioritisedSoundKey sound = DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
             PvP_PrioritisedSoundClientRpc(sound.Key.Type, sound.Key.Name, sound.Priority);
         }

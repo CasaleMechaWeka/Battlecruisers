@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             base.OnClicked();
             if (NetworkManager.Singleton.IsServer)
             {
-                IPvPDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
+                IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
                 _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
             }
             else if (!NetworkManager.Singleton.IsHost)

@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             UpdateVisibility();
         }
-        private void OnBuildableDroneNumChange(object sender, BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.PvPDroneNumChangedEventArgs e)
+        private void OnBuildableDroneNumChange(object sender, BattleCruisers.Cruisers.Drones.DroneNumChangedEventArgs e)
         {
             UpdateVisibility();
         }

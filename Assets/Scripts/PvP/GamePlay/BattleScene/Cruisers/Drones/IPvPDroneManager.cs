@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using System;
 using System.Collections.ObjectModel;
 
@@ -6,14 +7,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public interface IPvPDroneManager
     {
         int NumOfDrones { get; set; }
-        ReadOnlyObservableCollection<IPvPDroneConsumer> DroneConsumers { get; }
+        ReadOnlyObservableCollection<IDroneConsumer> DroneConsumers { get; }
 
-        event EventHandler<PvPDroneNumChangedEventArgs> DroneNumChanged;
+        event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         bool CanSupportDroneConsumer(int numOfDronesRequired);
-        bool HasDroneConsumer(IPvPDroneConsumer droneConsumer);
-        void AddDroneConsumer(IPvPDroneConsumer droneConsumer);
-        void RemoveDroneConsumer(IPvPDroneConsumer droneConsumer);
-        void ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer);
+        bool HasDroneConsumer(IDroneConsumer droneConsumer);
+        void AddDroneConsumer(IDroneConsumer droneConsumer);
+        void RemoveDroneConsumer(IDroneConsumer droneConsumer);
+        void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer);
     }
 }

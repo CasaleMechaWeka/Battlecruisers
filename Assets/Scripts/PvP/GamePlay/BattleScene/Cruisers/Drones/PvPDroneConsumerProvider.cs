@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones
@@ -12,12 +13,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _droneManager = droneManager;
         }
 
-        public IPvPDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
+        public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
         {
             return new PvPDroneConsumer(numOfDronesRequired, _droneManager);
         }
 
-        public void ActivateDroneConsumer(IPvPDroneConsumer droneConsumer)
+        public void ActivateDroneConsumer(IDroneConsumer droneConsumer)
         {
             // Logging.LogMethod(Tags.DRONE_CONSUMER_PROVIDER);
 
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _droneManager.AddDroneConsumer(droneConsumer);
         }
 
-        public void ReleaseDroneConsumer(IPvPDroneConsumer droneConsumer)
+        public void ReleaseDroneConsumer(IDroneConsumer droneConsumer)
         {
             // Logging.LogMethod(Tags.DRONE_CONSUMER_PROVIDER);
 

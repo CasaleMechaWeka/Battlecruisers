@@ -29,6 +29,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
@@ -105,8 +106,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IList<IPvPDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; private set; }
 
-        private IPvPDroneConsumer _droneConsumer;
-        public IPvPDroneConsumer DroneConsumer
+        private IDroneConsumer _droneConsumer;
+        public IDroneConsumer DroneConsumer
         {
             get { return _droneConsumer; }
             protected set
@@ -196,7 +197,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler StartedConstruction;
         public event EventHandler CompletedBuildable;
         public event EventHandler<PvPBuildProgressEventArgs> BuildableProgress;
-        public event EventHandler<PvPDroneNumChangedEventArgs> DroneNumChanged;
+        public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
         public event EventHandler Clicked;
         public event EventHandler Deactivated;
 
@@ -494,20 +495,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnDoubleClick() { }
 
-        private void DroneConsumer_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
             DroneNumChanged?.Invoke(this, e);
         }
 
-        private void DroneConsumer_DroneStateChanged(object sender, PvPDroneStateChangedEventArgs e)
+        private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
         {
             if (BuildableState != PvPBuildableState.Completed)
             {
-                if (e.OldState == PvPDroneConsumerState.Idle)
+                if (e.OldState == DroneConsumerState.Idle)
                 {
                     BuildableState = PvPBuildableState.InProgress;
                 }
-                else if (e.NewState == PvPDroneConsumerState.Idle)
+                else if (e.NewState == DroneConsumerState.Idle)
                 {
                     BuildableState = PvPBuildableState.Paused;
                 }
@@ -524,7 +525,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             EnableRenderers(false);
 
-            if (DroneConsumer.State != PvPDroneConsumerState.Idle)
+            if (DroneConsumer.State != DroneConsumerState.Idle)
             {
                 BuildableState = PvPBuildableState.InProgress;
             }
@@ -540,7 +541,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 if (BuildableState == PvPBuildableState.InProgress)
                 {
-                    Assert.IsTrue(DroneConsumer.State != PvPDroneConsumerState.Idle);
+                    Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
 
                     // Find build progress
                     float buildProgressInDroneS = ParentCruiser.BuildProgressCalculator.CalculateBuildProgressInDroneS(this, _time.DeltaTime);

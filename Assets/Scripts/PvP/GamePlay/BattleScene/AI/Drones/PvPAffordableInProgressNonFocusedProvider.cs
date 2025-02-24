@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
                     _buildingMonitor
                         .InProgressBuildings
                         .FirstOrDefault(building =>
-                            building.DroneConsumer.State != PvPDroneConsumerState.Focused
+                            building.DroneConsumer.State != DroneConsumerState.Focused
                             && building.DroneConsumer.NumOfDronesRequired <= _droneManager.NumOfDrones);
             }
         }

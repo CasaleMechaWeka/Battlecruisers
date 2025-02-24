@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using System;
@@ -6,57 +7,57 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPDroneFocusSoundPicker : IPvPDroneFocusSoundPicker
     {
         //TODO update tests
-        public PrioritisedSoundKey PickSound(PvPDroneConsumerState preFocusState, PvPDroneConsumerState postFocusState)
+        public PrioritisedSoundKey PickSound(DroneConsumerState preFocusState, DroneConsumerState postFocusState)
         {
             //Debug.Log($"{preFocusState}>{postFocusState}");
 
             switch (preFocusState)
             {
-                case PvPDroneConsumerState.Idle:
+                case DroneConsumerState.Idle:
                     switch (postFocusState)
                     {
-                        case PvPDroneConsumerState.Active:
-                        case PvPDroneConsumerState.Focused:
+                        case DroneConsumerState.Active:
+                        case DroneConsumerState.Focused:
                             return PrioritisedSoundKeys.Events.Drones.Focusing;
-                        case PvPDroneConsumerState.AllFocused:
+                        case DroneConsumerState.AllFocused:
                             return PrioritisedSoundKeys.Events.Drones.AllFocused;
                         default:
                             throw new ArgumentException();
                     }
 
-                case PvPDroneConsumerState.Active:
+                case DroneConsumerState.Active:
                     switch (postFocusState)
                     {
-                        case PvPDroneConsumerState.Idle:
+                        case DroneConsumerState.Idle:
                             return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
-                        case PvPDroneConsumerState.Focused:
+                        case DroneConsumerState.Focused:
                             return PrioritisedSoundKeys.Events.Drones.Focusing;
-                        case PvPDroneConsumerState.AllFocused:
+                        case DroneConsumerState.AllFocused:
                             return PrioritisedSoundKeys.Events.Drones.AllFocused;
                         default:
                             throw new ArgumentException();
                     }
 
-                case PvPDroneConsumerState.Focused:
+                case DroneConsumerState.Focused:
                     switch (postFocusState)
                     {
-                        case PvPDroneConsumerState.Idle:
+                        case DroneConsumerState.Idle:
                             return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
-                        case PvPDroneConsumerState.Active:
+                        case DroneConsumerState.Active:
                             return PrioritisedSoundKeys.Events.Drones.Dispersing;
-                        case PvPDroneConsumerState.AllFocused:
+                        case DroneConsumerState.AllFocused:
                             return PrioritisedSoundKeys.Events.Drones.AllFocused;
                         default:
                             throw new ArgumentException();
                     }
 
-                case PvPDroneConsumerState.AllFocused:
+                case DroneConsumerState.AllFocused:
                     switch (postFocusState)
                     {
-                        case PvPDroneConsumerState.Idle:
+                        case DroneConsumerState.Idle:
                             return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
-                        case PvPDroneConsumerState.Active:
-                        case PvPDroneConsumerState.Focused:
+                        case DroneConsumerState.Active:
+                        case DroneConsumerState.Focused:
                             return PrioritisedSoundKeys.Events.Drones.Dispersing;
                         default:
                             return PrioritisedSoundKeys.Events.Drones.AllFocused;
