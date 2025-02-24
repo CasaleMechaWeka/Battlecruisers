@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using System.Collections.ObjectModel;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
@@ -6,10 +5,11 @@ using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
 {
-    public interface IPvPUnit : IPvPBuildable, IRemovable, IPvPPoolable<PvPBuildableActivationArgs>
+    public interface IPvPUnit : IPvPBuildable, IRemovable, IPoolable<PvPBuildableActivationArgs>
     {
         UnitCategory Category { get; }
         IDroneConsumerProvider DroneConsumerProvider { set; }

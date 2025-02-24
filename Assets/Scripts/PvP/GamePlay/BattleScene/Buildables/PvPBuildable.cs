@@ -14,7 +14,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Commands;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using System;
@@ -30,11 +29,12 @@ using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Utils.BattleScene.Pools;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public abstract class PvPBuildable<TPvPActivationArgs> : PvPTarget, IPvPBuildable, IPvPPoolable<TPvPActivationArgs>
+    public abstract class PvPBuildable<TPvPActivationArgs> : PvPTarget, IPvPBuildable, IPoolable<TPvPActivationArgs>
         where TPvPActivationArgs : PvPBuildableActivationArgs
     {
         private float _cumulativeBuildProgressInDroneS;

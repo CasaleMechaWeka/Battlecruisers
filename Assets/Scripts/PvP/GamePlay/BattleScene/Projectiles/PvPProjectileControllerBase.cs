@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode.Components;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Buildables;
 using Unity.Netcode;
 
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public abstract class PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats> : PvPProjectile,
         IRemovable,
-        IPvPPoolable<TPvPActivationArgs>
+        IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
             where TPvPStats : IPvPProjectileStats
     {

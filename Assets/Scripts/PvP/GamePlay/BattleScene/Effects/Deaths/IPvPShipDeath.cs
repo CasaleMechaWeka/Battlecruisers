@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths
 {
-    public interface IPvPShipDeath : IPvPPoolable<Vector3>
+    public interface IPvPShipDeath : IPoolable<Vector3>
     {
         // empty
     }

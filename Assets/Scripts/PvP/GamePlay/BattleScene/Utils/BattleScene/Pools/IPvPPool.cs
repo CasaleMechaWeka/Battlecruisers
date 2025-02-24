@@ -1,9 +1,10 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools
 {
-    public interface IPvPPool<TPoolable, TArgs> where TPoolable : IPvPPoolable<TArgs>
+    public interface IPvPPool<TPoolable, TArgs> where TPoolable : IPoolable<TArgs>
     {
         Task AddCapacity(int capacityToAdd);
         Task<TPoolable> GetItem(TArgs activationArgs);

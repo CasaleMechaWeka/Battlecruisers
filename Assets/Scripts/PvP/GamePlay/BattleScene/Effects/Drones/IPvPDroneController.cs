@@ -1,10 +1,10 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones
 {
-    public interface IPvPDroneController : IPvPPoolable<PvPDroneActivationArgs>
+    public interface IPvPDroneController : IPoolable<PvPDroneActivationArgs>
     {
         Faction Faction { get; }
 
