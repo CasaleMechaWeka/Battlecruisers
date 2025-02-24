@@ -21,6 +21,7 @@ using Unity.Netcode;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Data.Models.PrefabKeys;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -180,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newDrone;
         }
 
-        public async Task<IPvPAudioSourcePoolable> CreateAudioSource(IDeferrer realTimeDeferrer)
+        public async Task<IAudioSourcePoolable> CreateAudioSource(IDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);
             PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);

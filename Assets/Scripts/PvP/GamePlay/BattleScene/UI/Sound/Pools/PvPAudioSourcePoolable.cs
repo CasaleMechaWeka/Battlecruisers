@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools
 {
-    public class PvPAudioSourcePoolable : IPvPAudioSourcePoolable
+    public class PvPAudioSourcePoolable : IAudioSourcePoolable
     {
         private readonly IAudioSource _source;
         private readonly IDeferrer _realTimeDeferrer;

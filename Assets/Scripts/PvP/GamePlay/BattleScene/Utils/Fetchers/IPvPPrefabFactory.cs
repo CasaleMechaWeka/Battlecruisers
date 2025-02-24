@@ -12,9 +12,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 
@@ -48,6 +48,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             where TPvPStats : IPvPProjectileStats;
 
         Task<IPvPDroneController> CreateDrone();
-        Task<IPvPAudioSourcePoolable> CreateAudioSource(IDeferrer realTimeDeferrer);
+        Task<IAudioSourcePoolable> CreateAudioSource(IDeferrer realTimeDeferrer);
     }
 }

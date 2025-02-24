@@ -14,9 +14,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPSoundPlayer : IPvPSoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly IPvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
+        private readonly IPvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
 
-        public PvPSoundPlayer(ISoundFetcher soundFetcher, IPvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> audioSourcePool)
+        public PvPSoundPlayer(ISoundFetcher soundFetcher, IPvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> audioSourcePool)
         {
             PvPHelper.AssertIsNotNull(soundFetcher, audioSourcePool);
 

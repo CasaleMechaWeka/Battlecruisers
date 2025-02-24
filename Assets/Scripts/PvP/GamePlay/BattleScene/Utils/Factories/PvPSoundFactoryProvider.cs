@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
 
-        private PvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
+        private PvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
 
         private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(components /*, poolProviders*/);
             IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-            _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
+            _audioSourcePool = new PvPPool<IAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
             SoundFetcher = new SoundFetcher();
             /*            _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
                         SoundFetcher = new PvPSoundFetcher();

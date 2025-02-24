@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.De
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Sound.Pools;
 
@@ -16,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPProjectilePoolProvider ProjectilePoolProvider { get; }
         IPvPUnitPoolProvider UnitPoolProvider { get; }
         IPvPPool<IPvPDroneController, PvPDroneActivationArgs> DronePool { get; }
-        IPvPPool<IPvPAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool { get; }
+        IPvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool { get; }
         IPvPUnitToPoolMap UnitToPoolMap { get; }
     }
 }
