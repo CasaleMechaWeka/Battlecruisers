@@ -41,8 +41,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public virtual float YSpawnOffset => 0.0f; // Default value for non-ship units
 
-        private PvPDirection _facingDirection;
-        public PvPDirection FacingDirection
+        private Direction _facingDirection;
+        public Direction FacingDirection
         {
             get { return _facingDirection; }
             set
@@ -245,14 +245,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             gameObject.transform.rotation = rotation;
         }
 
-        private int FindYRotation(PvPDirection facingDirection)
+        private int FindYRotation(Direction facingDirection)
         {
             switch (facingDirection)
             {
-                case PvPDirection.Right:
+                case Direction.Right:
                     // Sprites by default are facing right, so DO NOT mirror
                     return 0;
-                case PvPDirection.Left:
+                case Direction.Left:
                     // Sprites by default are facing right, so DO mirror
                     return 180;
                 default:

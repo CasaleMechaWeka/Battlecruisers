@@ -19,18 +19,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public bool IsMatch(ITarget target)
         {
             return
-                (_source.FacingDirection == PvPDirection.Right
+                (_source.FacingDirection == Direction.Right
                     && target.Position.x > _source.Position.x)
-                || (_source.FacingDirection == PvPDirection.Left
+                || (_source.FacingDirection == Direction.Left
                     && target.Position.x < _source.Position.x);
         }
 
         public bool IsMatch(ITarget target, VariantPrefab variant)
         {
             return
-                (_source.FacingDirection == PvPDirection.Right
+                (_source.FacingDirection == Direction.Right
                     && target.Position.x > _source.Position.x)
-                || (_source.FacingDirection == PvPDirection.Left
+                || (_source.FacingDirection == Direction.Left
                     && target.Position.x < _source.Position.x);
         }
     }

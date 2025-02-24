@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
         PvPBuildableOutlineController SelectedBuildableOutlinePrefab { get; set; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
-        PvPDirection Direction { get; }
+        Direction Direction { get; }
         float YAdjustmentInM { get; }
         Vector2 TrashTalkScreenPosition { get; }
         IGameObject Fog { get; }

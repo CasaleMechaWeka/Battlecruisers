@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override Vector2 DroneAreaSize => base.Size;
         public override TargetType TargetType => TargetType.Cruiser;
         public Vector2 droneAreaPositionAdjustment;
-        public override Vector2 DroneAreaPosition => FacingDirection == PvPDirection.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
+        public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
         public Animator bonesAnimator;
         private float animationSpeed = 1.0f;
 

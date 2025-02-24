@@ -32,20 +32,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         {
             if (DirectionChanged != null)
             {
-                PvPDirection? newDirection = null;
+                Direction? newDirection = null;
 
                 if (oldVelocity.x >= 0 && currentVelocity.x < 0)
                 {
-                    newDirection = PvPDirection.Left;
+                    newDirection = Direction.Left;
                 }
                 else if (oldVelocity.x <= 0 && currentVelocity.x > 0)
                 {
-                    newDirection = PvPDirection.Right;
+                    newDirection = Direction.Right;
                 }
 
                 if (newDirection != null)
                 {
-                    DirectionChanged.Invoke(this, new PvPXDirectionChangeEventArgs((PvPDirection)newDirection));
+                    DirectionChanged.Invoke(this, new PvPXDirectionChangeEventArgs((Direction)newDirection));
                 }
             }
         }

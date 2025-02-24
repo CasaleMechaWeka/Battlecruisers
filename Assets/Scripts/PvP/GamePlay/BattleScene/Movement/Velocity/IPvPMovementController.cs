@@ -1,14 +1,14 @@
+using BattleCruisers.Buildables.Units;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity
 {
     public class PvPXDirectionChangeEventArgs : EventArgs
     {
-        public PvPDirection NewDirection { get; }
+        public Direction NewDirection { get; }
 
-        public PvPXDirectionChangeEventArgs(PvPDirection newDirection)
+        public PvPXDirectionChangeEventArgs(Direction newDirection)
         {
             NewDirection = newDirection;
         }

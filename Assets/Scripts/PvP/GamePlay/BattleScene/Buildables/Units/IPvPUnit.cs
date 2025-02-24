@@ -9,16 +9,11 @@ using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
 {
-    public enum PvPDirection
-    {
-        Left, Right, Up, Down
-    }
-
     public interface IPvPUnit : IPvPBuildable, IRemovable, IPvPPoolable<PvPBuildableActivationArgs>
     {
         UnitCategory Category { get; }
         IDroneConsumerProvider DroneConsumerProvider { set; }
-        PvPDirection FacingDirection { get; }
+        Direction FacingDirection { get; }
         float MaxVelocityInMPerS { get; }
         bool IsUltra { get; }
 

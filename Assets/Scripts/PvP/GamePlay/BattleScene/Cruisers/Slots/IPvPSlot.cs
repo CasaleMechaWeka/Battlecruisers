@@ -1,6 +1,6 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using System.Collections.ObjectModel;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// the cruiser.
         /// </summary>
         PvPBuildingFunction BuildingFunctionAffinity { get; }
-        PvPDirection Direction { get; }
+        Direction Direction { get; }
         IBroadcastingProperty<IPvPBuilding> Building { get; }
         ObservableCollection<IPvPBoostProvider> BoostProviders { get; }
         bool IsVisibleRederer { get; set; }

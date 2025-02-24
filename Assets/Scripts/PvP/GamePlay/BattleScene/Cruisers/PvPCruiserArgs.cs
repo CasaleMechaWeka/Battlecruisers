@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IDroneConsumerProvider DroneConsumerProvider { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
-        public PvPDirection FacingDirection { get; }
+        public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
         public PvPFogStrength FogStrength { get; }
         public IPvPCruiserHelper Helper { get; }
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IDroneConsumerProvider droneConsumerProvider,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-           PvPDirection facingDirection,
+           Direction facingDirection,
             IRepairManager repairManager,
             PvPFogStrength fogStrength,
             IPvPCruiserHelper helper,
@@ -105,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IDroneConsumerProvider droneConsumerProvider,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            PvPDirection facingDirection,
+            Direction facingDirection,
             IRepairManager repairManager,
             PvPFogStrength fogStrength,
             IPvPCruiserHelper helper,

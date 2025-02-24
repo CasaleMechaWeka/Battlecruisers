@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -39,8 +40,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPBuildingFunction buildingFunctionAffinity;
         public PvPBuildingFunction BuildingFunctionAffinity => buildingFunctionAffinity;
 
-        public PvPDirection direction;
-        public PvPDirection Direction => direction;
+        public Direction direction;
+        public Direction Direction => direction;
 
         public float index;
         public float Index => index;
