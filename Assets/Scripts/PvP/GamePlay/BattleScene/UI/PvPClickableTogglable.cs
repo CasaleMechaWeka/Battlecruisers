@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI;
 using System;
 using UnityEngine.EventSystems;
 
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
         IPointerUpHandler,
         IPointerEnterHandler,
         IPointerExitHandler,
-        IPvPClickableEmitter,
+        IClickableEmitter,
         IPvPPointerUpDownEmitter
     {
         private bool _isPressed = false;

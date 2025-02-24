@@ -16,6 +16,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.BattleScene.Lifetime;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Wind;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
@@ -40,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public PvPSkyboxInitialiser SkyboxInitialiser { get; private set; }
         public PvPClickableEmitter backgroundClickableEmitter;
-        public IPvPClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
+        public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
         public PvPTargetIndicatorController targetIndicator;
         public IPvPTargetIndicator TargetIndicator => targetIndicator;

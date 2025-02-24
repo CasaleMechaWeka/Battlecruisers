@@ -1,18 +1,18 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
+using BattleCruisers.UI;
 
 namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene
 {
     public class PvPInformatorDismisser
     {
-        private readonly IPvPClickableEmitter _background;
+        private readonly IClickableEmitter _background;
         private readonly IPvPUIManager _uiManager;
         private readonly PvPHecklePanelController _panelController;
 
-        public PvPInformatorDismisser(IPvPClickableEmitter background, IPvPUIManager uiManager, PvPHecklePanelController hecklePanel)
+        public PvPInformatorDismisser(IClickableEmitter background, IPvPUIManager uiManager, PvPHecklePanelController hecklePanel)
         {
             PvPHelper.AssertIsNotNull(background, uiManager);
 

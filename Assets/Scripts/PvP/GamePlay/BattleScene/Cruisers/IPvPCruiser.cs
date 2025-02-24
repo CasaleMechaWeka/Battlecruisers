@@ -7,17 +7,17 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-    public interface IPvPCruiser : IPvPCruiserController, ITarget, IComparableItem, IPvPClickableEmitter
+    public interface IPvPCruiser : IPvPCruiserController, ITarget, IComparableItem, IClickableEmitter
     {
 
         IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
