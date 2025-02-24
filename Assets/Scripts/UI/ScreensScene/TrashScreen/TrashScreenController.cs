@@ -120,7 +120,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             if (_cameraOfCaptains != null)
             {
-                _cameraOfCaptains.orthographicSize = 5f;
+                _cameraOfCaptains.orthographicSize = 8;
             }
 
             ITrashTalkData trashTalkData;
@@ -157,7 +157,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             sky.sprite = skySprite.Sprite;
 
             _musicPlayer.PlayTrashMusic();
-
+            
             // Play taunt animation on captains
             PlayTauntAnimationOnCaptains();
         }
@@ -195,7 +195,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             if (_cameraOfCaptains != null)
             {
-                _cameraOfCaptains.orthographicSize = 2.5f;
+                _cameraOfCaptains.orthographicSize = 5;
             }
         }
     }
