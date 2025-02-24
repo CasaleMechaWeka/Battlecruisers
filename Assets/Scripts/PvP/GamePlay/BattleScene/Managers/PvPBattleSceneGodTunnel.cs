@@ -351,7 +351,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             return new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(buildingKey.BuildingCategory), buildingKey.PrefabName.Remove(0, 3));
         }
-        public IList<PvPUnitKey> GetUnlockedUnits_LeftPlayer(PvPUnitCategory pvpUnitCategory)
+        public IList<PvPUnitKey> GetUnlockedUnits_LeftPlayer(UnitCategory pvpUnitCategory)
         {
             UnitCategory unitCategory = convertPvPUnitCategory2PvEUnitCategory(pvpUnitCategory);
             IList<UnitKey> iList = _unlockedUnits_LeftPlayer.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
@@ -374,7 +374,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             return new UnitKey(convertPvPUnitCategory2PvEUnitCategory(unitKey.UnitCategory), unitKey.PrefabName.Remove(0, 3));
         }
 
-        public IList<PvPUnitKey> GetUnlockedUnits_RightPlayer(PvPUnitCategory pvpUnitCategory)
+        public IList<PvPUnitKey> GetUnlockedUnits_RightPlayer(UnitCategory pvpUnitCategory)
         {
             UnitCategory unitCategory = convertPvPUnitCategory2PvEUnitCategory(pvpUnitCategory);
             IList<UnitKey> iList = _unlockedUnits_RightPlayer.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
@@ -407,22 +407,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             RegisterUnlockedBuildablesAIPlayerServerRpc();
         }
 
-        private UnitCategory convertPvPUnitCategory2PvEUnitCategory(PvPUnitCategory category)
+        private UnitCategory convertPvPUnitCategory2PvEUnitCategory(UnitCategory category)
         {
             switch (category)
             {
-                case PvPUnitCategory.Aircraft: return UnitCategory.Aircraft;
-                case PvPUnitCategory.Naval: return UnitCategory.Naval;
+                case UnitCategory.Aircraft: return UnitCategory.Aircraft;
+                case UnitCategory.Naval: return UnitCategory.Naval;
                 default: throw new System.Exception();
             }
         }
 
-        private PvPUnitCategory convertPvEUnitCategory2PvPUnitCategory(UnitCategory category)
+        private UnitCategory convertPvEUnitCategory2PvPUnitCategory(UnitCategory category)
         {
             switch (category)
             {
-                case UnitCategory.Aircraft: return PvPUnitCategory.Aircraft;
-                case UnitCategory.Naval: return PvPUnitCategory.Naval;
+                case UnitCategory.Aircraft: return UnitCategory.Aircraft;
+                case UnitCategory.Naval: return UnitCategory.Naval;
                 default: throw new System.Exception();
             }
         }

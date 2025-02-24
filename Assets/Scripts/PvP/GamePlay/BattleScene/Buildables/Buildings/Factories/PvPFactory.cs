@@ -1,8 +1,8 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Utils;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPUnitSpawnDecider _unitSpawnDecider;
         private IPvPPool<PvPUnit, PvPBuildableActivationArgs> _unitPool;
 
-        public abstract PvPUnitCategory UnitCategory { get; }
+        public abstract UnitCategory UnitCategory { get; }
 
         public event EventHandler<PvPUnitStartedEventArgs> UnitStarted;
         public event EventHandler<PvPUnitCompletedEventArgs> UnitCompleted;
@@ -458,7 +458,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        protected virtual void OnStartBuildingUnit(PvPUnitCategory category, string prefabName, int variantIndex)
+        protected virtual void OnStartBuildingUnit(UnitCategory category, string prefabName, int variantIndex)
         {
         }
 

@@ -5,14 +5,10 @@ using System.Collections.ObjectModel;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
 {
-    public enum PvPUnitCategory
-    {
-        Naval, Aircraft//, Untouchable
-    }
-
     public enum PvPDirection
     {
         Left, Right, Up, Down
@@ -20,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
     public interface IPvPUnit : IPvPBuildable, IRemovable, IPvPPoolable<PvPBuildableActivationArgs>
     {
-        PvPUnitCategory Category { get; }
+        UnitCategory Category { get; }
         IDroneConsumerProvider DroneConsumerProvider { set; }
         PvPDirection FacingDirection { get; }
         float MaxVelocityInMPerS { get; }

@@ -131,34 +131,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             switch (uKey.UnitCategory)
             {
                 case UnitCategory.Aircraft:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvP" + uKey.PrefabName);
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvP" + uKey.PrefabName);
                 case UnitCategory.Naval:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvP" + uKey.PrefabName);
+                    return new PvPUnitKey(UnitCategory.Naval, "PvP" + uKey.PrefabName);
                 // case UnitCategory.Untouchable:
-                //     return new PvPUnitKey(PvPUnitCategory.Untouchable, "PvP" + uKey.PrefabName);
+                //     return new PvPUnitKey(UnitCategory.Untouchable, "PvP" + uKey.PrefabName);
                 default:
                     throw new NullReferenceException();
             }
         }
 
-        private PvPUnitCategory ConvertToPvP(UnitCategory category)
+        private UnitCategory ConvertToPvP(UnitCategory category)
         {
             switch (category)
             {
                 case UnitCategory.Aircraft:
-                    return PvPUnitCategory.Aircraft;
+                    return UnitCategory.Aircraft;
                 case UnitCategory.Naval:
-                    return PvPUnitCategory.Naval;
+                    return UnitCategory.Naval;
                 // case UnitCategory.Untouchable:
-                //     return PvPUnitCategory.Untouchable;
+                //     return UnitCategory.Untouchable;
                 default:
                     throw new NullReferenceException();
             }
         }
 
-        public IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> GetUnits()
+        public IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> GetUnits()
         {
-            IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> categoryToUnits = new Dictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>>();
+            IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> categoryToUnits = new Dictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>>();
 
             foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
             {

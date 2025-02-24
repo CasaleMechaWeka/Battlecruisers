@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -78,29 +78,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
         public static class PvPUnits
         {
             // Aircraft
-            public static PvPUnitKey PvPBomber { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBomber");
-            public static PvPUnitKey PvPFighter { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPFighter");
-            public static PvPUnitKey PvPGunship { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPGunship");
-            public static PvPUnitKey PvPSteamCopter { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSteamCopter");
-            public static PvPUnitKey PvPBroadsword { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBroadsword");
-            public static PvPUnitKey PvPStratBomber { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPStratBomber");
-            public static PvPUnitKey PvPSpyPlane { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpyPlane");
-            public static PvPUnitKey PvPTestAircraft { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPTestAircraft");
-            public static PvPUnitKey PvPSpySatellite { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpySatellite");
-            public static PvPUnitKey PvPMissileFighter { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPMissileFighter");
-            public static PvPUnitKey PvPDeathstar { get; } = new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPDeathstar");
+            public static PvPUnitKey PvPBomber { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPBomber");
+            public static PvPUnitKey PvPFighter { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPFighter");
+            public static PvPUnitKey PvPGunship { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPGunship");
+            public static PvPUnitKey PvPSteamCopter { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPSteamCopter");
+            public static PvPUnitKey PvPBroadsword { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPBroadsword");
+            public static PvPUnitKey PvPStratBomber { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPStratBomber");
+            public static PvPUnitKey PvPSpyPlane { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPSpyPlane");
+            public static PvPUnitKey PvPTestAircraft { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPTestAircraft");
+            public static PvPUnitKey PvPSpySatellite { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPSpySatellite");
+            public static PvPUnitKey PvPMissileFighter { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPMissileFighter");
+            public static PvPUnitKey PvPDeathstar { get; } = new PvPUnitKey(UnitCategory.Aircraft, "PvPDeathstar");
 
             // Ships
-            public static PvPUnitKey PvPAttackBoat { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackBoat");
-            public static PvPUnitKey PvPAttackRIB { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackRIB");
-            public static PvPUnitKey PvPFrigate { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPFrigate");
-            public static PvPUnitKey PvPDestroyer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPDestroyer");
-            public static PvPUnitKey PvPSiegeDestroyer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPSiegeDestroyer");
-            public static PvPUnitKey PvPArchonBattleship { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPArchonBattleship");
-            public static PvPUnitKey PvPGlassCannoneer { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPGlassCannoneer");
-            public static PvPUnitKey PvPGunBoat { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPGunBoat");
-            public static PvPUnitKey PvPRocketTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPRocketTurtle");
-            public static PvPUnitKey PvPFlakTurtle { get; } = new PvPUnitKey(PvPUnitCategory.Naval, "PvPFlakTurtle");
+            public static PvPUnitKey PvPAttackBoat { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPAttackBoat");
+            public static PvPUnitKey PvPAttackRIB { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPAttackRIB");
+            public static PvPUnitKey PvPFrigate { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPFrigate");
+            public static PvPUnitKey PvPDestroyer { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPDestroyer");
+            public static PvPUnitKey PvPSiegeDestroyer { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPSiegeDestroyer");
+            public static PvPUnitKey PvPArchonBattleship { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPArchonBattleship");
+            public static PvPUnitKey PvPGlassCannoneer { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPGlassCannoneer");
+            public static PvPUnitKey PvPGunBoat { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPGunBoat");
+            public static PvPUnitKey PvPRocketTurtle { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPRocketTurtle");
+            public static PvPUnitKey PvPFlakTurtle { get; } = new PvPUnitKey(UnitCategory.Naval, "PvPFlakTurtle");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {

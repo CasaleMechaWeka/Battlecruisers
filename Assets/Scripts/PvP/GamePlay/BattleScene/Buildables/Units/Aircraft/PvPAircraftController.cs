@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
@@ -217,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void Kamikaze(ITarget kamikazeTarget)
         {
-            Assert.AreEqual(PvPUnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
+            Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
             Assert.AreEqual(PvPBuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
 
             if (IsInKamikazeMode)

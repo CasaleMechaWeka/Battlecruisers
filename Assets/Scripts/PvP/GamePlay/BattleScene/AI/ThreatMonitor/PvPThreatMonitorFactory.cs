@@ -1,7 +1,7 @@
 using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -32,13 +32,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
         public IThreatMonitor CreateAirThreatMonitor()
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
-            return new PvPFactoryThreatMonitor(_playerCruiser, threatEvaluator, PvPUnitCategory.Aircraft);
+            return new PvPFactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Aircraft);
         }
 
         public IThreatMonitor CreateNavalThreatMonitor()
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(NAVAL_HIGH_THREAT_DRONE_NUM);
-            return new PvPFactoryThreatMonitor(_playerCruiser, threatEvaluator, PvPUnitCategory.Naval);
+            return new PvPFactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Naval);
         }
 
         public IThreatMonitor CreateRocketThreatMonitor()

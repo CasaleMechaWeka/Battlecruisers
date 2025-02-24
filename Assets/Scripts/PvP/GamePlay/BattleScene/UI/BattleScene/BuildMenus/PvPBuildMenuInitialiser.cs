@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             IList<IPvPBuildingGroup> buildingGroups,
-            IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
+            IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
             IPvPBuildableSorterFactory sorterFactory,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             ISpriteProvider spriteProvider,

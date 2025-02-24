@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -26,12 +27,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPVolumeAwareAudioSource _engineAudioSource;
 
         [Header("Other")]
-        public PvPUnitCategory category;
+        public UnitCategory category;
         public Rigidbody2D rigidBody;
 
         #region Properties
         public IDroneConsumerProvider DroneConsumerProvider { set { _droneConsumerProvider = value; } }
-        public PvPUnitCategory Category => category;
+        public UnitCategory Category => category;
         public override Vector2 Velocity => rigidBody.velocity;
         public virtual bool IsUltra => false;
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         void AddCompletedLevel(PvPCompletedLevel completedLevel);
 
         IList<PvPBuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
-        IList<PvPUnitKey> GetUnlockedUnits(PvPUnitCategory unitCategory);
+        IList<PvPUnitKey> GetUnlockedUnits(UnitCategory unitCategory);
 
         bool IsUnitUnlocked(PvPUnitKey unitKey);
         bool IsBuildingUnlocked(PvPBuildingKey buildingKey);

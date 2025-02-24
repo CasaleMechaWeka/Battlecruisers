@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Utils.DataStrctures;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public interface IPvPFactory : IPvPBuilding
     {
-        PvPUnitCategory UnitCategory { get; }
+        UnitCategory UnitCategory { get; }
         int NumOfDrones { get; }
         IPvPBuildableWrapper<IPvPUnit> UnitWrapper { get; set; }
         IPvPUnit UnitUnderConstruction { get; set; }

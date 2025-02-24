@@ -25,15 +25,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             // return null;
         }
 
-        private BattleCruisers.Buildables.Units.UnitCategory convertToPvP(PvPUnitCategory category)
+        private BattleCruisers.Buildables.Units.UnitCategory convertToPvP(UnitCategory category)
         {
             switch (category)
             {
-                case PvPUnitCategory.Aircraft:
+                case UnitCategory.Aircraft:
                     return UnitCategory.Aircraft;
-                case PvPUnitCategory.Naval:
+                case UnitCategory.Naval:
                     return UnitCategory.Naval;
-                // case PvPUnitCategory.Untouchable:
+                // case UnitCategory.Untouchable:
                 //     return UnitCategory.Untouchable;
                 default:
                     throw new NullReferenceException();

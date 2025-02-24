@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
@@ -10,12 +11,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus
 {
-    public class PvPUnitMenus : PvPBuildableMenus<IPvPUnit, PvPUnitCategory, PvPUnitsMenuController>
+    public class PvPUnitMenus : PvPBuildableMenus<IPvPUnit, UnitCategory, PvPUnitsMenuController>
     {
         private IPvPUnitClickHandler _clickHandler;
 
         public void Initialise(
-            IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> buildables,
+            IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> buildables,
             IPvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<IPvPUnit> buildableSorter,

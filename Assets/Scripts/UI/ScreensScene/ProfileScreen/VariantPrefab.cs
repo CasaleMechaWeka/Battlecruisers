@@ -328,41 +328,41 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     return new PvPBuildingKey(BuildingCategory.Offence, "PvPCannon");
 
                 case ParentBuildable.Bomber:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBomber");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPBomber");
                 case ParentBuildable.Fighter:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPFighter");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPFighter");
                 case ParentBuildable.MissileFighter:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPMissileFighter");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPMissileFighter");
                 case ParentBuildable.Gunship:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPGunship");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPGunship");
                 case ParentBuildable.SteamCopter:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSteamCopter");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPSteamCopter");
                 case ParentBuildable.Broadsword:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPBroadsword");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPBroadsword");
                 case ParentBuildable.StratBomber:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPStratBomber");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPStratBomber");
                 case ParentBuildable.SpyPlane:
-                    return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvPSpyPlane");
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvPSpyPlane");
                 case ParentBuildable.AttackBoat:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackBoat");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPAttackBoat");
                 case ParentBuildable.AttackRIB:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPAttackRIB");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPAttackRIB");
                 case ParentBuildable.Frigate:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPFrigate");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPFrigate");
                 case ParentBuildable.Destroyer:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPDestroyer");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPDestroyer");
                 case ParentBuildable.SiegeDestroyer:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPSiegeDestroyer");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPSiegeDestroyer");
                 case ParentBuildable.ArchonBattleship:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPArchonBattleship");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPArchonBattleship");
                 case ParentBuildable.GlassCannoneer:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPGlassCannoneer");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPGlassCannoneer");
                 case ParentBuildable.GunBoat:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPGunBoat");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPGunBoat");
                 case ParentBuildable.RocketTurtle:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPRocketTurtle");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPRocketTurtle");
                 case ParentBuildable.FlakTurtle:
-                    return new PvPUnitKey(PvPUnitCategory.Naval, "PvPFlakTurtle");
+                    return new PvPUnitKey(UnitCategory.Naval, "PvPFlakTurtle");
             }
             return null;
         }

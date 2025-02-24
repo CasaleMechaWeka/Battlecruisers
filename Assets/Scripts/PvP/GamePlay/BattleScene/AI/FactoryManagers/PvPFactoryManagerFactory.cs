@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
 
         public IPvPFactoryManager CreateNavalFactoryManager(PvPCruiser aiCruiser)
         {
-            IList<PvPUnitKey> availableShipKeys = aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.GetUnlockedUnits_LeftPlayer(PvPUnitCategory.Naval) : _battleSceneGodTunnel.GetUnlockedUnits_RightPlayer(PvPUnitCategory.Naval);
+            IList<PvPUnitKey> availableShipKeys = aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.GetUnlockedUnits_LeftPlayer(UnitCategory.Naval) : _battleSceneGodTunnel.GetUnlockedUnits_RightPlayer(UnitCategory.Naval);
             IList<IPvPBuildableWrapper<IPvPUnit>> availableShips =
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
                     availableShips,
                     aiCruiser.DroneManager,
                     new PvPAffordableUnitFilter());
-            return new PvPFactoryManager(PvPUnitCategory.Naval, aiCruiser, unitChooser);
+            return new PvPFactoryManager(UnitCategory.Naval, aiCruiser, unitChooser);
         }
 
         public IPvPFactoryManager CreateAirfactoryManager(PvPCruiser aiCruiser)
@@ -86,7 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
                     navalThreatMonitor,
                     threatLevelThreshold: ThreatLevel.High);
 
-            return new PvPFactoryManager(PvPUnitCategory.Aircraft, aiCruiser, unitchooser);
+            return new PvPFactoryManager(UnitCategory.Aircraft, aiCruiser, unitchooser);
         }
     }
 }

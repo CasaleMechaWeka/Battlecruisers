@@ -1,5 +1,5 @@
+using BattleCruisers.Buildables.Units;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys
@@ -15,9 +15,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         }
 
         [SerializeField]
-        private PvPUnitCategory _unitCategory;
+        private UnitCategory _unitCategory;
 
-        public PvPUnitCategory UnitCategory
+        public UnitCategory UnitCategory
         {
             get { return _unitCategory; }
             private set { _unitCategory = value; }
@@ -31,19 +31,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             }
         }
 
-        public PvPUnitKey(PvPUnitCategory category, string prefabFileName)
+        public PvPUnitKey(UnitCategory category, string prefabFileName)
             : base(prefabFileName, PvPBuildableType.Unit)
         {
             UnitCategory = category;
         }
 
-        private string UnitCategoryToFolderName(PvPUnitCategory unitCategory)
+        private string UnitCategoryToFolderName(UnitCategory unitCategory)
         {
             switch (unitCategory)
             {
-                case PvPUnitCategory.Aircraft:
+                case UnitCategory.Aircraft:
                     return PvPUnitFolderNames.AIRCRAFT;
-                case PvPUnitCategory.Naval:
+                case UnitCategory.Naval:
                     return PvPUnitFolderNames.NAVAL;
                 default:
                     throw new ArgumentException();

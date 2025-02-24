@@ -1,10 +1,10 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public LayerMask aircraftLayerMask;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.AirFactory;
-        public override PvPUnitCategory UnitCategory => PvPUnitCategory.Aircraft;
+        public override UnitCategory UnitCategory => UnitCategory.Aircraft;
         public override LayerMask UnitLayerMask => aircraftLayerMask;
 
 
@@ -140,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         // StartBuildingUnit
 
-        protected override void OnStartBuildingUnit(PvPUnitCategory category, string prefabName, int variantIndex)
+        protected override void OnStartBuildingUnit(UnitCategory category, string prefabName, int variantIndex)
         {
             OnStartBuildingUnitServerRpc(category, prefabName, variantIndex);
         }
@@ -356,7 +356,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ServerRpc(RequireOwnership = true)]
-        private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName, int variantIndex)
+        private void OnStartBuildingUnitServerRpc(UnitCategory category, string prefabName, int variantIndex)
         {
             PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
             UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);

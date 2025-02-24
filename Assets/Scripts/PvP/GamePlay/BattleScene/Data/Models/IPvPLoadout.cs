@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         PvPHullKey Hull { get; set; }
 
         IList<PvPBuildingKey> GetBuildings(BuildingCategory buildingCategory);
-        IList<PvPUnitKey> GetUnits(PvPUnitCategory unitCategory);
+        IList<PvPUnitKey> GetUnits(UnitCategory unitCategory);
 
         void AddBuilding(PvPBuildingKey buildingToAdd);
         void RemoveBuilding(PvPBuildingKey buildingToRemove);

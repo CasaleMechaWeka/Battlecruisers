@@ -1,8 +1,8 @@
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Utils;
@@ -22,10 +22,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
     /// </summary>
     public class PvPFactoryThreatMonitor : PvPImmediateThreatMonitor
     {
-        private readonly PvPUnitCategory _threatCategory;
+        private readonly UnitCategory _threatCategory;
         private readonly IList<IPvPFactory> _factories;
 
-        public PvPFactoryThreatMonitor(IPvPCruiserController enemyCruiser, IThreatEvaluator threatEvaluator, PvPUnitCategory threatCategory)
+        public PvPFactoryThreatMonitor(IPvPCruiserController enemyCruiser, IThreatEvaluator threatEvaluator, UnitCategory threatCategory)
             : base(enemyCruiser, threatEvaluator)
         {
             _threatCategory = threatCategory;

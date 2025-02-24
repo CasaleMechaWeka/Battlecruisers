@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Models;
@@ -261,7 +261,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             return _unlockedBuildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
         }
 
-        public IList<PvPUnitKey> GetUnlockedUnits(PvPUnitCategory unitCategory)
+        public IList<PvPUnitKey> GetUnlockedUnits(UnitCategory unitCategory)
         {
             return _unlockedUnits.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
         }

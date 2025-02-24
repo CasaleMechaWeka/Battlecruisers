@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
@@ -25,11 +25,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
     public class PvPFactoryManager : IPvPFactoryManager
     {
         private readonly HashSet<IPvPFactory> _factories;
-        private readonly PvPUnitCategory _factoryUnitCategory;
+        private readonly UnitCategory _factoryUnitCategory;
         private readonly IPvPCruiserController _friendlyCruiser;
         private readonly IPvPUnitChooser _unitChooser;
 
-        public PvPFactoryManager(PvPUnitCategory factoryUnitCategory, IPvPCruiserController friendlyCruiser, IPvPUnitChooser unitChooser)
+        public PvPFactoryManager(UnitCategory factoryUnitCategory, IPvPCruiserController friendlyCruiser, IPvPUnitChooser unitChooser)
         {
             PvPHelper.AssertIsNotNull(friendlyCruiser, unitChooser);
 

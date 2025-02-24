@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using System;
@@ -21,10 +22,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             switch (unit.Category)
             {
-                case PvPUnitCategory.Aircraft:
+                case UnitCategory.Aircraft:
                     return GetAircraftPool(unit);
 
-                case PvPUnitCategory.Naval:
+                case UnitCategory.Naval:
                     return GetShipPool(unit);
 
                 default:
