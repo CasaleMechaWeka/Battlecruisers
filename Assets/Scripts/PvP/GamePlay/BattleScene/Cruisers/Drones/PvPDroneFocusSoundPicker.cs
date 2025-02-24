@@ -4,7 +4,7 @@ using BattleCruisers.UI.Sound;
 using System;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones
 {
-    public class PvPDroneFocusSoundPicker : IPvPDroneFocusSoundPicker
+    public class PvPDroneFocusSoundPicker : IDroneFocusSoundPicker
     {
         //TODO update tests
         public PrioritisedSoundKey PickSound(DroneConsumerState preFocusState, DroneConsumerState postFocusState)
