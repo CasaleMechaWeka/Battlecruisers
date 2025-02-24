@@ -19,7 +19,7 @@ using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
-    public abstract class PvPFactory : PvPBuilding, IPvPFactory, IPvPDroneConsumerProvider
+    public abstract class PvPFactory : PvPBuilding, IPvPFactory, IDroneConsumerProvider
     {
         private IPvPUnitSpawnPositionFinder _unitSpawnPositionFinder;
         private IPvPUnitSpawnDecider _unitSpawnDecider;

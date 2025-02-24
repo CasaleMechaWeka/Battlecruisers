@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPRepairManager : IRepairManager
     {
         private readonly IDroneFeedbackFactory _feedbackFactory;
-        private readonly IPvPDroneConsumerProvider _droneConsumerProvider;
+        private readonly IDroneConsumerProvider _droneConsumerProvider;
         private readonly IPvPCruiser _cruiser;
         private readonly IDictionary<IRepairable, IDroneFeedback> _repairableToFeedback;
 
@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // until cruiser has been initialised.  Hence directly pass drone consumer provider.
         public PvPRepairManager(
             IDroneFeedbackFactory feedbackFactory,
-            IPvPDroneConsumerProvider droneConsumerProvider,
+            IDroneConsumerProvider droneConsumerProvider,
             IPvPCruiser cruiser)
         {
             PvPHelper.AssertIsNotNull(feedbackFactory, droneConsumerProvider, cruiser);

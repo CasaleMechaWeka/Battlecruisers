@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones
 {
-    public class PvPDroneConsumerProvider : IPvPDroneConsumerProvider
+    public class PvPDroneConsumerProvider : IDroneConsumerProvider
     {
         private IDroneManager _droneManager;
 

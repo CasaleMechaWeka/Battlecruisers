@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPUIManager UiManager { get; }
         IDroneManager DroneManager { get; }
         IPvPDroneFocuser DroneFocuser { get; }
-        IPvPDroneConsumerProvider DroneConsumerProvider { get; }
+        IDroneConsumerProvider DroneConsumerProvider { get; }
         IPvPFactoryProvider FactoryProvider { get; }
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         PvPDirection FacingDirection { get; }

@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IDroneFeedback _droneFeedback;
 
         protected IPvPUIManager _uiManager;
-        protected IPvPDroneConsumerProvider _droneConsumerProvider;
+        protected IDroneConsumerProvider _droneConsumerProvider;
         protected IPvPTargetFactoriesProvider _targetFactories;
         protected IPvPMovementControllerFactory _movementControllerFactory;
         protected IPvPAircraftProvider _aircraftProvider;

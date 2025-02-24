@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 _variantIndexOfSelectedBuilding = value;
             }
         }
-        public IPvPDroneConsumerProvider DroneConsumerProvider { get; private set; }
+        public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public PvPDirection Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
