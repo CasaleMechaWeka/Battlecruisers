@@ -1,10 +1,11 @@
 using System;
+using BattleCruisers.UI.Commands;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Commands
 {
-    public class PvPCommand : PvPCommandBase, IPvPCommand
+    public class PvPCommand : PvPCommandBase, ICommand
     {
         private readonly Action _action;
 

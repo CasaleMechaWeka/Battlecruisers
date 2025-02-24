@@ -30,6 +30,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.UI.Commands;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
@@ -151,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private bool IsDroneConsumerFocusable => DroneConsumer != null;
         protected bool IsDroneConsumerFocusable_PvPClient;
-        public IPvPCommand ToggleDroneConsumerFocusCommand { get; private set; }
+        public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
         public bool IsInitialised => BuildProgressBoostable != null;
 
 

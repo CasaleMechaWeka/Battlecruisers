@@ -5,9 +5,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Commands;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.UI;
+using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Localisation;
 using System;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         int NumOfDronesRequired { get; }
         float BuildTimeInS { get; }
         IDroneConsumer DroneConsumer { get; }
-        IPvPCommand ToggleDroneConsumerFocusCommand { get; }
+        ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
         ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; }
         IPvPBoostable BuildProgressBoostable { get; }
