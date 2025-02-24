@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback
 {
-    public class PvPSpawnPositionFinder : IPvPSpawnPositionFinder
+    public class PvPSpawnPositionFinder : ISpawnPositionFinder
     {
         private readonly IRandomGenerator _random;
         private readonly float _waterLine;
