@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _waterLine = waterLine;
         }
 
-        public Vector2 FindSpawnPosition(IPvPDroneConsumerInfo droneConsumerInfo)
+        public Vector2 FindSpawnPosition(IDroneConsumerInfo droneConsumerInfo)
         {
             Assert.IsNotNull(droneConsumerInfo);
 

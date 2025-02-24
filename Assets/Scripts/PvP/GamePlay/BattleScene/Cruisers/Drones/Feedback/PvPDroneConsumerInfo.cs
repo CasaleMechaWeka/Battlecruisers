@@ -1,9 +1,10 @@
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Drones.Feedback;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback
 {
-    public class PvPDroneConsumerInfo : IPvPDroneConsumerInfo
+    public class PvPDroneConsumerInfo : IDroneConsumerInfo
     {
         public IDroneConsumer DroneConsumer { get; }
         public Vector2 Position { get; }
