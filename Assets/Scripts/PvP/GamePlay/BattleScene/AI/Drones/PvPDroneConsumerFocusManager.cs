@@ -1,7 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -9,6 +8,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
 using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.Drones;
+using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones
 {
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
     {
         private readonly IDroneFocusingStrategy _strategy;
         private readonly IPvPCruiserBuildingMonitor _aiBuildingMonitor;
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
         private readonly IList<IPvPFactory> _completedFactories;
         private readonly IDroneConsumerFocusHelper _focusHelper;
 

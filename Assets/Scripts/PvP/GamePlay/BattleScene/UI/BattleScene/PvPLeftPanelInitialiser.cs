@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public RectTransform rectTransformThis;
 
         /*        public async Task<PvPLeftPanelComponents> Initialise(
-                    IPvPDroneManager droneManager,
+                    IDroneManager droneManager,
                     IPvPDroneManagerMonitor droneManagerMonitor,
                     IPvPUIManager uiManager,
                     ILoadout playerLoadout,
@@ -137,7 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
         }
 
-        private IHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        private IHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }

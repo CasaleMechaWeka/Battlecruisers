@@ -8,11 +8,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
 {
     public class PvPDroneConsumerFocusHelper : IDroneConsumerFocusHelper
     {
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
         private readonly IPvPFactoryAnalyzer _factoryAnalyzer;
         private readonly IPvPBuildingProvider _affordableInProgressNonFocusedBuildingProvider;
 
-        public PvPDroneConsumerFocusHelper(IPvPDroneManager droneManager, IPvPFactoryAnalyzer factoryAnalyzer, IPvPBuildingProvider affordableInProgressNonFocusedBuildingProvider)
+        public PvPDroneConsumerFocusHelper(IDroneManager droneManager, IPvPFactoryAnalyzer factoryAnalyzer, IPvPBuildingProvider affordableInProgressNonFocusedBuildingProvider)
         {
             PvPHelper.AssertIsNotNull(droneManager, factoryAnalyzer, affordableInProgressNonFocusedBuildingProvider);
 

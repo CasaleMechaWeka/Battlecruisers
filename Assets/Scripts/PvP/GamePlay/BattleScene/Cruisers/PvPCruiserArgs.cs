@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Faction Faction { get; }
         public IPvPCruiser EnemyCruiser { get; }
         public IPvPUIManager UiManager { get; }
-        public IPvPDroneManager DroneManager { get; }
+        public IDroneManager DroneManager { get; }
         public IPvPDroneFocuser DroneFocuser { get; }
         public IPvPDroneConsumerProvider DroneConsumerProvider { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Faction faction,
             IPvPCruiser enemyCruiser,
             IPvPUIManager uiManager,
-            IPvPDroneManager droneManager,
+            IDroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IPvPDroneConsumerProvider droneConsumerProvider,
             IPvPFactoryProvider factoryProvider,
@@ -99,7 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Faction faction,
             IPvPCruiser enemyCruiser,
             // IPvPUIManager uiManager,
-            IPvPDroneManager droneManager,
+            IDroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IPvPDroneConsumerProvider droneConsumerProvider,
             IPvPFactoryProvider factoryProvider,

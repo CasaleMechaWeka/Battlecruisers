@@ -17,10 +17,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
 	public class PvPMostExpensiveUnitChooser : PvPUnitChooser
     {
         private readonly IList<IPvPBuildableWrapper<IPvPUnit>> _units;
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
         private readonly IPvPUnitFilter _unitFilter;
 
-        public PvPMostExpensiveUnitChooser(IList<IPvPBuildableWrapper<IPvPUnit>> units, IPvPDroneManager droneManager, IPvPUnitFilter unitFilter)
+        public PvPMostExpensiveUnitChooser(IList<IPvPBuildableWrapper<IPvPUnit>> units, IDroneManager droneManager, IPvPUnitFilter unitFilter)
         {
             PvPHelper.AssertIsNotNull(units, droneManager, unitFilter);
             Assert.IsTrue(units.Count != 0);

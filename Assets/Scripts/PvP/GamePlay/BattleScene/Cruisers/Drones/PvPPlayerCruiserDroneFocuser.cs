@@ -9,13 +9,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPPlayerCruiserDroneFocuser : IPvPDroneFocuser
     {
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
         private readonly IDroneFocusSoundPicker _soundPicker;
         // private readonly IPrioritisedSoundPlayer _soundPlayer;
 
         public event EventHandler PlayerTriggeredRepair;
 
-        public PvPPlayerCruiserDroneFocuser(IPvPDroneManager droneManager, IDroneFocusSoundPicker soundPicker /* , IPrioritisedSoundPlayer soundPlayer */)
+        public PvPPlayerCruiserDroneFocuser(IDroneManager droneManager, IDroneFocusSoundPicker soundPicker /* , IPrioritisedSoundPlayer soundPlayer */)
         {
             PvPHelper.AssertIsNotNull(droneManager, soundPicker /*, soundPlayer */);
 

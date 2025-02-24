@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
@@ -177,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _factoryProvider.UpdaterProvider,
                     faction);
 
-            IPvPDroneManager droneManager = new PvPDroneManager();
+            IDroneManager droneManager = new PvPDroneManager();
             IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.PrioritisedSoundPlayer*/);
             IPvPDroneConsumerProvider droneConsumerProvider = new PvPDroneConsumerProvider(droneManager);
             PvPFogOfWarManager fogOfWarManager = new PvPFogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
@@ -212,7 +213,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             cruiser.Initialise(cruiserArgs);
         }
 
-        private IPvPDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IPvPDroneManager droneManager /*, IPrioritisedSoundPlayer soundPlayer */)
+        private IPvPDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IDroneManager droneManager /*, IPrioritisedSoundPlayer soundPlayer */)
         {
             if (isPlayerCruiser)
             {

@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPDroneConsumer : IDroneConsumer
     {
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
 
         private int _numOfDrones;
         public int NumOfDrones
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
         public event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 
-        public PvPDroneConsumer(int numOfDronesRequired, IPvPDroneManager droneManager)
+        public PvPDroneConsumer(int numOfDronesRequired, IDroneManager droneManager)
         {
             if (numOfDronesRequired < 0)
             {

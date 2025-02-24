@@ -133,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPSlotAccessor SlotAccessor { get; private set; }
         public IPvPSlotHighlighter SlotHighlighter { get; private set; }
         public IPvPSlotNumProvider SlotNumProvider { get; private set; }
-        public IPvPDroneManager DroneManager { get; private set; }
+        public IDroneManager DroneManager { get; private set; }
         public IPvPDroneFocuser DroneFocuser { get; private set; }
         public IPvPCruiserBuildingMonitor BuildingMonitor { get; private set; }
         public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }

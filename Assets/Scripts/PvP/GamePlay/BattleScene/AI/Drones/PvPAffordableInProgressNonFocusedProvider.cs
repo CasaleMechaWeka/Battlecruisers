@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
 {
     public class PvPAffordableInProgressNonFocusedProvider : IPvPBuildingProvider
     {
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
         private readonly IPvPInProgressBuildingMonitor _buildingMonitor;
 
         public IPvPBuilding Building
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
             }
         }
 
-        public PvPAffordableInProgressNonFocusedProvider(IPvPDroneManager droneManager, IPvPInProgressBuildingMonitor buildingMonitor)
+        public PvPAffordableInProgressNonFocusedProvider(IDroneManager droneManager, IPvPInProgressBuildingMonitor buildingMonitor)
         {
             PvPHelper.AssertIsNotNull(droneManager, buildingMonitor);
 

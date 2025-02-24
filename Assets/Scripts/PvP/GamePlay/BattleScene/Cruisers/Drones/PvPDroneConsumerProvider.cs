@@ -5,9 +5,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPDroneConsumerProvider : IPvPDroneConsumerProvider
     {
-        private IPvPDroneManager _droneManager;
+        private IDroneManager _droneManager;
 
-        public PvPDroneConsumerProvider(IPvPDroneManager droneManager)
+        public PvPDroneConsumerProvider(IDroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
             _droneManager = droneManager;

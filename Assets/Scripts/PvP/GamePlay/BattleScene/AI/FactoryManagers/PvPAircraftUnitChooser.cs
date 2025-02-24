@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
     public class PvPAircraftUnitChooser : PvPUnitChooser
     {
         private readonly IPvPBuildableWrapper<IPvPUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane;
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
         private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
         private readonly ThreatLevel _threatLevelThreshold;
 
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             IPvPBuildableWrapper<IPvPUnit> lategamePlane,
             IPvPBuildableWrapper<IPvPUnit> antiAirPlane,
             IPvPBuildableWrapper<IPvPUnit> antiNavalPlane,
-            IPvPDroneManager droneManager,
+            IDroneManager droneManager,
             IThreatMonitor airThreatMonitor,
             IThreatMonitor navalThreatMonitor,
             ThreatLevel threatLevelThreshold)

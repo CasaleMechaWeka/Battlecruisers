@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// If a DC is focused they are the highest priority DC and any 
     /// newly available drones will go to them.
     /// </summary>
-    public class PvPDroneManager : IPvPDroneManager
+    public class PvPDroneManager : IDroneManager
     {
         private const int MIN_NUM_OF_DRONES = 0;
 

@@ -1,4 +1,5 @@
 using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPSlotAccessor SlotAccessor { get; }
         IPvPSlotHighlighter SlotHighlighter { get; }
         IPvPSlotNumProvider SlotNumProvider { get; }
-        IPvPDroneManager DroneManager { get; }
+        IDroneManager DroneManager { get; }
         IPvPDroneFocuser DroneFocuser { get; }
         IPvPCruiserBuildingMonitor BuildingMonitor { get; }
         IPvPCruiserUnitMonitor UnitMonitor { get; }

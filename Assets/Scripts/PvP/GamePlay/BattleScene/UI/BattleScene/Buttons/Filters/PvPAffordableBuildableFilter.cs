@@ -1,6 +1,6 @@
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPAffordableBuildableFilter : IBroadcastingFilter<IPvPBuildable>
     {
-        private readonly IPvPDroneManager _droneManager;
+        private readonly IDroneManager _droneManager;
 
         public event EventHandler PotentialMatchChange;
         private readonly PvPCruiser _playerCruiser;
 
 
         // we don't use this constructor :D
-        public PvPAffordableBuildableFilter(IPvPDroneManager droneManager)
+        public PvPAffordableBuildableFilter(IDroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
 
