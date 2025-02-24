@@ -1,27 +1,28 @@
+using BattleCruisers.Buildables.Boost;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost
 {
-    public class PvPBoostProvider : IPvPBoostProvider
+    public class PvPBoostProvider : IBoostProvider
     {
-        private readonly IList<IPvPBoostConsumer> _boostConsumers;
+        private readonly IList<IBoostConsumer> _boostConsumers;
 
         public float BoostMultiplier { get; }
 
         public PvPBoostProvider(float boostMultiplier)
         {
             BoostMultiplier = boostMultiplier;
-            _boostConsumers = new List<IPvPBoostConsumer>();
+            _boostConsumers = new List<IBoostConsumer>();
         }
 
-        public void AddBoostConsumer(IPvPBoostConsumer boostConsumer)
+        public void AddBoostConsumer(IBoostConsumer boostConsumer)
         {
             _boostConsumers.Add(boostConsumer);
             boostConsumer.AddBoostProvider(this);
         }
 
-        public void RemoveBoostConsumer(IPvPBoostConsumer boostConsumer)
+        public void RemoveBoostConsumer(IBoostConsumer boostConsumer)
         {
             Assert.IsTrue(_boostConsumers.Contains(boostConsumer));
 

@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -285,7 +285,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnDestroyedEvent();
         }
-        protected override ObservableCollection<IPvPBoostProvider> TurretFireRateBoostProviders
+        protected override ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
         {
             get
             {
@@ -294,7 +294,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         protected override void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IPvPBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)
+            IList<ObservableCollection<IBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, rocketBuildingsBuildRateBoostProvidersList);
             rocketBuildingsBuildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders);

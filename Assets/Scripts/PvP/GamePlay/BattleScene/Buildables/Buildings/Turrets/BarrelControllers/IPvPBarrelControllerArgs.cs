@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -32,8 +32,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         ITarget Parent { get; }
         ISoundKey SpawnerSoundKey { get; }
-        ObservableCollection<IPvPBoostProvider> LocalBoostProviders { get; }
-        ObservableCollection<IPvPBoostProvider> GlobalFireRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
+        ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
         IPvPAnimation BarrelFiringAnimation { get; }
         IPvPCruiser EnemyCruiser { get; }
     }

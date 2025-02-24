@@ -1,11 +1,12 @@
+using BattleCruisers.Buildables.Boost;
 using System;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost
 {
-    public class PvPBoostConsumer : IPvPBoostConsumer
+    public class PvPBoostConsumer : IBoostConsumer
     {
-        private readonly IList<IPvPBoostProvider> _boostProviders;
+        private readonly IList<IBoostProvider> _boostProviders;
 
         private const float DEFAULT_BOOST_MULTIPLIER = 1;
 
@@ -29,10 +30,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPBoostConsumer()
         {
             _cumulativeBoost = DEFAULT_BOOST_MULTIPLIER;
-            _boostProviders = new List<IPvPBoostProvider>();
+            _boostProviders = new List<IBoostProvider>();
         }
 
-        public void AddBoostProvider(IPvPBoostProvider boostProvider)
+        public void AddBoostProvider(IBoostProvider boostProvider)
         {
             // Logging.LogMethod(Tags.BOOST);
 
@@ -44,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public void RemoveBoostProvider(IPvPBoostProvider boostProvider)
+        public void RemoveBoostProvider(IBoostProvider boostProvider)
         {
             // Logging.LogMethod(Tags.BOOST);
 
@@ -60,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             float cumulativeBoost = DEFAULT_BOOST_MULTIPLIER;
 
-            foreach (IPvPBoostProvider provider in _boostProviders)
+            foreach (IBoostProvider provider in _boostProviders)
             {
                 cumulativeBoost *= provider.BoostMultiplier;
             }

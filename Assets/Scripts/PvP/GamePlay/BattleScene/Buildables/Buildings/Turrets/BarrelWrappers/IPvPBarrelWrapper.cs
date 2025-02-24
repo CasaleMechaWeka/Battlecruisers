@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
@@ -26,8 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
-            ObservableCollection<IPvPBoostProvider> localBoostProviders = null,
-            ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders = null,
+            ObservableCollection<IBoostProvider> localBoostProviders = null,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IPvPAnimation barrelFiringAnimation = null);
 
         void Initialise(

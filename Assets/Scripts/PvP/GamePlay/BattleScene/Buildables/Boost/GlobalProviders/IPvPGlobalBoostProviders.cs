@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Boost;
 using System.Collections.ObjectModel;
 
 
@@ -5,18 +6,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public interface IPvPGlobalBoostProviders
     {
-        ObservableCollection<IPvPBoostProvider> DummyBoostProviders { get; }
+        ObservableCollection<IBoostProvider> DummyBoostProviders { get; }
 
-        ObservableCollection<IPvPBoostProvider> AircraftBoostProviders { get; }
+        ObservableCollection<IBoostProvider> AircraftBoostProviders { get; }
 
-        ObservableCollection<IPvPBoostProvider> DefenseFireRateBoostProviders { get; }
-        ObservableCollection<IPvPBoostProvider> OffenseFireRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; }
         // Currently affects ALL turrets (ships, gunship, buildings).  
         // That's ok though, because only used in tutorial to improve artillery accuracy :)
-        ObservableCollection<IPvPBoostProvider> TurretAccuracyBoostProviders { get; }
+        ObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }
 
-        ObservableCollection<IPvPBoostProvider> ShieldRechargeRateBoostProviders { get; }
-        ObservableCollection<IPvPBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
         IPvPBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         IPvPUnitBuildRatelBoostProviders UnitBuildRate { get; }
         IPvPBuildingHealthlBoostProviders BuildingHealth { get; }

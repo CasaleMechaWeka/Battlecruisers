@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
@@ -5,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Smoke;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
@@ -155,7 +155,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public bool IsInitialised => BuildProgressBoostable != null;
 
 
-        protected virtual ObservableCollection<IPvPBoostProvider> TurretFireRateBoostProviders
+        protected virtual ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
         {
             get
             {
@@ -454,10 +454,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
 
-            IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IPvPBoostProvider>>();
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
             AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
 
-            foreach (ObservableCollection<IPvPBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
+            foreach (ObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
             {
                 buildRateBoostableGroup.AddBoostProvidersList(buildRateBoostProviders);
             }
@@ -472,7 +472,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// </summary>
         protected virtual void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);
         }

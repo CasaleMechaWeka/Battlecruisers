@@ -1,5 +1,5 @@
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -310,7 +310,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.InternalDestroy();
         }
 
-        public void AddBuildRateBoostProviders(ObservableCollection<IPvPBoostProvider> boostProviders)
+        public void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders)
         {
             _buildRateBoostableGroup.AddBoostProvidersList(boostProviders);
         }

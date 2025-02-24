@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -25,8 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPBoostedBasicTurretStats(
             TStats baseStats,
             IPvPBoostFactory boostFactory,
-            ObservableCollection<IPvPBoostProvider> localBoostProviders,
-            ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders)
+            ObservableCollection<IBoostProvider> localBoostProviders,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
             PvPHelper.AssertIsNotNull(baseStats, boostFactory, localBoostProviders, globalFireRateBoostProviders);
 

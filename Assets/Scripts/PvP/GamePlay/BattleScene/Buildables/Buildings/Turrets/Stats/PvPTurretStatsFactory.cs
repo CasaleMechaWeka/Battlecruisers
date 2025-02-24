@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
@@ -22,8 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public ITurretStats CreateBoostedTurretStats(
             ITurretStats baseTurretStats,
-            ObservableCollection<IPvPBoostProvider> localBoostProviders,
-            ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders)
+            ObservableCollection<IBoostProvider> localBoostProviders,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
             return new PvPBoostedTurretStats(baseTurretStats, _boostFactory, localBoostProviders, globalFireRateBoostProviders, _globalBoostProviders);
         }

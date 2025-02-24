@@ -1,36 +1,37 @@
+using BattleCruisers.Buildables.Boost;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders
 {
     public class PvPBuildingBuildRatelBoostProviders : IPvPBuildingBuildRatelBoostProviders
     {
-        public ObservableCollection<IPvPBoostProvider> DefensivesProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> OffensivesProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> TacticalsProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> ShieldsProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> UltrasProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> AirFactoryProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> NavalFactoryProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> RocketBuildingsProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> DroneBuildingsProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> AllBuildingsProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> TacticalUltrasProviders { get; }
-        public ObservableCollection<IPvPBoostProvider> MastStructureProviders { get; }
+        public ObservableCollection<IBoostProvider> DefensivesProviders { get; }
+        public ObservableCollection<IBoostProvider> OffensivesProviders { get; }
+        public ObservableCollection<IBoostProvider> TacticalsProviders { get; }
+        public ObservableCollection<IBoostProvider> ShieldsProviders { get; }
+        public ObservableCollection<IBoostProvider> UltrasProviders { get; }
+        public ObservableCollection<IBoostProvider> AirFactoryProviders { get; }
+        public ObservableCollection<IBoostProvider> NavalFactoryProviders { get; }
+        public ObservableCollection<IBoostProvider> RocketBuildingsProviders { get; }
+        public ObservableCollection<IBoostProvider> DroneBuildingsProviders { get; }
+        public ObservableCollection<IBoostProvider> AllBuildingsProviders { get; }
+        public ObservableCollection<IBoostProvider> TacticalUltrasProviders { get; }
+        public ObservableCollection<IBoostProvider> MastStructureProviders { get; }
 
         public PvPBuildingBuildRatelBoostProviders()
         {
-            DefensivesProviders = new ObservableCollection<IPvPBoostProvider>();
-            OffensivesProviders = new ObservableCollection<IPvPBoostProvider>();
-            TacticalsProviders = new ObservableCollection<IPvPBoostProvider>();
-            ShieldsProviders = new ObservableCollection<IPvPBoostProvider>();
-            UltrasProviders = new ObservableCollection<IPvPBoostProvider>();
-            AirFactoryProviders = new ObservableCollection<IPvPBoostProvider>();
-            NavalFactoryProviders = new ObservableCollection<IPvPBoostProvider>();
-            RocketBuildingsProviders = new ObservableCollection<IPvPBoostProvider>();
-            DroneBuildingsProviders = new ObservableCollection<IPvPBoostProvider>();
-            AllBuildingsProviders = new ObservableCollection<IPvPBoostProvider>();
-            TacticalUltrasProviders = new ObservableCollection<IPvPBoostProvider>();
-            MastStructureProviders = new ObservableCollection<IPvPBoostProvider>();
+            DefensivesProviders = new ObservableCollection<IBoostProvider>();
+            OffensivesProviders = new ObservableCollection<IBoostProvider>();
+            TacticalsProviders = new ObservableCollection<IBoostProvider>();
+            ShieldsProviders = new ObservableCollection<IBoostProvider>();
+            UltrasProviders = new ObservableCollection<IBoostProvider>();
+            AirFactoryProviders = new ObservableCollection<IBoostProvider>();
+            NavalFactoryProviders = new ObservableCollection<IBoostProvider>();
+            RocketBuildingsProviders = new ObservableCollection<IBoostProvider>();
+            DroneBuildingsProviders = new ObservableCollection<IBoostProvider>();
+            AllBuildingsProviders = new ObservableCollection<IBoostProvider>();
+            TacticalUltrasProviders = new ObservableCollection<IBoostProvider>();
+            MastStructureProviders = new ObservableCollection<IBoostProvider>();
         }
     }
 }

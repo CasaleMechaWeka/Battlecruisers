@@ -1,5 +1,5 @@
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
         public NetworkVariable<int> pvp_BoostProviders_Num = new NetworkVariable<int>();
-        public ObservableCollection<IPvPBoostProvider> BoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
         private Vector3 _buildingPlacementPoint;
@@ -238,7 +238,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _explosion = _explosionController.Initialise();
             SpriteRenderer slotRenderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _size = slotRenderer.bounds.size;
-            BoostProviders = new ObservableCollection<IPvPBoostProvider>();
+            BoostProviders = new ObservableCollection<IBoostProvider>();
             // pvp
             BoostProviders.CollectionChanged += (sender, e) =>
             {

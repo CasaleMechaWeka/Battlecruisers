@@ -1,10 +1,10 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using System.Collections.ObjectModel;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         float MaxVelocityInMPerS { get; }
         bool IsUltra { get; }
 
-        void AddBuildRateBoostProviders(ObservableCollection<IPvPBoostProvider> boostProviders);
+        void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders);
 
         int variantIndex { get; set; }
         void ApplyVariantStats(StatVariant statVariant);

@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Buildables.Boost;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
@@ -19,10 +19,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsTrue(fireRateRocketBonus > 0);
             Assert.IsTrue(buildSpeedForRocketBuildings > 0);
 
-            IPvPBoostProvider rocketFireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(fireRateRocketBonus);
+            IBoostProvider rocketFireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(fireRateRocketBonus);
             CruiserSpecificFactories.GlobalBoostProviders.RocketBuildingsFireRateBoostProviders.Add(rocketFireRateBoostProvider);
 
-            IPvPBoostProvider buildSpeedForRocketProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildSpeedForRocketBuildings);
+            IBoostProvider buildSpeedForRocketProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildSpeedForRocketBuildings);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders.Add(buildSpeedForRocketProvider);
         }
         protected override void Start()

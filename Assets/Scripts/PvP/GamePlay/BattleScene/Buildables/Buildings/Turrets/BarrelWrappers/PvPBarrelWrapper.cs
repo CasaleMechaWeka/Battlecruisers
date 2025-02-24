@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
@@ -131,8 +131,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
-            ObservableCollection<IPvPBoostProvider> localBoostProviders = null,
-            ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders = null,
+            ObservableCollection<IBoostProvider> localBoostProviders = null,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IPvPAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
@@ -214,8 +214,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IAngleCalculator angleCalculator,
             IPvPAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
-            ObservableCollection<IPvPBoostProvider> localBoostProviders,
-            ObservableCollection<IPvPBoostProvider> globalFireRateBoostProvider,
+            ObservableCollection<IBoostProvider> localBoostProviders,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IPvPAnimation barrelFiringAnimation)
         {
             IPvPUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);

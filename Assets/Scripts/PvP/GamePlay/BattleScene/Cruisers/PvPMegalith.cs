@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Buildables.Boost;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             Assert.IsTrue(buildingHealthBoost > 0);
 
-            IPvPBoostProvider buildingHealthBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingHealthBoost);
+            IBoostProvider buildingHealthBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingHealthBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingHealth.AllBuildingsProviders.Add(buildingHealthBoostProvider);
         }
 

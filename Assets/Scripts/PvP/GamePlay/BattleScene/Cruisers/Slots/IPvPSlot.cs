@@ -1,5 +1,5 @@
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         PvPBuildingFunction BuildingFunctionAffinity { get; }
         Direction Direction { get; }
         IBroadcastingProperty<IPvPBuilding> Building { get; }
-        ObservableCollection<IPvPBoostProvider> BoostProviders { get; }
+        ObservableCollection<IBoostProvider> BoostProviders { get; }
         bool IsVisibleRederer { get; set; }
 
         Vector2 Position { get; }

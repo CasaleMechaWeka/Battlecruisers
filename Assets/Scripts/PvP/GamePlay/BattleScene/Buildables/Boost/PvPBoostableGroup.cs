@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Boost;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBoostableGroup : IPvPBoostableGroup
     {
-        private readonly IPvPBoostConsumer _boostConsumer;
+        private readonly IBoostConsumer _boostConsumer;
         private readonly IList<IPvPBoostable> _boostables;
         private bool _isCleanedUp;
 
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // 1. List of local boosters for building
         // 2. List of global boosters that apply to building (eg, cruiser benefit
         //      that improves all turrets).
-        private readonly IList<ObservableCollection<IPvPBoostProvider>> _boostProviders;
+        private readonly IList<ObservableCollection<IBoostProvider>> _boostProviders;
 
         public event EventHandler BoostChanged;
 
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _boostConsumer = boostFactory.CreateBoostConsumer();
             _boostables = new List<IPvPBoostable>();
-            _boostProviders = new List<ObservableCollection<IPvPBoostProvider>>();
+            _boostProviders = new List<ObservableCollection<IBoostProvider>>();
             _isCleanedUp = false;
 
             _boostConsumer.BoostChanged += _boostConsumer_BoostChanged;
@@ -56,12 +57,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _boostables.Remove(boostable);
         }
 
-        public void AddBoostProvidersList(ObservableCollection<IPvPBoostProvider> boostProviders)
+        public void AddBoostProvidersList(ObservableCollection<IBoostProvider> boostProviders)
         {
             Assert.IsFalse(_boostProviders.Contains(boostProviders));
             _boostProviders.Add(boostProviders);
 
-            foreach (IPvPBoostProvider provider in boostProviders)
+            foreach (IBoostProvider provider in boostProviders)
             {
                 provider.AddBoostConsumer(_boostConsumer);
             }
@@ -75,12 +76,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 case NotifyCollectionChangedAction.Add:
                     Assert.AreEqual(1, e.NewItems.Count);
-                    ((IPvPBoostProvider)e.NewItems[0]).AddBoostConsumer(_boostConsumer);
+                    ((IBoostProvider)e.NewItems[0]).AddBoostConsumer(_boostConsumer);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
                     Assert.AreEqual(1, e.OldItems.Count);
-                    ((IPvPBoostProvider)e.OldItems[0]).RemoveBoostConsumer(_boostConsumer);
+                    ((IBoostProvider)e.OldItems[0]).RemoveBoostConsumer(_boostConsumer);
                     break;
             }
         }
@@ -89,9 +90,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Assert.IsFalse(_isCleanedUp, "CleanUp() should only be called once.");
 
-            foreach (ObservableCollection<IPvPBoostProvider> boostProviders in _boostProviders)
+            foreach (ObservableCollection<IBoostProvider> boostProviders in _boostProviders)
             {
-                foreach (IPvPBoostProvider provider in boostProviders)
+                foreach (IBoostProvider provider in boostProviders)
                 {
                     provider.RemoveBoostConsumer(_boostConsumer);
                 }

@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Boost;
 using System;
 using System.Collections.ObjectModel;
 
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void AddBoostable(IPvPBoostable boostable);
         bool RemoveBoostable(IPvPBoostable boostable);
 
-        void AddBoostProvidersList(ObservableCollection<IPvPBoostProvider> boostProviders);
+        void AddBoostProvidersList(ObservableCollection<IBoostProvider> boostProviders);
 
         void CleanUp();
     }

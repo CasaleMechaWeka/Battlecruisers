@@ -1,3 +1,5 @@
+using BattleCruisers.Buildables.Boost;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost
 {
     public class PvPBoostFactory : IPvPBoostFactory
@@ -9,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPBoostableGroup(this);
         }
 
-        public IPvPBoostConsumer CreateBoostConsumer()
+        public IBoostConsumer CreateBoostConsumer()
         {
             return new PvPBoostConsumer();
         }
 
-        public IPvPBoostProvider CreateBoostProvider(float boostMultiplier)
+        public IBoostProvider CreateBoostProvider(float boostMultiplier)
         {
             return new PvPBoostProvider(boostMultiplier);
         }
