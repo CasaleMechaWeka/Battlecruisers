@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly ITargetFinder _targetFinder;
         private readonly IPvPTargetRanker _targetRanker;
         // List of targets, in decreasing priority
-        private readonly IList<PvPRankedTarget> _targets;
+        private readonly IList<RankedTarget> _targets;
 
-        public PvPRankedTarget HighestPriorityTarget => _targets.FirstOrDefault();
+        public RankedTarget HighestPriorityTarget => _targets.FirstOrDefault();
 
         public event EventHandler HighestPriorityTargetChanged;
 
@@ -36,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
             _targetFinder = targetFinder;
             _targetRanker = targetRanker;
-            _targets = new List<PvPRankedTarget>();
+            _targets = new List<RankedTarget>();
 
             _targetFinder.TargetFound += TargetFinder_TargetFound;
             _targetFinder.TargetLost += TargetFinder_TargetLost;
@@ -64,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                 return;
             }
 
-            PvPRankedTarget newTarget = CreateRankedTarget(e.Target);
+            RankedTarget newTarget = CreateRankedTarget(e.Target);
             int insertionIndex = FindInsertionIndex(newTarget.Rank);
 
             _targets.Insert(insertionIndex, newTarget);
@@ -105,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
 
             bool wasHighestPriorityTarget = ReferenceEquals(e.Target, HighestPriorityTarget.Target);
-            PvPRankedTarget targetToRemove = CreateRankedTarget(e.Target);
+            RankedTarget targetToRemove = CreateRankedTarget(e.Target);
             _targets.Remove(targetToRemove);
 
             if (wasHighestPriorityTarget)
@@ -125,10 +126,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             HighestPriorityTargetChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private PvPRankedTarget CreateRankedTarget(ITarget target)
+        private RankedTarget CreateRankedTarget(ITarget target)
         {
             int targetRank = _targetRanker.RankTarget(target);
-            return new PvPRankedTarget(target, targetRank);
+            return new RankedTarget(target, targetRank);
         }
 
         public void DisposeManagedState()

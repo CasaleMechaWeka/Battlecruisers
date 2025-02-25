@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System;
 using UnityEngine.Assertions;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         private const int MIN_NUM_OF_TARGET_TRACKERS = 2;
 
-        public PvPRankedTarget HighestPriorityTarget { get; private set; }
+        public RankedTarget HighestPriorityTarget { get; private set; }
 
         public event EventHandler HighestPriorityTargetChanged;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         private void TargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
-            PvPRankedTarget currentHighestRankedTarget = HighestPriorityTarget;
+            RankedTarget currentHighestRankedTarget = HighestPriorityTarget;
             HighestPriorityTarget = FindHighestRankedTarget();
 
             // Logging.Verbose(Tags.COMPOSITE_TARGET_TRACKER, $"Current highest: {currentHighestRankedTarget}  New highest: {HighestPriorityTarget}");
@@ -41,14 +41,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        private PvPRankedTarget FindHighestRankedTarget()
+        private RankedTarget FindHighestRankedTarget()
         {
-            PvPRankedTarget highestRankedTarget = null;
+            RankedTarget highestRankedTarget = null;
             int maxRankSoFar = int.MinValue;
 
             foreach (IPvPRankedTargetTracker targetTracker in _targetTrackers)
             {
-                PvPRankedTarget rankedTarget = targetTracker.HighestPriorityTarget;
+                RankedTarget rankedTarget = targetTracker.HighestPriorityTarget;
 
                 if (rankedTarget != null
                     && rankedTarget.Rank > maxRankSoFar)

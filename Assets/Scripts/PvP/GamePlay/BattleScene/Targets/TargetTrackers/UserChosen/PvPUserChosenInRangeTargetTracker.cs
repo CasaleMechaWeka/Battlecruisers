@@ -1,6 +1,6 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen
@@ -10,8 +10,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly ITargetTracker _inRangeTargetTracker;
         private readonly IPvPRankedTargetTracker _userChosenTargetTracker;
 
-        private PvPRankedTarget _highestPriorityTarget;
-        public PvPRankedTarget HighestPriorityTarget
+        private RankedTarget _highestPriorityTarget;
+        public RankedTarget HighestPriorityTarget
         {
             get { return _highestPriorityTarget; }
             private set
@@ -50,9 +50,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             HighestPriorityTarget = FindHighestPriorityTarget();
         }
 
-        private PvPRankedTarget FindHighestPriorityTarget()
+        private RankedTarget FindHighestPriorityTarget()
         {
-            PvPRankedTarget highestRankedTarget = null;
+            RankedTarget highestRankedTarget = null;
 
             if (_userChosenTargetTracker.HighestPriorityTarget != null
                 && _inRangeTargetTracker.ContainsTarget(_userChosenTargetTracker.HighestPriorityTarget.Target))

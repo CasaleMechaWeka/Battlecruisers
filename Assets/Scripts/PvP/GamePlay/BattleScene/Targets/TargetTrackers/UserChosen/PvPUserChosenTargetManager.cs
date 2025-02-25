@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System;
 using UnityEngine.Assertions;
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                 }
 
                 _userChosenTarget = value;
-                HighestPriorityTarget = _userChosenTarget != null ? new PvPRankedTarget(_userChosenTarget, USER_CHOSEN_TARGET_RANK) : null;
+                HighestPriorityTarget = _userChosenTarget != null ? new RankedTarget(_userChosenTarget, USER_CHOSEN_TARGET_RANK) : null;
 
                 if (_userChosenTarget != null)
                 {
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        public PvPRankedTarget HighestPriorityTarget { get; private set; }
+        public RankedTarget HighestPriorityTarget { get; private set; }
         public event EventHandler HighestPriorityTargetChanged;
 
         private void _userChosenTarget_Destroyed(object sender, DestroyedEventArgs e)
