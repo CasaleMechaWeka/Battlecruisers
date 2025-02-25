@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
-    public class PvPTurretStatsFactory : IPvPTurretStatsFactory
+    public class PvPTurretStatsFactory : ITurretStatsFactory
     {
         private readonly IPvPBoostFactory _boostFactory;
         private readonly IPvPGlobalBoostProviders _globalBoostProviders;

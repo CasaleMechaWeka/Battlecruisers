@@ -1,9 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         IDroneFeedbackFactory DroneFeedbackFactory { get; }
         IPvPGlobalBoostProviders GlobalBoostProviders { get; }
-        IPvPTurretStatsFactory TurretStatsFactory { get; }
+        ITurretStatsFactory TurretStatsFactory { get; }
         IPvPCruiserTargetFactoriesProvider Targets { get; }
     }
 }
