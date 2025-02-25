@@ -145,7 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return cruiser;
         }
 
-        public async Task<IPvPExplosion> CreateExplosion(PvPExplosionKey explosionKey)
+        public async Task<IPoolable<Vector3>> CreateExplosion(PvPExplosionKey explosionKey)
         {
             PvPExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
             PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);

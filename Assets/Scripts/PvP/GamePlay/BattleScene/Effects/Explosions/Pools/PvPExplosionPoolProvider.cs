@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,20 +11,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPExplosionPoolProvider : IPvPExplosionPoolProvider
     {
-        public IPvPPool<IPvPExplosion, Vector3> BulletImpactPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> HighCalibreBulletImpactPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> TinyBulletImpactPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> NovaShellImpactPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> RocketShellImpactPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> BombExplosionPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> FlakExplosionsPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> SmallExplosionsPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> MediumExplosionsPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> MFExplosionsPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> FirecrackerExplosionsPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> LargeExplosionsPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> HugeExplosionsPool { get; }
-        public IPvPPool<IPvPExplosion, Vector3> FiveShellClusterExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> BulletImpactPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> HighCalibreBulletImpactPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> TinyBulletImpactPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> NovaShellImpactPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> RocketShellImpactPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> BombExplosionPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> FlakExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> SmallExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> MediumExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> MFExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> FirecrackerExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> LargeExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> HugeExplosionsPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> FiveShellClusterExplosionsPool { get; }
 
         public PvPExplosionPoolProvider(IPvPPrefabFactory prefabFactory)
         {
@@ -45,10 +46,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFiveShellCluster);
         }
 
-        private IPvPPool<IPvPExplosion, Vector3> CreateExplosionPool(IPvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
+        private IPvPPool<IPoolable<Vector3>, Vector3> CreateExplosionPool(IPvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
         {
             return
-                new PvPPool<IPvPExplosion, Vector3>(
+                new PvPPool<IPoolable<Vector3>, Vector3>(
                     new PvPExplosionFactory(
                         prefabFactory,
                         explosionKey));

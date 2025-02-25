@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
@@ -8,7 +9,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions
 {
-    public class PvPExplosion : PvPParticleSystemGroup, IPvPExplosion
+    public class PvPExplosion : PvPParticleSystemGroup, IPoolable<Vector3>
     {
         private readonly IGameObject _explosionController;
         private int _systemsCompletedCount = 0;

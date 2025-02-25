@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Utils.BattleScene.Pools;
 using Unity.Netcode;
 using UnityEngine;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         private PvPExplosion _explosion;
         private AudioSource _audioSource;
-        public virtual IPvPExplosion Initialise()
+        public virtual IPoolable<Vector3> Initialise()
         {
             _explosion = new PvPExplosion(
                     this,

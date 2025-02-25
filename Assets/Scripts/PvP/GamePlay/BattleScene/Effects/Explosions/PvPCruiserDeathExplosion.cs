@@ -1,5 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public PvPBodykitWreck[] wrecks;
         public SpriteRenderer[] wreckRenders;
 
-        public IPvPExplosion Initialise(ISettingsManager settingsManager)
+        public IPoolable<Vector3> Initialise(ISettingsManager settingsManager)
         {
-            IPvPExplosion explosion = base.Initialise();
+            IPoolable<Vector3> explosion = base.Initialise();
 
             Assert.IsNotNull(settingsManager);
 

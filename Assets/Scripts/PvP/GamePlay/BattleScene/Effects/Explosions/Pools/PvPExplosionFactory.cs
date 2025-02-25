@@ -2,12 +2,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools
 {
-    public class PvPExplosionFactory : IPvPPoolableFactory<IPvPExplosion, Vector3>
+    public class PvPExplosionFactory : IPvPPoolableFactory<IPoolable<Vector3>, Vector3>
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly PvPExplosionKey _explosionKey;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _explosionKey = explosionKey;
         }
 
-        public async Task<IPvPExplosion> CreateItem()
+        public async Task<IPoolable<Vector3>> CreateItem()
         {
             return await _prefabFactory.CreateExplosion(_explosionKey);
         }

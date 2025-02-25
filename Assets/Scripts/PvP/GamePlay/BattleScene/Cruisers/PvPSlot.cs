@@ -14,6 +14,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Ex
 using Unity.Netcode;
 using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Properties;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private IPvPCruiser _parentCruiser;
         private SpriteRenderer _renderer;
-        private IPvPExplosion _explosion;
+        private IPoolable<Vector3> _explosion;
         public PvPExplosionController _explosionController;
         private IPvPBuildingPlacer _buildingPlacer;
         private Vector2 _size;
