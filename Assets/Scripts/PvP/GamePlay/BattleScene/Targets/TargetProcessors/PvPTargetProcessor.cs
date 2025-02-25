@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProcessors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// <summary>
     /// Assigns the highest priority target to target consumers.
     /// </summary>
-    public class PvPTargetProcessor : IPvPTargetProcessor
+    public class PvPTargetProcessor : ITargetProcessor
     {
         private readonly IPvPRankedTargetTracker _rankedTargetTracker;
         private readonly IList<ITargetConsumer> _targetConsumers;

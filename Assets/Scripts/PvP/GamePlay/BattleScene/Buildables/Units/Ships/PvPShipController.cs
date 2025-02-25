@@ -22,6 +22,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetProcessors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -38,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private int _directionMultiplier;
         private IList<IPvPBarrelWrapper> _turrets;
         private PvPShipTargetProcessorWrapper _targetProcessorWrapper;
-        private IPvPTargetProcessor _movementTargetProcessor;
+        private ITargetProcessor _movementTargetProcessor;
         private IPvPMovementDecider _movementDecider;
         private PvPManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
         private IPvPPool<IPoolable<Vector3>, Vector3> _deathPool;
@@ -162,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.ShipProviders);
         }
 
-        private IPvPTargetProcessor SetupTargetProcessorWrapper()
+        private ITargetProcessor SetupTargetProcessorWrapper()
         {
             Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
 

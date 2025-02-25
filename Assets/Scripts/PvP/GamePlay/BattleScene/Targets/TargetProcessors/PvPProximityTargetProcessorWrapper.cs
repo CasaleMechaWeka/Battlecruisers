@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking.Wrappers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public bool considerUserChosenTarget;
 
-        protected override IPvPTargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
         {
             _targetFinder = CreateTargetFinder(args);
             IPvPTargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);

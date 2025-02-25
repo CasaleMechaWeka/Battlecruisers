@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProcessors;
 using UnityEngine.Assertions;
 using BattleCruisers.Targets.TargetFinders;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public ITargetFinder InRangeTargetFinder { get; private set; }
 
-        protected override IPvPTargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
         {
             Assert.IsNotNull(args.ParentTarget);
 

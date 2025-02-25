@@ -1,8 +1,10 @@
+using BattleCruisers.Targets.TargetProcessors;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors
 {
     public class PvPGlobalTargetProcessorWrapper : PvPTargetProcessorWrapper
     {
-        protected override IPvPTargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
         {
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.OffensiveBuildableTargetProcessor;
         }

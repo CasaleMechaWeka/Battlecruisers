@@ -24,6 +24,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetProcessors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private PvPFollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IPvPBarrelWrapper _barrelWrapper;
-        private IPvPTargetProcessor _followingTargetProcessor;
+        private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
         private bool _isAtCruisingHeight;

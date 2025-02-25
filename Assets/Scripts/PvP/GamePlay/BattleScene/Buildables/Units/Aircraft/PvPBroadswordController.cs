@@ -25,6 +25,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using BattleCruisers.Targets.TargetFinders;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private PvPFollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IPvPBarrelWrapper _rocketBarrelWrapper, _minigunBarrelWrapper;
-        private IPvPTargetProcessor _followingTargetProcessor;
+        private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
         private bool _isAtCruisingHeight;

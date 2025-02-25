@@ -7,10 +7,10 @@ namespace BattleCruisers.Targets.TargetProcessors
     /// </summary>
     public interface ITargetProcessor : IManagedDisposable
     {
-		/// <exception cref="ArgumentException">If the target consumer is already added.</exception>
-		void AddTargetConsumer(ITargetConsumer targetConsumer);
+        /// <exception cref="ArgumentException">If the target consumer is already added.</exception>
+        void AddTargetConsumer(ITargetConsumer targetConsumer);
 
-		/// <exception cref="ArgumentException">If the target consumer was not added first.</exception>
-		void RemoveTargetConsumer(ITargetConsumer targetConsumer);
-	}
+        /// <exception cref="ArgumentException">If the target consumer was not added first.</exception>
+        void RemoveTargetConsumer(ITargetConsumer targetConsumer);
+    }
 }

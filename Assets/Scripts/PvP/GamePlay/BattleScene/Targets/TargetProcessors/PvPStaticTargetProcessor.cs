@@ -1,10 +1,11 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetProcessors;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors
 {
-    public class PvPStaticTargetProcessor : IPvPTargetProcessor
+    public class PvPStaticTargetProcessor : ITargetProcessor
     {
         private readonly ITarget _target;
 

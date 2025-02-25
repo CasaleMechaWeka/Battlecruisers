@@ -1,3 +1,4 @@
+using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -11,15 +12,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public abstract class PvPTargetProcessorWrapper : MonoBehaviour, IManagedDisposable
     {
-        private IPvPTargetProcessor _targetProcessor;
+        private ITargetProcessor _targetProcessor;
 
-        public IPvPTargetProcessor CreateTargetProcessor(IPvPTargetProcessorArgs args)
+        public ITargetProcessor CreateTargetProcessor(IPvPTargetProcessorArgs args)
         {
             _targetProcessor = CreateTargetProcessorInternal(args);
             return _targetProcessor;
         }
 
-        protected abstract IPvPTargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args);
+        protected abstract ITargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args);
 
         public virtual void DisposeManagedState()
         {

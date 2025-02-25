@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
@@ -26,13 +25,14 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetProcessors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
     public class PvPMissileFighterController : PvPAircraftController, ITargetConsumer, IPvPTargetProvider
     {
         private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
-        private IPvPTargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
+        private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
         private IPvPExactMatchTargetFilter _exactMatchTargetFilter;
         private IPvPMovementController _fighterMovementController;
         private PvPBarrelController _barrelController;

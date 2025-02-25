@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -10,6 +9,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProcessors;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPShipBlockingEnemyProvider : PvPBroadcastingTargetProvider, ITargetConsumer
     {
-        private readonly IPvPTargetProcessor _targetProcessor;
+        private readonly ITargetProcessor _targetProcessor;
         private readonly ITargetFilter _isInFrontFilter;
 
         ITarget ITargetConsumer.Target
