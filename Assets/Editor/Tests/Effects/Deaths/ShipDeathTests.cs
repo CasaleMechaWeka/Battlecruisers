@@ -1,9 +1,7 @@
 ﻿using BattleCruisers.Effects;
-using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
-using NSubstitute;
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ namespace BattleCruisers.Tests.Effects.Deaths
 {
     public class ShipDeathTests
     {
-        private IShipDeath _shipDeath;
+        private IPoolable<Vector3> _shipDeath;
         private IGameObject _shipDeathController;
         private IBroadcastingAnimation _sinkingAnimation;
         private IList<IParticleSystemGroup> _effects;

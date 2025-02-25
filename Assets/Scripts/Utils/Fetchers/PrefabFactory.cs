@@ -100,7 +100,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newExplosion.Initialise();
         }
 
-        public IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey)
+        public IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey)
         {
             ShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
             ShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);

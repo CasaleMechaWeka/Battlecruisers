@@ -12,10 +12,10 @@ namespace BattleCruisers.Tests.Effects.Deaths.Pools
 {
     public class ShipDeathFactoryTests
     {
-        private IPoolableFactory<IShipDeath, Vector3> _factory;
+        private IPoolableFactory<IPoolable<Vector3>, Vector3> _factory;
         private IPrefabFactory _prefabFactory;
         private ShipDeathKey _shipDeathKey;
-        private IShipDeath _shipDeath;
+        private IPoolable<Vector3> _shipDeath;
 
         [SetUp]
         public void TestSetup()
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Effects.Deaths.Pools
 
             _factory = new ShipDeathFactory(_prefabFactory, _shipDeathKey);
 
-            _shipDeath = Substitute.For<IShipDeath>();
+            _shipDeath = Substitute.For<IPoolable<Vector3>>();
             _prefabFactory.CreateShipDeath(_shipDeathKey).Returns(_shipDeath);
         }
 

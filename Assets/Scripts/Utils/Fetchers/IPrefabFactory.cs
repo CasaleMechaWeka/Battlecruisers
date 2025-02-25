@@ -33,7 +33,7 @@ namespace BattleCruisers.Utils.Fetchers
         Bodykit GetBodykit(IPrefabKey bodykitKey);
         VariantPrefab GetVariant(IPrefabKey variantKey);
         IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey);
-        IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
+        IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey);
 
         TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>

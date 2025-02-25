@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Deaths
 {
-    public class ShipDeath : IShipDeath
+    public class ShipDeath : IPoolable<Vector3>
     {
         private readonly GameObjectBC _shipDeathController;
         private readonly IBroadcastingAnimation _sinkingAnimation;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Effects.Deaths
         public event EventHandler Deactivated;
 
         public ShipDeath(
-            GameObjectBC shipDeathController, 
+            GameObjectBC shipDeathController,
             IBroadcastingAnimation sinkingAnimation,
             IList<IParticleSystemGroup> effects)
         {
@@ -44,7 +45,7 @@ namespace BattleCruisers.Effects.Deaths
         public void Activate(Vector3 activationArgs)
         {
             Logging.LogMethod(Tags.DEATHS);
-            
+
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
 
@@ -59,7 +60,7 @@ namespace BattleCruisers.Effects.Deaths
         public void Activate(Vector3 activationArgs, Faction faction)
         {
             Logging.LogMethod(Tags.DEATHS);
-            
+
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
             Vector3 pos = _shipDeathController.Position;

@@ -5,7 +5,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
 {
     public class DestroyerDeathPoolChooser : MonoBehaviour, IShipDeathPoolChooser
     {
-        public IPool<IShipDeath, Vector3> ChoosePool(IShipDeathPoolProvider shipDeathPoolProvider)
+        public IPool<IPoolable<Vector3>, Vector3> ChoosePool(IShipDeathPoolProvider shipDeathPoolProvider)
         {
             return shipDeathPoolProvider.DestroyerPool;
         }
