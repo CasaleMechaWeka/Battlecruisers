@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using System.Collections.ObjectModel;
 
 
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
         ObservableCollection<IBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
         IPvPBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
-        IPvPUnitBuildRatelBoostProviders UnitBuildRate { get; }
+        IUnitBuildRatelBoostProviders UnitBuildRate { get; }
         IPvPBuildingHealthlBoostProviders BuildingHealth { get; }
     }
 }
