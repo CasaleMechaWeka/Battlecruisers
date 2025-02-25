@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools
 {
-    public class PvPPool<TPoolable, TArgs> : IPvPPool<TPoolable, TArgs> where TPoolable : class, IPoolable<TArgs>
+    public class PvPPool<TPoolable, TArgs> : IPool<TPoolable, TArgs> where TPoolable : class, IPoolable<TArgs>
     {
         private readonly Stack<TPoolable> _items;
         private readonly IPvPPoolableFactory<TPoolable, TArgs> _itemFactory;

@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private ITargetProcessor _movementTargetProcessor;
         private IPvPMovementDecider _movementDecider;
         private PvPManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
-        private IPvPPool<IPoolable<Vector3>, Vector3> _deathPool;
+        private IPool<IPoolable<Vector3>, Vector3> _deathPool;
 
         private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;

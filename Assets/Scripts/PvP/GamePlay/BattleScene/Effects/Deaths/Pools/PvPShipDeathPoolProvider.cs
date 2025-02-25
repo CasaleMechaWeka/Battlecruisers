@@ -11,15 +11,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPShipDeathPoolProvider : IPvPShipDeathPoolProvider
     {
-        public IPvPPool<IPoolable<Vector3>, Vector3> ArchonPool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> AttackBoatPool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> AttackRIBPool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> FrigatePool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> DestroyerPool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> SiegeDestroyerPool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> GlassCannoneerPool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> GunBoatPool { get; }
-        public IPvPPool<IPoolable<Vector3>, Vector3> TurtlePool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> ArchonPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> AttackBoatPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> AttackRIBPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> FrigatePool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> DestroyerPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> SiegeDestroyerPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> GlassCannoneerPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> GunBoatPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> TurtlePool { get; }
 
         public PvPShipDeathPoolProvider(IPvPPrefabFactory prefabFactory)
         {
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             TurtlePool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPTurtle);
         }
 
-        private IPvPPool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(IPvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
+        private IPool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(IPvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
         {
             return
                 new PvPPool<IPoolable<Vector3>, Vector3>(

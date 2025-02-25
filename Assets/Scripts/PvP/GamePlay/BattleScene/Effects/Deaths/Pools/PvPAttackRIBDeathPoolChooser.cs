@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPAttackRIBDeathPoolChooser : MonoBehaviour, IPvPShipDeathPoolChooser
     {
-        public IPvPPool<IPoolable<Vector3>, Vector3> ChoosePool(IPvPShipDeathPoolProvider shipDeathPoolProvider)
+        public IPool<IPoolable<Vector3>, Vector3> ChoosePool(IPvPShipDeathPoolProvider shipDeathPoolProvider)
         {
             return shipDeathPoolProvider.AttackRIBPool;
         }

@@ -4,7 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using System;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPUnitSpawnPositionFinder _unitSpawnPositionFinder;
         private IPvPUnitSpawnDecider _unitSpawnDecider;
-        private IPvPPool<PvPUnit, PvPBuildableActivationArgs> _unitPool;
+        private IPool<PvPUnit, PvPBuildableActivationArgs> _unitPool;
 
         public abstract UnitCategory UnitCategory { get; }
 

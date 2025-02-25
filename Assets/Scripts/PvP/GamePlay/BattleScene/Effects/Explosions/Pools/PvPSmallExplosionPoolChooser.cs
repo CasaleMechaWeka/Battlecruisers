@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPSmallExplosionPoolChooser : MonoBehaviour, IPvPExplosionPoolChooser
     {
-        public IPvPPool<IPoolable<Vector3>, Vector3> ChoosePool(IPvPExplosionPoolProvider explosionPoolProvider)
+        public IPool<IPoolable<Vector3>, Vector3> ChoosePool(IPvPExplosionPoolProvider explosionPoolProvider)
         {
             return explosionPoolProvider.SmallExplosionsPool;
         }

@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System;
 using UnityEngine.Assertions;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _unitPoolProvider = unitPoolProvider;
         }
 
-        public IPvPPool<PvPUnit, PvPBuildableActivationArgs> GetPool(IPvPUnit unit)
+        public IPool<PvPUnit, PvPBuildableActivationArgs> GetPool(IPvPUnit unit)
         {
             Assert.IsNotNull(unit);
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private IPvPPool<PvPUnit, PvPBuildableActivationArgs> GetAircraftPool(IPvPUnit aircraft)
+        private IPool<PvPUnit, PvPBuildableActivationArgs> GetAircraftPool(IPvPUnit aircraft)
         {
             switch (aircraft.PrefabName)
             {
@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private IPvPPool<PvPUnit, PvPBuildableActivationArgs> GetShipPool(IPvPUnit ship)
+        private IPool<PvPUnit, PvPBuildableActivationArgs> GetShipPool(IPvPUnit ship)
         {
             switch (ship.PrefabName)
             {

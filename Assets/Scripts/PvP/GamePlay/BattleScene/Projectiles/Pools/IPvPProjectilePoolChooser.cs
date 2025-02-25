@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
@@ -9,6 +9,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
         where TPvPStats : IPvPProjectileStats
     {
-        IPvPPool<TPvPProjectile, TPvPActivationArgs> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider);
+        IPool<TPvPProjectile, TPvPActivationArgs> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider);
     }
 }

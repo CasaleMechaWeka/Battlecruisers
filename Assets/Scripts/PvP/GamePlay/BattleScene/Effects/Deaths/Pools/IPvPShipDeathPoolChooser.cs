@@ -6,6 +6,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public interface IPvPShipDeathPoolChooser
     {
-        IPvPPool<IPoolable<Vector3>, Vector3> ChoosePool(IPvPShipDeathPoolProvider shipDeathPoolProvider);
+        IPool<IPoolable<Vector3>, Vector3> ChoosePool(IPvPShipDeathPoolProvider shipDeathPoolProvider);
     }
 }
