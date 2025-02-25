@@ -20,6 +20,7 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetTrackers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -40,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPMovementController _dummyMovementController;
         private PvPManualDetectorProvider _enemyDetectorProvider;
         private ITargetFinder _targetFinder;
-        private IPvPRankedTargetTracker _targetTracker;
+        private IRankedTargetTracker _targetTracker;
         private ITargetProcessor _targetProcessor;
         //---> CODE BY ANUJ
         private PvPRocketTarget _rocketTarget;

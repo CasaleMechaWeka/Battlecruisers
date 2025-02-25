@@ -8,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetTrackerFactory
     {
         // Highest priority trackers
-        IPvPRankedTargetTracker UserChosenTargetTracker { get; }
-        IPvPRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker);
-        IPvPRankedTargetTracker CreateRankedTargetTracker(ITargetFinder targetFinder, IPvPTargetRanker targetRanker);
-        IPvPRankedTargetTracker CreateCompositeTracker(params IPvPRankedTargetTracker[] targetTrackers);
+        IRankedTargetTracker UserChosenTargetTracker { get; }
+        IRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker);
+        IRankedTargetTracker CreateRankedTargetTracker(ITargetFinder targetFinder, IPvPTargetRanker targetRanker);
+        IRankedTargetTracker CreateCompositeTracker(params IRankedTargetTracker[] targetTrackers);
 
         // Trackers
         ITargetTracker CreateTargetTracker(ITargetFinder targetFinder);

@@ -9,13 +9,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.H
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using System.Threading.Tasks;
@@ -88,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
             // IPvPCameraFocuser cameraFocuser,
-            IPvPRankedTargetTracker userChosenTargetTracker
+            IRankedTargetTracker userChosenTargetTracker
             // IPvPUserChosenTargetHelper userChosenTargetHelper
             )
         {
@@ -122,7 +122,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser playerBCruiser,
             PvPCruiser playerACruiser,
         //    IPvPCameraFocuser cameraFocuser,
-            IPvPRankedTargetTracker userChosenTargetTracker
+            IRankedTargetTracker userChosenTargetTracker
             /* IPvPUserChosenTargetHelper userChosenTargetHelper */)
         {
             PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
@@ -162,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPFogStrength fogStrength,
             IPvPSlotFilter highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
-            IPvPRankedTargetTracker userChosenTargetTracker,
+            IRankedTargetTracker userChosenTargetTracker,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones,

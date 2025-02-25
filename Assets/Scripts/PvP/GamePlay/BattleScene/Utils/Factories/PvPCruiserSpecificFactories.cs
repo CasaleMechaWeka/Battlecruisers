@@ -9,8 +9,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPFactoryProvider factoryProvider,
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
-            IPvPRankedTargetTracker userChosenTargetTracker,
+            IRankedTargetTracker userChosenTargetTracker,
             IPvPUpdaterProvider updaterProvider,
             Faction faction,
             bool isTutorial)
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPFactoryProvider factoryProvider,
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
-            IPvPRankedTargetTracker userChosenTargetTracker,
+            IRankedTargetTracker userChosenTargetTracker,
             IPvPUpdaterProvider updaterProvider,
             Faction faction)
         {

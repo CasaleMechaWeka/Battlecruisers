@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetTrackers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// </summary>
     public class PvPTargetProcessor : ITargetProcessor
     {
-        private readonly IPvPRankedTargetTracker _rankedTargetTracker;
+        private readonly IRankedTargetTracker _rankedTargetTracker;
         private readonly IList<ITargetConsumer> _targetConsumers;
 
         private ITarget HighestPriorityTarget
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             }
         }
 
-        public PvPTargetProcessor(IPvPRankedTargetTracker rankedTargetTracker)
+        public PvPTargetProcessor(IRankedTargetTracker rankedTargetTracker)
         {
             _rankedTargetTracker = rankedTargetTracker;
             _targetConsumers = new List<ITargetConsumer>();

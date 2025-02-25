@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
@@ -13,14 +13,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
             // IPvPCameraFocuser cameraFocuser,
-            IPvPRankedTargetTracker userChosenTargetTracker
+            IRankedTargetTracker userChosenTargetTracker
            /* IPvPUserChosenTargetHelper userChosenTargetHelper*/ );
 
         void InitialisePlayerBCruiser(
             PvPCruiser playerBCruiser,
             PvPCruiser playerACruiser,
             //  IPvPCameraFocuser cameraFocuser,
-            IPvPRankedTargetTracker userChosenTargetTracker
+            IRankedTargetTracker userChosenTargetTracker
             /*IPvPUserChosenTargetHelper userChosenTargetHelper*/);
     }
 }

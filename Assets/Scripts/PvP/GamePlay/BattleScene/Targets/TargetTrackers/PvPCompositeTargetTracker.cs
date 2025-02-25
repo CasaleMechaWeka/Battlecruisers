@@ -1,12 +1,13 @@
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers
 {
-    public class PvPCompositeTracker : IPvPRankedTargetTracker
+    public class PvPCompositeTracker : IRankedTargetTracker
     {
-        private readonly IPvPRankedTargetTracker[] _targetTrackers;
+        private readonly IRankedTargetTracker[] _targetTrackers;
 
         private const int MIN_NUM_OF_TARGET_TRACKERS = 2;
 
@@ -14,14 +15,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public event EventHandler HighestPriorityTargetChanged;
 
-        public PvPCompositeTracker(params IPvPRankedTargetTracker[] targetTrackers)
+        public PvPCompositeTracker(params IRankedTargetTracker[] targetTrackers)
         {
             Assert.IsNotNull(targetTrackers);
             Assert.IsTrue(targetTrackers.Length >= MIN_NUM_OF_TARGET_TRACKERS);
 
             _targetTrackers = targetTrackers;
 
-            foreach (IPvPRankedTargetTracker targetTracker in _targetTrackers)
+            foreach (IRankedTargetTracker targetTracker in _targetTrackers)
             {
                 targetTracker.HighestPriorityTargetChanged += TargetTracker_HighestPriorityTargetChanged;
             }
@@ -46,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             RankedTarget highestRankedTarget = null;
             int maxRankSoFar = int.MinValue;
 
-            foreach (IPvPRankedTargetTracker targetTracker in _targetTrackers)
+            foreach (IRankedTargetTracker targetTracker in _targetTrackers)
             {
                 RankedTarget rankedTarget = targetTracker.HighestPriorityTarget;
 
@@ -63,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public void DisposeManagedState()
         {
-            foreach (IPvPRankedTargetTracker targetTracker in _targetTrackers)
+            foreach (IRankedTargetTracker targetTracker in _targetTrackers)
             {
                 targetTracker.DisposeManagedState();
             }

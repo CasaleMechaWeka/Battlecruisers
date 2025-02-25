@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// NOTE:
     /// + Assumes target rank value is constant.
     /// </summary>
-    public class PvPRankedTargetTracker : IPvPRankedTargetTracker
+    public class PvPRankedTargetTracker : IRankedTargetTracker
     {
         private readonly ITargetFinder _targetFinder;
         private readonly IPvPTargetRanker _targetRanker;

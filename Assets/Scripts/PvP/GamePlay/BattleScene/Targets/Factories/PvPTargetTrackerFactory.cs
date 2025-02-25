@@ -9,9 +9,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPTargetTrackerFactory : IPvPTargetTrackerFactory
     {
-        public IPvPRankedTargetTracker UserChosenTargetTracker { get; }
+        public IRankedTargetTracker UserChosenTargetTracker { get; }
 
-        public PvPTargetTrackerFactory(IPvPRankedTargetTracker userChosenTargetTracker)
+        public PvPTargetTrackerFactory(IRankedTargetTracker userChosenTargetTracker)
         {
             Assert.IsNotNull(userChosenTargetTracker);
             UserChosenTargetTracker = userChosenTargetTracker;
@@ -22,17 +22,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return new PvPTargetTracker(targetFinder);
         }
 
-        public IPvPRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
+        public IRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
         {
             return new PvPUserChosenInRangeTargetTracker(inRangeTargetTracker, UserChosenTargetTracker);
         }
 
-        public IPvPRankedTargetTracker CreateRankedTargetTracker(ITargetFinder targetFinder, IPvPTargetRanker targetRanker)
+        public IRankedTargetTracker CreateRankedTargetTracker(ITargetFinder targetFinder, IPvPTargetRanker targetRanker)
         {
             return new PvPRankedTargetTracker(targetFinder, targetRanker);
         }
 
-        public IPvPRankedTargetTracker CreateCompositeTracker(params IPvPRankedTargetTracker[] targetTrackers)
+        public IRankedTargetTracker CreateCompositeTracker(params IRankedTargetTracker[] targetTrackers)
         {
             return new PvPCompositeTracker(targetTrackers);
         }

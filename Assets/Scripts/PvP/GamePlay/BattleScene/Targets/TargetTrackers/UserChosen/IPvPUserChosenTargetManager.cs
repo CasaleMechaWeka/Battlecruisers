@@ -1,8 +1,10 @@
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.TargetTrackers;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen
 {
     public interface IPvPUserChosenTargetManager :
-        IPvPRankedTargetTracker,   // For TargetProcessor/CompositTargetFinder
+        IRankedTargetTracker,   // For TargetProcessor/CompositTargetFinder
         ITargetConsumer         // For UI, so user can set their chosen target
     {
         // empty

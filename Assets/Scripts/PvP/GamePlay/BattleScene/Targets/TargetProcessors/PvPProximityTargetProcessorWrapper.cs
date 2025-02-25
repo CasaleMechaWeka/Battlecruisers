@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPProximityTargetProcessorWrapper : PvPTargetProcessorWrapper, IManagedDisposable
     {
         private ITargetFinder _targetFinder;
-        private IPvPRankedTargetTracker _targetTracker;
+        private IRankedTargetTracker _targetTracker;
 
         public bool considerUserChosenTarget;
 
@@ -28,8 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             if (considerUserChosenTarget)
             {
                 ITargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_targetFinder);
-                IPvPRankedTargetTracker userChosenInRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
-                IPvPRankedTargetTracker inRangeSingleTargetTracker = _targetTracker;
+                IRankedTargetTracker userChosenInRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
+                IRankedTargetTracker inRangeSingleTargetTracker = _targetTracker;
                 _targetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
             }
 

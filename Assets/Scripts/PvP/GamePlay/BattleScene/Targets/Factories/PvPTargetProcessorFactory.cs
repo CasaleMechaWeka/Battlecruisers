@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetTrackers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public ITargetProcessor OffensiveBuildableTargetProcessor { get; }
         public ITargetProcessor StaticTargetProcessor { get; }
 
-        public PvPTargetProcessorFactory(IPvPCruiser enemyCruiser, IPvPRankedTargetTracker userChosenTargetTracker)
+        public PvPTargetProcessorFactory(IPvPCruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
         {
             PvPHelper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
 
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             StaticTargetProcessor = new PvPStaticTargetProcessor(enemyCruiser);
         }
 
-        public ITargetProcessor CreateTargetProcessor(IPvPRankedTargetTracker rankedTargetTracker)
+        public ITargetProcessor CreateTargetProcessor(IRankedTargetTracker rankedTargetTracker)
         {
             return new PvPTargetProcessor(rankedTargetTracker);
         }

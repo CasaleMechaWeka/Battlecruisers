@@ -5,10 +5,10 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen
 {
-    public class PvPUserChosenInRangeTargetTracker : IPvPRankedTargetTracker
+    public class PvPUserChosenInRangeTargetTracker : IRankedTargetTracker
     {
         private readonly ITargetTracker _inRangeTargetTracker;
-        private readonly IPvPRankedTargetTracker _userChosenTargetTracker;
+        private readonly IRankedTargetTracker _userChosenTargetTracker;
 
         private RankedTarget _highestPriorityTarget;
         public RankedTarget HighestPriorityTarget
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public event EventHandler HighestPriorityTargetChanged;
 
-        public PvPUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker, IPvPRankedTargetTracker userChosenTargetTracker)
+        public PvPUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker, IRankedTargetTracker userChosenTargetTracker)
         {
             PvPHelper.AssertIsNotNull(inRangeTargetTracker, userChosenTargetTracker);
 
