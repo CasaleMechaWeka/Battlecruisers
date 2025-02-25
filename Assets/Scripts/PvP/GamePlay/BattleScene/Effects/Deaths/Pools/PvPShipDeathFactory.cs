@@ -2,12 +2,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
 {
-    public class PvPShipDeathFactory : IPvPPoolableFactory<IPvPShipDeath, Vector3>
+    public class PvPShipDeathFactory : IPvPPoolableFactory<IPoolable<Vector3>, Vector3>
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly PvPShipDeathKey _shipDeathKey;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _shipDeathKey = shipDeathKey;
         }
 
-        public async Task<IPvPShipDeath> CreateItem()
+        public async Task<IPoolable<Vector3>> CreateItem()
         {
             return await _prefabFactory.CreateShipDeath(_shipDeathKey);
         }

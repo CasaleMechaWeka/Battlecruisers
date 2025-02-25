@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,15 +11,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPShipDeathPoolProvider : IPvPShipDeathPoolProvider
     {
-        public IPvPPool<IPvPShipDeath, Vector3> ArchonPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> AttackBoatPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> AttackRIBPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> FrigatePool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> DestroyerPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> SiegeDestroyerPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> GlassCannoneerPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> GunBoatPool { get; }
-        public IPvPPool<IPvPShipDeath, Vector3> TurtlePool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> ArchonPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> AttackBoatPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> AttackRIBPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> FrigatePool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> DestroyerPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> SiegeDestroyerPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> GlassCannoneerPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> GunBoatPool { get; }
+        public IPvPPool<IPoolable<Vector3>, Vector3> TurtlePool { get; }
 
         public PvPShipDeathPoolProvider(IPvPPrefabFactory prefabFactory)
         {
@@ -35,10 +36,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             TurtlePool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPTurtle);
         }
 
-        private IPvPPool<IPvPShipDeath, Vector3> CreateShipDeathPool(IPvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
+        private IPvPPool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(IPvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
         {
             return
-                new PvPPool<IPvPShipDeath, Vector3>(
+                new PvPPool<IPoolable<Vector3>, Vector3>(
                     new PvPShipDeathFactory(
                         prefabFactory,
                         shipDeathKey));

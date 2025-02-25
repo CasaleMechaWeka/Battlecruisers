@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         private PvPShipDeath shipDeath;
         private PvPBroadcastingAnimationController sinkingAnimation;
         private IList<IPvPParticleSystemGroup> effects;
-        public IPvPShipDeath CreateShipDeath()
+        public IPoolable<Vector3> CreateShipDeath()
         {
             PvPBroadcastingAnimationController sinkingAnimation = GetComponent<PvPBroadcastingAnimationController>();
             Assert.IsNotNull(sinkingAnimation);

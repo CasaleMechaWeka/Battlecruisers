@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths
 {
-    public class PvPShipDeath : IPvPShipDeath
+    public class PvPShipDeath : IPoolable<Vector3>
     {
         private readonly PvPMonoBehaviourWrapper _shipDeathController;
         private readonly IPvPBroadcastingAnimation _sinkingAnimation;

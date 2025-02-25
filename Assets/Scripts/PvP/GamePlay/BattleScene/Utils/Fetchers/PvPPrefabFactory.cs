@@ -154,7 +154,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newExplosion.Initialise();
         }
 
-        public async Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey)
+        public async Task<IPoolable<Vector3>> CreateShipDeath(PvPShipDeathKey shipDeathKey)
         {
             PvPShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
             PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);

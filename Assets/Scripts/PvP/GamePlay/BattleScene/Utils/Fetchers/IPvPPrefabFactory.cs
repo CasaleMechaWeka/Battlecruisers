@@ -7,7 +7,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
@@ -42,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         Task<VariantPrefab> GetVariant(IPrefabKey prefabKey);
 
         Task<IPoolable<Vector3>> CreateExplosion(PvPExplosionKey explosionKey);
-        Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey);
+        Task<IPoolable<Vector3>> CreateShipDeath(PvPShipDeathKey shipDeathKey);
 
         Task<TPvPProjectile> CreateProjectile<TPvPProjectile, TPvPActiavtionArgs, TPvPStats>(PvPProjectileKey prefabKey, IPvPFactoryProvider factoryProvider)
             where TPvPProjectile : PvPProjectileControllerBase<TPvPActiavtionArgs, TPvPStats>
