@@ -14,6 +14,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using System.Threading.Tasks;
@@ -39,12 +40,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
         IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
-                             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
+                             IUserChosenTargetManager playerCruiserUserChosenTargetManager
                              // IPrioritisedSoundPlayer soundPlayer,
                              //  IPvPTargetIndicator targetIndicator
                              );
         IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
-            IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager,
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator
                                 );

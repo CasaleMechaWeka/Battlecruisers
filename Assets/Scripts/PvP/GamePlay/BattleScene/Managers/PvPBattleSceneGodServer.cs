@@ -25,6 +25,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -45,8 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
         private IPvPBattleSceneHelper pvpBattleHelper;
-        public IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager;
-        public IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager;
+        public IUserChosenTargetManager playerACruiserUserChosenTargetManager;
+        public IUserChosenTargetManager playerBCruiserUserChosenTargetManager;
 
         public static Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables_left;
         public static Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables_right;

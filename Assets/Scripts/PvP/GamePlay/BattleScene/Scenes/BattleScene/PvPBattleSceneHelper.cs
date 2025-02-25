@@ -16,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
@@ -45,8 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract ILoadout GetPlayerLoadout();
         public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
         public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
-        public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager /*, IPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator*/);
-        public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator);
+        public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager /*, IPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator*/);
+        public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator);
         public abstract IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
         public abstract IManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer);
         public abstract IArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);

@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using System;
 using UnityEngine.Assertions;
 
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// trumping other forms of target finding.  This class keeps track
     /// of that target.
     /// </summary>
-    public class PvPUserChosenTargetManager : IPvPUserChosenTargetManager
+    public class PvPUserChosenTargetManager : IUserChosenTargetManager
     {
         // The highest rank possible :)
         private const int USER_CHOSEN_TARGET_RANK = int.MaxValue;

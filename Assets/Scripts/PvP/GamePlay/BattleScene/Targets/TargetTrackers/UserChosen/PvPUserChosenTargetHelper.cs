@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using Unity.Netcode;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPUserChosenTargetHelper : IPvPUserChosenTargetHelper
     {
-        private readonly IPvPUserChosenTargetManager _userChosenTargetManager;
+        private readonly IUserChosenTargetManager _userChosenTargetManager;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IPvPTargetIndicator _targetIndicator;
 
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public event EventHandler UserChosenTargetChanged;
 
         public PvPUserChosenTargetHelper(
-            IPvPUserChosenTargetManager userChosenTargetManager
+            IUserChosenTargetManager userChosenTargetManager
             // IPrioritisedSoundPlayer soundPlayer,
             // IPvPTargetIndicator targetIndicator
             )
@@ -38,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
 
         public PvPUserChosenTargetHelper(
-            IPvPUserChosenTargetManager userChosenTargetManager,
+            IUserChosenTargetManager userChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator
     )

@@ -16,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
@@ -135,7 +136,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
         public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
-            IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager
             )
         {
             PvPHelper.AssertIsNotNull(playerCruiserUserChosenTargetManager);
@@ -151,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
         public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
-            IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager,
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator)
         {
