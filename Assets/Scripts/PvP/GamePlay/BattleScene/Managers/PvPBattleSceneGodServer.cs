@@ -193,9 +193,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public async Task _Initialise_Rest()
         {
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            await Task.Delay(500);
+            //await Task.Delay(500);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
-            await Task.Delay(500);
+            //await Task.Delay(500);
             playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
@@ -314,9 +314,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
 
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            await Task.Delay(500);
+            //await Task.Delay(500);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
-            await Task.Delay(500);
+            //await Task.Delay(500);
             playerBCruiser = await cruiserFactory.CreateAIBotCruiser(Team.RIGHT);
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);

@@ -203,7 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     if (joinTryCount < joinTryLimit)
                                     {
                                         joinTryCount++;
-                                        await Task.Delay(500);
+                                        //await Task.Delay(500);
                                     }
                                     if (joinTryCount >= joinTryLimit)
                                     {
@@ -265,7 +265,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                         if (joinTryCount < joinTryLimit)
                                         {
                                             joinTryCount++;
-                                            await Task.Delay(500);
+                                            //await Task.Delay(500);
                                         }
                                         if (joinTryCount >= joinTryLimit)
                                         {
@@ -315,7 +315,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             if (joinTryCount < joinTryLimit)
                             {
                                 joinTryCount++;
-                                await Task.Delay(500);
+                                //await Task.Delay(500);
                             }
                             if (joinTryCount >= joinTryLimit)
                             {
@@ -373,7 +373,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         if (joinTryCount < joinTryLimit)
                         {
                             joinTryCount++;
-                            await Task.Delay(500);
+                            //await Task.Delay(500);
                             return;
                         }
                         else
