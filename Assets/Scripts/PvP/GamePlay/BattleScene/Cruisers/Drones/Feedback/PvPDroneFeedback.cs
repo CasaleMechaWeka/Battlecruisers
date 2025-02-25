@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPDroneFeedback : IDroneFeedback
     {
         private readonly IDroneConsumerInfo _droneConsumerInfo;
-        private readonly IPvPPool<IPvPDroneController, PvPDroneActivationArgs> _dronePool;
+        private readonly IPvPPool<IPvPDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
         private readonly IList<IPvPDroneController> _drones;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPDroneFeedback(
             IDroneConsumerInfo droneConsumerInfo,
-            IPvPPool<IPvPDroneController, PvPDroneActivationArgs> dronePool,
+            IPvPPool<IPvPDroneController, DroneActivationArgs> dronePool,
             ISpawnPositionFinder spawnPositionFinder,
             Faction faction)
         {
@@ -56,8 +57,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             while (numOfDrones > _drones.Count)
             {
-                PvPDroneActivationArgs activationArgs
-                    = new PvPDroneActivationArgs(
+                DroneActivationArgs activationArgs
+                    = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
                         _faction);
                 IPvPDroneController droneToAdd = await _dronePool.GetItem(activationArgs);

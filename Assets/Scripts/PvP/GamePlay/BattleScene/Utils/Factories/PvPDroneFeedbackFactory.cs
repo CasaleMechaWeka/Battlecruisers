@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
@@ -11,12 +12,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPDroneFeedbackFactory : IDroneFeedbackFactory
     {
-        private readonly IPvPPool<IPvPDroneController, PvPDroneActivationArgs> _dronePool;
+        private readonly IPvPPool<IPvPDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
 
         public PvPDroneFeedbackFactory(
-            IPvPPool<IPvPDroneController, PvPDroneActivationArgs> dronePool,
+            IPvPPool<IPvPDroneController, DroneActivationArgs> dronePool,
             ISpawnPositionFinder spawnPositionFinder,
             Faction faction)
         {

@@ -1,5 +1,6 @@
 using System;
 using BattleCruisers.Buildables;
+using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             base.StaticInitialise(commonStrings);
             Assert.IsNotNull(_animation);
         }
-        public void Activate(PvPDroneActivationArgs activationArgs)
+        public void Activate(DroneActivationArgs activationArgs)
         {
             pvp_IsDroneVisible.Value = true;
             gameObject.transform.position = activationArgs.Position;
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Activate(PvPDroneActivationArgs activationArgs, Faction faction)
+        public void Activate(DroneActivationArgs activationArgs, Faction faction)
         {
 
         }

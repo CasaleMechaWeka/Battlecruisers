@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
@@ -15,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPShipDeathPoolProvider ShipDeathPoolProvider { get; }
         IPvPProjectilePoolProvider ProjectilePoolProvider { get; }
         IPvPUnitPoolProvider UnitPoolProvider { get; }
-        IPvPPool<IPvPDroneController, PvPDroneActivationArgs> DronePool { get; }
+        IPvPPool<IPvPDroneController, DroneActivationArgs> DronePool { get; }
         IPvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool { get; }
         IPvPUnitToPoolMap UnitToPoolMap { get; }
     }
