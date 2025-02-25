@@ -1,9 +1,10 @@
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders
 {
-    public class PvPBuildingBuildRatelBoostProviders : IPvPBuildingBuildRatelBoostProviders
+    public class PvPBuildingBuildRatelBoostProviders : IBuildingBuildRatelBoostProviders
     {
         public ObservableCollection<IBoostProvider> DefensivesProviders { get; }
         public ObservableCollection<IBoostProvider> OffensivesProviders { get; }
