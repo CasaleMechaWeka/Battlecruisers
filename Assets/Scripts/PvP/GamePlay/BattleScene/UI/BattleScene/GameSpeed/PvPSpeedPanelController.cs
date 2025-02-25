@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, PvPTimeBC.Instance);
             }
 
-            IPvPToggleButtonGroup speedButtonGroup = new PvPToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
+            IToggleButtonGroup speedButtonGroup = new PvPToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
 
             Highlightable speedButtonPanel = GetComponent<Highlightable>();
             Assert.IsNotNull(speedButtonPanel);

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles
 {
-    public class PvPToggleButtonGroup : IPvPToggleButtonGroup
+    public class PvPToggleButtonGroup : IToggleButtonGroup
     {
         private readonly IToggleButton _defaultButton;
 
