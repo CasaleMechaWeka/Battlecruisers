@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.BattleScene.GameSpeed;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed
 {
@@ -8,18 +9,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         public IHighlightable SpeedButtonPanel { get; }
         public IPvPToggleButtonGroup SpeedButtonGroup { get; }
-        public IPvPGameSpeedButton SlowMotionButton { get; }
-        public IPvPGameSpeedButton NormalSpeedButton { get; }
-        public IPvPGameSpeedButton FastForwardButton { get; }
-        public IPvPGameSpeedButton PauseButton { get; }
+        public IGameSpeedButton SlowMotionButton { get; }
+        public IGameSpeedButton NormalSpeedButton { get; }
+        public IGameSpeedButton FastForwardButton { get; }
+        public IGameSpeedButton PauseButton { get; }
 
         public PvPSpeedComponents(
             IHighlightable speedButtonPanel,
             IPvPToggleButtonGroup speedButtonGroup,
-            IPvPGameSpeedButton slowMotionButton,
-            IPvPGameSpeedButton normalSpeedButton,
-            IPvPGameSpeedButton fastForwardButton,
-            IPvPGameSpeedButton pauseButton)
+            IGameSpeedButton slowMotionButton,
+            IGameSpeedButton normalSpeedButton,
+            IGameSpeedButton fastForwardButton,
+            IGameSpeedButton pauseButton)
         {
             PvPHelper.AssertIsNotNull(speedButtonPanel, speedButtonGroup, slowMotionButton, normalSpeedButton, fastForwardButton);
 

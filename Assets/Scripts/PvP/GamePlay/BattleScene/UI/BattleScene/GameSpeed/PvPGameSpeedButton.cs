@@ -4,10 +4,11 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BattleCruisers.UI.BattleScene.GameSpeed;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed
 {
-    public class PvPGameSpeedButton : PvPCanvasGroupButton, IPvPGameSpeedButton
+    public class PvPGameSpeedButton : PvPCanvasGroupButton, IGameSpeedButton
     {
         private ITime _time;
         private PvPFilterToggler _isEnabledToggler;
