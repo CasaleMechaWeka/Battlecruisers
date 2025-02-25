@@ -7,6 +7,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IBoostConsumer CreateBoostConsumer();
         IBoostProvider CreateBoostProvider(float boostMultiplier);
         IPvPBoostableGroup CreateBoostableGroup();
-        IPvPBoostable CreateBoostable();
+        IBoostable CreateBoostable();
     }
 }

@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBoostedBasicTurretStats<TStats> : IBasicTurretStats where TStats : IBasicTurretStats
     {
         protected readonly TStats _baseStats;
-        private readonly IPvPBoostable _fireRateBoostable;
+        private readonly IBoostable _fireRateBoostable;
         private readonly IPvPBoostableGroup _fireRateBoostabelGroup;
 
         public float FireRatePerS => _fireRateBoostable.BoostMultiplier * _baseStats.FireRatePerS;

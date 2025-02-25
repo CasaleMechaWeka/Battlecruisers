@@ -92,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float BuildProgress { get; set; }
         public int NumOfDronesRequired => numOfDronesRequired;
         public float BuildTimeInS => buildTimeInS;
-        public IPvPBoostable BuildProgressBoostable { get; private set; }
+        public IBoostable BuildProgressBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
@@ -450,7 +450,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
         }
 
-        private IPvPBoostableGroup CreateBuildRateBoostableGroup(IPvPBoostFactory boostFactory, IPvPGlobalBoostProviders globalBoostProviders, IPvPBoostable buildProgressBoostable)
+        private IPvPBoostableGroup CreateBuildRateBoostableGroup(IPvPBoostFactory boostFactory, IPvPGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
             IPvPBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);

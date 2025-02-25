@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPBoostProvider(boostMultiplier);
         }
 
-        public IPvPBoostable CreateBoostable()
+        public IBoostable CreateBoostable()
         {
             return new PvPBoostable(DEFAULT_BOOST_MULTIPLIER);
         }

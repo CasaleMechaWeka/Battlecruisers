@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBoostableGroup : IPvPBoostableGroup
     {
         private readonly IBoostConsumer _boostConsumer;
-        private readonly IList<IPvPBoostable> _boostables;
+        private readonly IList<IBoostable> _boostables;
         private bool _isCleanedUp;
 
         // Need multiple boost provider lists.  Eg:
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(boostFactory);
 
             _boostConsumer = boostFactory.CreateBoostConsumer();
-            _boostables = new List<IPvPBoostable>();
+            _boostables = new List<IBoostable>();
             _boostProviders = new List<ObservableCollection<IBoostProvider>>();
             _isCleanedUp = false;
 
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void _boostConsumer_BoostChanged(object sender, EventArgs e)
         {
-            foreach (IPvPBoostable boostable in _boostables)
+            foreach (IBoostable boostable in _boostables)
             {
                 boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
             }
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             BoostChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void AddBoostable(IPvPBoostable boostable)
+        public void AddBoostable(IBoostable boostable)
         {
             Assert.IsFalse(_boostables.Contains(boostable), "Not allowed to add duplicates, tsk tsk tsk");
 
@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
         }
 
-        public bool RemoveBoostable(IPvPBoostable boostable)
+        public bool RemoveBoostable(IBoostable boostable)
         {
             Assert.IsTrue(_boostables.Contains(boostable));
             return _boostables.Remove(boostable);

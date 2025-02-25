@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Buildables.Boost;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
-    public interface IPvPShieldStats : IPvPBoostable
+    public interface IPvPShieldStats : IBoostable
     {
         float ShieldRadiusInM { get; }
         float shieldRechargeDelayModifier { get; set; }

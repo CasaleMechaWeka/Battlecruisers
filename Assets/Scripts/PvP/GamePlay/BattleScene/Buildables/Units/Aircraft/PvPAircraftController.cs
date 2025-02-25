@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPKamikazeController _kamikazeController;
         private Collider2D _collider;
         protected SpriteRenderer _spriteRenderer;
-        private IPvPBoostable _velocityBoostable;
+        private IBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
         protected TrailRenderer _aircraftTrail;
         protected GameObject _aircraftTrailObj;

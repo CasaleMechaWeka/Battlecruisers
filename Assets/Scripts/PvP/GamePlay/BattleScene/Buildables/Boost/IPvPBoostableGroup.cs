@@ -14,8 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         event EventHandler BoostChanged;
 
-        void AddBoostable(IPvPBoostable boostable);
-        bool RemoveBoostable(IPvPBoostable boostable);
+        void AddBoostable(IBoostable boostable);
+        bool RemoveBoostable(IBoostable boostable);
 
         void AddBoostProvidersList(ObservableCollection<IBoostProvider> boostProviders);
 

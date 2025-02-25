@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public class PvPBoostedTurretStats : PvPBoostedBasicTurretStats<ITurretStats>, ITurretStats
     {
-        private readonly IPvPBoostable _accuracyBoostable;
+        private readonly IBoostable _accuracyBoostable;
         private readonly IPvPBoostableGroup _accuracyBoostableGroup;
 
         public float Accuracy => Mathf.Clamp01(_accuracyBoostable.BoostMultiplier * _baseStats.Accuracy);

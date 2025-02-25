@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
         ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; }
-        IPvPBoostable BuildProgressBoostable { get; }
+        IBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
         IPvPCruiser ParentCruiser { get; set; }
         IPvPCruiser EnemyCruiser { get; }
