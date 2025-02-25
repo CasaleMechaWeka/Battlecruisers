@@ -29,6 +29,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
 using Object = UnityEngine.Object;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Effects.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -174,7 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return projectile;
         }
 
-        public async Task<IPvPDroneController> CreateDrone()
+        public async Task<IDroneController> CreateDrone()
         {
             PvPDroneController newDrone = Object.Instantiate(_prefabCache.Drone);
             newDrone.GetComponent<NetworkObject>().Spawn();

@@ -2,7 +2,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Effects.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using System.Collections.Generic;
@@ -14,16 +13,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPDroneFeedback : IDroneFeedback
     {
         private readonly IDroneConsumerInfo _droneConsumerInfo;
-        private readonly IPvPPool<IPvPDroneController, DroneActivationArgs> _dronePool;
+        private readonly IPvPPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
-        private readonly IList<IPvPDroneController> _drones;
+        private readonly IList<IDroneController> _drones;
 
         public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
 
         public PvPDroneFeedback(
             IDroneConsumerInfo droneConsumerInfo,
-            IPvPPool<IPvPDroneController, DroneActivationArgs> dronePool,
+            IPvPPool<IDroneController, DroneActivationArgs> dronePool,
             ISpawnPositionFinder spawnPositionFinder,
             Faction faction)
         {
@@ -33,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
             _faction = faction;
-            _drones = new List<IPvPDroneController>();
+            _drones = new List<IDroneController>();
 
             _droneConsumerInfo.DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
 
@@ -61,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
                         _faction);
-                IPvPDroneController droneToAdd = await _dronePool.GetItem(activationArgs);
+                IDroneController droneToAdd = await _dronePool.GetItem(activationArgs);
                 _drones.Add(droneToAdd);
             }
         }
@@ -70,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             while (numOfDrones < _drones.Count)
             {
-                IPvPDroneController droneToRemove = _drones.Last();
+                IDroneController droneToRemove = _drones.Last();
                 _drones.RemoveAt(_drones.Count - 1);
                 droneToRemove.Deactivate();
             }
@@ -78,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public void DisposeManagedState()
         {
-            foreach (IPvPDroneController drone in _drones)
+            foreach (IDroneController drone in _drones)
             {
                 drone.Deactivate();
             }

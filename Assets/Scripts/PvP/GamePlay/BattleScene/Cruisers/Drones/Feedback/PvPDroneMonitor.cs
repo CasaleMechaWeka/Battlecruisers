@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -6,6 +5,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
+using BattleCruisers.Effects.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback
 {
@@ -55,14 +55,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void Drone_Activated(object sender, EventArgs e)
         {
-            IPvPDroneController drone = sender.Parse<IPvPDroneController>();
+            IDroneController drone = sender.Parse<IDroneController>();
             _factionToActiveDroneNum[drone.Faction]++;
             UpdateDroneActiveness();
         }
 
         private void Drone_Deactivated(object sender, EventArgs e)
         {
-            IPvPDroneController drone = sender.Parse<IPvPDroneController>();
+            IDroneController drone = sender.Parse<IDroneController>();
             _factionToActiveDroneNum[drone.Faction]--;
             UpdateDroneActiveness();
 

@@ -2,7 +2,6 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -29,8 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private PvPUnitPoolProvider _unitPoolProvider;
         public IPvPUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
 
-        private PvPPool<IPvPDroneController, DroneActivationArgs> _dronePool;
-        public IPvPPool<IPvPDroneController, DroneActivationArgs> DronePool => _dronePool;
+        private PvPPool<IDroneController, DroneActivationArgs> _dronePool;
+        public IPvPPool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
 
         private PvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
         public IPvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
@@ -53,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _shipDeathPoolProvider = new PvPShipDeathPoolProvider(factoryProvider.PrefabFactory);
             _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
-            _dronePool = new PvPPool<IPvPDroneController, DroneActivationArgs>(droneFactory);
+            _dronePool = new PvPPool<IDroneController, DroneActivationArgs>(droneFactory);
             /*
                         IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
                         _audioSourcePool = new PvPPool<IPoolable<AudioSourceActivationArgs>, PvPAudioSourceActivationArgs>(audioSourceFactory);*/
@@ -73,7 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _shipDeathPoolProvider = new PvPShipDeathPoolProvider(factoryProvider.PrefabFactory);
             _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new PvPUnitPoolProvider(uiManager, factoryProvider);
-            _dronePool = new PvPPool<IPvPDroneController, DroneActivationArgs>(droneFactory);
+            _dronePool = new PvPPool<IDroneController, DroneActivationArgs>(droneFactory);
 
             IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new PvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);

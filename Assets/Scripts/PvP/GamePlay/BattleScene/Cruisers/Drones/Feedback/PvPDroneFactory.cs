@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
+using BattleCruisers.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using System;
 using System.Threading.Tasks;
@@ -18,9 +18,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _prefabFactory = prefabFactory;
         }
 
-        public async Task<IPvPDroneController> CreateItem()
+        public async Task<IDroneController> CreateItem()
         {
-            IPvPDroneController newDrone = await _prefabFactory.CreateDrone();
+            IDroneController newDrone = await _prefabFactory.CreateDrone();
             DroneCreated?.Invoke(this, new PvPDroneCreatedEventArgs(newDrone));
             return newDrone;
         }

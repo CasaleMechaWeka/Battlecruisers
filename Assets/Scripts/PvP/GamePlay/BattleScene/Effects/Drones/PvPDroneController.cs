@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones
 {
-    public class PvPDroneController : PvPPrefab, IPvPDroneController
+    public class PvPDroneController : PvPPrefab, IDroneController
     {
         public Animation _animation;
         public ParticleSystem _animatedDrone;

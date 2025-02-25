@@ -1,4 +1,5 @@
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
@@ -48,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             where TPvPActiavtionArgs : PvPProjectileActivationArgs<TPvPStats>
             where TPvPStats : IPvPProjectileStats;
 
-        Task<IPvPDroneController> CreateDrone();
+        Task<IDroneController> CreateDrone();
         Task<IPoolable<AudioSourceActivationArgs>> CreateAudioSource(IDeferrer realTimeDeferrer);
     }
 }
