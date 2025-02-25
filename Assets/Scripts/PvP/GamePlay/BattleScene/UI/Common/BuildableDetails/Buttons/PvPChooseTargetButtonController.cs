@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
-    public class PvPChooseTargetButtonController : PvPCanvasGroupButton, IPvPButton
+    public class PvPChooseTargetButtonController : PvPCanvasGroupButton, IButton
     {
         private IPvPUserChosenTargetHelper _userChosenTargetHelper;
         private IFilter<ITarget> _buttonVisibilityFilter;

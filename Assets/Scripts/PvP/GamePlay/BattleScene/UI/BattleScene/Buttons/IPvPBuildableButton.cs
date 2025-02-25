@@ -1,10 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables;
+using BattleCruisers.UI;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
 {
-    public interface IPvPBuildableButton : IPvPButton, IPvPPresentable
+    public interface IPvPBuildableButton : IButton, IPvPPresentable
     {
         IPvPBuildable Buildable { get; }
         Color Color { set; }

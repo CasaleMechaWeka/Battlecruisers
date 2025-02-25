@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
     // FELIX  Hide for tutorial?
-    public class PvPExtendInformatorButtonController : PvPCanvasGroupButton, IPvPButton
+    public class PvPExtendInformatorButtonController : PvPCanvasGroupButton, IButton
     {
         private IPvPSlidingPanel _informatorPanel;
 

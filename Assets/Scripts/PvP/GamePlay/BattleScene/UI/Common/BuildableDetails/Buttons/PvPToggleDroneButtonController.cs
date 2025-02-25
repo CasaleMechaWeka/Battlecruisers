@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
     [RequireComponent(typeof(Image))]
-    public class PvPToggleDroneButtonController : PvPCanvasGroupButton, IPvPButton
+    public class PvPToggleDroneButtonController : PvPCanvasGroupButton, IButton
     {
         private IPvPBuildable _buildable;
         private Image image;

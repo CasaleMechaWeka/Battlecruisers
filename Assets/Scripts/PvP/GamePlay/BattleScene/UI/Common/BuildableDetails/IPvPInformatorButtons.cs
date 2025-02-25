@@ -1,10 +1,11 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
     public interface IPvPInformatorButtons
     {
         ITarget SelectedItem { set; }
-        IPvPButton ToggleDronesButton { get; }
+        IButton ToggleDronesButton { get; }
     }
 }
