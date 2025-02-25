@@ -21,6 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ObservableCollection<IBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
         IPvPBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         IUnitBuildRatelBoostProviders UnitBuildRate { get; }
-        IPvPBuildingHealthlBoostProviders BuildingHealth { get; }
+        IBuildingHealthlBoostProviders BuildingHealth { get; }
     }
 }

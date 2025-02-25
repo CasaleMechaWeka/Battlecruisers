@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IPvPBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         public IUnitBuildRatelBoostProviders UnitBuildRate { get; }
-        public IPvPBuildingHealthlBoostProviders BuildingHealth { get; }
+        public IBuildingHealthlBoostProviders BuildingHealth { get; }
 
         public PvPGlobalBoostProviders()
         {
