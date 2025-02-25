@@ -1,13 +1,14 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
     public class PvPCruiserTargetFactoriesProvider : IPvPCruiserTargetFactoriesProvider
     {
-        public IPvPTargetProcessorFactory ProcessorFactory { get; }
+        public ITargetProcessorFactory ProcessorFactory { get; }
         public IPvPTargetTrackerFactory TrackerFactory { get; }
         public IPvPTargetDetectorFactory DetectorFactory { get; }
         public IPvPTargetProviderFactory ProviderFactory { get; }
