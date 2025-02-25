@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    public class Explosion : ParticleSystemGroup, IExplosion
+    public class Explosion : ParticleSystemGroup, IPoolable<Vector3>
     {
         private readonly IGameObject _explosionController;
         private int _systemsCompletedCount = 0;

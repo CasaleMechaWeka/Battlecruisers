@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Cruisers
@@ -12,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Cruisers
 
             foreach (CruiserDeathExplosion death in cruiserDeaths)
             {
-                IExplosion deathExplosion = death.Initialise(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                IPoolable<Vector3> deathExplosion = death.Initialise(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
                 deathExplosion.Activate(death.Position);
             }
         }

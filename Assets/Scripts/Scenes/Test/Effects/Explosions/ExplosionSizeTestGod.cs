@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
 
             foreach (ExplosionController explosionController in explosionControllers)
             {
-                IExplosion explosion = explosionController.Initialise();
+                IPoolable<Vector3> explosion = explosionController.Initialise();
                 explosion.Deactivated += (sender, e) => deferrer.Defer(() => explosion.Activate(explosionController.Position), delayInS: 0.25f);
                 explosion.Activate(explosionController.Position);
             }

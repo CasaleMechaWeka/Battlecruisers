@@ -18,6 +18,7 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
+using UnityEngine;
 using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 
@@ -92,7 +93,7 @@ namespace BattleCruisers.Utils.Fetchers
             return cruiser;
         }
 
-        public IExplosion CreateExplosion(ExplosionKey explosionKey)
+        public IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey)
         {
             ExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
             ExplosionController newExplosion = Object.Instantiate(explosionPrefab);

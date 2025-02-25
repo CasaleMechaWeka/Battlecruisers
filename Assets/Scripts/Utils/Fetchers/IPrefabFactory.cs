@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
@@ -15,6 +14,7 @@ using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers
 {
@@ -32,7 +32,7 @@ namespace BattleCruisers.Utils.Fetchers
         CaptainExo GetCaptainExo(IPrefabKey captainKey);
         Bodykit GetBodykit(IPrefabKey bodykitKey);
         VariantPrefab GetVariant(IPrefabKey variantKey);
-        IExplosion CreateExplosion(ExplosionKey explosionKey);
+        IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey);
         IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
 
         TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)

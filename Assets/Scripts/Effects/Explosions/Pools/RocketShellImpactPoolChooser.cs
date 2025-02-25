@@ -5,7 +5,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
 {
     public class RocketShellImpactPoolChooser : MonoBehaviour, IExplosionPoolChooser
     {
-        public IPool<IExplosion, Vector3> ChoosePool(IExplosionPoolProvider explosionPoolProvider)
+        public IPool<IPoolable<Vector3>, Vector3> ChoosePool(IExplosionPoolProvider explosionPoolProvider)
         {
             return explosionPoolProvider.RocketShellImpactPool;
         }

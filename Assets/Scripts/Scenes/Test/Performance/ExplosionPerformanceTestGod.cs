@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Data.Static;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
         private void Update()
         {
-            IExplosion explosion = _prefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.FlakExplosion);
+            IPoolable<Vector3> explosion = _prefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.FlakExplosion);
             explosion.Activate(FindRandomSpawnPosition());
         }
 

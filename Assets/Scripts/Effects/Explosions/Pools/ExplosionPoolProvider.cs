@@ -9,20 +9,20 @@ namespace BattleCruisers.Effects.Explosions.Pools
 {
     public class ExplosionPoolProvider : IExplosionPoolProvider
     {
-        public IPool<IExplosion, Vector3> BulletImpactPool { get; }
-        public IPool<IExplosion, Vector3> HighCalibreBulletImpactPool { get; }
-        public IPool<IExplosion, Vector3> TinyBulletImpactPool { get; }
-        public IPool<IExplosion, Vector3> NovaShellImpactPool { get; }
-        public IPool<IExplosion, Vector3> RocketShellImpactPool { get; }
-        public IPool<IExplosion, Vector3> BombExplosionPool { get; }
-        public IPool<IExplosion, Vector3> FlakExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> MediumExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> LargeExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> HugeExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> FirecrackerExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> MFExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> FiveShellClusterExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> BulletImpactPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> HighCalibreBulletImpactPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> TinyBulletImpactPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> NovaShellImpactPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> RocketShellImpactPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> BombExplosionPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> FlakExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> SmallExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> MediumExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> LargeExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> HugeExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> FirecrackerExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> MFExplosionsPool { get; }
+        public IPool<IPoolable<Vector3>, Vector3> FiveShellClusterExplosionsPool { get; }
 
 
         public ExplosionPoolProvider(IPrefabFactory prefabFactory)
@@ -45,10 +45,10 @@ namespace BattleCruisers.Effects.Explosions.Pools
             FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.ExplosionFiveShellCluster);
         }
 
-        private IPool<IExplosion, Vector3> CreateExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        private IPool<IPoolable<Vector3>, Vector3> CreateExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
         {
             return
-                new Pool<IExplosion, Vector3>(
+                new Pool<IPoolable<Vector3>, Vector3>(
                     new ExplosionFactory(
                         prefabFactory,
                         explosionKey));

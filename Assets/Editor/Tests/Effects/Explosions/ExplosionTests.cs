@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Tests.Effects.Explosions
 {
     public class ExplosionTests
     {
-        private IExplosion _explosion;
+        private IPoolable<Vector3> _explosion;
         private IGameObject _controller;
         private IBroadcastingParticleSystem _particleSystem1, _particleSystem2;
         private IBroadcastingParticleSystem[] _particleSystems;

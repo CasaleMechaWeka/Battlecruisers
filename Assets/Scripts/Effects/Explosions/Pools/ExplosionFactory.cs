@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Explosions.Pools
 {
-    public class ExplosionFactory : IPoolableFactory<IExplosion, Vector3>
+    public class ExplosionFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly ExplosionKey _explosionKey;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             _explosionKey = explosionKey;
         }
 
-        public IExplosion CreateItem()
+        public IPoolable<Vector3> CreateItem()
         {
             return _prefabFactory.CreateExplosion(_explosionKey);
         }

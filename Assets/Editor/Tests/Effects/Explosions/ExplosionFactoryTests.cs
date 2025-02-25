@@ -12,10 +12,10 @@ namespace BattleCruisers.Tests.Effects.Explosions
 {
     public class ExplosionFactoryTests
     {
-        private IPoolableFactory<IExplosion, Vector3> _factory;
+        private IPoolableFactory<IPoolable<Vector3>, Vector3> _factory;
         private IPrefabFactory _prefabFactory;
         private ExplosionKey _explosionKey;
-        private IExplosion _explosion;
+        private IPoolable<Vector3> _explosion;
 
         [SetUp]
         public void TestSetup()
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Effects.Explosions
 
             _factory = new ExplosionFactory(_prefabFactory, _explosionKey);
 
-            _explosion = Substitute.For<IExplosion>();
+            _explosion = Substitute.For<IPoolable<Vector3>>();
             _prefabFactory.CreateExplosion(_explosionKey).Returns(_explosion);
         }
 

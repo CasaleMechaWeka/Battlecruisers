@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Cruisers.Slots.Feedback;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private ICruiser _parentCruiser;
         private SpriteRenderer _renderer;
-        private IExplosion _explosion;
+        private IPoolable<Vector3> _explosion;
         public ExplosionController _explosionController;
         private IBuildingPlacer _buildingPlacer;
         private Vector2 _size;

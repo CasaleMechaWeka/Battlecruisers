@@ -30,7 +30,7 @@ namespace BattleCruisers.Projectiles
         private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
         private IAudioClipWrapper _impactSound;
-        private IPool<IExplosion, Vector3> _explosionPool;
+        private IPool<IPoolable<Vector3>, Vector3> _explosionPool;
 
         private bool _isActiveAndAlive;
         protected IFactoryProvider _factoryProvider;

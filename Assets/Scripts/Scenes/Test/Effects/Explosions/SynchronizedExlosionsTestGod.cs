@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,7 +8,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
 {
     public class SynchronizedExlosionsTestGod : MonoBehaviour
     {
-        private IExplosion _explosion;
+        private IPoolable<Vector3> _explosion;
 
         public ExplosionController explosionController;
 

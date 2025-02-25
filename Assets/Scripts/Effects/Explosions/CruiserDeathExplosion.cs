@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace BattleCruisers.Effects.Explosions
         private AudioSourceGroup _audioSources;
         public BodykitWreck[] wrecks;
         public SpriteRenderer[] wreckRenders;
-        public IExplosion Initialise(ISettingsManager settingsManager)
+        public IPoolable<Vector3> Initialise(ISettingsManager settingsManager)
         {
-            IExplosion explosion = base.Initialise();
+            IPoolable<Vector3> explosion = base.Initialise();
 
             Assert.IsNotNull(settingsManager);
 

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
                     continue;
                 }
 
-                IExplosion explosion = cruiserDeath.Initialise();
+                IPoolable<Vector3> explosion = cruiserDeath.Initialise();
                 explosion.Activate(cruiserDeath.Position);
             }
         }
