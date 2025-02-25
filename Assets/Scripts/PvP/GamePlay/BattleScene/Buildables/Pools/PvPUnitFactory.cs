@@ -1,14 +1,14 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools
 {
-    public class PvPUnitFactory : IPvPPoolableFactory<PvPUnit, PvPBuildableActivationArgs>
+    public class PvPUnitFactory : IPoolableFactory<PvPUnit, PvPBuildableActivationArgs>
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPrefabKey _unitKey;

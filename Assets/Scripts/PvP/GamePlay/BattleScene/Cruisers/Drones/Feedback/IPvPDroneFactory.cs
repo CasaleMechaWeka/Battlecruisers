@@ -1,5 +1,5 @@
 using BattleCruisers.Effects.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System;
 using UnityEngine.Assertions;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
     }
 
-    public interface IPvPDroneFactory : IPvPPoolableFactory<IDroneController, DroneActivationArgs>
+    public interface IPvPDroneFactory : IPoolableFactory<IDroneController, DroneActivationArgs>
     {
         event EventHandler<PvPDroneCreatedEventArgs> DroneCreated;
     }

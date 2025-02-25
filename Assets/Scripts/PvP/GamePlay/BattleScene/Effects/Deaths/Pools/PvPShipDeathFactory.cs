@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
 {
-    public class PvPShipDeathFactory : IPvPPoolableFactory<IPoolable<Vector3>, Vector3>
+    public class PvPShipDeathFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly PvPShipDeathKey _shipDeathKey;
