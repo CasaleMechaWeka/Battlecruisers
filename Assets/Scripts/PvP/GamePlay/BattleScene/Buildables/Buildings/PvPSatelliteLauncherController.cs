@@ -22,11 +22,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(satellitePrefab);
         }
 
-        protected override async void OnBuildableCompleted()
+        protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 
-            _satellite = await _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, /*_uiManager, */_factoryProvider);
+            _satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, /*_uiManager, */_factoryProvider);
             _satellite.Position = transform.position + SpawnPositionAdjustment;
             // pvp
             _satellite.GameObject.GetComponent<NetworkTransform>().Teleport(transform.position + SpawnPositionAdjustment, transform.rotation, transform.localScale);

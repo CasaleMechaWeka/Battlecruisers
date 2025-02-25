@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools
 {
@@ -29,9 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _unitPrefab = prefabFactory.GetUnitWrapperPrefab(unitKey);
         }
 
-        public async Task<PvPUnit> CreateItem()
+        public PvPUnit CreateItem()
         {
-            var unit = await _prefabFactory
+            var unit = _prefabFactory
                     .CreateUnit(_unitPrefab, /* _uiManager */ _factoryProvider);
             return unit.Parse<PvPUnit>();
             /*        _prefabFactory

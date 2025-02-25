@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private async void LoadAudioSourcePool()
         {
-            await _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
+            _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
             SoundPlayer = new PvPSoundPlayer(SoundFetcher, _audioSourcePool/*, poolProviders.AudioSourcePool*/);
         }
     }

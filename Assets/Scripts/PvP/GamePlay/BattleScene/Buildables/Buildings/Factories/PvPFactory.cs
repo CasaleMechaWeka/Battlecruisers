@@ -153,7 +153,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private async void StartBuildingUnit()
+        private void StartBuildingUnit()
         {
             // Logging.LogMethod(Tags.FACTORY);
 
@@ -162,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return;
             }
             PvPBuildableActivationArgs activationArgs = new PvPBuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories, VariantIndex);
-            UnitUnderConstruction = await _unitPool.GetItem(activationArgs);
+            UnitUnderConstruction = _unitPool.GetItem(activationArgs);
             Assert.IsNotNull(UnitUnderConstruction);
             UnitUnderConstruction.DroneConsumerProvider = this;
 

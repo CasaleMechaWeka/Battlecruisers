@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools
 {
@@ -123,11 +122,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return pool;
         }
 
-        public async Task SetInitialCapacity()
+        public void SetInitialCapacity()
         {
             foreach (IPvPPool<PvPUnit, PvPBuildableActivationArgs> pool in _pools)
             {
-                await pool.AddCapacity(INITIAL_UNIT_CAPACITY);
+                pool.AddCapacity(INITIAL_UNIT_CAPACITY);
             }
         }
     }

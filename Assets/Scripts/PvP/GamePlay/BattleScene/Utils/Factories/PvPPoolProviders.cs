@@ -9,8 +9,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -81,23 +79,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         // Not part of constructor, because ProjecilePoolProvider and UnitPollProvider depend on ExplosionPoolProvider :/
-        public async Task SetInitialCapacities()
+        public void SetInitialCapacities()
         {
-            List<Task> setInitialCapacities = new List<Task>
-            {
-                _explosionPoolProvider.SetInitialCapacity(),
-                _shipDeathPoolProvider.SetInitialCapacity(),
-                _projectilePoolProvider.SetInitialCapacity(),
-                _unitPoolProvider.SetInitialCapacity(),
-                _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY)
-            };
-            await Task.WhenAll(setInitialCapacities);
+            _explosionPoolProvider.SetInitialCapacity();
+            _shipDeathPoolProvider.SetInitialCapacity();
+            _projectilePoolProvider.SetInitialCapacity();
+            _unitPoolProvider.SetInitialCapacity();
+            _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
         }
 
-        public async Task SetInitialCapacities_Rest()
+        public void SetInitialCapacities_Rest()
         {
-            await _explosionPoolProvider.SetInitialCapacity_Rest();
-            await _projectilePoolProvider.SetInitialCapacity_Rest();
+            _explosionPoolProvider.SetInitialCapacity_Rest();
+            _projectilePoolProvider.SetInitialCapacity_Rest();
         }
     }
 }

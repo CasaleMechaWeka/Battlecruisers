@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -21,37 +20,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _items = new Stack<TPoolable>();
         }
 
-        public async Task AddCapacity(int capacityToAdd)
+        public void AddCapacity(int capacityToAdd)
         {
             for (int i = 0; i < capacityToAdd; ++i)
             {
-                var item = await _itemFactory.CreateItem();
-                await Task.Delay(100);
+                var item = _itemFactory.CreateItem();
                 _items.Push(item);
             }
         }
 
-        public async Task<TPoolable> GetItem(TArgs activationArgs)
+        public TPoolable GetItem(TArgs activationArgs)
         {
             if (_items.Count < MaxLimit)
             {
-                TPoolable item = _items.Count != 0 ? _items.Pop() : await CreateItem();
+                TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
                 item.Activate(activationArgs);
                 return item;
             }
             return null;
         }
 
-        public async Task<TPoolable> GetItem(TArgs activationArgs, Faction faction)
+        public TPoolable GetItem(TArgs activationArgs, Faction faction)
         {
-            TPoolable item = _items.Count != 0 ? _items.Pop() : await CreateItem();
+            TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
             item.Activate(activationArgs, faction);
             return item;
         }
 
-        private async Task<TPoolable> CreateItem()
+        private TPoolable CreateItem()
         {
-            TPoolable item = await _itemFactory.CreateItem();
+            TPoolable item = _itemFactory.CreateItem();
             item.Deactivated += Item_Deactivated;
             return item;
         }

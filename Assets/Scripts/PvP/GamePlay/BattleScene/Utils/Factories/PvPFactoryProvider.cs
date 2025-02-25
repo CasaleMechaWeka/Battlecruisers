@@ -81,12 +81,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
             poolProviders = new PvPPoolProviders(this, droneFactory);
             PoolProviders = poolProviders;
-            await poolProviders.SetInitialCapacities();
+            poolProviders.SetInitialCapacities();
         }
 
         public async Task Initialise_Rest()
         {
-            await poolProviders.SetInitialCapacities_Rest();
+            poolProviders.SetInitialCapacities_Rest();
         }
 
         public void Initialise(IPvPUIManager uiManager)

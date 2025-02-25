@@ -45,17 +45,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                         shipDeathKey));
         }
 
-        public async Task SetInitialCapacity()
+        public void SetInitialCapacity()
         {
-            await AttackBoatPool.AddCapacity(PvPInitialCapacity.ATTACK_BOAT);
-            await AttackRIBPool.AddCapacity(PvPInitialCapacity.ATTACK_RIB);
-            await FrigatePool.AddCapacity(PvPInitialCapacity.FRIGATE);
-            await DestroyerPool.AddCapacity(PvPInitialCapacity.DESTROYFER);
-            await SiegeDestroyerPool.AddCapacity(PvPInitialCapacity.SIEGEDESTROYER);
-            await ArchonPool.AddCapacity(PvPInitialCapacity.ARCHON);
-            await GlassCannoneerPool.AddCapacity(PvPInitialCapacity.GLASSCANNONEER);
-            await GunBoatPool.AddCapacity(PvPInitialCapacity.GUNBOAT);
-            await TurtlePool.AddCapacity(PvPInitialCapacity.TURTLE);
+            AttackBoatPool.AddCapacity(PvPInitialCapacity.ATTACK_BOAT);
+            AttackRIBPool.AddCapacity(PvPInitialCapacity.ATTACK_RIB);
+            FrigatePool.AddCapacity(PvPInitialCapacity.FRIGATE);
+            DestroyerPool.AddCapacity(PvPInitialCapacity.DESTROYFER);
+            SiegeDestroyerPool.AddCapacity(PvPInitialCapacity.SIEGEDESTROYER);
+            ArchonPool.AddCapacity(PvPInitialCapacity.ARCHON);
+            GlassCannoneerPool.AddCapacity(PvPInitialCapacity.GLASSCANNONEER);
+            GunBoatPool.AddCapacity(PvPInitialCapacity.GUNBOAT);
+            TurtlePool.AddCapacity(PvPInitialCapacity.TURTLE);
         }
     }
 }

@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
@@ -166,50 +165,50 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                         projectileKey));
         }
 
-        public async Task SetInitialCapacity()
+        public void SetInitialCapacity()
         {
-            await BulletsPool.AddCapacity(1);
-            await HighCalibreBulletsPool.AddCapacity(1);
-            await TinyBulletsPool.AddCapacity(1);
-            await FlakBulletsPool.AddCapacity(1);
-            await ShellsSmallPool.AddCapacity(1);
-            await ShellsLargePool.AddCapacity(1);
-            await NovaShellPool.AddCapacity(1);
-            await FiveShellCluster.AddCapacity(1);
-            await RocketShellPool.AddCapacity(1);
-            await BombsPool.AddCapacity(1);
-            await StratBombsPool.AddCapacity(1);
-            await RocketsPool.AddCapacity(1);
-            await RocketsSmallPool.AddCapacity(1);
-            await MissilesSmallPool.AddCapacity(1);
-            await MissilesMediumPool.AddCapacity(1);
-            await MissilesMFPool.AddCapacity(1);
-            await MissilesFirecrackerPool.AddCapacity(1);
-            await MissilesLargePool.AddCapacity(1);
-            await MissilesSmartPool.AddCapacity(1);
+            BulletsPool.AddCapacity(1);
+            HighCalibreBulletsPool.AddCapacity(1);
+            TinyBulletsPool.AddCapacity(1);
+            FlakBulletsPool.AddCapacity(1);
+            ShellsSmallPool.AddCapacity(1);
+            ShellsLargePool.AddCapacity(1);
+            NovaShellPool.AddCapacity(1);
+            FiveShellCluster.AddCapacity(1);
+            RocketShellPool.AddCapacity(1);
+            BombsPool.AddCapacity(1);
+            StratBombsPool.AddCapacity(1);
+            RocketsPool.AddCapacity(1);
+            RocketsSmallPool.AddCapacity(1);
+            MissilesSmallPool.AddCapacity(1);
+            MissilesMediumPool.AddCapacity(1);
+            MissilesMFPool.AddCapacity(1);
+            MissilesFirecrackerPool.AddCapacity(1);
+            MissilesLargePool.AddCapacity(1);
+            MissilesSmartPool.AddCapacity(1);
         }
 
-        public async Task SetInitialCapacity_Rest()
+        public void SetInitialCapacity_Rest()
         {
-            await BulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
-            await HighCalibreBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
-            await TinyBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
-            await FlakBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
-            await ShellsSmallPool.AddCapacity(PvPInitialCapacity.SHELL_SMALL - 1);
-            await ShellsLargePool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
-            await NovaShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
-            await FiveShellCluster.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
-            await RocketShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
-            await BombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
-            await StratBombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
-            await RocketsPool.AddCapacity(PvPInitialCapacity.ROCKET - 1);
-            await RocketsSmallPool.AddCapacity(PvPInitialCapacity.ROCKET - 1);
-            await MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL - 1);
-            await MissilesMediumPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
-            await MissilesMFPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
-            await MissilesFirecrackerPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
-            await MissilesLargePool.AddCapacity(PvPInitialCapacity.MISSILE_LARGE - 1);
-            await MissilesSmartPool.AddCapacity(PvPInitialCapacity.MISSILE_SMART - 1);
+            BulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
+            HighCalibreBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
+            TinyBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
+            FlakBulletsPool.AddCapacity(PvPInitialCapacity.BULLET - 1);
+            ShellsSmallPool.AddCapacity(PvPInitialCapacity.SHELL_SMALL - 1);
+            ShellsLargePool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
+            NovaShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
+            FiveShellCluster.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
+            RocketShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE - 1);
+            BombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
+            StratBombsPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
+            RocketsPool.AddCapacity(PvPInitialCapacity.ROCKET - 1);
+            RocketsSmallPool.AddCapacity(PvPInitialCapacity.ROCKET - 1);
+            MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL - 1);
+            MissilesMediumPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
+            MissilesMFPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
+            MissilesFirecrackerPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
+            MissilesLargePool.AddCapacity(PvPInitialCapacity.MISSILE_LARGE - 1);
+            MissilesSmartPool.AddCapacity(PvPInitialCapacity.MISSILE_SMART - 1);
         }
     }
 }

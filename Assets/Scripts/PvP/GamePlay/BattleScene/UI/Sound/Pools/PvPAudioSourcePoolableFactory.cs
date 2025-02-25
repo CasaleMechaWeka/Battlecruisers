@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Threading;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools
 {
@@ -20,9 +19,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             _realTimeDeferrer = realTimeDeferrer;
         }
 
-        public async Task<IPoolable<AudioSourceActivationArgs>> CreateItem()
+        public IPoolable<AudioSourceActivationArgs> CreateItem()
         {
-            return await _prefabFactory.CreateAudioSource(_realTimeDeferrer);
+            return _prefabFactory.CreateAudioSource(_realTimeDeferrer);
         }
     }
 }

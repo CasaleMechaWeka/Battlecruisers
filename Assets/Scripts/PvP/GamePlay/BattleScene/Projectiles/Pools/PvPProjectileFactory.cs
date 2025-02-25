@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
@@ -24,9 +23,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _projectileKey = projectileKey;
         }
 
-        public async Task<TProjectile> CreateItem()
+        public TProjectile CreateItem()
         {
-            return await _factoryProvider.PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey, _factoryProvider);
+            return _factoryProvider.PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey, _factoryProvider);
         }
 
         public override string ToString()

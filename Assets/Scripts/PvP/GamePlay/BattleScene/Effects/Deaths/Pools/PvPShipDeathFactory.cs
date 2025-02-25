@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.BattleScene.Pools;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
@@ -21,9 +20,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _shipDeathKey = shipDeathKey;
         }
 
-        public async Task<IPoolable<Vector3>> CreateItem()
+        public IPoolable<Vector3> CreateItem()
         {
-            return await _prefabFactory.CreateShipDeath(_shipDeathKey);
+            return _prefabFactory.CreateShipDeath(_shipDeathKey);
         }
 
         public override string ToString()
