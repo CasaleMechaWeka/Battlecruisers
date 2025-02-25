@@ -1,9 +1,10 @@
 using System;
+using BattleCruisers.UI.Commands;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Commands
 {
-    public abstract class PvPCommandBase : IPvPCommandBase
+    public abstract class PvPCommandBase : ICommandBase
     {
         private readonly Func<bool> _canExecute;
 
