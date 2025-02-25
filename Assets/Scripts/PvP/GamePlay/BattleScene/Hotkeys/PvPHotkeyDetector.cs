@@ -1,10 +1,10 @@
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
     {
         private readonly IHotkeyList _hotkeyList;
         private readonly IPvPInput _input;
-        private readonly IPvPUpdater _updater;
+        private readonly IUpdater _updater;
         private readonly IBroadcastingFilter _filter;
         private IPvPUIManager _uiManager;
 
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         public PvPHotkeyDetector(
             IHotkeyList hotkeyList,
             IPvPInput input,
-            IPvPUpdater updater,
+            IUpdater updater,
             IBroadcastingFilter filter,
             IPvPUIManager uiManager)
         {

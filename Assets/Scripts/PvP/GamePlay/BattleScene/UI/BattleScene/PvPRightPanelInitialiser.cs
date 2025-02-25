@@ -9,13 +9,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPCruiser playerCruiser,
             IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            IPvPUpdater perFrameUpdater,
+            IUpdater perFrameUpdater,
             IPauseGameManager pauseGameManager,
             IPvPBattleCompletionHandler battleCompletionHandler,
             ISingleSoundPlayer soundPlayer,
@@ -81,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPInformatorPanel SetupInformator(
             IPvPUIManager uiManager,
             IPvPCruiser playerCruiser,
-            IPvPUpdater perFrameUpdater,
+            IUpdater perFrameUpdater,
             IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             ISingleSoundPlayer soundPlayer)

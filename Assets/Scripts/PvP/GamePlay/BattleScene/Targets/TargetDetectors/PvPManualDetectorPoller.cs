@@ -1,5 +1,5 @@
 using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Utils.BattleScene.Update;
 using System;
 using BattleCruisers.Targets.TargetDetectors;
 
@@ -8,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPManualDetectorPoller : IManagedDisposable
     {
         private readonly IManualDetector _manualDetector;
-        private readonly IPvPUpdater _updater;
+        private readonly IUpdater _updater;
 
-        public PvPManualDetectorPoller(IManualDetector manualDetector, IPvPUpdater updater)
+        public PvPManualDetectorPoller(IManualDetector manualDetector, IUpdater updater)
         {
             Helper.AssertIsNotNull(manualDetector, updater);
 

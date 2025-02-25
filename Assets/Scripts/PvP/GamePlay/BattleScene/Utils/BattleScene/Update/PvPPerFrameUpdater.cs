@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
-    public class PvPPerFrameUpdater : MonoBehaviour, IPvPUpdater
+    public class PvPPerFrameUpdater : MonoBehaviour, IUpdater
     {
         public float DeltaTime => Time.deltaTime;
 

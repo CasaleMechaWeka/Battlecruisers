@@ -1,12 +1,14 @@
+using BattleCruisers.Utils.BattleScene.Update;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
     public interface IPvPUpdaterProvider
     {
-        IPvPUpdater PerFrameUpdater { get; }
-        IPvPUpdater PhysicsUpdater { get; }
+        IUpdater PerFrameUpdater { get; }
+        IUpdater PhysicsUpdater { get; }
         IPvPSwitchableUpdater SwitchableUpdater { get; }
-        IPvPUpdater SlowUpdater { get; }
-        IPvPUpdater VerySlowUpdater { get; }
-        IPvPUpdater BarrelControllerUpdater { get; }
+        IUpdater SlowUpdater { get; }
+        IUpdater VerySlowUpdater { get; }
+        IUpdater BarrelControllerUpdater { get; }
     }
 }

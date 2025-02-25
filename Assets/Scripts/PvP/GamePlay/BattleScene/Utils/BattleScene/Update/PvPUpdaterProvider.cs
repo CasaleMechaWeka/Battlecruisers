@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -6,17 +7,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPUpdaterProvider : MonoBehaviour, IPvPUpdaterProvider
     {
-        public IPvPUpdater PerFrameUpdater { get; private set; }
-        public IPvPUpdater PhysicsUpdater { get; private set; }
+        public IUpdater PerFrameUpdater { get; private set; }
+        public IUpdater PhysicsUpdater { get; private set; }
         public IPvPSwitchableUpdater SwitchableUpdater { get; private set; }
 
         private const float SLOW_UPDATER_INTERVAL_IN_S = 0.1f;
-        public IPvPUpdater SlowUpdater { get; private set; }
+        public IUpdater SlowUpdater { get; private set; }
 
         private const float VERY_SLOW_UPDATER_INTERVAL_IN_S = 0.2f;
-        public IPvPUpdater VerySlowUpdater { get; private set; }
+        public IUpdater VerySlowUpdater { get; private set; }
 
-        public IPvPUpdater BarrelControllerUpdater { get; private set; }
+        public IUpdater BarrelControllerUpdater { get; private set; }
 
 
         public void Initialise()

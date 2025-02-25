@@ -10,17 +10,17 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.BattleScene.Update;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class PvPBarrelControllerArgs : IPvPBarrelControllerArgs
     {
-        public IPvPUpdater Updater { get; }
+        public IUpdater Updater { get; }
         public ITargetFilter TargetFilter { get; }
         public IPvPTargetPositionPredictor TargetPositionPredictor { get; }
         public IAngleCalculator AngleCalculator { get; }
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         // should be called by server
         public PvPBarrelControllerArgs(
-            IPvPUpdater updater,
+            IUpdater updater,
             ITargetFilter targetFilter,
             IPvPTargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator,

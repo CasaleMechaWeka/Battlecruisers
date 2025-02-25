@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Utils.BattleScene.Update;
 using System;
 using UnityEngine.Assertions;
 
@@ -7,11 +7,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPCloudTeleporter
     {
-        private readonly IPvPUpdater _updater;
+        private readonly IUpdater _updater;
         private readonly IPvPTeleporterHelper _teleporterHelper;
         private IPvPCloud _leftCloud, _rightCloud;
 
-        public PvPCloudTeleporter(IPvPUpdater updater, IPvPTeleporterHelper teleporterHelper, IPvPCloud leftCloud, IPvPCloud rightCloud)
+        public PvPCloudTeleporter(IUpdater updater, IPvPTeleporterHelper teleporterHelper, IPvPCloud leftCloud, IPvPCloud rightCloud)
         {
             PvPHelper.AssertIsNotNull(updater, teleporterHelper, leftCloud, rightCloud);
             Assert.IsTrue(leftCloud.Position.x < rightCloud.Position.x);

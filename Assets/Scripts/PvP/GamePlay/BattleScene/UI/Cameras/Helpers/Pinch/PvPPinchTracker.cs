@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.BattleScene.Update;
 using System;
 using UnityEngine;
 
@@ -9,11 +9,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPPinchTracker : IPvPPinchTracker
     {
         private readonly IPvPInput _input;
-        private readonly IPvPUpdater _updater;
+        private readonly IUpdater _updater;
 
         private float _lastDistanceInM;
 
-        public PvPPinchTracker(IPvPInput input, IPvPUpdater updater)
+        public PvPPinchTracker(IPvPInput input, IUpdater updater)
         {
             PvPHelper.AssertIsNotNull(input, updater);
 

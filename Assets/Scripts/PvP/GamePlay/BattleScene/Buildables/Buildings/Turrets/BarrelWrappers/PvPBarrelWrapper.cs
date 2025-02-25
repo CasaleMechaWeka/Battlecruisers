@@ -18,6 +18,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -218,7 +219,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IPvPAnimation barrelFiringAnimation)
         {
-            IPvPUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);
+            IUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);
 
             return new PvPBarrelControllerArgs(
                 updater,
@@ -318,7 +319,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _factoryProvider.Turrets.AngleLimiterFactory.CreateFacingLimiter();
         }
 
-        protected virtual IPvPUpdater ChooseUpdater(IPvPUpdaterProvider updaterProvider)
+        protected virtual IUpdater ChooseUpdater(IPvPUpdaterProvider updaterProvider)
         {
             return updaterProvider.BarrelControllerUpdater;
         }

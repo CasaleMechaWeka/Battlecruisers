@@ -1,13 +1,14 @@
 using System;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
     /// <summary>
     /// Emits the Updated event during the first frame after the specified amount of time.
     /// </summary>
-    public class PvPMultiFrameUpdater : IPvPUpdater
+    public class PvPMultiFrameUpdater : IUpdater
     {
         private readonly IDeltaTimeProvider _timeProvider;
         private readonly float _intervalInS;
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public event EventHandler Updated;
 
-        public PvPMultiFrameUpdater(IPvPUpdater perFrameUpdater, IDeltaTimeProvider timeProvider, float intervalInS)
+        public PvPMultiFrameUpdater(IUpdater perFrameUpdater, IDeltaTimeProvider timeProvider, float intervalInS)
         {
             PvPHelper.AssertIsNotNull(perFrameUpdater, timeProvider);
             Assert.IsTrue(intervalInS > 0);

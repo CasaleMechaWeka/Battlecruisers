@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.BattleScene.Update;
 using System;
 using UnityEngine;
 
@@ -9,11 +9,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
     public class PvPEscapeDetector : IPvPEscapeDetector
     {
         private readonly IPvPInput _input;
-        private readonly IPvPUpdater _updater;
+        private readonly IUpdater _updater;
 
         public event EventHandler EscapePressed;
 
-        public PvPEscapeDetector(IPvPInput input, IPvPUpdater updater)
+        public PvPEscapeDetector(IPvPInput input, IUpdater updater)
         {
             PvPHelper.AssertIsNotNull(input, updater);
 

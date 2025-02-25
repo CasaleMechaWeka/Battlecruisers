@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
 
@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
     {
         private readonly IPvPPointerUpDownEmitter _button;
         private readonly ITime _time;
-        private readonly IPvPUpdater _updater;
+        private readonly IUpdater _updater;
         private readonly float _intervalLengthS;
         private float _longPressDurationS;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
         public PvPLongPressIdentifier(
             IPvPPointerUpDownEmitter button,
             ITime time,
-            IPvPUpdater updater,
+            IUpdater updater,
             float intervalLengthS)
         {
             PvPHelper.AssertIsNotNull(button, time, updater);

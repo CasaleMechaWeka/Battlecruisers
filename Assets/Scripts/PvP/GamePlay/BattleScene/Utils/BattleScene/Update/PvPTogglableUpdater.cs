@@ -1,11 +1,12 @@
 using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils.BattleScene.Update;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
-    public class PvPTogglableUpdater : MonoBehaviour, IPvPUpdater
+    public class PvPTogglableUpdater : MonoBehaviour, IUpdater
     {
         private IBroadcastingFilter _enabledFilter;
 
