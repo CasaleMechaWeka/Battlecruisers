@@ -29,10 +29,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _rigidBody = rigidBody;
             _parentProjectile = parentProjectile;
 
-            SpriteRenderer rocketRenderer = GetComponent<SpriteRenderer>();
-            Assert.IsNotNull(rocketRenderer);
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            Assert.IsNotNull(collider);
 
-            _size = rocketRenderer.bounds.size;
+            _size = collider.size;
         }
 
         protected override void InternalDestroy()
