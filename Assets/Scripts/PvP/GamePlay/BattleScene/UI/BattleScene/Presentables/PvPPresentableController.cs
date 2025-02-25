@@ -5,7 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public abstract class PvPPresentableController : MonoBehaviourWrapper, IPresentable
     {
-        private IPvPPresentableComponent _presentableComponent;
+        private IPresentableComponent _presentableComponent;
 
         public event EventHandler Dismissed;
 

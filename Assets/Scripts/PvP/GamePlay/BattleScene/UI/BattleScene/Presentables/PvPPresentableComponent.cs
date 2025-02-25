@@ -4,7 +4,7 @@ using BattleCruisers.UI.BattleScene.Presentables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables
 {
-    public sealed class PvPPresentableComponent : IPvPPresentableComponent
+    public sealed class PvPPresentableComponent : IPresentableComponent
     {
         private readonly IList<IPresentable> _childPresentables;
 

@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public abstract class PvPClickablePresentableController : PvPElementWithClickSound, IPresentable
     {
-        private IPvPPresentableComponent _presentableComponent;
+        private IPresentableComponent _presentableComponent;
 
         public event EventHandler Dismissed;
 
