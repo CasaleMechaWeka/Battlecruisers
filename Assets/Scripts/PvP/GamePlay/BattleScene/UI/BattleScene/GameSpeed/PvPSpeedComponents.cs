@@ -5,7 +5,7 @@ using BattleCruisers.UI.BattleScene.GameSpeed;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed
 {
-    public class PvPSpeedComponents : IPvPSpeedComponents
+    public class PvPSpeedComponents : ISpeedComponents
     {
         public IHighlightable SpeedButtonPanel { get; }
         public IToggleButtonGroup SpeedButtonGroup { get; }
