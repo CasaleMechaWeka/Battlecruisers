@@ -12,6 +12,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER = 1.6f;
         private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
-        public IPvPShieldStats Stats { get; private set; }
+        public IShieldStats Stats { get; private set; }
         public override TargetType TargetType => TargetType.Buildings;
 
         private Vector2 _size;
@@ -44,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             PvPHelper.AssertIsNotNull(visuals, circleCollider, healthBar);
 
-            Stats = GetComponent<IPvPShieldStats>();
+            Stats = GetComponent<IShieldStats>();
             Assert.IsNotNull(Stats);
 
             float diameter = 2 * Stats.ShieldRadiusInM;

@@ -1,8 +1,9 @@
+using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
-    public class PvPShieldStats : MonoBehaviour, IPvPShieldStats
+    public class PvPShieldStats : MonoBehaviour, IShieldStats
     {
         public float shieldRadiusInM;
         public float shieldRechargeDelayInS;
