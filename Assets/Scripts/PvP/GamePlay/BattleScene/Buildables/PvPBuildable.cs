@@ -31,6 +31,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Commands;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
@@ -450,7 +451,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
         }
 
-        private IPvPBoostableGroup CreateBuildRateBoostableGroup(IPvPBoostFactory boostFactory, IPvPGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IPvPBoostableGroup CreateBuildRateBoostableGroup(IPvPBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
             IPvPBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
@@ -472,7 +473,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// + Shields   => Boost from Raptor
         /// </summary>
         protected virtual void AddBuildRateBoostProviders(
-            IPvPGlobalBoostProviders globalBoostProviders,
+            IGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);

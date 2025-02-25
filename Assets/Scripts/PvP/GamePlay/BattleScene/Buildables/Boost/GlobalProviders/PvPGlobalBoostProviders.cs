@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders
 {
-    public class PvPGlobalBoostProviders : IPvPGlobalBoostProviders
+    public class PvPGlobalBoostProviders : IGlobalBoostProviders
     {
         // The BoostableGroup does not allow the same IBoostProviders collection
         // to be added twice, even if it is just the same DummyBoostProviders :/

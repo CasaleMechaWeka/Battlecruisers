@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBoostFactory boostFactory,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders,
-            IPvPGlobalBoostProviders globalBoostProviders)
+            IGlobalBoostProviders globalBoostProviders)
             : base(baseStats, boostFactory, localBoostProviders, globalFireRateBoostProviders)
         {
             Assert.IsNotNull(globalBoostProviders);
