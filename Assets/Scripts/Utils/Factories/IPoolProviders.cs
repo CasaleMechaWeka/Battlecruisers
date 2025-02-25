@@ -15,7 +15,7 @@ namespace BattleCruisers.Utils.Factories
         IProjectilePoolProvider ProjectilePoolProvider { get; }
         IUnitPoolProvider UnitPoolProvider { get; }
         IPool<IDroneController, DroneActivationArgs> DronePool { get; }
-        IPool<IAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool { get; }
+        IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool { get; }
         IUnitToPoolMap UnitToPoolMap { get; }
     }
 }

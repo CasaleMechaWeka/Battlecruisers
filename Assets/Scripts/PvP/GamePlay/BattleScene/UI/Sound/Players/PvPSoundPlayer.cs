@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
@@ -14,9 +14,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
     public class PvPSoundPlayer : IPvPSoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly IPvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
+        private readonly IPvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
 
-        public PvPSoundPlayer(ISoundFetcher soundFetcher, IPvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> audioSourcePool)
+        public PvPSoundPlayer(ISoundFetcher soundFetcher, IPvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourcePool)
         {
             PvPHelper.AssertIsNotNull(soundFetcher, audioSourcePool);
 

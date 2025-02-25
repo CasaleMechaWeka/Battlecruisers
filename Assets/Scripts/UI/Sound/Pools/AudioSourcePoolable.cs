@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -7,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.Pools
 {
-    public class AudioSourcePoolable : IAudioSourcePoolable
+    public class AudioSourcePoolable : IPoolable<AudioSourceActivationArgs>
     {
         private readonly IAudioSource _source;
         private readonly IDeferrer _realTimeDeferrer;

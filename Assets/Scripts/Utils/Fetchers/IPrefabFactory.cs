@@ -12,6 +12,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
 
@@ -40,6 +41,6 @@ namespace BattleCruisers.Utils.Fetchers
             where TStats : IProjectileStats;
 
         IDroneController CreateDrone();
-        IAudioSourcePoolable CreateAudioSource(IDeferrer realTimeDeferrer);
+        IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer);
     }
 }

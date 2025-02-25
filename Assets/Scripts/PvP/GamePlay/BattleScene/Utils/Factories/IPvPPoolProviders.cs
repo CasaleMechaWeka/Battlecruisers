@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Ex
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -15,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPProjectilePoolProvider ProjectilePoolProvider { get; }
         IPvPUnitPoolProvider UnitPoolProvider { get; }
         IPvPPool<IPvPDroneController, PvPDroneActivationArgs> DronePool { get; }
-        IPvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool { get; }
+        IPvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool { get; }
         IPvPUnitToPoolMap UnitToPoolMap { get; }
     }
 }

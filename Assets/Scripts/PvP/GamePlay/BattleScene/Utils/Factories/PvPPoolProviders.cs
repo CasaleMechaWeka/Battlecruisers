@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,8 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private PvPPool<IPvPDroneController, PvPDroneActivationArgs> _dronePool;
         public IPvPPool<IPvPDroneController, PvPDroneActivationArgs> DronePool => _dronePool;
 
-        private PvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
-        public IPvPPool<IAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
+        private PvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
+        public IPvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
 
         public IPvPUnitToPoolMap UnitToPoolMap { get; }
 
@@ -54,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _dronePool = new PvPPool<IPvPDroneController, PvPDroneActivationArgs>(droneFactory);
             /*
                         IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-                        _audioSourcePool = new PvPPool<IAudioSourcePoolable, PvPAudioSourceActivationArgs>(audioSourceFactory);*/
+                        _audioSourcePool = new PvPPool<IPoolable<AudioSourceActivationArgs>, PvPAudioSourceActivationArgs>(audioSourceFactory);*/
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }
@@ -74,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _dronePool = new PvPPool<IPvPDroneController, PvPDroneActivationArgs>(droneFactory);
 
             IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-            _audioSourcePool = new PvPPool<IAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
+            _audioSourcePool = new PvPPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }

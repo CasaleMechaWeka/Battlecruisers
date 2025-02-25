@@ -15,6 +15,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 
@@ -48,6 +49,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             where TPvPStats : IPvPProjectileStats;
 
         Task<IPvPDroneController> CreateDrone();
-        Task<IAudioSourcePoolable> CreateAudioSource(IDeferrer realTimeDeferrer);
+        Task<IPoolable<AudioSourceActivationArgs>> CreateAudioSource(IDeferrer realTimeDeferrer);
     }
 }

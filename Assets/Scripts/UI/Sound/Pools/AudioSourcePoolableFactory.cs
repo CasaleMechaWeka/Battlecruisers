@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
@@ -17,7 +18,7 @@ namespace BattleCruisers.UI.Sound.Pools
             _realTimeDeferrer = realTimeDeferrer;
         }
 
-        public IAudioSourcePoolable CreateItem()
+        public IPoolable<AudioSourceActivationArgs> CreateItem()
         {
             return _prefabFactory.CreateAudioSource(_realTimeDeferrer);
         }

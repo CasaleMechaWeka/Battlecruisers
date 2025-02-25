@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Tests.UI.Sound.Pools
 {
     public class AudioSourcePoolableTests
     {
-        private IAudioSourcePoolable _poolable;
+        private IPoolable<AudioSourceActivationArgs> _poolable;
         private IAudioSource _source;
         private IDeferrer _realTimeDeferrer;
         private int _deactivatedCount;

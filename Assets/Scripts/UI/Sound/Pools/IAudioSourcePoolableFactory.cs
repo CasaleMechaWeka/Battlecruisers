@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Sound.Pools
 {
-    public interface IAudioSourcePoolableFactory : IPoolableFactory<IAudioSourcePoolable, AudioSourceActivationArgs>
+    public interface IAudioSourcePoolableFactory : IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>
     {
     }
 }

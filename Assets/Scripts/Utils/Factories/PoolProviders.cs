@@ -27,8 +27,8 @@ namespace BattleCruisers.Utils.Factories
         private Pool<IDroneController, DroneActivationArgs> _dronePool;
         public IPool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
 
-        private Pool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
-        public IPool<IAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
+        private Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
+        public IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
 
         public IUnitToPoolMap UnitToPoolMap { get; }
 
@@ -50,7 +50,7 @@ namespace BattleCruisers.Utils.Factories
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
 
             IAudioSourcePoolableFactory audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-            _audioSourcePool = new Pool<IAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
+            _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }

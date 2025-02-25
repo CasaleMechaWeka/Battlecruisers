@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -8,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools
 {
-    public class PvPAudioSourcePoolable : IAudioSourcePoolable
+    public class PvPAudioSourcePoolable : IPoolable<AudioSourceActivationArgs>
     {
         private readonly IAudioSource _source;
         private readonly IDeferrer _realTimeDeferrer;
