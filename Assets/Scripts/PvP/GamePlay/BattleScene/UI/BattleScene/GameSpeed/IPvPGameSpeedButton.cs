@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles;
+using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed
 {
-    public interface IPvPGameSpeedButton : IPvPToggleButton
+    public interface IPvPGameSpeedButton : IToggleButton
     {
         void TriggerClick();
     }

@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPToggleButtonGroup : IPvPToggleButtonGroup
     {
-        private readonly IPvPToggleButton _defaultButton;
+        private readonly IToggleButton _defaultButton;
 
-        private IPvPToggleButton _selectedButton;
-        private IPvPToggleButton SelectedButton
+        private IToggleButton _selectedButton;
+        private IToggleButton SelectedButton
         {
             get { return _selectedButton; }
             set
@@ -29,13 +30,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public PvPToggleButtonGroup(IList<IPvPToggleButton> buttons, IPvPToggleButton defaultButton)
+        public PvPToggleButtonGroup(IList<IToggleButton> buttons, IToggleButton defaultButton)
         {
             PvPHelper.AssertIsNotNull(buttons, defaultButton);
 
             _defaultButton = defaultButton;
 
-            foreach (IPvPToggleButton button in buttons)
+            foreach (IToggleButton button in buttons)
             {
                 button.Clicked += Button_Clicked;
             }
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            SelectedButton = sender.Parse<IPvPToggleButton>();
+            SelectedButton = sender.Parse<IToggleButton>();
         }
 
         public void SelectDefaultButton()
