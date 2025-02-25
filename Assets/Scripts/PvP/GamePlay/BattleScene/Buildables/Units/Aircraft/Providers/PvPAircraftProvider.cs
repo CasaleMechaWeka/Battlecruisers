@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers
 {
-    public class PvPAircraftProvider : IPvPAircraftProvider
+    public class PvPAircraftProvider : IAircraftProvider
     {
         private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
         private readonly IRandomGenerator _random;
