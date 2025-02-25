@@ -1,10 +1,11 @@
+using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables
 {
-    public abstract class PvPClickablePresentableController : PvPElementWithClickSound, IPvPPresentable
+    public abstract class PvPClickablePresentableController : PvPElementWithClickSound, IPresentable
     {
         private IPvPPresentableComponent _presentableComponent;
 
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
-        protected void AddChildPresentable(IPvPPresentable presentableToAdd)
+        protected void AddChildPresentable(IPresentable presentableToAdd)
         {
             _presentableComponent.AddChildPresentable(presentableToAdd);
         }

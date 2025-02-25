@@ -1,7 +1,9 @@
+using BattleCruisers.UI.BattleScene.Presentables;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables
 {
-    public interface IPvPPresentableComponent : IPvPPresentable
+    public interface IPvPPresentableComponent : IPresentable
     {
-        void AddChildPresentable(IPvPPresentable presentableToAdd);
+        void AddChildPresentable(IPresentable presentableToAdd);
     }
 }

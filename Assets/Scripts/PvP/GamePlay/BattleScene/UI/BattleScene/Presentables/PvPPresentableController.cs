@@ -1,8 +1,9 @@
 using System;
+using BattleCruisers.UI.BattleScene.Presentables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables
 {
-    public abstract class PvPPresentableController : MonoBehaviourWrapper, IPvPPresentable
+    public abstract class PvPPresentableController : MonoBehaviourWrapper, IPresentable
     {
         private IPvPPresentableComponent _presentableComponent;
 
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
-        protected void AddChildPresentable(IPvPPresentable presentableToAdd)
+        protected void AddChildPresentable(IPresentable presentableToAdd)
         {
             _presentableComponent.AddChildPresentable(presentableToAdd);
         }

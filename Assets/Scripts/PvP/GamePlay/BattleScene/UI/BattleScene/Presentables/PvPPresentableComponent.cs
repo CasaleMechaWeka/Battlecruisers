@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using BattleCruisers.UI.BattleScene.Presentables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables
 {
     public sealed class PvPPresentableComponent : IPvPPresentableComponent
     {
-        private readonly IList<IPvPPresentable> _childPresentables;
+        private readonly IList<IPresentable> _childPresentables;
 
         public event EventHandler Dismissed;
 
@@ -13,14 +14,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPPresentableComponent()
         {
-            _childPresentables = new List<IPvPPresentable>();
+            _childPresentables = new List<IPresentable>();
         }
 
         public void OnPresenting(object activationParameter)
         {
             IsPresented = true;
 
-            foreach (IPvPPresentable presentable in _childPresentables)
+            foreach (IPresentable presentable in _childPresentables)
             {
                 presentable.OnPresenting(activationParameter);
             }
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             IsPresented = false;
 
-            foreach (IPvPPresentable presentable in _childPresentables)
+            foreach (IPresentable presentable in _childPresentables)
             {
                 presentable.OnDismissing();
             }
@@ -38,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
-        public void AddChildPresentable(IPvPPresentable presentableToAdd)
+        public void AddChildPresentable(IPresentable presentableToAdd)
         {
             _childPresentables.Add(presentableToAdd);
         }
