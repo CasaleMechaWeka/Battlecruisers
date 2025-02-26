@@ -1,6 +1,5 @@
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
             ITargetProvider targetProvider,
-            IPvPTargetPositionPredictorFactory targetPositionPredictorFactory)
+            ITargetPositionPredictorFactory targetPositionPredictorFactory)
             : base(rigidBody, maxVelocityProvider, targetProvider)
         {
             _targetPositionPredictor = targetPositionPredictorFactory.CreateLinearPredictor();

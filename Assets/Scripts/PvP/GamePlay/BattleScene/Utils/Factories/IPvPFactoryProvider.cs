@@ -4,13 +4,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Movement.Predictors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPSoundFactoryProvider Sound { get; }
         IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         IPvPSpriteChooserFactory SpriteChooserFactory { get; }
-        IPvPTargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IPvPTargetFactoriesProvider Targets { get; }
         IPvPTurretFactoryProvider Turrets { get; }
         IPvPUpdaterProvider UpdaterProvider { get; }

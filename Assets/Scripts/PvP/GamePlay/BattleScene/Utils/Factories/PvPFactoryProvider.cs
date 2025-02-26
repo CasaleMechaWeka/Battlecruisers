@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
@@ -19,6 +18,7 @@ using UnityEngine.Assertions;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Movement.Predictors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPPrefabFactory PrefabFactory { get; }
         public IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         public IPvPSpriteChooserFactory SpriteChooserFactory { get; }
-        public IPvPTargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public IPvPTurretFactoryProvider Turrets { get; }
         public IPvPUpdaterProvider UpdaterProvider { get; }
@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new PvPTargetFactoriesProvider();
-            TargetPositionPredictorFactory = new PvPTargetPositionPredictorFactory();
+            TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new PvPFlightPointsProviderFactory();
             BoostFactory = new PvPBoostFactory();
