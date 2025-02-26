@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private const float DEFAULT_BOOST_MULTIPLIER = 1;
 
-        public IPvPBoostableGroup CreateBoostableGroup()
+        public IBoostableGroup CreateBoostableGroup()
         {
             return new PvPBoostableGroup(this);
         }

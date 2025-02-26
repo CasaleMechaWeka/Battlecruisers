@@ -59,9 +59,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IPvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
-        protected IPvPBoostableGroup _buildRateBoostableGroup;
+        protected IBoostableGroup _buildRateBoostableGroup;
         // Boost resulting from adjacent local boosters
-        protected IPvPBoostableGroup _localBoosterBoostableGroup;
+        protected IBoostableGroup _localBoosterBoostableGroup;
         protected PvPBuildableProgressController _buildableProgress;
 
         public string stringKeyName;
@@ -451,9 +451,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
         }
 
-        private IPvPBoostableGroup CreateBuildRateBoostableGroup(IPvPBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(IPvPBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
-            IPvPBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
+            IBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();

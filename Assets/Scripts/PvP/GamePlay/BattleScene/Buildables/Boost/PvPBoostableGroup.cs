@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost
 {
-    public class PvPBoostableGroup : IPvPBoostableGroup
+    public class PvPBoostableGroup : IBoostableGroup
     {
         private readonly IBoostConsumer _boostConsumer;
         private readonly IList<IBoostable> _boostables;

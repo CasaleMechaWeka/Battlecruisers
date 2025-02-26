@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected readonly TStats _baseStats;
         private readonly IBoostable _fireRateBoostable;
-        private readonly IPvPBoostableGroup _fireRateBoostabelGroup;
+        private readonly IBoostableGroup _fireRateBoostabelGroup;
 
         public float FireRatePerS => _fireRateBoostable.BoostMultiplier * _baseStats.FireRatePerS;
         public float RangeInM => _baseStats.RangeInM;
