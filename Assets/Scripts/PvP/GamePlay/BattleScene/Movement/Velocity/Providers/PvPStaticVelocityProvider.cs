@@ -1,6 +1,8 @@
+using BattleCruisers.Movement.Velocity.Providers;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers
 {
-    public class PvPStaticVelocityProvider : IPvPVelocityProvider
+    public class PvPStaticVelocityProvider : IVelocityProvider
     {
         public float VelocityInMPerS { get; }
 

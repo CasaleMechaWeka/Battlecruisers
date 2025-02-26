@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public PvPPatrollingMovementController(
             Rigidbody2D rigidBody,
-            IPvPVelocityProvider maxVelocityProvider,
+            IVelocityProvider maxVelocityProvider,
             IList<IPvPPatrolPoint> patrolPoints,
             float positionEqualityMarginInM)
             : base(maxVelocityProvider)

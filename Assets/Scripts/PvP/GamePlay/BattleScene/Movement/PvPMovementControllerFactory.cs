@@ -1,4 +1,5 @@
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
@@ -33,41 +34,41 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         #region Homing
         public IMovementController CreateMissileMovementController(
             Rigidbody2D rigidBody,
-            IPvPVelocityProvider maxVelocityProvider,
+            IVelocityProvider maxVelocityProvider,
             IPvPTargetProvider targetProvider,
             IPvPTargetPositionPredictorFactory targetPositionPredictorFactory)
         {
             return new PvPMissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
         }
 
-        public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, Rectangle safeZone)
+        public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, Rectangle safeZone)
         {
             return new PvPFighterMovementController(rigidBody, maxVelocityProvider, targetProvider, safeZone);
         }
 
-        public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, float cruisingAltitudeInM, IPvPFlightPointsProvider flightPointsProvider)
+        public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, float cruisingAltitudeInM, IPvPFlightPointsProvider flightPointsProvider)
         {
             return new PvPRocketMovementController(rigidBody, maxVelocityProvider, targetProvider, cruisingAltitudeInM, flightPointsProvider);
         }
 
-        public IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider)
+        public IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider)
         {
             return new PvPHomingMovementController(rigidBody, maxVelocityProvider, targetProvider);
         }
         #endregion Homing
 
         #region Providers
-        public IPvPVelocityProvider CreateStaticVelocityProvider(float velocityInMPerS)
+        public IVelocityProvider CreateStaticVelocityProvider(float velocityInMPerS)
         {
             return new PvPStaticVelocityProvider(velocityInMPerS);
         }
 
-        public IPvPVelocityProvider CreateMultiplyingVelocityProvider(IPvPVelocityProvider providerToWrap, float multiplier)
+        public IVelocityProvider CreateMultiplyingVelocityProvider(IVelocityProvider providerToWrap, float multiplier)
         {
             return new PvPMultiplyingVelocityProvider(providerToWrap, multiplier);
         }
 
-        public IPvPVelocityProvider CreatePatrollingVelocityProvider(IPvPPatrollingVelocityProvider patrollingAircraft)
+        public IVelocityProvider CreatePatrollingVelocityProvider(IPvPPatrollingVelocityProvider patrollingAircraft)
         {
             return new PvPPatrollingVelocityProvider(patrollingAircraft);
         }
@@ -75,21 +76,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public IMovementController CreatePatrollingMovementController(
             Rigidbody2D rigidBody,
-            IPvPVelocityProvider maxVelocityProvider,
+            IVelocityProvider maxVelocityProvider,
             IList<IPvPPatrolPoint> patrolPoints,
             float positionEqualityMarginInM = DEFAULT_POSITION_EQUALITY_MARGIN_IN_M)
         {
             return new PvPPatrollingMovementController(rigidBody, maxVelocityProvider, patrolPoints, positionEqualityMarginInM);
         }
 
-        public IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider)
+        public IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
         {
             return new PvPBomberMovementController(rigidBody, maxVelocityProvider);
         }
 
-        public PvPFollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider)
+        public FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
         {
-            return new PvPFollowingXAxisMovementController(rigidBody, maxVelocityProvider);
+            return new FollowingXAxisMovementController(rigidBody, maxVelocityProvider);
         }
 
         public IMovementController CreateDummyMovementController()

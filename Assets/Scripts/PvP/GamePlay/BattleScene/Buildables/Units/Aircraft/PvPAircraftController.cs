@@ -2,6 +2,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
@@ -25,7 +26,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
-    public abstract class PvPAircraftController : PvPUnit, IPvPVelocityProvider, IPvPPatrollingVelocityProvider, IPvPSeabedImpactable
+    public abstract class PvPAircraftController : PvPUnit, IVelocityProvider, IPvPPatrollingVelocityProvider, IPvPSeabedImpactable
     {
         private PvPKamikazeController _kamikazeController;
         private Collider2D _collider;

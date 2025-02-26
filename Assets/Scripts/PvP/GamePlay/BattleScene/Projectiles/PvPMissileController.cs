@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 OnAddMoveControllerToClientRpc(objectId, activationArgs.ProjectileStats.MaxVelocityInMPerS);
             }
 
-            IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             IPvPTargetProvider targetProvider = this;
 
             MovementController
@@ -245,7 +245,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                         target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<ITarget>();
                     }
                     Target = target;
-                    IPvPVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);
+                    IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);
                     IPvPTargetProvider targetProvider = this;
 
                     MovementController

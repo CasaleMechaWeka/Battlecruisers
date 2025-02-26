@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public interface IPvPSpriteChooserFactory
     {
-        Task<IPvPSpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IPvPVelocityProvider maxVelocityProvider);
+        Task<IPvPSpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IVelocityProvider maxVelocityProvider);
         IPvPSpriteChooser CreateDummySpriteChooser(Sprite sprite);
     }
 }

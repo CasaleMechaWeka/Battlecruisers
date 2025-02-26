@@ -2,12 +2,12 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPGunShipController : PvPAircraftController, ITargetConsumer
     {
-        private PvPFollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
+        private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IPvPBarrelWrapper _barrelWrapper;
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
@@ -79,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
-            IPvPVelocityProvider inRangeVelocityProvider
+            IVelocityProvider inRangeVelocityProvider
                 = _movementControllerFactory.CreateMultiplyingVelocityProvider(
                     providerToWrap: this,
                     multiplier: WITHTIN_RANGE_VELOCITY_MULTIPLIER);
@@ -92,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
-            IPvPVelocityProvider inRangeVelocityProvider
+            IVelocityProvider inRangeVelocityProvider
                 = _movementControllerFactory.CreateMultiplyingVelocityProvider(
                     providerToWrap: this,
                     multiplier: WITHTIN_RANGE_VELOCITY_MULTIPLIER);

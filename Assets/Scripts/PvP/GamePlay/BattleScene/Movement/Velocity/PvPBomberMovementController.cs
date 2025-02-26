@@ -1,5 +1,5 @@
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             }
         }
 
-        public PvPBomberMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider)
+        public PvPBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
             : base(rigidBody, maxVelocityProvider) { }
 
         protected override Vector2 FindDesiredVelocity()

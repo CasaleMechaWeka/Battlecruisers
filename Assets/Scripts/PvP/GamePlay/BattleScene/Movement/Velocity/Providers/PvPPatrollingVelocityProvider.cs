@@ -1,8 +1,9 @@
+using BattleCruisers.Movement.Velocity.Providers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers
 {
-    public class PvPPatrollingVelocityProvider : IPvPVelocityProvider
+    public class PvPPatrollingVelocityProvider : IVelocityProvider
     {
         private readonly IPvPPatrollingVelocityProvider _patrollingAircraft;
 

@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Movement.Velocity.Providers;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
@@ -11,14 +11,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public abstract class PvPMovementController : IMovementController
     {
-        protected readonly IPvPVelocityProvider _maxVelocityProvider;
+        protected readonly IVelocityProvider _maxVelocityProvider;
         protected readonly ITime _time;
 
         public abstract Vector2 Velocity { get; set; }
 
         public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
 
-        protected PvPMovementController(IPvPVelocityProvider maxVelocityProvider)
+        protected PvPMovementController(IVelocityProvider maxVelocityProvider)
         {
             Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
             _maxVelocityProvider = maxVelocityProvider;

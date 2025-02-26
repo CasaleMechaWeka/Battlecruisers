@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private readonly IPvPAssigner _assigner;
         private readonly IList<ISpriteWrapper> _sprites;
-        private readonly IPvPVelocityProvider _maxVelocityProvider;
+        private readonly IVelocityProvider _maxVelocityProvider;
 
         public PvPSpriteChooser(
             IPvPAssignerFactory assignerFactory,
             IList<ISpriteWrapper> sprites,
-            IPvPVelocityProvider maxVelocityProvider)
+            IVelocityProvider maxVelocityProvider)
         {
             PvPHelper.AssertIsNotNull(assignerFactory, sprites, maxVelocityProvider);
             Assert.IsTrue(sprites.Count > 0);

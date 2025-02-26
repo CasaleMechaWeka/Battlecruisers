@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Utils;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public PvPRocketMovementController(
             Rigidbody2D rigidBody,
-            IPvPVelocityProvider maxVelocityProvider,
+            IVelocityProvider maxVelocityProvider,
             IPvPTargetProvider targetProvider,
             float cruisingAltitudeInM,
             IPvPFlightPointsProvider flightPointsProvider)

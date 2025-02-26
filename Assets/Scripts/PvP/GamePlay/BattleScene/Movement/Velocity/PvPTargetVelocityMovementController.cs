@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
+using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             set { _rigidBody.velocity = value; }
         }
 
-        public PvPTargetVelocityMovementController(Rigidbody2D rigidBody, IPvPVelocityProvider maxVelocityProvider)
+        public PvPTargetVelocityMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
             : base(maxVelocityProvider)
         {
             Assert.IsNotNull(rigidBody);
