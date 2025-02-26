@@ -1,9 +1,10 @@
-using System;
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetProviders;
+using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders
 {
-    public abstract class PvPBroadcastingTargetProvider : IPvPBroadcastingTargetProvider
+    public abstract class PvPBroadcastingTargetProvider : IBroadcastingTargetProvider
     {
         private ITarget _target;
         public ITarget Target

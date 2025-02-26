@@ -50,8 +50,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         // Deciers
         IPvPMovementDecider CreateShipMovementDecider(
             IPvPShip ship,
-            IPvPBroadcastingTargetProvider blockingEnemyTargetProvider,
-            IPvPBroadcastingTargetProvider blockingFriendTargetProvider,
+            IBroadcastingTargetProvider blockingEnemyTargetProvider,
+            IBroadcastingTargetProvider blockingFriendTargetProvider,
             ITargetTracker inRangeTargetTracker,
             ITargetTracker shipBlockerTargetTracker,
             ITargetRangeHelper rangeHelper);
