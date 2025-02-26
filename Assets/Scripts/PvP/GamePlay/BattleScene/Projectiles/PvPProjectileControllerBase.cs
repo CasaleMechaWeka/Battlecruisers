@@ -160,7 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
         }
 
-        private IDamageApplier CreateDamageApplier(IPvPDamageApplierFactory damageApplierFactory, IPvPProjectileStats projectileStats)
+        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IPvPProjectileStats projectileStats)
         {
             return
                 projectileStats.HasAreaOfEffectDamage ?

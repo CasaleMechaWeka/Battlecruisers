@@ -13,6 +13,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Fa
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Projectiles.DamageAppliers;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.Fetchers.Sprites;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private readonly IPvPBattleSceneGodComponents _components;
 
         public IPvPBoostFactory BoostFactory { get; }
-        public IPvPDamageApplierFactory DamageApplierFactory { get; }
+        public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
         public IPvPDroneMonitor DroneMonitor { get; private set; }
         public IPvPFlightPointsProviderFactory FlightPointsProviderFactory { get; }

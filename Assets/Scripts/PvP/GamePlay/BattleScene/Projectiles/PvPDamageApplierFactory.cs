@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers
 {
-    public class PvPDamageApplierFactory : IPvPDamageApplierFactory
+    public class PvPDamageApplierFactory : IDamageApplierFactory
     {
         private readonly IPvPTargetFilterFactory _filterFacotry;
 
