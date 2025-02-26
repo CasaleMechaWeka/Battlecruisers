@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
         private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
         private IExactMatchTargetFilter _exactMatchTargetFilter;
-        private IPvPMovementController _figherMovementController;
+        private IMovementController _figherMovementController;
         private PvPBarrelController _barrelController;
         private IAngleHelper _angleHelper;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;

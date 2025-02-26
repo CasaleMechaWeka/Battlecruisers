@@ -1,21 +1,21 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
-using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
-using UnityEngine;
-using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
+using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IPvPTargetProvider
     {
         private IDeferrer _deferrer;
-        private IPvPMovementController _dummyMovementController;
+        private IMovementController _dummyMovementController;
 
         private const float SELF_DETONATION_TIMER = 1.75f;
         private const float SELF_DETONATION_VARIANCE = .5f;

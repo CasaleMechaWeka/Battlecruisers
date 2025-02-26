@@ -1,5 +1,6 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Explosions.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -7,6 +8,8 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -14,9 +17,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode.Components;
-using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Buildables;
 using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
@@ -52,8 +52,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         NetworkVariable<float> autoDetonationTimer = new NetworkVariable<float>(0f);
         public float AutoDetonationTimer = 0f;
 
-        private IPvPMovementController _movementController;
-        protected IPvPMovementController MovementController
+        private IMovementController _movementController;
+        protected IMovementController MovementController
         {
             get { return _movementController; }
             set

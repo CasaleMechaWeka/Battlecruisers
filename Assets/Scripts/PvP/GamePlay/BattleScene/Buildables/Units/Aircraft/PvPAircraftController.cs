@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
@@ -54,12 +55,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual float PositionEqualityMarginInM => 0.5f;
         protected override bool ShowSmokeWhenDestroyed => true;
 
-        protected IPvPMovementController DummyMovementController { get; private set; }
-        protected IPvPMovementController PatrollingMovementController { get; private set; }
+        protected IMovementController DummyMovementController { get; private set; }
+        protected IMovementController PatrollingMovementController { get; private set; }
 
-        private IPvPMovementController _activeMovementController;
+        private IMovementController _activeMovementController;
         protected NetworkVariable<int> pvp_IndexOfSprite = new NetworkVariable<int>();
-        protected IPvPMovementController ActiveMovementController
+        protected IMovementController ActiveMovementController
         {
             get { return _activeMovementController; }
             set
@@ -191,7 +192,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected abstract IList<IPvPPatrolPoint> GetPatrolPoints();
 
-        private void _movementController_DirectionChanged(object sender, PvPXDirectionChangeEventArgs e)
+        private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
         {
             FacingDirection = e.NewDirection;
         }

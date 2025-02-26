@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
@@ -8,14 +9,14 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity
 {
-    public abstract class PvPMovementController : IPvPMovementController
+    public abstract class PvPMovementController : IMovementController
     {
         protected readonly IPvPVelocityProvider _maxVelocityProvider;
         protected readonly ITime _time;
 
         public abstract Vector2 Velocity { get; set; }
 
-        public event EventHandler<PvPXDirectionChangeEventArgs> DirectionChanged;
+        public event EventHandler<XDirectionChangeEventArgs> DirectionChanged;
 
         protected PvPMovementController(IPvPVelocityProvider maxVelocityProvider)
         {
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
                 if (newDirection != null)
                 {
-                    DirectionChanged.Invoke(this, new PvPXDirectionChangeEventArgs((Direction)newDirection));
+                    DirectionChanged.Invoke(this, new XDirectionChangeEventArgs((Direction)newDirection));
                 }
             }
         }
