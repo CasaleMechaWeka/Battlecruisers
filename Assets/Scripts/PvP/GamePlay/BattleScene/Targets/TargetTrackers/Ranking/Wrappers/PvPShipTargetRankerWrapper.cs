@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPShipTargetRankerWrapper : MonoBehaviour, IPvPTargetRankerWrapper
     {
-        public ITargetRanker CreateTargetRanker(IPvPTargetRankerFactory rankerFactory)
+        public ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
         {
             return rankerFactory.ShipTargetRanker;
         }

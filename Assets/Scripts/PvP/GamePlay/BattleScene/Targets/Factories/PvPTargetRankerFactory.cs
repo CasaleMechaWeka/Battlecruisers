@@ -1,9 +1,10 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
-    public class PvPTargetRankerFactory : IPvPTargetRankerFactory
+    public class PvPTargetRankerFactory : ITargetRankerFactory
     {
         public PvPTargetRankerFactory()
         {

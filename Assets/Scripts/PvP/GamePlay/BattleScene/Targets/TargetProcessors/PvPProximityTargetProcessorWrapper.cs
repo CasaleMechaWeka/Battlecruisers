@@ -1,6 +1,6 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking.Wrappers;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(_targetTracker);
         }
 
-        protected ITargetRanker CreateTargetRanker(IPvPTargetRankerFactory rankerFactory)
+        protected ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
         {
             IPvPTargetRankerWrapper targetRankerWrapper = GetComponent<IPvPTargetRankerWrapper>();
             Assert.IsNotNull(targetRankerWrapper);

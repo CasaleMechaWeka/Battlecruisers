@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         IPvPTargetFinderFactory FinderFactory { get; }
         IPvPTargetFilterFactory FilterFactory { get; }
-        IPvPTargetRankerFactory RankerFactory { get; }
+        ITargetRankerFactory RankerFactory { get; }
         IPvPTargetHelperFactory HelperFactory { get; }
         IRangeCalculatorProvider RangeCalculatorProvider { get; }
     }
