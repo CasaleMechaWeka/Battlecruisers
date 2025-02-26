@@ -2,7 +2,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints
 {
-    public class PvPFlightPointsProviderFactory : IPvPFlightPointsProviderFactory
+    public class PvPFlightPointsProviderFactory : IFlightPointsProviderFactory
     {
         public IFlightPointsProvider RocketFlightPointsProvider { get; }
         public IFlightPointsProvider InaccurateRocketFlightPointsProvider { get; }
