@@ -1,6 +1,8 @@
+using BattleCruisers.Movement.Rotation;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation
 {
-    public class PvPDummyRotationMovementController : IPvPRotationMovementController
+    public class PvPDummyRotationMovementController : IRotationMovementController
     {
         private readonly bool _isOnTarget;
 

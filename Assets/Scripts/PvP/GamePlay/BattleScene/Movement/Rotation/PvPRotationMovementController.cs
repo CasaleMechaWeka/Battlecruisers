@@ -1,3 +1,4 @@
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
@@ -6,7 +7,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation
 {
-    public class PvPRotationMovementController : IPvPRotationMovementController
+    public class PvPRotationMovementController : IRotationMovementController
     {
         private readonly IPvPRotationHelper _rotationHelper;
         private readonly ITransform _transform;

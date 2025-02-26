@@ -4,11 +4,11 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IAngleCalculator AngleCalculator { get; }
         public IPvPAttackablePositionFinder AttackablePositionFinder { get; }
         public IAccuracyAdjuster AccuracyAdjuster { get; }
-        public IPvPRotationMovementController RotationMovementController { get; }
+        public IRotationMovementController RotationMovementController { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public IPvPTargetPositionValidator TargetPositionValidator { get; }
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IAngleCalculator angleCalculator,
             IPvPAttackablePositionFinder attackablePositionFinder,
             IAccuracyAdjuster accuracyAdjuster,
-            IPvPRotationMovementController rotationMovementController,
+            IRotationMovementController rotationMovementController,
             IPvPTargetPositionValidator targetPositionValidator,
             IAngleLimiter angleLimiter,
             IPvPFactoryProvider factoryProvider,

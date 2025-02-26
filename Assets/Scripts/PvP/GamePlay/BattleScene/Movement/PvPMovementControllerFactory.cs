@@ -1,4 +1,5 @@
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
@@ -100,12 +101,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         #endregion Velocity
 
         #region Rotation
-        public IPvPRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform, IDeltaTimeProvider deltaTimeProvider)
+        public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform, IDeltaTimeProvider deltaTimeProvider)
         {
             return new PvPRotationMovementController(_rotationHelper, new TransformBC(transform), deltaTimeProvider, rotateSpeedInDegreesPerS);
         }
 
-        public IPvPRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)
+        public IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)
         {
             return new PvPDummyRotationMovementController(isOnTarget);
         }

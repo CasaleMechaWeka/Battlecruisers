@@ -1,3 +1,4 @@
+using BattleCruisers.Movement.Rotation;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
@@ -6,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public class PvPRotatingController : MonoBehaviour
     {
-        private IPvPRotationMovementController _activeRotationController, _realRotationController, _dummyRotationController;
+        private IRotationMovementController _activeRotationController, _realRotationController, _dummyRotationController;
         private float _targetAngleInDegrees;
         private bool _haveReachedDesiredAngle;
 
