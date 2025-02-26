@@ -1,10 +1,11 @@
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators
 {
-    public class PvPFacingMinRangePositionValidator : IPvPTargetPositionValidator
+    public class PvPFacingMinRangePositionValidator : ITargetPositionValidator
     {
         private readonly float _minRangeInM;
 

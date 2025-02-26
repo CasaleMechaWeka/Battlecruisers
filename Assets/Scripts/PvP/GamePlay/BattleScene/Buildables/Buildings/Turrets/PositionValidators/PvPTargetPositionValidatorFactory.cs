@@ -1,13 +1,15 @@
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators
 {
     public class PvPTargetPositionValidatorFactory : IPvPTargetPositionValidatorFactory
     {
-        public IPvPTargetPositionValidator CreateDummyValidator()
+        public ITargetPositionValidator CreateDummyValidator()
         {
             return new PvPDummyPositionValidator();
         }
 
-        public IPvPTargetPositionValidator CreateFacingMinRangeValidator(float minRangeInM)
+        public ITargetPositionValidator CreateFacingMinRangeValidator(float minRangeInM)
         {
             return new PvPFacingMinRangePositionValidator(minRangeInM);
         }

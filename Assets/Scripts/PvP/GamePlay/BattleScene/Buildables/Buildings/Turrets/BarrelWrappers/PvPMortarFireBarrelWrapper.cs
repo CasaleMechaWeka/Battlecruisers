@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _factoryProvider.TargetPositionPredictorFactory.CreateMortarPredictor();
         }
 
-        protected override PositionValidators.IPvPTargetPositionValidator CreatePositionValidator()
+        protected override ITargetPositionValidator CreatePositionValidator()
         {
             return _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateFacingMinRangeValidator(_minRangeInM);
         }

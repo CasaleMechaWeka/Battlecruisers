@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators
@@ -5,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// <summary>
     /// Null object
     /// </summary>
-    public class PvPDummyPositionValidator : IPvPTargetPositionValidator
+    public class PvPDummyPositionValidator : ITargetPositionValidator
     {
         public bool IsValid(Vector2 targetPosition, Vector2 sourcePosition, bool isSourceMirrored)
         {
