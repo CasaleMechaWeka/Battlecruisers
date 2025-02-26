@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
-    public class PvPClosestPositionFinderWrapper : MonoBehaviour, IPvPAttackablePositionFinderWrapper
+    public class PvPClosestPositionFinderWrapper : MonoBehaviour, IAttackablePositionFinderWrapper
     {
         public IAttackablePositionFinder CreatePositionFinder()
         {
