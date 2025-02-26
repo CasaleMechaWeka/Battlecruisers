@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         public ITargetTracker Initialise(
             IPvPTargetFactoriesProvider targetFactoriesProvider,
-            IPvPTargetTrackerFactory targetTrackerFactory,
+            ITargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)
         {
             Helper.AssertIsNotNull(targetFactoriesProvider, targetTrackerFactory);
