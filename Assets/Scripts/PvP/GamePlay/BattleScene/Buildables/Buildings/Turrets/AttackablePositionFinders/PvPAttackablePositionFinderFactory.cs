@@ -2,7 +2,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
-    public class PvPAttackablePositionFinderFactory : IPvPAttackablePositionFinderFactory
+    public class PvPAttackablePositionFinderFactory : IAttackablePositionFinderFactory
     {
         public IAttackablePositionFinder DummyPositionFinder { get; }
 
