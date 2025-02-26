@@ -1,6 +1,6 @@
 using System;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,9 +9,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public class PvPHomingMovementController : PvPTargetVelocityMovementController
     {
-        protected readonly IPvPTargetProvider _targetProvider;
+        protected readonly ITargetProvider _targetProvider;
 
-        public PvPHomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider)
+        public PvPHomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider)
             : base(rigidBody, maxVelocityProvider)
         {
             Assert.IsNotNull(targetProvider);

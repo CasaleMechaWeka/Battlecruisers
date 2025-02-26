@@ -1,6 +1,6 @@
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         public PvPMissileMovementController(
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
-            IPvPTargetProvider targetProvider,
+            ITargetProvider targetProvider,
             IPvPTargetPositionPredictorFactory targetPositionPredictorFactory)
             : base(rigidBody, maxVelocityProvider, targetProvider)
         {

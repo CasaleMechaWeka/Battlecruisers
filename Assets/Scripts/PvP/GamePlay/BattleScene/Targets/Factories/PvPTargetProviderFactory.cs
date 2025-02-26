@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Ta
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetProviders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _targetFactoriesProvider = targetFactoriesProvider;
         }
 
-        public IPvPTargetProvider CreateStaticTargetProvider(ITarget target)
+        public ITargetProvider CreateStaticTargetProvider(ITarget target)
         {
             return new PvPStaticTargetProvider(target);
         }

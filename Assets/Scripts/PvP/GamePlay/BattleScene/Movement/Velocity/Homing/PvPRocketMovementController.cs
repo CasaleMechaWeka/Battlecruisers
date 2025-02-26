@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         public PvPRocketMovementController(
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
-            IPvPTargetProvider targetProvider,
+            ITargetProvider targetProvider,
             float cruisingAltitudeInM,
             IPvPFlightPointsProvider flightPointsProvider)
             : base(rigidBody, maxVelocityProvider, targetProvider)

@@ -1,5 +1,5 @@
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         // safe zone the fighter will abandon pursuit.
         private readonly Rectangle _safeZone;
 
-        public PvPFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, IPvPTargetProvider targetProvider, Rectangle safeZone)
+        public PvPFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, Rectangle safeZone)
             : base(rigidBody, maxVelocityProvider, targetProvider)
         {
             _safeZone = safeZone;

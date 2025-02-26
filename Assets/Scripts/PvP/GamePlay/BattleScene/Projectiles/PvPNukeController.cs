@@ -5,8 +5,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.TargetProviders;
 using Unity.Netcode;
 using UnityEngine;
 using BattleCruisers.Utils;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public class PvPNukeController :
         PvPProjectileWithTrail<PvPTargetProviderActivationArgs<INukeStats>, INukeStats>,
-        IPvPTargetProvider
+        ITargetProvider
     {
         private INukeStats _nukeStats;
         private IPvPFlightPointsProvider _flightPointsProvider;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public void Launch()
         {
             IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(_nukeStats.MaxVelocityInMPerS);
-            IPvPTargetProvider targetProvider = this;
+            ITargetProvider targetProvider = this;
 
             MovementController
                 = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
@@ -186,7 +186,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     }
                     Target = target;
                     IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);
-                    IPvPTargetProvider targetProvider = this;
+                    ITargetProvider targetProvider = this;
                     MovementController
                         = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
                             _rigidBody,

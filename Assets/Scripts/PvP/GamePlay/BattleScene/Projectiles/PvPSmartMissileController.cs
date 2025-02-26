@@ -2,7 +2,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
@@ -10,6 +9,7 @@ using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.UI.Sound;
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// </summary>
     public class PvPSmartMissileController :
         PvPProjectileWithTrail<PvPSmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>,
-        IPvPTargetProvider,
+        ITargetProvider,
         ITargetConsumer
     {
         private ITransform _transform;
@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
 
             IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
-            IPvPTargetProvider targetProvider = this;
+            ITargetProvider targetProvider = this;
 
             MovementController
                 = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
