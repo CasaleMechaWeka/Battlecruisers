@@ -3,10 +3,10 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ITargetFilter TargetFilter { get; }
         public ITargetPositionPredictor TargetPositionPredictor { get; }
         public IAngleCalculator AngleCalculator { get; }
-        public IPvPAttackablePositionFinder AttackablePositionFinder { get; }
+        public IAttackablePositionFinder AttackablePositionFinder { get; }
         public IAccuracyAdjuster AccuracyAdjuster { get; }
         public IRotationMovementController RotationMovementController { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetFilter targetFilter,
             ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator,
-            IPvPAttackablePositionFinder attackablePositionFinder,
+            IAttackablePositionFinder attackablePositionFinder,
             IAccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
             ITargetPositionValidator targetPositionValidator,

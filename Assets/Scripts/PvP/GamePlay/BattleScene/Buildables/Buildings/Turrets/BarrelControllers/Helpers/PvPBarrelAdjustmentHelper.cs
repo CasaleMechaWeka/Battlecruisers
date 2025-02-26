@@ -1,10 +1,10 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IAngleCalculator _angleCalculator;
         private readonly IRotationMovementController _rotationMovementController;
         private readonly IAngleLimiter _angleLimiter;
-        private readonly IPvPAttackablePositionFinder _attackablePositionFinder;
+        private readonly IAttackablePositionFinder _attackablePositionFinder;
 
         public PvPBarrelAdjustmentHelper(
             IBarrelController barrelController,
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IAngleCalculator angleCalculator,
             IRotationMovementController rotationMovementController,
             IAngleLimiter angleLimiter,
-            IPvPAttackablePositionFinder attackablePositionFinder)
+            IAttackablePositionFinder attackablePositionFinder)
         {
             PvPHelper.AssertIsNotNull(barrelController, targetPositionPredictor, targetPositionValidator, angleCalculator, rotationMovementController, angleLimiter, attackablePositionFinder);
 

@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -149,7 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
-            IPvPAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
+            IAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
 
             foreach (PvPBarrelController barrel in _barrels)
             {
@@ -216,7 +217,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            IPvPAttackablePositionFinder attackablePositionFinder,
+            IAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
@@ -282,7 +283,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
 
-        private IPvPAttackablePositionFinder CreateAttackablePositionFinder()
+        private IAttackablePositionFinder CreateAttackablePositionFinder()
         {
             IPvPAttackablePositionFinderWrapper positionFinderWrapper = GetComponent<IPvPAttackablePositionFinderWrapper>();
 

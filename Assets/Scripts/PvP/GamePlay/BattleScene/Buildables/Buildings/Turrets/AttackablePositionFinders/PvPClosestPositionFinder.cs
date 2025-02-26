@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// Hence want to find a position on the cruiser the attack boat can attack
     /// (ie, front of cruiser).
     /// </summary>
-    public class PvPClosestPositionFinder : IPvPAttackablePositionFinder
+    public class PvPClosestPositionFinder : IAttackablePositionFinder
     {
         private readonly float _targetCutoffWidthInM;
 

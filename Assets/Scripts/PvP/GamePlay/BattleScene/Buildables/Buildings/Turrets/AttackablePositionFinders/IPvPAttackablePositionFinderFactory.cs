@@ -1,9 +1,11 @@
+using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
     public interface IPvPAttackablePositionFinderFactory
     {
-        IPvPAttackablePositionFinder DummyPositionFinder { get; }
+        IAttackablePositionFinder DummyPositionFinder { get; }
 
-        IPvPAttackablePositionFinder CreateClosestPositionFinder();
+        IAttackablePositionFinder CreateClosestPositionFinder();
     }
 }
