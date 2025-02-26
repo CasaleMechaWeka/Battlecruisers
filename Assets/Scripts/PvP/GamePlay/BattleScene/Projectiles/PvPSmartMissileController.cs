@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.V
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
@@ -20,6 +19,7 @@ using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -146,7 +146,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
             _targetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
 
-            IPvPTargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
+            ITargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
             _targetProcessor = activationArgs.TargetFactories.ProcessorFactory.CreateTargetProcessor(_targetTracker);
             _targetProcessor.AddTargetConsumer(this);

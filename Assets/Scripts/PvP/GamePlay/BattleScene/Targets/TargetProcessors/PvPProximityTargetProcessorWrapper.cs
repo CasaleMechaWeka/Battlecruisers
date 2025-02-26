@@ -1,12 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking.Wrappers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -22,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         protected override ITargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
         {
             _targetFinder = CreateTargetFinder(args);
-            IPvPTargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
+            ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
             _targetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
 
             if (considerUserChosenTarget)
@@ -36,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(_targetTracker);
         }
 
-        protected IPvPTargetRanker CreateTargetRanker(IPvPTargetRankerFactory rankerFactory)
+        protected ITargetRanker CreateTargetRanker(IPvPTargetRankerFactory rankerFactory)
         {
             IPvPTargetRankerWrapper targetRankerWrapper = GetComponent<IPvPTargetRankerWrapper>();
             Assert.IsNotNull(targetRankerWrapper);
