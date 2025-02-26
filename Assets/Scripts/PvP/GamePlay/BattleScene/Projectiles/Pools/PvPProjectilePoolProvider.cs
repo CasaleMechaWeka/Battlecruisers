@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPool<PvPMissileController, PvPTargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
         public IPool<PvPMissileController, PvPTargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
         public IPool<PvPMissileController, PvPTargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
-        public IPool<PvPSmartMissileController, PvPSmartMissileActivationArgs<IPvPSmartProjectileStats>> MissilesSmartPool { get; }
+        public IPool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
 
         public PvPProjectilePoolProvider(IPvPFactoryProvider factoryProvider)
         {
@@ -147,7 +147,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.MISSILE_LARGE);
 
             MissilesSmartPool
-                = CreatePool<PvPSmartMissileController, PvPSmartMissileActivationArgs<IPvPSmartProjectileStats>, IPvPSmartProjectileStats>(
+                = CreatePool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>(
                     factoryProvider,
                     PvPStaticPrefabKeys.PvPProjectiles.PvPMissileSmart,
                     PvPInitialCapacity.MISSILE_SMART);

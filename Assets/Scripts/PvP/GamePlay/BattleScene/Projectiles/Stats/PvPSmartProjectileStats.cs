@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats
 {
-    public class PvPSmartProjectileStats : PvPProjectileStats, IPvPSmartProjectileStats
+    public class PvPSmartProjectileStats : PvPProjectileStats, ISmartProjectileStats
     {
         public float detectionRangeM;
         public float DetectionRangeM => detectionRangeM;

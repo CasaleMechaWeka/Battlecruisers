@@ -2,10 +2,10 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// Once a target has been detected turns off target detection.
     /// </summary>
     public class PvPSmartMissileController :
-        PvPProjectileWithTrail<PvPSmartMissileActivationArgs<IPvPSmartProjectileStats>, IPvPSmartProjectileStats>,
+        PvPProjectileWithTrail<PvPSmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>,
         IPvPTargetProvider,
         ITargetConsumer
     {
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private ITargetProcessor _targetProcessor;
         //---> CODE BY ANUJ
         private PvPRocketTarget _rocketTarget;
-        private PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> _activationArgs;
+        private PvPSmartMissileActivationArgs<ISmartProjectileStats> _activationArgs;
         //<---
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 0.5f;
@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _transform = new TransformBC(gameObject.transform);
         }
 
-        public override void Activate(PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> activationArgs)
+        public override void Activate(PvPSmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
 
@@ -133,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Logging.Log(Tags.SMART_MISSILE, $"Rotation: {transform.rotation.eulerAngles}  _rigidBody.velocity: {_rigidBody.velocity}  MovementController.Velocity: {MovementController.Velocity}  activationArgs.InitialVelocityInMPerS: {activationArgs.InitialVelocityInMPerS}");
         }
 
-        private void SetupTargetProcessor(PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> activationArgs)
+        private void SetupTargetProcessor(PvPSmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             ITargetFilter targetFilter
                 = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(

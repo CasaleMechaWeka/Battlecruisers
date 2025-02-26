@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
@@ -8,14 +8,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPSmartMissileSpawner : PvPProjectileSpawner<PvPSmartMissileController, PvPSmartMissileActivationArgs<IPvPSmartProjectileStats>, IPvPSmartProjectileStats>
+    public class PvPSmartMissileSpawner : PvPProjectileSpawner<PvPSmartMissileController, PvPSmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>
     {
-        private IPvPSmartProjectileStats _smartProjectileStats;
+        private ISmartProjectileStats _smartProjectileStats;
 
         public async Task InitialiseAsync(
             IPvPProjectileSpawnerArgs args,
             ISoundKey firingSound,
-            IPvPSmartProjectileStats smartProjectileStats)
+            ISmartProjectileStats smartProjectileStats)
         {
             Assert.IsNotNull(smartProjectileStats);
             _smartProjectileStats = smartProjectileStats;
@@ -26,8 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITargetFilter targetFilter)
         {
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            PvPSmartMissileActivationArgs<IPvPSmartProjectileStats> activationArgs
-                = new PvPSmartMissileActivationArgs<IPvPSmartProjectileStats>(
+            PvPSmartMissileActivationArgs<ISmartProjectileStats> activationArgs
+                = new PvPSmartMissileActivationArgs<ISmartProjectileStats>(
                     transform.position,
                     _smartProjectileStats,
                     missileVelocity,
