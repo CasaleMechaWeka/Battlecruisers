@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools
 {
-    public class PvPFirecrackerExplosionPoolChooser : MonoBehaviour, IPvPExplosionPoolChooser
+    public class PvPFirecrackerExplosionPoolChooser : MonoBehaviour, IExplosionPoolChooser
     {
         public IPool<IPoolable<Vector3>, Vector3> ChoosePool(IExplosionPoolProvider explosionPoolProvider)
         {

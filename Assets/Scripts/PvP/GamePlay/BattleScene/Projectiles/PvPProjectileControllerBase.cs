@@ -1,9 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
@@ -19,7 +18,6 @@ using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Buildables;
 using Unity.Netcode;
-
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -93,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             //Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
             Assert.IsNotNull(_rigidBody);
 
-            IPvPExplosionPoolChooser explosionPoolChooser = GetComponent<IPvPExplosionPoolChooser>();
+            IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
             Assert.IsNotNull(explosionPoolChooser);
             _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
             _isActiveAndAlive = false;
@@ -231,7 +229,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             if (_explosionPool == null)
-                _explosionPool = GetComponent<IPvPExplosionPoolChooser>().ChoosePool(_factoryProvider.PoolProviders.ExplosionPoolProvider);
+                _explosionPool = GetComponent<IExplosionPoolChooser>().ChoosePool(_factoryProvider.PoolProviders.ExplosionPoolProvider);
             _explosionPool.GetItem(transform.position);
             OnPlayExplosionSound(SoundType.Explosions, _impactSound.AudioClip.name, transform.position);
 
