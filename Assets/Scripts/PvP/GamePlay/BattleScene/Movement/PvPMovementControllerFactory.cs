@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         public IMovementController CreatePatrollingMovementController(
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
-            IList<IPvPPatrolPoint> patrolPoints,
+            IList<IPatrolPoint> patrolPoints,
             float positionEqualityMarginInM = DEFAULT_POSITION_EQUALITY_MARGIN_IN_M)
         {
             return new PvPPatrollingMovementController(rigidBody, maxVelocityProvider, patrolPoints, positionEqualityMarginInM);

@@ -1,3 +1,4 @@
+using BattleCruisers.Movement.Velocity;
 using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
@@ -14,11 +15,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         public override TargetType TargetType => TargetType.Satellite;
 
-        protected override IList<IPvPPatrolPoint> GetPatrolPoints()
+        protected override IList<IPatrolPoint> GetPatrolPoints()
         {
             IList<Vector2> patrolPositions = _aircraftProvider.FindSpySatellitePatrolPoints(transform.position, cruisingAltitudeInM);
 
-            IList<IPvPPatrolPoint> patrolPoints = new List<IPvPPatrolPoint>(patrolPositions.Count)
+            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count)
             {
                 new PvPPatrolPoint(patrolPositions[0], removeOnceReached: true)
             };

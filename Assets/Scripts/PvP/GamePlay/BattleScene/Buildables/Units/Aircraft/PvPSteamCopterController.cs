@@ -171,11 +171,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             UpdateMovementController();
         }
 
-        protected override IList<IPvPPatrolPoint> GetPatrolPoints()
+        protected override IList<IPatrolPoint> GetPatrolPoints()
         {
             IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 
-            IList<IPvPPatrolPoint> patrolPoints = new List<IPvPPatrolPoint>(1)
+            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(1)
             {
 
                 new PvPPatrolPoint(patrolPositions[1], removeOnceReached: true)

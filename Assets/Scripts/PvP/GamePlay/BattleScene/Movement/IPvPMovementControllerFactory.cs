@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         IMovementController CreatePatrollingMovementController(
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
-            IList<IPvPPatrolPoint> patrolPoints,
+            IList<IPatrolPoint> patrolPoints,
             float positionEqualityMarginInM = PvPMovementControllerFactory.DEFAULT_POSITION_EQUALITY_MARGIN_IN_M);
         IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);
         FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider);

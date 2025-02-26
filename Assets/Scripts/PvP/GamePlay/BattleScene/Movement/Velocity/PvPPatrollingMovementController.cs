@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -9,11 +10,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     public class PvPPatrollingMovementController : PvPMovementController
     {
         private readonly Rigidbody2D _rigidBody;
-        private readonly IList<IPvPPatrolPoint> _patrolPoints;
+        private readonly IList<IPatrolPoint> _patrolPoints;
         private readonly float _positionEqualityMarginInM;
 
         private Vector2 _patrollingVelocity;
-        private IPvPPatrolPoint _targetPatrolPoint;
+        private IPatrolPoint _targetPatrolPoint;
 
         private const float MIN_POSITION_EQUALITY_MARGIN_IN_M = 0.1f;
         private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         public PvPPatrollingMovementController(
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
-            IList<IPvPPatrolPoint> patrolPoints,
+            IList<IPatrolPoint> patrolPoints,
             float positionEqualityMarginInM)
             : base(maxVelocityProvider)
         {
@@ -87,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         private void OnPatrolPointReached()
         {
-            IPvPPatrolPoint reachedPatrolPoint = _targetPatrolPoint;
+            IPatrolPoint reachedPatrolPoint = _targetPatrolPoint;
             _targetPatrolPoint = FindNextPatrolPoint();
 
             if (reachedPatrolPoint.RemoveOnceReached)
@@ -100,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         /// <summary>
         /// NOTE:  Assumes there are no duplicate patrol points.
         /// </summary>
-        private IPvPPatrolPoint FindNextPatrolPoint()
+        private IPatrolPoint FindNextPatrolPoint()
         {
             int currentIndex = _patrolPoints.IndexOf(_targetPatrolPoint);
             Assert.IsTrue(currentIndex != -1);

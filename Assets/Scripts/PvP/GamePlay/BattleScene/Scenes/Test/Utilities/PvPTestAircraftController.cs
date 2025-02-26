@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -60,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             _targetType = targetType;
         }
 
-        protected override IList<IPvPPatrolPoint> GetPatrolPoints()
+        protected override IList<IPatrolPoint> GetPatrolPoints()
         {
             return BCUtils.PvPHelper.ConvertVectorsToPatrolPoints(patrolPoints);
         }

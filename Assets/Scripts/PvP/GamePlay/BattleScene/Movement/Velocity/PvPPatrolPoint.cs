@@ -1,9 +1,10 @@
+using BattleCruisers.Movement.Velocity;
 using System;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity
 {
-    public class PvPPatrolPoint : IPvPPatrolPoint
+    public class PvPPatrolPoint : IPatrolPoint
     {
         public Vector2 Position { get; }
         public bool RemoveOnceReached { get; }

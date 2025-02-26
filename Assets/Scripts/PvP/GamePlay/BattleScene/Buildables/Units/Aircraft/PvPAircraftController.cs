@@ -190,7 +190,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.AircraftProviders);
         }
 
-        protected abstract IList<IPvPPatrolPoint> GetPatrolPoints();
+        protected abstract IList<IPatrolPoint> GetPatrolPoints();
 
         private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
         {
@@ -250,9 +250,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _kamikazeController.gameObject.SetActive(true);
         }
 
-        protected IList<IPvPPatrolPoint> ProcessPatrolPoints(IList<Vector2> patrolPositions, Action onFirstPatrolPointReached)
+        protected IList<IPatrolPoint> ProcessPatrolPoints(IList<Vector2> patrolPositions, Action onFirstPatrolPointReached)
         {
-            IList<IPvPPatrolPoint> patrolPoints = new List<IPvPPatrolPoint>(patrolPositions.Count);
+            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
 
             patrolPoints.Add(new PvPPatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: onFirstPatrolPointReached));
 

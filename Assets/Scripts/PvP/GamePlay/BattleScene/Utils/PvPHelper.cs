@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -19,10 +20,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
             return faction == Faction.Blues ? Faction.Reds : Faction.Blues;
         }
 
-        public static List<IPvPPatrolPoint> ConvertVectorsToPatrolPoints(IList<Vector2> positions)
+        public static List<IPatrolPoint> ConvertVectorsToPatrolPoints(IList<Vector2> positions)
         {
             return positions
-                .Select(position => new PvPPatrolPoint(position) as IPvPPatrolPoint)
+                .Select(position => new PvPPatrolPoint(position) as IPatrolPoint)
                 .ToList();
         }
 
