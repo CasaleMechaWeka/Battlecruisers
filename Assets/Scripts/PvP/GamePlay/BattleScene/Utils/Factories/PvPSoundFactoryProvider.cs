@@ -6,11 +6,12 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
-    public class PvPSoundFactoryProvider : IPvPSoundFactoryProvider
+    public class PvPSoundFactoryProvider : ISoundFactoryProvider
     {
         public ISoundFetcher SoundFetcher { get; }
         public ISoundPlayer SoundPlayer { get; set; }

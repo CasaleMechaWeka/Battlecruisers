@@ -11,6 +11,7 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPMovementControllerFactory MovementControllerFactory { get; }
         IPvPPoolProviders PoolProviders { get; }
         IPvPPrefabFactory PrefabFactory { get; }
-        IPvPSoundFactoryProvider Sound { get; }
+        ISoundFactoryProvider Sound { get; }
         IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }

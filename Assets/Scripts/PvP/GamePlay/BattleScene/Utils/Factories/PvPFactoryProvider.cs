@@ -20,6 +20,7 @@ using UnityEngine.Assertions;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         // Circular dependencies :/
         public IPvPPoolProviders PoolProviders { get; private set; }
-        public IPvPSoundFactoryProvider Sound { get; private set; }
+        public ISoundFactoryProvider Sound { get; private set; }
 
 
         private PvPPoolProviders poolProviders;
