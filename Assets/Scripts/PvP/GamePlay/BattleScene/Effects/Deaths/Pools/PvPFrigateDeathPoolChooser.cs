@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
 {
-    public class PvPFrigateDeathPoolChooser : MonoBehaviour, IPvPShipDeathPoolChooser
+    public class PvPFrigateDeathPoolChooser : MonoBehaviour, IShipDeathPoolChooser
     {
         public IPool<IPoolable<Vector3>, Vector3> ChoosePool(IShipDeathPoolProvider shipDeathPoolProvider)
         {
