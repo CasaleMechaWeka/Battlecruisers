@@ -1,10 +1,11 @@
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats
 {
-    public class PvPCruisingProjectileStats : PvPProjectileStats, IPvPCruisingProjectileStats
+    public class PvPCruisingProjectileStats : PvPProjectileStats, ICruisingProjectileStats
     {
         public float cruisingAltitudeInM;
         public float CruisingAltitudeInM => cruisingAltitudeInM;

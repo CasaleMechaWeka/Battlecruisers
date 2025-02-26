@@ -23,10 +23,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPool<PvPProjectileController, PvPProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
         public IPool<PvPBombController, PvPProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
         public IPool<PvPBombController, PvPProjectileActivationArgs<IProjectileStats>> StratBombsPool { get; }
-        public IPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> RocketsPool { get; }
+        public IPool<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
         public IPool<PvPMissileController, PvPTargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
-        public IPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> RocketsSmallPool { get; }
-        public IPool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>> MissilesFirecrackerPool { get; }
+        public IPool<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
+        public IPool<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
         public IPool<PvPMissileController, PvPTargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
         public IPool<PvPMissileController, PvPTargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
         public IPool<PvPMissileController, PvPTargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
@@ -105,13 +105,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.BOMB);
 
             RocketsPool
-                = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>(
+                = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
                     factoryProvider,
                     PvPStaticPrefabKeys.PvPProjectiles.PvPRocket,
                     PvPInitialCapacity.ROCKET);
 
             RocketsSmallPool
-                = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>(
+                = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
                     factoryProvider,
                     PvPStaticPrefabKeys.PvPProjectiles.PvPRocketSmall,
                     PvPInitialCapacity.ROCKET);
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.MISSILE_MEDIUM);
 
             MissilesFirecrackerPool
-                = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>(
+                = CreatePool<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
                     factoryProvider,
                     PvPStaticPrefabKeys.PvPProjectiles.PvPMissileFirecracker,
                     PvPInitialCapacity.MISSILE_MEDIUM);

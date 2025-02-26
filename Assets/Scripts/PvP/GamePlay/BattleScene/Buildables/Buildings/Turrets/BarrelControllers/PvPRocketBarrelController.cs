@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private ICircularList<PvPRocketSpawner> _rocketSpawners;
         private PvPRocketSpawner _middleSpawner;
-        private IPvPCruisingProjectileStats _rocketStats;
+        private ICruisingProjectileStats _rocketStats;
 
         public override Vector3 ProjectileSpawnerPosition
         {

@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using System.Threading.Tasks;
@@ -9,14 +9,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPRocketSpawner : PvPProjectileSpawner<PvPRocketController, PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>
+    public class PvPRocketSpawner : PvPProjectileSpawner<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
     {
-        private IPvPCruisingProjectileStats _rocketStats;
+        private ICruisingProjectileStats _rocketStats;
 
         public async Task InitialiseAsync(
             IPvPProjectileSpawnerArgs args,
             ISoundKey firingSound,
-            IPvPCruisingProjectileStats rocketStats)
+            ICruisingProjectileStats rocketStats)
         {
             Assert.IsNotNull(rocketStats);
             _rocketStats = rocketStats;
@@ -29,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             // Logging.Log(Tags.PROJECTILE_SPAWNER, $"spawn position: {transform.position}");
 
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats> activationArgs
-                = new PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>(
+            PvPTargetProviderActivationArgs<ICruisingProjectileStats> activationArgs
+                = new PvPTargetProviderActivationArgs<ICruisingProjectileStats>(
                     transform.position,
                     _rocketStats,
                     rocketVelocity,

@@ -4,10 +4,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Projectiles.Stats;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
     public class PvPRocketController :
-        PvPProjectileWithTrail<PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats>, IPvPCruisingProjectileStats>,
+        PvPProjectileWithTrail<PvPTargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>,
         IPvPTargetProvider
     {
         private PvPRocketTarget _rocketTarget;
@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        public override void Activate(PvPTargetProviderActivationArgs<IPvPCruisingProjectileStats> activationArgs)
+        public override void Activate(PvPTargetProviderActivationArgs<ICruisingProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
 
