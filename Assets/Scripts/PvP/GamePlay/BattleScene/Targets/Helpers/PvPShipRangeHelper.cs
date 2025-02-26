@@ -1,11 +1,12 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
+using BattleCruisers.Targets.Helpers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers
 {
-    public class PvPShipRangeHelper : IPvPTargetRangeHelper
+    public class PvPShipRangeHelper : ITargetRangeHelper
     {
         private readonly IPvPShip _ship;
 

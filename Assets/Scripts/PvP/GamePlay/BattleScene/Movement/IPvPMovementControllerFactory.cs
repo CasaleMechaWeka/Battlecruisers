@@ -5,13 +5,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.R
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
-using System.Collections.Generic;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.Utils.PlatformAbstractions.Time;
-using UnityEngine;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement
 {
@@ -51,6 +51,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             IPvPBroadcastingTargetProvider blockingFriendTargetProvider,
             ITargetTracker inRangeTargetTracker,
             ITargetTracker shipBlockerTargetTracker,
-            IPvPTargetRangeHelper rangeHelper);
+            ITargetRangeHelper rangeHelper);
     }
 }

@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         private readonly IPvPShip _ship;
         private readonly IPvPBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly ITargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
-        private readonly IPvPTargetRangeHelper _rangeHelper;
+        private readonly ITargetRangeHelper _rangeHelper;
 
         private ITarget _highestPriorityTarget;
         public ITarget Target
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             IPvPBroadcastingTargetProvider blockingFriendlyProvider,
             ITargetTracker inRangeTargetTracker,
             ITargetTracker shipBlockerTargetTracker,
-            IPvPTargetRangeHelper rangeHelper)
+            ITargetRangeHelper rangeHelper)
         {
             Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, inRangeTargetTracker, shipBlockerTargetTracker, rangeHelper);
 
