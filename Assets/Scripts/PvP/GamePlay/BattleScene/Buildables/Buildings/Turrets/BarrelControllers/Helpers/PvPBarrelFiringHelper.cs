@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
@@ -6,13 +7,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBarrelFiringHelper : IPvPBarrelFiringHelper
     {
-        private readonly IPvPBarrelController _barrelController;
+        private readonly IBarrelController _barrelController;
         private readonly IAccuracyAdjuster _accuracyAdjuster;
         private readonly IFireIntervalManager _fireIntervalManager;
         private readonly IPvPBarrelFirer _barrelFirer;
 
         public PvPBarrelFiringHelper(
-            IPvPBarrelController barrelController,
+            IBarrelController barrelController,
             IAccuracyAdjuster accuracyAdjuster,
             IFireIntervalManager fireIntervalManager,
             IPvPBarrelFirer barrelFirer)
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  InBurst: {_barrelController.TurretStats.IsInBurst}  Current target: {_barrelController.CurrentTarget}  Can fire with no target: {_barrelController.CanFireWithoutTarget}  barrelAdjustmentResult.IsOnTarget: {barrelAdjustmentResult.IsOnTarget}");
 
-                if (_barrelController.pvpTurretStats.IsInBurst
+                if (_barrelController.TurretStats.IsInBurst
                     && (_barrelController.CurrentTarget != null
                         || _barrelController.CanFireWithoutTarget))
                 {

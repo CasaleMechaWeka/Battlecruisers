@@ -124,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
                         _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
                         _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
-                        _movementControllerFactory.CreateRotationMovementController(_barrelController.pvpTurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
+                        _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                         _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
                         _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
                         _factoryProvider,
@@ -188,7 +188,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _shootableEnemeyDetectorProvider
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
                     Transform,
-                    _barrelController.pvpTurretStats.RangeInM,
+                    _barrelController.TurretStats.RangeInM,
                     _targetFactories.RangeCalculatorProvider.BasicCalculator);
             _shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_shootableEnemeyDetectorProvider.TargetDetector, _exactMatchTargetFilter);
 

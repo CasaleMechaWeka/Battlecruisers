@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
@@ -57,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 // When Unity game object is destroyed need to null check it, even though it is not truly null.
                 Debug.Log("[PvPBarrelWrapper] Target set to: " + value);
                 _target = value;
-                foreach (IPvPBarrelController barrel in _barrels)
+                foreach (IBarrelController barrel in _barrels)
                 {
                     barrel.Target = _target;
                 }
@@ -82,8 +83,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             InitialiseBarrels();
 
             DamageCapability = SumBarrelDamage();
-            RangeInM = _barrels.Max(barrel => barrel.pvpTurretStats.RangeInM);
-            _minRangeInM = _barrels.Max(barrel => barrel.pvpTurretStats.MinRangeInM);
+            RangeInM = _barrels.Max(barrel => barrel.TurretStats.RangeInM);
+            _minRangeInM = _barrels.Max(barrel => barrel.TurretStats.MinRangeInM);
         }
 
         private void InitialiseBarrels()
@@ -210,7 +211,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         // should be called by Server
         private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
-            IPvPBarrelController barrel,
+            IBarrelController barrel,
             IPvPBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
@@ -244,7 +245,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         // should be called by Client
         private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
-            IPvPBarrelController barrel,
+            IBarrelController barrel,
             IPvPBuildable parent,
             ISoundKey firingSound,
             IPvPAnimation barrelFiringAnimation)
@@ -294,16 +295,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected virtual IPvPRotationMovementController CreateRotationMovementController(IPvPBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
+        protected virtual IPvPRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return
                 _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
-                    barrel.pvpTurretStats.TurretRotateSpeedInDegrees,
+                    barrel.TurretStats.TurretRotateSpeedInDegrees,
                     barrel.Transform,
                     deltaTimeProvider);
         }
 
-        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IPvPBarrelController barrel)
+        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             // Default to 100% accuracy
             return _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster();

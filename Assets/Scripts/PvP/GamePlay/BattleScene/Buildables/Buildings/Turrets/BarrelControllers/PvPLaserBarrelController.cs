@@ -53,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             float cycleDamage = _laserTurretStats.laserDurationInS * _laserTurretStats.DamagePerS;
             float damagePerS = cycleDamage / cycleLength;
 
-            return new PvPDamageCapability(damagePerS, pvpTurretStats.AttackCapabilities);
+            return new PvPDamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
         protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)

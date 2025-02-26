@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             await base.InitialiseAsync(args);
 
             _exactMatchTargetFilter = targetFilter;
-            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _projectileStats, pvpTurretStats.BurstSize);
+            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
 
             await _missileSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey);
         }

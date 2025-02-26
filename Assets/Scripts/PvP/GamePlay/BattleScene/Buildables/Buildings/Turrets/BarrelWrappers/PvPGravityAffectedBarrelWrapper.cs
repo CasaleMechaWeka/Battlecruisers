@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
@@ -28,9 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IPvPBarrelController barrel)
+        protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
-            if (barrel.pvpTurretStats.Accuracy >= PvPConstants.MAX_ACCURACY)
+            if (barrel.TurretStats.Accuracy >= PvPConstants.MAX_ACCURACY)
             {
                 return _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster();
             }
@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return
                     _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateHorizontalImpactProjectileAdjuster(
                         angleCalculator,
-                        barrel.pvpTurretStats);
+                        barrel.TurretStats);
             }
         }
 

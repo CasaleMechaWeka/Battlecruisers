@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -6,12 +7,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBarrelFirer : IPvPBarrelFirer
     {
-        private readonly IPvPBarrelController _barrelController;
+        private readonly IBarrelController _barrelController;
         private readonly IPvPAnimation _barrelFiringAnimation;
         private readonly IPvPParticleSystemGroup _muzzleFlash;
 
         public PvPBarrelFirer(
-            IPvPBarrelController barrelController,
+            IBarrelController barrelController,
             IPvPAnimation barrelFiringAnimation,
             IPvPParticleSystemGroup muzzleFlash)
         {
@@ -27,9 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelController.Fire(fireAngleInDegrees);
-            
+
             if (_barrelFiringAnimation != null)
-            _barrelFiringAnimation.Play();
+                _barrelFiringAnimation.Play();
 
             _muzzleFlash.Play();
         }

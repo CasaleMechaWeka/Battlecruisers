@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 = new PvPProjectileSpawnerArgs(
                     args,
                     _smartProjectileStats,
-                    pvpTurretStats.BurstSize);
+                    TurretStats.BurstSize);
 
             await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, _smartProjectileStats);
         }

@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
@@ -23,7 +24,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
-    public abstract class PvPBarrelController : NetworkBehaviour, IPvPBarrelController
+    public abstract class PvPBarrelController : NetworkBehaviour, IBarrelController
     {
         private IPvPBarrelAdjustmentHelper _adjustmentHelper;
         private IPvPBarrelFiringHelper _firingHelper;
@@ -39,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private PvPTurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
-        public ITurretStats pvpTurretStats => _turretStatsWrapper;
+        public ITurretStats TurretStats => _turretStatsWrapper;
 
         public ITarget Target { get; set; }
         public ITarget CurrentTarget => Target;
@@ -84,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _projectileStats = GetProjectileStats();
             _baseTurretStats = SetupTurretStats();
             _turretStatsWrapper = new PvPTurretStatsWrapper(_baseTurretStats);
-            _fireIntervalManager = SetupFireIntervalManager(pvpTurretStats);
+            _fireIntervalManager = SetupFireIntervalManager(TurretStats);
 
             IPvPParticleSystemGroupInitialiser muzzleFlashInitialiser = transform.FindNamedComponent<IPvPParticleSystemGroupInitialiser>("MuzzleFlash");
             _muzzleFlash = muzzleFlashInitialiser.CreateParticleSystemGroup();
@@ -140,8 +141,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual IPvPDamageCapability FindDamageCapabilities()
         {
-            float damagePerS = NumOfBarrels * _projectileStats.Damage * pvpTurretStats.MeanFireRatePerS;
-            return new PvPDamageCapability(damagePerS, pvpTurretStats.AttackCapabilities);
+            float damagePerS = NumOfBarrels * _projectileStats.Damage * TurretStats.MeanFireRatePerS;
+            return new PvPDamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
 

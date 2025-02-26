@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
         {
-            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _rocketStats, pvpTurretStats.BurstSize);
+            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _rocketStats, TurretStats.BurstSize);
 
             foreach (PvPRocketSpawner rocketSpawner in _rocketSpawners.Items)
             {
