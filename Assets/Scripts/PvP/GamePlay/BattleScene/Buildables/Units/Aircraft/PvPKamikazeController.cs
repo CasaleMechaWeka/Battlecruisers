@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Explosions.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // the target collider does not trigger OnTriggerExit2D().  I filed a bug with
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private ITarget _targetToDamage;
-        private IPvPDamageStats kamikazeDamageStats;
+        private IDamageStats kamikazeDamageStats;
         private IPvPFactoryProvider _factoryProvider;
 
         private float remainingPotentialDamage;

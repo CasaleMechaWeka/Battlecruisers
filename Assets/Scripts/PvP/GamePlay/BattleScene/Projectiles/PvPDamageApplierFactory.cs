@@ -2,6 +2,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
@@ -17,12 +18,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _filterFacotry = filterFactory;
         }
 
-        public IPvPDamageStats CreateDamageStats(float damage, float damageRadiusInM)
+        public IDamageStats CreateDamageStats(float damage, float damageRadiusInM)
         {
             return new PvPDamageStats(damage, damageRadiusInM);
         }
 
-        public IDamageApplier CreateSingleDamageApplier(IPvPDamageStats damageStats)
+        public IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats)
         {
             return new PvPSingleDamageApplier(damageStats.Damage);
         }
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         /// All ITargets are susceptible to area of effect damage, 
         /// regardless of faction (ie, friendly fire is on :) ).
         /// </summary>
-        public IDamageApplier CreateAreaOfDamageApplier(IPvPDamageStats damageStats)
+        public IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats)
         {
             ITargetFilter damageTargetFilter = _filterFacotry.CreateDummyTargetFilter(isMatchResult: true);
             return new PvPAreaOfEffectDamageApplier(damageStats, damageTargetFilter);
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         /// Only targets that match the given "enemyFaction" are damaged.
         /// Ie, friendly fire is off :).
         /// </summary>
-        public IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IPvPDamageStats damageStats, Faction enemyFaction)
+        public IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IDamageStats damageStats, Faction enemyFaction)
         {
             ITargetFilter damageTargetFilter = _filterFacotry.CreateTargetFilter(enemyFaction);
             return new PvPAreaOfEffectDamageApplier(damageStats, damageTargetFilter);

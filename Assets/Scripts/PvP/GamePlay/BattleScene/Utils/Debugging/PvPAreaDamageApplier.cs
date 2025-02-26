@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         void Start()
         {
-            IPvPDamageStats damageStats = new PvPDamageStats(damage, damageRadiusInM);
+            IDamageStats damageStats = new PvPDamageStats(damage, damageRadiusInM);
             ITargetFilter targetFilter = new PvPDummyTargetFilter(isMatchResult: true);
             _areaDamageApplier = new PvPAreaOfEffectDamageApplier(damageStats, targetFilter);
         }

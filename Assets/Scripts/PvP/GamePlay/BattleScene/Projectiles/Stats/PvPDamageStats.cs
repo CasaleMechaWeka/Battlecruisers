@@ -1,6 +1,8 @@
+using BattleCruisers.Projectiles.Stats;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats
 {
-    public class PvPDamageStats : IPvPDamageStats
+    public class PvPDamageStats : IDamageStats
     {
         public float Damage { get; }
         public float DamageRadiusInM { get; }
