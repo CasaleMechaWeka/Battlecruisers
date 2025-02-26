@@ -2,7 +2,7 @@ using BattleCruisers.Buildables.Boost;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost
 {
-    public class PvPBoostFactory : IPvPBoostFactory
+    public class PvPBoostFactory : IBoostFactory
     {
         private const float DEFAULT_BOOST_MULTIPLIER = 1;
 

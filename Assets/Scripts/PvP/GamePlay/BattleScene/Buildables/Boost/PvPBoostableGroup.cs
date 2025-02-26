@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public event EventHandler BoostChanged;
 
-        public PvPBoostableGroup(IPvPBoostFactory boostFactory)
+        public PvPBoostableGroup(IBoostFactory boostFactory)
         {
             Assert.IsNotNull(boostFactory);
 

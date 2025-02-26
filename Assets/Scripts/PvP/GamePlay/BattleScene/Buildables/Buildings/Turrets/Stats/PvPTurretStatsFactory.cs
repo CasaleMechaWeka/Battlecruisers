@@ -10,10 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPTurretStatsFactory : ITurretStatsFactory
     {
-        private readonly IPvPBoostFactory _boostFactory;
+        private readonly IBoostFactory _boostFactory;
         private readonly IGlobalBoostProviders _globalBoostProviders;
 
-        public PvPTurretStatsFactory(IPvPBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
+        public PvPTurretStatsFactory(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
         {
             PvPHelper.AssertIsNotNull(boostFactory, globalBoostProviders);
 
