@@ -3,11 +3,11 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         public IUpdater Updater { get; }
         public ITargetFilter TargetFilter { get; }
-        public IPvPTargetPositionPredictor TargetPositionPredictor { get; }
+        public ITargetPositionPredictor TargetPositionPredictor { get; }
         public IAngleCalculator AngleCalculator { get; }
         public IPvPAttackablePositionFinder AttackablePositionFinder { get; }
         public IAccuracyAdjuster AccuracyAdjuster { get; }
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPBarrelControllerArgs(
             IUpdater updater,
             ITargetFilter targetFilter,
-            IPvPTargetPositionPredictor targetPositionPredictor,
+            ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator,
             IPvPAttackablePositionFinder attackablePositionFinder,
             IAccuracyAdjuster accuracyAdjuster,

@@ -1,3 +1,4 @@
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
 using BattleCruisers.Targets.TargetProviders;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public class PvPMissileMovementController : PvPHomingMovementController
     {
-        private IPvPTargetPositionPredictor _targetPositionPredictor;
+        private ITargetPositionPredictor _targetPositionPredictor;
 
         public PvPMissileMovementController(
             Rigidbody2D rigidBody,

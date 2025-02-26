@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
 	public abstract class PvPLeadingDirectFireBarrelWrapper : PvPBarrelWrapper
     {
-        protected override IPvPTargetPositionPredictor CreateTargetPositionPredictor()
+        protected override ITargetPositionPredictor CreateTargetPositionPredictor()
         {
             return _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor();
         }

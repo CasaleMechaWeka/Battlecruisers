@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors;
+using BattleCruisers.Movement.Predictors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public class PvPMortarFireBarrelWrapper : PvPGravityAffectedBarrelWrapper
     {
-        protected override IPvPTargetPositionPredictor CreateTargetPositionPredictor()
+        protected override ITargetPositionPredictor CreateTargetPositionPredictor()
         {
             return _factoryProvider.TargetPositionPredictorFactory.CreateMortarPredictor();
         }

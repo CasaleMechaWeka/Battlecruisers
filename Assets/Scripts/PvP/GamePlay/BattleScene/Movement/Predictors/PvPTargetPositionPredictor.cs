@@ -1,10 +1,11 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Predictors
 {
-    public abstract class PvPTargetPositionPredictor : IPvPTargetPositionPredictor
+    public abstract class PvPTargetPositionPredictor : ITargetPositionPredictor
     {
         public Vector2 PredictTargetPosition(Vector2 sourcePosition, Vector2 targetPositionToAttack, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
         {
