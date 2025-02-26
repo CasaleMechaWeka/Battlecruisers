@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public class PvPAreaDamageApplier : PvPCheaterBase
     {
-        private IPvPDamageApplier _areaDamageApplier;
+        private IDamageApplier _areaDamageApplier;
 
         public float damage;
         public float damageRadiusInM;

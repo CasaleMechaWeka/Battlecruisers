@@ -1,12 +1,13 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers
 {
-    public class PvPAreaOfEffectDamageApplier : IPvPDamageApplier
+    public class PvPAreaOfEffectDamageApplier : IDamageApplier
     {
         private readonly IPvPDamageStats _damageStats;
         private readonly ITargetFilter _targetFilter;

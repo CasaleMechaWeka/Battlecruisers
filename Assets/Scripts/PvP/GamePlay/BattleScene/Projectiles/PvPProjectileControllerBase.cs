@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -28,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             where TPvPStats : IPvPProjectileStats
     {
         private ITargetFilter _targetFilter;
-        private IPvPDamageApplier _damageApplier;
-        private IPvPDamageApplier _singleDamageApplier;
+        private IDamageApplier _damageApplier;
+        private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
         private IAudioClipWrapper _impactSound;
         private IPool<IPoolable<Vector3>, Vector3> _explosionPool;
@@ -159,7 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
         }
 
-        private IPvPDamageApplier CreateDamageApplier(IPvPDamageApplierFactory damageApplierFactory, IPvPProjectileStats projectileStats)
+        private IDamageApplier CreateDamageApplier(IPvPDamageApplierFactory damageApplierFactory, IPvPProjectileStats projectileStats)
         {
             return
                 projectileStats.HasAreaOfEffectDamage ?

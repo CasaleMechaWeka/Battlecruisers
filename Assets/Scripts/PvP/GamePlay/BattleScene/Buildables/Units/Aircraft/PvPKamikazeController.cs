@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Explosions.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPUnit _parentAircraft;
         private ITargetFilter _targetFilter;
-        private IPvPDamageApplier _damageApplier;
+        private IDamageApplier _damageApplier;
         private IExplosionPoolProvider _explosionPoolProvider;
         private ITarget _initialTarget;
 
