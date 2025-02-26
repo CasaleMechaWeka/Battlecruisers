@@ -2,9 +2,9 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -19,13 +19,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public abstract class PvPProjectileSpawner<TPvPProjectile, TPvPProjectileArgs, TPvPStats> : NetworkBehaviour
         where TPvPProjectile : PvPProjectileControllerBase<TPvPProjectileArgs, TPvPStats>
         where TPvPProjectileArgs : PvPProjectileActivationArgs<TPvPStats>
-        where TPvPStats : IPvPProjectileStats
+        where TPvPStats : IProjectileStats
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
         private IPool<TPvPProjectile, TPvPProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
-        protected IPvPProjectileStats _projectileStats;
+        protected IProjectileStats _projectileStats;
         protected IPvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected IPvPCruiser _enemyCruiser;

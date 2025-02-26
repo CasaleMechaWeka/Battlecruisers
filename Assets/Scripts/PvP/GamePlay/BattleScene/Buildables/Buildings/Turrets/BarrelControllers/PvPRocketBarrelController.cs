@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _middleSpawner = rocketSpawners.Middle();
         }
 
-        protected override IPvPProjectileStats GetProjectileStats()
+        protected override IProjectileStats GetProjectileStats()
         {
             _rocketStats = GetComponent<PvPCruisingProjectileStats>();
             Assert.IsNotNull(_rocketStats);

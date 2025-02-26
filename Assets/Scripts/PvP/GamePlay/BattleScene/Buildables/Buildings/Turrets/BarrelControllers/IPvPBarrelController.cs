@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         Transform Transform { get; }
         ITurretStats pvpTurretStats { get; }
-        IPvPProjectileStats ProjectileStats { get; }
+        IProjectileStats ProjectileStats { get; }
         Vector3 ProjectileSpawnerPosition { get; }
         bool IsSourceMirrored { get; }
         ITarget CurrentTarget { get; }

@@ -9,11 +9,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Dr
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -165,7 +165,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, IPvPFactoryProvider factoryProvider)
             where TProjectile : PvPProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : PvPProjectileActivationArgs<TStats>
-            where TStats : IPvPProjectileStats
+            where TStats : IProjectileStats
         {
             Assert.IsNotNull(factoryProvider);
             TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);

@@ -1,3 +1,4 @@
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -5,7 +6,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats
 {
     // Extends MonoBehaviour so can be set in Unity inspector
-    public class PvPProjectileStats : MonoBehaviour, IPvPProjectileStats
+    public class PvPProjectileStats : MonoBehaviour, IProjectileStats
     {
         public float initialVelocityMultiplier;
 

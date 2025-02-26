@@ -1,16 +1,16 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
     public class PvPProjectileSpawnerArgs : IPvPProjectileSpawnerArgs
     {
         public ITarget Parent { get; }
-        public IPvPProjectileStats ProjectileStats { get; }
+        public IProjectileStats ProjectileStats { get; }
         public int BurstSize { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public PvPProjectileSpawnerArgs(
             IPvPBarrelControllerArgs barrelControllerArgs,
-            IPvPProjectileStats projectileStats,
+            IProjectileStats projectileStats,
             int burstSize)
             : this(
                   barrelControllerArgs.Parent,
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public PvPProjectileSpawnerArgs(
             ITarget parent,
-            IPvPProjectileStats projectileStats,
+            IProjectileStats projectileStats,
             int burstSize,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,

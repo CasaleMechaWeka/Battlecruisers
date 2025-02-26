@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
@@ -33,8 +34,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected ITargetFilter _targetFilter;
         protected IFireIntervalManager _fireIntervalManager;
 
-        protected IPvPProjectileStats _projectileStats;
-        public IPvPProjectileStats ProjectileStats => _projectileStats;
+        protected IProjectileStats _projectileStats;
+        public IProjectileStats ProjectileStats => _projectileStats;
 
         private PvPTurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
@@ -89,7 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _muzzleFlash = muzzleFlashInitialiser.CreateParticleSystemGroup();
         }
 
-        protected virtual IPvPProjectileStats GetProjectileStats()
+        protected virtual IProjectileStats GetProjectileStats()
         {
             PvPProjectileStats projectileStats = GetComponent<PvPProjectileStats>();
             Assert.IsNotNull(projectileStats);

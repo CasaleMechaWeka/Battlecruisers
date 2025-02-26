@@ -2,6 +2,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_missileSpawner);
         }
 
-        protected override IPvPProjectileStats GetProjectileStats()
+        protected override IProjectileStats GetProjectileStats()
         {
             _smartProjectileStats = GetComponent<IPvPSmartProjectileStats>();
             Assert.IsNotNull(_smartProjectileStats);

@@ -1,16 +1,16 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPBombController : PvPProjectileWithTrail<PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>
+    public class PvPBombController : PvPProjectileWithTrail<PvPProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         protected override float TrailLifetimeInS => 3;
 
-        public override void Activate(PvPProjectileActivationArgs<IPvPProjectileStats> activationArgs)
+        public override void Activate(PvPProjectileActivationArgs<IProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
             MovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();

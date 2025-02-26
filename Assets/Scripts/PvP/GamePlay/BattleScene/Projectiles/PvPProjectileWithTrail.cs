@@ -1,7 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Trails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IRemovable,
         IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
-            where TPvPStats : IPvPProjectileStats
+            where TPvPStats : IProjectileStats
     {
         private Collider2D _collider;
         private IDeferrer _deferrer;

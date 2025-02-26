@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBomberController : PvPAircraftController, ITargetConsumer
     {
         private PvPBombSpawner _bombSpawner;
-        private IPvPProjectileStats _bombStats;
+        private IProjectileStats _bombStats;
         private ITargetProcessor _targetProcessor;
         private IPvPBomberMovementController _bomberMovementControler;
         private bool _haveDroppedBombOnRun = false;

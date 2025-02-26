@@ -3,8 +3,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -15,13 +15,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Threading;
-using BattleCruisers.Movement;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
     public class PvPMissileController :
-        PvPProjectileWithTrail<PvPTargetProviderActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>,
+        PvPProjectileWithTrail<PvPTargetProviderActivationArgs<IProjectileStats>, IProjectileStats>,
         IPvPTargetProvider
     {
         private IDeferrer _deferrer;
@@ -49,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsNotNull(missile);
         }
 
-        public override void Activate(PvPTargetProviderActivationArgs<IPvPProjectileStats> activationArgs)
+        public override void Activate(PvPTargetProviderActivationArgs<IProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
 

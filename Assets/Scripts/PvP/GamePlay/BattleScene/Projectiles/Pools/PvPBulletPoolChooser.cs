@@ -1,18 +1,18 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
 
-    public class PvPBulletPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>
+    public class PvPBulletPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPProjectileController, PvPProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         public bool highCalibre = false;
         public bool tinyBullet = false;
         public bool flakBullet = false;
 
-        public IPool<PvPProjectileController, PvPProjectileActivationArgs<IPvPProjectileStats>>
+        public IPool<PvPProjectileController, PvPProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (highCalibre)

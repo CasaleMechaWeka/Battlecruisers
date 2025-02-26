@@ -1,12 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPProjectileController : PvPProjectileControllerBase<PvPProjectileActivationArgs<IPvPProjectileStats>, IPvPProjectileStats>
+    public class PvPProjectileController : PvPProjectileControllerBase<PvPProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         private SoundType _type;
         private string _name;

@@ -1,10 +1,9 @@
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -26,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IRemovable,
         IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
-            where TPvPStats : IPvPProjectileStats
+            where TPvPStats : IProjectileStats
     {
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
@@ -160,7 +159,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
         }
 
-        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IPvPProjectileStats projectileStats)
+        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
         {
             return
                 projectileStats.HasAreaOfEffectDamage ?
