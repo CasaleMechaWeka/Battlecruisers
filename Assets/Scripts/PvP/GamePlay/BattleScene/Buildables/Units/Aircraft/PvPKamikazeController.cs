@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPUnit _parentAircraft;
         private ITargetFilter _targetFilter;
         private IPvPDamageApplier _damageApplier;
-        private IPvPExplosionPoolProvider _explosionPoolProvider;
+        private IExplosionPoolProvider _explosionPoolProvider;
         private ITarget _initialTarget;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because

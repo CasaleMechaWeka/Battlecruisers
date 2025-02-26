@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
@@ -8,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools
 {
-    public class PvPExplosionPoolProvider : IPvPExplosionPoolProvider
+    public class PvPExplosionPoolProvider : IExplosionPoolProvider
     {
         public IPool<IPoolable<Vector3>, Vector3> BulletImpactPool { get; }
         public IPool<IPoolable<Vector3>, Vector3> HighCalibreBulletImpactPool { get; }

@@ -1,4 +1,5 @@
 using BattleCruisers.Effects.Drones;
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools;
@@ -15,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPPoolProviders : IPvPPoolProviders
     {
         private PvPExplosionPoolProvider _explosionPoolProvider;
-        public IPvPExplosionPoolProvider ExplosionPoolProvider => _explosionPoolProvider;
+        public IExplosionPoolProvider ExplosionPoolProvider => _explosionPoolProvider;
 
         private PvPShipDeathPoolProvider _shipDeathPoolProvider;
         public IPvPShipDeathPoolProvider ShipDeathPoolProvider => _shipDeathPoolProvider;
