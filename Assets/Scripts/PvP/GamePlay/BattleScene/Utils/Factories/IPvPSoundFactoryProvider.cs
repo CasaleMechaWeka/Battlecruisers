@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
@@ -8,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public interface IPvPSoundFactoryProvider
     {
         ISoundFetcher SoundFetcher { get; }
-        IPvPSoundPlayer SoundPlayer { get; set; }
+        ISoundPlayer SoundPlayer { get; set; }
 
         /// <summary>
         /// Plays a single sound at a time.  Used by in game events, such as

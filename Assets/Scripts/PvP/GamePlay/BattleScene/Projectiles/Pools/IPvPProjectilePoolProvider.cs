@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
 
