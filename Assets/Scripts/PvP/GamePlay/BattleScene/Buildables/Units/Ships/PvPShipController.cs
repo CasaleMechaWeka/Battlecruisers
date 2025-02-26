@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
@@ -94,20 +95,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void FindDamageStats()
         {
-            IList<IPvPDamageCapability> antiAirDamageCapabilities = GetDamageCapabilities(TargetType.Aircraft);
+            IList<IDamageCapability> antiAirDamageCapabilities = GetDamageCapabilities(TargetType.Aircraft);
             if (antiAirDamageCapabilities.Count != 0)
             {
                 AddDamageStats(new PvPDamageCapability(antiAirDamageCapabilities));
             }
 
-            IList<IPvPDamageCapability> antiSeaDamageCapabilities = GetDamageCapabilities(TargetType.Ships);
+            IList<IDamageCapability> antiSeaDamageCapabilities = GetDamageCapabilities(TargetType.Ships);
             if (antiSeaDamageCapabilities.Count != 0)
             {
                 AddDamageStats(new PvPDamageCapability(antiSeaDamageCapabilities));
             }
         }
 
-        private IList<IPvPDamageCapability> GetDamageCapabilities(TargetType attackCapability)
+        private IList<IDamageCapability> GetDamageCapabilities(TargetType attackCapability)
         {
             return
                 _turrets

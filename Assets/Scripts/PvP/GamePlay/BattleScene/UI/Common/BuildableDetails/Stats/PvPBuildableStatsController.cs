@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation;
 using BattleCruisers.Scenes;
@@ -80,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             float damagePerS = 0;
 
-            foreach (IPvPDamageCapability damageCapability in item.DamageCapabilities)
+            foreach (IDamageCapability damageCapability in item.DamageCapabilities)
             {
                 if (damageCapability.AttackCapabilities.Contains(targetType))
                 {

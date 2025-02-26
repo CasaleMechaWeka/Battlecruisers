@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public interface IPvPBarrelWrapper : ITargetConsumer, IManagedDisposable
     {
-        IPvPDamageCapability DamageCapability { get; }
+        IDamageCapability DamageCapability { get; }
         float RangeInM { get; }
         Vector2 Position { get; }
         IList<SpriteRenderer> Renderers { get; }

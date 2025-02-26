@@ -1,10 +1,10 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Need satellite to be initialised to be able to access damage capabilities.
             satellitePrefab.StaticInitialise(commonStrings);
 
-            foreach (IPvPDamageCapability damageCapability in satellitePrefab.Buildable.DamageCapabilities)
+            foreach (IDamageCapability damageCapability in satellitePrefab.Buildable.DamageCapabilities)
             {
                 AddDamageStats(damageCapability);
             }

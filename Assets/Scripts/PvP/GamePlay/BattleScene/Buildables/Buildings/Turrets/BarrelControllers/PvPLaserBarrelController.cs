@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return fireIntervalManagerInitialiser.Initialise(waitingDurationProvider, firingDurationProvider);
         }
 
-        protected override IPvPDamageCapability FindDamageCapabilities()
+        protected override IDamageCapability FindDamageCapabilities()
         {
             // Damage per s
             float cycleLength = _laserTurretStats.laserDurationInS + 1 / _laserTurretStats.FireRatePerS;

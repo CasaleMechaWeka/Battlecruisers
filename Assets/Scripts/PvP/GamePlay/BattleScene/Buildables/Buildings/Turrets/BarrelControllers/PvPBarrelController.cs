@@ -53,8 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public List<SpriteRenderer> Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
-        private IPvPDamageCapability _damageCapability;
-        public IPvPDamageCapability DamageCapability
+        private IDamageCapability _damageCapability;
+        public IDamageCapability DamageCapability
         {
             get
             {
@@ -139,7 +139,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return fireIntervalManagerInitialiser.Initialise(turretStats);
         }
 
-        protected virtual IPvPDamageCapability FindDamageCapabilities()
+        protected virtual IDamageCapability FindDamageCapabilities()
         {
             float damagePerS = NumOfBarrels * _projectileStats.Damage * TurretStats.MeanFireRatePerS;
             return new PvPDamageCapability(damagePerS, TurretStats.AttackCapabilities);

@@ -1,7 +1,5 @@
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -105,8 +103,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPHealthBarController _healthBar;
         public PvPHealthBarController HealthBar => _healthBar;
 
-        private IList<IPvPDamageCapability> _damageCapabilities;
-        public ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; private set; }
+        private IList<IDamageCapability> _damageCapabilities;
+        public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
 
         private IDroneConsumer _droneConsumer;
         public IDroneConsumer DroneConsumer
@@ -256,8 +254,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
 
-            _damageCapabilities = new List<IPvPDamageCapability>();
-            this.DamageCapabilities = new ReadOnlyCollection<IPvPDamageCapability>(_damageCapabilities);
+            _damageCapabilities = new List<IDamageCapability>();
+            this.DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
             _smokeInitialiser = GetComponentInChildren<PvPSmokeInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeInitialiser);
             Assert.IsNotNull(deathSound);
@@ -284,8 +282,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
 
-            _damageCapabilities = new List<IPvPDamageCapability>();
-            this.DamageCapabilities = new ReadOnlyCollection<IPvPDamageCapability>(_damageCapabilities);
+            _damageCapabilities = new List<IDamageCapability>();
+            this.DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
 
             _smokeInitialiser = GetComponentInChildren<PvPSmokeInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeInitialiser);
@@ -296,7 +294,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }
 
-        protected void AddDamageStats(IPvPDamageCapability statsToAdd)
+        protected void AddDamageStats(IDamageCapability statsToAdd)
         {
             Assert.IsFalse(_damageCapabilities.Contains(statsToAdd));
             _damageCapabilities.Add(statsToAdd);
@@ -305,7 +303,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void UpdateAttackCapabilities()
         {
-            foreach (IPvPDamageCapability damageStat in _damageCapabilities)
+            foreach (IDamageCapability damageStat in _damageCapabilities)
             {
                 foreach (TargetType attackCapability in damageStat.AttackCapabilities)
                 {

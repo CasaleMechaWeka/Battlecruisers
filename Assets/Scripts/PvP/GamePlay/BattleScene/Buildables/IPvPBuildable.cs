@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IDroneConsumer DroneConsumer { get; }
         ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
-        ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; }
+        ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
         IBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
         IPvPCruiser ParentCruiser { get; set; }
