@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPManualProximityTargetProcessorWrapper : PvPProximityTargetProcessorWrapper
     {
-        private PvPManualDetectorProvider _manualDetectorProvider;
+        private ManualDetectorProvider _manualDetectorProvider;
 
         protected override ITargetFinder CreateTargetFinder(IPvPTargetProcessorArgs args)
         {

@@ -5,11 +5,11 @@ using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPShipTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _movementTargetProcessor;
         private IPvPMovementDecider _movementDecider;
-        private PvPManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
+        private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
         private IPool<IPoolable<Vector3>, Vector3> _deathPool;
 
         private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
