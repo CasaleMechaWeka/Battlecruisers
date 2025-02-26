@@ -12,8 +12,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes);
         ITargetFilter CreateDummyTargetFilter(bool isMatchResult);
         ITargetFilter CreateTargetInFrontFilter(IPvPUnit source);
-        IPvPExactMatchTargetFilter CreateExactMatchTargetFilter();
-        IPvPExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch);
-        IPvPExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter();
+        IExactMatchTargetFilter CreateExactMatchTargetFilter();
+        IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch);
+        IExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter();
     }
 }

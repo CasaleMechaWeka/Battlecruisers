@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
         {
-            IPvPExactMatchTargetFilter exatMatchTargetFilter = args.TargetFilter.Parse<IPvPExactMatchTargetFilter>();
+            IExactMatchTargetFilter exatMatchTargetFilter = args.TargetFilter.Parse<IExactMatchTargetFilter>();
             PvPSamSiteBarrelController samSiteBarrel = barrel.Parse<PvPSamSiteBarrelController>();
             samSiteBarrel.InitialiseAsync(exatMatchTargetFilter, args);
         }

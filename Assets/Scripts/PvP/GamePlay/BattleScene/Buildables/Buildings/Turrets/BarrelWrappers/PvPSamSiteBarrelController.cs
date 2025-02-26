@@ -1,5 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSamSiteBarrelController : PvPBarrelController
     {
-        private IPvPExactMatchTargetFilter _exactMatchTargetFilter;
+        private IExactMatchTargetFilter _exactMatchTargetFilter;
         private PvPMissileSpawner _missileSpawner;
 
         public override Vector3 ProjectileSpawnerPosition => _missileSpawner.transform.position;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_missileSpawner);
         }
 
-        public async Task InitialiseAsync(IPvPExactMatchTargetFilter targetFilter, IPvPBarrelControllerArgs args)
+        public async Task InitialiseAsync(IExactMatchTargetFilter targetFilter, IPvPBarrelControllerArgs args)
         {
             await base.InitialiseAsync(args);
 

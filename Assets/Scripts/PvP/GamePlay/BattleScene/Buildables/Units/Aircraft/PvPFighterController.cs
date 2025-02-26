@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
         private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
-        private IPvPExactMatchTargetFilter _exactMatchTargetFilter;
+        private IExactMatchTargetFilter _exactMatchTargetFilter;
         private IPvPMovementController _figherMovementController;
         private PvPBarrelController _barrelController;
         private IAngleHelper _angleHelper;
