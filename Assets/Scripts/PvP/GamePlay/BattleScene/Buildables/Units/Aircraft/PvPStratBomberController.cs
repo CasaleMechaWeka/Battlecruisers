@@ -25,6 +25,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Velocity;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private PvPBombSpawner _bombSpawner;
         private IProjectileStats _bombStats;
         private ITargetProcessor _targetProcessor;
-        private IPvPBomberMovementController _bomberMovementControler;
+        private IBomberMovementController _bomberMovementControler;
         private bool _haveDroppedBombOnRun = false;
         private bool _isAtCruisingHeight = false;
         public List<Sprite> allSprites = new List<Sprite>();

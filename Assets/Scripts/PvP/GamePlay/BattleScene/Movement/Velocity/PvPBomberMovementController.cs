@@ -1,10 +1,11 @@
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity
 {
-    public class PvPBomberMovementController : PvPTargetVelocityMovementController, IPvPBomberMovementController
+    public class PvPBomberMovementController : PvPTargetVelocityMovementController, IBomberMovementController
     {
         private float _velocitySmoothTime;
 
