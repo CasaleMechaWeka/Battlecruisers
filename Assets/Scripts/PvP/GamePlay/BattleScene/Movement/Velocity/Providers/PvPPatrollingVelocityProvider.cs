@@ -5,11 +5,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public class PvPPatrollingVelocityProvider : IVelocityProvider
     {
-        private readonly IPvPPatrollingVelocityProvider _patrollingAircraft;
+        private readonly IPatrollingVelocityProvider _patrollingAircraft;
 
         public float VelocityInMPerS => _patrollingAircraft.PatrollingVelocityInMPerS;
 
-        public PvPPatrollingVelocityProvider(IPvPPatrollingVelocityProvider patrollingAircraft)
+        public PvPPatrollingVelocityProvider(IPatrollingVelocityProvider patrollingAircraft)
         {
             Assert.IsNotNull(patrollingAircraft);
             _patrollingAircraft = patrollingAircraft;

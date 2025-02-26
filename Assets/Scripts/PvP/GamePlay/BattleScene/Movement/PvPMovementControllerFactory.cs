@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             return new PvPMultiplyingVelocityProvider(providerToWrap, multiplier);
         }
 
-        public IVelocityProvider CreatePatrollingVelocityProvider(IPvPPatrollingVelocityProvider patrollingAircraft)
+        public IVelocityProvider CreatePatrollingVelocityProvider(IPatrollingVelocityProvider patrollingAircraft)
         {
             return new PvPPatrollingVelocityProvider(patrollingAircraft);
         }
