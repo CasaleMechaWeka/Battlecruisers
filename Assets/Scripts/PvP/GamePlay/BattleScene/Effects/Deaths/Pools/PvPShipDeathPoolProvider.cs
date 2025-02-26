@@ -1,15 +1,15 @@
+using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.BattleScene.Pools;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
 {
-    public class PvPShipDeathPoolProvider : IPvPShipDeathPoolProvider
+    public class PvPShipDeathPoolProvider : IShipDeathPoolProvider
     {
         public IPool<IPoolable<Vector3>, Vector3> ArchonPool { get; }
         public IPool<IPoolable<Vector3>, Vector3> AttackBoatPool { get; }
