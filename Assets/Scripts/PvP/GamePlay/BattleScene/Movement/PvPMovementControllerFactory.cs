@@ -111,12 +111,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             return new PvPDummyRotationMovementController(isOnTarget);
         }
 
-        public IPvPConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform)
+        public IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform)
         {
             return new PvPConstantRotationController(rotateSpeedInDegreesPerS, transform);
         }
 
-        public IPvPConstantRotationController CreateDummyConstantRotationController()
+        public IConstantRotationController CreateDummyConstantRotationController()
         {
             return new PvPDummyConstantRotationController();
         }

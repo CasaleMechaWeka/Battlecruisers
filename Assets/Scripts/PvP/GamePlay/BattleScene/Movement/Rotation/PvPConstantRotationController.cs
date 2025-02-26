@@ -1,10 +1,11 @@
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation
 {
-    public class PvPConstantRotationController : IPvPConstantRotationController
+    public class PvPConstantRotationController : IConstantRotationController
     {
         private float _rotateSpeedInDegreesPerS;
         private Transform _transform;

@@ -1,5 +1,5 @@
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPNukeSpinner : MonoBehaviour
     {
-        private IPvPConstantRotationController _activeRotationController, _constantRotationController, _dummyRotationController;
+        private IConstantRotationController _activeRotationController, _constantRotationController, _dummyRotationController;
 
         public float rotateSpeedInDegreesPerS;
 
