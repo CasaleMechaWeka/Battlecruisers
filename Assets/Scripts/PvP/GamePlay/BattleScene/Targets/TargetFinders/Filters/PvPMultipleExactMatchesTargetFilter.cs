@@ -1,10 +1,11 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters
 {
-    public class PvPMultipleExactMatchesTargetFilter : IPvPExactMatchTargetFilter
+    public class PvPMultipleExactMatchesTargetFilter : IExactMatchTargetFilter
     {
         private readonly HashSet<ITarget> _matches;
 

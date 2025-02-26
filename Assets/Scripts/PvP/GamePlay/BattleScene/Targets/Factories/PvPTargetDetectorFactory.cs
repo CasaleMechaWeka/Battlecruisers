@@ -7,11 +7,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
-    public class PvPTargetDetectorFactory : IPvPTargetDetectorFactory
+    public class PvPTargetDetectorFactory : ITargetDetectorFactory
     {
         private readonly IPvPUnitTargets _enemyTargets, _friendlyTargets;
         private readonly IPvPUpdaterProvider _updaterProvider;

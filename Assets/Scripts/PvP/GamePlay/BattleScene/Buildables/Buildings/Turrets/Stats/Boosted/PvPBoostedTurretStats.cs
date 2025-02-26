@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBoostedTurretStats : PvPBoostedBasicTurretStats<ITurretStats>, ITurretStats
     {
         private readonly IBoostable _accuracyBoostable;
-        private readonly IPvPBoostableGroup _accuracyBoostableGroup;
+        private readonly IBoostableGroup _accuracyBoostableGroup;
 
         public float Accuracy => Mathf.Clamp01(_accuracyBoostable.BoostMultiplier * _baseStats.Accuracy);
         public float TurretRotateSpeedInDegrees => _baseStats.TurretRotateSpeedInDegrees;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public PvPBoostedTurretStats(
             ITurretStats baseStats,
-            IPvPBoostFactory boostFactory,
+            IBoostFactory boostFactory,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders,
             IGlobalBoostProviders globalBoostProviders)

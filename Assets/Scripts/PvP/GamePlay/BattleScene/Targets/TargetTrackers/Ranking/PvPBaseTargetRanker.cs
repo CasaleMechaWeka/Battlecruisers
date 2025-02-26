@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// <summary>
     /// Prioritise targets by target value.
     /// </summary>
-    public class PvPBaseTargetRanker : IPvPTargetRanker
+    public class PvPBaseTargetRanker : ITargetRanker
     {
         protected IDictionary<TargetType, int> _attackCapabilityToBonus;
 

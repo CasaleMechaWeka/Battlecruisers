@@ -19,6 +19,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPNukeLauncherController : PvPBuilding
     {
         private PvPNukeSpinner _spinner;
-        private IPvPNukeStats _nukeStats;
+        private INukeStats _nukeStats;
         private PvPNukeController _launchedNuke;
 
         public PvPSiloHalfController leftSiloHalf, rightSiloHalf;
@@ -132,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
             _launchedNuke.Initialise(_commonStrings, _factoryProvider);
             _launchedNuke.Activate(
-                new PvPTargetProviderActivationArgs<IPvPNukeStats>(
+                new PvPTargetProviderActivationArgs<INukeStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,
                     _nukeStats,
                     Vector2.zero,
