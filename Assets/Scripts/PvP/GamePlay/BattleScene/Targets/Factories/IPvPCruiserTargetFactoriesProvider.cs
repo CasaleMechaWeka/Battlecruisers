@@ -5,7 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPCruiserTargetFactoriesProvider
     {
         ITargetProcessorFactory ProcessorFactory { get; }
-        IPvPTargetDetectorFactory DetectorFactory { get; }
+        ITargetDetectorFactory DetectorFactory { get; }
         IPvPTargetProviderFactory ProviderFactory { get; }
         IPvPTargetTrackerFactory TrackerFactory { get; }
     }
