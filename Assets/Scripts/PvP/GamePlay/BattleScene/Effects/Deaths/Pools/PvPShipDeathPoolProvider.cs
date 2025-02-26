@@ -47,15 +47,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void SetInitialCapacity()
         {
-            AttackBoatPool.AddCapacity(PvPInitialCapacity.ATTACK_BOAT);
-            AttackRIBPool.AddCapacity(PvPInitialCapacity.ATTACK_RIB);
-            FrigatePool.AddCapacity(PvPInitialCapacity.FRIGATE);
-            DestroyerPool.AddCapacity(PvPInitialCapacity.DESTROYFER);
-            SiegeDestroyerPool.AddCapacity(PvPInitialCapacity.SIEGEDESTROYER);
-            ArchonPool.AddCapacity(PvPInitialCapacity.ARCHON);
-            GlassCannoneerPool.AddCapacity(PvPInitialCapacity.GLASSCANNONEER);
-            GunBoatPool.AddCapacity(PvPInitialCapacity.GUNBOAT);
-            TurtlePool.AddCapacity(PvPInitialCapacity.TURTLE);
+            AttackBoatPool.AddCapacity(0);
+            AttackRIBPool.AddCapacity(0);
+            FrigatePool.AddCapacity(0);
+            DestroyerPool.AddCapacity(0);
+            SiegeDestroyerPool.AddCapacity(0);
+            ArchonPool.AddCapacity(0);
+            GlassCannoneerPool.AddCapacity(0);
+            GunBoatPool.AddCapacity(0);
+            TurtlePool.AddCapacity(0);
         }
     }
 }

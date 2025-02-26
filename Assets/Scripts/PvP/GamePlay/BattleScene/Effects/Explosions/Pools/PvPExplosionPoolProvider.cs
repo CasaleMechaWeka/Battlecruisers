@@ -57,20 +57,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void SetInitialCapacity()
         {
-            TinyBulletImpactPool.AddCapacity(1);
-            HighCalibreBulletImpactPool.AddCapacity(1);
-            BulletImpactPool.AddCapacity(1);
-            BombExplosionPool.AddCapacity(1);
-            FlakExplosionsPool.AddCapacity(1);
-            SmallExplosionsPool.AddCapacity(1);
-            MediumExplosionsPool.AddCapacity(1);
-            MFExplosionsPool.AddCapacity(1);
-            FirecrackerExplosionsPool.AddCapacity(1);
-            LargeExplosionsPool.AddCapacity(1);
-            NovaShellImpactPool.AddCapacity(1);
-            RocketShellImpactPool.AddCapacity(1);
-            HugeExplosionsPool.AddCapacity(1);
-            FiveShellClusterExplosionsPool.AddCapacity(1);
+            TinyBulletImpactPool.AddCapacity(0);
+            HighCalibreBulletImpactPool.AddCapacity(0);
+            BulletImpactPool.AddCapacity(0);
+            BombExplosionPool.AddCapacity(0);
+            FlakExplosionsPool.AddCapacity(0);
+            SmallExplosionsPool.AddCapacity(0);
+            MediumExplosionsPool.AddCapacity(0);
+            MFExplosionsPool.AddCapacity(0);
+            FirecrackerExplosionsPool.AddCapacity(0);
+            LargeExplosionsPool.AddCapacity(0);
+            NovaShellImpactPool.AddCapacity(0);
+            RocketShellImpactPool.AddCapacity(0);
+            HugeExplosionsPool.AddCapacity(0);
+            FiveShellClusterExplosionsPool.AddCapacity(0);
         }
 
         public void SetInitialCapacity_Rest()
