@@ -55,7 +55,7 @@ using BattleCruisers.Utils.Localisation;
 namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class Helper
-	{
+    {
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
 
@@ -77,7 +77,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         public Helper(
-            int numOfDrones, 
+            int numOfDrones,
             float buildSpeedMultiplier,
             IDeferrer deferrer,
             IDeferrer realTimeDeferrer,
@@ -85,7 +85,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IPrefabFactory prefabFactory,
             ILocTable commonStrings,
             ILocTable storyStrings)
-		{
+        {
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             Deferrer = deferrer;
@@ -94,7 +94,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _prefabFactory = prefabFactory;
             CommonStrings = commonStrings;
             StoryStrings = storyStrings;
-		}
+        }
 
         public Helper(
             Helper helper,
@@ -179,17 +179,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         public void InitialiseUnit(
-			IUnit unit,
-			Faction faction = Faction.Blues,
-			IUIManager uiManager = null,
-			ICruiser parentCruiser = null,
-			ICruiser enemyCruiser = null,
-			IAircraftProvider aircraftProvider = null,
+            IUnit unit,
+            Faction faction = Faction.Blues,
+            IUIManager uiManager = null,
+            ICruiser parentCruiser = null,
+            ICruiser enemyCruiser = null,
+            IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
-			IAngleCalculatorFactory angleCalculatorFactory = null,
-			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
-			IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            IAngleCalculatorFactory angleCalculatorFactory = null,
+            ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
+            IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
@@ -197,7 +197,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null,
             bool showDroneFeedback = false)
-		{
+        {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
                     this,
@@ -222,7 +222,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     showDroneFeedback: showDroneFeedback);
 
             InitialiseUnit(unit, args);
-		}
+        }
 
         public void InitialiseUnit(
             IUnit unit,
@@ -239,7 +239,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     initialisationArgs.CruiserSpecificFactories));
         }
 
-		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)
+        public ICruiser CreateCruiser(Direction facingDirection, Faction faction)
         {
             IDroneConsumerProvider droneConsumerProvider = CreateDroneConsumerProvider();
 
@@ -263,20 +263,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         public ICruiser CreateCruiser(GameObject target)
-		{
-			ICruiser enemyCruiser = Substitute.For<ICruiser>();
-			enemyCruiser.GameObject.Returns(target);
-			enemyCruiser.Position.Returns(x => (Vector2)target.transform.position);
+        {
+            ICruiser enemyCruiser = Substitute.For<ICruiser>();
+            enemyCruiser.GameObject.Returns(target);
+            enemyCruiser.Position.Returns(x => (Vector2)target.transform.position);
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
-			return enemyCruiser;
+            return enemyCruiser;
         }
 
         public ITargetFactories CreateTargetFactories(
-            GameObject globalTarget, 
+            GameObject globalTarget,
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
             IUpdaterProvider updaterProvider = null,
-            ITargetFilter targetFilter = null, 
+            ITargetFilter targetFilter = null,
             IExactMatchTargetFilter exactMatchTargetFilter = null)
         {
             // The enemy cruiser is added as a target by the global target finder.
@@ -317,7 +317,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 ITargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
                 targetFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
             }
-            
+
             // Filters
             targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
@@ -344,104 +344,104 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         public IAircraftProvider CreateAircraftProvider(
-			IList<Vector2> bomberPatrolPoints = null,
+            IList<Vector2> bomberPatrolPoints = null,
             IList<Vector2> gunshipPatrolPoints = null,
-			IList<Vector2> fighterPatrolPoints = null,
-			IList<Vector2> deathstarPatrolPoints = null,
+            IList<Vector2> fighterPatrolPoints = null,
+            IList<Vector2> deathstarPatrolPoints = null,
             IList<Vector2> spySatellitePatrolPoints = null,
             IList<Vector2> missileFighterPatrolPoints = null,
-			Rectangle fighterSafeZone = null)
-		{
-			IAircraftProvider provider = Substitute.For<IAircraftProvider>();
+            Rectangle fighterSafeZone = null)
+        {
+            IAircraftProvider provider = Substitute.For<IAircraftProvider>();
 
-			if (bomberPatrolPoints == null)
-			{
-				bomberPatrolPoints = new List<Vector2>() 
-				{
-					new Vector2(0, 1),
-					new Vector2(0, 4)
-				};
-			}
-			provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
+            if (bomberPatrolPoints == null)
+            {
+                bomberPatrolPoints = new List<Vector2>()
+                {
+                    new Vector2(0, 1),
+                    new Vector2(0, 4)
+                };
+            }
+            provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
 
             if (gunshipPatrolPoints == null)
-			{
-				gunshipPatrolPoints = new List<Vector2>()
-				{
-					new Vector2(0, 1),
-					new Vector2(0, 4)
-				};
-			}
+            {
+                gunshipPatrolPoints = new List<Vector2>()
+                {
+                    new Vector2(0, 1),
+                    new Vector2(0, 4)
+                };
+            }
             provider.FindGunshipPatrolPoints(0).ReturnsForAnyArgs(gunshipPatrolPoints);
 
-			if (fighterPatrolPoints == null)
-			{
-				fighterPatrolPoints = new List<Vector2>() 
-				{
-                    new Vector2(0, 0),  
-					new Vector2(3, 10)
-				};
-			}
-			provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
+            if (fighterPatrolPoints == null)
+            {
+                fighterPatrolPoints = new List<Vector2>()
+                {
+                    new Vector2(0, 0),
+                    new Vector2(3, 10)
+                };
+            }
+            provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
 
-			if (deathstarPatrolPoints == null)
-			{
-				deathstarPatrolPoints = new List<Vector2>() 
-				{
-					new Vector2(0, 10),
-					new Vector2(0, 20),
-					new Vector2(0, 30),
-					new Vector2(0, 40)
-				};
-			}
-			provider.FindDeathstarPatrolPoints(default, 0).ReturnsForAnyArgs(deathstarPatrolPoints);
+            if (deathstarPatrolPoints == null)
+            {
+                deathstarPatrolPoints = new List<Vector2>()
+                {
+                    new Vector2(0, 10),
+                    new Vector2(0, 20),
+                    new Vector2(0, 30),
+                    new Vector2(0, 40)
+                };
+            }
+            provider.FindDeathstarPatrolPoints(default, 0).ReturnsForAnyArgs(deathstarPatrolPoints);
 
             if (spySatellitePatrolPoints == null)
             {
                 spySatellitePatrolPoints = new List<Vector2>()
                 {
-					new Vector2(0, 10),
-					new Vector2(0, 20),
-					new Vector2(0, 30)
+                    new Vector2(0, 10),
+                    new Vector2(0, 20),
+                    new Vector2(0, 30)
                 };
             }
             provider.FindSpySatellitePatrolPoints(default, 0).ReturnsForAnyArgs(spySatellitePatrolPoints);
 
-			if (fighterSafeZone == null)
-			{
-				fighterSafeZone = new Rectangle(
-					minX: float.MinValue,
-					maxX: float.MaxValue,
-					minY: float.MinValue,
-					maxY: float.MaxValue);
-			}
+            if (fighterSafeZone == null)
+            {
+                fighterSafeZone = new Rectangle(
+                    minX: float.MinValue,
+                    maxX: float.MaxValue,
+                    minY: float.MinValue,
+                    maxY: float.MaxValue);
+            }
             if (missileFighterPatrolPoints == null)
-			{
-				missileFighterPatrolPoints = new List<Vector2>() 
-				{
-                    new Vector2(0, 0),  
-					new Vector2(3, 10)
-				};
-			}
-			provider.FindMissileFighterPatrolPoints(0).ReturnsForAnyArgs(missileFighterPatrolPoints);
+            {
+                missileFighterPatrolPoints = new List<Vector2>()
+                {
+                    new Vector2(0, 0),
+                    new Vector2(3, 10)
+                };
+            }
+            provider.FindMissileFighterPatrolPoints(0).ReturnsForAnyArgs(missileFighterPatrolPoints);
 
-			provider.FighterSafeZone.Returns(fighterSafeZone);
+            provider.FighterSafeZone.Returns(fighterSafeZone);
 
-			return provider;
-		}
+            return provider;
+        }
 
-		private ISlot CreateParentSlot()
-		{
-			ISlot parentSlot = Substitute.For<ISlot>();
+        private ISlot CreateParentSlot()
+        {
+            ISlot parentSlot = Substitute.For<ISlot>();
 
             ObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>();
-			parentSlot.BoostProviders.Returns(boostProviders);
+            parentSlot.BoostProviders.Returns(boostProviders);
 
-			ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
-			parentSlot.NeighbouringSlots.Returns(neighbouringSlots);
+            ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
+            parentSlot.NeighbouringSlots.Returns(neighbouringSlots);
 
-			return parentSlot;
-		}
+            return parentSlot;
+        }
 
         public IBarrelControllerArgs CreateBarrelControllerArgs(
             BarrelController barrel,
@@ -467,7 +467,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 new BarrelControllerArgs(
                     updater,
                     targetFilter ?? Substitute.For<ITargetFilter>(),
-                    targetPositionPredictor ?? new DummyTargetPositionpredictor(),
+                    targetPositionPredictor ?? new DummyTargetPositionPredictor(),
                     angleCalculator ?? new AngleCalculator(new AngleHelper()),
                     attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
@@ -495,7 +495,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()
         {
-			IAccuracyAdjusterFactory factory = Substitute.For<IAccuracyAdjusterFactory>();
+            IAccuracyAdjusterFactory factory = Substitute.For<IAccuracyAdjusterFactory>();
 
             IAccuracyAdjuster dummyAccuracyAdjuster = new DummyAccuracyAdjuster();
 
@@ -550,9 +550,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
             GlobalBoostProviders globalBoostProviders = new GlobalBoostProviders();
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
-            TurretStatsFactory turretStatsFactory 
+            TurretStatsFactory turretStatsFactory
                 = new TurretStatsFactory(
-                    new BoostFactory(), 
+                    new BoostFactory(),
                     globalBoostProviders);
             cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
 

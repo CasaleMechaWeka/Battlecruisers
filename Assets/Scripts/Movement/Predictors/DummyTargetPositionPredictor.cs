@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Movement.Predictors
 {
-    public class DummyTargetPositionpredictor : ITargetPositionPredictor
+    public class DummyTargetPositionPredictor : ITargetPositionPredictor
     {
         public Vector2 PredictTargetPosition(Vector2 sourcePosition, Vector2 targetPositionToAttack, ITarget target, float projectileVelocityInMPerS, float currentAngleInRadians)
         {

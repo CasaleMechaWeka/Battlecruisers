@@ -1,20 +1,20 @@
 ﻿namespace BattleCruisers.Movement.Predictors
 {
-    public interface ITargetPositionPredictorFactory
+	public interface ITargetPositionPredictorFactory
 	{
 		ITargetPositionPredictor CreateDummyPredictor();
-        ITargetPositionPredictor CreateLinearPredictor();
-        ITargetPositionPredictor CreateMortarPredictor();
+		ITargetPositionPredictor CreateLinearPredictor();
+		ITargetPositionPredictor CreateMortarPredictor();
 	}
 
 	public class TargetPositionPredictorFactory : ITargetPositionPredictorFactory
 	{
-        public ITargetPositionPredictor CreateDummyPredictor()
-        {
-            return new DummyTargetPositionpredictor();
-        }
+		public ITargetPositionPredictor CreateDummyPredictor()
+		{
+			return new DummyTargetPositionPredictor();
+		}
 
-        public ITargetPositionPredictor CreateLinearPredictor()
+		public ITargetPositionPredictor CreateLinearPredictor()
 		{
 			return new LinearTargetPositionPredictor();
 		}

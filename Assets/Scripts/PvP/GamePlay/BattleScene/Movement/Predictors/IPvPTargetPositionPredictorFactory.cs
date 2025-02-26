@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     {
         public ITargetPositionPredictor CreateDummyPredictor()
         {
-            return new PvPDummyTargetPositionpredictor();
+            return new DummyTargetPositionPredictor();
         }
 
         public ITargetPositionPredictor CreateLinearPredictor()
