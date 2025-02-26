@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public ITargetPositionPredictor CreateLinearPredictor()
         {
-            return new PvPLinearTargetPositionPredictor();
+            return new LinearTargetPositionPredictor();
         }
 
         public ITargetPositionPredictor CreateMortarPredictor()
