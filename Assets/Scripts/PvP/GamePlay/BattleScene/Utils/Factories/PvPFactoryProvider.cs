@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
@@ -76,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         // Not in constructor because of circular dependency
         public async Task Initialise( /* IPvPUIManager uiManager */)
         {
-            IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
+            IDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
             DroneMonitor = new PvPDroneMonitor(droneFactory);
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
             poolProviders = new PvPPoolProviders(this, droneFactory);

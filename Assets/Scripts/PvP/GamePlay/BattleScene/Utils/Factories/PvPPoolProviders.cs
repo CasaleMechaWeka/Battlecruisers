@@ -1,7 +1,7 @@
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPPoolProviders(
             IPvPFactoryProvider factoryProvider,
             // IPvPUIManager uiManager,
-            IPvPDroneFactory droneFactory)
+            IDroneFactory droneFactory)
         {
             PvPHelper.AssertIsNotNull(factoryProvider, droneFactory);
 
@@ -63,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPPoolProviders(
             IPvPFactoryProvider factoryProvider,
             IPvPUIManager uiManager,
-            IPvPDroneFactory droneFactory)
+            IDroneFactory droneFactory)
         {
             PvPHelper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
 

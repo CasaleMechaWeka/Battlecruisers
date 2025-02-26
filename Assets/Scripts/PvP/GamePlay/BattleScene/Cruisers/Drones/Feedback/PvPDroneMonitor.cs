@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// </summary>
     public class PvPDroneMonitor : IPvPDroneMonitor
     {
-        private readonly IPvPDroneFactory _droneFactory;
+        private readonly IDroneFactory _droneFactory;
 
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly ISettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
         public IBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
 
-        public PvPDroneMonitor(IPvPDroneFactory droneFactory)
+        public PvPDroneMonitor(IDroneFactory droneFactory)
         {
             Assert.IsNotNull(droneFactory);
 
@@ -47,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PlayerBCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
         }
 
-        private void _droneFactory_DroneCreated(object sender, PvPDroneCreatedEventArgs e)
+        private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)
         {
             e.Drone.Activated += Drone_Activated;
             e.Drone.Deactivated += Drone_Deactivated;
