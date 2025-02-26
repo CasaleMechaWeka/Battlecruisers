@@ -1,10 +1,11 @@
+using BattleCruisers.Projectiles.FlightPoints;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints
 {
-    public class PvPNukeFlightPointsProvider : IPvPFlightPointsProvider
+    public class PvPNukeFlightPointsProvider : IFlightPointsProvider
     {
         private const float NUKE_MIN_HORIZONTAL_DISTANCE_IN_M = 50;
         private const float NUKE_MIN_CRUISNG_ALTITUDE_IN_M = 25;

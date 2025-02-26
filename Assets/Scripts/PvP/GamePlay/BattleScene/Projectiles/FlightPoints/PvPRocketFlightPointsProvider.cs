@@ -1,10 +1,11 @@
+using BattleCruisers.Projectiles.FlightPoints;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints
 {
-    public class PvPRocketFlightPointsProvider : IPvPFlightPointsProvider
+    public class PvPRocketFlightPointsProvider : IFlightPointsProvider
     {
         private const float ROCKET_CRUISING_POINTS_OFFSET_PROPORTION = 0.25f; //ascend point at 25% of distance to target; descend point at 75%
         private const float ROCKET_MIN_HORIZONTAL_DISTANCE_IN_M = 10;

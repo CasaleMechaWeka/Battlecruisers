@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             IVelocityProvider maxVelocityProvider,
             ITargetProvider targetProvider,
             float cruisingAltitudeInM,
-            IPvPFlightPointsProvider flightPointsProvider)
+            IFlightPointsProvider flightPointsProvider)
             : base(rigidBody, maxVelocityProvider, targetProvider)
         {
             Assert.IsTrue(cruisingAltitudeInM > rigidBody.position.y);

@@ -4,7 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using Unity.Netcode;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         ITargetProvider
     {
         private INukeStats _nukeStats;
-        private IPvPFlightPointsProvider _flightPointsProvider;
+        private IFlightPointsProvider _flightPointsProvider;
 
         public ITarget Target { get; private set; }
 
