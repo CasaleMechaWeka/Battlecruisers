@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
     /// c) The unit chooser changes the chosen unit (eg, because the number of drones has changed)
     ///     AND the factory is not building a unit
     /// </summary>
-    public class PvPFactoryManager : IPvPFactoryManager
+    public class PvPFactoryManager : IManagedDisposable
     {
         private readonly HashSet<IPvPFactory> _factories;
         private readonly UnitCategory _factoryUnitCategory;

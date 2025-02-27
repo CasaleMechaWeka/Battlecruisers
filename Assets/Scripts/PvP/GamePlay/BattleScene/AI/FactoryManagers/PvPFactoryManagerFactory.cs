@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
+using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
@@ -8,14 +8,15 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Buildables;
-using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Utils;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
-    public class PvPFactoryManagerFactory : IPvPFactoryManagerFactory
+    public class PvPFactoryManagerFactory : IManagedDisposableFactory
     {
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPPrefabFactory _prefabFactory;
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public IPvPFactoryManager CreateNavalFactoryManager(PvPCruiser aiCruiser)
+        public IManagedDisposable CreateNavalFactoryManager(PvPCruiser aiCruiser)
         {
             IList<PvPUnitKey> availableShipKeys = aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.GetUnlockedUnits_LeftPlayer(UnitCategory.Naval) : _battleSceneGodTunnel.GetUnlockedUnits_RightPlayer(UnitCategory.Naval);
             IList<IPvPBuildableWrapper<IPvPUnit>> availableShips =
@@ -49,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             return new PvPFactoryManager(UnitCategory.Naval, aiCruiser, unitChooser);
         }
 
-        public IPvPFactoryManager CreateAirfactoryManager(PvPCruiser aiCruiser)
+        public IManagedDisposable CreateAirfactoryManager(PvPCruiser aiCruiser)
         {
             Assert.IsTrue(aiCruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(DEFAULT_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(DEFAULT_PLANE_KEY), "Default plane should always be available.");
             IPvPBuildableWrapper<IPvPUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);

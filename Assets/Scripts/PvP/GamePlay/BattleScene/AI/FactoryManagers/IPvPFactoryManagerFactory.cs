@@ -1,10 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
-    public interface IPvPFactoryManagerFactory
+    public interface IManagedDisposableFactory
     {
-        IPvPFactoryManager CreateNavalFactoryManager(PvPCruiser aiCruiser);
-        IPvPFactoryManager CreateAirfactoryManager(PvPCruiser aiCruiser);
+        IManagedDisposable CreateNavalFactoryManager(PvPCruiser aiCruiser);
+        IManagedDisposable CreateAirfactoryManager(PvPCruiser aiCruiser);
     }
 }
