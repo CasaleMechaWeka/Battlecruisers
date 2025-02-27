@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Slots.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Utils;
@@ -9,9 +10,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly PvPSlot _parentSlot;
         private readonly IPvPBoostStateFinder _boostStateFinder;
-        private readonly IPvPBoostFeedback _boostFeedback;
+        private readonly IBoostFeedback _boostFeedback;
 
-        public PvPSlotBoostFeedbackMonitor(PvPSlot parentSlot, IPvPBoostStateFinder boostStateFinder, IPvPBoostFeedback boostFeedback, bool isHost)
+        public PvPSlotBoostFeedbackMonitor(PvPSlot parentSlot, IPvPBoostStateFinder boostStateFinder, IBoostFeedback boostFeedback, bool isHost)
         {
             Helper.AssertIsNotNull(parentSlot, boostStateFinder, boostFeedback);
 
