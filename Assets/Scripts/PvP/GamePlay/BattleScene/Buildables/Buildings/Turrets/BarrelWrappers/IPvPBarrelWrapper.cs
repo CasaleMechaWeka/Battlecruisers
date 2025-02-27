@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
@@ -28,13 +28,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
-            IPvPAnimation barrelFiringAnimation = null);
+            IAnimation barrelFiringAnimation = null);
 
         void Initialise(
             IPvPBuildable parent,
             IPvPFactoryProvider factoryProvider,
             ISoundKey firingSound = null,
-            IPvPAnimation barrelFiringAnimation = null);
+            IAnimation barrelFiringAnimation = null);
 
         void ApplyVariantStats(IPvPBuilding building);
         void ApplyVariantStats(IPvPUnit unit);

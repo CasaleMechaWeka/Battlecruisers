@@ -1,3 +1,4 @@
+using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public abstract class PvPTurretController : PvPBuilding
     {
-        private IPvPAnimation _barrelAnimation;
+        private IAnimation _barrelAnimation;
         protected IPvPBarrelWrapper _barrelWrapper;
 
         // By default have null (no) sound
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelWrapper.StaticInitialise();
             AddDamageStats(_barrelWrapper.DamageCapability);
 
-            IPvPAnimationInitialiser barrelAnimationInitialiser = GetComponent<IPvPAnimationInitialiser>();
+            IAnimationInitialiser barrelAnimationInitialiser = GetComponent<IAnimationInitialiser>();
             Assert.IsNotNull(barrelAnimationInitialiser);
             _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
         }
@@ -54,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnBuildableCompleted_PvPClient()
         {
             base.OnBuildableCompleted_PvPClient();
-           
+
             _barrelWrapper
             .Initialise(
                 this,

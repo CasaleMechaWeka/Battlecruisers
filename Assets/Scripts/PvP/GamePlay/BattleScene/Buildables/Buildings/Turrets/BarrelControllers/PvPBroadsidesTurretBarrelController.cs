@@ -1,3 +1,4 @@
+using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Utils.Threading;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public class PvPBroadsidesTurretBarrelController : PvPShellTurretBarrelController
     {
-        private IPvPAnimation _barrelAnimation;
+        private IAnimation _barrelAnimation;
 
         public float delayInS;
 
@@ -22,12 +23,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsTrue(delayInS >= 0);
 
-            IPvPAnimationInitialiser barrelAnimationInitialiser = GetComponent<IPvPAnimationInitialiser>();
+            IAnimationInitialiser barrelAnimationInitialiser = GetComponent<IAnimationInitialiser>();
             Assert.IsNotNull(barrelAnimationInitialiser);
             _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
         }
 
-        protected override IPvPAnimation GetBarrelFiringAnimation(IPvPBarrelControllerArgs args)
+        protected override IAnimation GetBarrelFiringAnimation(IPvPBarrelControllerArgs args)
         {
             return _barrelAnimation;
         }

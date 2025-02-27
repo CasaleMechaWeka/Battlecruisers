@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
         public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
         public ISoundKey SpawnerSoundKey { get; }
-        public IPvPAnimation BarrelFiringAnimation { get; }
+        public IAnimation BarrelFiringAnimation { get; }
         public IPvPCruiser EnemyCruiser { get; }
 
         // should be called by server
@@ -56,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IPvPCruiser enemyCruiser,
             ISoundKey firingSound = null,
-            IPvPAnimation barrelFiringAnimation = null)
+            IAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(
                 updater,
@@ -101,7 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPFactoryProvider factoryProvider,
             ITarget parent,
             ISoundKey firingSound = null,
-            IPvPAnimation barrelFiringAnimation = null)
+            IAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent);
             Parent = parent;

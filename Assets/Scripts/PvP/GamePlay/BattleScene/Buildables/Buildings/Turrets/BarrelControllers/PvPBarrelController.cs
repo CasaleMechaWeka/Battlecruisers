@@ -2,11 +2,11 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelFiringHelper _firingHelper;
         private IUpdater _updater;
         protected IPvPParticleSystemGroup _muzzleFlash;
-        protected IPvPAnimation _barrelAnimation;
+        protected IAnimation _barrelAnimation;
         private ITarget _parent;
         protected ITargetFilter _targetFilter;
         protected IFireIntervalManager _fireIntervalManager;
@@ -200,7 +200,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _muzzleFlash);
         }
 
-        protected virtual IPvPAnimation GetBarrelFiringAnimation(IPvPBarrelControllerArgs args)
+        protected virtual IAnimation GetBarrelFiringAnimation(IPvPBarrelControllerArgs args)
         {
             return args.BarrelFiringAnimation;
         }

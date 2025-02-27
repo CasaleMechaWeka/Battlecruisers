@@ -7,6 +7,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
@@ -137,7 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
-            IPvPAnimation barrelFiringAnimation = null)
+            IAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
 
@@ -189,7 +190,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBuildable parent,
             IPvPFactoryProvider factoryProvider,
             ISoundKey firingSound = null,
-            IPvPAnimation barrelFiringAnimation = null)
+            IAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent, factoryProvider);
 
@@ -220,7 +221,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ISoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
-            IPvPAnimation barrelFiringAnimation)
+            IAnimation barrelFiringAnimation)
         {
             IUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);
 
@@ -249,7 +250,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IBarrelController barrel,
             IPvPBuildable parent,
             ISoundKey firingSound,
-            IPvPAnimation barrelFiringAnimation)
+            IAnimation barrelFiringAnimation)
         {
             return new PvPBarrelControllerArgs(
                 _factoryProvider,
@@ -327,9 +328,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return updaterProvider.BarrelControllerUpdater;
         }
 
-        private IPvPAnimation GetBarrelAnimation()
+        private IAnimation GetBarrelAnimation()
         {
-            IPvPAnimationInitialiser animationInitialiser = GetComponent<IPvPAnimationInitialiser>();
+            IAnimationInitialiser animationInitialiser = GetComponent<IAnimationInitialiser>();
             return animationInitialiser?.CreateAnimation();
         }
 

@@ -1,9 +1,10 @@
+using BattleCruisers.Effects;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.BarrelRecoil
 {
-    public class PvPBarrelAnimation : IPvPAnimation
+    public class PvPBarrelAnimation : IAnimation
     {
         private readonly Animator _animator;
 
