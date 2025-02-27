@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IPvPCruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly IPvPCruiserUnitMonitor _enemyUnitMonitor;
         private readonly IList<IPvPStealthGenerator> _friendlyIStealthGenerators;
-        private readonly IList<IPvPSpySatelliteLauncher> _enemySpySatellites;
+        private readonly IList<IPvPBuilding> _enemySpySatellites;
         private readonly IList<IPvPSpyPlaneController> _enemySpyPlanes;
 
         public PvPFogOfWarManager(
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _enemyUnitMonitor.UnitCompleted += _enemyUnitMonitor_UnitCompleted;
 
             _friendlyIStealthGenerators = new List<IPvPStealthGenerator>();
-            _enemySpySatellites = new List<IPvPSpySatelliteLauncher>();
+            _enemySpySatellites = new List<IPvPBuilding>();
             _enemySpyPlanes = new List<IPvPSpyPlaneController>();
         }
 

@@ -16,7 +16,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical
 {
-    public class PvPSpySatelliteLauncherController : PvPSatelliteLauncherController, IPvPSpySatelliteLauncher
+    public class PvPSpySatelliteLauncherController : PvPSatelliteLauncherController, IPvPBuilding
     {
         protected override Vector3 SpawnPositionAdjustment => new Vector3(0, 0.17f, 0);
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.SpySatellite;
