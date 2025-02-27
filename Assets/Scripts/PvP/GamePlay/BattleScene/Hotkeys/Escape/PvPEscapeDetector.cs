@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Escape
 {
-    public class PvPEscapeDetector : IPvPEscapeDetector
+    public class PvPEscapeDetector : IEscapeDetector
     {
         private readonly IPvPInput _input;
         private readonly IUpdater _updater;

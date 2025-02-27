@@ -1,4 +1,4 @@
-// using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.HelpLabels;
+using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -7,10 +7,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 {
     public class PvPEscapeHandler
     {
-        private readonly IPvPEscapeDetector _escapeDetector;
+        private readonly IEscapeDetector _escapeDetector;
         private readonly IPvPMainMenuManager _mainMenuManager;
 
-        public PvPEscapeHandler(IPvPEscapeDetector escapeDetector, IPvPMainMenuManager mainMenuManager)
+        public PvPEscapeHandler(IEscapeDetector escapeDetector, IPvPMainMenuManager mainMenuManager)
         {
             PvPHelper.AssertIsNotNull(escapeDetector, mainMenuManager);
 
