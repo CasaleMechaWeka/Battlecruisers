@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     {
         private readonly IPrioritisedTask _baseTask;
         private readonly IDeferrer _deferrer;
-        private readonly IPvPDelayProvider _delayProvider;
+        private readonly IDelayProvider _delayProvider;
 
         public TaskPriority Priority => _baseTask.Priority;
 
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             remove { _baseTask.Completed -= value; }
         }
 
-        public PvPDeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer, IPvPDelayProvider delayProvider)
+        public PvPDeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer, IDelayProvider delayProvider)
         {
             PvPHelper.AssertIsNotNull(baseTask, deferrer, delayProvider);
 
