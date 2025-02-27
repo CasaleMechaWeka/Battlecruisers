@@ -1,5 +1,9 @@
 using BattleCruisers.AI;
 using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.AI.Tasks;
+using BattleCruisers.AI.TaskProducers.SlotNumber;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers;
@@ -8,15 +12,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskPro
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Data;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
-using BattleCruisers.AI.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
         private readonly IDeferrer _deferrer;
-        private readonly IPvPSlotNumCalculatorFactory _slotNumCalculatorFactory;
+        private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
         private readonly IManagedDisposableFactory _factoryManagerFactory;
         private readonly IPvPBuildOrderFactory _buildOrderFactory;

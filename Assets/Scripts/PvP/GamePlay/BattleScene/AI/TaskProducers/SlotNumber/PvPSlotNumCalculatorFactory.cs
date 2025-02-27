@@ -2,7 +2,7 @@ using BattleCruisers.AI.TaskProducers.SlotNumber;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber
 {
-    public class PvPSlotNumCalculatorFactory : IPvPSlotNumCalculatorFactory
+    public class PvPSlotNumCalculatorFactory : ISlotNumCalculatorFactory
     {
         public ISlotNumCalculator CreateAntiAirSlotNumCalculator(int maxNumOfSlots)
         {

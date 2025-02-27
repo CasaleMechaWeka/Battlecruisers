@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         private readonly IPvPCruiserController _aiCruiser;
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly ITaskFactory _taskFactory;
-        private readonly IPvPSlotNumCalculatorFactory _slotNumCalculatorFactory;
+        private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IStaticData _staticData;
         private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
 
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             IPvPCruiserController aiCruiser,
             IPvPPrefabFactory prefabFactory,
             ITaskFactory taskFactory,
-            IPvPSlotNumCalculatorFactory slotNumCalculatorFactory,
+            ISlotNumCalculatorFactory slotNumCalculatorFactory,
             IStaticData staticData,
             IPvPThreatMonitorFactory threatMonitorFactory)
         {
