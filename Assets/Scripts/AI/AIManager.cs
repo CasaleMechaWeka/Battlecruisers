@@ -23,7 +23,7 @@ namespace BattleCruisers.AI
         private readonly IDeferrer _deferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
-        private readonly IManagedDisposableFactory _factoryManagerFactory;
+        private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 

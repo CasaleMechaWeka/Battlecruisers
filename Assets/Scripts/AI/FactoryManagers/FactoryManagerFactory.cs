@@ -13,7 +13,7 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public class FactoryManagerFactory : IManagedDisposableFactory
+    public class FactoryManagerFactory : IFactoryManagerFactory
     {
         private readonly IGameModel _gameModel;
         private readonly IPrefabFactory _prefabFactory;

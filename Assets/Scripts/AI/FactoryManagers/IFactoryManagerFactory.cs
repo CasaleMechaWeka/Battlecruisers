@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public interface IManagedDisposableFactory
+    public interface IFactoryManagerFactory
     {
         IManagedDisposable CreateNavalFactoryManager(ICruiserController aiCruiser);
         IManagedDisposable CreateAirfactoryManager(ICruiserController aiCruiser);
