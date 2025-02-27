@@ -1,7 +1,6 @@
 using BattleCruisers.AI.Drones;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones
@@ -9,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
     public class PvPDroneConsumerFocusHelper : IDroneConsumerFocusHelper
     {
         private readonly IDroneManager _droneManager;
-        private readonly IPvPFactoryAnalyzer _factoryAnalyzer;
+        private readonly IFactoryAnalyzer _factoryAnalyzer;
         private readonly IPvPBuildingProvider _affordableInProgressNonFocusedBuildingProvider;
 
-        public PvPDroneConsumerFocusHelper(IDroneManager droneManager, IPvPFactoryAnalyzer factoryAnalyzer, IPvPBuildingProvider affordableInProgressNonFocusedBuildingProvider)
+        public PvPDroneConsumerFocusHelper(IDroneManager droneManager, IFactoryAnalyzer factoryAnalyzer, IPvPBuildingProvider affordableInProgressNonFocusedBuildingProvider)
         {
             PvPHelper.AssertIsNotNull(droneManager, factoryAnalyzer, affordableInProgressNonFocusedBuildingProvider);
 

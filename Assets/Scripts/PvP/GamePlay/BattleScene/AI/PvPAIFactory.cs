@@ -101,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 
         private PvPDroneConsumerFocusManager CreateDroneFocusManager(IPvPCruiserController aiCruiser)
         {
-            IPvPFactoryAnalyzer factoryAnalyzer
+            IFactoryAnalyzer factoryAnalyzer
                 = new PvPFactoryAnalyzer(
                     new PvPFactoriesMonitor(aiCruiser.BuildingMonitor, _factoryMonitorFactory),
                     new PvPFactoryWastingDronesFilter());
