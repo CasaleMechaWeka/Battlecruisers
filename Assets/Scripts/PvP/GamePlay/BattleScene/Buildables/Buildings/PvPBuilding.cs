@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public AudioClip placementSound;
 
         [Header("Slots")]
-        public PvPBuildingFunction function;
+        public BuildingFunction function;
         public bool preferCruiserFront;
         public PvPSlotType slotType;
 

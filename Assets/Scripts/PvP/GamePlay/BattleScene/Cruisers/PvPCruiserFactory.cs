@@ -1,5 +1,8 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Fog;
+using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
@@ -7,7 +10,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.D
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
-using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
@@ -16,11 +18,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using System.Threading.Tasks;
-using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers.Fog;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IPvPFactoryProvider _factoryProvider;
         private readonly IPvPBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
-        private readonly IPvPSlotFilter _highlightableSlotFilter;
+        private readonly IFilter<IPvPSlot> _highlightableSlotFilter;
         private readonly IPvPUIManager _uiManager;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
@@ -161,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Faction faction,
             Direction facingDirection,
             PvPFogStrength fogStrength,
-            IPvPSlotFilter highlightableFilter,
+            IFilter<IPvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,

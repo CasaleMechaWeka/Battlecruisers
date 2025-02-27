@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPSlotHighlighter : IPvPSlotHighlighter
     {
         private readonly IPvPSlotAccessor _slotAccessor;
-        private readonly IPvPSlotFilter _highlightableFilter;
+        private readonly IFilter<IPvPSlot> _highlightableFilter;
         private IPvPSlotSpecification _highlightedSlotSpec;
         public bool isHighlighting = false;
         private IPvPSlot _highlightedSlot;
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPSlotHighlighter(
             IPvPSlotAccessor slotAccessor,
-            IPvPSlotFilter highlightableFilter,
+            IFilter<IPvPSlot> highlightableFilter,
             IPvPCruiserBuildingMonitor parentCruiserBuildingMonitor)
         {
             Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiserBuildingMonitor);

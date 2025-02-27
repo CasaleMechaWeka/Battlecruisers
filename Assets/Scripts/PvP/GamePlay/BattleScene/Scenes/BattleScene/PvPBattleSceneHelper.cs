@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public virtual IPrefabKey AIBotCruiser => new PvPHullKey(PvPHullNames[UnityEngine.Random.Range(0, PvPHullNames.Length)]);
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public abstract IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
-        public abstract IPvPSlotFilter CreateHighlightableSlotFilter();
+        public abstract IFilter<IPvPSlot> CreateHighlightableSlotFilter();
         public abstract IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         public abstract IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();
         public abstract IPvPUIManager CreateUIManager();

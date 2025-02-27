@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
@@ -6,12 +6,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPSlotSpecification : IPvPSlotSpecification
     {
         public PvPSlotType SlotType { get; }
-        public PvPBuildingFunction BuildingFunction { get; }
+        public BuildingFunction BuildingFunction { get; }
         public bool PreferFromFront { get; }
 
         public PvPSlotSpecification(
             PvPSlotType slotType,
-            PvPBuildingFunction buildingFunction = PvPBuildingFunction.Generic,
+            BuildingFunction buildingFunction = BuildingFunction.Generic,
             bool preferCruiserFront = true)
         {
             SlotType = slotType;

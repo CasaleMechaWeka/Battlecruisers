@@ -75,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             _uiManager.Initialise(args);
         }
 
-        public override IPvPSlotFilter CreateHighlightableSlotFilter()
+        public override IFilter<IPvPSlot> CreateHighlightableSlotFilter()
         {
             return new PvPFreeSlotFilter();
         }

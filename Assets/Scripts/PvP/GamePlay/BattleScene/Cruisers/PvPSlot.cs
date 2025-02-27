@@ -19,6 +19,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Properties;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -38,8 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPSlotType type;
         public PvPSlotType Type => type;
 
-        public PvPBuildingFunction buildingFunctionAffinity;
-        public PvPBuildingFunction BuildingFunctionAffinity => buildingFunctionAffinity;
+        public BuildingFunction buildingFunctionAffinity;
+        public BuildingFunction BuildingFunctionAffinity => buildingFunctionAffinity;
 
         public Direction direction;
         public Direction Direction => direction;

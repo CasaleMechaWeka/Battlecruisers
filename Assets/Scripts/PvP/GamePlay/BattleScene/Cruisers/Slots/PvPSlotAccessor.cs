@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(slotSpecification);
             Assert.IsTrue(_slots.ContainsKey(slotSpecification.SlotType));
 
-            if (slotSpecification.BuildingFunction == PvPBuildingFunction.AntiShip
+            if (slotSpecification.BuildingFunction == BuildingFunction.AntiShip
                 && slotSpecification.SlotType == PvPSlotType.Deck)
             {
                 return _antiShipSlots;
@@ -69,11 +70,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 _slots[slotSpecification.SlotType].Last(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
         }
 
-        private bool FreeSlotFilter(IPvPSlot slot, PvPBuildingFunction desiredBuildingFunction)
+        private bool FreeSlotFilter(IPvPSlot slot, BuildingFunction desiredBuildingFunction)
         {
             return
                 slot.IsFree
-                && (desiredBuildingFunction == PvPBuildingFunction.Generic
+                && (desiredBuildingFunction == BuildingFunction.Generic
                     || slot.BuildingFunctionAffinity == desiredBuildingFunction);
         }
 

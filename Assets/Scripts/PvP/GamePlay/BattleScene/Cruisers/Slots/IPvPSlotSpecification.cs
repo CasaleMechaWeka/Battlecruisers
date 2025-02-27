@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
     public interface IPvPSlotSpecification
     {
-        PvPBuildingFunction BuildingFunction { get; }
+        BuildingFunction BuildingFunction { get; }
         bool PreferFromFront { get; }
         PvPSlotType SlotType { get; }
     }

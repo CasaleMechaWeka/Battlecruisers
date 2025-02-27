@@ -11,13 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     // to the integer values.  So now, if I decide to modify the enum
     // I don't need to adjust every single prefab that uses this enum.  
     // Thanks Manya!
-    public enum PvPBuildingFunction
-    {
-        Generic = 0,
-        AntiAir = 1,
-        AntiShip = 2,
-        Shield = 3
-    }
 
     public interface IPvPBuilding : IPvPBuildable, IPoolable<PvPBuildingActivationArgs>
     {

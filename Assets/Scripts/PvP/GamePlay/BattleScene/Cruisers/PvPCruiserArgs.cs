@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IRepairManager RepairManager { get; }
         public PvPFogStrength FogStrength { get; }
         public IPvPCruiserHelper Helper { get; }
-        public IPvPSlotFilter HighlightableFilter { get; }
+        public IFilter<IPvPSlot> HighlightableFilter { get; }
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; }
         public IPvPDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
         public IPvPDoubleClickHandler<IPvPCruiser> CruiserDoubleClickHandler { get; }
@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IRepairManager repairManager,
             PvPFogStrength fogStrength,
             IPvPCruiserHelper helper,
-            IPvPSlotFilter highlightableFilter,
+            IFilter<IPvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
@@ -109,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IRepairManager repairManager,
             PvPFogStrength fogStrength,
             IPvPCruiserHelper helper,
-            IPvPSlotFilter highlightableFilter,
+            IFilter<IPvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,

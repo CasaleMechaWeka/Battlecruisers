@@ -1,8 +1,9 @@
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPFreeSlotFilter : IPvPSlotFilter
+    public class PvPFreeSlotFilter : IFilter<IPvPSlot>
     {
         public bool IsMatch(IPvPSlot slot)
         {

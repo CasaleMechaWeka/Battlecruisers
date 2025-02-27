@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// buildings that is the cruiser front.  For shields that is spread accross
         /// the cruiser.
         /// </summary>
-        PvPBuildingFunction BuildingFunctionAffinity { get; }
+        BuildingFunction BuildingFunctionAffinity { get; }
         Direction Direction { get; }
         IBroadcastingProperty<IPvPBuilding> Building { get; }
         ObservableCollection<IBoostProvider> BoostProviders { get; }
