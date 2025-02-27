@@ -32,11 +32,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 
         public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
         {
-            IPvPTask constructBuildingTask = new PvPConstructBuildingTask(buildingKey, _prefabFactory, _cruiser);
+            ITask constructBuildingTask = new PvPConstructBuildingTask(buildingKey, _prefabFactory, _cruiser);
             return CreatePrioritisedTask(constructBuildingTask, priority);
         }
 
-        private IPrioritisedTask CreatePrioritisedTask(IPvPTask task, TaskPriority priority)
+        private IPrioritisedTask CreatePrioritisedTask(ITask task, TaskPriority priority)
         {
             IPrioritisedTask prioritisedTask = new PvPPrioritisedTask(priority, task);
             return new PvPDeferredPrioritisedTask(prioritisedTask, _deferrer, delayProvider);

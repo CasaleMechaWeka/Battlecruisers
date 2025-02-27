@@ -18,14 +18,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     /// </summary>
     public class PvPPrioritisedTask : IPrioritisedTask, ICompletedEventEmitter
     {
-        private readonly IPvPTask _task;
+        private readonly ITask _task;
         private IState _currentState;
 
         public TaskPriority Priority { get; }
 
         public event EventHandler<EventArgs> Completed;
 
-        public PvPPrioritisedTask(TaskPriority priority, IPvPTask task)
+        public PvPPrioritisedTask(TaskPriority priority, ITask task)
         {
             Priority = priority;
             _task = task;

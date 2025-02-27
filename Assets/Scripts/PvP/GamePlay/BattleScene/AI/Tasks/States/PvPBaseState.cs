@@ -5,10 +5,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 {
     public abstract class PvPBaseState : IState
     {
-        protected readonly IPvPTask _task;
+        protected readonly ITask _task;
         protected readonly ICompletedEventEmitter _eventEmitter;
 
-        public PvPBaseState(IPvPTask task, ICompletedEventEmitter eventEmitter)
+        public PvPBaseState(ITask task, ICompletedEventEmitter eventEmitter)
         {
             _task = task;
             _eventEmitter = eventEmitter;

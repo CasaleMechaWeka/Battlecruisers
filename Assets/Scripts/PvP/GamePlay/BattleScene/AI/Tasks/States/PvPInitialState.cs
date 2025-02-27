@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 {
     public class PvPInitialState : PvPBaseState
     {
-        public PvPInitialState(IPvPTask task, ICompletedEventEmitter eventEmitter)
+        public PvPInitialState(ITask task, ICompletedEventEmitter eventEmitter)
             : base(task, eventEmitter)
         {
         }

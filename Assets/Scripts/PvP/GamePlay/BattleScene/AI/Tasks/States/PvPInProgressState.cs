@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             }
         }
 
-        public PvPInProgressState(IPvPTask task, ICompletedEventEmitter eventEmitter)
+        public PvPInProgressState(ITask task, ICompletedEventEmitter eventEmitter)
             : base(task, eventEmitter)
         {
         }

@@ -1,3 +1,4 @@
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
@@ -11,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks
 {
-    public class PvPConstructBuildingTask : IPvPTask
+    public class PvPConstructBuildingTask : ITask
     {
         private readonly IPrefabKey _buildingToConstruct;
         private readonly IPvPPrefabFactory _prefabFactory;
