@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         private readonly ITaskFactory _taskFactory;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IStaticData _staticData;
-        private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
+        private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         // For spy satellite launcher and shields.  All cruisers have at least 6
         // deck slots:
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             ITaskFactory taskFactory,
             ISlotNumCalculatorFactory slotNumCalculatorFactory,
             IStaticData staticData,
-            IPvPThreatMonitorFactory threatMonitorFactory)
+            IThreatMonitorFactory threatMonitorFactory)
         {
             PvPHelper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData, threatMonitorFactory);
 

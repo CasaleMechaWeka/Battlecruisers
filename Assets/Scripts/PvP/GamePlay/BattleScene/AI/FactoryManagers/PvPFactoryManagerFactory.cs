@@ -1,7 +1,6 @@
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
@@ -20,13 +19,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
     {
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPPrefabFactory _prefabFactory;
-        private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
+        private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         private readonly static PvPUnitKey DEFAULT_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPBomber;
         private readonly static PvPUnitKey LATEGAME_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPSteamCopter;
         private readonly static PvPUnitKey ANTI_AIR_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPFighter;
         private readonly static PvPUnitKey ANTI_NAVAL_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPGunship;
-        public PvPFactoryManagerFactory(PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPPrefabFactory prefabFactory, IPvPThreatMonitorFactory threatMonitorFactory)
+        public PvPFactoryManagerFactory(PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
         {
             PvPHelper.AssertIsNotNull(battleSceneGodTunnel, prefabFactory, threatMonitorFactory);
 

@@ -9,7 +9,7 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors
 {
-    public class PvPThreatMonitorFactory : IPvPThreatMonitorFactory
+    public class PvPThreatMonitorFactory : IThreatMonitorFactory
     {
         private readonly PvPCruiser _playerCruiser;
         private readonly ITime _time;

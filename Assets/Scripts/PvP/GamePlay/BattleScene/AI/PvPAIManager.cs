@@ -18,6 +18,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         private readonly IDataProvider _dataProvider;
         private readonly IDeferrer _deferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
-        private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
+        private readonly IThreatMonitorFactory _threatMonitorFactory;
         private readonly IManagedDisposableFactory _factoryManagerFactory;
         private readonly IPvPBuildOrderFactory _buildOrderFactory;
         private readonly IPvPFactoryMonitorFactory _factoryMonitorFactory;
