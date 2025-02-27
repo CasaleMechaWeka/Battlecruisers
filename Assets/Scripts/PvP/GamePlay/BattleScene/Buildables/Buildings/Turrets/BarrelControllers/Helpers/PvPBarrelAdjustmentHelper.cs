@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
-    public class PvPBarrelAdjustmentHelper : IPvPBarrelAdjustmentHelper
+    public class PvPBarrelAdjustmentHelper : IBarrelAdjustmentHelper
     {
         private readonly IBarrelController _barrelController;
         private readonly ITargetPositionPredictor _targetPositionPredictor;
