@@ -21,7 +21,7 @@ namespace BattleCruisers.Cruisers.Fog
         private readonly ICruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly ICruiserUnitMonitor _enemyUnitMonitor;
         private readonly IList<IStealthGenerator> _friendlyIStealthGenerators;
-        private readonly IList<ISpySatelliteLauncher> _enemySpySatellites;
+        private readonly IList<IBuilding> _enemySpySatellites;
         private readonly IList<ISpyPlaneController> _enemySpyPlanes;
 
         public FogOfWarManager(
@@ -44,7 +44,7 @@ namespace BattleCruisers.Cruisers.Fog
             _enemyUnitMonitor.UnitCompleted += _enemyUnitMonitor_UnitCompleted;
 
             _friendlyIStealthGenerators = new List<IStealthGenerator>();
-            _enemySpySatellites = new List<ISpySatelliteLauncher>();
+            _enemySpySatellites = new List<IBuilding>();
             _enemySpyPlanes = new List<ISpyPlaneController>();
         }
 

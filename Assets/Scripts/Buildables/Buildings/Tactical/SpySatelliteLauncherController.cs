@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-    public class SpySatelliteLauncherController : SatelliteLauncherController, ISpySatelliteLauncher
+    public class SpySatelliteLauncherController : SatelliteLauncherController, IBuilding
     {
         protected override Vector3 SpawnPositionAdjustment => new Vector3(0, 0.17f, 0);
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.SpySatellite;

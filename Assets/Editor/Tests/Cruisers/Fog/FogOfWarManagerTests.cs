@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
         private IFogVisibilityDecider _visibilityDecider;
         private ICruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private ICruiserUnitMonitor _enemyUnitMonitor;
-        private ISpySatelliteLauncher _satelliteLauncher;
+        private IBuilding _satelliteLauncher;
         private IStealthGenerator _stealthGenerator;
         private IBuilding _randomBuilding;
 
@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
             _friendlyBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
             _enemyBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
             _enemyUnitMonitor = Substitute.For<ICruiserUnitMonitor>();
-            _satelliteLauncher = Substitute.For<ISpySatelliteLauncher>();
+            _satelliteLauncher = Substitute.For<IBuilding>();
             _stealthGenerator = Substitute.For<IStealthGenerator>();
             _randomBuilding = Substitute.For<IBuilding>();
 
