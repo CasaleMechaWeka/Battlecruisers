@@ -1,11 +1,10 @@
-
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Projectiles.Spawners.Beams.Laser;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
-    public class PvPLaserSoundPlayer : ILaserSoundPlayer
+    public class PvPLaserSoundPlayer : IManagedDisposable
     {
         private readonly IPvPLaserRenderer _laserRenderer;
         private readonly IAudioSource _audioSource;

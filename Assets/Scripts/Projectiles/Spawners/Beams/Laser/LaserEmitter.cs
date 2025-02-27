@@ -16,7 +16,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
     public class LaserEmitter : BeamEmitter, ILaserEmitter
     {
         private ILaserRenderer _laserRenderer;
-        private ILaserSoundPlayer _laserSoundPlayer;
+        private IManagedDisposable _laserSoundPlayer;
         private float _damagePerS;
         private LaserImpact _laserImpact;
         private IParticleSystemGroup _laserMuzzleEffect;

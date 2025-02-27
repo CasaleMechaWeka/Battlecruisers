@@ -4,7 +4,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 {
-    public class LaserSoundPlayer : ILaserSoundPlayer
+    public class LaserSoundPlayer : IManagedDisposable
     {
         private readonly ILaserRenderer _laserRenderer;
         private readonly IAudioSource _audioSource;

@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public class PvPLaserEmitter : PvPBeamEmitter, ILaserEmitter
     {
         private IPvPLaserRenderer _laserRenderer;
-        private ILaserSoundPlayer _laserSoundPlayer;
+        private IManagedDisposable _laserSoundPlayer;
         private float _damagePerS;
         private PvPLaserImpact _laserImpact;
         private IPvPParticleSystemGroup _laserMuzzleEffect;
