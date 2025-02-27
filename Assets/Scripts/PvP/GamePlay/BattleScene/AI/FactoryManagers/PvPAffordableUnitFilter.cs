@@ -1,6 +1,8 @@
+using BattleCruisers.AI.FactoryManagers;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
-    public class PvPAffordableUnitFilter : IPvPUnitFilter
+    public class PvPAffordableUnitFilter : IUnitFilter
     {
         public bool IsBuildableAcceptable(int buildableDroneNum, int droneManagerDroneNum)
         {

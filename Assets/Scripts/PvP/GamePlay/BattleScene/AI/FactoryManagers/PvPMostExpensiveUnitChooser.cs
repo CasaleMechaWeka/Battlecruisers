@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine.Assertions;
 
@@ -18,9 +18,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
     {
         private readonly IList<IPvPBuildableWrapper<IPvPUnit>> _units;
         private readonly IDroneManager _droneManager;
-        private readonly IPvPUnitFilter _unitFilter;
+        private readonly IUnitFilter _unitFilter;
 
-        public PvPMostExpensiveUnitChooser(IList<IPvPBuildableWrapper<IPvPUnit>> units, IDroneManager droneManager, IPvPUnitFilter unitFilter)
+        public PvPMostExpensiveUnitChooser(IList<IPvPBuildableWrapper<IPvPUnit>> units, IDroneManager droneManager, IUnitFilter unitFilter)
         {
             PvPHelper.AssertIsNotNull(units, droneManager, unitFilter);
             Assert.IsTrue(units.Count != 0);
