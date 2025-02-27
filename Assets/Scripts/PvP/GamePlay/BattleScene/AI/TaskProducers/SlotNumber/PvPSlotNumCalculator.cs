@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.ThreatMonitors;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber
 {
-    public abstract class PvPSlotNumCalculator : IPvPSlotNumCalculator
+    public abstract class PvPSlotNumCalculator : ISlotNumCalculator
     {
         private readonly int _roofSlotNum;
         private readonly IDictionary<ThreatLevel, int> _threatLevelsToSlotNumbers;

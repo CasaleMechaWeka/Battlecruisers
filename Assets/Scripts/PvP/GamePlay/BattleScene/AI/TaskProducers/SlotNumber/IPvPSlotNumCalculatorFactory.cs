@@ -1,9 +1,11 @@
+using BattleCruisers.AI.TaskProducers.SlotNumber;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber
 {
     public interface IPvPSlotNumCalculatorFactory
     {
-        IPvPSlotNumCalculator CreateAntiAirSlotNumCalculator(int maxNumOfSlots);
-        IPvPSlotNumCalculator CreateAntiNavalSlotNumCalculator(int maxNumOfSlots);
-        IPvPSlotNumCalculator CreateStaticSlotNumCalculator(int numOfSlots);
+        ISlotNumCalculator CreateAntiAirSlotNumCalculator(int maxNumOfSlots);
+        ISlotNumCalculator CreateAntiNavalSlotNumCalculator(int maxNumOfSlots);
+        ISlotNumCalculator CreateStaticSlotNumCalculator(int numOfSlots);
     }
 }

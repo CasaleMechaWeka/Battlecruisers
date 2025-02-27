@@ -1,12 +1,12 @@
 using System;
 using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
+using BattleCruisers.AI.TaskProducers.SlotNumber;
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers.SlotNumber;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.AI.ThreatMonitors;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     {
         private readonly IPvPDynamicBuildOrder _antiThreatBuildOrder;
         private readonly IThreatMonitor _threatMonitor;
-        private readonly IPvPSlotNumCalculator _slotNumCalculator;
+        private readonly ISlotNumCalculator _slotNumCalculator;
 
         private int _targetNumOfSlotsToUse;
         private int _numOfTasksCompleted;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             ITaskFactory taskFactory,
             IPvPDynamicBuildOrder antiThreatBuildOrder,
             IThreatMonitor threatMonitor,
-            IPvPSlotNumCalculator slotNumCalculator)
+            ISlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
             PvPHelper.AssertIsNotNull(antiThreatBuildOrder, threatMonitor, slotNumCalculator);
