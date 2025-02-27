@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public interface IFactoryManagerFactory
+    public interface IManagedDisposableFactory
     {
-        IFactoryManager CreateNavalFactoryManager(ICruiserController aiCruiser);
-        IFactoryManager CreateAirfactoryManager(ICruiserController aiCruiser);
-	}
+        IManagedDisposable CreateNavalFactoryManager(ICruiserController aiCruiser);
+        IManagedDisposable CreateAirfactoryManager(ICruiserController aiCruiser);
+    }
 }

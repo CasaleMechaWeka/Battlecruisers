@@ -13,7 +13,7 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public class FactoryManagerFactory : IFactoryManagerFactory
+    public class FactoryManagerFactory : IManagedDisposableFactory
     {
         private readonly IGameModel _gameModel;
         private readonly IPrefabFactory _prefabFactory;
@@ -35,7 +35,7 @@ namespace BattleCruisers.AI.FactoryManagers
             _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public IFactoryManager CreateNavalFactoryManager(ICruiserController aiCruiser)
+        public IManagedDisposable CreateNavalFactoryManager(ICruiserController aiCruiser)
         {
             IList<UnitKey> availableShipKeys = _gameModel.GetUnlockedUnits(UnitCategory.Naval);
             IList<IBuildableWrapper<IUnit>> availableShips =
@@ -51,7 +51,7 @@ namespace BattleCruisers.AI.FactoryManagers
             return new FactoryManager(UnitCategory.Naval, aiCruiser, unitChooser);
         }
 
-        public IFactoryManager CreateAirfactoryManager(ICruiserController aiCruiser)
+        public IManagedDisposable CreateAirfactoryManager(ICruiserController aiCruiser)
         {
             Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY), "Default plane should always be available.");
             IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);

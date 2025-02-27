@@ -20,7 +20,7 @@ namespace BattleCruisers.AI.FactoryManagers
     /// c) The unit chooser changes the chosen unit (eg, because the number of drones has changed)
     ///     AND the factory is not building a unit
     /// </summary>
-    public class FactoryManager : IFactoryManager
+    public class FactoryManager : IManagedDisposable
     {
         private readonly HashSet<IFactory> _factories;
         private readonly UnitCategory _factoryUnitCategory;
@@ -57,7 +57,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private void Factory_CompletedBuildable(object sender, EventArgs e)
         {
-			IFactory factory = sender.Parse<IFactory>();
+            IFactory factory = sender.Parse<IFactory>();
             Assert.IsTrue(_factories.Contains(factory));
 
             factory.StartBuildingUnit(_unitChooser.ChosenUnit);
@@ -65,7 +65,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private void Factory_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
-			IFactory factory = sender.Parse<IFactory>();
+            IFactory factory = sender.Parse<IFactory>();
             Assert.IsTrue(_factories.Contains(factory));
 
             factory.StartBuildingUnit(_unitChooser.ChosenUnit);

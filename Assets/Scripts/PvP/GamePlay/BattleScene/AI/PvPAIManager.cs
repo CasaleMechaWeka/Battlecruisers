@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         private readonly IDeferrer _deferrer;
         private readonly IPvPSlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
-        private readonly IPvPFactoryManagerFactory _factoryManagerFactory;
+        private readonly IManagedDisposableFactory _factoryManagerFactory;
         private readonly IPvPBuildOrderFactory _buildOrderFactory;
         private readonly IPvPFactoryMonitorFactory _factoryMonitorFactory;
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;

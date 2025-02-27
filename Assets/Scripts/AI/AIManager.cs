@@ -22,16 +22,16 @@ namespace BattleCruisers.AI
         private readonly IDataProvider _dataProvider;
         private readonly IDeferrer _deferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
-		private readonly IThreatMonitorFactory _threatMonitorFactory;
-		private readonly IFactoryManagerFactory _factoryManagerFactory;
+        private readonly IThreatMonitorFactory _threatMonitorFactory;
+        private readonly IManagedDisposableFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
         public AIManager(
-            IPrefabFactory prefabFactory, 
-            IDataProvider dataProvider, 
-            IDeferrer deferrer, 
-            ICruiserController playerCruiser, 
+            IPrefabFactory prefabFactory,
+            IDataProvider dataProvider,
+            IDeferrer deferrer,
+            ICruiserController playerCruiser,
             IStrategyFactory strategyFactory)
         {
             Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser, strategyFactory);
@@ -58,12 +58,12 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
             ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
-            ITaskProducerFactory taskProducerFactory 
+            ITaskProducerFactory taskProducerFactory
                 = new TaskProducerFactory(
-                    levelInfo.AICruiser, 
-                    _prefabFactory, 
-                    taskFactory, 
-                    _slotNumCalculatorFactory, 
+                    levelInfo.AICruiser,
+                    _prefabFactory,
+                    taskFactory,
+                    _slotNumCalculatorFactory,
                     _dataProvider.StaticData,
                     _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
