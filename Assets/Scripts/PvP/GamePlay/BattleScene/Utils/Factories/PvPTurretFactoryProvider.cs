@@ -2,6 +2,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
 
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IAngleCalculatorFactory AngleCalculatorFactory { get; }
         public IAngleLimiterFactory AngleLimiterFactory { get; }
         public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
-        public IPvPTargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
+        public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
 
         public PvPTurretFactoryProvider()
         {
