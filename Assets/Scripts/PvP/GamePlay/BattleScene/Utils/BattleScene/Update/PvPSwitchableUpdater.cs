@@ -1,9 +1,10 @@
 using System;
+using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
-    public class PvPSwitchableUpdater : MonoBehaviour, IPvPSwitchableUpdater
+    public class PvPSwitchableUpdater : MonoBehaviour, ISwitchableUpdater
     {
         public float DeltaTime => Time.deltaTime;
         public bool Enabled { get; set; } = true;

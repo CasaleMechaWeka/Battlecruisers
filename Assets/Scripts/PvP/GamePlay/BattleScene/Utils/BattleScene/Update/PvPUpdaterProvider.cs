@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         public IUpdater PerFrameUpdater { get; private set; }
         public IUpdater PhysicsUpdater { get; private set; }
-        public IPvPSwitchableUpdater SwitchableUpdater { get; private set; }
+        public ISwitchableUpdater SwitchableUpdater { get; private set; }
 
         private const float SLOW_UPDATER_INTERVAL_IN_S = 0.1f;
         public IUpdater SlowUpdater { get; private set; }

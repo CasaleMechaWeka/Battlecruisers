@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         IUpdater PerFrameUpdater { get; }
         IUpdater PhysicsUpdater { get; }
-        IPvPSwitchableUpdater SwitchableUpdater { get; }
+        ISwitchableUpdater SwitchableUpdater { get; }
         IUpdater SlowUpdater { get; }
         IUpdater VerySlowUpdater { get; }
         IUpdater BarrelControllerUpdater { get; }

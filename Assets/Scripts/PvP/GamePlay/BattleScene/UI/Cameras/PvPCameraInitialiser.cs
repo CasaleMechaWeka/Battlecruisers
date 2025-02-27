@@ -21,6 +21,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -65,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             NavigationPermitters navigationPermitters,
-            IPvPSwitchableUpdater switchableUpdater,
+            ISwitchableUpdater switchableUpdater,
             ISingleSoundPlayer uiSoundPlayer,
             Team team)
         {
@@ -166,7 +167,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCruiser playerCruiser,
             IPvPCruiser enemyCruiser,
             // PvPNavigationPermitters navigationPermitters,
-            IPvPSwitchableUpdater switchableUpdater,
+            ISwitchableUpdater switchableUpdater,
             ISingleSoundPlayer uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
