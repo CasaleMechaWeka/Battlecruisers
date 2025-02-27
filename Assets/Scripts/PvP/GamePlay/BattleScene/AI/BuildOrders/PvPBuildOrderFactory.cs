@@ -1,3 +1,4 @@
+using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 {
     public class PvPBuildOrderFactory : IPvPBuildOrderFactory
     {
-        private readonly IPvPSlotAssigner _slotAssigner;
+        private readonly ISlotAssigner _slotAssigner;
         private readonly IStaticData _staticData;
         //private readonly IGameModel _gameModel;
         private readonly IPvPStrategyFactory _strategyFactory;
@@ -32,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         private const int NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE = 1;
         //<---
 
-        public PvPBuildOrderFactory(IPvPSlotAssigner slotAssigner, IStaticData staticData, PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPStrategyFactory strategyFactory)
+        public PvPBuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPStrategyFactory strategyFactory)
         {
             PvPHelper.AssertIsNotNull(slotAssigner, staticData, battleSceneGodTunnel, strategyFactory);
 
@@ -133,7 +134,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             return new PvPCombinedBuildOrders(buildOrders);
         }
 
-        private void AssignSlots(IPvPSlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
+        private void AssignSlots(ISlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
         {
             // Should have a single naval request at most
             IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);

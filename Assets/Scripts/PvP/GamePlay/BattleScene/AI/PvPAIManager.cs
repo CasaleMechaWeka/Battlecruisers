@@ -1,4 +1,5 @@
 using BattleCruisers.AI;
+using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers;
@@ -16,7 +17,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.AI.Tasks;
-
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             _threatMonitorFactory = new PvPThreatMonitorFactory(playerCruiser, PvPTimeBC.Instance, deferrer);
             _factoryManagerFactory = new PvPFactoryManagerFactory(_battleSceneGodTunnel, _prefabFactory, _threatMonitorFactory);
 
-            IPvPSlotAssigner slotAssigner = new PvPSlotAssigner();
+            ISlotAssigner slotAssigner = new PvPSlotAssigner();
             _buildOrderFactory = new PvPBuildOrderFactory(slotAssigner, _dataProvider.StaticData, _battleSceneGodTunnel, strategyFactory);
 
             _factoryMonitorFactory = new PvPFactoryMonitorFactory(RandomGenerator.Instance);

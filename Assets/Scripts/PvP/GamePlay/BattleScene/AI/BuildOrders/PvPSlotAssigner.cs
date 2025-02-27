@@ -1,10 +1,11 @@
+using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders
 {
-    public class PvPSlotAssigner : IPvPSlotAssigner
+    public class PvPSlotAssigner : ISlotAssigner
     {
         /// <summary>
         /// 1. High focus requests are served once before low focus requests
