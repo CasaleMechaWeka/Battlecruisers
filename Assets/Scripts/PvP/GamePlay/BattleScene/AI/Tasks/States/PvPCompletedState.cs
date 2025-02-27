@@ -1,3 +1,4 @@
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.Tasks.States;
 using System;
 
@@ -5,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 {
     public class PvPCompletedState : PvPBaseState
     {
-        public PvPCompletedState(IPvPTask task, IPvPCompletedEventEmitter eventEmitter)
+        public PvPCompletedState(IPvPTask task, ICompletedEventEmitter eventEmitter)
             : base(task, eventEmitter)
         {
             _eventEmitter.EmitCompletedEvent();

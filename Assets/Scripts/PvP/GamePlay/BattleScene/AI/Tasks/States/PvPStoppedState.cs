@@ -1,3 +1,4 @@
+using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.Tasks.States;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States
@@ -6,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     {
         private readonly IState _inProgressState;
 
-        public PvPStoppedState(IPvPTask task, IPvPCompletedEventEmitter eventEmitter, IState inProgressState)
+        public PvPStoppedState(IPvPTask task, ICompletedEventEmitter eventEmitter, IState inProgressState)
             : base(task, eventEmitter)
         {
             _inProgressState = inProgressState;

@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     /// + IInternalTask.Stop()  => Only called if started or resumed
     /// + IInternalTask.Resume()=> Only called if stopped
     /// </summary>
-    public class PvPPrioritisedTask : IPrioritisedTask, IPvPCompletedEventEmitter
+    public class PvPPrioritisedTask : IPrioritisedTask, ICompletedEventEmitter
     {
         private readonly IPvPTask _task;
         private IState _currentState;
