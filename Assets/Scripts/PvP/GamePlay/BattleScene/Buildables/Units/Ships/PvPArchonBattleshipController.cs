@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
@@ -19,12 +18,13 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
     public class PvPArchonBattleshipController : PvPShipController
     {
-        private IPvPBroadcastingAnimation _unfurlAnimation;
+        private IBroadcastingAnimation _unfurlAnimation;
         private PvPAudioSourceGroup _unfurlAudioGroup;
 
         public PvPBarrelWrapper laser;
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             PvPHelper.AssertIsNotNull(bones, laser, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
 
-            _unfurlAnimation = bones.GetComponent<IPvPBroadcastingAnimation>();
+            _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
             Assert.IsNotNull(_unfurlAnimation);
             _unfurlAnimation.AnimationDone += _unfurlAnimation_AnimationDone;
 

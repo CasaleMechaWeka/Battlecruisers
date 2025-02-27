@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -12,14 +13,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPShipDeath : IPoolable<Vector3>
     {
         private readonly PvPMonoBehaviourWrapper _shipDeathController;
-        private readonly IPvPBroadcastingAnimation _sinkingAnimation;
+        private readonly IBroadcastingAnimation _sinkingAnimation;
         private readonly IList<IPvPParticleSystemGroup> _effects;
 
         public event EventHandler Deactivated;
 
         public PvPShipDeath(
             PvPMonoBehaviourWrapper shipDeathController,
-            IPvPBroadcastingAnimation sinkingAnimation,
+            IBroadcastingAnimation sinkingAnimation,
             IList<IPvPParticleSystemGroup> effects)
         {
             PvPHelper.AssertIsNotNull(shipDeathController, sinkingAnimation, effects);

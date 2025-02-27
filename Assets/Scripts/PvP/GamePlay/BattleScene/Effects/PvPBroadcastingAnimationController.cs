@@ -1,9 +1,10 @@
 using System;
+using BattleCruisers.Effects;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects
 {
-    public class PvPBroadcastingAnimationController : MonoBehaviour, IPvPBroadcastingAnimation
+    public class PvPBroadcastingAnimationController : MonoBehaviour, IBroadcastingAnimation
     {
         public event EventHandler AnimationDone;
         public event EventHandler AnimationStarted;
