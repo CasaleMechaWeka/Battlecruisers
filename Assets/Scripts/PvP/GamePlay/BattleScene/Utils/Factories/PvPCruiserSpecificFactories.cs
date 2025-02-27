@@ -9,10 +9,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker,
-            IPvPUpdaterProvider updaterProvider,
+            IUpdaterProvider updaterProvider,
             Faction faction,
             bool isTutorial)
         {
@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker,
-            IPvPUpdaterProvider updaterProvider,
+            IUpdaterProvider updaterProvider,
             Faction faction)
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);

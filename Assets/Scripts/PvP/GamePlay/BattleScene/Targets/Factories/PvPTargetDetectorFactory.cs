@@ -15,9 +15,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPTargetDetectorFactory : ITargetDetectorFactory
     {
         private readonly IPvPUnitTargets _enemyTargets, _friendlyTargets;
-        private readonly IPvPUpdaterProvider _updaterProvider;
+        private readonly IUpdaterProvider _updaterProvider;
 
-        public PvPTargetDetectorFactory(IPvPUnitTargets enemyTargets, IPvPUnitTargets friendlyTargets, IPvPUpdaterProvider updaterProvider)
+        public PvPTargetDetectorFactory(IPvPUnitTargets enemyTargets, IPvPUnitTargets friendlyTargets, IUpdaterProvider updaterProvider)
         {
             PvPHelper.AssertIsNotNull(enemyTargets, friendlyTargets, updaterProvider);
 

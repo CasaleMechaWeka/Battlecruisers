@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
-    public class PvPUpdaterProvider : MonoBehaviour, IPvPUpdaterProvider
+    public class PvPUpdaterProvider : MonoBehaviour, IUpdaterProvider
     {
         public IUpdater PerFrameUpdater { get; private set; }
         public IUpdater PhysicsUpdater { get; private set; }

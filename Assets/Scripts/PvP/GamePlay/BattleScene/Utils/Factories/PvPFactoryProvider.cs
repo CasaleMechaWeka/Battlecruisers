@@ -1,26 +1,26 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.FlightPoints;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using UnityEngine.Assertions;
-using System.Threading.Tasks;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
-using BattleCruisers.Utils.Factories;
+using System.Threading.Tasks;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public ITurretFactoryProvider Turrets { get; }
-        public IPvPUpdaterProvider UpdaterProvider { get; }
+        public IUpdaterProvider UpdaterProvider { get; }
         public ISettingsManager SettingsManager { get; }
 
         // Circular dependencies :/

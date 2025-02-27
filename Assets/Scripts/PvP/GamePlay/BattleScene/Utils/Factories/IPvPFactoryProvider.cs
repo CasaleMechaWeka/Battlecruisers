@@ -1,17 +1,17 @@
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Utils.Threading;
-using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IPvPTargetFactoriesProvider Targets { get; }
         ITurretFactoryProvider Turrets { get; }
-        IPvPUpdaterProvider UpdaterProvider { get; }
+        IUpdaterProvider UpdaterProvider { get; }
         ISettingsManager SettingsManager { get; }
     }
 }

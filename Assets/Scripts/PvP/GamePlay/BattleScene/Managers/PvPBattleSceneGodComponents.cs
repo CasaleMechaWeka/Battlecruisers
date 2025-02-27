@@ -16,6 +16,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.BattleScene.Lifetime;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Wind;
 
@@ -55,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private PvPUpdaterProvider _updaterProvider;
-        public IPvPUpdaterProvider UpdaterProvider => _updaterProvider;
+        public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
         //        public void Initialise_Client(ISettingsManager settingsManager)
         public void Initialise(ISettingsManager settingsManager)

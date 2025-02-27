@@ -323,7 +323,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _factoryProvider.Turrets.AngleLimiterFactory.CreateFacingLimiter();
         }
 
-        protected virtual IUpdater ChooseUpdater(IPvPUpdaterProvider updaterProvider)
+        protected virtual IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)
         {
             return updaterProvider.BarrelControllerUpdater;
         }
