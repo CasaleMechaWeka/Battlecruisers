@@ -1,10 +1,11 @@
 using System;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
-    public class PvPLaserRenderer : IPvPLaserRenderer
+    public class PvPLaserRenderer : ILaserRenderer
     {
         private readonly LineRenderer _lineRenderer;
 
@@ -18,12 +19,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     _isVisible = value;
                     _lineRenderer.enabled = _isVisible;
 
-                    LaserVisibilityChanged?.Invoke(this, new PvPLaserVisibilityChangedEventArgs(_isVisible));
+                    LaserVisibilityChanged?.Invoke(this, new LaserVisibilityChangedEventArgs(_isVisible));
                 }
             }
         }
 
-        public event EventHandler<PvPLaserVisibilityChangedEventArgs> LaserVisibilityChanged;
+        public event EventHandler<LaserVisibilityChangedEventArgs> LaserVisibilityChanged;
 
         public PvPLaserRenderer(LineRenderer lineRenderer)
         {

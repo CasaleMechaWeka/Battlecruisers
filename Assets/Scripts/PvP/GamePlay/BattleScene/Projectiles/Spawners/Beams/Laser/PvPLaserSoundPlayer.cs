@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
@@ -6,10 +7,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public class PvPLaserSoundPlayer : IManagedDisposable
     {
-        private readonly IPvPLaserRenderer _laserRenderer;
+        private readonly ILaserRenderer _laserRenderer;
         private readonly IAudioSource _audioSource;
 
-        public PvPLaserSoundPlayer(IPvPLaserRenderer laserRenderer, IAudioSource audioSource)
+        public PvPLaserSoundPlayer(ILaserRenderer laserRenderer, IAudioSource audioSource)
         {
             PvPHelper.AssertIsNotNull(laserRenderer, audioSource);
 
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _laserRenderer.LaserVisibilityChanged += _laserRenderer_LaserVisibilityChanged;
         }
 
-        private void _laserRenderer_LaserVisibilityChanged(object sender, PvPLaserVisibilityChangedEventArgs e)
+        private void _laserRenderer_LaserVisibilityChanged(object sender, LaserVisibilityChangedEventArgs e)
         {
             if (e.IsLaserVisible)
             {
