@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers
@@ -26,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelFirer = barrelFirer;
         }
 
-        public bool TryFire(PvPBarrelAdjustmentResult barrelAdjustmentResult)
+        public bool TryFire(BarrelAdjustmentResult barrelAdjustmentResult)
         {
             // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  _fireIntervalManager.ShouldFire: {_fireIntervalManager.ShouldFire.Value}");
 

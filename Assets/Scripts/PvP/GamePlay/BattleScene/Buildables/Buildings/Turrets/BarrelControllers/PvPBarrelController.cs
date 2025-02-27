@@ -21,6 +21,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -215,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (this != null)
             {
                 _fireIntervalManager.ProcessTimeInterval(_updater.DeltaTime);
-                PvPBarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
+                BarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
                 bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
                 if (!wasFireSuccessful)
                 {

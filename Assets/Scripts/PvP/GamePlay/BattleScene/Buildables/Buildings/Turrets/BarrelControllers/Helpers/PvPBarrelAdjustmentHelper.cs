@@ -2,6 +2,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -40,14 +41,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _attackablePositionFinder = attackablePositionFinder;
         }
 
-        public PvPBarrelAdjustmentResult AdjustTurretBarrel()
+        public BarrelAdjustmentResult AdjustTurretBarrel()
         {
             // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target: {_barrelController.CurrentTarget}  Target.IsDestroyed: {_barrelController.CurrentTarget?.IsDestroyed}  Position: {_barrelController.CurrentTarget?.Position}");
 
             if (_barrelController.CurrentTarget == null || _barrelController.CurrentTarget.IsDestroyed)
             {
                 // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  No alive target, cannot be on target");
-                return new PvPBarrelAdjustmentResult(isOnTarget: false);
+                return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
             Vector2 targetPositionToAttack = _attackablePositionFinder.FindClosestAttackablePosition(_barrelController.ProjectileSpawnerPosition, _barrelController.CurrentTarget);
@@ -64,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!_targetPositionValidator.IsValid(predictedTargetPosition, _barrelController.ProjectileSpawnerPosition, _barrelController.IsSourceMirrored))
             {
                 // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target position is invalid, cannot be on target.  predictedTargetPosition: {predictedTargetPosition}  _barrelController.ProjectileSpawnerPosition: {_barrelController.ProjectileSpawnerPosition}  _barrelController.IsSourceMirrored: {_barrelController.IsSourceMirrored}");
-                return new PvPBarrelAdjustmentResult(isOnTarget: false);
+                return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
             float desiredAngleInDegrees
@@ -80,11 +81,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (isOnTarget)
             {
                 // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  On target!");
-                return new PvPBarrelAdjustmentResult(isOnTarget, limitedDesiredAngle, predictedTargetPosition);
+                return new BarrelAdjustmentResult(isOnTarget, limitedDesiredAngle, predictedTargetPosition);
             }
 
             // Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Not on target, but adjusted barrel rotation :)");
-            return new PvPBarrelAdjustmentResult(isOnTarget: false);
+            return new BarrelAdjustmentResult(isOnTarget: false);
         }
     }
 }
