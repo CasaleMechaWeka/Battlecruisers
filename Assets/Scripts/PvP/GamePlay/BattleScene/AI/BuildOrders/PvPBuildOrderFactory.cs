@@ -2,14 +2,13 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Requests;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 using System.Collections.Generic;
@@ -119,13 +118,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         /// IEnumerable I would get a fresh copy of the object, so any changes I made to
         /// those objects were lost!!!
         /// </summary>
-        private IPvPDynamicBuildOrder CreateOffensiveBuildOrder(IList<IPvPOffensiveRequest> requests, int numOfPlatformSlots, IPvPLevelInfo levelInfo)
+        private IPvPDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots, IPvPLevelInfo levelInfo)
         {
             AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
             // Create individual build orders
             IList<IPvPDynamicBuildOrder> buildOrders = new List<IPvPDynamicBuildOrder>();
-            foreach (IPvPOffensiveRequest request in requests)
+            foreach (IOffensiveRequest request in requests)
             {
                 buildOrders.Add(CreateBuildOrder(request, levelInfo));
             }
@@ -134,10 +133,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             return new PvPCombinedBuildOrders(buildOrders);
         }
 
-        private void AssignSlots(IPvPSlotAssigner slotAssigner, IList<IPvPOffensiveRequest> requests, int numOfPlatformSlots)
+        private void AssignSlots(IPvPSlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
         {
             // Should have a single naval request at most
-            IPvPOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == PvPOffensiveType.Naval);
+            IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
             if (navalRequest != null)
             {
                 navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
@@ -145,7 +144,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 
             //---> CODE BY ANUJ
             // Should have a single air request at most
-            IPvPOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == PvPOffensiveType.Air);
+            IOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Air);
             if (airRequest != null)
             {
                 airRequest.NumOfSlotsToUse = NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE;
@@ -156,28 +155,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             // so need to split the available platform slots between these requests.
 
             //---> CODE CHANGED BY ANUJ
-            IEnumerable<IPvPOffensiveRequest> platformRequests = requests.Where
-                (request => request.Type != PvPOffensiveType.Naval && request.Type != PvPOffensiveType.Air);
+            IEnumerable<IOffensiveRequest> platformRequests = requests.Where
+                (request => request.Type != OffensiveType.Naval && request.Type != OffensiveType.Air);
             //<---
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
         }
 
-        private IPvPDynamicBuildOrder CreateBuildOrder(IPvPOffensiveRequest request, IPvPLevelInfo levelInfo)
+        private IPvPDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request, IPvPLevelInfo levelInfo)
         {
             //Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 
             switch (request.Type)
             {
-                case PvPOffensiveType.Air:
+                case OffensiveType.Air:
                     return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPAirFactory, request.NumOfSlotsToUse);
 
-                case PvPOffensiveType.Naval:
+                case OffensiveType.Naval:
                     return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPNavalFactory, request.NumOfSlotsToUse);
 
-                case PvPOffensiveType.Buildings:
+                case OffensiveType.Buildings:
                     return CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
 
-                case PvPOffensiveType.Ultras:
+                case OffensiveType.Ultras:
                     return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, convertPvEBuildingKey2PvPBuildingKey(_staticData.AIBannedUltrakeys));
 
                 default:

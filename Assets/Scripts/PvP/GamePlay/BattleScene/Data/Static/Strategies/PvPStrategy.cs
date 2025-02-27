@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies
@@ -9,9 +10,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
     public class PvPStrategy : IPvPStrategy
     {
         public IPvPBaseStrategy BaseStrategy { get; }
-        public IEnumerable<IPvPOffensiveRequest> Offensives { get; }
+        public IEnumerable<IOffensiveRequest> Offensives { get; }
 
-        public PvPStrategy(IPvPBaseStrategy baseStrategy, IPvPOffensiveRequest[] offensives)
+        public PvPStrategy(IPvPBaseStrategy baseStrategy, IOffensiveRequest[] offensives)
         {
             Assert.IsNotNull(baseStrategy);
             Assert.IsTrue(offensives.Length != 0);
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             // not affect other strategies.
             Offensives
                 = strategyToCopy.Offensives
-                    .Select(originalOffensiveRequest => (IPvPOffensiveRequest)new PvPOffensiveRequest(originalOffensiveRequest))
+                    .Select(originalOffensiveRequest => (IOffensiveRequest)new PvPOffensiveRequest(originalOffensiveRequest))
                     .ToList();
         }
 

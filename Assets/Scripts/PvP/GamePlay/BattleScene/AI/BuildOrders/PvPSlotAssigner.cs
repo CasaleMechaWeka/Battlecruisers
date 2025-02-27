@@ -1,6 +1,6 @@
+using BattleCruisers.Data.Static.Strategies.Requests;
 using System.Collections.Generic;
 using System.Linq;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Requests;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders
 {
@@ -11,10 +11,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         /// 2. Low focus request get one slot at most
         /// 3. Remaining slots are split evenly between high focus requests
         /// </summary>
-        public void AssignSlots(IEnumerable<IPvPOffensiveRequest> slotRequests, int numOfSlotsAvailable)
+        public void AssignSlots(IEnumerable<IOffensiveRequest> slotRequests, int numOfSlotsAvailable)
         {
-            IEnumerable<IPvPOffensiveRequest> highFocusRequests = slotRequests.Where(request => request.Focus == PvPOffensiveFocus.High);
-            IEnumerable<IPvPOffensiveRequest> lowFocusRequest = slotRequests.Where(request => request.Focus == PvPOffensiveFocus.Low);
+            IEnumerable<IOffensiveRequest> highFocusRequests = slotRequests.Where(request => request.Focus == OffensiveFocus.High);
+            IEnumerable<IOffensiveRequest> lowFocusRequest = slotRequests.Where(request => request.Focus == OffensiveFocus.Low);
 
             int numOfSlotsUsed = 0;
 
@@ -34,9 +34,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             }
         }
 
-        private int AssignSlotsToRequests(IEnumerable<IPvPOffensiveRequest> requests, int numOfPlatformSlots, int numOfSlotsUsed)
+        private int AssignSlotsToRequests(IEnumerable<IOffensiveRequest> requests, int numOfPlatformSlots, int numOfSlotsUsed)
         {
-            foreach (IPvPOffensiveRequest request in requests)
+            foreach (IOffensiveRequest request in requests)
             {
                 if (numOfSlotsUsed < numOfPlatformSlots)
                 {

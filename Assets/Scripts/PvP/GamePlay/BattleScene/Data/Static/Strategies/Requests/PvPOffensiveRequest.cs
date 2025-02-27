@@ -1,21 +1,22 @@
+using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Requests
 {
-    public class PvPOffensiveRequest : IPvPOffensiveRequest
+    public class PvPOffensiveRequest : IOffensiveRequest
     {
-        public PvPOffensiveType Type { get; }
-        public PvPOffensiveFocus Focus { get; }
+        public OffensiveType Type { get; }
+        public OffensiveFocus Focus { get; }
         public int NumOfSlotsToUse { get; set; }
 
-        public PvPOffensiveRequest(PvPOffensiveType type, PvPOffensiveFocus focus)
+        public PvPOffensiveRequest(OffensiveType type, OffensiveFocus focus)
         {
             Type = type;
             Focus = focus;
             NumOfSlotsToUse = 0;
         }
 
-        public PvPOffensiveRequest(IPvPOffensiveRequest requestToCopy)
+        public PvPOffensiveRequest(IOffensiveRequest requestToCopy)
         {
             Type = requestToCopy.Type;
             Focus = requestToCopy.Focus;

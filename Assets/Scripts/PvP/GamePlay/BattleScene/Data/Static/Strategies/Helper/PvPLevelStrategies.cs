@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Requests;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
         {
             IList<IPvPBaseStrategy> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
             IList<IPvPBaseStrategy> basicBaseStrategies = CreateBasicBaseStrategies();
-            IList<IPvPOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
+            IList<IOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
             _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
@@ -163,264 +164,264 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             };
         }
 
-        private IList<IPvPOffensiveRequest[]> CreateOffensiveRequests()
+        private IList<IOffensiveRequest[]> CreateOffensiveRequests()
         {
-            return new List<IPvPOffensiveRequest[]>()
+            return new List<IOffensiveRequest[]>()
             {
                 // Set 1:  Levels 1 - 3
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
 
                 // Set 2:  Levels 4 - 7
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
                 
                 // Set 3:  Levels 8 - 10
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
 
                 // Set 4:  Levels 11 - 14
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
 
                 //Man of war
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
 
                 // Set 5:  Levels 15 - 17
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
 
                 // Set 6:  Levels 18 - 21
-				new IPvPOffensiveRequest[]
+				new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
 
                 // Set 7:  Levels 22 - 25
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
 
                 //BCUMIE enemies
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[] //Huntress Prime
+                new IOffensiveRequest[] //Huntress Prime
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
 
                 // Enemies for levels 32 - 40
 
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IPvPOffensiveRequest[]
+                new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
-                },
-
-                 new IPvPOffensiveRequest[]
-                {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low)
-                },
-                new IPvPOffensiveRequest[]
-                {
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.High)
-                },
-                new IPvPOffensiveRequest[]
-                {
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
-                },
-                new IPvPOffensiveRequest[]
-                {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
 
-                new IPvPOffensiveRequest[]
+                 new IOffensiveRequest[]
                 {
-                    new PvPOffensiveRequest(PvPOffensiveType.Buildings, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Air, PvPOffensiveFocus.Low),
-                    new PvPOffensiveRequest(PvPOffensiveType.Naval, PvPOffensiveFocus.High),
-                    new PvPOffensiveRequest(PvPOffensiveType.Ultras, PvPOffensiveFocus.Low)
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+
+                new IOffensiveRequest[]
+                {
+                    new PvPOffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new PvPOffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
+                    new PvPOffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 }
             };
         }
 
-        private IList<IPvPStrategy> CreateStrategies(IList<IPvPBaseStrategy> baseStrategies, IList<IPvPOffensiveRequest[]> offensiveRequests)
+        private IList<IPvPStrategy> CreateStrategies(IList<IPvPBaseStrategy> baseStrategies, IList<IOffensiveRequest[]> offensiveRequests)
         {
             Assert.AreEqual(baseStrategies.Count, offensiveRequests.Count);
 
