@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,16 +10,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPSlotAccessor : IPvPSlotAccessor
     {
-        private readonly IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> _slots;
+        private readonly IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> _slots;
         private readonly ReadOnlyCollection<PvPSlot> _antiShipSlots;
 
-        public PvPSlotAccessor(IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> slots)
+        public PvPSlotAccessor(IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> slots)
         {
             Assert.IsNotNull(slots);
 
             _slots = slots;
             _antiShipSlots
-                = slots[PvPSlotType.Deck]
+                = slots[SlotType.Deck]
                     //.Where(slot => slot.BuildingFunctionAffinity == BuildingFunction.AntiShip)
                     .ToList()
                     .AsReadOnly();
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsTrue(_slots.ContainsKey(slotSpecification.SlotType));
 
             if (slotSpecification.BuildingFunction == BuildingFunction.AntiShip
-                && slotSpecification.SlotType == PvPSlotType.Deck)
+                && slotSpecification.SlotType == SlotType.Deck)
             {
                 return _antiShipSlots;
             }
@@ -53,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public IList<PvPSlot> GetFreeSlots(PvPSlotType slotType)
+        public IList<PvPSlot> GetFreeSlots(SlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));
 
@@ -87,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     .FirstOrDefault(slot => ReferenceEquals(slot.Building.Value, building));
         }
 
-        public int GetSlotCount(PvPSlotType slotType)
+        public int GetSlotCount(SlotType slotType)
         {
             return _slots[slotType].Count;
         }

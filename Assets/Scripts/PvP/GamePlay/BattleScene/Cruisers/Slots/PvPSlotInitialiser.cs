@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Utils;
 using System;
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 
-        public IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> InitialiseSlots(IPvPCruiser parentCruiser, IList<PvPSlot> slots, IPvPBuildingPlacer buildingPlacer)
+        public IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> InitialiseSlots(IPvPCruiser parentCruiser, IList<PvPSlot> slots, IPvPBuildingPlacer buildingPlacer)
         {
             Helper.AssertIsNotNull(parentCruiser, slots);
 
@@ -52,11 +53,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return neighbouringSlots.AsReadOnly();
         }
 
-        private IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> CreateSlotsMap(IList<PvPSlot> slots)
+        private IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> CreateSlotsMap(IList<PvPSlot> slots)
         {
-            IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = new Dictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>>();
+            IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = new Dictionary<SlotType, ReadOnlyCollection<PvPSlot>>();
 
-            foreach (PvPSlotType slotType in (PvPSlotType[])Enum.GetValues(typeof(PvPSlotType)))
+            foreach (SlotType slotType in (SlotType[])Enum.GetValues(typeof(SlotType)))
             {
                 ReadOnlyCollection<PvPSlot> slotsOfType
                     = slots

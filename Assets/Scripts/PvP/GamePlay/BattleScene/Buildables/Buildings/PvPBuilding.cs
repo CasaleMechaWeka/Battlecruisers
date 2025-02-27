@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [Header("Slots")]
         public BuildingFunction function;
         public bool preferCruiserFront;
-        public PvPSlotType slotType;
+        public SlotType slotType;
 
         public override TargetType TargetType => TargetType.Buildings;
         public IPvPSlotSpecification SlotSpecification { get; private set; }

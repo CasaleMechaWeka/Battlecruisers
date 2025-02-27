@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
@@ -44,15 +44,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         //---> CODE BY ANUJ
         public bool HasMastOffensive()
         {
-            return HasPvPSlotType(PvPSlotType.Mast);
+            return HasPvPSlotType(SlotType.Mast);
         }
 
         public bool HasBowOffensive()
         {
-            return HasPvPSlotType(PvPSlotType.Mast);
+            return HasPvPSlotType(SlotType.Mast);
         }
 
-        private bool HasPvPSlotType(PvPSlotType pvpSlotType)
+        private bool HasPvPSlotType(SlotType pvpSlotType)
         {
             IList<PvPBuildingKey> offensives = GetAvailableBuildings(BuildingCategory.Offence);
 

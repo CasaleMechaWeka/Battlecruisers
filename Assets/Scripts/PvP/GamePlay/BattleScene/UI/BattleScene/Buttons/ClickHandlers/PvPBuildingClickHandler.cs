@@ -1,9 +1,8 @@
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -41,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 // _uiManager.SelectBuilding(buildingClicked.Buildable);
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
-                if (buildingClicked.Buildable.SlotSpecification.SlotType == PvPSlotType.Bow)
+                if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)
                 {
                     _playerCruiserFocusHelper.FocusOnPlayerBowSlotIfNeeded();
                 }

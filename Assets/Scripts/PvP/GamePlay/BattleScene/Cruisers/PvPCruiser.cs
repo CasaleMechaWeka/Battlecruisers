@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -653,7 +654,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 OnDestroyedEvent();
         }
         [ServerRpc(RequireOwnership = true)]
-        public void PvP_HighlightAvailableSlotsServerRpc(PvPSlotType SlotType, BuildingFunction BuildingFunction, bool PreferFromFront, ServerRpcParams serverRpcParams = default)
+        public void PvP_HighlightAvailableSlotsServerRpc(SlotType SlotType, BuildingFunction BuildingFunction, bool PreferFromFront, ServerRpcParams serverRpcParams = default)
         {
             PvPSlotSpecification SlotSpecification = new PvPSlotSpecification(SlotType, BuildingFunction, PreferFromFront);
             var clientId = serverRpcParams.Receive.SenderClientId;

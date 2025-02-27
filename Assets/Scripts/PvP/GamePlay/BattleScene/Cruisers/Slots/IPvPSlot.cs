@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using System.Collections.ObjectModel;
@@ -12,18 +13,10 @@ using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public enum PvPSlotType
-    {
-        Utility = 1,
-        Mast = 2,
-        Bow = 3,
-        Platform = 4,
-        Deck = 5
-    }
     public interface IPvPSlot : IClickableEmitter, IHighlightable
     {
         bool IsFree { get; }
-        PvPSlotType Type { get; }
+        SlotType Type { get; }
         /// <summary>
         /// The type of building this slot is well positioned for.  Eg, for AntiShip
         /// buildings that is the cruiser front.  For shields that is spread accross

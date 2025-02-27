@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
@@ -66,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             IPvPSlot bowSlot
                 = _playerCruiser.SlotAccessor
-                    .GetSlots(new PvPSlotSpecification(PvPSlotType.Bow))
+                    .GetSlots(new PvPSlotSpecification(SlotType.Bow))
                     .FirstOrDefault();
 
             Assert.IsNotNull(bowSlot);

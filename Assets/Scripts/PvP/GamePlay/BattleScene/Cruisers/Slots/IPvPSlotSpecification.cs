@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
@@ -6,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         BuildingFunction BuildingFunction { get; }
         bool PreferFromFront { get; }
-        PvPSlotType SlotType { get; }
+        SlotType SlotType { get; }
     }
 }
 

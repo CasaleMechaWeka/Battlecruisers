@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
@@ -36,8 +37,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private PvPSlotBoostFeedbackMonitor _boostFeedbackMonitor;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        public PvPSlotType type;
-        public PvPSlotType Type => type;
+        public SlotType type;
+        public SlotType Type => type;
 
         public BuildingFunction buildingFunctionAffinity;
         public BuildingFunction BuildingFunctionAffinity => buildingFunctionAffinity;

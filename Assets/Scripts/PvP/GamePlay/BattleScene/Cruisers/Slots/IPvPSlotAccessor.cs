@@ -1,6 +1,7 @@
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// </returns>
         ReadOnlyCollection<PvPSlot> GetSlots(IPvPSlotSpecification slotSpecification);
 
-        IList<PvPSlot> GetFreeSlots(PvPSlotType slotType);
+        IList<PvPSlot> GetFreeSlots(SlotType slotType);
         IPvPSlot GetFreeSlot(IPvPSlotSpecification slotSpecification);
 
         /// <returns>
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// </returns>
         IPvPSlot GetSlot(IPvPBuilding building);
 
-        int GetSlotCount(PvPSlotType slotType);
+        int GetSlotCount(SlotType slotType);
     }
 }
 

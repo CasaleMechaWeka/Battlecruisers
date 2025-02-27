@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,12 +33,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _slotsByName.Add(_slots[i].gameObject.name, _slots[i]);
                 }
             }
-            IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
+            IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
             return new PvPSlotAccessor(typeToSlots);
         }
 
-        public int GetSlotCount(PvPSlotType type)
+        public int GetSlotCount(SlotType type)
         {
             return _slots.Count(slot => slot.Type == type);
         }

@@ -1,6 +1,7 @@
 using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Requests;
@@ -68,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             //---> CODE BY ANUJ
             int numOfOffensiveSlots = FindNumOfOffensiveSlots(levelInfo);
             //<---
-            //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Platform);
+            //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
             //IPvPDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
 
             IPvPDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
@@ -97,16 +98,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             int numOfMastSlotsToReserve = 2;
 
             IPvPSlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
-            int numOfOffensiveSlots = slotAccessor.GetSlotCount(PvPSlotType.Platform);
+            int numOfOffensiveSlots = slotAccessor.GetSlotCount(SlotType.Platform);
 
             if (levelInfo.HasMastOffensive())
             {
-                numOfOffensiveSlots += slotAccessor.GetSlotCount(PvPSlotType.Mast) - numOfMastSlotsToReserve;
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Mast) - numOfMastSlotsToReserve;
             }
 
             if (levelInfo.HasBowOffensive())
             {
-                numOfOffensiveSlots += slotAccessor.GetSlotCount(PvPSlotType.Bow);
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Bow);
             }
 
             return numOfOffensiveSlots;
@@ -235,7 +236,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 
         public IPvPDynamicBuildOrder CreateAntiAirBuildOrder(IPvPLevelInfo levelInfo)
         {
-            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Deck);
+            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = PvPHelper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
 
             return
@@ -248,7 +249,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 
         public IPvPDynamicBuildOrder CreateAntiNavalBuildOrder(IPvPLevelInfo levelInfo)
         {
-            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Deck);
+            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = PvPHelper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
 
             return
