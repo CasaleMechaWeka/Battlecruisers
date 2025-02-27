@@ -1,6 +1,8 @@
+using BattleCruisers.Cruisers.Fog;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog
 {
-    public class PvPFogVisibilityDecider : IPvPFogVisibilityDecider
+    public class PvPFogVisibilityDecider : IFogVisibilityDecider
     {
         public bool ShouldFogBeVisible(int numOfFriendlyStealthGenerators, int numOfEnemySpySatellites, int numOfEnemySpyPlanes)
         {

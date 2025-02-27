@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPFogOfWarManager : IManagedDisposable
     {
         private readonly IGameObject _fog;
-        private readonly IPvPFogVisibilityDecider _visibilityDecider;
+        private readonly IFogVisibilityDecider _visibilityDecider;
         private readonly IPvPCruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly IPvPCruiserUnitMonitor _enemyUnitMonitor;
         private readonly IList<IPvPStealthGenerator> _friendlyIStealthGenerators;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPFogOfWarManager(
             IGameObject fog,
-            IPvPFogVisibilityDecider visibilityDecider,
+            IFogVisibilityDecider visibilityDecider,
             IPvPCruiserBuildingMonitor friendlyBuildingMonitor,
             IPvPCruiserBuildingMonitor enemyBuildingMonitor,
             IPvPCruiserUnitMonitor enemyUnitMonitor)

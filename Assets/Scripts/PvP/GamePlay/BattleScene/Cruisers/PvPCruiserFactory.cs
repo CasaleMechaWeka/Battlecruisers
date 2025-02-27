@@ -20,6 +20,7 @@ using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using System.Threading.Tasks;
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Fog;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IApplicationModel _applicationModel;
         private readonly IPvPSlotFilter _highlightableSlotFilter;
         private readonly IPvPUIManager _uiManager;
-        private readonly IPvPFogVisibilityDecider _fogVisibilityDecider;
+        private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
