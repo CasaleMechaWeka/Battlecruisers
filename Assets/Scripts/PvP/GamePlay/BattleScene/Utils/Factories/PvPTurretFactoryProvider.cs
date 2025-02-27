@@ -5,10 +5,11 @@ using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
-    public class PvPTurretFactoryProvider : IPvPTurretFactoryProvider
+    public class PvPTurretFactoryProvider : ITurretFactoryProvider
     {
         public IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
         public IAngleCalculatorFactory AngleCalculatorFactory { get; }

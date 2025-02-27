@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
-        public IPvPTurretFactoryProvider Turrets { get; }
+        public ITurretFactoryProvider Turrets { get; }
         public IPvPUpdaterProvider UpdaterProvider { get; }
         public ISettingsManager SettingsManager { get; }
 

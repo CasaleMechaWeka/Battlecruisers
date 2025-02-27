@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IPvPTargetFactoriesProvider Targets { get; }
-        IPvPTurretFactoryProvider Turrets { get; }
+        ITurretFactoryProvider Turrets { get; }
         IPvPUpdaterProvider UpdaterProvider { get; }
         ISettingsManager SettingsManager { get; }
     }
