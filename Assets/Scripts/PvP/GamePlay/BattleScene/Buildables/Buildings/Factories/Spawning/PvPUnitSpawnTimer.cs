@@ -4,10 +4,11 @@ using BattleCruisers.Utils;
 using System;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning
 {
-    public class PvPUnitSpawnTimer : IPvPUnitSpawnTimer
+    public class PvPUnitSpawnTimer : IUnitSpawnTimer
     {
         private readonly ITime _time;
         private float _timeWhenFactoryWasClearInS, _timeWhenUnitWasChosenInS;

@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using UnityEngine.Assertions;
 
@@ -11,11 +12,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public class PvPCooldownSpawnDecider : IPvPUnitSpawnDecider
     {
-        private readonly IPvPUnitSpawnTimer _unitSpawnTimer;
+        private readonly IUnitSpawnTimer _unitSpawnTimer;
 
         public const float MIN_BUILD_BREAK_IN_S = 0.5f;
 
-        public PvPCooldownSpawnDecider(IPvPUnitSpawnTimer unitSpawnTimer)
+        public PvPCooldownSpawnDecider(IUnitSpawnTimer unitSpawnTimer)
         {
             Assert.IsNotNull(unitSpawnTimer);
             _unitSpawnTimer = unitSpawnTimer;
