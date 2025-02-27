@@ -8,13 +8,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected bool _haveFired;
 
         // No constructor due to circular dependency :)
-        public override void Initialise(IPvPState otherState, IDurationProvider durationProvider)
+        public override void Initialise(IState otherState, IDurationProvider durationProvider)
         {
             base.Initialise(otherState, durationProvider);
             Reset();
         }
 
-        public override IPvPState OnFired()
+        public override IState OnFired()
         {
             // Logging.VerboseMethod(Tags.FIRE_INTERVAL_MANAGER);
 
@@ -23,14 +23,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return this;
         }
 
-        public override IPvPState ProcessTimeInterval(float timePassedInS)
+        public override IState ProcessTimeInterval(float timePassedInS)
         {
             if (!ShouldProcessTimeInterval())
             {
                 return this;
             }
 
-            IPvPState nextState = this;
+            IState nextState = this;
 
             _elapsedTimeInS += timePassedInS;
 

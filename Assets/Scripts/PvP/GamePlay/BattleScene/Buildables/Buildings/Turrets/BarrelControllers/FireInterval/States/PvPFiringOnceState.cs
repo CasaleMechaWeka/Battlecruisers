@@ -4,13 +4,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         public override bool ShouldFire => true;
 
-        public override IPvPState OnFired()
+        public override IState OnFired()
         {
             _durationProvider.MoveToNextDuration();
             return _otherState;
         }
 
-        public override IPvPState ProcessTimeInterval(float timePassedInS)
+        public override IState ProcessTimeInterval(float timePassedInS)
         {
             // Do nothing
             return this;

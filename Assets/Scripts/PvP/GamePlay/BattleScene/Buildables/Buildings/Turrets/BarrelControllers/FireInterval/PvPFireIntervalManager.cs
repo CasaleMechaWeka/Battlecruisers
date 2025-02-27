@@ -7,8 +7,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPFireIntervalManager : IFireIntervalManager
     {
-        private IPvPState _currentState;
-        private IPvPState CurrentState
+        private IState _currentState;
+        private IState CurrentState
         {
             get => _currentState;
             set
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly SettableBroadcastingProperty<bool> _shouldFire;
         public IBroadcastingProperty<bool> ShouldFire { get; }
 
-        public PvPFireIntervalManager(IPvPState startingState)
+        public PvPFireIntervalManager(IState startingState)
         {
             Assert.IsNotNull(startingState);
 

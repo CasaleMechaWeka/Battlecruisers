@@ -1,5 +1,5 @@
+using BattleCruisers.AI.Tasks.States;
 using System;
-// using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States
 {
@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
         }
 
-        /*        public override async Task<IPvPState> Start()
+        /*        public override async Task<IState> Start()
                 {
                     var isStart = await _task.Start();
                     if (isStart)
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
                 }*/
 
 
-        public override IPvPState Start()
+        public override IState Start()
         {
             //   var isStart = _task.Start();
             if (_task.Start())
@@ -37,12 +37,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             }
         }
 
-        public override IPvPState Stop()
+        public override IState Stop()
         {
             return this;
         }
 
-        public override IPvPState OnCompleted()
+        public override IState OnCompleted()
         {
             throw new Exception("Should never complete from the InitialState :(");
         }

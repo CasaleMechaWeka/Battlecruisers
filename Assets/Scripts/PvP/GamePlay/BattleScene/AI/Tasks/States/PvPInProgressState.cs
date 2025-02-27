@@ -1,9 +1,11 @@
+using BattleCruisers.AI.Tasks.States;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States
 {
     public class PvPInProgressState : PvPBaseState
     {
-        private IPvPState _stoppedState;
-        private IPvPState StoppedState
+        private IState _stoppedState;
+        private IState StoppedState
         {
             get
             {
@@ -21,16 +23,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
         }
 
-        /*        public override Task<IPvPState> Start()
+        /*        public override Task<IState> Start()
                 {
-                    return (Task<IPvPState>)(IPvPState)this;
+                    return (Task<IState>)(IState)this;
                 }*/
 
-        public override IPvPState Start()
+        public override IState Start()
         {
             return this;
         }
-        public override IPvPState Stop()
+        public override IState Stop()
         {
             _task.Stop();
             return StoppedState;

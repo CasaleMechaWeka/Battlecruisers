@@ -1,4 +1,5 @@
 using BattleCruisers.AI.Tasks;
+using BattleCruisers.AI.Tasks.States;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States;
 using System;
 
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     public class PvPPrioritisedTask : IPrioritisedTask, IPvPCompletedEventEmitter
     {
         private readonly IPvPTask _task;
-        private IPvPState _currentState;
+        private IState _currentState;
 
         public TaskPriority Priority { get; }
 
