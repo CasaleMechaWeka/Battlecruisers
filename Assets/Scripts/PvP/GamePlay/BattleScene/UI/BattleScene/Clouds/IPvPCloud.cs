@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds
@@ -8,6 +8,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         Vector2 Size { get; }
         Vector3 Position { get; set; }
 
-        void Initialise(IPvPCloudStats cloudStats);
+        void Initialise(ICloudStats cloudStats);
     }
 }

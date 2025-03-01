@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             set { transform.position = value; }
         }
 
-        public void Initialise(IPvPCloudStats cloudStats)
+        public void Initialise(ICloudStats cloudStats)
         {
             Assert.IsNotNull(cloudStats);
             Assert.IsTrue(cloudStats.HorizontalMovementSpeedInMPerS > 0, "Only support clouds moving from left to right.");
