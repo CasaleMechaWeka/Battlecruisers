@@ -1,10 +1,11 @@
+using BattleCruisers.UI.BattleScene.Cruisers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers
 {
-    public class PvPSingleDigitDisplayController : MonoBehaviour, IPvPNumberDisplay
+    public class PvPSingleDigitDisplayController : MonoBehaviour, INumberDisplay
     {
         private Text _text;
 

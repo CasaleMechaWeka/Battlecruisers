@@ -1,3 +1,4 @@
+using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPNumOfDronesPanelInitialiser : MonoBehaviour
     {
-        public IPvPNumberDisplay CreateTwoDigitDisplay()
+        public INumberDisplay CreateTwoDigitDisplay()
         {
             PvPSingleDigitDisplayController firstDigit = transform.FindNamedComponent<PvPSingleDigitDisplayController>("FirstDigit");
             firstDigit.Initialise();

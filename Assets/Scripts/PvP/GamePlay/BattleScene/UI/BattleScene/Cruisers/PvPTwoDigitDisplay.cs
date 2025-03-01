@@ -1,11 +1,12 @@
+using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers
 {
-    public class PvPTwoDigitDisplay : IPvPNumberDisplay
+    public class PvPTwoDigitDisplay : INumberDisplay
     {
-        private readonly IPvPNumberDisplay _firstDigit, _secondDigit;
+        private readonly INumberDisplay _firstDigit, _secondDigit;
 
         private const int MIN_VALUE = 0;
         private const int MAX_VALUE = 99;
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public PvPTwoDigitDisplay(IPvPNumberDisplay firstDigit, IPvPNumberDisplay secondDigit)
+        public PvPTwoDigitDisplay(INumberDisplay firstDigit, INumberDisplay secondDigit)
         {
             PvPHelper.AssertIsNotNull(firstDigit, secondDigit);
 

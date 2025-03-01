@@ -1,7 +1,7 @@
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers
@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private readonly IDroneManager _droneManager;
         private readonly IDroneManagerMonitor _droneManagerMonitor;
-        private readonly IPvPNumberDisplay _numberDisplay;
+        private readonly INumberDisplay _numberDisplay;
         private readonly IGameObject _idleFeedback;
         private PvPCruiser _playerCruiser;
 
         public PvPDronesDisplayer(
             IDroneManager droneManager,
             IDroneManagerMonitor droneManagerMonitor,
-            IPvPNumberDisplay numberDisplay,
+            INumberDisplay numberDisplay,
             IGameObject idleFeedback)
         {
             PvPHelper.AssertIsNotNull(droneManager, droneManagerMonitor, numberDisplay, idleFeedback);
@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPDronesDisplayer(
             PvPCruiser playerCruiser,
-            IPvPNumberDisplay numberDisplay,
+            INumberDisplay numberDisplay,
             IGameObject idleFeedback)
         {
             PvPHelper.AssertIsNotNull(numberDisplay, idleFeedback);
