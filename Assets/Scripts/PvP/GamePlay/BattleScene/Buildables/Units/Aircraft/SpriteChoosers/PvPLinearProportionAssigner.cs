@@ -1,8 +1,9 @@
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers
 {
-    public class PvPLinearProportionAssigner : IPvPAssigner
+    public class PvPLinearProportionAssigner : IAssigner
     {
         private readonly int _numOfOptions;
 

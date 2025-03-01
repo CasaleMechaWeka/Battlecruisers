@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSpriteChooser : IPvPSpriteChooser
     {
-        private readonly IPvPAssigner _assigner;
+        private readonly IAssigner _assigner;
         private readonly IList<ISpriteWrapper> _sprites;
         private readonly IVelocityProvider _maxVelocityProvider;
 
