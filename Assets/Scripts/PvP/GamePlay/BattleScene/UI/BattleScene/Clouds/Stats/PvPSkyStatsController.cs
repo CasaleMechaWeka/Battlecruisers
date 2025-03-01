@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats
 {
-    public class PvPSkyStatsController : MonoBehaviour, IPvPSkyStats
+    public class PvPSkyStatsController : MonoBehaviour, ISkyStats
     {
         public IMoonStats MoonStats { get; private set; }
 

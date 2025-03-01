@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
@@ -36,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
             skyStatsGroup.Initialise();
-            IPvPSkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
+            ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
             background.Initialise(backgroundStats, cameraAspectRatio, new PvPBackgroundImageCalculator());
 

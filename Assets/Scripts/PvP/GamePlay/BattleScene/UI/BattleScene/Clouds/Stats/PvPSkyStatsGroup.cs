@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private const int EXPECTED_NUMBER_OF_SKIES = 7;
 
-        public IList<IPvPSkyStats> SkyStats { get; private set; }
+        public IList<ISkyStats> SkyStats { get; private set; }
 
         public void Initialise()
         {
             PvPSkyStatsController[] skyStats = GetComponentsInChildren<PvPSkyStatsController>();
             Assert.AreEqual(EXPECTED_NUMBER_OF_SKIES, skyStats.Length);
 
-            SkyStats = new List<IPvPSkyStats>();
+            SkyStats = new List<ISkyStats>();
             foreach (PvPSkyStatsController stats in skyStats)
             {
                 stats.Initialise();
@@ -24,9 +25,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public IPvPSkyStats GetSkyStats(string skyMaterialName)
+        public ISkyStats GetSkyStats(string skyMaterialName)
         {
-            IPvPSkyStats skyStats = SkyStats.FirstOrDefault(stats => stats.SkyMaterial.name == skyMaterialName);
+            ISkyStats skyStats = SkyStats.FirstOrDefault(stats => stats.SkyMaterial.name == skyMaterialName);
             Assert.IsNotNull(skyStats, $"Unknown sky material name: {skyMaterialName}");
             return skyStats;
         }
