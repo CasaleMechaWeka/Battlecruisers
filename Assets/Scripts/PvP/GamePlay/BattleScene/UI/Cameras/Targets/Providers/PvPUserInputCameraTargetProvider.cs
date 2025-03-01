@@ -1,3 +1,4 @@
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils;
 using System;
 
@@ -9,8 +10,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public abstract int Priority { get; }
 
-        private IPvPCameraTarget _target;
-        public IPvPCameraTarget Target
+        private ICameraTarget _target;
+        public ICameraTarget Target
         {
             get { return _target; }
             protected set

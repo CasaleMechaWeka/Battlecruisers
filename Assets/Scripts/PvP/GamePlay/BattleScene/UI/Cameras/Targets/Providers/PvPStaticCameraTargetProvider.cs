@@ -1,3 +1,5 @@
+using BattleCruisers.UI.Cameras.Targets;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
     public class PvPStaticCameraTargetProvider : PvPUserInputCameraTargetProvider, IPvPStaticCameraTargetProvider
@@ -9,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             Priority = priority;
         }
 
-        public void SetTarget(IPvPCameraTarget target)
+        public void SetTarget(ICameraTarget target)
         {
             Target = target;
         }

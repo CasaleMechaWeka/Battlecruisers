@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _validOrthographicSizes = validOrthographicSizes;
         }
 
-        public IPvPCameraTarget ZoomOut(float orthographicSizeDelta)
+        public ICameraTarget ZoomOut(float orthographicSizeDelta)
         {
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
 
@@ -46,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     targetOrthographicSize);
         }
 
-        public IPvPCameraTarget ZoomIn(float orthographicSizeDelta, Vector3 contactPosition)
+        public ICameraTarget ZoomIn(float orthographicSizeDelta, Vector3 contactPosition)
         {
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
 

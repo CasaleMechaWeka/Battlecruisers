@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -11,30 +12,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPCameraTargets : IPvPCameraTargets
     {
-        public IPvPCameraTarget PlayerCruiserTarget
+        public ICameraTarget PlayerCruiserTarget
         {
             get
             {
                 return FindCruiserTarget(_camera, _cameraCalculator, _playerCruiser);
             }
         }
-        public IPvPCameraTarget PlayerCruiserDeathTarget { get; }
-        public IPvPCameraTarget PlayerCruiserNukedTarget { get; }
-        public IPvPCameraTarget PlayerNavalFactoryTarget { get; }
+        public ICameraTarget PlayerCruiserDeathTarget { get; }
+        public ICameraTarget PlayerCruiserNukedTarget { get; }
+        public ICameraTarget PlayerNavalFactoryTarget { get; }
 
-        public IPvPCameraTarget EnemyCruiserTarget
+        public ICameraTarget EnemyCruiserTarget
         {
             get
             {
                 return FindCruiserTarget(_camera, _cameraCalculator, _enemyCruiser);
             }
         }
-        public IPvPCameraTarget EnemyCruiserDeathTarget { get; }
-        public IPvPCameraTarget EnemyCruiserNukedTarget { get; }
-        public IPvPCameraTarget EnemyNavalFactoryTarget { get; }
+        public ICameraTarget EnemyCruiserDeathTarget { get; }
+        public ICameraTarget EnemyCruiserNukedTarget { get; }
+        public ICameraTarget EnemyNavalFactoryTarget { get; }
 
-        public IPvPCameraTarget MidLeftTarget { get; }
-        public IPvPCameraTarget OverviewTarget { get; }
+        public ICameraTarget MidLeftTarget { get; }
+        public ICameraTarget OverviewTarget { get; }
 
         private const float CRUISER_DEATH_ORTHOGRAPHIC_SIZE = 10;
         private const float MID_ORTHOGRAPHIC_SIZE = 15;
@@ -84,14 +85,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             EnemyCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, enemyCruiser.Position.x);
         }
 
-        private IPvPCameraTarget FindCruiserTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, IPvPCruiser cruiser)
+        private ICameraTarget FindCruiserTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, IPvPCruiser cruiser)
         {
             float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser) + 0.75f;
             Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
             return new PvPCameraTarget(targetPosition, targetOrthographicSize);
         }
 
-        private IPvPCameraTarget CreateTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, float orthographicSize, float xPosition)
+        private ICameraTarget CreateTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, float orthographicSize, float xPosition)
         {
             float yPosition = cameraCalculator.FindCameraYPosition(orthographicSize);
             Vector3 position = new Vector3(xPosition, yPosition, camera.Position.z);

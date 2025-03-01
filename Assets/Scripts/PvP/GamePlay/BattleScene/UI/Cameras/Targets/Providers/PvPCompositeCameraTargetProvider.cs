@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             }
         }
 
-        public IPvPCameraTarget Target => ActiveTargetProvider.Target;
+        public ICameraTarget Target => ActiveTargetProvider.Target;
 
         public event EventHandler TargetChanged;
 

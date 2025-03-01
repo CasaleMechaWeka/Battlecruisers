@@ -1,9 +1,10 @@
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets
 {
-    public class PvPCameraTarget : IPvPCameraTarget
+    public class PvPCameraTarget : ICameraTarget
     {
         public Vector3 Position { get; }
         public float OrthographicSize { get; }

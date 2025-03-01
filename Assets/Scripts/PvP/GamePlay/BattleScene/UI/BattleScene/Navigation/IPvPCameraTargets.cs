@@ -1,20 +1,20 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
     public interface IPvPCameraTargets
     {
-        IPvPCameraTarget PlayerCruiserTarget { get; }
-        IPvPCameraTarget PlayerCruiserDeathTarget { get; }
-        IPvPCameraTarget PlayerCruiserNukedTarget { get; }
-        IPvPCameraTarget PlayerNavalFactoryTarget { get; }
+        ICameraTarget PlayerCruiserTarget { get; }
+        ICameraTarget PlayerCruiserDeathTarget { get; }
+        ICameraTarget PlayerCruiserNukedTarget { get; }
+        ICameraTarget PlayerNavalFactoryTarget { get; }
 
-        IPvPCameraTarget EnemyCruiserTarget { get; }
-        IPvPCameraTarget EnemyCruiserDeathTarget { get; }
-        IPvPCameraTarget EnemyCruiserNukedTarget { get; }
-        IPvPCameraTarget EnemyNavalFactoryTarget { get; }
+        ICameraTarget EnemyCruiserTarget { get; }
+        ICameraTarget EnemyCruiserDeathTarget { get; }
+        ICameraTarget EnemyCruiserNukedTarget { get; }
+        ICameraTarget EnemyNavalFactoryTarget { get; }
 
-        IPvPCameraTarget MidLeftTarget { get; }
-        IPvPCameraTarget OverviewTarget { get; }
+        ICameraTarget MidLeftTarget { get; }
+        ICameraTarget OverviewTarget { get; }
     }
 }

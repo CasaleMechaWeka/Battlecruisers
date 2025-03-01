@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPCameraTargetTracker : ICameraTargetTracker
     {
         private readonly ICamera _camera;
-        private readonly IPvPCameraTarget _target;
+        private readonly ICameraTarget _target;
         private readonly IPvPCameraTargetEqualityCalculator _equalityCalculator;
 
         private readonly ISettableBroadcastingProperty<bool> _isOnTarget;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public PvPCameraTargetTracker(
             ICamera camera,
-            IPvPCameraTarget target,
+            ICameraTarget target,
             IPvPCameraTargetEqualityCalculator equalityCalculator)
         {
             PvPHelper.AssertIsNotNull(camera, target, equalityCalculator);
