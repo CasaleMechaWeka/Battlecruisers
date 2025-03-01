@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer;
         }
 
-        public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
+        public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager
             )
         {
@@ -151,7 +151,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return aiManager.CreateAI(levelInfo, FindDifficulty() /* should be modified in production*/);
         }
 
-        public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
+        public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator)

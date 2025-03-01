@@ -39,12 +39,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
-        IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
+        IUserChosenTargetHelper CreateUserChosenTargetHelper(
                              IUserChosenTargetManager playerCruiserUserChosenTargetManager
                              // IPrioritisedSoundPlayer soundPlayer,
                              //  IPvPTargetIndicator targetIndicator
                              );
-        IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
+        IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator

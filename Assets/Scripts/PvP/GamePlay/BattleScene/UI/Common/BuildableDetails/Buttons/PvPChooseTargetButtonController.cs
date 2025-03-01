@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 {
     public class PvPChooseTargetButtonController : PvPCanvasGroupButton, IButton
     {
-        private IPvPUserChosenTargetHelper _userChosenTargetHelper;
+        private IUserChosenTargetHelper _userChosenTargetHelper;
         private IFilter<ITarget> _buttonVisibilityFilter;
 
         public Image activeFeedback;
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IPvPUserChosenTargetHelper userChosenTargetHelper,
+            IUserChosenTargetHelper userChosenTargetHelper,
             IFilter<ITarget> buttonVisibilityFilter)
         {
             base.Initialise(soundPlayer);

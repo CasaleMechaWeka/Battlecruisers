@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public CaptainExo leftCaptain, rightCaptain;
         public Transform leftContainer, rightContainer;
         private PvPCaptainExoHUDController captainController;
-        public IPvPUserChosenTargetHelper userChosenTargetHelper;
+        public IUserChosenTargetHelper userChosenTargetHelper;
         public bool canFlee = true;
         private bool isCompletedBattleByFlee = false;
         private bool isStartedPvP = false;

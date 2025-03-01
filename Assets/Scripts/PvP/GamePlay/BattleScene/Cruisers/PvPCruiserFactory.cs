@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser playerBCruiser,
             // IPvPCameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker
-            // IPvPUserChosenTargetHelper userChosenTargetHelper
+            // IUserChosenTargetHelper userChosenTargetHelper
             )
         {
             PvPHelper.AssertIsNotNull(playerACruiser, playerBCruiser,/* cameraFocuser,*/ userChosenTargetTracker);
@@ -125,7 +125,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser playerACruiser,
         //    IPvPCameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker
-            /* IPvPUserChosenTargetHelper userChosenTargetHelper */)
+            /* IUserChosenTargetHelper userChosenTargetHelper */)
         {
             PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
 

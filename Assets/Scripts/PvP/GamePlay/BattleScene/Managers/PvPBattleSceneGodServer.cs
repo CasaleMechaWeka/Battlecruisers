@@ -57,8 +57,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static Sprite playerBCruiserSprite;
         public static string playerBCruiserName;
 
-        public IPvPUserChosenTargetHelper playerBCruiseruserChosenTargetHelper;
-        public IPvPUserChosenTargetHelper playerACruiseruserChosenTargetHelper;
+        public IUserChosenTargetHelper playerBCruiseruserChosenTargetHelper;
+        public IUserChosenTargetHelper playerACruiseruserChosenTargetHelper;
 
         private bool isInitializingServer = false;
 

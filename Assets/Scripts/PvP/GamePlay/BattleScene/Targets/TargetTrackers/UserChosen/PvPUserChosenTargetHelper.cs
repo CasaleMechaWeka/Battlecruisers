@@ -12,7 +12,7 @@ using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen
 {
-    public class PvPUserChosenTargetHelper : IPvPUserChosenTargetHelper
+    public class PvPUserChosenTargetHelper : IUserChosenTargetHelper
     {
         private readonly IUserChosenTargetManager _userChosenTargetManager;
         private readonly IPrioritisedSoundPlayer _soundPlayer;

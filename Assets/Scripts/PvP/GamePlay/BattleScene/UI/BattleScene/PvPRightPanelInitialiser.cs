@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
@@ -14,6 +13,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Update;
 
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IApplicationModel applicationModel,
             IPvPUIManager uiManager,
             IPvPCruiser playerCruiser,
-            IPvPUserChosenTargetHelper userChosenTargetHelper,
+            IUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IUpdater perFrameUpdater,
             IPauseGameManager pauseGameManager,
@@ -82,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUIManager uiManager,
             IPvPCruiser playerCruiser,
             IUpdater perFrameUpdater,
-            IPvPUserChosenTargetHelper userChosenTargetHelper,
+            IUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             ISingleSoundPlayer soundPlayer)
         {

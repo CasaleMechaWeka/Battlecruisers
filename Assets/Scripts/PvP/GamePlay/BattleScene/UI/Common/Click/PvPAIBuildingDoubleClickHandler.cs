@@ -1,15 +1,15 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click
 {
     public class PvPAIBuildingDoubleClickHandler : IPvPDoubleClickHandler<IPvPBuilding>
     {
-        private readonly IPvPUserChosenTargetHelper _userChosenTargetHelper;
+        private readonly IUserChosenTargetHelper _userChosenTargetHelper;
 
-        public PvPAIBuildingDoubleClickHandler(IPvPUserChosenTargetHelper userChosenTargetHelper)
+        public PvPAIBuildingDoubleClickHandler(IUserChosenTargetHelper userChosenTargetHelper)
         {
             Assert.IsNotNull(userChosenTargetHelper);
             _userChosenTargetHelper = userChosenTargetHelper;
