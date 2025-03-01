@@ -1,15 +1,16 @@
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage
 {
-    public class PvPHealthStateMonitor : IPvPHealthStateMonitor
+    public class PvPHealthStateMonitor : IHealthStateMonitor
     {
         private readonly PvPTarget _damagable;
 
-        private PvPHealthState _healthState;
-        public PvPHealthState HealthState
+        private HealthState _healthState;
+        public HealthState HealthState
         {
             get { return _healthState; }
             private set
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(damagable);
 
             _damagable = damagable;
-            _healthState = PvPHealthState.FullHealth;
+            _healthState = HealthState.FullHealth;
 
             _damagable.pvp_Health.OnValueChanged += _damagable_HealthChanged;
             _damagable.pvp_Destroyed.OnValueChanged += _damagable_Destroyed;
@@ -45,29 +46,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             HealthState = FindHealthState(healthProportionRemaining);
         }
 
-        private PvPHealthState FindHealthState(float healthProportionRemaining)
+        private HealthState FindHealthState(float healthProportionRemaining)
         {
             if (healthProportionRemaining >= 1)
             {
-                return PvPHealthState.FullHealth;
+                return HealthState.FullHealth;
             }
             else if (healthProportionRemaining >= DAMAGED_THRESHOLD)
             {
-                return PvPHealthState.SlightlyDamaged;
+                return HealthState.SlightlyDamaged;
             }
             else if (healthProportionRemaining >= SEVERELY_DAMAGED_THRESHOLD)
             {
-                return PvPHealthState.Damaged;
+                return HealthState.Damaged;
             }
             else
             {
-                return PvPHealthState.SeverelyDamaged;
+                return HealthState.SeverelyDamaged;
             }
         }
 
         private void _damagable_Destroyed(bool oldVal, bool newVal)
         {
-            HealthState = PvPHealthState.NoHealth;
+            HealthState = HealthState.NoHealth;
 
             _damagable.pvp_Health.OnValueChanged -= _damagable_HealthChanged;
             _damagable.pvp_Destroyed.OnValueChanged -= _damagable_Destroyed;

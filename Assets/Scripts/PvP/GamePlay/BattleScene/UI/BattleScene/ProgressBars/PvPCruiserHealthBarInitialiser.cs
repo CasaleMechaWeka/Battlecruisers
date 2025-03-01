@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
@@ -17,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         public Image _lowHealthFeedback;
         public PvPDamageTakenIndicator damageTakenIndicator;
-        private IPvPHealthStateMonitor _cruiserHealthMonitor;
+        private IHealthStateMonitor _cruiserHealthMonitor;
 
         public IHighlightable Initialise(PvPCruiser cruiser)
         {
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         private void CruiserHealthMonitor_HealthStateChanged(object sender, EventArgs e)
         {
-            _lowHealthFeedback.enabled = _cruiserHealthMonitor.HealthState == PvPHealthState.SeverelyDamaged;
+            _lowHealthFeedback.enabled = _cruiserHealthMonitor.HealthState == HealthState.SeverelyDamaged;
         }
     }
 }
