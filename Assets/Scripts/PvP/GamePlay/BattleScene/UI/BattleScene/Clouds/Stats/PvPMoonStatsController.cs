@@ -1,8 +1,9 @@
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats
 {
-    public class PvPMoonStatsController : MonoBehaviour, IPvPMoonStats
+    public class PvPMoonStatsController : MonoBehaviour, IMoonStats
     {
         public bool showMoon;
         public bool ShowMoon => showMoon;

@@ -6,6 +6,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public interface IPvPSkyStats : ICloudStats
     {
         Material SkyMaterial { get; }
-        IPvPMoonStats MoonStats { get; }
+        IMoonStats MoonStats { get; }
     }
 }

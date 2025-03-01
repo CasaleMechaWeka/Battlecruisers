@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPMoonController : MonoBehaviour
     {
-        public void Initialise(IPvPMoonStats moonStats)
+        public void Initialise(IMoonStats moonStats)
         {
             Image moon = GetComponent<Image>();
             Assert.IsNotNull(moon);

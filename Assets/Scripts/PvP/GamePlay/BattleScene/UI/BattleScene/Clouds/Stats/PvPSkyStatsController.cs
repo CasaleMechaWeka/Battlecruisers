@@ -1,3 +1,4 @@
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -5,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPSkyStatsController : MonoBehaviour, IPvPSkyStats
     {
-        public IPvPMoonStats MoonStats { get; private set; }
+        public IMoonStats MoonStats { get; private set; }
 
         public Material skyboxMaterial;
         public Material SkyMaterial => skyboxMaterial;
@@ -38,11 +39,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private Color _fogColour;
         public Color FogColour => _fogColour;
 
-        [SerializeField] 
-        private Color _waterColour; 
-        public Color WaterColour => _waterColour; 
+        [SerializeField]
+        private Color _waterColour;
+        public Color WaterColour => _waterColour;
 
-        [SerializeField] private Color _underwaterGlowColour; 
+        [SerializeField] private Color _underwaterGlowColour;
         public Color UnderwaterGlowColour => _underwaterGlowColour;
 
 
