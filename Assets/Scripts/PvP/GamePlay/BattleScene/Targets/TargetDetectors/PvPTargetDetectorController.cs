@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
-    public class PvPTargetDetectorController : MonoBehaviour, ITargetDetector, IPvPTargetDetectorEventEmitter
+    public class PvPTargetDetectorController : MonoBehaviour, ITargetDetector, ITargetDetectorEventEmitter
     {
         private ITargetColliderHandler _targetColliderHandler;
 

@@ -6,9 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPTargetColliderHandler : ITargetColliderHandler
     {
-        private readonly IPvPTargetDetectorEventEmitter _eventEmitter;
+        private readonly ITargetDetectorEventEmitter _eventEmitter;
 
-        public PvPTargetColliderHandler(IPvPTargetDetectorEventEmitter eventEmitter)
+        public PvPTargetColliderHandler(ITargetDetectorEventEmitter eventEmitter)
         {
             Assert.IsNotNull(eventEmitter);
             _eventEmitter = eventEmitter;
