@@ -1,9 +1,10 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Targets.TargetDetectors;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
-    public class PvPTargetColliderHandler : IPvPTargetColliderHandler
+    public class PvPTargetColliderHandler : ITargetColliderHandler
     {
         private readonly IPvPTargetDetectorEventEmitter _eventEmitter;
 
