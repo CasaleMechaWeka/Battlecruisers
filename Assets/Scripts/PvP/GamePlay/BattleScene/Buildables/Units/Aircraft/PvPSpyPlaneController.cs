@@ -5,7 +5,7 @@ using BCUtils = BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
-    public class PvPSpyPlaneController : PvPAircraftController, IPvPSpyPlaneController
+    public class PvPSpyPlaneController : PvPAircraftController, IPvPUnit
     {
         // IList is not picked up by the Unity inspector
         public List<Vector2> patrolPoints;
