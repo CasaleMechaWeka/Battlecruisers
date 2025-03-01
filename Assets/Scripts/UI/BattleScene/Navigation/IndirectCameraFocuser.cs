@@ -46,24 +46,24 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             switch (_indirectFocusTarget)
             {
                 case IndirectFocusTarget.PlayerCruiser:
-                    _coreFocuser.FocusOnPlayerCruiser();
+                    _coreFocuser.FocusOnLeftCruiser();
                     break;
 
                 case IndirectFocusTarget.AICruiser:
-                    _coreFocuser.FocusOnAICruiser();
+                    _coreFocuser.FocusOnRightCruiser();
                     break;
             }
 
             _indirectFocusTarget = IndirectFocusTarget.None;
         }
 
-        public void FocusOnAICruiser()
+        public void FocusOnRightCruiser()
         {
             if (_camera.Position.x + INDIRECTION_BUFFER_IN_M > 0)
             {
                 // Direct
                 _indirectFocusTarget = IndirectFocusTarget.None;
-                _coreFocuser.FocusOnAICruiser();
+                _coreFocuser.FocusOnRightCruiser();
             }
             else
             {
@@ -73,13 +73,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             }
         }
 
-        public void FocusOnPlayerCruiser()
+        public void FocusOnLeftCruiser()
         {
             if (_camera.Position.x - INDIRECTION_BUFFER_IN_M < 0)
             {
                 // Direct
                 _indirectFocusTarget = IndirectFocusTarget.None;
-                _coreFocuser.FocusOnPlayerCruiser();
+                _coreFocuser.FocusOnLeftCruiser();
             }
             else
             {
@@ -95,22 +95,22 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _coreFocuser.FocusMidLeft();
         }
 
-        public void FocusOnAICruiserDeath()
+        public void FocusOnRightCruiserDeath()
         {
             _indirectFocusTarget = IndirectFocusTarget.None;
-            _coreFocuser.FocusOnAICruiserDeath();
+            _coreFocuser.FocusOnRightCruiserDeath();
         }
 
-        public void FocusOnAICruiserNuke()
+        public void FocusOnRightCruiserNuke()
         {
             _indirectFocusTarget = IndirectFocusTarget.None;
-            _coreFocuser.FocusOnAICruiserNuke();
+            _coreFocuser.FocusOnRightCruiserNuke();
         }
 
-        public void FocusOnAINavalFactory()
+        public void FocusOnRightNavalFactory()
         {
             _indirectFocusTarget = IndirectFocusTarget.None;
-            _coreFocuser.FocusOnAINavalFactory();
+            _coreFocuser.FocusOnRightNavalFactory();
         }
 
         public void FocusOnOverview()
@@ -119,22 +119,22 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _coreFocuser.FocusOnOverview();
         }
 
-        public void FocusOnPlayerCruiserDeath()
+        public void FocusOnLeftCruiserDeath()
         {
             _indirectFocusTarget = IndirectFocusTarget.None;
-            _coreFocuser.FocusOnPlayerCruiserDeath();
+            _coreFocuser.FocusOnLeftCruiserDeath();
         }
 
-        public void FocusOnPlayerCruiserNuke()
+        public void FocusOnLeftCruiserNuke()
         {
             _indirectFocusTarget = IndirectFocusTarget.None;
-            _coreFocuser.FocusOnPlayerCruiserNuke();
+            _coreFocuser.FocusOnLeftCruiserNuke();
         }
 
-        public void FocusOnPlayerNavalFactory()
+        public void FocusOnLeftNavalFactory()
         {
             _indirectFocusTarget = IndirectFocusTarget.None;
-            _coreFocuser.FocusOnPlayerNavalFactory();
+            _coreFocuser.FocusOnLeftNavalFactory();
         }
     }
 }

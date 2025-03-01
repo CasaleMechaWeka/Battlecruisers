@@ -20,8 +20,8 @@ namespace BattleCruisers.UI.Cameras.Helpers
         public const float BOW_SLOT_CAMERA_MARGIN_IN_M = 1;
 
         public PlayerCruiserFocusHelper(
-            ICamera camera, 
-            ICameraFocuser cameraFocuser, 
+            ICamera camera,
+            ICameraFocuser cameraFocuser,
             ICruiser playerCruiser,
             bool isTutorial)
         {
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         {
             if (!IsCameraRoughlyOnPlayerCruiser())
             {
-                _cameraFocuser.FocusOnPlayerCruiser();
+                _cameraFocuser.FocusOnLeftCruiser();
             }
         }
 
@@ -51,13 +51,13 @@ namespace BattleCruisers.UI.Cameras.Helpers
             if (!_isTutorial
                 && !IsCameraRoughlyOnPlayerNavalFactory())
             {
-                _cameraFocuser.FocusOnPlayerNavalFactory();
+                _cameraFocuser.FocusOnLeftNavalFactory();
             }
         }
 
         private bool IsCameraRoughlyOnPlayerNavalFactory()
         {
-            ISlot bowSlot 
+            ISlot bowSlot
                 = _playerCruiser.SlotAccessor
                     .GetSlots(new SlotSpecification(SlotType.Bow))
                     .FirstOrDefault();

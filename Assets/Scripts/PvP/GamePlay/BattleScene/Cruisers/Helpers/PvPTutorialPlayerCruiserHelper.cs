@@ -1,14 +1,14 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers
 {
     public class PvPTutorialPlayerCruiserHelper : PvPCruiserHelper
     {
-        public PvPTutorialPlayerCruiserHelper(  IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser )
-            : base(  uIManager, cameraFocuser )
+        public PvPTutorialPlayerCruiserHelper(IPvPUIManager uIManager, ICameraFocuser cameraFocuser)
+            : base(uIManager, cameraFocuser)
         {
         }
 

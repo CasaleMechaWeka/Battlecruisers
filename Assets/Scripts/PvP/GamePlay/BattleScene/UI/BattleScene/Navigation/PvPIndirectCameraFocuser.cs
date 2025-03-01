@@ -1,9 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
-
-
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
@@ -17,16 +16,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     /// cruisers where the camera will show the overview before going to
     /// the actual cruiser.
     /// </summary>
-    public class PvPIndirectCameraFocuser : IPvPCameraFocuser
+    public class PvPIndirectCameraFocuser : ICameraFocuser
     {
-        private readonly IPvPCameraFocuser _coreFocuser;
+        private readonly ICameraFocuser _coreFocuser;
         private readonly ICamera _camera;
         private readonly ICameraTargetTracker _overviewTargetTracker;
         private PvPIndirectFocusTarget _indirectFocusTarget;
 
         public const float INDIRECTION_BUFFER_IN_M = 10;
 
-        public PvPIndirectCameraFocuser(IPvPCameraFocuser coreFocuser, ICamera camera, ICameraTargetTracker overviewTargetTracker)
+        public PvPIndirectCameraFocuser(ICameraFocuser coreFocuser, ICamera camera, ICameraTargetTracker overviewTargetTracker)
         {
             PvPHelper.AssertIsNotNull(coreFocuser, camera, overviewTargetTracker);
 
@@ -48,24 +47,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             switch (_indirectFocusTarget)
             {
                 case PvPIndirectFocusTarget.PlayerCruiser:
-                    _coreFocuser.FocusOnLeftPlayerCruiser();
+                    _coreFocuser.FocusOnLeftCruiser();
                     break;
 
                 case PvPIndirectFocusTarget.EnemyCruiser:
-                    _coreFocuser.FocusOnRightPlayerCruiser();
+                    _coreFocuser.FocusOnRightCruiser();
                     break;
             }
 
             _indirectFocusTarget = PvPIndirectFocusTarget.None;
         }
 
-        public void FocusOnRightPlayerCruiser()
+        public void FocusOnRightCruiser()
         {
             if (_camera.Position.x + INDIRECTION_BUFFER_IN_M > 0)
             {
                 // Direct
                 _indirectFocusTarget = PvPIndirectFocusTarget.None;
-                _coreFocuser.FocusOnRightPlayerCruiser();
+                _coreFocuser.FocusOnRightCruiser();
             }
             else
             {
@@ -75,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public void FocusOnLeftPlayerCruiser()
+        public void FocusOnLeftCruiser()
         {
 
 
@@ -83,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 // Direct
                 _indirectFocusTarget = PvPIndirectFocusTarget.None;
-                _coreFocuser.FocusOnLeftPlayerCruiser();
+                _coreFocuser.FocusOnLeftCruiser();
             }
             else
             {
@@ -99,22 +98,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _coreFocuser.FocusMidLeft();
         }
 
-        public void FocusOnRightPlayerCruiserDeath()
+        public void FocusOnRightCruiserDeath()
         {
             _indirectFocusTarget = PvPIndirectFocusTarget.None;
-            _coreFocuser.FocusOnRightPlayerCruiserDeath();
+            _coreFocuser.FocusOnRightCruiserDeath();
         }
 
-        public void FocusOnRightPlayerCruiserNuke()
+        public void FocusOnRightCruiserNuke()
         {
             _indirectFocusTarget = PvPIndirectFocusTarget.None;
-            _coreFocuser.FocusOnRightPlayerCruiserNuke();
+            _coreFocuser.FocusOnRightCruiserNuke();
         }
 
-        public void FocusOnRightPlayerNavalFactory()
+        public void FocusOnRightNavalFactory()
         {
             _indirectFocusTarget = PvPIndirectFocusTarget.None;
-            _coreFocuser.FocusOnRightPlayerNavalFactory();
+            _coreFocuser.FocusOnRightNavalFactory();
         }
 
         public void FocusOnOverview()
@@ -123,22 +122,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _coreFocuser.FocusOnOverview();
         }
 
-        public void FocusOnLeftPlayerCruiserDeath()
+        public void FocusOnLeftCruiserDeath()
         {
             _indirectFocusTarget = PvPIndirectFocusTarget.None;
-            _coreFocuser.FocusOnLeftPlayerCruiserDeath();
+            _coreFocuser.FocusOnLeftCruiserDeath();
         }
 
-        public void FocusOnLeftPlayerCruiserNuke()
+        public void FocusOnLeftCruiserNuke()
         {
             _indirectFocusTarget = PvPIndirectFocusTarget.None;
-            _coreFocuser.FocusOnLeftPlayerCruiserNuke();
+            _coreFocuser.FocusOnLeftCruiserNuke();
         }
 
-        public void FocusOnLeftPlayerNavalFactory()
+        public void FocusOnLeftNavalFactory()
         {
             _indirectFocusTarget = PvPIndirectFocusTarget.None;
-            _coreFocuser.FocusOnLeftPlayerNavalFactory();
+            _coreFocuser.FocusOnLeftNavalFactory();
         }
     }
 }

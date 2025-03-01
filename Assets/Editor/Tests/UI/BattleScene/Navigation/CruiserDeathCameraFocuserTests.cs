@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _cruiserDeathCameraFocuser.FocusOnLosingCruiser(_losingCruiser);
 
-            _cameraFocuser.Received().FocusOnPlayerCruiserNuke();
+            _cameraFocuser.Received().FocusOnLeftCruiserNuke();
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _cruiserDeathCameraFocuser.FocusOnLosingCruiser(_losingCruiser);
 
-            _cameraFocuser.Received().FocusOnPlayerCruiserDeath();
+            _cameraFocuser.Received().FocusOnLeftCruiserDeath();
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _cruiserDeathCameraFocuser.FocusOnLosingCruiser(_losingCruiser);
 
-            _cameraFocuser.Received().FocusOnAICruiserNuke();
+            _cameraFocuser.Received().FocusOnRightCruiserNuke();
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _cruiserDeathCameraFocuser.FocusOnLosingCruiser(_losingCruiser);
 
-            _cameraFocuser.Received().FocusOnAICruiserDeath();
+            _cameraFocuser.Received().FocusOnRightCruiserDeath();
         }
     }
 }

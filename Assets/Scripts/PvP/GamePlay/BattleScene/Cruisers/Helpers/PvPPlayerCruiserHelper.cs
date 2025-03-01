@@ -1,13 +1,13 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers
 {
     public class PvPPlayerCruiserHelper : PvPCruiserHelper
     {
-        public PvPPlayerCruiserHelper(IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser)
+        public PvPPlayerCruiserHelper(IPvPUIManager uIManager, ICameraFocuser cameraFocuser)
             : base(uIManager, cameraFocuser)
         {
         }
@@ -17,20 +17,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (isOwner)
             {
                 if (team == Team.LEFT)
-                    _cameraFocuser.FocusOnLeftPlayerCruiser();
+                    _cameraFocuser.FocusOnLeftCruiser();
                 else
-                    _cameraFocuser.FocusOnRightPlayerCruiser();
+                    _cameraFocuser.FocusOnRightCruiser();
             }
             else
             {
                 if (team == Team.LEFT)
-                    _cameraFocuser.FocusOnRightPlayerCruiser();
+                    _cameraFocuser.FocusOnRightCruiser();
                 else
-                    _cameraFocuser.FocusOnLeftPlayerCruiser();
+                    _cameraFocuser.FocusOnLeftCruiser();
             }
         }
 
-        public PvPPlayerCruiserHelper(/*IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser*/)
+        public PvPPlayerCruiserHelper(/*IPvPUIManager uIManager, ICameraFocuser cameraFocuser*/)
     : base(/*uIManager, cameraFocuser*/)
         {
 

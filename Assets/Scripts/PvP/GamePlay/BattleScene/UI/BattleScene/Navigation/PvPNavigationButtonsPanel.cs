@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPCanvasGroupButton heckleButton, mainMenuButton;
 
-        public void Initialise(IBroadcastingFilter enabledFilter, IPvPCameraFocuser cameraFocuser, ISingleSoundPlayer singleSoundPlayer)
+        public void Initialise(IBroadcastingFilter enabledFilter, ICameraFocuser cameraFocuser, ISingleSoundPlayer singleSoundPlayer)
         {
             base.Initialise();
 
@@ -24,11 +25,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(enabledFilter, cameraFocuser);
 
             overviewButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnOverview);
-            leftPlayerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftPlayerCruiser);
-            rightPlayerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightPlayerCruiser);
+            leftPlayerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftCruiser);
+            rightPlayerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightCruiser);
 
-            leftCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftPlayerCruiser);
-            rightCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightPlayerCruiser);
+            leftCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftCruiser);
+            rightCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightCruiser);
 
             _enabledToggler = new PvPFilterToggler(enabledFilter, overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton, leftCaptainButton, rightCaptainButton, heckleButton/*, mainMenuButton*/);
         }

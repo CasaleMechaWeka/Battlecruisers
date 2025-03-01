@@ -1,14 +1,15 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Offensive;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.UI.BattleScene.Navigation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
     public class PvPCruiserDeathCameraFocuser : IPvPCruiserDeathCameraFocuser
     {
-        private readonly IPvPCameraFocuser _cameraFocuser;
+        private readonly ICameraFocuser _cameraFocuser;
 
-        public PvPCruiserDeathCameraFocuser(IPvPCameraFocuser cameraFocuser)
+        public PvPCruiserDeathCameraFocuser(ICameraFocuser cameraFocuser)
         {
             Assert.IsNotNull(cameraFocuser);
             _cameraFocuser = cameraFocuser;
@@ -20,35 +21,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 if (IsNukeCauseOfDeath(losingCruiser))
                 {
-                    _cameraFocuser.FocusOnLeftPlayerCruiserNuke();
+                    _cameraFocuser.FocusOnLeftCruiserNuke();
                 }
                 else
                 {
-                    _cameraFocuser.FocusOnLeftPlayerCruiserDeath();
+                    _cameraFocuser.FocusOnLeftCruiserDeath();
                 }
             }
             else
             {
                 if (IsNukeCauseOfDeath(losingCruiser))
                 {
-                    _cameraFocuser.FocusOnRightPlayerCruiserNuke();
+                    _cameraFocuser.FocusOnRightCruiserNuke();
                 }
                 else
                 {
-                    _cameraFocuser.FocusOnRightPlayerCruiserDeath();
+                    _cameraFocuser.FocusOnRightCruiserDeath();
                 }
             }
         }
 
         public void FocusOnDisconnectedCruiser(bool isHost)
         {
-            if(isHost)
+            if (isHost)
             {
-                _cameraFocuser.FocusOnRightPlayerCruiserDeath();
+                _cameraFocuser.FocusOnRightCruiserDeath();
             }
             else
             {
-                _cameraFocuser.FocusOnLeftPlayerCruiserDeath();
+                _cameraFocuser.FocusOnLeftCruiserDeath();
             }
         }
 

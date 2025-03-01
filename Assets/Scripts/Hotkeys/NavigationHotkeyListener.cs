@@ -23,7 +23,7 @@ namespace BattleCruisers.Hotkeys
 
         private void _hotkeyDetector_PlayerCruiser(object sender, EventArgs e)
         {
-            _cameraFocuser.FocusOnPlayerCruiser();
+            _cameraFocuser.FocusOnLeftCruiser();
         }
 
         private void _hotkeyDetector_Overview(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace BattleCruisers.Hotkeys
 
         private void _hotkeyDetector_EnemyCruiser(object sender, EventArgs e)
         {
-            _cameraFocuser.FocusOnAICruiser();
+            _cameraFocuser.FocusOnRightCruiser();
         }
 
         public void DisposeManagedState()

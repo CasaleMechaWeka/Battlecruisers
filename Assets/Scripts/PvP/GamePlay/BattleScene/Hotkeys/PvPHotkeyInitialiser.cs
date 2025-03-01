@@ -3,10 +3,10 @@ using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Escape;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IPvPInput input,
             IUpdater updater,
             IBroadcastingFilter hotkeyFilter,
-            IPvPCameraFocuser cameraFocuser,
+            ICameraFocuser cameraFocuser,
             //            IPvPSpeedComponents speedComponents,
             IMainMenuManager mainMenuManager,
             IPvPUIManager uiManager)

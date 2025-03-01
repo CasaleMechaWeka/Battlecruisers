@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private readonly ICameraTransitionSpeedManager _cameraTransitionSpeedManager;
 
         public CameraFocuser(
-            ICameraTargets targets, 
+            ICameraTargets targets,
             IStaticCameraTargetProvider trumpCameraTargetProvider,
             IStaticCameraTargetProvider defaultCameraTargetProvider,
             ICameraTransitionSpeedManager cameraTransitionSpeedManager)
@@ -24,42 +24,42 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _cameraTransitionSpeedManager = cameraTransitionSpeedManager;
         }
 
-        public void FocusOnPlayerCruiser()
+        public void FocusOnLeftCruiser()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
             _defaultCameraTargetProvider.SetTarget(_targets.PlayerCruiserTarget);
         }
 
-        public void FocusOnPlayerCruiserDeath()
+        public void FocusOnLeftCruiserDeath()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
             _trumpCameraTargetProvider.SetTarget(_targets.PlayerCruiserDeathTarget);
         }
 
-        public void FocusOnPlayerNavalFactory()
+        public void FocusOnLeftNavalFactory()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
             _defaultCameraTargetProvider.SetTarget(_targets.PlayerNavalFactoryTarget);
         }
 
-        public void FocusOnAICruiser()
+        public void FocusOnRightCruiser()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
             _defaultCameraTargetProvider.SetTarget(_targets.AICruiserTarget);
         }
 
-        public void FocusOnAICruiserDeath()
+        public void FocusOnRightCruiserDeath()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
             _trumpCameraTargetProvider.SetTarget(_targets.AICruiserDeathTarget);
         }
 
-        public void FocusOnAINavalFactory()
+        public void FocusOnRightNavalFactory()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
@@ -80,14 +80,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             _defaultCameraTargetProvider.SetTarget(_targets.OverviewTarget);
         }
 
-        public void FocusOnPlayerCruiserNuke()
+        public void FocusOnLeftCruiserNuke()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
             _trumpCameraTargetProvider.SetTarget(_targets.PlayerCruiserNukedTarget);
         }
 
-        public void FocusOnAICruiserNuke()
+        public void FocusOnRightCruiserNuke()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();

@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers.Helpers
 
         public override void FocusCameraOnCruiser()
         {
-            _cameraFocuser.FocusOnPlayerCruiser();
+            _cameraFocuser.FocusOnLeftCruiser();
         }
 
         public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)

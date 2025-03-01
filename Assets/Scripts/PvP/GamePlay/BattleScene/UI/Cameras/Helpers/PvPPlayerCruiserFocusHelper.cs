@@ -1,9 +1,9 @@
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Linq;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPPlayerCruiserFocusHelper : IPvPPlayerCruiserFocusHelper
     {
         private readonly ICamera _camera;
-        private readonly IPvPCameraFocuser _cameraFocuser;
+        private readonly ICameraFocuser _cameraFocuser;
         private readonly IPvPCruiser _playerCruiser;
         private readonly bool _isTutorial;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public PvPPlayerCruiserFocusHelper(
             ICamera camera,
-            IPvPCameraFocuser cameraFocuser,
+            ICameraFocuser cameraFocuser,
             IPvPCruiser playerCruiser,
             bool isTutorial)
         {
@@ -40,9 +40,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             if (!IsCameraRoughlyOnPlayerCruiser())
             {
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-                    _cameraFocuser.FocusOnLeftPlayerCruiser();
+                    _cameraFocuser.FocusOnLeftCruiser();
                 else
-                    _cameraFocuser.FocusOnRightPlayerCruiser();
+                    _cameraFocuser.FocusOnRightCruiser();
             }
         }
 
@@ -57,9 +57,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                 && !IsCameraRoughlyOnPlayerNavalFactory())
             {
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-                    _cameraFocuser.FocusOnLeftPlayerNavalFactory();
+                    _cameraFocuser.FocusOnLeftNavalFactory();
                 else
-                    _cameraFocuser.FocusOnRightPlayerNavalFactory();
+                    _cameraFocuser.FocusOnRightNavalFactory();
             }
         }
 

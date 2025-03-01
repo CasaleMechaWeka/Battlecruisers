@@ -192,7 +192,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     navigationPermitters,
                     components.UpdaterProvider.SwitchableUpdater,
                     factoryProvider.Sound.UISoundPlayer);
-            cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
+            cameraComponents.CameraFocuser.FocusOnLeftCruiser();
 
             // Initialise player cruiser
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraComponents.CameraFocuser, playerCruiserUserChosenTargetManager);

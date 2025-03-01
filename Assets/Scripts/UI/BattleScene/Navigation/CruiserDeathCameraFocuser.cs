@@ -20,22 +20,22 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             {
                 if (IsNukeCauseOfDeath(losingCruiser))
                 {
-                    _cameraFocuser.FocusOnPlayerCruiserNuke();
+                    _cameraFocuser.FocusOnLeftCruiserNuke();
                 }
                 else
                 {
-                    _cameraFocuser.FocusOnPlayerCruiserDeath();
+                    _cameraFocuser.FocusOnLeftCruiserDeath();
                 }
             }
             else
             {
                 if (IsNukeCauseOfDeath(losingCruiser))
                 {
-                    _cameraFocuser.FocusOnAICruiserNuke();
+                    _cameraFocuser.FocusOnRightCruiserNuke();
                 }
                 else
                 {
-                    _cameraFocuser.FocusOnAICruiserDeath();
+                    _cameraFocuser.FocusOnRightCruiserDeath();
                 }
             }
         }

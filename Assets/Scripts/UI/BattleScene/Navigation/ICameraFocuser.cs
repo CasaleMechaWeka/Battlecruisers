@@ -2,14 +2,14 @@
 {
     public interface ICameraFocuser
     {
-        void FocusOnPlayerCruiser();
-        void FocusOnPlayerCruiserDeath();
-        void FocusOnPlayerCruiserNuke();
-        void FocusOnPlayerNavalFactory();
-        void FocusOnAICruiser();
-        void FocusOnAICruiserDeath();
-        void FocusOnAICruiserNuke();
-        void FocusOnAINavalFactory();
+        void FocusOnLeftCruiser();
+        void FocusOnLeftCruiserDeath();
+        void FocusOnLeftCruiserNuke();
+        void FocusOnLeftNavalFactory();
+        void FocusOnRightCruiser();
+        void FocusOnRightCruiserDeath();
+        void FocusOnRightCruiserNuke();
+        void FocusOnRightNavalFactory();
         void FocusMidLeft();
         void FocusOnOverview();
     }

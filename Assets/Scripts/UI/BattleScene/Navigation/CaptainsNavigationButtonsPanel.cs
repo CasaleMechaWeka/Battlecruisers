@@ -18,8 +18,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             Helper.AssertIsNotNull(playerCruiserButton, aiCruiserButton);
             Helper.AssertIsNotNull(enabledFilter, cameraFocuser);
 
-            playerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnPlayerCruiser);
-            aiCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnAICruiser);
+            playerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftCruiser);
+            aiCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightCruiser);
 
             _enabledToggler = new FilterToggler(enabledFilter, playerCruiserButton, aiCruiserButton);
         }

@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public float normalCameraSmoothTime = 0.15f;
         public float slowCameraSmoothTime = 0.5f;
         private ICamera icamera;
-        private IPvPCameraFocuser cameraFocuser;
+        private ICameraFocuser cameraFocuser;
         private IPvPStaticCameraTargetProvider defaultCameraTargetProvider;
         private IPvPStaticCameraTargetProvider trumpCameraTargetProvider;
         private IPvPCameraTargets targets;

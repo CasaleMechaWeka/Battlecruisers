@@ -26,19 +26,19 @@ namespace BattleCruisers.Tutorial.Steps
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
-            
+
             switch (_target)
             {
                 case CameraFocuserTarget.PlayerCruiser:
-                    _cameraFocuser.FocusOnPlayerCruiser();
+                    _cameraFocuser.FocusOnLeftCruiser();
                     break;
 
                 case CameraFocuserTarget.AICruiser:
-                    _cameraFocuser.FocusOnAICruiser();
+                    _cameraFocuser.FocusOnRightCruiser();
                     break;
 
                 case CameraFocuserTarget.AICruiserNavalFactory:
-                    _cameraFocuser.FocusOnAINavalFactory();
+                    _cameraFocuser.FocusOnRightNavalFactory();
                     break;
 
                 case CameraFocuserTarget.MidLeft:

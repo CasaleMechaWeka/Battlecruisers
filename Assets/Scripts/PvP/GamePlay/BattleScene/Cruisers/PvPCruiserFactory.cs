@@ -12,12 +12,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.H
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -89,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
-            // IPvPCameraFocuser cameraFocuser,
+            // ICameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker
             // IUserChosenTargetHelper userChosenTargetHelper
             )
@@ -123,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void InitialisePlayerBCruiser(
             PvPCruiser playerBCruiser,
             PvPCruiser playerACruiser,
-        //    IPvPCameraFocuser cameraFocuser,
+        //    ICameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker
             /* IUserChosenTargetHelper userChosenTargetHelper */)
         {
@@ -227,7 +227,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private IPvPCruiserHelper CreatePlayerBHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
+        private IPvPCruiserHelper CreatePlayerBHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             // if (_applicationModel.IsTutorial)
             // {
@@ -239,7 +239,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
-        private IPvPCruiserHelper CreatePlayerBHelper(/*IPvPUIManager uiManager  , IPvPCameraFocuser cameraFocuser*/)
+        private IPvPCruiserHelper CreatePlayerBHelper(/*IPvPUIManager uiManager  , ICameraFocuser cameraFocuser*/)
         {
             // if (_applicationModel.IsTutorial)
             // {
@@ -251,7 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
-        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
+        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             // if (_applicationModel.IsTutorial)
             // {
@@ -264,7 +264,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
 
-        private IPvPCruiserHelper CreatePlayerHelper(/*IPvPUIManager uiManager , IPvPCameraFocuser cameraFocuser*/)
+        private IPvPCruiserHelper CreatePlayerHelper(/*IPvPUIManager uiManager , ICameraFocuser cameraFocuser*/)
         {
             // if (_applicationModel.IsTutorial)
             // {

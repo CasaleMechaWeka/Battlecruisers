@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
-            _cameraFocuser.DidNotReceive().FocusOnPlayerCruiser();
+            _cameraFocuser.DidNotReceive().FocusOnLeftCruiser();
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
-            _cameraFocuser.Received().FocusOnPlayerCruiser();
+            _cameraFocuser.Received().FocusOnLeftCruiser();
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper.FocusOnPlayerBowSlotIfNeeded();
 
-            _cameraFocuser.DidNotReceive().FocusOnPlayerNavalFactory();
+            _cameraFocuser.DidNotReceive().FocusOnLeftNavalFactory();
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper.FocusOnPlayerBowSlotIfNeeded();
 
-            _cameraFocuser.DidNotReceive().FocusOnPlayerNavalFactory();
+            _cameraFocuser.DidNotReceive().FocusOnLeftNavalFactory();
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper.FocusOnPlayerBowSlotIfNeeded();
 
-            _cameraFocuser.Received().FocusOnPlayerNavalFactory();
+            _cameraFocuser.Received().FocusOnLeftNavalFactory();
         }
     }
 }

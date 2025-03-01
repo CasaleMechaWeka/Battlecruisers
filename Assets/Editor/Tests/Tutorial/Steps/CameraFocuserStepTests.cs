@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.PlayerCruiser);
             step.Start(_completionCallback);
 
-            _cameraFocuser.Received().FocusOnPlayerCruiser();
+            _cameraFocuser.Received().FocusOnLeftCruiser();
             Assert.AreEqual(1, _callbackCounter);
         }
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiser);
             step.Start(_completionCallback);
 
-            _cameraFocuser.Received().FocusOnAICruiser();
+            _cameraFocuser.Received().FocusOnRightCruiser();
             Assert.AreEqual(1, _callbackCounter);
         }
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiserNavalFactory);
             step.Start(_completionCallback);
 
-            _cameraFocuser.Received().FocusOnAINavalFactory();
+            _cameraFocuser.Received().FocusOnRightNavalFactory();
             Assert.AreEqual(1, _callbackCounter);
         }
 

@@ -759,7 +759,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             windManager?.DisposeManagedState();
         }
 
-        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
+        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
         }
@@ -875,9 +875,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 // Optionally focus based on team...
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-                    cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();
+                    cameraComponents.CameraFocuser.FocusOnLeftCruiser();
                 else if (SynchedServerData.Instance.GetTeam() == Team.RIGHT)
-                    cameraComponents.CameraFocuser.FocusOnRightPlayerCruiser();
+                    cameraComponents.CameraFocuser.FocusOnRightCruiser();
 
                 // In either case, mark loading as done.
                 MatchmakingScreenController.Instance.isProcessing = false;

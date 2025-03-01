@@ -7,14 +7,14 @@ namespace BattleCruisers.Cruisers.Helpers
 {
     public class AICruiserHelper : CruiserHelper
     {
-        public AICruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser) 
+        public AICruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser)
             : base(uIManager, cameraFocuser)
         {
         }
 
         public override void FocusCameraOnCruiser()
         {
-            _cameraFocuser.FocusOnAICruiser();
+            _cameraFocuser.FocusOnRightCruiser();
         }
 
         public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)

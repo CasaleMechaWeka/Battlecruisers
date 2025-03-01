@@ -31,15 +31,15 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnAICruiser_WithinBuffer_Direct()
         {
             _camera.Position.Returns(new Vector3(0.1f - IndirectCameraFocuser.INDIRECTION_BUFFER_IN_M, 0, 0));
-            _indirectFocuser.FocusOnAICruiser();
-            _coreFocuser.Received().FocusOnAICruiser();
+            _indirectFocuser.FocusOnRightCruiser();
+            _coreFocuser.Received().FocusOnRightCruiser();
         }
 
         [Test]
         public void FocusOnAICruiser_BeyondBuffer_Indirect()
         {
             _camera.Position.Returns(new Vector3(-IndirectCameraFocuser.INDIRECTION_BUFFER_IN_M, 0, 0));
-            _indirectFocuser.FocusOnAICruiser();
+            _indirectFocuser.FocusOnRightCruiser();
             _coreFocuser.Received().FocusOnOverview();
         }
 
@@ -47,15 +47,15 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnPlayerCruiser_WithinBuffer_Direct()
         {
             _camera.Position.Returns(new Vector3(IndirectCameraFocuser.INDIRECTION_BUFFER_IN_M - 0.1f, 0, 0));
-            _indirectFocuser.FocusOnPlayerCruiser();
-            _coreFocuser.Received().FocusOnPlayerCruiser();
+            _indirectFocuser.FocusOnLeftCruiser();
+            _coreFocuser.Received().FocusOnLeftCruiser();
         }
 
         [Test]
         public void FocusOnPlayerCruiser_BeyondBuffer_Indirect()
         {
             _camera.Position.Returns(new Vector3(IndirectCameraFocuser.INDIRECTION_BUFFER_IN_M, 0, 0));
-            _indirectFocuser.FocusOnPlayerCruiser();
+            _indirectFocuser.FocusOnLeftCruiser();
             _coreFocuser.Received().FocusOnOverview();
         }
 
@@ -64,11 +64,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void IsOnTarget_ValueChanged_NotOnTarget()
         {
             _overviewTargetTracker.IsOnTarget.Value.Returns(false);
-            
+
             _overviewTargetTracker.IsOnTarget.ValueChanged += Raise.Event();
-            
-            _coreFocuser.DidNotReceive().FocusOnPlayerCruiser();
-            _coreFocuser.DidNotReceive().FocusOnAICruiser();
+
+            _coreFocuser.DidNotReceive().FocusOnLeftCruiser();
+            _coreFocuser.DidNotReceive().FocusOnRightCruiser();
         }
 
         [Test]
@@ -78,8 +78,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _overviewTargetTracker.IsOnTarget.ValueChanged += Raise.Event();
 
-            _coreFocuser.DidNotReceive().FocusOnPlayerCruiser();
-            _coreFocuser.DidNotReceive().FocusOnAICruiser();
+            _coreFocuser.DidNotReceive().FocusOnLeftCruiser();
+            _coreFocuser.DidNotReceive().FocusOnRightCruiser();
         }
 
         [Test]
@@ -90,12 +90,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _overviewTargetTracker.IsOnTarget.ValueChanged += Raise.Event();
 
-            _coreFocuser.Received().FocusOnPlayerCruiser();
+            _coreFocuser.Received().FocusOnLeftCruiser();
 
             // Check indirect target is cleared
             _coreFocuser.ClearReceivedCalls();
             _overviewTargetTracker.IsOnTarget.ValueChanged += Raise.Event();
-            _coreFocuser.DidNotReceive().FocusOnPlayerCruiser();
+            _coreFocuser.DidNotReceive().FocusOnLeftCruiser();
         }
 
         private void MakePlayerCruiserIndirectTarget()
@@ -111,12 +111,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             _overviewTargetTracker.IsOnTarget.ValueChanged += Raise.Event();
 
-            _coreFocuser.Received().FocusOnAICruiser();
+            _coreFocuser.Received().FocusOnRightCruiser();
 
             // Check indirect target is cleared
             _coreFocuser.ClearReceivedCalls();
             _overviewTargetTracker.IsOnTarget.ValueChanged += Raise.Event();
-            _coreFocuser.DidNotReceive().FocusOnAICruiser();
+            _coreFocuser.DidNotReceive().FocusOnRightCruiser();
         }
 
         private void MakeAICruiserIndirectTarget()

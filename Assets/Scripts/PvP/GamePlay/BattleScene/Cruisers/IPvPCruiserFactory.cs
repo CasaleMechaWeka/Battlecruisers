@@ -12,14 +12,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
-            // IPvPCameraFocuser cameraFocuser,
+            // ICameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker
            /* IUserChosenTargetHelper userChosenTargetHelper*/ );
 
         void InitialisePlayerBCruiser(
             PvPCruiser playerBCruiser,
             PvPCruiser playerACruiser,
-            //  IPvPCameraFocuser cameraFocuser,
+            //  ICameraFocuser cameraFocuser,
             IRankedTargetTracker userChosenTargetTracker
             /*IUserChosenTargetHelper userChosenTargetHelper*/);
     }

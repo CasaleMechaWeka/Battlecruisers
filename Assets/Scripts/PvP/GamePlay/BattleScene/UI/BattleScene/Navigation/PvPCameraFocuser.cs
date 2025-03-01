@@ -1,10 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
-    public class PvPCameraFocuser : IPvPCameraFocuser
+    public class PvPCameraFocuser : ICameraFocuser
     {
         private readonly IPvPCameraTargets _targets;
         private readonly IPvPStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
@@ -24,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _cameraTransitionSpeedManager = cameraTransitionSpeedManager;
         }
 
-        public void FocusOnLeftPlayerCruiser()
+        public void FocusOnLeftCruiser()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
 
@@ -32,35 +33,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _defaultCameraTargetProvider.SetTarget(_targets.PlayerCruiserTarget);
         }
 
-        public void FocusOnLeftPlayerCruiserDeath()
+        public void FocusOnLeftCruiserDeath()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
             _trumpCameraTargetProvider.SetTarget(_targets.PlayerCruiserDeathTarget);
         }
 
-        public void FocusOnLeftPlayerNavalFactory()
+        public void FocusOnLeftNavalFactory()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
             _defaultCameraTargetProvider.SetTarget(_targets.PlayerNavalFactoryTarget);
         }
 
-        public void FocusOnRightPlayerCruiser()
+        public void FocusOnRightCruiser()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
             _defaultCameraTargetProvider.SetTarget(_targets.EnemyCruiserTarget);
         }
 
-        public void FocusOnRightPlayerCruiserDeath()
+        public void FocusOnRightCruiserDeath()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
             _trumpCameraTargetProvider.SetTarget(_targets.EnemyCruiserDeathTarget);
         }
 
-        public void FocusOnRightPlayerNavalFactory()
+        public void FocusOnRightNavalFactory()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
 
@@ -83,14 +84,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _defaultCameraTargetProvider.SetTarget(_targets.OverviewTarget);
         }
 
-        public void FocusOnLeftPlayerCruiserNuke()
+        public void FocusOnLeftCruiserNuke()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
             _trumpCameraTargetProvider.SetTarget(_targets.PlayerCruiserNukedTarget);
         }
 
-        public void FocusOnRightPlayerCruiserNuke()
+        public void FocusOnRightCruiserNuke()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();

@@ -62,12 +62,12 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
         public void PlayerCruiser()
         {
-            _cameraFocuser.FocusOnPlayerCruiserDeath();
+            _cameraFocuser.FocusOnLeftCruiserDeath();
         }
 
         public void PlayerCruiserNuke()
         {
-            _cameraFocuser.FocusOnPlayerCruiserNuke();
+            _cameraFocuser.FocusOnLeftCruiserNuke();
         }
 
         public void AINuke()
@@ -77,12 +77,12 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
         public void AICruiser()
         {
-            _cameraFocuser.FocusOnAICruiserDeath();
+            _cameraFocuser.FocusOnRightCruiserDeath();
         }
 
         public void AICruiserNuke()
         {
-            _cameraFocuser.FocusOnAICruiserNuke();
+            _cameraFocuser.FocusOnRightCruiserNuke();
         }
     }
 }
