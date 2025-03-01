@@ -1,4 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     [Serializable]
-    public class PvPHotkeysModel : IPvPHotkeysModel, IPvPHotkeyList
+    public class PvPHotkeysModel : IHotkeysModel, IHotkeyList
     {
         #region Navigation
         [SerializeField]
@@ -355,6 +356,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             get => _steamCopter;
             set => _steamCopter = value;
         }
+
+        [SerializeField]
+        private KeyCode _broadsword;
+        public KeyCode Broadsword
+        {
+            get => _broadsword;
+            set => _broadsword = value;
+        }
         #endregion Aircraft
 
         #region Ships
@@ -464,6 +473,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             Gunship = KeyCode.W;
             Fighter = KeyCode.E;
             SteamCopter = KeyCode.R;
+            Broadsword = KeyCode.T;
 
             // Ships
             AttackBoat = KeyCode.Q;

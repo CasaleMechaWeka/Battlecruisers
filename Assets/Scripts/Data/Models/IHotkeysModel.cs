@@ -27,8 +27,8 @@ namespace BattleCruisers.Data.Models
         KeyCode DroneStation { get; set; }
         KeyCode AirFactory { get; set; }
         KeyCode NavalFactory { get; set; }
-        KeyCode DroneStation4 { get; set;}
-        KeyCode DroneStation8 { get; set;}
+        KeyCode DroneStation4 { get; set; }
+        KeyCode DroneStation8 { get; set; }
 
         // Offensives
         KeyCode Artillery { get; set; }
