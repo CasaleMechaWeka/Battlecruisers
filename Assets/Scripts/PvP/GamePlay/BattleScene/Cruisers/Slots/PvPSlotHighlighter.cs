@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Utils;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly IPvPSlotAccessor _slotAccessor;
         private readonly IFilter<IPvPSlot> _highlightableFilter;
-        private IPvPSlotSpecification _highlightedSlotSpec;
+        private ISlotSpecification _highlightedSlotSpec;
         public bool isHighlighting = false;
         private IPvPSlot _highlightedSlot;
         private IPvPSlot HighlightedSlot
@@ -56,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         // Only highlight one slot type at a time
-        public bool HighlightAvailableSlots(IPvPSlotSpecification slotSpecification)
+        public bool HighlightAvailableSlots(ISlotSpecification slotSpecification)
         {
             Logging.LogMethod(Tags.SLOTS);
 
@@ -85,7 +86,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public void HighlightSlots(IPvPSlotSpecification slotSpecification)
+        public void HighlightSlots(ISlotSpecification slotSpecification)
         {
             Logging.LogMethod(Tags.SLOTS);
 
@@ -112,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             HighlightedSlot = null;
         }
 
-        private void UnhighlightSlots(IPvPSlotSpecification slotSpecification)
+        private void UnhighlightSlots(ISlotSpecification slotSpecification)
         {
             foreach (IPvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
             {

@@ -25,20 +25,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     .AsReadOnly();
         }
 
-        public bool IsSlotAvailable(IPvPSlotSpecification slotSpecification)
+        public bool IsSlotAvailable(ISlotSpecification slotSpecification)
         {
             return
                 _slots[slotSpecification.SlotType]
                     .Any(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
         }
 
-        public bool IsSlotAvailableForPlayer(IPvPSlotSpecification slotSpecification)
+        public bool IsSlotAvailableForPlayer(ISlotSpecification slotSpecification)
         {
             ReadOnlyCollection<PvPSlot> slots = GetSlots(slotSpecification);
             return slots.Any(slot => slot.IsFree);
         }
 
-        public ReadOnlyCollection<PvPSlot> GetSlots(IPvPSlotSpecification slotSpecification)
+        public ReadOnlyCollection<PvPSlot> GetSlots(ISlotSpecification slotSpecification)
         {
             Assert.IsNotNull(slotSpecification);
             Assert.IsTrue(_slots.ContainsKey(slotSpecification.SlotType));
@@ -64,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     .ToList();
         }
 
-        public IPvPSlot GetFreeSlot(IPvPSlotSpecification slotSpecification)
+        public IPvPSlot GetFreeSlot(ISlotSpecification slotSpecification)
         {
             return slotSpecification.PreferFromFront ?
                 _slots[slotSpecification.SlotType].First(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction)) :

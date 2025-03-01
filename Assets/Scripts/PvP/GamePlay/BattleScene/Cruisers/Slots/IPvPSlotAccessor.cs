@@ -7,8 +7,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public interface IPvPSlotAccessor
     {
-        bool IsSlotAvailable(IPvPSlotSpecification slotSpecification);
-        bool IsSlotAvailableForPlayer(IPvPSlotSpecification slotSpecification);
+        bool IsSlotAvailable(ISlotSpecification slotSpecification);
+        bool IsSlotAvailableForPlayer(ISlotSpecification slotSpecification);
 
         /// <returns>
         /// If looking for anti-ship slots, only returns slot placed well for anti-ship
@@ -19,10 +19,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// If looking for non anti-ship slots returns all slots of that SlotType
         /// (eg: all deck slots).
         /// </returns>
-        ReadOnlyCollection<PvPSlot> GetSlots(IPvPSlotSpecification slotSpecification);
+        ReadOnlyCollection<PvPSlot> GetSlots(ISlotSpecification slotSpecification);
 
         IList<PvPSlot> GetFreeSlots(SlotType slotType);
-        IPvPSlot GetFreeSlot(IPvPSlotSpecification slotSpecification);
+        IPvPSlot GetFreeSlot(ISlotSpecification slotSpecification);
 
         /// <returns>
         /// The slot that currently contains the given building, or null if no such slot exists.

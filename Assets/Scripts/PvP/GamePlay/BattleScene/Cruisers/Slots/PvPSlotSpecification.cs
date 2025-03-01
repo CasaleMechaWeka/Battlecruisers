@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPSlotSpecification : IPvPSlotSpecification
+    public class PvPSlotSpecification : ISlotSpecification
     {
         public SlotType SlotType { get; }
         public BuildingFunction BuildingFunction { get; }

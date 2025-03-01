@@ -1,9 +1,9 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
-using UnityEngine;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils.BattleScene.Pools;
+using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPBuilding : IPvPBuildable, IPoolable<PvPBuildingActivationArgs>
     {
         BuildingCategory Category { get; }
-        IPvPSlotSpecification SlotSpecification { get; }
+        ISlotSpecification SlotSpecification { get; }
         Vector3 PuzzleRootPoint { get; }
 
         /// <summary>

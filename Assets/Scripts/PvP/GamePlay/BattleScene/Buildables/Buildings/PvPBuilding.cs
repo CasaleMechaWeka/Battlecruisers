@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public SlotType slotType;
 
         public override TargetType TargetType => TargetType.Buildings;
-        public IPvPSlotSpecification SlotSpecification { get; private set; }
+        public ISlotSpecification SlotSpecification { get; private set; }
         public Vector3 PuzzleRootPoint { get; private set; }
 
         [Header("Other")]
