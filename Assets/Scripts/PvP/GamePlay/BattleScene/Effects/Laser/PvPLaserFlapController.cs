@@ -1,9 +1,10 @@
+using BattleCruisers.Effects.Laser;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
-    public class PvPLaserFlapController : MonoBehaviour, IPvPLaserFlap
+    public class PvPLaserFlapController : MonoBehaviour, ILaserFlap
     {
         private Animator _flapAnimator;
 
