@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public SpriteRenderer background;
 
-        public void Initialise(IPvPPrefabContainer<PvPBackgroundImageStats> statsContainer, float cameraAspectRatio, IPvPBackgroundImageCalculator calculator)
+        public void Initialise(IPvPPrefabContainer<PvPBackgroundImageStats> statsContainer, float cameraAspectRatio, IBackgroundImageCalculator calculator)
         {
             PvPHelper.AssertIsNotNull(statsContainer, calculator);
             Assert.IsNotNull(background);

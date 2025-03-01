@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats
 {
-    public class PvPBackgroundImageCalculator : IPvPBackgroundImageCalculator
+    public class PvPBackgroundImageCalculator : IBackgroundImageCalculator
     {
         public const float RATIO_4_TO_3 = 1.333f;
         public const float RATIO_16_TO_9 = 1.778f;
