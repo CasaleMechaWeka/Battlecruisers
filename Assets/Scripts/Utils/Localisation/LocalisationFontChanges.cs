@@ -30,9 +30,9 @@ namespace BattleCruisers.Utils.Localisation
 
         private void Awake()
         {
-            
+
             if (_text == null) _text = GetComponent<Text>();
-            
+
             if (TryGetComponent(out LocalizeStringEvent localizeStringEvent))
             {
                 _localizeStringEvent = localizeStringEvent;
@@ -69,7 +69,8 @@ namespace BattleCruisers.Utils.Localisation
                 Boolean.TryParse(boldNewFontBool, out _boldNewFont);
                 UpdateString();
             }
-            catch {
+            catch
+            {
                 Debug.Log("font localisation failed - Start");
                 Debug.Log("NAna");
             }
@@ -77,7 +78,7 @@ namespace BattleCruisers.Utils.Localisation
 
         private void OnEnable()
         {
-            
+
             if (LocalizationSettings.SelectedLocale.LocaleName != "Arabic (ar)") return; // FIX ALL CAPS ISSUE
             if (_localizeStringEvent != null)
             {
@@ -125,17 +126,17 @@ namespace BattleCruisers.Utils.Localisation
                     _text.resizeTextMaxSize = (int)(_originalFontMaxSize * _newFontScaleAdjustment);
                 }
             }
-            catch {
+            catch
+            {
                 Debug.Log("font localisation failed - UpdateString");
             }
         }
 
-        private async void ConvertToRtl()
+        private void ConvertToRtl()
         {
             if (LocalizationSettings.SelectedLocale.LocaleName == "Arabic (ar)")
             {
                 _rtlSettings.IsRtl = true;
-                await Task.Delay(1);
                 var allCaps = GetComponent<AllCaps>();
                 if (allCaps) allCaps.enabled = false;
                 _rtlSettings.RtlCorrectedText = _text.text;
@@ -144,11 +145,10 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        private async void ResetRtl()
+        private void ResetRtl()
         {
             if (LocalizationSettings.SelectedLocale.LocaleName == "Arabic (ar)")
             {
-                await Task.Delay(1);
                 _text.text = _rtlSettings.RtlCorrectedText;
             }
         }
