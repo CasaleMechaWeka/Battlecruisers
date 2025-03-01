@@ -1,3 +1,4 @@
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsTrue(cameraAspectRatio > 0);
 
             _statsContainer = statsContainer;
-            IPvPBackgroundImageStats stats = _statsContainer.Prefab;
+            IBackgroundImageStats stats = _statsContainer.Prefab;
 
             if (stats.Sprite == null)
             {

@@ -1,3 +1,4 @@
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public const float RATIO_16_TO_9 = 1.778f;
         public const float RATIO_24_TO_10 = 2.4f;
 
-        public Vector3 FindPosition(IPvPBackgroundImageStats stats, float cameraAspectRatio)
+        public Vector3 FindPosition(IBackgroundImageStats stats, float cameraAspectRatio)
         {
             float deltaY = stats.YPositionAt16to9 - stats.PositionAt4to3.y;
             float deltaX = RATIO_16_TO_9 - RATIO_4_TO_3;
@@ -25,7 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             float deltaX_16to9_to_24to10 = RATIO_24_TO_10 - RATIO_16_TO_9;
             float gradient_16to9_to_24to10 = deltaY_16to9_to_24to10 / deltaX_16to9_to_24to10;
 
-            if (cameraAspectRatio > RATIO_16_TO_9 && cameraAspectRatio <= RATIO_24_TO_10) {
+            if (cameraAspectRatio > RATIO_16_TO_9 && cameraAspectRatio <= RATIO_24_TO_10)
+            {
                 float constant_16to9_to_24to10 = stats.YPositionAt16to9 - (gradient_16to9_to_24to10 * RATIO_16_TO_9);
                 float yAdjustedPosition_16to9_to_24to10 = gradient_16to9_to_24to10 * cameraAspectRatio + constant_16to9_to_24to10;
                 return new Vector3(

@@ -1,8 +1,9 @@
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats
 {
-    public class PvPBackgroundImageStats : MonoBehaviour, IPvPBackgroundImageStats
+    public class PvPBackgroundImageStats : MonoBehaviour, IBackgroundImageStats
     {
         public Vector2 scale;
         public Vector2 Scale => scale;
