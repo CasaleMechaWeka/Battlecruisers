@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             bool isTutorial,
-            IPvPMainMenuManager menuManager)
+            IMainMenuManager menuManager)
         {
             PvPHelper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton);
             PvPHelper.AssertIsNotNull(soundPlayer, menuManager);

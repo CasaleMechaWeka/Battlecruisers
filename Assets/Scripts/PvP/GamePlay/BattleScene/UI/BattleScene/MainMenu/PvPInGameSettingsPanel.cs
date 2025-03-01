@@ -3,6 +3,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.DataStrctures;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IPvPMainMenuManager mainMenuManager,
+            IMainMenuManager mainMenuManager,
             ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(saveButton, cancelButton, musicVolumeSlider, effectVolumeSlider);

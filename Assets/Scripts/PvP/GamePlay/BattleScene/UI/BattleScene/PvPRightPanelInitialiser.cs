@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
@@ -8,14 +8,15 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
-using UnityEngine;
-using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Update;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -64,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             heckleController.Initialise(applicationModel.DataProvider, soundPlayer, uiManager);
             uiManager.SetHecklePanel(heckleController);
             //    PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
-            IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
+            IMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             MakeRightBackgroundPanelFit();
@@ -108,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IPvPMainMenuManager mainMenuManager)
+        private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
         {
             PvPMainMenuButtonController mainMenuButton = GetComponentInChildren<PvPMainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);

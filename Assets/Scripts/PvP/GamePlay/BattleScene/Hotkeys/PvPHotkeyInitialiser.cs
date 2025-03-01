@@ -2,11 +2,11 @@ using BattleCruisers.Hotkeys;
 using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Escape;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IBroadcastingFilter hotkeyFilter,
             IPvPCameraFocuser cameraFocuser,
             //            IPvPSpeedComponents speedComponents,
-            IPvPMainMenuManager mainMenuManager,
+            IMainMenuManager mainMenuManager,
             IPvPUIManager uiManager)
         {
             PvPHelper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);

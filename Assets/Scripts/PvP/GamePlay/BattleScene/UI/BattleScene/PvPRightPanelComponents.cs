@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPRightPanelComponents
     {
         public IPvPInformatorPanel InformatorPanel { get; }
-        public IPvPMainMenuManager MainMenuManager { get; }
+        public IMainMenuManager MainMenuManager { get; }
         public IModalMenu MainMenu { get; }
         // public PvPSpeedComponents SpeedComponents { get; }
         public PvPHelpButton HelpButton { get; }
@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPRightPanelComponents(
             IPvPInformatorPanel informatorPanel,
-            IPvPMainMenuManager mainMenuManager,
+            IMainMenuManager mainMenuManager,
             IModalMenu mainMenu,
             //   PvPSpeedComponents speedComponents,
             PvPHecklePanelController pvPHecklePanelController,

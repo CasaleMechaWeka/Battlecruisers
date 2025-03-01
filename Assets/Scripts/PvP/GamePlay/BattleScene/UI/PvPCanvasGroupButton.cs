@@ -1,3 +1,4 @@
+using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
         public override void Initialise(
             ISingleSoundPlayer soundPlayer,
             Action clickAction = null,
-            IPvPDismissableEmitter parent = null)
+            IDismissableEmitter parent = null)
         {
             base.Initialise(soundPlayer, clickAction, parent);
 

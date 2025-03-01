@@ -1,3 +1,4 @@
+using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 && _presentableComponent.IsPresented;
         protected override ISoundKey ClickSound => null;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPDismissableEmitter parent = null)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
         {
             base.Initialise(soundPlayer, parent: parent);
 

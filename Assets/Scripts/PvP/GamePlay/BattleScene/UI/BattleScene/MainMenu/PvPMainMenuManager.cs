@@ -7,7 +7,7 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
-    public class PvPMainMenuManager : PvPModalManager, IPvPMainMenuManager
+    public class PvPMainMenuManager : PvPModalManager, IMainMenuManager
     {
         private readonly IModalMenu _modalMenu;
         private readonly IPvPBattleCompletionHandler _battleCompletionHandler;

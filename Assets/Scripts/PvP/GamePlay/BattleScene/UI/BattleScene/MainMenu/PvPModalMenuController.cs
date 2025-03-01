@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             bool isTutorial,
-            IPvPMainMenuManager menuManager,
+            IMainMenuManager menuManager,
             ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(buttonsPanel, settingsPanel);

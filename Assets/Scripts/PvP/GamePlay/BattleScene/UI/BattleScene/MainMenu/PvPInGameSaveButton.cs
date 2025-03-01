@@ -1,5 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPInGameSaveButton : PvPElementWithClickSound
     {
-        private IPvPMainMenuManager _mainMenuManager;
+        private IMainMenuManager _mainMenuManager;
         private ISettingsManager _settingsManager;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IPvPMainMenuManager mainMenuManager,
+            IMainMenuManager mainMenuManager,
             ISettingsManager settingsManager,
             IBroadcastingProperty<float> musicVolume,
             IBroadcastingProperty<float> effectVolume,

@@ -1,23 +1,24 @@
-using System;
-using UnityEngine.Assertions;
-using UnityEngine;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
+using System;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {
     public class PvPElementWithClickSound : PvPClickableTogglable
     {
         private Action _clickAction;
-        private IPvPDismissableEmitter _parent;
+        private IDismissableEmitter _parent;
         protected ISingleSoundPlayer _soundPlayer;
         protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual void Initialise(
             ISingleSoundPlayer soundPlayer,
             Action clickAction = null,
-            IPvPDismissableEmitter parent = null)
+            IDismissableEmitter parent = null)
         {
             base.Initialise();
             Assert.IsNotNull(soundPlayer);
