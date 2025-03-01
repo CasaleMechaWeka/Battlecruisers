@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
+using BattleCruisers.Effects.Explosions;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
@@ -8,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPParticleSystemGroup : IPvPParticleSystemGroup
     {
         protected readonly IPvPBroadcastingParticleSystem[] _particleSystems;
-        private readonly IPvPSynchronizedParticleSystems[] _synchronizedSystems;
+        private readonly ISynchronizedParticleSystems[] _synchronizedSystems;
 
-        public PvPParticleSystemGroup(IPvPBroadcastingParticleSystem[] particleSystems, IPvPSynchronizedParticleSystems[] synchronizedSystems)
+        public PvPParticleSystemGroup(IPvPBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
         {
             Helper.AssertIsNotNull(particleSystems, synchronizedSystems);
             Assert.IsTrue(particleSystems.Length != 0);
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public async Task Play()
         {
             await Task.Yield();
-            foreach (IPvPSynchronizedParticleSystems system in _synchronizedSystems)
+            foreach (ISynchronizedParticleSystems system in _synchronizedSystems)
             {
                 system.ResetSeed();
             }

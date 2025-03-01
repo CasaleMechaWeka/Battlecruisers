@@ -1,9 +1,10 @@
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions
 {
-    public class PvPSynchronizedParticleSystemsController : MonoBehaviour, IPvPSynchronizedParticleSystems
+    public class PvPSynchronizedParticleSystemsController : MonoBehaviour, ISynchronizedParticleSystems
     {
         private static int _randomSeed;
         private ParticleSystem[] _particleSystems;

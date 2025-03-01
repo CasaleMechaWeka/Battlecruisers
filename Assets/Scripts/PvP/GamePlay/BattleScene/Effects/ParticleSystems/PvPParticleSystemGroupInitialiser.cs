@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using UnityEngine.Assertions;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             return particleSystems;
         }
 
-        protected IPvPSynchronizedParticleSystems[] GetSynchronizedSystems()
+        protected ISynchronizedParticleSystems[] GetSynchronizedSystems()
         {
             PvPSynchronizedParticleSystemsController[] synchronizedSystems = GetComponentsInChildren<PvPSynchronizedParticleSystemsController>();
 

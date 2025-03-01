@@ -1,3 +1,5 @@
+using BattleCruisers.Buildables;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -5,7 +7,6 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions
 {
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public event EventHandler Deactivated;
 
-        public PvPExplosion(IGameObject explosionController, IPvPBroadcastingParticleSystem[] particleSystems, IPvPSynchronizedParticleSystems[] synchronizedSystems)
+        public PvPExplosion(IGameObject explosionController, IPvPBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
             : base(particleSystems, synchronizedSystems)
         {
             Assert.IsNotNull(explosionController);
