@@ -103,7 +103,7 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.PlayerCruiserHasActiveDrones,
+                _factoryProvider.DroneMonitor.LeftCruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 
@@ -137,7 +137,7 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.AICruiserHasActiveDrones,
+                _factoryProvider.DroneMonitor.RightCruiserHasActiveDrones,
                 isPlayerCruiser: false);
         }
 

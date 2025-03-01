@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
-        public IPvPDroneMonitor DroneMonitor { get; private set; }
+        public IDroneMonitor DroneMonitor { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IPvPMovementControllerFactory MovementControllerFactory { get; }
         public IPvPPrefabFactory PrefabFactory { get; }

@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// If you have a lot of drones they make a heck of a racket.  So limit the number
     /// of drones that make a sound.
     /// </summary>
-    public class PvPDroneMonitor : IPvPDroneMonitor
+    public class PvPDroneMonitor : IDroneMonitor
     {
         private readonly IDroneFactory _droneFactory;
 
@@ -22,10 +22,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
         private readonly ISettableBroadcastingProperty<bool> _playerACruiserHasActiveDrones;
-        public IBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
+        public IBroadcastingProperty<bool> LeftCruiserHasActiveDrones { get; }
 
         private readonly ISettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
-        public IBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
+        public IBroadcastingProperty<bool> RightCruiserHasActiveDrones { get; }
 
         public PvPDroneMonitor(IDroneFactory droneFactory)
         {
@@ -42,10 +42,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
 
             _playerACruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            PlayerACruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
+            LeftCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
 
             _playerBCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            PlayerBCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
+            RightCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
         }
 
         private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)

@@ -129,8 +129,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
 
         private void AssertDroneActivnessStatus(bool playerHasActiveDrone, bool aiHasActiveDrone)
         {
-            Assert.AreEqual(playerHasActiveDrone, _droneMonitor.PlayerCruiserHasActiveDrones.Value);
-            Assert.AreEqual(aiHasActiveDrone, _droneMonitor.AICruiserHasActiveDrones.Value);
+            Assert.AreEqual(playerHasActiveDrone, _droneMonitor.LeftCruiserHasActiveDrones.Value);
+            Assert.AreEqual(aiHasActiveDrone, _droneMonitor.RightCruiserHasActiveDrones.Value);
         }
     }
 }

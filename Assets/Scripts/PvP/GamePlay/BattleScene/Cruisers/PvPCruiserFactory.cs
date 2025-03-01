@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.PlayerACruiserHasActiveDrones,
+                _factoryProvider.DroneMonitor.LeftCruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 
@@ -150,7 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.PlayerBCruiserHasActiveDrones,
+                _factoryProvider.DroneMonitor.RightCruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 

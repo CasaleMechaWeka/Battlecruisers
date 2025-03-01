@@ -7,7 +7,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public interface IDroneMonitor
     {
         IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
-        IBroadcastingProperty<bool> PlayerCruiserHasActiveDrones { get; }
-        IBroadcastingProperty<bool> AICruiserHasActiveDrones { get; }
+        IBroadcastingProperty<bool> LeftCruiserHasActiveDrones { get; }
+        IBroadcastingProperty<bool> RightCruiserHasActiveDrones { get; }
     }
 }

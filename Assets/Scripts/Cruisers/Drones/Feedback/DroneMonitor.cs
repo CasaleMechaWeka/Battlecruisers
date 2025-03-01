@@ -21,10 +21,10 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
         private readonly ISettableBroadcastingProperty<bool> _playerCruiserHasActiveDrones;
-        public IBroadcastingProperty<bool> PlayerCruiserHasActiveDrones { get; }
+        public IBroadcastingProperty<bool> LeftCruiserHasActiveDrones { get; }
 
         private readonly ISettableBroadcastingProperty<bool> _aiCruiserHasActiveDrones;
-        public IBroadcastingProperty<bool> AICruiserHasActiveDrones { get; }
+        public IBroadcastingProperty<bool> RightCruiserHasActiveDrones { get; }
 
         public DroneMonitor(IDroneFactory droneFactory)
         {
@@ -41,10 +41,10 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
 
             _playerCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            PlayerCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerCruiserHasActiveDrones);
+            LeftCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerCruiserHasActiveDrones);
 
             _aiCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            AICruiserHasActiveDrones = new BroadcastingProperty<bool>(_aiCruiserHasActiveDrones);
+            RightCruiserHasActiveDrones = new BroadcastingProperty<bool>(_aiCruiserHasActiveDrones);
         }
 
         private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)
