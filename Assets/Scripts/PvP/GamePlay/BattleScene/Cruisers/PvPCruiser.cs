@@ -133,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public bool IsAlive => !IsDestroyed;
         public IPvPSlotAccessor SlotAccessor { get; private set; }
         public IPvPSlotHighlighter SlotHighlighter { get; private set; }
-        public IPvPSlotNumProvider SlotNumProvider { get; private set; }
+        public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IPvPDroneFocuser DroneFocuser { get; private set; }
         public IPvPCruiserBuildingMonitor BuildingMonitor { get; private set; }

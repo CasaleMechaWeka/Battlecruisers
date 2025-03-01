@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPSlotWrapperController : MonoBehaviour, IPvPSlotNumProvider
+    public class PvPSlotWrapperController : MonoBehaviour, ISlotNumProvider
     {
         private IList<PvPSlot> _slots;
         public Dictionary<string, IPvPSlot> _slotsByName = new Dictionary<string, IPvPSlot>();
