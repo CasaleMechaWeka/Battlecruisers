@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction
 {
-    public class PvPUnitTargets : IPvPUnitTargets
+    public class PvPUnitTargets : IUnitTargets
     {
         private readonly HashSet<ITarget> _ships;
         public IReadOnlyCollection<ITarget> Ships => _ships;

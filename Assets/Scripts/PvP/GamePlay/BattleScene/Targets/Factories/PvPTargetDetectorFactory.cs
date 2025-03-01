@@ -1,23 +1,22 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Cruisers.Construction;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
     public class PvPTargetDetectorFactory : ITargetDetectorFactory
     {
-        private readonly IPvPUnitTargets _enemyTargets, _friendlyTargets;
+        private readonly IUnitTargets _enemyTargets, _friendlyTargets;
         private readonly IUpdaterProvider _updaterProvider;
 
-        public PvPTargetDetectorFactory(IPvPUnitTargets enemyTargets, IPvPUnitTargets friendlyTargets, IUpdaterProvider updaterProvider)
+        public PvPTargetDetectorFactory(IUnitTargets enemyTargets, IUnitTargets friendlyTargets, IUpdaterProvider updaterProvider)
         {
             PvPHelper.AssertIsNotNull(enemyTargets, friendlyTargets, updaterProvider);
 

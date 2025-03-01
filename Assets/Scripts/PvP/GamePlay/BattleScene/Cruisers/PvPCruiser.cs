@@ -139,7 +139,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPCruiserBuildingMonitor BuildingMonitor { get; private set; }
         public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }
         public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
-        public IPvPUnitTargets UnitTargets { get; private set; }
+        public IUnitTargets UnitTargets { get; private set; }
         public ITargetTracker BlockedShipsTracker { get; private set; }
 
         public event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;

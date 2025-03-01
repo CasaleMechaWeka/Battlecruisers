@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IPvPCruiserBuildingMonitor BuildingMonitor { get; }
         IPvPCruiserUnitMonitor UnitMonitor { get; }
         IPopulationLimitMonitor PopulationLimitMonitor { get; }
-        IPvPUnitTargets UnitTargets { get; }
+        IUnitTargets UnitTargets { get; }
         ITargetTracker BlockedShipsTracker { get; }
 
         event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;
