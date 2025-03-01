@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                    /* args.FactoryProvider.SettingsManager,*/ null,
                     args.Updater,
                     args.FactoryProvider.DeferrerProvider.Deferrer);
-            IPvPLaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<IPvPLaserCooldownEffectInitialiser>();
+            ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
             Assert.IsNotNull(laserCooldownEffectInitialiser);
             _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_laserEmitter);
         }

@@ -1,14 +1,15 @@
+using BattleCruisers.Effects.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
-using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
-    public class PvPLaserCooldownEffectInitialiser : MonoBehaviour, IPvPLaserCooldownEffectInitialiser
+    public class PvPLaserCooldownEffectInitialiser : MonoBehaviour, ILaserCooldownEffectInitialiser
     {
         public float laserStoppedDebounceTimeInS = 0.5f;
 
