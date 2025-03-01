@@ -5,10 +5,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Effects.Laser;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
-    public class PvPLaserImpact : MonoBehaviour, IPvPLaserImpact
+    public class PvPLaserImpact : MonoBehaviour, ILaserImpact
     {
         private IPvPParticleSystemGroup _effects;
         private IDebouncer _debouncer;
