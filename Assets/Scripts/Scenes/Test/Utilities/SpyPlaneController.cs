@@ -5,7 +5,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class SpyPlaneController : AircraftController, ISpyPlaneController
+    public class SpyPlaneController : AircraftController, IUnit
     {
         // IList is not picked up by the Unity inspector
         public List<Vector2> patrolPoints;
