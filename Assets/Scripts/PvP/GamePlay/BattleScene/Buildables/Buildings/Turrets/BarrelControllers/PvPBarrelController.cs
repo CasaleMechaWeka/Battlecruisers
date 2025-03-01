@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public abstract class PvPBarrelController : NetworkBehaviour, IBarrelController
     {
         private IBarrelAdjustmentHelper _adjustmentHelper;
-        private IPvPBarrelFiringHelper _firingHelper;
+        private IBarrelFiringHelper _firingHelper;
         private IUpdater _updater;
         protected IPvPParticleSystemGroup _muzzleFlash;
         protected IAnimation _barrelAnimation;
