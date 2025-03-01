@@ -1,3 +1,4 @@
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Explanation
@@ -5,8 +6,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutori
     public interface IPvPExplanationPanel : IGameObject
     {
         IPvPTextDisplayer TextDisplayer { get; }
-        IPvPExplanationDismissButton OkButton { get; }
-        IPvPExplanationDismissButton DoneButton { get; }
+        IExplanationDismissButton OkButton { get; }
+        IExplanationDismissButton DoneButton { get; }
 
         void ShrinkHeight();
         void ExpandHeight();
