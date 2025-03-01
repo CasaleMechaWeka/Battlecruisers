@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IDeferrer deferrer,
             ITime time,
             IPvPBattleCompletionHandler battleCompletionHandler,
-            IPvPCruiserDamageMonitor playerCruiserDamageMonitor,
+            ICruiserDamageMonitor playerCruiserDamageMonitor,
             IGameObject popLimitReachedFeedback)
         {
             PvPHelper.AssertIsNotNull(helper, musicPlayer, playerCruiser, enemyCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor, popLimitReachedFeedback);
@@ -70,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private PvPCruiserEventMonitor CreateCruiserEventMonitor(
             PvPCruiser playerCruiser,
             ITime time,
-            IPvPCruiserDamageMonitor playerCruiserDamageMonitor)
+            ICruiserDamageMonitor playerCruiserDamageMonitor)
         {
             return
                 new PvPCruiserEventMonitor(

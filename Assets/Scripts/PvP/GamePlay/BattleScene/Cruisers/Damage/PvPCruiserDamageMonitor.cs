@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Utils;
 using System;
@@ -6,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage
 {
-    public class PvPCruiserDamageMonitor : IPvPCruiserDamageMonitor, IManagedDisposable
+    public class PvPCruiserDamageMonitor : ICruiserDamageMonitor, IManagedDisposable
     {
         private readonly IPvPCruiser _cruiser;
 

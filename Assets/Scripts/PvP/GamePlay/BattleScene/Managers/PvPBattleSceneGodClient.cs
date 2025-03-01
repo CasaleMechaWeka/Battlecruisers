@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
@@ -479,7 +480,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager);
-            IPvPCruiserDamageMonitor playerCruiserDamageMonitor = new PvPCruiserDamageMonitor(playerCruiser);
+            ICruiserDamageMonitor playerCruiserDamageMonitor = new PvPCruiserDamageMonitor(playerCruiser);
             _audioInitialiser
                 = new PvPAudioInitialiser(
                     pvpBattleHelper,

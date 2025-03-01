@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Sound.Players;
@@ -15,13 +16,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPCruiserEventMonitor : IManagedDisposable
     {
         private readonly IPvPHealthThresholdMonitor _cruiserHealthThresholdMonitor;
-        private readonly IPvPCruiserDamageMonitor _cruiserDamageMonitor;
+        private readonly ICruiserDamageMonitor _cruiserDamageMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _damagedDebouncer;
 
         public PvPCruiserEventMonitor(
             IPvPHealthThresholdMonitor cruiserHealthThresholdMonitor,
-            IPvPCruiserDamageMonitor cruiserDamageMonitor,
+            ICruiserDamageMonitor cruiserDamageMonitor,
             IPrioritisedSoundPlayer soundPlayer,
             IDebouncer damagedDebouncer)
         {
