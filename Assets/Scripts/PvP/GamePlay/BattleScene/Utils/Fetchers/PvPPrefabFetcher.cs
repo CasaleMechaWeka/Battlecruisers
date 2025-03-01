@@ -1,4 +1,5 @@
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils.Fetchers;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const string PREFAB_ROOT_DIR = "Assets/Resources_moved/";
         private const string PREFAB_FILE_EXTENSION = ".prefab";
 
-        public async Task<IPvPPrefabContainer<TPrefab>> GetPrefabAsync<TPrefab>(IPrefabKey prefabKey) where TPrefab : class
+        public async Task<IPrefabContainer<TPrefab>> GetPrefabAsync<TPrefab>(IPrefabKey prefabKey) where TPrefab : class
         {
             string addressableKey = PREFAB_ROOT_DIR + prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
 

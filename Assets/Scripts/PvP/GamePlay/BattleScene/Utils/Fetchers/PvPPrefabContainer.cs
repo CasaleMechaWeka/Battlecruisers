@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
-    public class PvPPrefabContainer<TPrefab> : IPvPPrefabContainer<TPrefab> where TPrefab : class
+    public class PvPPrefabContainer<TPrefab> : IPrefabContainer<TPrefab> where TPrefab : class
     {
         public AsyncOperationHandle<GameObject> Handle { get; }
         public TPrefab Prefab { get; }

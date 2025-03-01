@@ -1,6 +1,6 @@
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
@@ -9,11 +9,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBackgroundImageController : MonoBehaviour
     {
-        private IPvPPrefabContainer<PvPBackgroundImageStats> _statsContainer;
+        private IPrefabContainer<PvPBackgroundImageStats> _statsContainer;
 
         public SpriteRenderer background;
 
-        public void Initialise(IPvPPrefabContainer<PvPBackgroundImageStats> statsContainer, float cameraAspectRatio, IBackgroundImageCalculator calculator)
+        public void Initialise(IPrefabContainer<PvPBackgroundImageStats> statsContainer, float cameraAspectRatio, IBackgroundImageCalculator calculator)
         {
             PvPHelper.AssertIsNotNull(statsContainer, calculator);
             Assert.IsNotNull(background);

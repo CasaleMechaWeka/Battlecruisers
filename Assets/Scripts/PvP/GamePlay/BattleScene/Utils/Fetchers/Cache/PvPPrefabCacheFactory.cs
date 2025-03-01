@@ -11,6 +11,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Ex
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -103,7 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 where TPrefab : class, IPvPPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
-            IPvPPrefabContainer<TPrefab> prefabContainer = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            IPrefabContainer<TPrefab> prefabContainer = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
             prefabContainer.Prefab.StaticInitialise(_commonStrings);
             keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
@@ -116,7 +117,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 where TPrefab : class, IPvPPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
-            IPvPPrefabContainer<TPrefab> result = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            IPrefabContainer<TPrefab> result = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             prefabContainer.Value = result.Prefab;
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
