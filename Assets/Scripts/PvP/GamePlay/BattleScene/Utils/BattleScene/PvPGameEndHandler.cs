@@ -4,12 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
-using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.Buttons.Toggles;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
 using UnityEngine;
@@ -24,13 +18,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private IArtificialIntelligence _ai_RightPlayer;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IDeferrer _deferrer;
-        private readonly IPvPCruiserDeathCameraFocuser _cameraFocuser;
-        private readonly IPermitter _navigationPermitter;
-        private readonly IPvPUIManager _uiManager;
-        private readonly IPvPTargetIndicator _targetIndicator;
-        // private readonly IPvPWindManager _windManager;
-        private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
-        private readonly IToggleButtonGroup _speedButtonGroup;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 

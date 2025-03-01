@@ -10,15 +10,16 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
-using Unity.Multiplayer.Samples.Utilities;
-using UnityEngine;
-using UnityEngine.Assertions;
+using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.UI;
-using BattleCruisers.UI.Sound.Wind;
+using Unity.Multiplayer.Samples.Utilities;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
         public PvPTargetIndicatorController targetIndicator;
-        public IPvPTargetIndicator TargetIndicator => targetIndicator;
+        public ITargetIndicator TargetIndicator => targetIndicator;
 
         public PvPHotkeyInitialiser hotkeyInitialiser;
         public PvPHotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;

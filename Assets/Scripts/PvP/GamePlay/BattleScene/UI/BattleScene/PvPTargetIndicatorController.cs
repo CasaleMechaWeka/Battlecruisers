@@ -1,9 +1,10 @@
+using BattleCruisers.UI.BattleScene;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
-    public class PvPTargetIndicatorController : MonoBehaviour, IPvPTargetIndicator
+    public class PvPTargetIndicatorController : MonoBehaviour, ITargetIndicator
     {
         private Animator _animation;
 
