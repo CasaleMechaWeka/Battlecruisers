@@ -1,8 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPCameraComponents : IPvPCameraComponents
     {
         public ICamera MainCamera { get; }
-        public IPvPCameraAdjuster CameraAdjuster { get; }
+        public ICameraAdjuster CameraAdjuster { get; }
         public ICameraFocuser CameraFocuser { get; }
         public IPvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public PvPCameraComponents(
             ICamera mainCamera,
-            IPvPCameraAdjuster cameraAdjuster,
+            ICameraAdjuster cameraAdjuster,
             ICameraFocuser cameraFocuser,
             IPvPCruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,

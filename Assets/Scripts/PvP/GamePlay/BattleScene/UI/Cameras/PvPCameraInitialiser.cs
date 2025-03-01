@@ -15,19 +15,20 @@ using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
     public class PvPCameraInitialiser : MonoBehaviour
     {
-        private IPvPCameraAdjuster _cameraAdjuster;
+        private ICameraAdjuster _cameraAdjuster;
 
         // Allows camera to be moved into invalid position up to this amount,
         // with camera snapping back into valid range when the navigation wheel

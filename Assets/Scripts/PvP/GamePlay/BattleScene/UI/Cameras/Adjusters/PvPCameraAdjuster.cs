@@ -1,10 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
+using BattleCruisers.UI.Cameras.Adjusters;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters
 {
-    public abstract class PvPCameraAdjuster : IPvPCameraAdjuster
+    public abstract class PvPCameraAdjuster : ICameraAdjuster
     {
         protected readonly IPvPCameraTargetProvider _cameraTargetProvider;
 
