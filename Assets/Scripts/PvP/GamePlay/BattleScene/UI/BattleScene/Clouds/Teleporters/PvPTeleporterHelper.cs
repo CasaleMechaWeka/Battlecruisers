@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Clouds;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,13 +10,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         // With the perspective camera now this is a little tricky.  Determined by trial and error :D
         public const float MAX_X_POSITION_VISIBLE_BY_USER = 1500;
 
-        public bool ShouldTeleportCloud(IPvPCloud rightCloud)
+        public bool ShouldTeleportCloud(ICloud rightCloud)
         {
             Assert.IsNotNull(rightCloud);
             return rightCloud.Position.x - (rightCloud.Size.x / 2) > MAX_X_POSITION_VISIBLE_BY_USER;
         }
 
-        public Vector3 FindTeleportTargetPosition(IPvPCloud onScreenCloud, IPvPCloud offScreenCloud)
+        public Vector3 FindTeleportTargetPosition(ICloud onScreenCloud, ICloud offScreenCloud)
         {
             PvPHelper.AssertIsNotNull(onScreenCloud, offScreenCloud);
             Assert.IsTrue(offScreenCloud.Position.x > onScreenCloud.Position.x);

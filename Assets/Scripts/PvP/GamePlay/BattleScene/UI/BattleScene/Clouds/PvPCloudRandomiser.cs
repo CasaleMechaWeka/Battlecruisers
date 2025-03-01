@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _rightCloudValidXPositions = rightCloudValidXPositions;
         }
 
-        public void RandomiseStartingPosition(IPvPCloud leftCloud, IPvPCloud rightCloud)
+        public void RandomiseStartingPosition(ICloud leftCloud, ICloud rightCloud)
         {
             PvPHelper.AssertIsNotNull(leftCloud, rightCloud);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);

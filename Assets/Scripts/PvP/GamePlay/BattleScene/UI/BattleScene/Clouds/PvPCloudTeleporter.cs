@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.Utils.BattleScene.Update;
 using System;
 using UnityEngine.Assertions;
@@ -9,9 +10,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private readonly IUpdater _updater;
         private readonly IPvPTeleporterHelper _teleporterHelper;
-        private IPvPCloud _leftCloud, _rightCloud;
+        private ICloud _leftCloud, _rightCloud;
 
-        public PvPCloudTeleporter(IUpdater updater, IPvPTeleporterHelper teleporterHelper, IPvPCloud leftCloud, IPvPCloud rightCloud)
+        public PvPCloudTeleporter(IUpdater updater, IPvPTeleporterHelper teleporterHelper, ICloud leftCloud, ICloud rightCloud)
         {
             PvPHelper.AssertIsNotNull(updater, teleporterHelper, leftCloud, rightCloud);
             Assert.IsTrue(leftCloud.Position.x < rightCloud.Position.x);
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _rightCloud.Position = _teleporterHelper.FindTeleportTargetPosition(_leftCloud, _rightCloud);
 
             // Switch clouds
-            IPvPCloud newLeftCloud = _rightCloud;
+            ICloud newLeftCloud = _rightCloud;
             _rightCloud = _leftCloud;
             _leftCloud = newLeftCloud;
         }

@@ -1,10 +1,11 @@
+using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds
 {
-    public class PvPCloudController : MonoBehaviour, IPvPCloud
+    public class PvPCloudController : MonoBehaviour, ICloud
     {
         public Vector2 Size { get; private set; }
 
