@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using System;
@@ -6,7 +7,7 @@ using UnityEngine;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     [Serializable]
-    public class PvPCompletedLevel : IPvPCompletedLevel
+    public class PvPCompletedLevel : ICompletedLevel
     {
         [SerializeField]
         private int _levelNum;
