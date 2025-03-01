@@ -64,7 +64,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [Test]
         public void FocusOnAICruiser()
         {
-            _targets.AICruiserTarget.Returns(_target);
+            _targets.EnemyCruiserTarget.Returns(_target);
 
             _cameraFocuser.FocusOnRightCruiser();
 
@@ -75,7 +75,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [Test]
         public void FocusOnAICruiserZoomedOut()
         {
-            _targets.AICruiserDeathTarget.Returns(_target);
+            _targets.EnemyCruiserDeathTarget.Returns(_target);
 
             _cameraFocuser.FocusOnRightCruiserDeath();
 
@@ -86,7 +86,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [Test]
         public void FocusOnAINavalFactory()
         {
-            _targets.AINavalFactoryTarget.Returns(_target);
+            _targets.EnemyNavalFactoryTarget.Returns(_target);
 
             _cameraFocuser.FocusOnRightNavalFactory();
 
@@ -130,7 +130,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [Test]
         public void FocusOnAICruiserNuke()
         {
-            _targets.AICruiserNukedTarget.Returns(_target);
+            _targets.EnemyCruiserNukedTarget.Returns(_target);
 
             _cameraFocuser.FocusOnRightCruiserNuke();
 

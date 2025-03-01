@@ -49,21 +49,21 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
-            _defaultCameraTargetProvider.SetTarget(_targets.AICruiserTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.EnemyCruiserTarget);
         }
 
         public void FocusOnRightCruiserDeath()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
-            _trumpCameraTargetProvider.SetTarget(_targets.AICruiserDeathTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.EnemyCruiserDeathTarget);
         }
 
         public void FocusOnRightNavalFactory()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
-            _defaultCameraTargetProvider.SetTarget(_targets.AINavalFactoryTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.EnemyNavalFactoryTarget);
         }
 
         public void FocusMidLeft()
@@ -91,7 +91,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
-            _trumpCameraTargetProvider.SetTarget(_targets.AICruiserNukedTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.EnemyCruiserNukedTarget);
         }
     }
 }

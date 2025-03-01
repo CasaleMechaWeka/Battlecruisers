@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private ICameraFocuser cameraFocuser;
         private IPvPStaticCameraTargetProvider defaultCameraTargetProvider;
         private IPvPStaticCameraTargetProvider trumpCameraTargetProvider;
-        private IPvPCameraTargets targets;
+        private ICameraTargets targets;
         private ITime time;
         private PvPCameraTransitionSpeedManager cameraTransitionSpeedManager;
 

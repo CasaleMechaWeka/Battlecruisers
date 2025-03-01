@@ -9,10 +9,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         ICameraTarget PlayerCruiserNukedTarget { get; }
         ICameraTarget PlayerNavalFactoryTarget { get; }
 
-        ICameraTarget AICruiserTarget { get; }
-        ICameraTarget AICruiserDeathTarget { get; }
-        ICameraTarget AICruiserNukedTarget { get; }
-        ICameraTarget AINavalFactoryTarget { get; }
+        ICameraTarget EnemyCruiserTarget { get; }
+        ICameraTarget EnemyCruiserDeathTarget { get; }
+        ICameraTarget EnemyCruiserNukedTarget { get; }
+        ICameraTarget EnemyNavalFactoryTarget { get; }
 
         ICameraTarget MidLeftTarget { get; }
         ICameraTarget OverviewTarget { get; }

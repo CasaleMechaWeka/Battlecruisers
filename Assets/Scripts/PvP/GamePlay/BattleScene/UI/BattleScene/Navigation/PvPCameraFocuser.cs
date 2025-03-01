@@ -7,12 +7,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPCameraFocuser : ICameraFocuser
     {
-        private readonly IPvPCameraTargets _targets;
+        private readonly ICameraTargets _targets;
         private readonly IPvPStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
         private readonly IPvPCameraTransitionSpeedManager _cameraTransitionSpeedManager;
 
         public PvPCameraFocuser(
-            IPvPCameraTargets targets,
+            ICameraTargets targets,
             IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
             IPvPStaticCameraTargetProvider defaultCameraTargetProvider,
             IPvPCameraTransitionSpeedManager cameraTransitionSpeedManager)

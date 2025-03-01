@@ -15,10 +15,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public ICameraTarget PlayerCruiserNukedTarget { get; }
         public ICameraTarget PlayerNavalFactoryTarget { get; }
 
-        public ICameraTarget AICruiserTarget { get; }
-        public ICameraTarget AICruiserDeathTarget { get; }
-        public ICameraTarget AICruiserNukedTarget { get; }
-        public ICameraTarget AINavalFactoryTarget { get; }
+        public ICameraTarget EnemyCruiserTarget { get; }
+        public ICameraTarget EnemyCruiserDeathTarget { get; }
+        public ICameraTarget EnemyCruiserNukedTarget { get; }
+        public ICameraTarget EnemyNavalFactoryTarget { get; }
 
         public ICameraTarget MidLeftTarget { get; }
         public ICameraTarget OverviewTarget { get; }
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             Helper.AssertIsNotNull(cameraCalculator, cameraCalculatorSettings, playerCruiser, aiCruiser, camera);
 
             PlayerCruiserTarget = FindCruiserTarget(camera, cameraCalculator, playerCruiser);
-            AICruiserTarget = FindCruiserTarget(camera, cameraCalculator, aiCruiser);
+            EnemyCruiserTarget = FindCruiserTarget(camera, cameraCalculator, aiCruiser);
 
             // Overview
             Vector3 overviewPosition = camera.Position;
@@ -53,13 +53,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             // AI cruiser naval factory
             float aiCruiserBowSlotXPosition = aiCruiser.Position.x - aiCruiser.Size.x / 2;
-            AINavalFactoryTarget = CreateTarget(camera, cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, aiCruiserBowSlotXPosition);
+            EnemyNavalFactoryTarget = CreateTarget(camera, cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, aiCruiserBowSlotXPosition);
 
             PlayerCruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
             PlayerCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
 
-            AICruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
-            AICruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
+            EnemyCruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
+            EnemyCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
         }
 
         private ICameraTarget FindCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
