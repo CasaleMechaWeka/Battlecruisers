@@ -1,11 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Clouds;
+using BattleCruisers.UI.BattleScene.Clouds.Teleporters;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Teleporters
 {
-    public class PvPTeleporterHelper : IPvPTeleporterHelper
+    public class PvPTeleporterHelper : ITeleporterHelper
     {
         // With the perspective camera now this is a little tricky.  Determined by trial and error :D
         public const float MAX_X_POSITION_VISIBLE_BY_USER = 1500;

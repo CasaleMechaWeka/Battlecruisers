@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Clouds;
+using BattleCruisers.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Utils.BattleScene.Update;
 using System;
 using UnityEngine.Assertions;
@@ -9,10 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPCloudTeleporter
     {
         private readonly IUpdater _updater;
-        private readonly IPvPTeleporterHelper _teleporterHelper;
+        private readonly ITeleporterHelper _teleporterHelper;
         private ICloud _leftCloud, _rightCloud;
 
-        public PvPCloudTeleporter(IUpdater updater, IPvPTeleporterHelper teleporterHelper, ICloud leftCloud, ICloud rightCloud)
+        public PvPCloudTeleporter(IUpdater updater, ITeleporterHelper teleporterHelper, ICloud leftCloud, ICloud rightCloud)
         {
             PvPHelper.AssertIsNotNull(updater, teleporterHelper, leftCloud, rightCloud);
             Assert.IsTrue(leftCloud.Position.x < rightCloud.Position.x);
