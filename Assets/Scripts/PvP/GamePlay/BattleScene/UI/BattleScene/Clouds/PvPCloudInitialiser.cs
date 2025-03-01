@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -44,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             leftCloud.Initialise(skyStats);
             rightCloud.Initialise(skyStats);
 
-            IPvPCloudRandomiser cloudRandomiser
+            ICloudRandomiser cloudRandomiser
                 = new PvPCloudRandomiser(
                     RandomGenerator.Instance,
                     rightCloudValidXPositions: new Range<float>(min: -100, max: 400));

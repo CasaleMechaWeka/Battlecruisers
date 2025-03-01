@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds
 {
-    public class PvPCloudRandomiser : IPvPCloudRandomiser
+    public class PvPCloudRandomiser : ICloudRandomiser
     {
         private readonly IRandomGenerator _random;
         private readonly IRange<float> _rightCloudValidXPositions;
