@@ -1,6 +1,6 @@
 using BattleCruisers.AI;
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using System;
 using System.Collections.Generic;
@@ -14,13 +14,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public class PvPGameEndMonitor : IPvPGameEndMonitor
     {
-        private readonly IPvPCruiserDestroyedMonitor _cruiserDestroyedMonitor;
+        private readonly ICruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPGameEndHandler _gameEndHandler;
 
         public event EventHandler GameEnded;
         public PvPGameEndMonitor(
-            IPvPCruiserDestroyedMonitor cruiserDestroyedMonitor,
+            ICruiserDestroyedMonitor cruiserDestroyedMonitor,
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IPvPGameEndHandler gameEndHandler)
         {
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         // May or may not happen (ie, user may quit from menu, in which case no cruiser is destroyed)
-        private void _cruiserDestroyedMonitor_CruiserDestroyed(object sender, PvPCruiserDestroyedEventArgs e)
+        private void _cruiserDestroyedMonitor_CruiserDestroyed(object sender, CruiserDestroyedEventArgs e)
         {
             _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
             _gameEndHandler.HandleCruiserDestroyed(e.WasPlayerVictory, e.WasPlayerVictory ? GetTotalDestructionScore_Left() : GetTotalDestructionScore_Right());

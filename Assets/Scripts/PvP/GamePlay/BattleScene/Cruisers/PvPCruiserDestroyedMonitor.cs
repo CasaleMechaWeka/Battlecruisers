@@ -1,14 +1,15 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-    public class PvPCruiserDestroyedMonitor : IPvPCruiserDestroyedMonitor
+    public class PvPCruiserDestroyedMonitor : ICruiserDestroyedMonitor
     {
         private readonly IPvPCruiser _playerACruiser, _playerBCruiser;
 
-        public event EventHandler<PvPCruiserDestroyedEventArgs> CruiserDestroyed;
+        public event EventHandler<CruiserDestroyedEventArgs> CruiserDestroyed;
 
         public PvPCruiserDestroyedMonitor(IPvPCruiser playerCruiser, IPvPCruiser aiCruiser)
         {
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             _playerACruiser.Destroyed -= _playerACruiser_Destroyed;
             _playerBCruiser.Destroyed -= _playerBCruiser_Destroyed;
-            CruiserDestroyed?.Invoke(this, new PvPCruiserDestroyedEventArgs(wasVictory));
+            CruiserDestroyed?.Invoke(this, new CruiserDestroyedEventArgs(wasVictory));
         }
     }
 }
