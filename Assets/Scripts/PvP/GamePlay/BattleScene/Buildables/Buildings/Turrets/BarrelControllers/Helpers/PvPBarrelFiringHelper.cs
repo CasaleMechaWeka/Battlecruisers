@@ -11,13 +11,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IBarrelController _barrelController;
         private readonly IAccuracyAdjuster _accuracyAdjuster;
         private readonly IFireIntervalManager _fireIntervalManager;
-        private readonly IPvPBarrelFirer _barrelFirer;
+        private readonly IBarrelFirer _barrelFirer;
 
         public PvPBarrelFiringHelper(
             IBarrelController barrelController,
             IAccuracyAdjuster accuracyAdjuster,
             IFireIntervalManager fireIntervalManager,
-            IPvPBarrelFirer barrelFirer)
+            IBarrelFirer barrelFirer)
         {
             PvPHelper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager, barrelFirer);
 

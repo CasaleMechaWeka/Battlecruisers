@@ -1,14 +1,15 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
-    public class PvPDeferredBarrelFirer : IPvPBarrelFirer
+    public class PvPDeferredBarrelFirer : IBarrelFirer
     {
-        private readonly IPvPBarrelFirer _coreFirer;
+        private readonly IBarrelFirer _coreFirer;
         private readonly IConstantDeferrer _deferrer;
 
-        public PvPDeferredBarrelFirer(IPvPBarrelFirer coreFirer, IConstantDeferrer deferrer)
+        public PvPDeferredBarrelFirer(IBarrelFirer coreFirer, IConstantDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(coreFirer, deferrer);
 

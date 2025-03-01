@@ -193,7 +193,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelAnimation = GetBarrelFiringAnimation(args);
         }
 
-        protected virtual IPvPBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
+        protected virtual IBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
         {
             return new PvPBarrelFirer(
                     this,
