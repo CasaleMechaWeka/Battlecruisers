@@ -1,4 +1,5 @@
 using System;
+using BattleCruisers.Cruisers.Damage;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage
@@ -7,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// Keeps track of a damagable, and emits an event when that damagable's 
     /// health drops below a specified threshold.
     /// </summary>
-    public class PvPHealthThresholdMonitor : IPvPHealthThresholdMonitor
+    public class PvPHealthThresholdMonitor : IHealthThresholdMonitor
     {
         private readonly PvPCruiser _damagable;
         private readonly float _threshold;

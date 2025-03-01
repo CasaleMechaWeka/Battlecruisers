@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Threading;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
     {
         private readonly IDeferrer _timeScaleDeferrer;
         private readonly IPvPCruiserController _playerCruiser, _enemyCruiser;
-        private readonly IPvPHealthThresholdMonitor _playerCruiserHealthMonitor, _aiCruiserHealthMonitor;
+        private readonly IHealthThresholdMonitor _playerCruiserHealthMonitor, _aiCruiserHealthMonitor;
 
         public const float DANGER_LIFETIME_IN_S = 60;
 
@@ -30,8 +30,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
             IDeferrer timeScaleDeferrer,
             IPvPCruiserController playerCruiser,
             IPvPCruiserController enemyCruiser,
-            IPvPHealthThresholdMonitor playerCruiserHealthMonitor,
-            IPvPHealthThresholdMonitor enemyCruiserHealthMonitor)
+            IHealthThresholdMonitor playerCruiserHealthMonitor,
+            IHealthThresholdMonitor enemyCruiserHealthMonitor)
         {
             PvPHelper.AssertIsNotNull(timeScaleDeferrer, timeScaleDeferrer, playerCruiser, enemyCruiser, playerCruiserHealthMonitor, enemyCruiserHealthMonitor);
 

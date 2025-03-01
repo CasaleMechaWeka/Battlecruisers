@@ -15,13 +15,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// </summary>
     public class PvPCruiserEventMonitor : IManagedDisposable
     {
-        private readonly IPvPHealthThresholdMonitor _cruiserHealthThresholdMonitor;
+        private readonly IHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private readonly ICruiserDamageMonitor _cruiserDamageMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _damagedDebouncer;
 
         public PvPCruiserEventMonitor(
-            IPvPHealthThresholdMonitor cruiserHealthThresholdMonitor,
+            IHealthThresholdMonitor cruiserHealthThresholdMonitor,
             ICruiserDamageMonitor cruiserDamageMonitor,
             IPrioritisedSoundPlayer soundPlayer,
             IDebouncer damagedDebouncer)
