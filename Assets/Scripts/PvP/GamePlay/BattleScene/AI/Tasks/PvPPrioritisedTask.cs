@@ -1,6 +1,5 @@
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.Tasks.States;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks
@@ -29,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
             Priority = priority;
             _task = task;
-            _currentState = new PvPInitialState(_task, this);
+            _currentState = new InitialState(_task, this);
 
             _task.Completed += _task_Completed;
         }
