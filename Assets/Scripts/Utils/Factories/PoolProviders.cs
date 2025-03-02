@@ -49,7 +49,7 @@ namespace BattleCruisers.Utils.Factories
             _unitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
 
-            IAudioSourcePoolableFactory audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
+            IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
