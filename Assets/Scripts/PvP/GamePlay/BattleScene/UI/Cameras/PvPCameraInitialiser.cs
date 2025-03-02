@@ -259,7 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
-            IList<IPvPUserInputCameraTargetProvider> cameraTargetProviders
+            IList<IUserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
                     camera,
                     cameraCalculator,
@@ -289,7 +289,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             Assert.IsNotNull(updater);
             // updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
-            IList<IPvPUserInputCameraTargetProvider> cameraTargetProviders
+            IList<IUserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
                     camera,
                     cameraCalculator,
@@ -304,7 +304,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     cameraTargetProviders);
         }
 
-        private IList<IPvPUserInputCameraTargetProvider> CreateCameraTargetProviders(
+        private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
@@ -332,7 +332,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     zoomScale,
                     zoomSettingsMultiplier);
 
-            IList<IPvPUserInputCameraTargetProvider> targetProviders = new List<IPvPUserInputCameraTargetProvider>()
+            IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>()
             {
                 trumpCameraTargetProvider
             };
