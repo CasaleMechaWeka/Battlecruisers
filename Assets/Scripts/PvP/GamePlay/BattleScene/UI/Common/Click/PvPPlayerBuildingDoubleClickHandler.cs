@@ -3,10 +3,11 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.Common.Click;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click
 {
-    public class PvPPlayerBuildingDoubleClickHandler : IPvPDoubleClickHandler<IPvPBuilding>
+    public class PvPPlayerBuildingDoubleClickHandler : IDoubleClickHandler<IPvPBuilding>
     {
         public void OnDoubleClick(IPvPBuilding playerBuliding)
         {

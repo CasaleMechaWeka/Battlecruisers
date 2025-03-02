@@ -9,8 +9,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.F
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using BCUtils = BattleCruisers.Utils;
@@ -33,8 +33,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPCruiserHelper Helper { get; }
         public IFilter<IPvPSlot> HighlightableFilter { get; }
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; }
-        public IPvPDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
-        public IPvPDoubleClickHandler<IPvPCruiser> CruiserDoubleClickHandler { get; }
+        public IDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
+        public IDoubleClickHandler<IPvPCruiser> CruiserDoubleClickHandler { get; }
         public IManagedDisposable FogOfWarManager { get; }
         public IBroadcastingProperty<bool> HasActiveDrones { get; }
 
@@ -53,8 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPCruiserHelper helper,
             IFilter<IPvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
-            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
-            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
+            IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
+            IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
             IManagedDisposable fogOfWarManager,
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
@@ -111,8 +111,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPCruiserHelper helper,
             IFilter<IPvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
-            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
-            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
+            IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
+            IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
             IManagedDisposable fogOfWarManager,
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {

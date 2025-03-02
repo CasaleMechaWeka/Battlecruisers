@@ -18,6 +18,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -100,8 +101,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
             PvPFogStrength fogStrength = PvPFogStrength.Weak;
-            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
-            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
+            IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
+            IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
 
             InitialiseCruiser(
                 playerACruiser,
@@ -134,8 +135,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Direction facingDirection = Direction.Left;
             PvPFogStrength fogStrength = PvPFogStrength.Strong;
 
-            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
-            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
+            IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
+            IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
 
             InitialiseCruiser(
                 playerBCruiser,
@@ -165,8 +166,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IFilter<IPvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
-            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
-            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
+            IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
+            IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
             bool isPlayerCruiser)
         {

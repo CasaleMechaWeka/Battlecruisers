@@ -2,10 +2,11 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.Common.Click;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click
 {
-    public class PvPPlayerCruiserDoubleClickHandler : IPvPDoubleClickHandler<IPvPCruiser>
+    public class PvPPlayerCruiserDoubleClickHandler : IDoubleClickHandler<IPvPCruiser>
     {
         public void OnDoubleClick(IPvPCruiser playerCruiser)
         {

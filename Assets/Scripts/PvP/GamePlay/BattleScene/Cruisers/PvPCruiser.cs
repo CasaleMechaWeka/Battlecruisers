@@ -56,8 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private IPvPCruiserHelper _helper;
         private PvPSlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
-        private IPvPDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
-        private IPvPDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
+        private IDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
+        private IDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
         private IAudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
