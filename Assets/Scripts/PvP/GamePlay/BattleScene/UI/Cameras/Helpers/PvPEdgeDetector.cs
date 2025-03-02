@@ -1,11 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
 {
-    public class PvPEdgeDetector : IPvPEdgeDetector
+    public class PvPEdgeDetector : IEdgeDetector
     {
         private readonly IInput _input;
         private readonly IPvPScreen _screen;
