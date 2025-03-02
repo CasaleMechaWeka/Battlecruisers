@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers.Drones.Feedback;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -37,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
             AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance, isTutorial);
-            GlobalBoostProviders = new PvPGlobalBoostProviders();
+            GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
             //   BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             //  BuildableEffectsSoundPlayer = factoryProvider.Sound.PrioritisedSoundPlayer;
@@ -61,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
             AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance);
-            GlobalBoostProviders = new PvPGlobalBoostProviders();
+            GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
             //    BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
