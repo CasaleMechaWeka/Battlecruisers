@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
         IPointerEnterHandler,
         IPointerExitHandler,
         IClickableEmitter,
-        IPvPPointerUpDownEmitter
+        IPointerUpDownEmitter
     {
         private bool _isPressed = false;
         private bool _isHover = false;
