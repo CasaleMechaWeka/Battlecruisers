@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
@@ -9,23 +10,22 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.V
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Seabed;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Seabed;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
-    public abstract class PvPAircraftController : PvPUnit, IVelocityProvider, IPatrollingVelocityProvider, IPvPSeabedImpactable
+    public abstract class PvPAircraftController : PvPUnit, IVelocityProvider, IPatrollingVelocityProvider, ISeabedImpactable
     {
         private PvPKamikazeController _kamikazeController;
         private Collider2D _collider;
