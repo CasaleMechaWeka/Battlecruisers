@@ -9,10 +9,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPEdgeDetector : IEdgeDetector
     {
         private readonly IInput _input;
-        private readonly IPvPScreen _screen;
+        private readonly IScreen _screen;
         private readonly int _edgeRegionWithInPixels;
 
-        public PvPEdgeDetector(IInput input, IPvPScreen screen, int edgeRegionWithInPixels)
+        public PvPEdgeDetector(IInput input, IScreen screen, int edgeRegionWithInPixels)
         {
             PvPHelper.AssertIsNotNull(input, screen);
             Assert.IsTrue(edgeRegionWithInPixels >= 0);
