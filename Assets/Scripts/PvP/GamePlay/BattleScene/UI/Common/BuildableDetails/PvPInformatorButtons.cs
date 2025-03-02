@@ -9,13 +9,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
-    public class PvPInformatorButtons : MonoBehaviour, IPvPInformatorButtons
+    public class PvPInformatorButtons : MonoBehaviour, IInformatorButtons
     {
         public PvPRepairButtonController repairButton;
         public PvPChooseTargetButtonController chooseTargetButton;

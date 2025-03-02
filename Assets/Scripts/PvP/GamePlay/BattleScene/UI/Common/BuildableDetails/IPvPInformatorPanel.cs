@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
+using BattleCruisers.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         IPvPComparableItemDetails<IPvPBuilding> BuildingDetails { get; }
         IPvPComparableItemDetails<IPvPUnit> UnitDetails { get; }
         IPvPComparableItemDetails<IPvPCruiser> CruiserDetails { get; }
-        IPvPInformatorButtons Buttons { get; }
+        IInformatorButtons Buttons { get; }
         IPvPSlidingPanel ExtendedPanel { get; }
 
         void Show(ITarget item);
