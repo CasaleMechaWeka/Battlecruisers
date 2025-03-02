@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public class PvPSwipeCameraTargetProvider : PvPUserInputCameraTargetProvider
     {
-        private readonly IPvPDragTracker _dragTracker;
+        private readonly IDragTracker _dragTracker;
         private readonly IScrollCalculator _scrollCalculator;
         private readonly IZoomCalculator _zoomCalculator;
         private readonly ICamera _camera;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public override int Priority => 3;
 
         public PvPSwipeCameraTargetProvider(
-            IPvPDragTracker dragTracker,
+            IDragTracker dragTracker,
             IScrollCalculator scrollCalculator,
             IZoomCalculator zoomCalculator,
             ICamera camera,
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _dragTracker.DragEnd += _dragTracker_DragEnd;
         }
 
-        private void _dragTracker_Drag(object sender, PvPDragEventArgs e)
+        private void _dragTracker_Drag(object sender, DragEventArgs e)
         {
             // Logging.Log(Tags.SWIPE_NAVIGATION, $"dragDelta: {e.PointerEventData.Delta}");
 
@@ -88,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             return _cameraXPositionClamper.Clamp(targetXPosition, validXPositions);
         }
 
-        private void _dragTracker_DragEnd(object sender, PvPDragEventArgs e)
+        private void _dragTracker_DragEnd(object sender, DragEventArgs e)
         {
             UserInputEnd();
         }
