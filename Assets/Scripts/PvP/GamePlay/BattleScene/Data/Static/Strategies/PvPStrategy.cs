@@ -1,5 +1,4 @@
 using BattleCruisers.Data.Static.Strategies.Requests;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             // not affect other strategies.
             Offensives
                 = strategyToCopy.Offensives
-                    .Select(originalOffensiveRequest => (IOffensiveRequest)new PvPOffensiveRequest(originalOffensiveRequest))
+                    .Select(originalOffensiveRequest => (IOffensiveRequest)new OffensiveRequest(originalOffensiveRequest))
                     .ToList();
         }
 
