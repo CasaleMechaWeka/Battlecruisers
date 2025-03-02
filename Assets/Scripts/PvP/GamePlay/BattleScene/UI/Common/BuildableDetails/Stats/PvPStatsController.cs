@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public virtual void Initialise()
         {
-            IPvPValueToStarsConverterFactory converterFactory = new PvPValueToStarsConverterFactory();
+            IValueToStarsConverterFactory converterFactory = new PvPValueToStarsConverterFactory();
 
             _unitMovementSpeedConverter = converterFactory.CreateUnitMovementSpeedConverter();
             _buildableHealthConverter = converterFactory.CreateBuildableHealthConverter();

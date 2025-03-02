@@ -2,7 +2,7 @@ using BattleCruisers.Utils.Categorisation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation
 {
-    public class PvPValueToStarsConverterFactory : IPvPValueToStarsConverterFactory
+    public class PvPValueToStarsConverterFactory : IValueToStarsConverterFactory
     {
         public IValueToStarsConverter CreateUnitMovementSpeedConverter()
         {
