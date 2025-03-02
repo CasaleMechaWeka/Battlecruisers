@@ -1,14 +1,14 @@
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
 {
     public class PvPDragEventArgs : EventArgs
     {
-        public IPvPPointerEventData PointerEventData { get; }
+        public IPointerEventData PointerEventData { get; }
 
-        public PvPDragEventArgs(IPvPPointerEventData pointerEventData)
+        public PvPDragEventArgs(IPointerEventData pointerEventData)
         {
             Assert.IsNotNull(pointerEventData);
             PointerEventData = pointerEventData;
