@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.BarrelRecoil
 {
@@ -11,6 +12,7 @@ namespace BattleCruisers.Effects.BarrelRecoil
 
         public BarrelAnimation(Animator animator)
         {
+            Assert.IsNotNull(animator, "Animator cannot be null");
             _animator = animator;
         }
 
