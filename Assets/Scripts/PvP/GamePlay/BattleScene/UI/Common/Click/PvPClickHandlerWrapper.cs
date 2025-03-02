@@ -1,3 +1,4 @@
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         private PvPClickHandler _clickHandler;
 
-        public IPvPClickHandler GetClickHandler(float doubleClickThresholdInS = Constants.DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S)
+        public IClickHandler GetClickHandler(float doubleClickThresholdInS = Constants.DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S)
         {
             if (_clickHandler == null)
             {

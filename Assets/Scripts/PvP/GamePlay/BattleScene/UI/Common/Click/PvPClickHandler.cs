@@ -1,9 +1,10 @@
+using BattleCruisers.UI.Common.Click;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click
 {
-    public class PvPClickHandler : IPvPClickHandler
+    public class PvPClickHandler : IClickHandler
     {
         private readonly float _doubleClickThresholdInS;
         private float _lastClickTime;
