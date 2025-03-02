@@ -1,20 +1,20 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
     public class PvPCameraFocuser : ICameraFocuser
     {
         private readonly ICameraTargets _targets;
-        private readonly IPvPStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
+        private readonly IStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
         private readonly ICameraTransitionSpeedManager _cameraTransitionSpeedManager;
 
         public PvPCameraFocuser(
             ICameraTargets targets,
-            IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
-            IPvPStaticCameraTargetProvider defaultCameraTargetProvider,
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            IStaticCameraTargetProvider defaultCameraTargetProvider,
             ICameraTransitionSpeedManager cameraTransitionSpeedManager)
         {
             PvPHelper.AssertIsNotNull(targets, trumpCameraTargetProvider, defaultCameraTargetProvider, cameraTransitionSpeedManager);

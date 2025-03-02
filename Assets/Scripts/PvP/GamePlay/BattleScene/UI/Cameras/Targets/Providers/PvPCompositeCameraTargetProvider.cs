@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     /// </summary>
     public class PvPCompositeCameraTargetProvider : ICameraTargetProvider
     {
-        private readonly IPvPStaticCameraTargetProvider _defaultTargetProvider;
+        private readonly IStaticCameraTargetProvider _defaultTargetProvider;
         private readonly IList<IUserInputCameraTargetProvider> _targetProviders;
 
         private IUserInputCameraTargetProvider _activeTargetProvider;
@@ -56,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public event EventHandler TargetChanged;
 
         public PvPCompositeCameraTargetProvider(
-            IPvPStaticCameraTargetProvider defaultTargetProvider,
+            IStaticCameraTargetProvider defaultTargetProvider,
             IList<IUserInputCameraTargetProvider> targetProviders)
         {
             PvPHelper.AssertIsNotNull(defaultTargetProvider, targetProviders);

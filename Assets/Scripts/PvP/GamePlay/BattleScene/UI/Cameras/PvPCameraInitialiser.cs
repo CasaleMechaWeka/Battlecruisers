@@ -54,8 +54,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public float slowCameraSmoothTime = 0.5f;
         private ICamera icamera;
         private ICameraFocuser cameraFocuser;
-        private IPvPStaticCameraTargetProvider defaultCameraTargetProvider;
-        private IPvPStaticCameraTargetProvider trumpCameraTargetProvider;
+        private IStaticCameraTargetProvider defaultCameraTargetProvider;
+        private IStaticCameraTargetProvider trumpCameraTargetProvider;
         private ICameraTargets targets;
         private ITime time;
         private PvPCameraTransitionSpeedManager cameraTransitionSpeedManager;
@@ -252,8 +252,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             NavigationPermitters navigationPermitters,
-            IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
-            IPvPStaticCameraTargetProvider defaultCameraTargetProvider)
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            IStaticCameraTargetProvider defaultCameraTargetProvider)
         {
             PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
             Assert.IsNotNull(updater);
@@ -281,8 +281,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             // PvPNavigationPermitters navigationPermitters,
-            IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
-            IPvPStaticCameraTargetProvider defaultCameraTargetProvider
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            IStaticCameraTargetProvider defaultCameraTargetProvider
         )
         {
             PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
@@ -310,7 +310,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             PvPTogglableUpdater updater,
-            IPvPStaticCameraTargetProvider trumpCameraTargetProvider)
+            IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
             IPvPDirectionalZoom directionalZoom
                 = new PvPDirectionalZoom(
