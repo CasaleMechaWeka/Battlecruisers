@@ -1,5 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
-        private readonly IPvPLevelToMultiplierConverter _scrollLevelConverter;
+        private readonly ILevelToMultiplierConverter _scrollLevelConverter;
         private readonly float _scrollMultiplier;
 
         public PvPScrollCalculator(
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ITime time,
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
-            IPvPLevelToMultiplierConverter scrollLevelConverter,
+            ILevelToMultiplierConverter scrollLevelConverter,
             float scrollMultiplier)
         {
             PvPHelper.AssertIsNotNull(camera, time, validOrthographicSizes, settingsManager, scrollLevelConverter);
