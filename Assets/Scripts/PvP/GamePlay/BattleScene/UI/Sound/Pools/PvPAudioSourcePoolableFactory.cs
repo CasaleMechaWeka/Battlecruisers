@@ -6,7 +6,7 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools
 {
-    public class PvPAudioSourcePoolableFactory : IPvPAudioSourcePoolableFactory
+    public class PvPAudioSourcePoolableFactory : IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IDeferrer _realTimeDeferrer;
