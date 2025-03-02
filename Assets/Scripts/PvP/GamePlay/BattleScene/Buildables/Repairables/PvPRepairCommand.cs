@@ -1,11 +1,11 @@
 using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.UI.Commands;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Commands;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables
 {
-    public class PvPRepairCommand : PvPParameterisedCommand<float>, IRepairCommand
+    public class PvPRepairCommand : ParameterisedCommand<float>, IRepairCommand
     {
         public IRepairable Repairable { get; }
 
