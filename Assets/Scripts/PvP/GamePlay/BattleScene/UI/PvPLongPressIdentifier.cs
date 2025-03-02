@@ -1,11 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {
-    public class PvPLongPressIdentifier : IPvPLongPressIdentifier
+    public class PvPLongPressIdentifier : ILongPressIdentifier
     {
         private readonly IPvPPointerUpDownEmitter _button;
         private readonly ITime _time;
