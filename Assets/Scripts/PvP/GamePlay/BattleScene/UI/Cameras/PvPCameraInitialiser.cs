@@ -318,7 +318,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     cameraCalculator,
                     settings.ValidOrthographicSizes);
 
-            IPvPInput input = PvPInputBC.Instance;
+            IInput input = PvPInputBC.Instance;
             IPvPPinchTracker pinchTracker = new PvPPinchTracker(input, updater);
 
             float zoomScale = PvPSystemInfoBC.Instance.IsHandheld ? PvPZoomScale.SWIPE : PvPZoomScale.SCROLL_WHEEL;
