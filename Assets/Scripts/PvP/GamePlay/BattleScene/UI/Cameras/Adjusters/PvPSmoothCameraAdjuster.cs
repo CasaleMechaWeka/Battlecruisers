@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Adjusters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters
 {
@@ -9,12 +10,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPSmoothCameraAdjuster : PvPCameraAdjuster
     {
         private readonly IPvPSmoothZoomAdjuster _zoomAdjuster;
-        private readonly IPvPSmoothPositionAdjuster _positionAdjuster;
+        private readonly ISmoothPositionAdjuster _positionAdjuster;
 
         public PvPSmoothCameraAdjuster(
             IPvPCameraTargetProvider cameraTargetProvider,
             IPvPSmoothZoomAdjuster zoomAdjuster,
-            IPvPSmoothPositionAdjuster positionAdjuster)
+            ISmoothPositionAdjuster positionAdjuster)
             : base(cameraTargetProvider)
         {
             PvPHelper.AssertIsNotNull(zoomAdjuster, positionAdjuster);

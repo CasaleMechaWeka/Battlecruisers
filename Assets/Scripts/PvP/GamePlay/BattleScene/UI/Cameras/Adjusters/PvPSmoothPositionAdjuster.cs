@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters
 {
-    public class PvPSmoothPositionAdjuster : IPvPSmoothPositionAdjuster
+    public class PvPSmoothPositionAdjuster : ISmoothPositionAdjuster
     {
         private readonly ICamera _camera;
         private readonly ITime _time;
