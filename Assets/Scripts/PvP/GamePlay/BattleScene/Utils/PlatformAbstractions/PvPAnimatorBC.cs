@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions
 {
-    public class PvPAnimatorBC : IPvPAnimator
+    public class PvPAnimatorBC : IAnimator
     {
         private readonly Animator _platformObject;
 
