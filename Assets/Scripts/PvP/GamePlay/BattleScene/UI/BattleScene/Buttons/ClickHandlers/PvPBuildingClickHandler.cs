@@ -2,8 +2,8 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine.Assertions;
@@ -12,14 +12,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBuildingClickHandler : PvPBuildableClickHandler, IPvPBuildingClickHandler
     {
-        private readonly IPvPPlayerCruiserFocusHelper _playerCruiserFocusHelper;
+        private readonly IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
         private readonly IAudioClipWrapper _buildingSelectedSound;
 
         public PvPBuildingClickHandler(
             IPvPUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IAudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
