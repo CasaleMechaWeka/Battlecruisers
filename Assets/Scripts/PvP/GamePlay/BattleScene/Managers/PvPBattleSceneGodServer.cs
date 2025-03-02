@@ -1,4 +1,5 @@
 using BattleCruisers.AI;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
@@ -11,7 +12,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
@@ -68,8 +68,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private PvPDroneManagerMonitor droneManagerMonitorA;
-        private PvPDroneManagerMonitor droneManagerMonitorB;
+        private DroneManagerMonitor droneManagerMonitorA;
+        private DroneManagerMonitor droneManagerMonitorB;
 #pragma warning restore CS0414  // Variable is assigned but never used
         public NameGenerationData nameGenerator;
         public static PvPBattleSceneGodServer Instance
@@ -207,13 +207,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiserSprite = playerBCruiser.Sprite;
             playerBCruiserName = playerBCruiser.stringKeyBase;
 
-            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
-            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
             droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
             droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
             droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
 
-            droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorB = new DroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
             droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
             droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
             droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
@@ -328,13 +328,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiserSprite = playerBCruiser.Sprite;
             playerBCruiserName = playerBCruiser.stringKeyBase;
 
-            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
-            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
             droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
             droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
             droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
 
-            droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorB = new DroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
             droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
             droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
             droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;

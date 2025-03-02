@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
-
-
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public class DroneFeedback : IDroneFeedback

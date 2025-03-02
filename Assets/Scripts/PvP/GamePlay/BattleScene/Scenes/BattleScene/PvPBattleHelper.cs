@@ -167,7 +167,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             return
                 new DroneEventSoundPlayer(
-                    new PvPDroneManagerMonitor(playerCruiser.DroneManager, deferrer),
+                    new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
