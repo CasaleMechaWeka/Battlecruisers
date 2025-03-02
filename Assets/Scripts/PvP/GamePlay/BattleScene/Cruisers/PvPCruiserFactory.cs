@@ -22,7 +22,6 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -50,10 +49,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _applicationModel = applicationModel;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             // _uiManager = uiManager;
-            _fogVisibilityDecider = new PvPFogVisibilityDecider();
+            _fogVisibilityDecider = new FogVisibilityDecider();
         }
 
-        public async Task<PvPCruiser> CreatePlayerACruiser(Team team)
+        public PvPCruiser CreatePlayerACruiser(Team team)
         {
             PvPCruiser playerACruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerACruiser);
             PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerACruiserPrefab, SynchedServerData.Instance.playerAClientNetworkId.Value, -CRUISER_OFFSET_IN_M);
@@ -64,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return playerACruiser;
         }
 
-        public async Task<PvPCruiser> CreatePlayerBCruiser(Team team)
+        public PvPCruiser CreatePlayerBCruiser(Team team)
         {
             PvPCruiser playerBCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
             PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerBCruiserPrefab, SynchedServerData.Instance.playerBClientNetworkId.Value, CRUISER_OFFSET_IN_M);
@@ -76,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return playerBCruiser;
         }
 
-        public async Task<PvPCruiser> CreateAIBotCruiser(Team team)
+        public PvPCruiser CreateAIBotCruiser(Team team)
         {
             PvPCruiser aiBotCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
             PvPCruiser aiBotCruiser = _factoryProvider.PrefabFactory.CreateAIBotCruiser(aiBotCruiserPrefab, CRUISER_OFFSET_IN_M);
@@ -181,9 +180,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _factoryProvider.UpdaterProvider,
                     faction);
 
-            IDroneManager droneManager = new PvPDroneManager();
+            IDroneManager droneManager = new DroneManager();
             IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.PrioritisedSoundPlayer*/);
-            IDroneConsumerProvider droneConsumerProvider = new PvPDroneConsumerProvider(droneManager);
+            IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             PvPFogOfWarManager fogOfWarManager = new PvPFogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
 
             PvPRepairManager repairManager = new PvPRepairManager(cruiserSpecificFactories.DroneFeedbackFactory, droneConsumerProvider, cruiser);
@@ -220,7 +219,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             if (isPlayerCruiser)
             {
-                return new PvPPlayerCruiserDroneFocuser(droneManager, new PvPDroneFocusSoundPicker() /*, soundPlayer*/);
+                return new PvPPlayerCruiserDroneFocuser(droneManager, new DroneFocusSoundPicker() /*, soundPlayer*/);
             }
             else
             {

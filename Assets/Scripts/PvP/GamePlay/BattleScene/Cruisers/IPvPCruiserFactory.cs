@@ -1,13 +1,12 @@
 using BattleCruisers.Targets.TargetTrackers;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
     public interface IPvPCruiserFactory
     {
-        Task<PvPCruiser> CreatePlayerACruiser(Team team);
-        Task<PvPCruiser> CreatePlayerBCruiser(Team team);
-        Task<PvPCruiser> CreateAIBotCruiser(Team team);
+        PvPCruiser CreatePlayerACruiser(Team team);
+        PvPCruiser CreatePlayerBCruiser(Team team);
+        PvPCruiser CreateAIBotCruiser(Team team);
 
         void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,

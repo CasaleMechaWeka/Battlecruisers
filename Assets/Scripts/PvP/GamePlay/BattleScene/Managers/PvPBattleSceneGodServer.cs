@@ -189,15 +189,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             factoryProvider.Initialise();
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
-            await _Initialise_Rest();
+            _Initialise_Rest();
         }
-        public async Task _Initialise_Rest()
+        public void _Initialise_Rest()
         {
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             //await Task.Delay(500);
-            playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            playerACruiser = cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             //await Task.Delay(500);
-            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
+            playerBCruiser = cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
 
@@ -316,9 +316,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             //await Task.Delay(500);
-            playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            playerACruiser = cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             //await Task.Delay(500);
-            playerBCruiser = await cruiserFactory.CreateAIBotCruiser(Team.RIGHT);
+            playerBCruiser = cruiserFactory.CreateAIBotCruiser(Team.RIGHT);
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
 
