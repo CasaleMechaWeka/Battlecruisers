@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
@@ -66,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new PvPFlightPointsProviderFactory();
-            BoostFactory = new PvPBoostFactory();
+            BoostFactory = new BoostFactory();
             DamageApplierFactory = new PvPDamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
                 = new PvPSpriteChooserFactory(

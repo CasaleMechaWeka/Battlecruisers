@@ -6,14 +6,14 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Boost
 {
     public class BoostConsumer : IBoostConsumer
-	{
+    {
         private readonly IList<IBoostProvider> _boostProviders;
 
         private const float DEFAULT_BOOST_MULTIPLIER = 1;
 
         private float _cumulativeBoost;
-		public float CumulativeBoost 
-        { 
+        public float CumulativeBoost
+        {
             get { return _cumulativeBoost; }
             private set
             {
@@ -39,19 +39,22 @@ namespace BattleCruisers.Buildables.Boost
             Logging.LogMethod(Tags.BOOST);
 
             Assert.IsFalse(_boostProviders.Contains(boostProvider));
-            _boostProviders.Add(boostProvider);
-            UpdateCumulativeBoost();
+            if (!_boostProviders.Contains(boostProvider))
+            {
+                _boostProviders.Add(boostProvider);
+                UpdateCumulativeBoost();
+            }
         }
-		
-		public void RemoveBoostProvider(IBoostProvider boostProvider)
-		{
+
+        public void RemoveBoostProvider(IBoostProvider boostProvider)
+        {
             Logging.LogMethod(Tags.BOOST);
 
             Assert.IsTrue(_boostProviders.Contains(boostProvider));
             _boostProviders.Remove(boostProvider);
-			UpdateCumulativeBoost();
-		}
-		
+            UpdateCumulativeBoost();
+        }
+
         private void UpdateCumulativeBoost()
         {
             float cumulativeBoost = DEFAULT_BOOST_MULTIPLIER;
