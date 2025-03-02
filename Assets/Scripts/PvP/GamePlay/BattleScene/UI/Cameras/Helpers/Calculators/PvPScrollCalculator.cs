@@ -1,13 +1,14 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.DataStrctures;
-using UnityEngine.Assertions;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
 {
-    public class PvPScrollCalculator : IPvPScrollCalculator
+    public class PvPScrollCalculator : IScrollCalculator
     {
         private readonly ICamera _camera;
         private readonly ITime _time;
