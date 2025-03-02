@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPEdgeScrollingCameraTargetProvider : PvPUserInputCameraTargetProvider
     {
         private readonly IUpdater _updater;
-        private readonly IPvPEdgeScrollCalculator _scrollCalculator;
+        private readonly IEdgeScrollCalculator _scrollCalculator;
         private readonly ICamera _camera;
         private readonly IPvPCameraCalculator _cameraCalculator;
         private readonly IPvPEdgeDetector _edgeDetector;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public PvPEdgeScrollingCameraTargetProvider(
             IUpdater updater,
-            IPvPEdgeScrollCalculator scrollCalculator,
+            IEdgeScrollCalculator scrollCalculator,
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             IPvPEdgeDetector edgeDetector,
