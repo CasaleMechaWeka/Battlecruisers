@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     {
         private readonly IPvPDragTracker _dragTracker;
         private readonly IScrollCalculator _scrollCalculator;
-        private readonly IPvPZoomCalculator _zoomCalculator;
+        private readonly IZoomCalculator _zoomCalculator;
         private readonly ICamera _camera;
         private readonly IPvPCameraCalculator _cameraCalculator;
         private readonly IPvPDirectionalZoom _directionalZoom;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public PvPSwipeCameraTargetProvider(
             IPvPDragTracker dragTracker,
             IScrollCalculator scrollCalculator,
-            IPvPZoomCalculator zoomCalculator,
+            IZoomCalculator zoomCalculator,
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             IPvPDirectionalZoom directionalZoom,

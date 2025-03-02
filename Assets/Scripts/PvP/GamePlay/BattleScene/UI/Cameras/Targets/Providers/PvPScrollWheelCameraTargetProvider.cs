@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     {
         private readonly IInput _input;
         private readonly IUpdater _updater;
-        private readonly IPvPZoomCalculator _zoomCalculator;
+        private readonly IZoomCalculator _zoomCalculator;
         private readonly IPvPDirectionalZoom _directionalZoom;
 
         public override int Priority => 5;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public PvPScrollWheelCameraTargetProvider(
             IInput input,
             IUpdater updater,
-            IPvPZoomCalculator zoomCalculator,
+            IZoomCalculator zoomCalculator,
             IPvPDirectionalZoom directionalZoom)
         {
             PvPHelper.AssertIsNotNull(input, updater, zoomCalculator, directionalZoom);
