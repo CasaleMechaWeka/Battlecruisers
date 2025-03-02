@@ -1,12 +1,12 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
+using BattleCruisers.UI.Panels;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus
 {
     public interface IPvPBuildMenu : IPvPBuildMenuButtons
     {
-        IPvPSlidingPanel SelectorPanel { get; }
+        ISlidingPanel SelectorPanel { get; }
 
         /// <summary>
         /// Shows the building group menu for the given buildingCategory.

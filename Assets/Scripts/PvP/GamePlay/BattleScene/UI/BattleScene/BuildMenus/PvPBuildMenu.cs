@@ -2,10 +2,10 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
@@ -22,11 +22,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private readonly IAudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu, _lastShownMenu;
 
-        public IPvPSlidingPanel SelectorPanel { get; }
+        public ISlidingPanel SelectorPanel { get; }
         public IReadOnlyCollection<IPvPBuildableButton> BuildableButtons { get; }
 
         public PvPBuildMenu(
-            IPvPSlidingPanel selectorPanel,
+            ISlidingPanel selectorPanel,
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IPvPBuildableMenus<BuildingCategory> buildingMenus,
             IPvPBuildableMenus<UnitCategory> unitMenus,
