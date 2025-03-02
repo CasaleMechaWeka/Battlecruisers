@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters
 {
-    public class PvPCameraTransitionSpeedManager : IPvPCameraTransitionSpeedManager, ICameraSmoothTimeProvider
+    public class PvPCameraTransitionSpeedManager : ICameraTransitionSpeedManager, ICameraSmoothTimeProvider
     {
         private readonly float _normalSmoothTime, _slowSmoothTime;
         private const float MIN_SMOOTH_TIME = 0;

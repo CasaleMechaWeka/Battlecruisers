@@ -1,7 +1,7 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras.Adjusters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
@@ -9,13 +9,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private readonly ICameraTargets _targets;
         private readonly IPvPStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
-        private readonly IPvPCameraTransitionSpeedManager _cameraTransitionSpeedManager;
+        private readonly ICameraTransitionSpeedManager _cameraTransitionSpeedManager;
 
         public PvPCameraFocuser(
             ICameraTargets targets,
             IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
             IPvPStaticCameraTargetProvider defaultCameraTargetProvider,
-            IPvPCameraTransitionSpeedManager cameraTransitionSpeedManager)
+            ICameraTransitionSpeedManager cameraTransitionSpeedManager)
         {
             PvPHelper.AssertIsNotNull(targets, trumpCameraTargetProvider, defaultCameraTargetProvider, cameraTransitionSpeedManager);
 
