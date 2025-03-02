@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly IInput _input;
         private readonly IUpdater _updater;
         private readonly IZoomCalculator _zoomCalculator;
-        private readonly IPvPDirectionalZoom _directionalZoom;
+        private readonly IDirectionalZoom _directionalZoom;
 
         public override int Priority => 5;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IInput input,
             IUpdater updater,
             IZoomCalculator zoomCalculator,
-            IPvPDirectionalZoom directionalZoom)
+            IDirectionalZoom directionalZoom)
         {
             PvPHelper.AssertIsNotNull(input, updater, zoomCalculator, directionalZoom);
 

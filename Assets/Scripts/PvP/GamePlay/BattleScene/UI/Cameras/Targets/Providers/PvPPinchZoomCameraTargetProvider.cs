@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using System;
@@ -9,14 +9,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPPinchZoomCameraTargetProvider : PvPUserInputCameraTargetProvider
     {
         private readonly IZoomCalculator _zoomCalculator;
-        private readonly IPvPDirectionalZoom _directionalZoom;
+        private readonly IDirectionalZoom _directionalZoom;
         private readonly IPinchTracker _pinchTracker;
 
         public override int Priority => 4;
 
         public PvPPinchZoomCameraTargetProvider(
             IZoomCalculator zoomCalculator,
-            IPvPDirectionalZoom directionalZoom,
+            IDirectionalZoom directionalZoom,
             IPinchTracker pinchTracker)
         {
             PvPHelper.AssertIsNotNull(zoomCalculator, directionalZoom, pinchTracker);

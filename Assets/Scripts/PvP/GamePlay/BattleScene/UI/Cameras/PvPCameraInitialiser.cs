@@ -16,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets.Providers;
@@ -313,7 +314,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             PvPTogglableUpdater updater,
             IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
-            IPvPDirectionalZoom directionalZoom
+            IDirectionalZoom directionalZoom
                 = new PvPDirectionalZoom(
                     camera,
                     cameraCalculator,
