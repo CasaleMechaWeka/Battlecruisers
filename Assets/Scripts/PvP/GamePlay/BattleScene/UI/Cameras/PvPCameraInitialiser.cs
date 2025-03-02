@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Sound.Players;
@@ -319,7 +320,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     settings.ValidOrthographicSizes);
 
             IInput input = PvPInputBC.Instance;
-            IPvPPinchTracker pinchTracker = new PvPPinchTracker(input, updater);
+            IPinchTracker pinchTracker = new PvPPinchTracker(input, updater);
 
             float zoomScale = PvPSystemInfoBC.Instance.IsHandheld ? PvPZoomScale.SWIPE : PvPZoomScale.SCROLL_WHEEL;
             float zoomSettingsMultiplier = new PvPZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
