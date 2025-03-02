@@ -9,12 +9,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     /// </summary>
     public class PvPSmoothCameraAdjuster : PvPCameraAdjuster
     {
-        private readonly IPvPSmoothZoomAdjuster _zoomAdjuster;
+        private readonly ISmoothZoomAdjuster _zoomAdjuster;
         private readonly ISmoothPositionAdjuster _positionAdjuster;
 
         public PvPSmoothCameraAdjuster(
             IPvPCameraTargetProvider cameraTargetProvider,
-            IPvPSmoothZoomAdjuster zoomAdjuster,
+            ISmoothZoomAdjuster zoomAdjuster,
             ISmoothPositionAdjuster positionAdjuster)
             : base(cameraTargetProvider)
         {
