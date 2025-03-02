@@ -1,16 +1,18 @@
+using BattleCruisers.Utils.Categorisation;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation
 {
     public interface IPvPValueToStarsConverterFactory
     {
-        IPvPValueToStarsConverter CreateUnitMovementSpeedConverter();
+        IValueToStarsConverter CreateUnitMovementSpeedConverter();
 
         // Health
-        IPvPValueToStarsConverter CreateBuildableHealthConverter();
-        IPvPValueToStarsConverter CreateCruiserHealthConverter();
+        IValueToStarsConverter CreateBuildableHealthConverter();
+        IValueToStarsConverter CreateCruiserHealthConverter();
 
         // Damage
-        IPvPValueToStarsConverter CreateAntiAirDamageConverter();
-        IPvPValueToStarsConverter CreateAntiShipDamageConverter();
-        IPvPValueToStarsConverter CreateAntiCruiserDamageConverter();
+        IValueToStarsConverter CreateAntiAirDamageConverter();
+        IValueToStarsConverter CreateAntiShipDamageConverter();
+        IValueToStarsConverter CreateAntiCruiserDamageConverter();
     }
 }
