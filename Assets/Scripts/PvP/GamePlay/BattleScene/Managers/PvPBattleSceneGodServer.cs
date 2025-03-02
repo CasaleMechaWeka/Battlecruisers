@@ -19,6 +19,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Buildables;
@@ -164,7 +165,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
-            IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
 
@@ -277,7 +278,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
-            IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
@@ -498,7 +499,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
-            IPvPPrefabFetcher prefabFetcher,
+            IPrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer,
             // PvPNavigationPermitters navigationPermitters,

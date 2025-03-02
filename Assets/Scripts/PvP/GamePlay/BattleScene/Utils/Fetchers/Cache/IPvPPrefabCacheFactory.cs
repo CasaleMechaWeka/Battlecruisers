@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
 {
@@ -9,6 +10,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public interface IPvPPrefabCacheFactory
     {
-        Task<IPvPPrefabCache> CreatePrefabCacheAsync(IPvPPrefabFetcher prefabFetcher);
+        Task<IPvPPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher);
     }
 }
