@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     /// 1. Default (static)
     /// (Lowest)
     /// </summary>
-    public class PvPCompositeCameraTargetProvider : IPvPCameraTargetProvider
+    public class PvPCompositeCameraTargetProvider : ICameraTargetProvider
     {
         private readonly IPvPStaticCameraTargetProvider _defaultTargetProvider;
         private readonly IList<IPvPUserInputCameraTargetProvider> _targetProviders;

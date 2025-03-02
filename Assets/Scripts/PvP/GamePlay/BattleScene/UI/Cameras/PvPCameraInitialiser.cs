@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -109,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
-            IPvPCameraTargetProvider cameraTargetProvider
+            ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,
@@ -194,7 +195,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
-            IPvPCameraTargetProvider cameraTargetProvider
+            ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,
@@ -245,7 +246,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     settings,
                     navigationButtonsPanel);
         }
-        private IPvPCameraTargetProvider CreateCameraTargetProvider(
+        private ICameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
@@ -274,7 +275,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         }
 
 
-        private IPvPCameraTargetProvider CreateCameraTargetProvider(
+        private ICameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
@@ -424,7 +425,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             ICameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
-            IPvPCameraTargetProvider cameraTargetProvider
+            ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,

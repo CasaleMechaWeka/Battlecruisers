@@ -1,6 +1,6 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Adjusters
 {
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly ISmoothPositionAdjuster _positionAdjuster;
 
         public PvPSmoothCameraAdjuster(
-            IPvPCameraTargetProvider cameraTargetProvider,
+            ICameraTargetProvider cameraTargetProvider,
             ISmoothZoomAdjuster zoomAdjuster,
             ISmoothPositionAdjuster positionAdjuster)
             : base(cameraTargetProvider)

@@ -1,8 +1,9 @@
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
-    public interface IPvPUserInputCameraTargetProvider : IPvPCameraTargetProvider
+    public interface IPvPUserInputCameraTargetProvider : ICameraTargetProvider
     {
         /// <summary>
         /// The higher the number the higher the priority.  This is so if we
