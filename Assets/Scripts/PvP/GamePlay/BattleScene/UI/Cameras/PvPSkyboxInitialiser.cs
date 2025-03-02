@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             PvPHelper.AssertIsNotNull(skybox, level);
 
-            IPvPMaterialFetcher materialFetcher = new PvPMaterialFetcher();
+            IMaterialFetcher materialFetcher = new PvPMaterialFetcher();
             skybox.material = await materialFetcher.GetMaterialAsync(level.SkyMaterialName);
         }
     }

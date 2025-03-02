@@ -1,12 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
-    public class PvPMaterialFetcher : IPvPMaterialFetcher
+    public class PvPMaterialFetcher : IMaterialFetcher
     {
         public async Task<Material> GetMaterialAsync(string materialName)
         {
