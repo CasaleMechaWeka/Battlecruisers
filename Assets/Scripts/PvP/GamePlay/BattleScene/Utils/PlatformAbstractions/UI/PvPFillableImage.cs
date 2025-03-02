@@ -1,9 +1,10 @@
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI
 {
-    public class PvPFillableImage : IPvPFillableImage
+    public class PvPFillableImage : IFillableImage
     {
         private readonly Image _platformImage;
 
