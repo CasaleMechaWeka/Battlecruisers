@@ -339,7 +339,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                 trumpCameraTargetProvider
             };
 
-            IPvPScrollRecogniser scrollRecogniser;
+            IScrollRecogniser scrollRecogniser;
             PvPScrollLevelConverter scrollLevelConverter = new PvPScrollLevelConverter();
             float swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
 

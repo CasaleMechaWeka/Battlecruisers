@@ -1,8 +1,9 @@
+using BattleCruisers.UI.Cameras.Helpers;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
 {
-    public class PvPStaticScrollRecogniser : IPvPScrollRecogniser
+    public class PvPStaticScrollRecogniser : IScrollRecogniser
     {
         private readonly bool _isScroll;
 
