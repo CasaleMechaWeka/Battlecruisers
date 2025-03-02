@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     public interface IPvPGameModel
@@ -14,18 +15,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         bool HasAttemptedTutorial { get; set; }
         bool FirstNonTutorialBattle { get; }
         PvPLoadout PlayerLoadout { get; set; }
-        PvPBattleResult LastBattleResult { get; set; }
+        BattleResult LastBattleResult { get; set; }
 
         public bool PremiumEdition { get; set; }
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }
-        PvPHotkeysModel Hotkeys { get; }
+        HotkeysModel Hotkeys { get; }
         PvPSkirmishModel Skirmish { get; set; }
 
         ReadOnlyCollection<PvPHullKey> UnlockedHulls { get; }
         ReadOnlyCollection<PvPBuildingKey> UnlockedBuildings { get; }
         ReadOnlyCollection<PvPUnitKey> UnlockedUnits { get; }
-        ReadOnlyCollection<PvPCompletedLevel> CompletedLevels { get; }
+        ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
 
         PvPNewItems<PvPHullKey> NewHulls { get; }
         PvPNewItems<PvPBuildingKey> NewBuildings { get; }
@@ -36,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         void AddUnlockedHull(PvPHullKey hull);
         void AddUnlockedBuilding(PvPBuildingKey building);
         void AddUnlockedUnit(PvPUnitKey unit);
-        void AddCompletedLevel(PvPCompletedLevel completedLevel);
+        void AddCompletedLevel(CompletedLevel completedLevel);
 
         IList<PvPBuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
         IList<PvPUnitKey> GetUnlockedUnits(UnitCategory unitCategory);

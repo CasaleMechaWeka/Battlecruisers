@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         private PvPLoadout _playerLoadout;
 
         [SerializeField]
-        private PvPBattleResult _lastBattleResult;
+        private BattleResult _lastBattleResult;
 
         [SerializeField]
         private List<PvPHullKey> _unlockedHulls;
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         private List<PvPUnitKey> _unlockedUnits;
 
         [SerializeField]
-        private List<PvPCompletedLevel> _completedLevels;
+        private List<CompletedLevel> _completedLevels;
 
         [SerializeField]
         private long _lifetimeDestructionScore;
@@ -71,8 +71,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         private PvPSkirmishModel _skirmish;
 
         [SerializeField]
-        private PvPHotkeysModel _hotkeys;
-        public PvPHotkeysModel Hotkeys => _hotkeys;
+        private HotkeysModel _hotkeys;
+        public HotkeysModel Hotkeys => _hotkeys;
 
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
@@ -93,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             set { _playerLoadout = value; }
         }
 
-        public PvPBattleResult LastBattleResult
+        public BattleResult LastBattleResult
         {
             get { return _lastBattleResult; }
             set { _lastBattleResult = value; }
@@ -125,7 +125,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         public ReadOnlyCollection<PvPHullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<PvPBuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<PvPUnitKey> UnlockedUnits { get; }
-        public ReadOnlyCollection<PvPCompletedLevel> CompletedLevels { get; }
+        public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
 
         public PvPNewItems<PvPHullKey> NewHulls { get; set; }
         public PvPNewItems<PvPBuildingKey> NewBuildings { get; set; }
@@ -144,7 +144,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             _unlockedUnits = new List<PvPUnitKey>();
             UnlockedUnits = _unlockedUnits.AsReadOnly();
 
-            _completedLevels = new List<PvPCompletedLevel>();
+            _completedLevels = new List<CompletedLevel>();
             CompletedLevels = _completedLevels.AsReadOnly();
 
             NewHulls = new PvPNewItems<PvPHullKey>();
@@ -152,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             NewUnits = new PvPNewItems<PvPUnitKey>();
 
             Settings = new SettingsModel();
-            _hotkeys = new PvPHotkeysModel();
+            _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
         }
@@ -162,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             long lifetimeDestructionScore,
             long bestDestructionScore,
             PvPLoadout playerLoadout,
-            PvPBattleResult lastBattleResult,
+            BattleResult lastBattleResult,
             List<PvPHullKey> unlockedHulls,
             List<PvPBuildingKey> unlockedBuildings,
             List<PvPUnitKey> unlockedUnits)
@@ -234,7 +234,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             }
         }
 
-        public void AddCompletedLevel(PvPCompletedLevel completedLevel)
+        public void AddCompletedLevel(CompletedLevel completedLevel)
         {
             Assert.IsTrue(completedLevel.LevelNum <= _completedLevels.Count + 1, "Have not completed preceeding level :/");
             Assert.IsTrue(completedLevel.LevelNum > 0);
@@ -247,7 +247,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             else
             {
                 // Level has been completed before
-                PvPCompletedLevel currentLevel = _completedLevels[completedLevel.LevelNum - 1];
+                CompletedLevel currentLevel = _completedLevels[completedLevel.LevelNum - 1];
 
                 if (completedLevel.HardestDifficulty > currentLevel.HardestDifficulty)
                 {
@@ -292,7 +292,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             }
             if (_hotkeys == null)
             {
-                _hotkeys = new PvPHotkeysModel();
+                _hotkeys = new HotkeysModel();
             }
         }
 
