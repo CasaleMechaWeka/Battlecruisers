@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private ItemCategoryButton[] _buttons;
         public Slider changeCategorySlider;
-        private float previuosIndex;
+        private float previousIndex;
 
         public void Initialise(
             IItemPanelsController itemPanels,
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public void ChangeCategory(float index)
         {
             index = Mathf.RoundToInt(index);
-            if (index != previuosIndex)
+            if (index != previousIndex)
             {
                 if (index <= .5f && _buttons[0].isActiveAndEnabled)
                     _buttons[0].OnClickedAction();
@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     _buttons[7].OnClickedAction();
                 else if (index == 8f)
                     transform.FindNamedComponent<HeckleCategoryButton>("HeckleButton").OnClickedAction();
-                previuosIndex = index;
+                previousIndex = index;
             }
         }
 
