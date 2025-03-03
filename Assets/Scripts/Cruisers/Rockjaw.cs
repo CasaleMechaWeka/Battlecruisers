@@ -30,6 +30,7 @@ namespace BattleCruisers.Cruisers
 
             IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(offensivesFireRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
+            CruiserSpecificFactories.GlobalBoostProviders.RocketBuildingsFireRateBoostProviders.Add(fireRateBoostProvider);
 
             IBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(offensivesBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.OffensivesProviders.Add(buildRateBoostProvider);

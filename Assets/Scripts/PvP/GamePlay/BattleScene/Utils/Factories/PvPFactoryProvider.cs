@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement.Predictors;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
@@ -19,7 +18,6 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
-using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
@@ -66,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new PvPFlightPointsProviderFactory();
-            BoostFactory = new PvPBoostFactory();
+            BoostFactory = new BoostFactory();
             DamageApplierFactory = new PvPDamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
                 = new PvPSpriteChooserFactory(
@@ -79,17 +77,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Turrets = new PvPTurretFactoryProvider();
         }
         // Not in constructor because of circular dependency
-        public async Task Initialise( /* IPvPUIManager uiManager */)
+        public void Initialise( /* IPvPUIManager uiManager */)
         {
             IDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
-            DroneMonitor = new PvPDroneMonitor(droneFactory);
+            DroneMonitor = new DroneMonitor(droneFactory);
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
             poolProviders = new PvPPoolProviders(this, droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
         }
 
-        public async Task Initialise_Rest()
+        public void Initialise_Rest()
         {
             poolProviders.SetInitialCapacities_Rest();
         }

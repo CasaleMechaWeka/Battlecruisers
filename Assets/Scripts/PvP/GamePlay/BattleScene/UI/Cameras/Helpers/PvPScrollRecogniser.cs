@@ -1,8 +1,9 @@
+using BattleCruisers.UI.Cameras.Helpers;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
 {
-    public class PvPScrollRecogniser : IPvPScrollRecogniser
+    public class PvPScrollRecogniser : IScrollRecogniser
     {
         /// <returns>
         /// True if the delta represents a swipe, false if the delta represents a zoom.

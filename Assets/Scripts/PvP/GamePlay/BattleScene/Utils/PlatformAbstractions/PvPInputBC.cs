@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions
 {
-    public class PvPInputBC : IPvPInput
+    public class PvPInputBC : IInput
     {
         private static IList<KeyCode> ValidHotkeys = new List<KeyCode>()
         {
@@ -116,8 +117,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public Vector2 MouseScrollDelta => Input.mouseScrollDelta;
         public int TouchCount => Input.touchCount;
 
-        private static IPvPInput _instance;
-        public static IPvPInput Instance
+        private static IInput _instance;
+        public static IInput Instance
         {
             get
             {

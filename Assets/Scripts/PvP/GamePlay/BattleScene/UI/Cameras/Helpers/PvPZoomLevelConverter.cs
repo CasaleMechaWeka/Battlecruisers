@@ -1,10 +1,11 @@
 using BattleCruisers.Data.Models;
+using BattleCruisers.UI.Cameras.Helpers;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
 {
-    public class PvPZoomLevelConverter : IPvPLevelToMultiplierConverter
+    public class PvPZoomLevelConverter : ILevelToMultiplierConverter
     {
         public float LevelToMultiplier(int zoomLevel)
         {

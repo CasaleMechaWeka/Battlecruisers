@@ -2,12 +2,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Utils.Debugging;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Debugging
 {
-    public class PvPCheater : PvPCheaterBase, IPvPCheater
+    public class PvPCheater : PvPCheaterBase, ICheater
     {
         private IPvPFactoryProvider _factoryProvider;
         private IPvPCruiser _playerCruiser, _aiCruiser;

@@ -6,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             Image platformFillableImage = GetComponent<Image>();
             Assert.IsNotNull(platformFillableImage);
-            IPvPFillableImage fillableImage = new PvPFillableImage(platformFillableImage);
+            IFillableImage fillableImage = new PvPFillableImage(platformFillableImage);
 
             IFilter<PvPTarget> visibilityFilter = new PvPStaticFilter<PvPTarget>(isMatch: true);
 

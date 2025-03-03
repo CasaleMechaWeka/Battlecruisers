@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
-    public class PvPPrefabFetcher : IPvPPrefabFetcher
+    public class PvPPrefabFetcher : IPrefabFetcher
     {
         private const string PREFAB_ROOT_DIR = "Assets/Resources_moved/";
         private const string PREFAB_FILE_EXTENSION = ".prefab";

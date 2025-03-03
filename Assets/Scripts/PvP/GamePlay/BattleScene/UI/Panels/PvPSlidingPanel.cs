@@ -1,16 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels
 {
-    public enum PvPPanelState
-    {
-        Shown, Hidden, Sliding
-    }
-
-    public class PvPSlidingPanel : PvPPanel, IPvPSlidingPanel
+    public class PvPSlidingPanel : PvPPanel, ISlidingPanel
     {
         private Vector2 _slidePositionVelocity, _sliderScaleVelocity;
         private bool _isInitialised = false;
@@ -19,22 +15,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
 
         private float _smoothTimeinS;
         private Vector2 _targetPosition, _targetScale;
-        private PvPPanelState _targetState;
+        private PanelState _targetState;
         public GameObject blocker;
-        public PvPPanelState TargetState
+        public PanelState TargetState
         {
             get => _targetState;
             private set
             {
-                Assert.IsTrue(value != PvPPanelState.Sliding);
+                Assert.IsTrue(value != PanelState.Sliding);
                 // Logging.Log(Tags.SLIDING_PANEL, $"Target state: {_targetState} > {value}");
 
                 _targetState = value;
-                _state.Value = PvPPanelState.Sliding;
+                _state.Value = PanelState.Sliding;
                 _positionDone = false;
                 _scaleDone = false;
 
-                if (_targetState == PvPPanelState.Shown)
+                if (_targetState == PanelState.Shown)
                 {
                     _smoothTimeinS = showSmoothTimeInS;
                     _targetPosition = _shownPosition;
@@ -49,8 +45,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
             }
         }
 
-        private ISettableBroadcastingProperty<PvPPanelState> _state;
-        public IBroadcastingProperty<PvPPanelState> State { get; private set; }
+        private ISettableBroadcastingProperty<PanelState> _state;
+        public IBroadcastingProperty<PanelState> State { get; private set; }
 
         public float shownPositionYDelta = 500;
         public float showSmoothTimeInS = 0.05f;
@@ -79,9 +75,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
 
             _hiddenScale = transform.localScale;
 
-            _state = new SettableBroadcastingProperty<PvPPanelState>(initialValue: PvPPanelState.Sliding);
-            State = new BroadcastingProperty<PvPPanelState>(_state);
-            TargetState = PvPPanelState.Hidden;
+            _state = new SettableBroadcastingProperty<PanelState>(initialValue: PanelState.Sliding);
+            State = new BroadcastingProperty<PanelState>(_state);
+            TargetState = PanelState.Hidden;
 
             _isInitialised = true;
 
@@ -91,7 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
         void Update()
         {
             if (!_isInitialised
-                || _state.Value != PvPPanelState.Sliding)
+                || _state.Value != PanelState.Sliding)
             {
                 return;
             }
@@ -156,13 +152,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
         public override void Show()
         {
             // Logging.LogMethod(Tags.SLIDING_PANEL);
-            TargetState = PvPPanelState.Shown;
+            TargetState = PanelState.Shown;
         }
 
         public override void Hide()
         {
             // Logging.LogMethod(Tags.SLIDING_PANEL);
-            TargetState = PvPPanelState.Hidden;
+            TargetState = PanelState.Hidden;
         }
     }
 }

@@ -1,17 +1,19 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.DataStrctures;
-using UnityEngine.Assertions;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
 {
-    public class PvPEdgeScrollCalculator : IPvPEdgeScrollCalculator
+    public class PvPEdgeScrollCalculator : IEdgeScrollCalculator
     {
         private readonly ITime _time;
         private readonly ISettingsManager _settingsManager;
-        private readonly IPvPLevelToMultiplierConverter _scrollLevelConverter;
+        private readonly ILevelToMultiplierConverter _scrollLevelConverter;
         private readonly ICamera _camera;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly float _scrollMultiplier;
@@ -19,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public PvPEdgeScrollCalculator(
             ITime time,
             ISettingsManager settingsManager,
-            IPvPLevelToMultiplierConverter scrollLevelConverter,
+            ILevelToMultiplierConverter scrollLevelConverter,
             ICamera camera,
             IRange<float> validOrthographicSizes,
             float scrollMultiplier)

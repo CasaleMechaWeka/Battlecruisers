@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private CanvasGroup PvPcanvasGroup;
         private IPvPUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
-        private IPvPLongPressIdentifier _longPressIdentifier;
+        private ILongPressIdentifier _longPressIdentifier;
 
         public float lightUpIntervalS = 0.25f;
         public Image activeImage;

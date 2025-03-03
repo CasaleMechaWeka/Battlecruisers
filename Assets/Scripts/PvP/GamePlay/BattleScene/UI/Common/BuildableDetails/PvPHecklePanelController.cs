@@ -1,6 +1,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public PvPHeckleButton heckleButtonPrefab;
         public Transform hecklesParent;
 
-        public IPvPSlidingPanel HecklePanel => hecklePanel;
+        public ISlidingPanel HecklePanel => hecklePanel;
 
         private IDataProvider _dataProvider;
         private ISingleSoundPlayer _soundPlayer;

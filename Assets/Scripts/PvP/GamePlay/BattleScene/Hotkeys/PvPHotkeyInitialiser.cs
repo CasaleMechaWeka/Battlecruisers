@@ -9,6 +9,7 @@ using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         public void Initialise(
             IHotkeyList hotkeyList,
-            IPvPInput input,
+            IInput input,
             IUpdater updater,
             IBroadcastingFilter hotkeyFilter,
             ICameraFocuser cameraFocuser,
@@ -49,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _escapeHandler = new PvPEscapeHandler(escapeDetector, mainMenuManager);
         }
 
-        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IPvPInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter, IPvPUIManager uiManager)
+        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter, IPvPUIManager uiManager)
         {
             if (PvPSystemInfoBC.Instance.IsHandheld)
             {

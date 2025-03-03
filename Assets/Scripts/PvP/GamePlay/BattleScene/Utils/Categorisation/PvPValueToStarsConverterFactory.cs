@@ -1,36 +1,38 @@
+using BattleCruisers.Utils.Categorisation;
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation
 {
-    public class PvPValueToStarsConverterFactory : IPvPValueToStarsConverterFactory
+    public class PvPValueToStarsConverterFactory : IValueToStarsConverterFactory
     {
-        public IPvPValueToStarsConverter CreateUnitMovementSpeedConverter()
+        public IValueToStarsConverter CreateUnitMovementSpeedConverter()
         {
             return new PvPUnitMovementSpeedToStarsConverter();
         }
 
         #region Health
-        public IPvPValueToStarsConverter CreateBuildableHealthConverter()
+        public IValueToStarsConverter CreateBuildableHealthConverter()
         {
             return new PvPBuildableHealthToStarsConverter();
         }
 
-        public IPvPValueToStarsConverter CreateCruiserHealthConverter()
+        public IValueToStarsConverter CreateCruiserHealthConverter()
         {
             return new PvPCruiserHealthToStarsConverter();
         }
         #endregion Health
 
         #region Damage
-        public IPvPValueToStarsConverter CreateAntiAirDamageConverter()
+        public IValueToStarsConverter CreateAntiAirDamageConverter()
         {
             return new PvPAntiAirDamageToStarsConverter();
         }
 
-        public IPvPValueToStarsConverter CreateAntiShipDamageConverter()
+        public IValueToStarsConverter CreateAntiShipDamageConverter()
         {
             return new PvPAntiShipDamageToStarsConverter();
         }
 
-        public IPvPValueToStarsConverter CreateAntiCruiserDamageConverter()
+        public IValueToStarsConverter CreateAntiCruiserDamageConverter()
         {
             return new PvPAntiCruiserDamageToStarsConverter();
         }

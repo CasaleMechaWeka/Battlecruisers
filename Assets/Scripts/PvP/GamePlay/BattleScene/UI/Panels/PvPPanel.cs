@@ -1,8 +1,9 @@
+using BattleCruisers.UI.Panels;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels
 {
-    public class PvPPanel : MonoBehaviour, IPvPPanel
+    public class PvPPanel : MonoBehaviour, IPanel
     {
         public virtual void Show()
         {

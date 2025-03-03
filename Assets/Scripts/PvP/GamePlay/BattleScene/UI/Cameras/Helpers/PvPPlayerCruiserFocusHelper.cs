@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Linq;
 using UnityEngine;
@@ -11,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
 {
-    public class PvPPlayerCruiserFocusHelper : IPvPPlayerCruiserFocusHelper
+    public class PvPPlayerCruiserFocusHelper : IPlayerCruiserFocusHelper
     {
         private readonly ICamera _camera;
         private readonly ICameraFocuser _cameraFocuser;

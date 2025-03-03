@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
+
+
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public class DroneFeedback : IDroneFeedback
@@ -19,8 +21,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
 
         public DroneFeedback(
-            IDroneConsumerInfo droneConsumerInfo, 
-            IPool<IDroneController, DroneActivationArgs> dronePool, 
+            IDroneConsumerInfo droneConsumerInfo,
+            IPool<IDroneController, DroneActivationArgs> dronePool,
             ISpawnPositionFinder spawnPositionFinder,
             Faction faction)
         {
@@ -52,7 +54,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         private void AddDronesIfNeeded(int numOfDrones)
         {
-            while (numOfDrones> _drones.Count)
+            while (numOfDrones > _drones.Count)
             {
                 DroneActivationArgs activationArgs
                     = new DroneActivationArgs(

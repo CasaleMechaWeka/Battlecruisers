@@ -1,6 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -10,25 +12,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public class PvPSwipeCameraTargetProvider : PvPUserInputCameraTargetProvider
     {
-        private readonly IPvPDragTracker _dragTracker;
-        private readonly IPvPScrollCalculator _scrollCalculator;
-        private readonly IPvPZoomCalculator _zoomCalculator;
+        private readonly IDragTracker _dragTracker;
+        private readonly IScrollCalculator _scrollCalculator;
+        private readonly IZoomCalculator _zoomCalculator;
         private readonly ICamera _camera;
         private readonly IPvPCameraCalculator _cameraCalculator;
-        private readonly IPvPDirectionalZoom _directionalZoom;
-        private readonly IPvPScrollRecogniser _scrollRecogniser;
+        private readonly IDirectionalZoom _directionalZoom;
+        private readonly IScrollRecogniser _scrollRecogniser;
         private readonly IClamper _cameraXPositionClamper;
 
         public override int Priority => 3;
 
         public PvPSwipeCameraTargetProvider(
-            IPvPDragTracker dragTracker,
-            IPvPScrollCalculator scrollCalculator,
-            IPvPZoomCalculator zoomCalculator,
+            IDragTracker dragTracker,
+            IScrollCalculator scrollCalculator,
+            IZoomCalculator zoomCalculator,
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
-            IPvPDirectionalZoom directionalZoom,
-            IPvPScrollRecogniser scrollRecogniser,
+            IDirectionalZoom directionalZoom,
+            IScrollRecogniser scrollRecogniser,
             IClamper cameraXPositionClamper)
         {
             PvPHelper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser, cameraXPositionClamper);
@@ -46,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _dragTracker.DragEnd += _dragTracker_DragEnd;
         }
 
-        private void _dragTracker_Drag(object sender, PvPDragEventArgs e)
+        private void _dragTracker_Drag(object sender, DragEventArgs e)
         {
             // Logging.Log(Tags.SWIPE_NAVIGATION, $"dragDelta: {e.PointerEventData.Delta}");
 
@@ -86,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             return _cameraXPositionClamper.Clamp(targetXPosition, validXPositions);
         }
 
-        private void _dragTracker_DragEnd(object sender, PvPDragEventArgs e)
+        private void _dragTracker_DragEnd(object sender, DragEventArgs e)
         {
             UserInputEnd();
         }

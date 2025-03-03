@@ -31,8 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsNotNull(droneConsumer);
             return
-                new PvPDroneFeedback(
-                    new PvPDroneConsumerInfo(droneConsumer, position, size),
+                new DroneFeedback(
+                    new DroneConsumerInfo(droneConsumer, position, size),
                     _dronePool,
                     _spawnPositionFinder,
                     _faction);
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public IDroneFeedback CreateDummyFeedback()
         {
-            return new PvPDummyDroneFeedback();
+            return new DummyDroneFeedback();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     {
         private readonly PvPLevelMusicPlayer _levelMusicPlayer;
         private readonly IManagedDisposable _droneEventSoundPlayer;
-        private readonly PvPCruiserEventMonitor _cruiserEventMonitor;
+        private readonly CruiserEventMonitor _cruiserEventMonitor;
         private readonly PvPUltrasConstructionMonitor _ultrasConstructionMonitor;
         private readonly PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
 
@@ -68,13 +68,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     battleCompletionHandler);
         }
 
-        private PvPCruiserEventMonitor CreateCruiserEventMonitor(
+        private CruiserEventMonitor CreateCruiserEventMonitor(
             PvPCruiser playerCruiser,
             ITime time,
             ICruiserDamageMonitor playerCruiserDamageMonitor)
         {
             return
-                new PvPCruiserEventMonitor(
+                new CruiserEventMonitor(
                     new PvPHealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     playerCruiserDamageMonitor,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,

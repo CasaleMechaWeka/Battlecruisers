@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;

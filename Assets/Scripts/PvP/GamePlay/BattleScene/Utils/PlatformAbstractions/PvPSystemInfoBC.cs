@@ -1,11 +1,12 @@
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions
 {
-    public class PvPSystemInfoBC : IPvPSystemInfo
+    public class PvPSystemInfoBC : ISystemInfo
     {
-        private static IPvPSystemInfo _instance;
-        public static IPvPSystemInfo Instance
+        private static ISystemInfo _instance;
+        public static ISystemInfo Instance
         {
             get
             {

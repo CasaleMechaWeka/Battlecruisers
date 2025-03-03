@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _commonStrings = commonStrings;
         }
 
-        public async Task<IPvPPrefabCache> CreatePrefabCacheAsync(IPvPPrefabFetcher prefabFetcher)
+        public async Task<IPvPPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
         {
             Assert.IsNotNull(prefabFetcher);
 
@@ -88,20 +88,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         private async Task GetPrefabs<TPrefab>(
-            IPvPPrefabFetcher prefabFetcher,
+            IPrefabFetcher prefabFetcher,
             IList<IPrefabKey> prefabKeys,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab)
-                where TPrefab : class, IPvPPrefab
+                where TPrefab : class, IPrefab
         {
             IEnumerable<Task> prefabTasks = prefabKeys.Select(prefabKey => GetPrefab(prefabFetcher, keyToPrefab, prefabKey));
             await Task.WhenAll(prefabTasks);
         }
 
         private async Task GetPrefab<TPrefab>(
-            IPvPPrefabFetcher prefabFetcher,
+            IPrefabFetcher prefabFetcher,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab,
             IPrefabKey prefabKey)
-                where TPrefab : class, IPvPPrefab
+                where TPrefab : class, IPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
             IPrefabContainer<TPrefab> prefabContainer = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
@@ -111,10 +111,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         private async Task GetPrefab<TPrefab>(
-            IPvPPrefabFetcher prefabFetcher,
+            IPrefabFetcher prefabFetcher,
             IPrefabKey prefabKey,
             Container<TPrefab> prefabContainer)
-                where TPrefab : class, IPvPPrefab
+                where TPrefab : class, IPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
             IPrefabContainer<TPrefab> result = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);

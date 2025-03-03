@@ -8,14 +8,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPShipMovementEffect : IPvPMovementEffect
     {
         private readonly IGameObject _gameObject;
-        private readonly IPvPAnimator _animator;
+        private readonly IAnimator _animator;
         private readonly IPvPBroadcastingParticleSystem _particleSystem;
 
         public const string MOVEMENT_ANIMATION_STATE = "MovementAnimation";
 
         public PvPShipMovementEffect(
             IGameObject gameObject,
-            IPvPAnimator animator,
+            IAnimator animator,
             IPvPBroadcastingParticleSystem particleSystem)
         {
             PvPHelper.AssertIsNotNull(gameObject, animator, particleSystem);

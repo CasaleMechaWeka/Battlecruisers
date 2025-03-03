@@ -1,8 +1,9 @@
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio
 {
-    public class PvPAudioListenerBC : IPvPAudioListener
+    public class PvPAudioListenerBC : IAudioListener
     {
         public void Pause()
         {

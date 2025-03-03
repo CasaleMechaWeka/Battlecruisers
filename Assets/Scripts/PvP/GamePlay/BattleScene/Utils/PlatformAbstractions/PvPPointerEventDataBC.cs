@@ -1,10 +1,11 @@
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions
 {
-    public class PvPPointerEventDataBC : IPvPPointerEventData
+    public class PvPPointerEventDataBC : IPointerEventData
     {
         private readonly PointerEventData _platformObject;
 

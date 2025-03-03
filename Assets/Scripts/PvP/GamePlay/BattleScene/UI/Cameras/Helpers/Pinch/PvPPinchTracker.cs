@@ -1,19 +1,20 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Pinch
 {
-    public class PvPPinchTracker : IPvPPinchTracker
+    public class PvPPinchTracker : IPinchTracker
     {
-        private readonly IPvPInput _input;
+        private readonly IInput _input;
         private readonly IUpdater _updater;
 
         private float _lastDistanceInM;
 
-        public PvPPinchTracker(IPvPInput input, IUpdater updater)
+        public PvPPinchTracker(IInput input, IUpdater updater)
         {
             PvPHelper.AssertIsNotNull(input, updater);
 
@@ -51,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         }
 
         public event EventHandler PinchStart;
-        public event EventHandler<PvPPinchEventArgs> Pinch;
+        public event EventHandler<PinchEventArgs> Pinch;
         public event EventHandler PinchEnd;
 
         private void _updater_Updated(object sender, EventArgs e)
@@ -84,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _lastDistanceInM = currentDistance;
 
             // Logging.Log(Tags.PINCH, $"About to invoke {nameof(Pinch)} event with position: {touchPosition1}  and delta: {delta}");
-            Pinch?.Invoke(this, new PvPPinchEventArgs(touchPosition1, delta));
+            Pinch?.Invoke(this, new PinchEventArgs(touchPosition1, delta));
         }
     }
 }

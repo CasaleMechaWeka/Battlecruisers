@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     /// 1. Default (static)
     /// (Lowest)
     /// </summary>
-    public class PvPCompositeCameraTargetProvider : IPvPCameraTargetProvider
+    public class PvPCompositeCameraTargetProvider : ICameraTargetProvider
     {
-        private readonly IPvPStaticCameraTargetProvider _defaultTargetProvider;
-        private readonly IList<IPvPUserInputCameraTargetProvider> _targetProviders;
+        private readonly IStaticCameraTargetProvider _defaultTargetProvider;
+        private readonly IList<IUserInputCameraTargetProvider> _targetProviders;
 
-        private IPvPUserInputCameraTargetProvider _activeTargetProvider;
-        private IPvPUserInputCameraTargetProvider ActiveTargetProvider
+        private IUserInputCameraTargetProvider _activeTargetProvider;
+        private IUserInputCameraTargetProvider ActiveTargetProvider
         {
             get { return _activeTargetProvider; }
             set
@@ -55,8 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public event EventHandler TargetChanged;
 
         public PvPCompositeCameraTargetProvider(
-            IPvPStaticCameraTargetProvider defaultTargetProvider,
-            IList<IPvPUserInputCameraTargetProvider> targetProviders)
+            IStaticCameraTargetProvider defaultTargetProvider,
+            IList<IUserInputCameraTargetProvider> targetProviders)
         {
             PvPHelper.AssertIsNotNull(defaultTargetProvider, targetProviders);
 
@@ -65,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
             ActiveTargetProvider = _defaultTargetProvider;
 
-            foreach (IPvPUserInputCameraTargetProvider targetProvider in _targetProviders)
+            foreach (IUserInputCameraTargetProvider targetProvider in _targetProviders)
             {
                 targetProvider.UserInputStarted += TargetProvider_UserInputStarted;
                 targetProvider.UserInputEnded += TargetProvider_UserInputEnded;
@@ -76,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             // Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"Active target provider: {_activeTargetProvider}");
 
-            IPvPUserInputCameraTargetProvider startingProvider = sender.Parse<IPvPUserInputCameraTargetProvider>();
+            IUserInputCameraTargetProvider startingProvider = sender.Parse<IUserInputCameraTargetProvider>();
 
             if (startingProvider.Priority > ActiveTargetProvider.Priority)
             {
@@ -88,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             // Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"Active target provider: {_activeTargetProvider}");
 
-            IPvPUserInputCameraTargetProvider endingProvider = sender.Parse<IPvPUserInputCameraTargetProvider>();
+            IUserInputCameraTargetProvider endingProvider = sender.Parse<IUserInputCameraTargetProvider>();
 
             if (ReferenceEquals(ActiveTargetProvider, endingProvider))
             {

@@ -22,6 +22,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -46,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public PvPBattleHelper(
             IApplicationModel appModel,
-            IPvPPrefabFetcher prefabFetcher,
+            IPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer

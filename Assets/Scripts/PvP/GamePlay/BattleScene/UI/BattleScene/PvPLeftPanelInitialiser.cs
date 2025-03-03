@@ -9,7 +9,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
@@ -17,9 +16,10 @@ using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Cruisers.Drones;
 
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     IPvPPrefabFactory prefabFactory,
                     IPvPSpriteProvider spriteProvider,
                     IPvPButtonVisibilityFilters buttonVisibilityFilters,
-                    IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
+                    IPlayerCruiserFocusHelper playerCruiserFocusHelper,
                     IPrioritisedSoundPlayer eventSoundPlayer,
                     IPvPSingleSoundPlayer uiSoundPlayer,
                     IPopulationLimitMonitor populationLimitMonitor,
@@ -95,7 +95,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPPrefabFactory prefabFactory,
             ISpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
@@ -154,7 +154,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPPrefabFactory prefabFactory,
             ISpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,

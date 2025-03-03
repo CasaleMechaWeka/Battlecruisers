@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using System;
 using UnityEngine.Assertions;
 
@@ -7,11 +7,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public abstract class PvPCameraAdjuster : ICameraAdjuster
     {
-        protected readonly IPvPCameraTargetProvider _cameraTargetProvider;
+        protected readonly ICameraTargetProvider _cameraTargetProvider;
 
         public event EventHandler CompletedAdjustment;
 
-        public PvPCameraAdjuster(IPvPCameraTargetProvider cameraTargetProvider)
+        public PvPCameraAdjuster(ICameraTargetProvider cameraTargetProvider)
         {
             Assert.IsNotNull(cameraTargetProvider);
             _cameraTargetProvider = cameraTargetProvider;

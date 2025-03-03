@@ -15,6 +15,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data;
+using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
@@ -27,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         [SerializeField]
         private List<GameObject> additionalRenderers = new List<GameObject>(); // Added for handling additional renderers
-        private IPvPDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
+        private IDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
         protected IPvPSlot _parentSlot;
 
         private IAudioClipWrapper _placementSound;

@@ -16,7 +16,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Helpers.Pinch;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -53,8 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public float slowCameraSmoothTime = 0.5f;
         private ICamera icamera;
         private ICameraFocuser cameraFocuser;
-        private IPvPStaticCameraTargetProvider defaultCameraTargetProvider;
-        private IPvPStaticCameraTargetProvider trumpCameraTargetProvider;
+        private IStaticCameraTargetProvider defaultCameraTargetProvider;
+        private IStaticCameraTargetProvider trumpCameraTargetProvider;
         private ICameraTargets targets;
         private ITime time;
         private PvPCameraTransitionSpeedManager cameraTransitionSpeedManager;
@@ -109,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
-            IPvPCameraTargetProvider cameraTargetProvider
+            ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,
@@ -194,7 +197,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
-            IPvPCameraTargetProvider cameraTargetProvider
+            ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,
@@ -245,20 +248,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     settings,
                     navigationButtonsPanel);
         }
-        private IPvPCameraTargetProvider CreateCameraTargetProvider(
+        private ICameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             NavigationPermitters navigationPermitters,
-            IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
-            IPvPStaticCameraTargetProvider defaultCameraTargetProvider)
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            IStaticCameraTargetProvider defaultCameraTargetProvider)
         {
             PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
-            IList<IPvPUserInputCameraTargetProvider> cameraTargetProviders
+            IList<IUserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
                     camera,
                     cameraCalculator,
@@ -274,21 +277,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         }
 
 
-        private IPvPCameraTargetProvider CreateCameraTargetProvider(
+        private ICameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             // PvPNavigationPermitters navigationPermitters,
-            IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
-            IPvPStaticCameraTargetProvider defaultCameraTargetProvider
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            IStaticCameraTargetProvider defaultCameraTargetProvider
         )
         {
             PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
             Assert.IsNotNull(updater);
             // updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
-            IList<IPvPUserInputCameraTargetProvider> cameraTargetProviders
+            IList<IUserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
                     camera,
                     cameraCalculator,
@@ -303,22 +306,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     cameraTargetProviders);
         }
 
-        private IList<IPvPUserInputCameraTargetProvider> CreateCameraTargetProviders(
+        private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             PvPTogglableUpdater updater,
-            IPvPStaticCameraTargetProvider trumpCameraTargetProvider)
+            IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
-            IPvPDirectionalZoom directionalZoom
+            IDirectionalZoom directionalZoom
                 = new PvPDirectionalZoom(
                     camera,
                     cameraCalculator,
                     settings.ValidOrthographicSizes);
 
-            IPvPInput input = PvPInputBC.Instance;
-            IPvPPinchTracker pinchTracker = new PvPPinchTracker(input, updater);
+            IInput input = PvPInputBC.Instance;
+            IPinchTracker pinchTracker = new PvPPinchTracker(input, updater);
 
             float zoomScale = PvPSystemInfoBC.Instance.IsHandheld ? PvPZoomScale.SWIPE : PvPZoomScale.SCROLL_WHEEL;
             float zoomSettingsMultiplier = new PvPZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
@@ -331,12 +334,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     zoomScale,
                     zoomSettingsMultiplier);
 
-            IList<IPvPUserInputCameraTargetProvider> targetProviders = new List<IPvPUserInputCameraTargetProvider>()
+            IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>()
             {
                 trumpCameraTargetProvider
             };
 
-            IPvPScrollRecogniser scrollRecogniser;
+            IScrollRecogniser scrollRecogniser;
             PvPScrollLevelConverter scrollLevelConverter = new PvPScrollLevelConverter();
             float swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
 
@@ -424,7 +427,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             ICameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
-            IPvPCameraTargetProvider cameraTargetProvider
+            ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,

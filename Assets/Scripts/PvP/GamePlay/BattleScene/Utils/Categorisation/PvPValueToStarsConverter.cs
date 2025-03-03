@@ -1,8 +1,9 @@
+using BattleCruisers.Utils.Categorisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation
 {
-    public abstract class PvPValueToStarsConverter : IPvPValueToStarsConverter
+    public abstract class PvPValueToStarsConverter : IValueToStarsConverter
     {
         private readonly float[] _categoryThresholds;
 

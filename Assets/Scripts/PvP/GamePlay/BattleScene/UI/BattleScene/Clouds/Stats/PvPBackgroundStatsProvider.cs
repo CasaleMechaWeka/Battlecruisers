@@ -9,9 +9,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBackgroundStatsProvider : IPvPBackgroundStatsProvider
     {
-        private readonly IPvPPrefabFetcher _prefabFetcher;
+        private readonly IPrefabFetcher _prefabFetcher;
 
-        public PvPBackgroundStatsProvider(IPvPPrefabFetcher prefabFetcher)
+        public PvPBackgroundStatsProvider(IPrefabFetcher prefabFetcher)
         {
             Assert.IsNotNull(prefabFetcher);
             _prefabFetcher = prefabFetcher;

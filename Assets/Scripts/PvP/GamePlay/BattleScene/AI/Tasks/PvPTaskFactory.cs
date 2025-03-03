@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         private readonly IDeferrer _deferrer;
 
         // For cheating :)
-        public static PvPDelayProvider delayProvider;
+        public static DelayProvider delayProvider;
 
         public const float DEFAULT_DELAY_IN_S = 1.5f;
         public const float MIN_DELAY_IN_S = 0.1f;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             _cruiser = cruiser;
             _deferrer = deferrer;
 
-            delayProvider = new PvPDelayProvider(DEFAULT_DELAY_IN_S);
+            delayProvider = new DelayProvider(DEFAULT_DELAY_IN_S);
         }
 
         public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
@@ -38,8 +38,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 
         private IPrioritisedTask CreatePrioritisedTask(ITask task, TaskPriority priority)
         {
-            IPrioritisedTask prioritisedTask = new PvPPrioritisedTask(priority, task);
-            return new PvPDeferredPrioritisedTask(prioritisedTask, _deferrer, delayProvider);
+            IPrioritisedTask prioritisedTask = new PrioritisedTask(priority, task);
+            return new DeferredPrioritisedTask(prioritisedTask, _deferrer, delayProvider);
         }
     }
 }

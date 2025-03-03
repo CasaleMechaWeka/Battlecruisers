@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿
+
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
@@ -18,7 +20,6 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         public ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
 
         public ObservableCollection<IBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
-
 
         public IBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         public IUnitBuildRatelBoostProviders UnitBuildRate { get; }

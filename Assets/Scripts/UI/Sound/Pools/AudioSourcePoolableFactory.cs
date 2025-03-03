@@ -5,7 +5,7 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.UI.Sound.Pools
 {
-    public class AudioSourcePoolableFactory : IAudioSourcePoolableFactory
+    public class AudioSourcePoolableFactory : IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDeferrer _realTimeDeferrer;

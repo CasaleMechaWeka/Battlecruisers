@@ -2,9 +2,9 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation;
-using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Categorisation;
+using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats
 {
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         }
 
 
-        private void ShowDamageStat(PvPStarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IPvPValueToStarsConverter converter)
+        private void ShowDamageStat(PvPStarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
         {
             bool shouldShowRow = damagePerS > 0;
             damageStatsRow.gameObject.SetActive(shouldShowRow);

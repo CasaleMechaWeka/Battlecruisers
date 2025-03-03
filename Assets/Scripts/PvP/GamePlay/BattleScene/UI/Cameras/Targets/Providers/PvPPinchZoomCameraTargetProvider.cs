@@ -1,23 +1,23 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
     public class PvPPinchZoomCameraTargetProvider : PvPUserInputCameraTargetProvider
     {
-        private readonly IPvPZoomCalculator _zoomCalculator;
-        private readonly IPvPDirectionalZoom _directionalZoom;
-        private readonly IPvPPinchTracker _pinchTracker;
+        private readonly IZoomCalculator _zoomCalculator;
+        private readonly IDirectionalZoom _directionalZoom;
+        private readonly IPinchTracker _pinchTracker;
 
         public override int Priority => 4;
 
         public PvPPinchZoomCameraTargetProvider(
-            IPvPZoomCalculator zoomCalculator,
-            IPvPDirectionalZoom directionalZoom,
-            IPvPPinchTracker pinchTracker)
+            IZoomCalculator zoomCalculator,
+            IDirectionalZoom directionalZoom,
+            IPinchTracker pinchTracker)
         {
             PvPHelper.AssertIsNotNull(zoomCalculator, directionalZoom, pinchTracker);
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _pinchTracker.PinchEnd += _pinchTracker_PinchEnd;
         }
 
-        private void _pinchTracker_Pinch(object sender, PvPPinchEventArgs e)
+        private void _pinchTracker_Pinch(object sender, PinchEventArgs e)
         {
             float orthographicSizeDelta = _zoomCalculator.FindPinchZoomOrthographicSizeDelta(e.DeltaInM);
 

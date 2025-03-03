@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.UI;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
@@ -10,14 +11,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     // FELIX  Hide for tutorial?
     public class PvPExtendInformatorButtonController : PvPCanvasGroupButton, IButton
     {
-        private IPvPSlidingPanel _informatorPanel;
+        private ISlidingPanel _informatorPanel;
 
         public Image activeFeedback;
         public Image defaultImage;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IPvPSlidingPanel informatorPanel)
+            ISlidingPanel informatorPanel)
         {
             base.Initialise(soundPlayer);
 
@@ -31,14 +32,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private void State_ValueChanged(object sender, EventArgs e)
         {
-            SetActiveFeedback(_informatorPanel.State.Value == PvPPanelState.Shown);
+            SetActiveFeedback(_informatorPanel.State.Value == PanelState.Shown);
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
 
-            if (_informatorPanel.TargetState == PvPPanelState.Hidden)
+            if (_informatorPanel.TargetState == PanelState.Hidden)
             {
                 _informatorPanel.Show();
                 SetActiveFeedback(true);

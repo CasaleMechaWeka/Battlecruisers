@@ -43,6 +43,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
+using BattleCruisers.UI.Common.Click;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -54,9 +55,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected Collider2D _collider;
         private IPvPCruiserHelper _helper;
         private PvPSlotWrapperController _slotWrapperController;
-        private IPvPClickHandler _clickHandler;
-        private IPvPDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
-        private IPvPDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
+        private IClickHandler _clickHandler;
+        private IDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
+        private IDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
         private IAudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used

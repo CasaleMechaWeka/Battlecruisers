@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Utils.BattleScene.Seabed;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Seabed
@@ -7,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         void OnTriggerEnter2D(Collider2D collider)
         {
-            IPvPSeabedImpactable impactable = collider.GetComponent<IPvPSeabedImpactable>();
+            ISeabedImpactable impactable = collider.GetComponent<ISeabedImpactable>();
 
             if (impactable != null)
             {
@@ -15,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 return;
             }
 
-            if (collider.GetComponent<ITargetProxy>()?.Target is IPvPSeabedImpactable targetImpactable)
+            if (collider.GetComponent<ITargetProxy>()?.Target is ISeabedImpactable targetImpactable)
             {
                 targetImpactable.OnHitSeabed();
             }

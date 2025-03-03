@@ -1,10 +1,11 @@
 using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
-    public abstract class PvPUserInputCameraTargetProvider : IPvPUserInputCameraTargetProvider
+    public abstract class PvPUserInputCameraTargetProvider : IUserInputCameraTargetProvider
     {
         private bool _duringUserInput;
 

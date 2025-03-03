@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
+
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     /// <summary>
@@ -20,10 +21,10 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
-        private readonly ISettableBroadcastingProperty<bool> _playerCruiserHasActiveDrones;
+        private readonly ISettableBroadcastingProperty<bool> _leftCruiserHasActiveDrones;
         public IBroadcastingProperty<bool> LeftCruiserHasActiveDrones { get; }
 
-        private readonly ISettableBroadcastingProperty<bool> _aiCruiserHasActiveDrones;
+        private readonly ISettableBroadcastingProperty<bool> _rightCruiserHasActiveDrones;
         public IBroadcastingProperty<bool> RightCruiserHasActiveDrones { get; }
 
         public DroneMonitor(IDroneFactory droneFactory)
@@ -40,11 +41,11 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             };
             FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
 
-            _playerCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            LeftCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerCruiserHasActiveDrones);
+            _leftCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
+            LeftCruiserHasActiveDrones = new BroadcastingProperty<bool>(_leftCruiserHasActiveDrones);
 
-            _aiCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
-            RightCruiserHasActiveDrones = new BroadcastingProperty<bool>(_aiCruiserHasActiveDrones);
+            _rightCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
+            RightCruiserHasActiveDrones = new BroadcastingProperty<bool>(_rightCruiserHasActiveDrones);
         }
 
         private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)
@@ -67,12 +68,14 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             UpdateDroneActiveness();
 
             Assert.IsTrue(_factionToActiveDroneNum[drone.Faction] >= 0);
+            if (_factionToActiveDroneNum[drone.Faction] < 0)
+                _factionToActiveDroneNum[drone.Faction] = 0;
         }
 
         private void UpdateDroneActiveness()
         {
-            _playerCruiserHasActiveDrones.Value = _factionToActiveDroneNum[Faction.Blues] != 0;
-            _aiCruiserHasActiveDrones.Value = _factionToActiveDroneNum[Faction.Reds] != 0;
+            _leftCruiserHasActiveDrones.Value = _factionToActiveDroneNum[Faction.Blues] != 0;
+            _rightCruiserHasActiveDrones.Value = _factionToActiveDroneNum[Faction.Reds] != 0;
         }
     }
 }

@@ -9,6 +9,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine.Assertions;
@@ -29,10 +31,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public IPvPComparableItemDetails<IPvPCruiser> CruiserDetails => cruiserDetails;
 
         public PvPSlidingPanel informatorPanelExtended;
-        public IPvPSlidingPanel ExtendedPanel => informatorPanelExtended;
+        public ISlidingPanel ExtendedPanel => informatorPanelExtended;
 
         public PvPInformatorButtons buttons;
-        public IPvPInformatorButtons Buttons => buttons;
+        public IInformatorButtons Buttons => buttons;
 
         public void Initialise(
             IPvPUIManager uiManager,

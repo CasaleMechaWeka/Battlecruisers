@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets
 {
-    public class PvPCameraTargetEqualityCalculator : IPvPCameraTargetEqualityCalculator
+    public class PvPCameraTargetEqualityCalculator : ICameraTargetEqualityCalculator
     {
         private readonly float _positionEqualityMarginInM, _orthographicSizeEqualityMargin;
 
