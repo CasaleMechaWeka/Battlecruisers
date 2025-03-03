@@ -63,11 +63,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 Vector3 mousePosition = Input.mousePosition;
                 if (SystemInfo.deviceType == DeviceType.Handheld)
                 {
-                    mousePosition.y = mousePosition.y + (Screen.height / 5);//move to just above the pointer - this enables better visability of icon and for pointer to gameobject interactions
+                    mousePosition.y = mousePosition.y + (Screen.height / 20);
                 }
                 else
                 {
-                    mousePosition.y = mousePosition.y + (Screen.height / 10);//move to just above the pointer - this enables better visability of icon and for pointer to gameobject interactions
+                    mousePosition.y = mousePosition.y + (Screen.height / 21);
                 }
 
                 _clickAndDragIcon.position = mousePosition;
