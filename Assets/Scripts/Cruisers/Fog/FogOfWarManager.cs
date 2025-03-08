@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -20,9 +21,9 @@ namespace BattleCruisers.Cruisers.Fog
         private readonly IFogVisibilityDecider _visibilityDecider;
         private readonly ICruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly ICruiserUnitMonitor _enemyUnitMonitor;
-        private readonly IList<IStealthGenerator> _friendlyIStealthGenerators;
-        private readonly IList<IBuilding> _enemySpySatellites;
-        private readonly IList<IUnit> _enemySpyPlanes;
+        private readonly IList<StealthGenerator> _friendlyIStealthGenerators;
+        private readonly IList<SpySatelliteLauncherController> _enemySpySatellites;
+        private readonly IList<SpyPlaneController> _enemySpyPlanes;
 
         public FogOfWarManager(
             IGameObject fog,
@@ -39,70 +40,85 @@ namespace BattleCruisers.Cruisers.Fog
             _enemyBuildingMonitor = enemyBuildingMonitor;
             _enemyUnitMonitor = enemyUnitMonitor;
 
-            _friendlyBuildingMonitor.BuildingCompleted += _friendlyBuildingMonitor_BuildingCompleted;
-            _enemyBuildingMonitor.BuildingCompleted += _enemyBuildingMonitor_BuildingCompleted;
-            _enemyUnitMonitor.UnitCompleted += _enemyUnitMonitor_UnitCompleted;
+            _friendlyBuildingMonitor.BuildingCompleted += FriendlyBuildingMonitorBuildingCompleted;
+            _enemyBuildingMonitor.BuildingCompleted += EnemyBuildingMonitorBuildingCompleted;
+            _enemyUnitMonitor.UnitCompleted += EnemyUnitMonitorUnitCompleted;
 
-            _friendlyIStealthGenerators = new List<IStealthGenerator>();
-            _enemySpySatellites = new List<IBuilding>();
-            _enemySpyPlanes = new List<IUnit>();
+            _friendlyIStealthGenerators = new List<StealthGenerator>();
+            _enemySpySatellites = new List<SpySatelliteLauncherController>();
+            _enemySpyPlanes = new List<SpyPlaneController>();
         }
 
-        private void _friendlyBuildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
+        private void FriendlyBuildingMonitorBuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
             // Look for stealth generators
-            AddBuilding(_friendlyIStealthGenerators, e.CompletedBuilding, IStealthGenerator_Destroyed);
+            AddStealthGen(_friendlyIStealthGenerators, e.CompletedBuilding, StealthGeneratorDestroyed);
+
         }
 
-        private void IStealthGenerator_Destroyed(object sender, DestroyedEventArgs e)
+        private void StealthGeneratorDestroyed(object sender, DestroyedEventArgs e)
         {
-            RemoveBuilding(_friendlyIStealthGenerators, e.DestroyedTarget, IStealthGenerator_Destroyed);
+            RemoveBuilding(_friendlyIStealthGenerators, e.DestroyedTarget, StealthGeneratorDestroyed);
         }
 
-        private void _enemyBuildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
+        private void EnemyBuildingMonitorBuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
             // Look for spy satellite launchers
-            AddBuilding(_enemySpySatellites, e.CompletedBuilding, SatelliteLauncher_Destroyed);
+            AddSpySat(_enemySpySatellites, e.CompletedBuilding, SatelliteLauncherDestroyed);
         }
 
-        private void _enemyUnitMonitor_UnitCompleted(object sender, UnitCompletedEventArgs e)
+        private void EnemyUnitMonitorUnitCompleted(object sender, UnitCompletedEventArgs e)
         {
-            AddUnit(_enemySpyPlanes, e.CompletedUnit, SpyPlane_Destroyed);
+            AddSpyPlane(_enemySpyPlanes, e.CompletedUnit, SpyPlaneDestroyed);
         }
 
-        private void SatelliteLauncher_Destroyed(object sender, DestroyedEventArgs e)
+        private void SatelliteLauncherDestroyed(object sender, DestroyedEventArgs e)
         {
-            RemoveBuilding(_enemySpySatellites, e.DestroyedTarget, SatelliteLauncher_Destroyed);
+            RemoveBuilding(_enemySpySatellites, e.DestroyedTarget, SatelliteLauncherDestroyed);
         }
 
-        private void SpyPlane_Destroyed(object sender, DestroyedEventArgs e)
+        private void SpyPlaneDestroyed(object sender, DestroyedEventArgs e)
         {
-            RemoveUnit(_enemySpyPlanes, e.DestroyedTarget, SpyPlane_Destroyed);
+            RemoveUnit(_enemySpyPlanes, e.DestroyedTarget, SpyPlaneDestroyed);
         }
 
-        private void AddBuilding<T>(IList<T> buildings, IBuildable buildingCompleted, EventHandler<DestroyedEventArgs> destroyedHander)
-            where T : class, IBuilding
+        private void AddStealthGen(
+            IList<StealthGenerator> stealthGens,
+            IBuilding stealthGenCompleted,
+            EventHandler<DestroyedEventArgs> destroyedHander)
         {
-            T building = buildingCompleted as T;
-
-            if (building != null)
+            if (stealthGenCompleted is StealthGenerator stealthGen)
             {
-                buildings.Add(building);
-                building.Destroyed += destroyedHander;
+                stealthGens.Add(stealthGen);
+                stealthGen.Destroyed += destroyedHander;
 
                 UpdateFogState();
             }
         }
 
-        private void AddUnit<T>(IList<T> units, IBuildable unitCompleted, EventHandler<DestroyedEventArgs> destroyedHander)
-            where T : class, IUnit
+        private void AddSpySat(
+            IList<SpySatelliteLauncherController> spySats,
+            IBuilding spySatCompleted,
+            EventHandler<DestroyedEventArgs> destroyedHander)
         {
-            T unit = unitCompleted as T;
-
-            if (unit != null)
+            if (spySatCompleted is SpySatelliteLauncherController spySat)
             {
-                units.Add(unit);
-                unit.Destroyed += destroyedHander;
+                spySats.Add(spySat);
+                spySat.Destroyed += destroyedHander;
+
+                UpdateFogState();
+            }
+        }
+
+        private void AddSpyPlane(
+            IList<SpyPlaneController> spyPlanes,
+            IBuildable unitCompleted,
+            EventHandler<DestroyedEventArgs> destroyedHander)
+        {
+            if (unitCompleted is SpyPlaneController spyPlane)
+            {
+                spyPlanes.Add(spyPlane);
+                spyPlane.Destroyed += destroyedHander;
 
                 UpdateFogState();
             }
@@ -141,9 +157,9 @@ namespace BattleCruisers.Cruisers.Fog
 
         public void DisposeManagedState()
         {
-            _friendlyBuildingMonitor.BuildingCompleted -= _friendlyBuildingMonitor_BuildingCompleted;
-            _enemyBuildingMonitor.BuildingCompleted -= _enemyBuildingMonitor_BuildingCompleted;
-            _enemyUnitMonitor.UnitCompleted -= _enemyUnitMonitor_UnitCompleted;
+            _friendlyBuildingMonitor.BuildingCompleted -= FriendlyBuildingMonitorBuildingCompleted;
+            _enemyBuildingMonitor.BuildingCompleted -= EnemyBuildingMonitorBuildingCompleted;
+            _enemyUnitMonitor.UnitCompleted -= EnemyUnitMonitorUnitCompleted;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-    public class StealthGenerator : TacticalBuilding, IStealthGenerator
+    public class StealthGenerator : TacticalBuilding, IBuilding
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.StealthGenerator;
 

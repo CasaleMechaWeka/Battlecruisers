@@ -11,7 +11,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical
 {
-    public class PvPStealthGenerator : PvPTacticalBuilding, IPvPStealthGenerator
+    public class PvPStealthGenerator : PvPTacticalBuilding, IPvPBuilding
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.StealthGenerator;
 

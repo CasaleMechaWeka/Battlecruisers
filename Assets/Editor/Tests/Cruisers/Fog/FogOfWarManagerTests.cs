@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
         private ICruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private ICruiserUnitMonitor _enemyUnitMonitor;
         private IBuilding _satelliteLauncher;
-        private IStealthGenerator _stealthGenerator;
+        private IBuilding _stealthGenerator;
         private IBuilding _randomBuilding;
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
             _enemyBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
             _enemyUnitMonitor = Substitute.For<ICruiserUnitMonitor>();
             _satelliteLauncher = Substitute.For<IBuilding>();
-            _stealthGenerator = Substitute.For<IStealthGenerator>();
+            _stealthGenerator = Substitute.For<IBuilding>();
             _randomBuilding = Substitute.For<IBuilding>();
 
             new FogOfWarManager(_fog, _visibilityDecider, _friendlyBuildingMonitor, _enemyBuildingMonitor, _enemyUnitMonitor);

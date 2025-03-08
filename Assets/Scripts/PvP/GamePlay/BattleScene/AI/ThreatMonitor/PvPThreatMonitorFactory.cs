@@ -1,6 +1,6 @@
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
         public IThreatMonitor CreateStealthThreatMonitor()
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
-            return new PvPBuildingThreatMonitor<IPvPStealthGenerator>(_playerCruiser, threatEvaluator);
+            return new PvPBuildingThreatMonitor<IPvPBuilding>(_playerCruiser, threatEvaluator);
         }
 
         public IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor)

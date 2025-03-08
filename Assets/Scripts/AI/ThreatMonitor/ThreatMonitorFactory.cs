@@ -1,10 +1,10 @@
-﻿using BattleCruisers.Buildables.Buildings.Tactical;
-using BattleCruisers.Buildables.Buildings.Turrets;
+﻿using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
@@ -15,9 +15,9 @@ namespace BattleCruisers.AI.ThreatMonitors
         private readonly IDeferrer _deferrer;
 
         private const int AIR_HIGH_THREAT_DRONE_NUM = 6;
-		private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
-		private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
-		private const float STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM = 0.5f;
+        private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
+        private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
+        private const float STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
         public ThreatMonitorFactory(ICruiserController playerCruiser, ITime time, IDeferrer deferrer)
         {
@@ -28,10 +28,10 @@ namespace BattleCruisers.AI.ThreatMonitors
             _deferrer = deferrer;
         }
 
-		public IThreatMonitor CreateAirThreatMonitor()
+        public IThreatMonitor CreateAirThreatMonitor()
         {
-			IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
-			return new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Aircraft);
+            IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
+            return new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Aircraft);
         }
 
         public IThreatMonitor CreateNavalThreatMonitor()
@@ -43,13 +43,13 @@ namespace BattleCruisers.AI.ThreatMonitors
         public IThreatMonitor CreateRocketThreatMonitor()
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
-			return new BuildingThreatMonitor<RocketLauncherController>(_playerCruiser, threatEvaluator);
+            return new BuildingThreatMonitor<RocketLauncherController>(_playerCruiser, threatEvaluator);
         }
 
         public IThreatMonitor CreateStealthThreatMonitor()
         {
             IThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
-            return new BuildingThreatMonitor<IStealthGenerator>(_playerCruiser, threatEvaluator);
+            return new BuildingThreatMonitor<IBuilding>(_playerCruiser, threatEvaluator);
         }
 
         public IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor)

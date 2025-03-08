@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
@@ -23,9 +24,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IFogVisibilityDecider _visibilityDecider;
         private readonly IPvPCruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly IPvPCruiserUnitMonitor _enemyUnitMonitor;
-        private readonly IList<IPvPStealthGenerator> _friendlyIStealthGenerators;
-        private readonly IList<IPvPBuilding> _enemySpySatellites;
-        private readonly IList<IPvPUnit> _enemySpyPlanes;
+        private readonly IList<PvPStealthGenerator> _friendlyIStealthGenerators;
+        private readonly IList<PvPSpySatelliteLauncherController> _enemySpySatellites;
+        private readonly IList<PvPSpyPlaneController> _enemySpyPlanes;
 
         public PvPFogOfWarManager(
             IGameObject fog,
@@ -46,15 +47,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _enemyBuildingMonitor.BuildingCompleted += _enemyBuildingMonitor_BuildingCompleted;
             _enemyUnitMonitor.UnitCompleted += _enemyUnitMonitor_UnitCompleted;
 
-            _friendlyIStealthGenerators = new List<IPvPStealthGenerator>();
-            _enemySpySatellites = new List<IPvPBuilding>();
-            _enemySpyPlanes = new List<IPvPUnit>();
+            _friendlyIStealthGenerators = new List<PvPStealthGenerator>();
+            _enemySpySatellites = new List<PvPSpySatelliteLauncherController>();
+            _enemySpyPlanes = new List<PvPSpyPlaneController>();
         }
 
         private void _friendlyBuildingMonitor_BuildingCompleted(object sender, PvPBuildingCompletedEventArgs e)
         {
             // Look for stealth generators
-            AddBuilding(_friendlyIStealthGenerators, e.CompletedBuilding, IStealthGenerator_Destroyed);
+            AddStealthGen(_friendlyIStealthGenerators, e.CompletedBuilding, IStealthGenerator_Destroyed);
         }
 
         private void IStealthGenerator_Destroyed(object sender, DestroyedEventArgs e)
@@ -65,12 +66,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void _enemyBuildingMonitor_BuildingCompleted(object sender, PvPBuildingCompletedEventArgs e)
         {
             // Look for spy satellite launchers
-            AddBuilding(_enemySpySatellites, e.CompletedBuilding, SatelliteLauncher_Destroyed);
+            AddSpySat(_enemySpySatellites, e.CompletedBuilding, SatelliteLauncher_Destroyed);
         }
 
         private void _enemyUnitMonitor_UnitCompleted(object sender, PvPUnitCompletedEventArgs e)
         {
-            AddUnit(_enemySpyPlanes, e.CompletedUnit, SpyPlane_Destroyed);
+            AddSpyPlane(_enemySpyPlanes, e.CompletedUnit, SpyPlane_Destroyed);
         }
 
         private void SatelliteLauncher_Destroyed(object sender, DestroyedEventArgs e)
@@ -83,29 +84,43 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             RemoveUnit(_enemySpyPlanes, e.DestroyedTarget, SpyPlane_Destroyed);
         }
 
-        private void AddBuilding<T>(IList<T> buildings, IPvPBuildable buildingCompleted, EventHandler<DestroyedEventArgs> destroyedHander)
-            where T : class, IPvPBuilding
+        private void AddStealthGen(
+            IList<PvPStealthGenerator> stealthGens,
+            IPvPBuildable stealtgGenCompleted,
+            EventHandler<DestroyedEventArgs> destroyedHander)
         {
-            T building = buildingCompleted as T;
-
-            if (building != null)
+            if (stealtgGenCompleted is PvPStealthGenerator stealthGen)
             {
-                buildings.Add(building);
-                building.Destroyed += destroyedHander;
+                stealthGens.Add(stealthGen);
+                stealthGen.Destroyed += destroyedHander;
 
                 UpdateFogState();
             }
         }
 
-        private void AddUnit<T>(IList<T> units, IPvPBuildable unitCompleted, EventHandler<DestroyedEventArgs> destroyedHander)
-            where T : class, IPvPUnit
+        private void AddSpySat(
+            IList<PvPSpySatelliteLauncherController> spySats,
+            IPvPBuildable spySatCompleted,
+            EventHandler<DestroyedEventArgs> destroyedHander)
         {
-            T unit = unitCompleted as T;
-
-            if (unit != null)
+            if (spySatCompleted is PvPSpySatelliteLauncherController spySat)
             {
-                units.Add(unit);
-                unit.Destroyed += destroyedHander;
+                spySats.Add(spySat);
+                spySat.Destroyed += destroyedHander;
+
+                UpdateFogState();
+            }
+        }
+
+        private void AddSpyPlane(
+            IList<PvPSpyPlaneController> units,
+            IPvPBuildable spyPlaneCompleted,
+            EventHandler<DestroyedEventArgs> destroyedHander)
+        {
+            if (spyPlaneCompleted is PvPSpyPlaneController spyPlane)
+            {
+                units.Add(spyPlane);
+                spyPlane.Destroyed += destroyedHander;
 
                 UpdateFogState();
             }
@@ -135,6 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             UpdateFogState();
         }
+
         private void UpdateFogState()
         {
             _fog.IsVisible = _visibilityDecider.ShouldFogBeVisible(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count, _enemySpyPlanes.Count);
