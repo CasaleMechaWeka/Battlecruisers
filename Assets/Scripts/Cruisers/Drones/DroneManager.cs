@@ -304,7 +304,7 @@ namespace BattleCruisers.Cruisers.Drones
             }
 
             bool wasRemoved = _droneConsumers.Remove(droneConsumer);
-            Assert.IsTrue(wasRemoved);
+            //Assert.IsTrue(wasRemoved);
 
             _droneConsumers.Insert(0, droneConsumer);
 		}

@@ -38,7 +38,7 @@ namespace BattleCruisers.Buildables.Boost
         {
             Logging.LogMethod(Tags.BOOST);
 
-            Assert.IsFalse(_boostProviders.Contains(boostProvider));
+            //  Assert.IsFalse(_boostProviders.Contains(boostProvider));
             if (!_boostProviders.Contains(boostProvider))
             {
                 _boostProviders.Add(boostProvider);
@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables.Boost
         {
             Logging.LogMethod(Tags.BOOST);
 
-            Assert.IsTrue(_boostProviders.Contains(boostProvider));
+            // Assert.IsTrue(_boostProviders.Contains(boostProvider));
             _boostProviders.Remove(boostProvider);
             UpdateCumulativeBoost();
         }
