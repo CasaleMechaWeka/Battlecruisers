@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private ItemCategoryButton[] _buttons;
         public Slider changeCategorySlider;
-        private float previuosIndex;
+        private float previousIndex;
 
         public void Initialise(
             IItemPanelsController itemPanels,
@@ -50,28 +50,27 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void ChangeCategory(float index)
         {
-            index = Mathf.RoundToInt(index);
-            if (index != previuosIndex)
+            if (index != previousIndex)
             {
-                if (index <= .5f && _buttons[0].isActiveAndEnabled)
+                if (index < 1f && _buttons[0].isActiveAndEnabled)
                     _buttons[0].OnClickedAction();
-                else if (index == 1f && _buttons[1].isActiveAndEnabled)
+                else if (index < 2.1f && _buttons[1].isActiveAndEnabled)
                     _buttons[1].OnClickedAction();
-                else if (index == 2f && _buttons[2].isActiveAndEnabled)
+                else if (index < 3.1f && _buttons[2].isActiveAndEnabled)
                     _buttons[2].OnClickedAction();
-                else if (index == 3f && _buttons[3].isActiveAndEnabled)
+                else if (index < 4.1f && _buttons[3].isActiveAndEnabled)
                     _buttons[3].OnClickedAction();
-                else if (index == 4f && _buttons[4].isActiveAndEnabled)
+                else if (index < 5f && _buttons[4].isActiveAndEnabled)
                     _buttons[4].OnClickedAction();
-                else if (index == 5f && _buttons[5].isActiveAndEnabled)
+                else if (index < 5.8f && _buttons[5].isActiveAndEnabled)
                     _buttons[5].OnClickedAction();
-                else if (index == 6f && _buttons[6].isActiveAndEnabled)
+                else if (index < 6.7f && _buttons[6].isActiveAndEnabled)
                     _buttons[6].OnClickedAction();
-                else if (index == 7f && _buttons[7].isActiveAndEnabled)
+                else if (index < 7.7f && _buttons[7].isActiveAndEnabled)
                     _buttons[7].OnClickedAction();
-                else if (index == 8f)
+                else if (index < 9f)
                     transform.FindNamedComponent<HeckleCategoryButton>("HeckleButton").OnClickedAction();
-                previuosIndex = index;
+                previousIndex = index;
             }
         }
 
