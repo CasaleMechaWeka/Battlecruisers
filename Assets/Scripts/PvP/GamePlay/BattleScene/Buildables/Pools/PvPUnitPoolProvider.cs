@@ -126,9 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void SetInitialCapacity()
         {
             foreach (IPool<PvPUnit, PvPBuildableActivationArgs> pool in _pools)
-            {
                 pool.AddCapacity(INITIAL_UNIT_CAPACITY);
-            }
         }
     }
 }

@@ -75,20 +75,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void SetInitialCapacity_Rest()
         {
-            TinyBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT - 1);
-            HighCalibreBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT - 1);
-            BulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT - 1);
-            BombExplosionPool.AddCapacity(PvPInitialCapacity.BOMB - 1);
-            FlakExplosionsPool.AddCapacity(PvPInitialCapacity.FLAK - 1);
-            SmallExplosionsPool.AddCapacity(PvPInitialCapacity.SMALL - 1);
-            MediumExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
-            MFExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
-            FirecrackerExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
-            LargeExplosionsPool.AddCapacity(PvPInitialCapacity.LARGE - 1);
-            NovaShellImpactPool.AddCapacity(PvPInitialCapacity.LARGE - 1);
-            RocketShellImpactPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
-            HugeExplosionsPool.AddCapacity(PvPInitialCapacity.HUGE - 1);
-            FiveShellClusterExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM - 1);
+            TinyBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT - 1);
+            HighCalibreBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT - 1);
+            BulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT - 1);
+            BombExplosionPool.AddCapacity(InitialCapacity.BOMB - 1);
+            FlakExplosionsPool.AddCapacity(InitialCapacity.FLAK - 1);
+            SmallExplosionsPool.AddCapacity(InitialCapacity.SMALL - 1);
+            MediumExplosionsPool.AddCapacity(InitialCapacity.MEDIUM - 1);
+            MFExplosionsPool.AddCapacity(InitialCapacity.MEDIUM - 1);
+            FirecrackerExplosionsPool.AddCapacity(InitialCapacity.MEDIUM - 1);
+            LargeExplosionsPool.AddCapacity(InitialCapacity.LARGE - 1);
+            NovaShellImpactPool.AddCapacity(InitialCapacity.LARGE - 1);
+            RocketShellImpactPool.AddCapacity(InitialCapacity.MEDIUM - 1);
+            HugeExplosionsPool.AddCapacity(InitialCapacity.HUGE - 1);
+            FiveShellClusterExplosionsPool.AddCapacity(InitialCapacity.MEDIUM - 1);
         }
     }
 }
