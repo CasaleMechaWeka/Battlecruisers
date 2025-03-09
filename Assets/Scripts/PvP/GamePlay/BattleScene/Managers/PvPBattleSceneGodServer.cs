@@ -27,6 +27,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.Scenes.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -50,8 +51,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public IUserChosenTargetManager playerACruiserUserChosenTargetManager;
         public IUserChosenTargetManager playerBCruiserUserChosenTargetManager;
 
-        public static Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables_left;
-        public static Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables_right;
+        public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables_left;
+        public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables_right;
         public static Sprite enemyCruiserSprite;
         public static string enemyCruiserName;
 
@@ -362,20 +363,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         components.Deferrer
                         ));
 
-            deadBuildables_left = new Dictionary<TargetType, PvPDeadBuildableCounter>();
-            deadBuildables_left.Add(TargetType.Aircraft, new PvPDeadBuildableCounter());
-            deadBuildables_left.Add(TargetType.Ships, new PvPDeadBuildableCounter());
-            deadBuildables_left.Add(TargetType.Cruiser, new PvPDeadBuildableCounter());
-            deadBuildables_left.Add(TargetType.Buildings, new PvPDeadBuildableCounter());
-            deadBuildables_left.Add(TargetType.PlayedTime, new PvPDeadBuildableCounter());
+            deadBuildables_left = new Dictionary<TargetType, DeadBuildableCounter>();
+            deadBuildables_left.Add(TargetType.Aircraft, new DeadBuildableCounter());
+            deadBuildables_left.Add(TargetType.Ships, new DeadBuildableCounter());
+            deadBuildables_left.Add(TargetType.Cruiser, new DeadBuildableCounter());
+            deadBuildables_left.Add(TargetType.Buildings, new DeadBuildableCounter());
+            deadBuildables_left.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
 
-            deadBuildables_right = new Dictionary<TargetType, PvPDeadBuildableCounter>();
-            deadBuildables_right.Add(TargetType.Aircraft, new PvPDeadBuildableCounter());
-            deadBuildables_right.Add(TargetType.Ships, new PvPDeadBuildableCounter());
-            deadBuildables_right.Add(TargetType.Cruiser, new PvPDeadBuildableCounter());
-            deadBuildables_right.Add(TargetType.Buildings, new PvPDeadBuildableCounter());
-            deadBuildables_right.Add(TargetType.PlayedTime, new PvPDeadBuildableCounter());
+            deadBuildables_right = new Dictionary<TargetType, DeadBuildableCounter>();
+            deadBuildables_right.Add(TargetType.Aircraft, new DeadBuildableCounter());
+            deadBuildables_right.Add(TargetType.Ships, new DeadBuildableCounter());
+            deadBuildables_right.Add(TargetType.Cruiser, new DeadBuildableCounter());
+            deadBuildables_right.Add(TargetType.Buildings, new DeadBuildableCounter());
+            deadBuildables_right.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
 
             if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)

@@ -5,10 +5,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using System.Collections.Generic;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
+using BattleCruisers.Scenes.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
@@ -99,9 +99,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 }
             }
 
-            Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_left;
+            Dictionary<TargetType, DeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_left;
             long ds = 0;
-            foreach (KeyValuePair<TargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
+            foreach (KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
             {
                 ds += kvp.Value.GetTotalDamageInCredits();
             }
@@ -134,9 +134,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                         break;
                 }
             }
-            Dictionary<TargetType, PvPDeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_right;
+            Dictionary<TargetType, DeadBuildableCounter> deadBuildables = PvPBattleSceneGodServer.deadBuildables_right;
             long ds = 0;
-            foreach (KeyValuePair<TargetType, PvPDeadBuildableCounter> kvp in deadBuildables)
+            foreach (KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
             {
                 ds += kvp.Value.GetTotalDamageInCredits();
             }
