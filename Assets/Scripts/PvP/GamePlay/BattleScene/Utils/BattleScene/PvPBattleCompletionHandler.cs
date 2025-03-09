@@ -20,7 +20,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
-        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         public static bool _isCompleted = false;
 
         public event EventHandler BattleCompleted;
@@ -31,15 +30,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const int POST_GAME_WAIT_TIME_IN_S = 10 * 1000;
         public PvPBattleCompletionHandler(
             IApplicationModel applicationModel,
-            ISceneNavigator sceneNavigator,
-            PvPBattleSceneGodTunnel battleSceneGodTunnel)
+            ISceneNavigator sceneNavigator)
         {
             PvPHelper.AssertIsNotNull(applicationModel, sceneNavigator);
             _applicationModel = applicationModel;
             _sceneNavigator = sceneNavigator;
 
             _isCompleted = false;
-            _battleSceneGodTunnel = battleSceneGodTunnel;
             team = SynchedServerData.Instance.GetTeam();
             playerARating = SynchedServerData.Instance.playerARating.Value;
             playerBRating = SynchedServerData.Instance.playerBRating.Value;
@@ -233,7 +230,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
             }
             _applicationModel.DataProvider.SaveGame();
-            NetworkManager.Singleton.Shutdown(true);
+            if (NetworkManager.Singleton != null)
+                NetworkManager.Singleton.Shutdown(true);
             DestroyAllNetworkObjects();
             _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
         }

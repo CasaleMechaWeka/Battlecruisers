@@ -69,7 +69,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private ISpriteProvider spriteProvider;
         private IPvPCameraComponents cameraComponents;
 
-
         public PvPCameraInitialiser cameraInitialiser;
         public PvPTopPanelInitialiser topPanelInitialiser;
         public PvPLeftPanelInitialiser leftPanelInitialiser;
@@ -79,7 +78,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
         private ITime time;
-        private IPauseGameManager pauseGameManager;
         private IDebouncer _debouncer;
         private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
@@ -89,7 +87,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private bool isReadyToShowCaptainExo = false;
         public IPvPUIManager uiManager;
         public ILocTable commonStrings;
-        public Dictionary<string, AudioClip> projectileImpactSounds = new Dictionary<string, AudioClip>();
         public IDataProvider dataProvider;
         public IPvPPrefabFactory prefabFactory;
         public PvPFactoryProvider factoryProvider;
@@ -112,7 +109,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public GameObject obj_LeftBackgroundPanel;
         public GameObject obj_RightBackgroundPanel;
         public GameObject obj_ToolTipActivator;
-        private float timeStampForInit;
         public bool IsBattleCompleted = false;
         public bool IsConnectedClient = false;   // this is only for Host
         public bool WasLeftMatch = false;
@@ -326,7 +322,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             sceneNavigator = LandingSceneGod.SceneNavigator;
-            battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator, _battleSceneGodTunnel);
+            battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator);
 
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize();
@@ -357,7 +353,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             sceneNavigator = LandingSceneGod.SceneNavigator;
-            battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator, _battleSceneGodTunnel);
+            battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator);
 
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize();
