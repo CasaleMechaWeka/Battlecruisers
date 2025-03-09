@@ -10,22 +10,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         public ITargetFilter CreateTargetFilter(Faction faction)
         {
-            return new PvPFactionTargetFilter(faction);
+            return new FactionTargetFilter(faction);
         }
 
         public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
         {
-            return new PvPFactionAndTargetTypeFilter(faction, targetTypes);
+            return new FactionAndTargetTypeFilter(faction, targetTypes);
         }
 
         public IExactMatchTargetFilter CreateExactMatchTargetFilter()
         {
-            return new PvPExactMatchTargetFilter();
+            return new ExactMatchTargetFilter();
         }
 
         public IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch)
         {
-            return new PvPExactMatchTargetFilter()
+            return new ExactMatchTargetFilter()
             {
                 Target = targetToMatch
             };
@@ -33,12 +33,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public IExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter()
         {
-            return new PvPMultipleExactMatchesTargetFilter();
+            return new MultipleExactMatchesTargetFilter();
         }
 
         public ITargetFilter CreateDummyTargetFilter(bool isMatchResult)
         {
-            return new PvPDummyTargetFilter(isMatchResult);
+            return new DummyTargetFilter(isMatchResult);
         }
 
         public ITargetFilter CreateTargetInFrontFilter(IPvPUnit source)

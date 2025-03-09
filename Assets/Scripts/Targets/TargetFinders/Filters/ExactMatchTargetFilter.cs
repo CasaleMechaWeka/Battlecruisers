@@ -11,9 +11,10 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 		{
 			return ReferenceEquals(Target, target);
 		}
-        public virtual bool IsMatch(ITarget target, VariantPrefab variant)
-        {
-            return ReferenceEquals(Target, target);
-        }
-    }
+
+		public virtual bool IsMatch(ITarget target, VariantPrefab variant)
+		{
+			return ReferenceEquals(Target, target);
+		}
+	}
 }

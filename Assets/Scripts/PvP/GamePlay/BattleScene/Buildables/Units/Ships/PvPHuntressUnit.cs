@@ -113,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Vector2 collisionPoint = new Vector2(0, 0);
             IDamageStats damageStats = new PvPDamageStats(2000, 25);
-            ITargetFilter targetFilter = new PvPDummyTargetFilter(isMatchResult: true);
+            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
 
             _areaDamageApplier = new PvPAreaOfEffectDamageApplier(damageStats, targetFilter);
             _areaDamageApplier

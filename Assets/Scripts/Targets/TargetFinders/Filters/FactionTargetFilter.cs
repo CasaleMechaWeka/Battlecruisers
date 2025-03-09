@@ -19,6 +19,7 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
             Logging.Log(Tags.TARGET_FILTER, $"result: {result}  _factionToDetect: {_factionToDetect}");
             return result;
         }
+
         public virtual bool IsMatch(ITarget target, VariantPrefab variant)
         {
             bool result = target.Faction == _factionToDetect;

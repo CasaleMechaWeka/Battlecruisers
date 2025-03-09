@@ -3,8 +3,8 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
-	public class DummyTargetFilter : ITargetFilter
-	{
+    public class DummyTargetFilter : ITargetFilter
+    {
         private readonly bool _isMatchResult;
 
         public DummyTargetFilter(bool isMatchResult)
@@ -12,10 +12,11 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
             _isMatchResult = isMatchResult;
         }
 
-		public virtual bool IsMatch(ITarget target)
-		{
+        public virtual bool IsMatch(ITarget target)
+        {
             return _isMatchResult;
-		}
+        }
+
         public virtual bool IsMatch(ITarget target, VariantPrefab variant)
         {
             return _isMatchResult;
