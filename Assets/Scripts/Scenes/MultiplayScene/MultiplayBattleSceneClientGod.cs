@@ -321,8 +321,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                 navigationPermitters.HotkeyFilter,
                 cameraComponents.CameraFocuser,
                 rightPanelComponents.SpeedComponents,
-                rightPanelComponents.MainMenuManager,
-                uiManager);
+                rightPanelComponents.MainMenuManager);
             _gameEndMonitor
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(

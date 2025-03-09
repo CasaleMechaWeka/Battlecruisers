@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
+﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -13,7 +12,6 @@ namespace BattleCruisers.Hotkeys
         private readonly IInput _input;
         private readonly IUpdater _updater;
         private readonly IBroadcastingFilter _filter;
-        private IUIManager _UIManager;
 
         // Navigation
         public event EventHandler PlayerCruiser, Overview, EnemyCruiser;
@@ -49,8 +47,7 @@ namespace BattleCruisers.Hotkeys
             IHotkeyList hotkeyList,
             IInput input,
             IUpdater updater,
-            IBroadcastingFilter filter,
-            IUIManager uIManager)
+            IBroadcastingFilter filter)
         {
             Helper.AssertIsNotNull(hotkeyList, input, updater, filter);
 
@@ -58,7 +55,6 @@ namespace BattleCruisers.Hotkeys
             _input = input;
             _updater = updater;
             _filter = filter;
-            _UIManager = uIManager;
 
             _updater.Updated += _updater_Updated;
         }

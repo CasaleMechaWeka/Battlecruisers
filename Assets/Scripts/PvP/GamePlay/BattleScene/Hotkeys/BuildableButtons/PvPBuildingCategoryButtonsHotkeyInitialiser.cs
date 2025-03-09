@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 {
     public class PvPBuildingCategoryButtonsHotkeyInitialiser : MonoBehaviour
     {
-        private PvPDummyBuildingCategoryButton _nullButton;
+        private DummyBuildingCategoryButton _nullButton;
 
         // Keep references to avoid garbage collection
         private IManagedDisposable _buildingCategoryHotkeyListener;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             // Locked buttons may be destroyed, so null check before they are destroyed
             PvPHelper.AssertIsNotNull(factoriesButton, defensivesButton, offensivesButton, tacticalsButton, ultrasButton);
 
-            _nullButton = new PvPDummyBuildingCategoryButton();
+            _nullButton = new DummyBuildingCategoryButton();
         }
 
         public void Initialise(IHotkeyDetector hotkeyDetector)

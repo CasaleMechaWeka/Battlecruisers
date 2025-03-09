@@ -499,8 +499,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     components.UpdaterProvider.SwitchableUpdater,
                     navigationPermitters.HotkeyFilter,
                     cameraComponents.CameraFocuser,
-                    rightPanelComponents.MainMenuManager,
-                    uiManager);
+                    rightPanelComponents.MainMenuManager);
             playerCruiser.Destroyed += PlayerCruiser_Destroyed;
             enemyCruiser.Destroyed += EnemyCruiser_Destroyed;
             // Captains
