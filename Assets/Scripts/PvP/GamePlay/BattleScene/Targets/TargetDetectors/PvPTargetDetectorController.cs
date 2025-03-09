@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         protected virtual void Start()
         {
             Logging.Verbose(Tags.TARGET_DETECTOR, $"id: {gameObject.GetInstanceID()}");
-            _targetColliderHandler = new PvPTargetColliderHandler(this);
+            _targetColliderHandler = new TargetColliderHandler(this);
         }
 
         public virtual void StartDetecting()
