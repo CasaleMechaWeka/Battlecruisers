@@ -1,5 +1,4 @@
-﻿
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams.Laser

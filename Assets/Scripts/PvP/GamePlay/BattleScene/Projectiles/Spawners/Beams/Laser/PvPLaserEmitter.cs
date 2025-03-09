@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.La
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using System.Threading.Tasks;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -36,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.Awake();
 
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
-            _laserRenderer = new PvPLaserRenderer(lineRenderer);
+            _laserRenderer = new LaserRenderer(lineRenderer);
 
             _laserImpact = GetComponentInChildren<PvPLaserImpact>();
             Assert.IsNotNull(_laserImpact);
@@ -48,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
         }
 
-        public async Task InitialiseAsync(
+        public void Initialise(
             ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
@@ -70,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.OnNetworkSpawn();
             if (IsClient)
             {
-                _laserSoundPlayer = new PvPLaserSoundPlayer(_laserRenderer, _audioSource);
+                _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
                 _laserImpact.Initialise(PvPBattleSceneGodClient.Instance.factoryProvider.DeferrerProvider.Deferrer);
             }
         }

@@ -58,8 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
         {
-            await
-                _laserEmitter.InitialiseAsync(
+            _laserEmitter.Initialise(
                     args.TargetFilter,
                     _laserTurretStats.damagePerS,
                     args.Parent,
