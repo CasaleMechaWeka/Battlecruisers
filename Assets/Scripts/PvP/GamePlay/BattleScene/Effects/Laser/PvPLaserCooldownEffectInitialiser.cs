@@ -1,5 +1,5 @@
 using BattleCruisers.Effects.Laser;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
@@ -21,8 +21,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Assert.IsNotNull(laserFlap);
             laserFlap.Initialise();
 
-            IPvPParticleSystemGroupInitialiser smokeDischargeInitialiser = transform.FindNamedComponent<IPvPParticleSystemGroupInitialiser>("SmokeDischarge");
-            IPvPParticleSystemGroup smokeDischarge = smokeDischargeInitialiser.CreateParticleSystemGroup();
+            IParticleSystemGroupInitialiser smokeDischargeInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("SmokeDischarge");
+            IParticleSystemGroup smokeDischarge = smokeDischargeInitialiser.CreateParticleSystemGroup();
 
             return
                 new PvPLaserCooldownEffect(

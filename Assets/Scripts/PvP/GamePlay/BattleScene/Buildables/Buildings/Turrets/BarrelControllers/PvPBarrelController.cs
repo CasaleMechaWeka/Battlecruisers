@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
@@ -30,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IBarrelAdjustmentHelper _adjustmentHelper;
         private IBarrelFiringHelper _firingHelper;
         private IUpdater _updater;
-        protected IPvPParticleSystemGroup _muzzleFlash;
+        protected IParticleSystemGroup _muzzleFlash;
         protected IAnimation _barrelAnimation;
         private ITarget _parent;
         protected ITargetFilter _targetFilter;
@@ -88,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _turretStatsWrapper = new PvPTurretStatsWrapper(_baseTurretStats);
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
 
-            IPvPParticleSystemGroupInitialiser muzzleFlashInitialiser = transform.FindNamedComponent<IPvPParticleSystemGroupInitialiser>("MuzzleFlash");
+            IParticleSystemGroupInitialiser muzzleFlashInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("MuzzleFlash");
             _muzzleFlash = muzzleFlashInitialiser.CreateParticleSystemGroup();
         }
 

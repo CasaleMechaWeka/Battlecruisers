@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
+using BattleCruisers.Effects.ParticleSystems;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
-    public class PvPDummyParticleSystemGroup : IPvPParticleSystemGroup
+    public class PvPDummyParticleSystemGroup : IParticleSystemGroup
     {
-        public async Task Play() { await Task.Yield(); }
-        public async Task Stop() { await Task.Yield(); }
+        public void Play() { }
+        public void Stop() { }
     }
 }

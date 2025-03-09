@@ -1,10 +1,11 @@
+using BattleCruisers.Effects.ParticleSystems;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
-    public class PvPDummyParticleSystemGroupInitialiser : MonoBehaviour, IPvPParticleSystemGroupInitialiser
+    public class PvPDummyParticleSystemGroupInitialiser : MonoBehaviour, IParticleSystemGroupInitialiser
     {
-        public IPvPParticleSystemGroup CreateParticleSystemGroup()
+        public IParticleSystemGroup CreateParticleSystemGroup()
         {
             return new PvPDummyParticleSystemGroup();
         }

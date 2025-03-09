@@ -2,11 +2,10 @@ using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Effects.ParticleSystems;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
-    public class PvPParticleSystemGroup : IPvPParticleSystemGroup
+    public class PvPParticleSystemGroup : IParticleSystemGroup
     {
         protected readonly IBroadcastingParticleSystem[] _particleSystems;
         private readonly ISynchronizedParticleSystems[] _synchronizedSystems;
@@ -21,27 +20,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _synchronizedSystems = synchronizedSystems;
         }
 
-        public async Task Play()
+        public void Play()
         {
-            await Task.Yield();
             foreach (ISynchronizedParticleSystems system in _synchronizedSystems)
-            {
                 system.ResetSeed();
-            }
 
             foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
-            {
                 particleSystem.Play();
-            }
         }
 
-        public async Task Stop()
+        public void Stop()
         {
-            await Task.Yield();
             foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
-            {
                 particleSystem.Stop();
-            }
         }
     }
 }

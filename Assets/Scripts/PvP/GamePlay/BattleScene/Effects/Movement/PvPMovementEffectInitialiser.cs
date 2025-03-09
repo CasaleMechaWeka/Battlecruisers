@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Animator animator = GetComponent<Animator>();
             Assert.IsNotNull(animator);
 
-            PvPBroadcastingParticleSystem particleSystem = GetComponentInChildren<PvPBroadcastingParticleSystem>();
+            BroadcastingParticleSystem particleSystem = GetComponentInChildren<BroadcastingParticleSystem>();
             // particleSystem may be null
             if (particleSystem != null)
             {

@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IManagedDisposable _laserSoundPlayer;
         private float _damagePerS;
         private PvPLaserImpact _laserImpact;
-        private IPvPParticleSystemGroup _laserMuzzleEffect;
+        private IParticleSystemGroup _laserMuzzleEffect;
         private IDeltaTimeProvider _deltaTimeProvider;
 
         private ISettableBroadcastingProperty<bool> _isLaserFiring;
@@ -40,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _laserImpact = GetComponentInChildren<PvPLaserImpact>();
             Assert.IsNotNull(_laserImpact);
 
-            IPvPParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = transform.FindNamedComponent<IPvPParticleSystemGroupInitialiser>("LaserMuzzleEffect");
+            IParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("LaserMuzzleEffect");
             _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
 
             _isLaserFiring = new SettableBroadcastingProperty<bool>(false);

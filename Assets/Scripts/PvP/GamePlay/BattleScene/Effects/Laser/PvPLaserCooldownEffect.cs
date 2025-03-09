@@ -1,5 +1,5 @@
 using BattleCruisers.Effects.Laser;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         private readonly IBroadcastingProperty<bool> _isLaserFiring;
         private readonly ILaserFlap _laserFlap;
-        private readonly IPvPParticleSystemGroup _overheatingSmoke;
+        private readonly IParticleSystemGroup _overheatingSmoke;
         private readonly IDebouncer _laserStoppdDebouncer;
 
         private bool _laserIsActive;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public PvPLaserCooldownEffect(
             IBroadcastingProperty<bool> isLaserFiring,
             ILaserFlap laserFlap,
-            IPvPParticleSystemGroup overheatingSmoke,
+            IParticleSystemGroup overheatingSmoke,
             IDebouncer laserStoppedDebouncer)
         {
             PvPHelper.AssertIsNotNull(isLaserFiring, laserFlap, overheatingSmoke, laserStoppedDebouncer);

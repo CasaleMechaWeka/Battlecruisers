@@ -1,5 +1,4 @@
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,21 +7,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPNukeTrailController : MonoBehaviour, IPvPProjectileTrail
     {
-        private IList<PvPBroadcastingParticleSystem> _effects;
-        public PvPBroadcastingParticleSystem fireExhaust, smoke, flame;
+        private IList<BroadcastingParticleSystem> _effects;
+        public BroadcastingParticleSystem fireExhaust, smoke, flame;
         public SpriteRenderer constantGlow, fireJet;
 
         public void Initialise()
         {
             PvPHelper.AssertIsNotNull(fireExhaust, smoke, flame);
 
-            _effects = new List<PvPBroadcastingParticleSystem>()
+            _effects = new List<BroadcastingParticleSystem>()
             {
                 fireExhaust,
                 flame,
                 smoke
             };
-            foreach (PvPBroadcastingParticleSystem effect in _effects)
+            foreach (BroadcastingParticleSystem effect in _effects)
             {
                 effect.Initialise();
             }

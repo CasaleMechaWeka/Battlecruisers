@@ -1,8 +1,8 @@
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -14,14 +14,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public GameObject effects_parent;
         private PvPShipDeath shipDeath;
         private PvPBroadcastingAnimationController sinkingAnimation;
-        private IList<IPvPParticleSystemGroup> effects;
+        private IList<IParticleSystemGroup> effects;
         public IPoolable<Vector3> CreateShipDeath()
         {
             PvPBroadcastingAnimationController sinkingAnimation = GetComponent<PvPBroadcastingAnimationController>();
             Assert.IsNotNull(sinkingAnimation);
 
             PvPParticleSystemGroupInitialiser[] particleSystemGroupInitialisers = GetComponentsInChildren<PvPParticleSystemGroupInitialiser>();
-            IList<IPvPParticleSystemGroup> effects
+            IList<IParticleSystemGroup> effects
                 = particleSystemGroupInitialisers
                     .Select(initialiser => initialiser.CreateParticleSystemGroup())
                     .ToList();
@@ -29,8 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             return
                 new PvPShipDeath(
                     this,
-                    sinkingAnimation,
-                    effects);
+                    sinkingAnimation);
         }
         protected virtual void Awake()
         {
@@ -48,8 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             shipDeath =
                 new PvPShipDeath(
                     this,
-                    sinkingAnimation,
-                    effects);
+                    sinkingAnimation);
         }
         protected override void SetVisible(bool isVisible)
         {
@@ -57,9 +55,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             if (effects_parent != null)
                 effects_parent.SetActive(isVisible);
         }
-
-
-
 
         protected override void CallRpc_SetVisible(bool isVisible)
         {
@@ -87,17 +82,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             if (isVisible)
             {
                 sinkingAnimation.Play();
-                iPlayEffects();
+                foreach (IParticleSystemGroup effect in effects)
+                    effect.Play();
             }
         }
-        private async Task iPlayEffects()
-        {
-            await Task.Yield();
-            foreach (IPvPParticleSystemGroup effect in effects)
-            {
-                await effect.Play();
-            }
-        }
-
     }
 }

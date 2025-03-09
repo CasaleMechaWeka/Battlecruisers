@@ -6,10 +6,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
-    public class PvPParticleSystemGroupInitialiser : PvPMonoBehaviourWrapper, IPvPParticleSystemGroupInitialiser
+    public class PvPParticleSystemGroupInitialiser : PvPMonoBehaviourWrapper, IParticleSystemGroupInitialiser
     {
         public GameObject effects_parent;
-        public IPvPParticleSystemGroup CreateParticleSystemGroup()
+        public IParticleSystemGroup CreateParticleSystemGroup()
         {
             return
                 new PvPParticleSystemGroup(
@@ -19,10 +19,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         protected virtual IBroadcastingParticleSystem[] GetParticleSystems()
         {
-            PvPBroadcastingParticleSystem[] particleSystems = GetComponentsInChildren<PvPBroadcastingParticleSystem>(includeInactive: true);
+            BroadcastingParticleSystem[] particleSystems = GetComponentsInChildren<BroadcastingParticleSystem>(includeInactive: true);
             Assert.IsTrue(particleSystems.Length != 0);
 
-            foreach (PvPBroadcastingParticleSystem particleSystem in particleSystems)
+            foreach (BroadcastingParticleSystem particleSystem in particleSystems)
             {
                 particleSystem.Initialise();
             }
