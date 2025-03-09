@@ -18,7 +18,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Scenes;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -434,7 +433,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser.pvp_IdleDronesStarted.OnValueChanged += IdleDronesStarted_ValueChanged;
             playerCruiser.pvp_IdleDronesEnded.OnValueChanged += IdleDronesEnded_ValueChanged;
 
-            IUserChosenTargetManager playerCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             userChosenTargetHelper
                 = pvpBattleHelper.CreateUserChosenTargetHelper(
                             playerCruiserUserChosenTargetManager,

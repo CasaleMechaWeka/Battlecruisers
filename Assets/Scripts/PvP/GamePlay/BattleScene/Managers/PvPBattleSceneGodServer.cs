@@ -179,11 +179,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
 
-            playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerACruiserUserChosenTargetManager);
 
-            playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerBCruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 
@@ -303,11 +303,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             SynchedServerData.Instance.playerAScore.Value = dataProvider.GameModel.LifetimeDestructionScore;
             SynchedServerData.Instance.playerARating.Value = dataProvider.GameModel.BattleWinScore;
 
-            playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerACruiserUserChosenTargetManager);
 
-            playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            playerBCruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 

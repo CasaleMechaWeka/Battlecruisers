@@ -18,7 +18,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
         public event EventHandler UserChosenTargetChanged;
 
         public UserChosenTargetHelper(
-            IUserChosenTargetManager userChosenTargetManager, 
+            IUserChosenTargetManager userChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator)
         {
