@@ -8,6 +8,7 @@ using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// + Assumes all blocking targets will be in front of the parent unit
     /// (should hold true for ships :) ).
     /// </summary>
-    public class PvPShipBlockingEnemyProvider : PvPBroadcastingTargetProvider, ITargetConsumer
+    public class PvPShipBlockingEnemyProvider : BroadcastingTargetProvider, ITargetConsumer
     {
         private readonly ITargetProcessor _targetProcessor;
         private readonly ITargetFilter _isInFrontFilter;

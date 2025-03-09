@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Targets.TargetProviders;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     /// + Assumes not more than one friendly unit will be detected in front of the
     /// parent unit at a time (should hold true for ships :) ).
     /// </summary>
-    public class PvPShipBlockingFriendlyProvider : PvPBroadcastingTargetProvider
+    public class PvPShipBlockingFriendlyProvider : BroadcastingTargetProvider
     {
         private readonly ITargetFinder _friendFinder;
         private readonly ITargetFilter _isInFrontFilter;

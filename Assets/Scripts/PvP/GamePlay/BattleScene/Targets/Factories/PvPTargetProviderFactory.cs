@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public ITargetProvider CreateStaticTargetProvider(ITarget target)
         {
-            return new PvPStaticTargetProvider(target);
+            return new StaticTargetProvider(target);
         }
 
         public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IPvPUnit parentUnit)
