@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             PvPHelper.AssertIsNotNull(factoryProvider, cruiserSpecificFactories, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             ProcessorFactory = new PvPTargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
-            TrackerFactory = new PvPTargetTrackerFactory(userChosenTargetTracker);
+            TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
             DetectorFactory = new PvPTargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, factoryProvider.UpdaterProvider);
             ProviderFactory = new PvPTargetProviderFactory(cruiserSpecificFactories, factoryProvider.Targets);
         }

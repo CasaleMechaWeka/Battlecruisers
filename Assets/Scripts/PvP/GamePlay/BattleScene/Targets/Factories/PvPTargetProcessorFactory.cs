@@ -24,17 +24,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
             BomberTargetProcessor
                 = new PvPTargetProcessor(
-                    new PvPCompositeTracker(
+                    new CompositeTracker(
                         userChosenTargetTracker,
-                        new PvPRankedTargetTracker(
+                        new RankedTargetTracker(
                             globalTargetFinder,
                             new BomberTargetRanker())));
 
             OffensiveBuildableTargetProcessor
                 = new PvPTargetProcessor(
-                    new PvPCompositeTracker(
+                    new CompositeTracker(
                         userChosenTargetTracker,
-                        new PvPRankedTargetTracker(
+                        new RankedTargetTracker(
                             globalTargetFinder,
                             new OffensiveBuildableTargetRanker())));
 
