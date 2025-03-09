@@ -8,7 +8,8 @@ namespace BattleCruisers.Targets.Helpers
     {
         public bool IsInRange(ITransform parentTransform, ITarget target, float rangeInM)
         {
-            if (target == null || parentTransform == null) {//if either have been distoryed then it's not in range
+            if (target == null || parentTransform == null)
+            {//if either have been distoryed then it's not in range
                 return false;
             }
             float distanceCenterToCenter = Vector2.Distance(target.Position, parentTransform.Position);

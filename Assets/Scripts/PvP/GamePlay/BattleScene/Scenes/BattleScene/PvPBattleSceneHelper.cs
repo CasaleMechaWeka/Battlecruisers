@@ -3,7 +3,6 @@ using BattleCruisers.Data;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
