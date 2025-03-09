@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 
@@ -8,9 +7,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         public PvPTargetRankerFactory()
         {
-            EqualTargetRanker = new PvPEqualTargetRanker();
-            ShipTargetRanker = new PvPShipTargetRanker();
-            OffensiveBuildableTargetRanker = new PvPOffensiveBuildableTargetRanker();
+            EqualTargetRanker = new EqualTargetRanker();
+            ShipTargetRanker = new ShipTargetRanker();
+            OffensiveBuildableTargetRanker = new OffensiveBuildableTargetRanker();
         }
 
         public ITargetRanker EqualTargetRanker { get; }
@@ -19,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public ITargetRanker CreateBoostedRanker(ITargetRanker baseRanker, int rankBoost)
         {
-            return new PvPBoostedRanker(baseRanker, rankBoost);
+            return new BoostedRanker(baseRanker, rankBoost);
         }
     }
 }

@@ -2,11 +2,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                         userChosenTargetTracker,
                         new PvPRankedTargetTracker(
                             globalTargetFinder,
-                            new PvPBomberTargetRanker())));
+                            new BomberTargetRanker())));
 
             OffensiveBuildableTargetProcessor
                 = new PvPTargetProcessor(
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                         userChosenTargetTracker,
                         new PvPRankedTargetTracker(
                             globalTargetFinder,
-                            new PvPOffensiveBuildableTargetRanker())));
+                            new OffensiveBuildableTargetRanker())));
 
             globalTargetFinder.EmitCruiserAsGlobalTarget();
 
