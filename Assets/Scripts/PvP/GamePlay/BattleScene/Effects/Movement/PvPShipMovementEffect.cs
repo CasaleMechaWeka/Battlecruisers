@@ -1,6 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Movement
@@ -9,14 +8,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         private readonly IGameObject _gameObject;
         private readonly IAnimator _animator;
-        private readonly IPvPBroadcastingParticleSystem _particleSystem;
+        private readonly IBroadcastingParticleSystem _particleSystem;
 
         public const string MOVEMENT_ANIMATION_STATE = "MovementAnimation";
 
         public PvPShipMovementEffect(
             IGameObject gameObject,
             IAnimator animator,
-            IPvPBroadcastingParticleSystem particleSystem)
+            IBroadcastingParticleSystem particleSystem)
         {
             PvPHelper.AssertIsNotNull(gameObject, animator, particleSystem);
 

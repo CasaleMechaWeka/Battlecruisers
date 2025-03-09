@@ -1,4 +1,5 @@
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.ParticleSystems;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
@@ -7,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPParticleSystemGroup : IPvPParticleSystemGroup
     {
-        protected readonly IPvPBroadcastingParticleSystem[] _particleSystems;
+        protected readonly IBroadcastingParticleSystem[] _particleSystems;
         private readonly ISynchronizedParticleSystems[] _synchronizedSystems;
 
-        public PvPParticleSystemGroup(IPvPBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
+        public PvPParticleSystemGroup(IBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
         {
             Helper.AssertIsNotNull(particleSystems, synchronizedSystems);
             Assert.IsTrue(particleSystems.Length != 0);
@@ -28,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 system.ResetSeed();
             }
 
-            foreach (IPvPBroadcastingParticleSystem particleSystem in _particleSystems)
+            foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
             {
                 particleSystem.Play();
             }
@@ -37,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public async Task Stop()
         {
             await Task.Yield();
-            foreach (IPvPBroadcastingParticleSystem particleSystem in _particleSystems)
+            foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
             {
                 particleSystem.Stop();
             }

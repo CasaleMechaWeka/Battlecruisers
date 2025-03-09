@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -17,13 +18,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public event EventHandler Deactivated;
 
-        public PvPExplosion(IGameObject explosionController, IPvPBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
+        public PvPExplosion(IGameObject explosionController, IBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
             : base(particleSystems, synchronizedSystems)
         {
             Assert.IsNotNull(explosionController);
             _explosionController = explosionController;
 
-            foreach (IPvPBroadcastingParticleSystem particleSystem in _particleSystems)
+            foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
             {
                 particleSystem.Stopped += ParticleSystem_Stopped;
             }

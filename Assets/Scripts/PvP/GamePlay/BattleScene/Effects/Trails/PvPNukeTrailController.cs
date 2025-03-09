@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void Initialise()
         {
-            PvPHelper.AssertIsNotNull( fireExhaust, smoke, flame);
+            PvPHelper.AssertIsNotNull(fireExhaust, smoke, flame);
 
             _effects = new List<PvPBroadcastingParticleSystem>()
             {
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void ShowAllEffects()
         {
-            foreach (IPvPBroadcastingParticleSystem effect in _effects)
+            foreach (IBroadcastingParticleSystem effect in _effects)
             {
                 effect.Play();
             }
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void HideEffects()
         {
-            foreach (IPvPBroadcastingParticleSystem effect in _effects)
+            foreach (IBroadcastingParticleSystem effect in _effects)
             {
                 effect.Stop();
             }

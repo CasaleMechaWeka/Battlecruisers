@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
-    public class PvPBroadcastingParticleSystem : MonoBehaviour, IPvPBroadcastingParticleSystem
+    public class PvPBroadcastingParticleSystem : MonoBehaviour, IBroadcastingParticleSystem
     {
         private ParticleSystem _particleSystem;
 

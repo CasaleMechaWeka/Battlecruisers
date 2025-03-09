@@ -1,8 +1,9 @@
+using BattleCruisers.Effects.ParticleSystems;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
-    public class PvPDummyBroadcastingParticleSystem : IPvPBroadcastingParticleSystem
+    public class PvPDummyBroadcastingParticleSystem : IBroadcastingParticleSystem
     {
 #pragma warning disable 67  // Unused event
         public event EventHandler Stopped;

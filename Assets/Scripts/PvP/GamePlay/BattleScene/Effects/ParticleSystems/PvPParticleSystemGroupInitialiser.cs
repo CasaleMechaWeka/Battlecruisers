@@ -1,4 +1,5 @@
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using UnityEngine.Assertions;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                     GetSynchronizedSystems());
         }
 
-        protected virtual IPvPBroadcastingParticleSystem[] GetParticleSystems()
+        protected virtual IBroadcastingParticleSystem[] GetParticleSystems()
         {
             PvPBroadcastingParticleSystem[] particleSystems = GetComponentsInChildren<PvPBroadcastingParticleSystem>(includeInactive: true);
             Assert.IsTrue(particleSystems.Length != 0);
