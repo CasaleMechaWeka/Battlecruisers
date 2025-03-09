@@ -1,3 +1,4 @@
+using BattleCruisers.Effects;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -13,11 +14,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         public GameObject effects_parent;
         private PvPShipDeath shipDeath;
-        private PvPBroadcastingAnimationController sinkingAnimation;
+        private BroadcastingAnimationController sinkingAnimation;
         private IList<IParticleSystemGroup> effects;
         public IPoolable<Vector3> CreateShipDeath()
         {
-            PvPBroadcastingAnimationController sinkingAnimation = GetComponent<PvPBroadcastingAnimationController>();
+            BroadcastingAnimationController sinkingAnimation = GetComponent<BroadcastingAnimationController>();
             Assert.IsNotNull(sinkingAnimation);
 
             PvPParticleSystemGroupInitialiser[] particleSystemGroupInitialisers = GetComponentsInChildren<PvPParticleSystemGroupInitialiser>();
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             if (effects_parent == null)
                 effects_parent = transform.Find("Effects").gameObject;
-            sinkingAnimation = GetComponent<PvPBroadcastingAnimationController>();
+            sinkingAnimation = GetComponent<BroadcastingAnimationController>();
             Assert.IsNotNull(sinkingAnimation);
 
             PvPParticleSystemGroupInitialiser[] particleSystemGroupInitialisers = GetComponentsInChildren<PvPParticleSystemGroupInitialiser>();
