@@ -1,6 +1,5 @@
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using UnityEngine.Assertions;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public IParticleSystemGroup CreateParticleSystemGroup()
         {
             return
-                new PvPParticleSystemGroup(
+                new ParticleSystemGroup(
                     GetParticleSystems(),
                     GetSynchronizedSystems());
         }
@@ -32,9 +31,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         protected ISynchronizedParticleSystems[] GetSynchronizedSystems()
         {
-            PvPSynchronizedParticleSystemsController[] synchronizedSystems = GetComponentsInChildren<PvPSynchronizedParticleSystemsController>();
+            SynchronizedParticleSystemsController[] synchronizedSystems = GetComponentsInChildren<SynchronizedParticleSystemsController>();
 
-            foreach (PvPSynchronizedParticleSystemsController system in synchronizedSystems)
+            foreach (SynchronizedParticleSystemsController system in synchronizedSystems)
             {
                 system.Initialise();
             }

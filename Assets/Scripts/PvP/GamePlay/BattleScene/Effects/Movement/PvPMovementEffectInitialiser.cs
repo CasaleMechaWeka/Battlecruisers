@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 = new PvPShipMovementEffect(
                     new GameObjectBC(gameObject),
                     new PvPAnimatorBC(animator),
-                    (IBroadcastingParticleSystem)particleSystem ?? new PvPDummyBroadcastingParticleSystem());
+                    (IBroadcastingParticleSystem)particleSystem ?? new DummyBroadcastingParticleSystem());
 
             shipMovementEffect.ResetAndHide();
             return shipMovementEffect;
