@@ -1,0 +1,369 @@
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
+using System;
+using System.Runtime.Serialization;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Data.Models
+{
+    // Serialise settings instead of using UnityEngine.PlayerPrefs, so that
+    // settings can be cloud synced via steam.
+    [Serializable]
+    public class SettingsModel : ISettingsModel
+    {
+        private const int DEFAULT_ZOOM_SPEED_LEVEL = 7;
+        public const int MIN_ZOOM_SPEED_LEVEL = 2;
+        public const int MAX_ZOOM_SPEED_LEVEL = 9;
+
+        public const int DEFAULT_SCROLL_SPEED_LEVEL = 7;
+        public const int MIN_SCROLL_SPEED_LEVEL = 2;
+        public const int MAX_SCROLL_SPEED_LEVEL = 9;
+
+        public const float DEFAULT_VOLUME = .5f;
+        public const float DEFAULT_VOLUME_MUSIC = 1f;
+        public const float MIN_VOLUME = 0;
+        public const float MAX_VOLUME = 1;
+
+        [SerializeField]
+        private int _version;
+        public int Version
+        {
+            get => _version;
+            set => _version = value;
+        }
+
+        public class ModelVersion
+        {
+            public const int PreMusicVolume = 0;
+            public const int WithMusicVolume = 1;
+            public const int RemovedEasyDifficulty = 2;
+        }
+
+        [SerializeField]
+        private Difficulty _aiDifficulty;
+        public Difficulty AIDifficulty
+        {
+            get => _aiDifficulty;
+            set => _aiDifficulty = value;
+        }
+
+        [SerializeField]
+        private int _zoomSpeedLevel;
+        public int ZoomSpeedLevel
+        {
+            get => _zoomSpeedLevel;
+            set
+            {
+                Assert.IsTrue(value >= MIN_ZOOM_SPEED_LEVEL);
+                Assert.IsTrue(value <= MAX_ZOOM_SPEED_LEVEL);
+                _zoomSpeedLevel = value;
+            }
+        }
+
+        [SerializeField]
+        private int _scrollSpeedLevel;
+        public int ScrollSpeedLevel
+        {
+            get => _scrollSpeedLevel;
+            set
+            {
+                Assert.IsTrue(value >= MIN_SCROLL_SPEED_LEVEL);
+                Assert.IsTrue(value <= MAX_SCROLL_SPEED_LEVEL);
+                _scrollSpeedLevel = value;
+            }
+        }
+
+        [SerializeField]
+        private float _masterVolume;
+        public float MasterVolume
+        {
+            get => _masterVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _masterVolume = value;
+            }
+        }
+
+        [SerializeField]
+        private float _musicVolume;
+        public float MusicVolume
+        {
+            get => _musicVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _musicVolume = value;
+            }
+        }
+
+        [SerializeField]
+        private float _effectVolume;
+        public float EffectVolume
+        {
+            get => _effectVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _effectVolume = value;
+            }
+        }
+
+        [SerializeField]
+        private float _alertVolume;
+        public float AlertVolume
+        {
+            get => _alertVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _alertVolume = value;
+            }
+        }
+
+        [SerializeField]
+        private float _interfaceVolume;
+        public float InterfaceVolume
+        {
+            get => _interfaceVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _interfaceVolume = value;
+            }
+        }
+
+        [SerializeField]
+        private float _ambientVolume;
+        public float AmbientVolume
+        {
+            get => _ambientVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _ambientVolume = value;
+            }
+        }
+
+        [SerializeField]
+        private string _language;
+        public string Language
+        {
+            get => _language;
+            set
+            {
+                _language = value;
+            }
+        }
+
+        [SerializeField]
+        private bool _showInGameHints;
+        public bool ShowInGameHints
+        {
+            get => _showInGameHints;
+            set => _showInGameHints = value;
+        }
+
+        [SerializeField]
+        private bool _showToolTips;
+        public bool ShowToolTips
+        {
+            get => _showToolTips;
+            set => _showToolTips = value;
+        }
+
+        [SerializeField]
+        private bool _altDroneSounds;
+        public bool AltDroneSounds
+        {
+            get => _altDroneSounds;
+            set => _altDroneSounds = value;
+        }
+
+        [SerializeField]
+        private bool _showAds;
+        public bool ShowAds
+        {
+            get => _showAds;
+            set => _showAds = value;
+        }
+
+        [SerializeField]
+        private bool _turboMode;
+        public bool TurboMode
+        {
+            get => _turboMode;
+            set => _turboMode = value;
+        }
+
+        [SerializeField]
+        private bool _richMode;
+        public bool RichMode
+        {
+            get => _richMode;
+            set => _richMode = value;
+        }
+
+        [SerializeField]
+        private bool _hecklesAllowed;
+        public bool HecklesAllowed
+        {
+            get => _hecklesAllowed;
+            set => _hecklesAllowed = value;
+        }
+
+        private bool _cloudSaveDisabled;
+        public bool CloudSaveDisabled
+        {
+            get => _cloudSaveDisabled;
+            set => _cloudSaveDisabled = value;
+        }
+
+        [SerializeField]
+        private bool _VSync;
+        public bool VSync
+        {
+            get => _VSync;
+            set => _VSync = value;
+        }
+
+        [SerializeField]
+        private bool _fullScreen;
+        public bool FullScreen
+        {
+            get => _fullScreen;
+            set => _fullScreen = value;
+        }
+
+        public Vector2 Resolution
+        {
+            get => new Vector2(_resolutionWidth, _resolutionHeight);
+            set
+            {
+                _resolutionWidth = (int)value.x;
+                _resolutionHeight = (int)value.y;
+            }
+
+        }
+
+        [SerializeField]
+        private int _resolutionWidth;
+        public int ResolutionWidth
+        {
+            get => _resolutionWidth;
+            set => _resolutionWidth = value;
+        }
+
+        [SerializeField]
+        private int _resolutionHeight;
+        public int ResolutionHeight
+        {
+            get => _resolutionHeight;
+            set => _resolutionHeight = value;
+        }
+
+        [SerializeField]
+        private bool _initialisedGraphics;
+        public bool InitialisedGraphics
+        {
+            get => _initialisedGraphics;
+            set => _initialisedGraphics = value;
+        }
+
+        public SettingsModel()
+        {
+            AIDifficulty = Difficulty.Hard;
+            ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
+            ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
+            EffectVolume = DEFAULT_VOLUME;
+            AmbientVolume = DEFAULT_VOLUME;
+            AlertVolume = DEFAULT_VOLUME;
+            InterfaceVolume = DEFAULT_VOLUME;
+            MusicVolume = DEFAULT_VOLUME_MUSIC;
+
+            MasterVolume = 0.5f;
+            ShowInGameHints = true;
+            ShowToolTips = true;
+            ShowAds = false;
+            TurboMode = false;
+            RichMode = false;
+            HecklesAllowed = true;
+            CloudSaveDisabled = false;
+
+            AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
+            InitialiseGraphicsSettings();
+
+            //Debug.Log(Application.systemLanguage);
+
+        }
+
+        public void InitialiseGraphicsSettings()
+        {
+            VSync = false;
+            FullScreen = true;
+            if (Screen.currentResolution.width < 600)
+            {
+                Screen.SetResolution(600, 400, FullScreenMode.Windowed);
+                FullScreen = false;
+            }
+            Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
+            _initialisedGraphics = true;
+        }
+
+        private void CheckVolumeValue(float volume)
+        {
+            Assert.IsTrue(volume >= MIN_VOLUME);
+            Assert.IsTrue(volume <= MAX_VOLUME);
+        }
+
+        [OnDeserialized()]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            // For backwards compatability, when this class did not have these fields
+            if (_version == ModelVersion.PreMusicVolume)
+            {
+                //_musicVolume = DEFAULT_VOLUME;
+                //_effectVolume = DEFAULT_VOLUME;
+
+                _version = ModelVersion.WithMusicVolume;
+            }
+            else if (_version == ModelVersion.WithMusicVolume)
+            {
+                if (_aiDifficulty == Difficulty.Easy)
+                {
+                    _aiDifficulty = Difficulty.Normal;
+                }
+
+                _version = ModelVersion.RemovedEasyDifficulty;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            SettingsModel other = obj as SettingsModel;
+
+            return
+                other != null
+                && AIDifficulty == other.AIDifficulty
+                && ScrollSpeedLevel == other.ScrollSpeedLevel
+                && ZoomSpeedLevel == other.ZoomSpeedLevel
+                && ShowInGameHints == other.ShowInGameHints
+                && MasterVolume == other.MasterVolume
+                && EffectVolume == other.EffectVolume
+                && AmbientVolume == other.AmbientVolume
+                && AlertVolume == other.AlertVolume
+                && InterfaceVolume == other.InterfaceVolume
+                && MusicVolume == other.MusicVolume
+                && ShowToolTips == other.ShowToolTips
+                && HecklesAllowed == other.HecklesAllowed;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode
+                (AIDifficulty, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel,
+                MasterVolume, EffectVolume, AmbientVolume, AlertVolume, InterfaceVolume, MusicVolume, ShowToolTips, HecklesAllowed);
+        }
+    }
+}

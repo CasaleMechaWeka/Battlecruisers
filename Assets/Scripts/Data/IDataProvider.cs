@@ -1,0 +1,66 @@
+﻿using System.Collections.Generic;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using System.Threading.Tasks;
+using Unity.Services.Economy.Model;
+
+namespace BattleCruisers.Data
+{
+    public interface IDataProvider
+    {
+        // Local Saving:
+        IList<ILevel> Levels { get; }
+        IList<ISideQuestData> SideQuests { get; }
+        IGameModel GameModel { get; }
+        ILockedInformation LockedInfo { get; }
+        IStaticData StaticData { get; }
+        ISettingsManager SettingsManager { get; }
+
+        List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
+        public VirtualShopConfig virtualShopConfig { get; set; }
+        /*       public PvPConfig pvpConfig { get; set; }*/
+        public bool pvpServerAvailable { get; set; }
+        Task RefreshEconomyConfiguration();
+        string GetPVPVersion();
+        ILevel GetLevel(int levelNum);
+        ISideQuestData GetSideQuest(int sideQuestID);
+        IPvPLevel GetPvPLevel(Map map);
+        void SaveGame();
+
+        /// <summary>
+        /// Deletes the saved game and resets all settings to their default values.
+        /// Designed for user playtests, so users can start with a clean slate.
+        /// </summary>
+        void Reset();
+        /*        Task<int> GetCaptainCost(int index);
+                Task<int> GetHeckleCost(int index);*/
+        // Cloud Saving:
+        Task CloudSave();
+        Task CloudLoad();
+        Task ApplyRemoteConfig();
+        Task<bool> SyncCurrencyFromCloud();
+        Task<bool> SyncInventoryFromCloud();
+        Task<bool> SyncCoinsToCloud();
+        Task<bool> SyncCreditsToCloud();
+        bool RefreshPVPServerStatus();
+        Task SyncItemsCost();
+        Task SyncItemsCostV2();
+        Task SyncHecklesCost();
+        Task ProcessOfflineTransactions();
+        Task<bool> PurchaseCaptain(int index);
+        Task<bool> PurchaseCaptainV2(int index);
+        Task<bool> PurchaseHeckle(int index);
+        Task<bool> PurchaseHeckleV2(int index);
+        Task<bool> PurchaseBodykit(int index);
+        Task<bool> PurchaseBodykitV2(int index);
+        Task<bool> PurchaseVariant(int index);
+
+        /*        Task<bool> PurchaseIAP(string purchaseId);*/
+
+        /*        Task RefreshEconomyConfiguration();
+                Task FetchConfigs();*/
+    }
+}

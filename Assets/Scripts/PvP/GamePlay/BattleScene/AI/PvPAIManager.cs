@@ -1,0 +1,97 @@
+using BattleCruisers.AI;
+using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.AI.Tasks;
+using BattleCruisers.AI.TaskProducers.SlotNumber;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Drones.BuildingMonitors;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatMonitors;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
+using BattleCruisers.AI.ThreatMonitors;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
+{
+    public class PvPAIManager : IPvPAIManager
+    {
+        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly IDataProvider _dataProvider;
+        private readonly IDeferrer _deferrer;
+        private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
+        private readonly IThreatMonitorFactory _threatMonitorFactory;
+        private readonly IManagedDisposableFactory _factoryManagerFactory;
+        private readonly IPvPBuildOrderFactory _buildOrderFactory;
+        private readonly IPvPFactoryMonitorFactory _factoryMonitorFactory;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
+
+        public PvPAIManager(
+            IPvPPrefabFactory prefabFactory,
+            IDataProvider dataProvider,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel,
+            IDeferrer deferrer,
+            PvPCruiser playerCruiser,
+            IPvPStrategyFactory strategyFactory)
+        {
+            PvPHelper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser, strategyFactory, battleSceneGodTunnel);
+
+            _prefabFactory = prefabFactory;
+            _dataProvider = dataProvider;
+            _deferrer = deferrer;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
+
+            _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
+            _threatMonitorFactory = new PvPThreatMonitorFactory(playerCruiser, PvPTimeBC.Instance, deferrer);
+            _factoryManagerFactory = new PvPFactoryManagerFactory(_battleSceneGodTunnel, _prefabFactory, _threatMonitorFactory);
+
+            ISlotAssigner slotAssigner = new PvPSlotAssigner();
+            _buildOrderFactory = new PvPBuildOrderFactory(slotAssigner, _dataProvider.StaticData, _battleSceneGodTunnel, strategyFactory);
+
+            _factoryMonitorFactory = new PvPFactoryMonitorFactory(RandomGenerator.Instance);
+        }
+
+        public IArtificialIntelligence CreateAI(IPvPLevelInfo levelInfo, Difficulty difficulty)
+        {
+            // Manage AI unit factories (needs to be before the AI strategy is created,
+            // otherwise miss started construction event for first building :) )
+            _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.AICruiser);
+            _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
+
+            ITaskFactory taskFactory = new PvPTaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
+            IPvPTaskProducerFactory taskProducerFactory
+                = new PvPTaskProducerFactory(
+                    levelInfo.AICruiser,
+                    _prefabFactory,
+                    taskFactory,
+                    _slotNumCalculatorFactory,
+                    _dataProvider.StaticData,
+                    _threatMonitorFactory);
+            IPvPAIFactory aiFactory = new PvPAIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
+
+            if (IsAdaptiveAI(difficulty))
+            {
+                return aiFactory.CreateAdaptiveAI(levelInfo);
+            }
+            else
+            {
+                return aiFactory.CreateBasicAI(levelInfo);
+            }
+        }
+
+        private bool IsAdaptiveAI(Difficulty difficulty)
+        {
+            return
+                difficulty == Difficulty.Hard
+                || difficulty == Difficulty.Harder
+                || difficulty == Difficulty.Normal;//add this condition 
+        }
+    }
+}

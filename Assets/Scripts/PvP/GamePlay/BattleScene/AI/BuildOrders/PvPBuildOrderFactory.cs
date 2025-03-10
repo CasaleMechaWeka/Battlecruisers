@@ -1,0 +1,303 @@
+using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.Strategies.Requests;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys.Wrappers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.BuildOrders
+{
+    public class PvPBuildOrderFactory : IPvPBuildOrderFactory
+    {
+        private readonly ISlotAssigner _slotAssigner;
+        private readonly IStaticData _staticData;
+        //private readonly IGameModel _gameModel;
+        private readonly IPvPStrategyFactory _strategyFactory;
+
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
+
+        private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
+        // For spy satellite launcher
+        private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
+        //---> CODE BY ANUJ
+        private const int NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE = 1;
+        //<---
+
+        public PvPBuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPStrategyFactory strategyFactory)
+        {
+            PvPHelper.AssertIsNotNull(slotAssigner, staticData, battleSceneGodTunnel, strategyFactory);
+
+            _slotAssigner = slotAssigner;
+            _staticData = staticData;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
+            _strategyFactory = strategyFactory;
+        }
+
+        /// <summary>
+        /// Gets the basic build order, which contains counters to threats.
+        /// </summary>
+        public IPvPDynamicBuildOrder CreateBasicBuildOrder(IPvPLevelInfo levelInfo)
+        {
+            IPvPStrategy strategy = _strategyFactory.GetBasicStrategy();
+            return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
+        }
+
+        /// <summary>
+        /// Build orders do NOT contain counters to threats.  These counters
+        /// get created on the fly in response to threats.
+        /// </summary>
+        public IPvPDynamicBuildOrder CreateAdaptiveBuildOrder(IPvPLevelInfo levelInfo)
+        {
+            IPvPStrategy strategy = _strategyFactory.GetAdaptiveStrategy();
+            return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
+        }
+
+        private IPvPDynamicBuildOrder GetBuildOrder(IPvPStrategy strategy, IPvPLevelInfo levelInfo, bool hasDefensivePlaceholders)
+        {
+            // Create offensive build order
+            //---> CODE BY ANUJ
+            int numOfOffensiveSlots = FindNumOfOffensiveSlots(levelInfo);
+            //<---
+            //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
+            //IPvPDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfPlatformSlots, levelInfo);
+
+            IPvPDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
+
+            // Create defensive build orders (only for basic AI)
+            IPvPDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
+            IPvPDynamicBuildOrder antiNavalBuildOrder = hasDefensivePlaceholders ? CreateAntiNavalBuildOrder(levelInfo) : null;
+
+            IPvPBuildOrders buildOrders = new PvPBuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
+
+            IList<IPvPPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
+
+            foreach (IPvPPrefabKeyWrapper keyWrapper in baseBuildOrder)
+            {
+                keyWrapper.Initialise(buildOrders);
+            }
+
+            return new PvPStrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);
+        }
+
+        //---> CODE BY ANUJ
+        // TODO: Find a better class to move this to. Make the method public to add unit test!
+        private int FindNumOfOffensiveSlots(IPvPLevelInfo levelInfo)
+        {
+            // Reserve 2 mast slots for a stealth gen and teslacoil.
+            int numOfMastSlotsToReserve = 2;
+
+            IPvPSlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
+            int numOfOffensiveSlots = slotAccessor.GetSlotCount(SlotType.Platform);
+
+            if (levelInfo.HasMastOffensive())
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Mast) - numOfMastSlotsToReserve;
+            }
+
+            if (levelInfo.HasBowOffensive())
+            {
+                numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Bow);
+            }
+
+            return numOfOffensiveSlots;
+        }
+        //<---
+
+        /// <summary>
+        /// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
+        /// IEnumerable from a LINQ Select query, but every time I looped through this
+        /// IEnumerable I would get a fresh copy of the object, so any changes I made to
+        /// those objects were lost!!!
+        /// </summary>
+        private IPvPDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots, IPvPLevelInfo levelInfo)
+        {
+            AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
+
+            // Create individual build orders
+            IList<IPvPDynamicBuildOrder> buildOrders = new List<IPvPDynamicBuildOrder>();
+            foreach (IOffensiveRequest request in requests)
+            {
+                buildOrders.Add(CreateBuildOrder(request, levelInfo));
+            }
+
+            // Create combined build order
+            return new PvPCombinedBuildOrders(buildOrders);
+        }
+
+        private void AssignSlots(ISlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
+        {
+            // Should have a single naval request at most
+            IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
+            if (navalRequest != null)
+            {
+                navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
+            }
+
+            //---> CODE BY ANUJ
+            // Should have a single air request at most
+            IOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Air);
+            if (airRequest != null)
+            {
+                airRequest.NumOfSlotsToUse = NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE;
+            }
+            //<---
+
+            // All non-naval requests (offensives or non-banned ultras) require platform slots, 
+            // so need to split the available platform slots between these requests.
+
+            //---> CODE CHANGED BY ANUJ
+            IEnumerable<IOffensiveRequest> platformRequests = requests.Where
+                (request => request.Type != OffensiveType.Naval && request.Type != OffensiveType.Air);
+            //<---
+            slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
+        }
+
+        private IPvPDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request, IPvPLevelInfo levelInfo)
+        {
+            //Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
+
+            switch (request.Type)
+            {
+                case OffensiveType.Air:
+                    return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPAirFactory, request.NumOfSlotsToUse);
+
+                case OffensiveType.Naval:
+                    return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPNavalFactory, request.NumOfSlotsToUse);
+
+                case OffensiveType.Buildings:
+                    return CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
+
+                case OffensiveType.Ultras:
+                    return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, convertPvEBuildingKey2PvPBuildingKey(_staticData.AIBannedUltrakeys));
+
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        private IList<PvPBuildingKey> convertPvEBuildingKey2PvPBuildingKey(IList<BuildingKey> keys)
+        {
+            IList<PvPBuildingKey> iPvPKeys = new List<PvPBuildingKey>();
+            foreach (BuildingKey key in keys)
+            {
+                iPvPKeys.Add(new PvPBuildingKey(convertPvEBuildingCategory2PvPBuildingCategory(key.BuildingCategory), "PvP" + key.PrefabName));
+            }
+
+            return iPvPKeys;
+        }
+
+        private BuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
+        {
+            switch (category)
+            {
+                case BuildingCategory.Ultra:
+                    return BuildingCategory.Ultra;
+                case BuildingCategory.Tactical:
+                    return BuildingCategory.Tactical;
+                case BuildingCategory.Factory:
+                    return BuildingCategory.Factory;
+                case BuildingCategory.Offence:
+                    return BuildingCategory.Offence;
+                case BuildingCategory.Defence:
+                    return BuildingCategory.Defence;
+                default:
+                    throw new System.Exception();
+            }
+        }
+        private BuildingCategory convertPvPBuildingCategory2PvEBuildingCategory(BuildingCategory category)
+        {
+            switch (category)
+            {
+                case BuildingCategory.Ultra:
+                    return BuildingCategory.Ultra;
+                case BuildingCategory.Tactical:
+                    return BuildingCategory.Tactical;
+                case BuildingCategory.Factory:
+                    return BuildingCategory.Factory;
+                case BuildingCategory.Offence:
+                    return BuildingCategory.Offence;
+                case BuildingCategory.Defence:
+                    return BuildingCategory.Defence;
+                default:
+                    throw new System.Exception();
+            }
+        }
+
+        public IPvPDynamicBuildOrder CreateAntiAirBuildOrder(IPvPLevelInfo levelInfo)
+        {
+            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
+            int numOfSlotsToUse = PvPHelper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
+
+            return
+                new PvPAntiUnitBuildOrder(
+                    basicDefenceKey: PvPStaticPrefabKeys.PvPBuildings.PvPAntiAirTurret,
+                    advancedDefenceKey: PvPStaticPrefabKeys.PvPBuildings.PvPSamSite,
+                    levelInfo: levelInfo,
+                    numOfSlotsToUse: numOfSlotsToUse);
+        }
+
+        public IPvPDynamicBuildOrder CreateAntiNavalBuildOrder(IPvPLevelInfo levelInfo)
+        {
+            int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
+            int numOfSlotsToUse = PvPHelper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
+
+            return
+                new PvPAntiUnitBuildOrder(
+                    basicDefenceKey: PvPStaticPrefabKeys.PvPBuildings.PvPAntiShipTurret,
+                    advancedDefenceKey: PvPStaticPrefabKeys.PvPBuildings.PvPMortar,
+                    levelInfo: levelInfo,
+                    numOfSlotsToUse: numOfSlotsToUse);
+        }
+
+        public bool IsAntiRocketBuildOrderAvailable(IPvPLevelInfo levelInfo)
+        {
+            return levelInfo.AICruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.IsBuildingUnlocked_LeftPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil) : _battleSceneGodTunnel.IsBuildingUnlocked_RightPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil);
+        }
+
+        public IPvPDynamicBuildOrder CreateAntiRocketBuildOrder()
+        {
+            return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil, size: 1);
+        }
+
+        public bool IsAntiStealthBuildOrderAvailable(IPvPLevelInfo levelInfo)
+        {
+            return levelInfo.AICruiser.Faction == Faction.Blues ? _battleSceneGodTunnel.IsBuildingUnlocked_LeftPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher) : _battleSceneGodTunnel.IsBuildingUnlocked_RightPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher);
+        }
+
+        public IPvPDynamicBuildOrder CreateAntiStealthBuildOrder()
+        {
+            return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher, size: 1);
+        }
+
+        private IPvPDynamicBuildOrder CreateStaticBuildOrder(PvPBuildingKey buildingKey, int size)
+        {
+            return
+                new PvPFiniteBuildOrder(
+                    new PvPInfiniteStaticBuildOrder(buildingKey),
+                    size);
+        }
+
+        private IPvPDynamicBuildOrder CreateDynamicBuildOrder(
+            BuildingCategory buildingCategory,
+            int size,
+            IPvPLevelInfo levelInfo,
+            IList<PvPBuildingKey> bannedBuildings = null)
+        {
+            return
+                new PvPFiniteBuildOrder(
+                    new PvPInfiniteBuildOrder(buildingCategory, levelInfo, bannedBuildings),
+                    size);
+        }
+    }
+}

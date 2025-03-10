@@ -1,0 +1,153 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Effects.Deaths;
+using BattleCruisers.Effects.Drones;
+using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Threading;
+using UnityEngine;
+using UnityEngine.Assertions;
+using Object = UnityEngine.Object;
+
+namespace BattleCruisers.Utils.Fetchers
+{
+    public class PrefabFactory : IPrefabFactory
+    {
+        private readonly IPrefabCache _prefabCache;
+        private readonly ISettingsManager _settingsManager;
+        private readonly ILocTable _commonStrings;
+
+        public PrefabFactory(IPrefabCache prefabCache, ISettingsManager settingsManager, ILocTable commonStrings)
+        {
+            Helper.AssertIsNotNull(prefabCache, settingsManager, commonStrings);
+
+            _prefabCache = prefabCache;
+            _settingsManager = settingsManager;
+            _commonStrings = commonStrings;
+        }
+
+        public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
+        {
+            return _prefabCache.GetBuilding(buildingKey);
+        }
+
+        public IBuilding CreateBuilding(
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab,
+            IUIManager uiManager,
+            IFactoryProvider factoryProvider)
+        {
+            return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager, factoryProvider);
+        }
+
+        public IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
+        {
+            return _prefabCache.GetUnit(unitKey);
+        }
+
+        public IUnit CreateUnit(
+            IBuildableWrapper<IUnit> unitWrapperPrefab,
+            IUIManager uiManager,
+            IFactoryProvider factoryProvider)
+        {
+            return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager, factoryProvider);
+        }
+
+        private TBuildable CreateBuildable<TBuildable>(
+            BuildableWrapper<TBuildable> buildableWrapperPrefab,
+            IUIManager uiManager,
+            IFactoryProvider factoryProvider) where TBuildable : class, IBuildable
+        {
+            Helper.AssertIsNotNull(buildableWrapperPrefab, uiManager, factoryProvider);
+
+            BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
+            buildableWrapper.gameObject.SetActive(true);
+            buildableWrapper.StaticInitialise(_commonStrings);
+            buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
+
+            Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
+            return buildableWrapper.Buildable;
+        }
+
+        public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
+        {
+            return _prefabCache.GetCruiser(hullKey);
+        }
+
+        public Cruiser CreateCruiser(Cruiser cruiserPrefab)
+        {
+            Cruiser cruiser = Object.Instantiate(cruiserPrefab);
+            cruiser.StaticInitialise(_commonStrings);
+            return cruiser;
+        }
+
+        public IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey)
+        {
+            ExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
+            ExplosionController newExplosion = Object.Instantiate(explosionPrefab);
+            return newExplosion.Initialise();
+        }
+
+        public IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey)
+        {
+            ShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
+            ShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
+            return newShipDeath.CreateShipDeath();
+        }
+
+        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+            where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
+            where TActiavtionArgs : ProjectileActivationArgs<TStats>
+            where TStats : IProjectileStats
+        {
+            Assert.IsNotNull(factoryProvider);
+
+            TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
+            TProjectile projectile = Object.Instantiate(prefab);
+            projectile.Initialise(_commonStrings, factoryProvider);
+            return projectile;
+        }
+
+        public IDroneController CreateDrone()
+        {
+            DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
+            newDrone.StaticInitialise(_commonStrings);
+            return newDrone;
+        }
+
+        public IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
+        {
+            Assert.IsNotNull(realTimeDeferrer);
+
+            AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
+            return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+        }
+
+        public CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
+        {
+            return _prefabCache.GetCaptainExo(captainExoKey);
+        }
+
+        public Bodykit GetBodykit(IPrefabKey bodykitKey)
+        {
+            return _prefabCache.GetBodykit(bodykitKey);
+        }
+
+        public VariantPrefab GetVariant(IPrefabKey variantKey)
+        {
+            return _prefabCache.GetVariant(variantKey);
+        }
+    }
+}
