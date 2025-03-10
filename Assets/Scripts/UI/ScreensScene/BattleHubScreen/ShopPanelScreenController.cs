@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Unity.Services.Core;
 using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections;
+using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -43,6 +44,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private List<int> exoBaseList;
         private List<CaptainExo> captains = new List<CaptainExo>();
 
+        private VariantOrganizer _variantOrganizer;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -56,6 +59,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
+
+            _variantOrganizer = new VariantOrganizer(dataProvider, prefabFactory);
 
             //Initialise each button with its function
             backButton.Initialise(_soundPlayer, GoHome, this);
@@ -586,28 +591,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         List<int> VariantsForOwnedItems()
         {
-            List<int> variantsList = new List<int>();
-            IList<BuildingKey> buildingKeys = _dataProvider.GameModel.UnlockedBuildings;
-            IList<UnitKey> unitKeys = _dataProvider.GameModel.UnlockedUnits;
-            List<string> buildablePrefabNames = new List<string>();
-
-            for (int i = 0; i < buildingKeys.Count; i++)
-                buildablePrefabNames.Add(buildingKeys[i].PrefabName);
-
-            for (int i = 0; i < unitKeys.Count; i++)
-                buildablePrefabNames.Add(unitKeys[i].PrefabName);
-
-
-            for (int i = 0; i < _dataProvider.StaticData.Variants.Count; i++)
-            {
-                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
-
-                for (int j = 0; j < buildablePrefabNames.Count; j++)
-                    if (variant.parent.ToString() == buildablePrefabNames[j])
-                        variantsList.Add(variant.variantIndex);
-            }
-
-            return variantsList;
+            return _variantOrganizer.GetOrganizedVariants();
         }
 
         List<int> GenerateFullList(int elements)
