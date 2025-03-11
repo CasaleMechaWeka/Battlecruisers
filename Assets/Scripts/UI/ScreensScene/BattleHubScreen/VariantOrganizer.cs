@@ -1,6 +1,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
@@ -23,16 +24,48 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             var variants = new List<int>();
             
-            // First Aircraft
-            AddVariantsForCategory(variants, UnitCategory.Aircraft);
+            // First add Building variants
+            // Factory buildings
+            AddVariantsForBuildingCategory(variants, BuildingCategory.Factory);
             
-            // Then Naval
-            AddVariantsForCategory(variants, UnitCategory.Naval);
+            // Tactical buildings
+            AddVariantsForBuildingCategory(variants, BuildingCategory.Tactical);
+            
+            // Defence buildings
+            AddVariantsForBuildingCategory(variants, BuildingCategory.Defence);
+            
+            // Offence buildings
+            AddVariantsForBuildingCategory(variants, BuildingCategory.Offence);
+            
+            // Ultra buildings
+            AddVariantsForBuildingCategory(variants, BuildingCategory.Ultra);
+            
+            // Then add Unit variants
+            // Aircraft units
+            AddVariantsForUnitCategory(variants, UnitCategory.Aircraft);
+            
+            // Naval units
+            AddVariantsForUnitCategory(variants, UnitCategory.Naval);
 
             return variants;
         }
 
-        private void AddVariantsForCategory(List<int> variants, UnitCategory category)
+        private void AddVariantsForBuildingCategory(List<int> variants, BuildingCategory category)
+        {
+            // Get buildings in this category in their unlock order
+            var buildingsInCategory = _dataProvider.GameModel.UnlockedBuildings
+                .Where(b => b.BuildingCategory == category)
+                .OrderBy(b => _dataProvider.StaticData.BuildingUnlockLevel(b));
+
+            // Add variants for each building
+            foreach (var building in buildingsInCategory)
+            {
+                var buildingVariants = GetVariantsForBuilding(building);
+                variants.AddRange(buildingVariants);
+            }
+        }
+
+        private void AddVariantsForUnitCategory(List<int> variants, UnitCategory category)
         {
             // Get units in this category in their unlock order
             var unitsInCategory = _dataProvider.GameModel.UnlockedUnits
@@ -45,6 +78,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 var unitVariants = GetVariantsForUnit(unit);
                 variants.AddRange(unitVariants);
             }
+        }
+
+        private List<int> GetVariantsForBuilding(BuildingKey building)
+        {
+            return _dataProvider.StaticData.Variants
+                .Where(v => {
+                    var variant = _prefabFactory.GetVariant(
+                        StaticPrefabKeys.Variants.GetVariantKey(v.Index));
+                    return variant.parent.ToString() == building.PrefabName;
+                })
+                .Select(v => v.Index)
+                .ToList();
         }
 
         private List<int> GetVariantsForUnit(UnitKey unit)
