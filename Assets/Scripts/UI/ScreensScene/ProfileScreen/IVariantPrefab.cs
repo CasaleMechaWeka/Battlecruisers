@@ -29,8 +29,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         LocalBooster = 0203,
         ControlTower = 0204,
         GrapheneBarrier = 0205,
-        GlobeShield = 0206,
-        Sledgehammer = 0207,
 
         AntiShipTurret = 0300,
         AntiAirTurret = 0301,
