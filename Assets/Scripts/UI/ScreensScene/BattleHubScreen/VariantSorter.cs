@@ -11,7 +11,7 @@ using System.Text;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
-    // Advanced variant organizer that sorts units by category and type.
+    // Organizes unit variants into a consistent display order.
     // - Groups variants by their parent unit
     // - Sorts groups by category (Buildings -> Aircraft -> Naval)
     // - Orders variants within groups by their type (QuickBuild, RapidFire, etc.)
@@ -64,6 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                 CacheVariantParents(allVariants);
                 
+                // Log how many variants we found before categorizing
                 Debug.Log($"[VariantSorter] Found {allVariants.Count} total variants");
                 
                 var uncachedVariants = allVariants.Where(v => !_variantParentCache.ContainsKey(v.Index)).ToList();
@@ -80,6 +81,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     .ToList();
 
                 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+                // Debug logging only - this block is completely removed in production
                 var parentCounts = result.GroupBy(v => _variantParentCache[v])
                     .OrderBy(g => g.Key)
                     .ToDictionary(g => g.Key, g => g.Count());
@@ -94,6 +96,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 Debug.Log(sb.ToString());
                 #endif
 
+                // If we lost variants in the process, log a warning
                 if (result.Count < allVariants.Count - uncachedVariants.Count)
                 {
                     Debug.LogWarning($"[VariantSorter] Lost {allVariants.Count - uncachedVariants.Count - result.Count} variants during organization");
@@ -104,6 +107,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             catch (System.Exception e)
             {
                 Debug.LogError($"[VariantSorter] Critical error: {e}");
+                // Instead of returning empty, return all valid variant indices we can find
                 return _dataProvider.StaticData.Variants?
                     .Where(v => v != null)
                     .Select(v => v.Index)
@@ -148,6 +152,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
         }
 
+        // Categorizes variants into building, aircraft, and naval groups.
+        // Within each category, variants are grouped by parent unit and sorted by type.
         private (List<int> building, List<int> aircraft, List<int> naval) CategorizeVariants(
             IReadOnlyList<VariantData> allVariants)
         {
@@ -158,17 +164,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             try 
             {
+                // Group variants by parent and category
                 var variantGroups = allVariants
                     .Where(v => _variantParentCache.ContainsKey(v.Index))
                     .GroupBy(v => _variantParentCache[v.Index])
                     .Where(g => !string.IsNullOrEmpty(g.Key))
                     .ToList();
 
+                // First, categorize all variants
                 foreach (var group in variantGroups)
                 {
                     var firstVariant = group.First();
                     var variants = SortVariantGroup(group);
 
+                    // Use our existing category detection
                     if (IsAircraftVariant(firstVariant.Index))
                     {
                         aircraftVariants.AddRange(
@@ -186,6 +195,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     }
                 }
 
+                // Then sort each category according to StaticPrefabKeys order
                 buildingVariants = ReorderVariantsByPrefabKeys(
                     buildingVariants, 
                     StaticPrefabKeys.Buildings.AllKeys.OfType<BuildingKey>());
@@ -247,10 +257,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             catch (System.Exception e)
             {
                 Debug.LogError($"[VariantSorter] Error reordering variants: {e}");
-                return variants;
+                return variants; // Return original list if reordering fails
             }
         }
 
+        // Sorts variants within a group according to their NameKey order.
+        // Uses the NameKeyOrder dictionary to determine sort priority.
         private List<int> SortVariantGroup(IGrouping<string, VariantData> group)
         {
             try
@@ -279,6 +291,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         #endif
 
+        // Helper methods for category detection
         private bool IsAircraftVariant(int variantIndex) => 
             IsVariantOfCategory(variantIndex, UnitCategory.Aircraft);
 
@@ -290,5 +303,62 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider.GameModel.UnlockedUnits
                 .Where(u => u.UnitCategory == category)
                 .Any(u => parentName.Contains(u.PrefabName.ToLowerInvariant()));
-    }
-} 
+
+        private void LogUnitData(UnitKey unit)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine($"=== Unit {unit.PrefabName} Properties ===");
+            
+            // Known properties
+            sb.AppendLine($"PrefabName: {unit.PrefabName}");
+            sb.AppendLine($"UnitCategory: {unit.UnitCategory}");
+            
+            // Dynamic properties
+            var properties = unit.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                try
+                {
+                    var value = prop.GetValue(unit);
+                    sb.AppendLine($"{prop.Name}: {value}");
+                }
+                catch (System.Exception e)
+                {
+                    sb.AppendLine($"{prop.Name}: <error: {e.Message}>");
+                }
+            }
+            sb.AppendLine("=== End Unit Properties ===");
+            
+            // Log everything at once
+            Debug.Log(sb.ToString());
+        }
+
+        private void LogVariantData(VariantData variant)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine($"=== Variant {variant.Index} Properties ===");
+            
+            // Known properties
+            sb.AppendLine($"Index: {variant.Index}");
+            
+            // Dynamic properties
+            var properties = variant.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                try
+                {
+                    var value = prop.GetValue(variant);
+                    sb.AppendLine($"{prop.Name}: {value}");
+                }
+                catch (System.Exception e)
+                {
+                    sb.AppendLine($"{prop.Name}: <error: {e.Message}>");
+                }
+            }
+            sb.AppendLine("=== End Variant Properties ===");
+            
+            // Log everything at once with LogWarning
+            Debug.LogWarning(sb.ToString());
+        }
+    }  // end of VariantSorter class
+}  // end of namespace
