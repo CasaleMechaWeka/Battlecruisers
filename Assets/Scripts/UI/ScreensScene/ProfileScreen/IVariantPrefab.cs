@@ -50,8 +50,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         BlastVLS = 0408,
         FirecrackerVLS = 0409,
 
-        Bomber = 0500,
-        Fighter = 0501,
+        Bomber = 0500,              //anything with a higher index than this should be a Unit, otherwise it breaks the
+        Fighter = 0501,             //IsUnit() function in 'VariantPrefab.cs'
         Gunship = 0502,
         SteamCopter = 0503,
         Broadsword = 0504,
