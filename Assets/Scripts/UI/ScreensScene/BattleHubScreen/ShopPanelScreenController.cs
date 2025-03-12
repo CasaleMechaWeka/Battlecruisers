@@ -44,8 +44,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private List<int> exoBaseList;
         private List<CaptainExo> captains = new List<CaptainExo>();
 
-        private VariantOrganizer _variantOrganizer;
-
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -59,8 +57,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
-
-            _variantOrganizer = new VariantOrganizer(dataProvider, prefabFactory);
 
             //Initialise each button with its function
             backButton.Initialise(_soundPlayer, GoHome, this);
@@ -591,7 +587,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         List<int> VariantsForOwnedItems()
         {
-            return _variantOrganizer.GetOrganizedVariants();
+            // Use original implementation (mainline)
+            return new VariantOrganizer(_dataProvider, _prefabFactory).GetOrganizedVariants();
+            // For advanced categorized sorting, comment line above and uncomment line below
+            // return new VariantSorter(_dataProvider, _prefabFactory).GetOrganizedVariants();
         }
 
         List<int> GenerateFullList(int elements)
