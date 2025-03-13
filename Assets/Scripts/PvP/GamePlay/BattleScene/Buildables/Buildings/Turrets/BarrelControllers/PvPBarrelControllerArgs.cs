@@ -9,7 +9,6 @@ using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -92,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             GlobalFireRateBoostProviders = globalFireRateBoostProvider;
             EnemyCruiser = enemyCruiser;
             SpawnerSoundKey = firingSound;
-            BarrelFiringAnimation = barrelFiringAnimation ?? new PvPDummyAnimation();
+            BarrelFiringAnimation = barrelFiringAnimation ?? new DummyAnimation();
         }
 
 
@@ -107,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPHelper.AssertIsNotNull(parent);
             Parent = parent;
             SpawnerSoundKey = firingSound;
-            BarrelFiringAnimation = barrelFiringAnimation ?? new PvPDummyAnimation();
+            BarrelFiringAnimation = barrelFiringAnimation ?? new DummyAnimation();
         }
     }
 }
