@@ -1,16 +1,17 @@
+using BattleCruisers.Effects.Laser;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
-using BattleCruisers.Utils.Timers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Threading;
-using BattleCruisers.Effects.Laser;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
     public class PvPLaserImpact : MonoBehaviour, ILaserImpact
     {
-        private IPvPParticleSystemGroup _effects;
+        private IParticleSystemGroup _effects;
         private IDebouncer _debouncer;
 
         private const float HIDE_IMPACT_DEBOUNCE_TIME_IN_S = 0.25f;

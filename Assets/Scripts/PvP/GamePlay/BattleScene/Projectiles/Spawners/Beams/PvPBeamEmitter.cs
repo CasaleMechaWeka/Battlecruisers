@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private AudioSource _platformAudioSource;
         protected IAudioSource _audioSource;
 
-        public PvPBroadcastingParticleSystem constantSparks;
+        public BroadcastingParticleSystem constantSparks;
         public LayerMask unitsLayerMask, shieldsLayerMask;
 
         protected virtual void Awake()

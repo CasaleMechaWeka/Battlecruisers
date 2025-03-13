@@ -22,22 +22,16 @@ namespace BattleCruisers.Effects.ParticleSystems
         public void Play()
         {
             foreach (ISynchronizedParticleSystems system in _synchronizedSystems)
-            {
                 system.ResetSeed();
-            }
 
             foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
-            {
                 particleSystem.Play();
-            }
         }
 
         public void Stop()
         {
             foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
-            {
                 particleSystem.Stop();
-            }
         }
     }
 }

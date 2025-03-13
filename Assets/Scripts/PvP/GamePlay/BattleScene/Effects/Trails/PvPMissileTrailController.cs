@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         public SpriteRenderer glow, missileFlare;
         public TrailRenderer trail;
-        public PvPBroadcastingParticleSystem optionalParticleEffect;
+        public BroadcastingParticleSystem optionalParticleEffect;
 
         public void Initialise()
         {

@@ -1,7 +1,7 @@
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Effects;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers
@@ -10,12 +10,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private readonly IBarrelController _barrelController;
         private readonly IAnimation _barrelFiringAnimation;
-        private readonly IPvPParticleSystemGroup _muzzleFlash;
+        private readonly IParticleSystemGroup _muzzleFlash;
 
         public PvPBarrelFirer(
             IBarrelController barrelController,
             IAnimation barrelFiringAnimation,
-            IPvPParticleSystemGroup muzzleFlash)
+            IParticleSystemGroup muzzleFlash)
         {
             PvPHelper.AssertIsNotNull(barrelController, muzzleFlash);
 

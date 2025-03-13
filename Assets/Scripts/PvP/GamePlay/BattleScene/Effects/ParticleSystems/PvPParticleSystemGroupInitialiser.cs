@@ -1,28 +1,27 @@
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using UnityEngine.Assertions;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems
 {
-    public class PvPParticleSystemGroupInitialiser : PvPMonoBehaviourWrapper, IPvPParticleSystemGroupInitialiser
+    public class PvPParticleSystemGroupInitialiser : PvPMonoBehaviourWrapper, IParticleSystemGroupInitialiser
     {
         public GameObject effects_parent;
-        public IPvPParticleSystemGroup CreateParticleSystemGroup()
+        public IParticleSystemGroup CreateParticleSystemGroup()
         {
             return
-                new PvPParticleSystemGroup(
+                new ParticleSystemGroup(
                     GetParticleSystems(),
                     GetSynchronizedSystems());
         }
 
         protected virtual IBroadcastingParticleSystem[] GetParticleSystems()
         {
-            PvPBroadcastingParticleSystem[] particleSystems = GetComponentsInChildren<PvPBroadcastingParticleSystem>(includeInactive: true);
+            BroadcastingParticleSystem[] particleSystems = GetComponentsInChildren<BroadcastingParticleSystem>(includeInactive: true);
             Assert.IsTrue(particleSystems.Length != 0);
 
-            foreach (PvPBroadcastingParticleSystem particleSystem in particleSystems)
+            foreach (BroadcastingParticleSystem particleSystem in particleSystems)
             {
                 particleSystem.Initialise();
             }
@@ -32,9 +31,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         protected ISynchronizedParticleSystems[] GetSynchronizedSystems()
         {
-            PvPSynchronizedParticleSystemsController[] synchronizedSystems = GetComponentsInChildren<PvPSynchronizedParticleSystemsController>();
+            SynchronizedParticleSystemsController[] synchronizedSystems = GetComponentsInChildren<SynchronizedParticleSystemsController>();
 
-            foreach (PvPSynchronizedParticleSystemsController system in synchronizedSystems)
+            foreach (SynchronizedParticleSystemsController system in synchronizedSystems)
             {
                 system.Initialise();
             }
