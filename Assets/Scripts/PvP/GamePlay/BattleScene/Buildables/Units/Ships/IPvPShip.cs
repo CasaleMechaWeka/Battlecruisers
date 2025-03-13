@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
+using BattleCruisers.Movement.Deciders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
-    public interface IPvPShip : IPvPUnit, IPvPBasicMover
+    public interface IPvPShip : IPvPUnit, IBasicMover
     {
         float OptimalArmamentRangeInM { get; }
         bool KeepDistanceFromEnemyCruiser { get; }

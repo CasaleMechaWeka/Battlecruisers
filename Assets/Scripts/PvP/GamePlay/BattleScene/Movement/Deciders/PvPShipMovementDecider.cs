@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     /// 
     /// Otherwise ship starts moving.
     /// </summary>
-    public class PvPShipMovementDecider : IPvPMovementDecider
+    public class PvPShipMovementDecider : IMovementDecider
     {
         private readonly IPvPShip _ship;
         private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;

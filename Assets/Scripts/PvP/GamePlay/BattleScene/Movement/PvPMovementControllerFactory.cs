@@ -1,3 +1,4 @@
+using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
@@ -122,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         }
         #endregion Rotation
 
-        public IPvPMovementDecider CreateShipMovementDecider(
+        public IMovementDecider CreateShipMovementDecider(
             IPvPShip ship,
             IBroadcastingTargetProvider blockingEnemyTargetProvider,
             IBroadcastingTargetProvider blockingFriendTargetProvider,

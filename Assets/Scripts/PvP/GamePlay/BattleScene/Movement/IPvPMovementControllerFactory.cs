@@ -1,9 +1,9 @@
+using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         IConstantRotationController CreateDummyConstantRotationController();
 
         // Deciers
-        IPvPMovementDecider CreateShipMovementDecider(
+        IMovementDecider CreateShipMovementDecider(
             IPvPShip ship,
             IBroadcastingTargetProvider blockingEnemyTargetProvider,
             IBroadcastingTargetProvider blockingFriendTargetProvider,

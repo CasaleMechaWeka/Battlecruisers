@@ -5,7 +5,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -23,6 +22,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.Movement.Deciders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IList<IPvPBarrelWrapper> _turrets;
         private PvPShipTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _movementTargetProcessor;
-        private IPvPMovementDecider _movementDecider;
+        private IMovementDecider _movementDecider;
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
         private IPool<IPoolable<Vector3>, Vector3> _deathPool;
 
@@ -185,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _targetProcessorWrapper.CreateTargetProcessor(args);
         }
 
-        private IPvPMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
+        private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
         {
             IRangeCalculator rangeCalculator = _factoryProvider.Targets.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
