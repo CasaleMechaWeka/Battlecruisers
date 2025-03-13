@@ -587,10 +587,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         List<int> VariantsForOwnedItems()
         {
-            // Use original implementation (mainline)
-            return new VariantOrganizer(_dataProvider, _prefabFactory).GetOrganizedVariants();
-            // For advanced categorized sorting, comment line above and uncomment line below
-            // return new VariantSorter(_dataProvider, _prefabFactory).GetOrganizedVariants();
+            // Use original implementation, uncomment line below to use VariantOrganizer.
+            // return new VariantOrganizer(_dataProvider, _prefabFactory).GetOrganizedVariants();
+            // For categorized sorting and logging, uncomment line below to use VariantSorter.
+            return new VariantSorter(_dataProvider, _prefabFactory).GetOrganizedVariants();
         }
 
         List<int> GenerateFullList(int elements)
