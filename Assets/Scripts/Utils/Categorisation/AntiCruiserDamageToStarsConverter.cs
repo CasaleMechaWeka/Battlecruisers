@@ -1,9 +1,9 @@
 ﻿namespace BattleCruisers.Utils.Categorisation
 {
-    public class AntiCruiserDamageToStarsConverter : ValueToStarsConverter
-    {
-        private static readonly float[] CATEGORY_THRESHOLDS =
+        public class AntiCruiserDamageToStarsConverter : ValueToStarsConverter
         {
+                private static readonly float[] CATEGORY_THRESHOLDS =
+                {
             1,
                     // Bomber:      8.3 DPS
                     // MissilePod:  12.5 DPS
@@ -25,11 +25,10 @@
             70
                     // Mann o' War: 88.9 DPS
                     // Broadsides:  90 DPS
-
         };
 
-        public AntiCruiserDamageToStarsConverter() : base(CATEGORY_THRESHOLDS)
-        {
+                public AntiCruiserDamageToStarsConverter() : base(CATEGORY_THRESHOLDS)
+                {
+                }
         }
-    }
 }

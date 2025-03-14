@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Categorisation;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Categorisation;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public virtual void Initialise()
         {
-            IValueToStarsConverterFactory converterFactory = new PvPValueToStarsConverterFactory();
+            IValueToStarsConverterFactory converterFactory = new ValueToStarsConverterFactory();
 
             _unitMovementSpeedConverter = converterFactory.CreateUnitMovementSpeedConverter();
             _buildableHealthConverter = converterFactory.CreateBuildableHealthConverter();
