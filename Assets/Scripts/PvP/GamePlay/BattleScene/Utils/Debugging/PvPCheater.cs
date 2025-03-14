@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Debugging
 {
-    public class PvPCheater : PvPCheaterBase, ICheater
+    public class PvPCheater : CheaterBase, ICheater
     {
         private IPvPFactoryProvider _factoryProvider;
         private IPvPCruiser _playerCruiser, _aiCruiser;
