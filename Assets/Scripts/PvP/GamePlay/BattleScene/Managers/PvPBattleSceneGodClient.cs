@@ -51,6 +51,7 @@ using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -590,18 +591,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     rightCaptain.transform.localScale = Vector3.one * 0.5f;
                 }
 
-                if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
+                try
                 {
-                    IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
-                    resultA.Prefab.StaticInitialise(commonStrings);
-                    if (leftCaptain == null)
+                    if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
                     {
-                        leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
-                        leftCaptain.transform.localScale = Vector3.one * 0.5f;
+                        IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
+                        resultA.Prefab.StaticInitialise(commonStrings);
+                        if (leftCaptain == null)
+                        {
+                            leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                            leftCaptain.transform.localScale = Vector3.one * 0.5f;
+                        }
+                    }
+                    else
+                    {
+                        IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                        resultA.Prefab.StaticInitialise(commonStrings);
+                        if (leftCaptain == null)
+                        {
+                            leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
+                            leftCaptain.transform.localScale = Vector3.one * 0.5f;
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
+                    Debug.LogError(e.Message);
                     IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                     resultA.Prefab.StaticInitialise(commonStrings);
                     if (leftCaptain == null)
