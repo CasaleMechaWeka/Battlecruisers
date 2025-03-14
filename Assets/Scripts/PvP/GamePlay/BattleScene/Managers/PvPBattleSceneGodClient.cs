@@ -25,7 +25,6 @@ using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
-using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
@@ -425,7 +424,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     dataProvider.StaticData,
                     SynchedServerData.Instance.GetTeam() == Team.RIGHT);
             time = TimeBC.Instance;
-            IPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
+            IPauseGameManager pauseGameManager = new PauseGameManager(time);
             _debouncer = new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
             playerCruiser.pvp_popLimitReachedFeedback.OnValueChanged += IsPopulationLimitReached_ValueChanged;
             playerCruiser.pvp_DroneNumIncreased.OnValueChanged += DroneNumIncreased_ValueChanged;
