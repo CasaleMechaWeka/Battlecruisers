@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
@@ -20,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public IDamageStats CreateDamageStats(float damage, float damageRadiusInM)
         {
-            return new PvPDamageStats(damage, damageRadiusInM);
+            return new DamageStats(damage, damageRadiusInM);
         }
 
         public IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats)

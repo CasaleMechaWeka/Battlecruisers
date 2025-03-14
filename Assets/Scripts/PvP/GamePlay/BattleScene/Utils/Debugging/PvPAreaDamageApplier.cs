@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         void Start()
         {
-            IDamageStats damageStats = new PvPDamageStats(damage, damageRadiusInM);
+            IDamageStats damageStats = new DamageStats(damage, damageRadiusInM);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             _areaDamageApplier = new PvPAreaOfEffectDamageApplier(damageStats, targetFilter);
         }
