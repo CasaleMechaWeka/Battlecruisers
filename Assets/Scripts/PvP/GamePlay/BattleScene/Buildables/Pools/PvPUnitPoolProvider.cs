@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
@@ -113,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPool<PvPUnit, PvPBuildableActivationArgs> CreatePool(IPrefabKey unitKey)
         {
             IPool<PvPUnit, PvPBuildableActivationArgs> pool
-                = new PvPPool<PvPUnit, PvPBuildableActivationArgs>(
+                = new Pool<PvPUnit, PvPBuildableActivationArgs>(
                     new PvPUnitFactory(
                         _factoryProvider.PrefabFactory,
                         unitKey,

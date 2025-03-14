@@ -1,8 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Projectiles.Stats;
@@ -161,7 +159,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             where TStats : IProjectileStats
         {
             return
-                new PvPPool<TProjectile, TArgs>(
+                new Pool<TProjectile, TArgs>(
                     new PvPProjectileFactory<TProjectile, TArgs, TStats>(
                         factoryProvider,
                         projectileKey));

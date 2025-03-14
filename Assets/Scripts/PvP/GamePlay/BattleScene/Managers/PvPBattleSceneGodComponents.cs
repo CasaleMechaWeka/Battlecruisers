@@ -9,7 +9,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.A
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Sound.Wind;
@@ -56,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
-        private PvPUpdaterProvider _updaterProvider;
+        private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
         //        public void Initialise_Client(ISettingsManager settingsManager)
@@ -96,7 +95,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
             Assert.IsNotNull(RealTimeDeferrer);
 
-            _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
+            _updaterProvider = GetComponentInChildren<UpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);
             _updaterProvider.Initialise();
         }

@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -255,7 +254,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IStaticCameraTargetProvider trumpCameraTargetProvider,
             IStaticCameraTargetProvider defaultCameraTargetProvider)
         {
-            PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
+            TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
@@ -285,7 +284,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IStaticCameraTargetProvider defaultCameraTargetProvider
         )
         {
-            PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
+            TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
             // updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
@@ -309,7 +308,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCameraCalculator cameraCalculator,
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
-            PvPTogglableUpdater updater,
+            TogglableUpdater updater,
             IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
             IDirectionalZoom directionalZoom

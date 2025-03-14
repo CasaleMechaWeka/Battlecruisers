@@ -6,7 +6,6 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Sound.Players;
@@ -43,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
-                = new PvPDroneFeedbackFactory(
+                = new DroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
                     new SpawnPositionFinder(RandomGenerator.Instance, PvPConstants.WATER_LINE),
                     faction);
@@ -66,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
-                = new PvPDroneFeedbackFactory(
+                = new DroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
                     new SpawnPositionFinder(RandomGenerator.Instance, PvPConstants.WATER_LINE),
                     faction);
