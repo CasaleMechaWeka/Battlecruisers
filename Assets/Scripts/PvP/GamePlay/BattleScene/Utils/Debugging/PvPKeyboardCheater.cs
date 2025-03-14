@@ -1,9 +1,10 @@
+using BattleCruisers.Utils.Debugging;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Debugging
 {
-    public class PvPKeyboardCheater : PvPCheaterBase
+    public class PvPKeyboardCheater : CheaterBase
     {
         public PvPCheater cheater;
 
