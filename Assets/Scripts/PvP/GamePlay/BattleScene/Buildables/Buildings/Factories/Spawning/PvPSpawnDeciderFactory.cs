@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning
@@ -10,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public PvPSpawnDeciderFactory()
         {
-            _time = PvPTimeBC.Instance;
+            _time = TimeBC.Instance;
         }
 
         public IPvPUnitSpawnPositionFinder CreateAircraftSpawnPositionFinder(IPvPFactory factory)

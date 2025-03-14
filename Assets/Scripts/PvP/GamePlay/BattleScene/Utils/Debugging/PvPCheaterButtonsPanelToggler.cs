@@ -1,7 +1,7 @@
 using BattleCruisers.Utils.Timers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Debugging
 {
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Destroy(gameObject);
 #endif
 
-            _debouncer = new Debouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS);
+            _debouncer = new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS);
         }
 
         void Update()

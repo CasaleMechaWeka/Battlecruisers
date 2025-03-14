@@ -2,13 +2,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons.Toggles;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed
 {
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             foreach (PvPGameSpeedButton speedButton in speedButtons)
             {
-                speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, PvPTimeBC.Instance);
+                speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, TimeBC.Instance);
             }
 
             IToggleButtonGroup speedButtonGroup = new PvPToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);

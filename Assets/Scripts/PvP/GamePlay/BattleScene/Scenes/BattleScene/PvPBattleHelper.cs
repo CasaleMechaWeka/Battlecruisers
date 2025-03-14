@@ -16,7 +16,6 @@ using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils.Timers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.Sound.Players;
@@ -27,6 +26,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -168,7 +168,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
-                    new Debouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
+                    new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
 
         protected virtual IPvPStrategyFactory CreateStrategyFactory(int currentLevelNum)

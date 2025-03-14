@@ -24,8 +24,6 @@ using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
@@ -53,6 +51,7 @@ using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Buildables.Colours;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -425,7 +424,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     playerCruiser.PopulationLimitMonitor,
                     dataProvider.StaticData,
                     SynchedServerData.Instance.GetTeam() == Team.RIGHT);
-            time = PvPTimeBC.Instance;
+            time = TimeBC.Instance;
             IPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
             _debouncer = new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
             playerCruiser.pvp_popLimitReachedFeedback.OnValueChanged += IsPopulationLimitReached_ValueChanged;
@@ -495,7 +494,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
             components.HotkeyInitialiser.Initialise(
                     dataProvider.GameModel.Hotkeys,
-                    PvPInputBC.Instance,
+                    InputBC.Instance,
                     components.UpdaterProvider.SwitchableUpdater,
                     navigationPermitters.HotkeyFilter,
                     cameraComponents.CameraFocuser,
@@ -773,7 +772,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void IdleDronesStarted_ValueChanged(bool oldVal, bool newVal)
         {
-            new Debouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle));
+            new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle));
         }
 
         private void IdleDronesEnded_ValueChanged(bool oldVal, bool newVal)

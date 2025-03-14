@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     /// <summary>
     /// Smoothly moves camera to target postion and orthographic size.
     /// </summary>
-    public class PvPSmoothCameraAdjuster : PvPCameraAdjuster
+    public class PvPSmoothCameraAdjuster : CameraAdjuster
     {
         private readonly ISmoothZoomAdjuster _zoomAdjuster;
         private readonly ISmoothPositionAdjuster _positionAdjuster;

@@ -1,7 +1,7 @@
 using BattleCruisers.Effects.Laser;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _effects = effectsInitialiser.CreateParticleSystemGroup();
             _effects.Stop();
 
-            _debouncer = new DeferredDebouncer(PvPTimeBC.Instance.TimeSinceGameStartProvider, timeScaleDeferrer, HIDE_IMPACT_DEBOUNCE_TIME_IN_S);
+            _debouncer = new DeferredDebouncer(TimeBC.Instance.TimeSinceGameStartProvider, timeScaleDeferrer, HIDE_IMPACT_DEBOUNCE_TIME_IN_S);
         }
 
         public void Show(Vector3 position)

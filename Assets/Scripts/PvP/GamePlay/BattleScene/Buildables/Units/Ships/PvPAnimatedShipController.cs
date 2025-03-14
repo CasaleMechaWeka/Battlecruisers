@@ -1,3 +1,4 @@
+using BattleCruisers.Effects.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public abstract class PvPAnimatedShipController : PvPShipController
     {
-        private IPvPMovementEffect _movementEffects;
+        private IMovementEffect _movementEffects;
         public PvPMovementEffectInitialiser movementEffectInitialiser;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void StopMovementEffectsOfClient()
         {
-            if(IsClient)
+            if (IsClient)
                 _movementEffects.StopEffects();
         }
 
@@ -63,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void ResetAndHideOfClient()
         {
-            if(IsClient)
+            if (IsClient)
                 _movementEffects.ResetAndHide();
         }
     }

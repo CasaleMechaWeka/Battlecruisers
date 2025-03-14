@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public class PvPRotationMovementController : IRotationMovementController
     {
-        private readonly IPvPRotationHelper _rotationHelper;
+        private readonly IRotationHelper _rotationHelper;
         private readonly ITransform _transform;
         private readonly IDeltaTimeProvider _time;
         private readonly float _rotateSpeedInDegreesPerS;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         public const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
 
         public PvPRotationMovementController(
-            IPvPRotationHelper rotationHelper,
+            IRotationHelper rotationHelper,
             ITransform transform,
             IDeltaTimeProvider time,
             float rotateSpeedInDegreesPerS)

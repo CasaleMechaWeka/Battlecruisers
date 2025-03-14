@@ -1,6 +1,5 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using System;
 using UnityEngine;
 using Unity.Netcode;
@@ -13,6 +12,7 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using Unity.Services.Leaderboards;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //--->CODE CHANGED BY ANUJ
             //_applicationModel.ShowPostBattleScreen = true;
             //<---
-            PvPTimeBC.Instance.TimeScale = 1;
+            TimeBC.Instance.TimeScale = 1;
             if (wasVictory)
             {
                 PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(PvPBattleSceneGodClient.Instance.commonStrings.GetString("EnemyLeft"), () => PvPBattleSceneGodClient.Instance.messageBox.HideMessage());
@@ -220,7 +220,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //--->CODE CHANGED BY ANUJ
             //_applicationModel.ShowPostBattleScreen = true;
             //<---
-            PvPTimeBC.Instance.TimeScale = 1;
+            TimeBC.Instance.TimeScale = 1;
             await Task.Delay(POST_GAME_WAIT_TIME_IN_S);
 
             // Whatever the outcome, everyone goes to Destruction Scene:

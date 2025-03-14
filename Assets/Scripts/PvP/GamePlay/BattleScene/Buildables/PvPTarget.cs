@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
@@ -133,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _healthTracker = new PvPHealthTracker(this, maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;
 
-            _time = PvPTimeBC.Instance;
+            _time = TimeBC.Instance;
             _attackCapabilities = new List<TargetType>();
             AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);

@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 {
     public class PvPMovementControllerFactory : IPvPMovementControllerFactory
     {
-        private readonly IPvPRotationHelper _rotationHelper;
+        private readonly IRotationHelper _rotationHelper;
 
         public const float DEFAULT_POSITION_EQUALITY_MARGIN_IN_M = 0.5f;
 

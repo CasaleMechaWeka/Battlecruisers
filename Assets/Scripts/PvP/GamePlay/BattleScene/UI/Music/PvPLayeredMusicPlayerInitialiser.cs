@@ -1,7 +1,6 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Audio;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -11,6 +10,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.Music;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music
 {
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
 
             return
                 new LayeredMusicPlayer(
-                    new AudioVolumeFade(coroutineStarter, PvPTimeBC.Instance),
+                    new AudioVolumeFade(coroutineStarter, TimeBC.Instance),
                     primary,
                     secondary,
                     settingsManager);

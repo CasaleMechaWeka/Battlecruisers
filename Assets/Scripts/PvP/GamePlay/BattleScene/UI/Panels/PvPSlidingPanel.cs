@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.UI.Panels;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -125,7 +125,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
                     ref _slidePositionVelocity,
                     _smoothTimeinS,
                     maxSpeed: float.MaxValue,
-                    deltaTime: PvPTimeBC.Instance.UnscaledDeltaTime);
+                    deltaTime: TimeBC.Instance.UnscaledDeltaTime);
             return false;
         }
 
@@ -145,7 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Pan
                     ref _sliderScaleVelocity,
                     _smoothTimeinS,
                     maxSpeed: float.MaxValue,
-                    deltaTime: PvPTimeBC.Instance.UnscaledDeltaTime);
+                    deltaTime: TimeBC.Instance.UnscaledDeltaTime);
             return false;
         }
 

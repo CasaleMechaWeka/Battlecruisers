@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
@@ -13,6 +12,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             float diameter = 2 * Stats.ShieldRadiusInM;
             _size = new Vector2(diameter, diameter);
 
-            _takeDamageSoundDebouncer = new Debouncer(PvPTimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
+            _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
         public void Initialise(Faction faction, ISoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)

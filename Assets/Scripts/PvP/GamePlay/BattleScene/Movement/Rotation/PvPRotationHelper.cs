@@ -1,9 +1,10 @@
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation
 {
-    public class PvPRotationHelper : IPvPRotationHelper
+    public class PvPRotationHelper : IRotationHelper
     {
         /// <returns>
         /// 1 if it is shorter to rotate anti-clockwise, -1 if it is shorter to rotate clockwise, 

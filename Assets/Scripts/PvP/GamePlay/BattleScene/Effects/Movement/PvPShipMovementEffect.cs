@@ -1,10 +1,11 @@
+using BattleCruisers.Effects.Movement;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Movement
 {
-    public class PvPShipMovementEffect : IPvPMovementEffect
+    public class PvPShipMovementEffect : IMovementEffect
     {
         private readonly IGameObject _gameObject;
         private readonly IAnimator _animator;

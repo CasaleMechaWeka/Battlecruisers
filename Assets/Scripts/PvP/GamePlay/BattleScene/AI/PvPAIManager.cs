@@ -14,10 +14,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.AI.ThreatMonitors;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             _battleSceneGodTunnel = battleSceneGodTunnel;
 
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-            _threatMonitorFactory = new PvPThreatMonitorFactory(playerCruiser, PvPTimeBC.Instance, deferrer);
+            _threatMonitorFactory = new PvPThreatMonitorFactory(playerCruiser, TimeBC.Instance, deferrer);
             _factoryManagerFactory = new PvPFactoryManagerFactory(_battleSceneGodTunnel, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new PvPSlotAssigner();

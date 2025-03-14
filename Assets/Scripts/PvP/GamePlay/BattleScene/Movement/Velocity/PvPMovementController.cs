@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -22,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         {
             Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
             _maxVelocityProvider = maxVelocityProvider;
-            _time = PvPTimeBC.Instance;
+            _time = TimeBC.Instance;
         }
 
         public virtual void Activate() { }

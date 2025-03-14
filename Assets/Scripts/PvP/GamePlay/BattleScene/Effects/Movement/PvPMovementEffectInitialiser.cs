@@ -1,6 +1,5 @@
+using BattleCruisers.Effects.Movement;
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPMovementEffectInitialiser : MonoBehaviour, IPvPMovementEffectInitialiser
     {
-        public IPvPMovementEffect CreateMovementEffects()
+        public IMovementEffect CreateMovementEffects()
         {
             Animator animator = GetComponent<Animator>();
             Assert.IsNotNull(animator);
@@ -21,10 +20,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 particleSystem.Initialise();
             }
 
-            IPvPMovementEffect shipMovementEffect
+            IMovementEffect shipMovementEffect
                 = new PvPShipMovementEffect(
                     new GameObjectBC(gameObject),
-                    new PvPAnimatorBC(animator),
+                    new AnimatorBC(animator),
                     (IBroadcastingParticleSystem)particleSystem ?? new DummyBroadcastingParticleSystem());
 
             shipMovementEffect.ResetAndHide();

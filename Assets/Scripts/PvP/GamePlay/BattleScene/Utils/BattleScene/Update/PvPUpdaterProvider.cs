@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -31,8 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             SwitchableUpdater = GetComponent<PvPSwitchableUpdater>();
             Assert.IsNotNull(SwitchableUpdater);
 
-            SlowUpdater = new PvPMultiFrameUpdater(PhysicsUpdater, PvPTimeBC.Instance, SLOW_UPDATER_INTERVAL_IN_S);
-            VerySlowUpdater = new PvPMultiFrameUpdater(PhysicsUpdater, PvPTimeBC.Instance, VERY_SLOW_UPDATER_INTERVAL_IN_S);
+            SlowUpdater = new PvPMultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, SLOW_UPDATER_INTERVAL_IN_S);
+            VerySlowUpdater = new PvPMultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, VERY_SLOW_UPDATER_INTERVAL_IN_S);
 
             BarrelControllerUpdater = PhysicsUpdater;
         }

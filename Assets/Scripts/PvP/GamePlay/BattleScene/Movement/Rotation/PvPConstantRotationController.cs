@@ -1,5 +1,4 @@
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         {
             _rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
             _transform = transform;
-            _time = PvPTimeBC.Instance;
+            _time = TimeBC.Instance;
         }
 
         public void Rotate()
