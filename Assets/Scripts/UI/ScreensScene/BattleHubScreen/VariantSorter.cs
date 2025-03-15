@@ -86,13 +86,38 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     .OrderBy(g => g.Key)
                     .ToDictionary(g => g.Key, g => g.Count());
 
+                // Get all possible parent groups from StaticPrefabKeys
+                var allParentGroups = new HashSet<string>();
+                
+                // Add Buildings
+                foreach (var building in StaticPrefabKeys.Buildings.AllKeys)
+                {
+                    allParentGroups.Add(building.PrefabName.ToLowerInvariant());
+                }
+                
+                // Add Units
+                foreach (var unit in StaticPrefabKeys.Units.AllKeys)
+                {
+                    allParentGroups.Add(unit.PrefabName.ToLowerInvariant());
+                }
+
                 var sb = new StringBuilder();
                 sb.AppendLine($"[VariantSorter] Returning {result.Count} organized variants:");
                 sb.AppendLine("Parent groups:");
-                foreach (var kvp in parentCounts)
+                
+                // First list groups with variants
+                foreach (var kvp in parentCounts.OrderBy(kvp => kvp.Key))
                 {
                     sb.AppendLine($"  {kvp.Key}: {kvp.Value} variants");
+                    allParentGroups.Remove(kvp.Key); // Remove from all groups as we've handled it
                 }
+                
+                // Then list groups with 0 variants
+                foreach (var group in allParentGroups.OrderBy(g => g))
+                {
+                    sb.AppendLine($"  {group}: 0 variants");
+                }
+                
                 Debug.Log(sb.ToString());
                 #endif
 
