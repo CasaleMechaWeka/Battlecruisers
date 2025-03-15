@@ -207,7 +207,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
         {
-            barrel.InitialiseAsync(args);
+            AsyncHelper.FireAndForget(() => barrel.InitialiseAsync(args));
         }
 
         protected virtual ITargetFilter CreateTargetFilter()

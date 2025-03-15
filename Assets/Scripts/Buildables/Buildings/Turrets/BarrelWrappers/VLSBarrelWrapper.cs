@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
@@ -18,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 return;
             }
 
-            barrelController.InitialiseAsync(args);
+            AsyncHelper.FireAndForget(() => barrelController.InitialiseAsync(args));
         }
     }
 }
