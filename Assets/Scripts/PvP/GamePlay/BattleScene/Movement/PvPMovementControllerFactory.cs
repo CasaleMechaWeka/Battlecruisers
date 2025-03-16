@@ -5,7 +5,6 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Homing;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
@@ -29,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public PvPMovementControllerFactory()
         {
-            _rotationHelper = new PvPRotationHelper();
+            _rotationHelper = new RotationHelper();
         }
 
         #region Velocity
@@ -104,22 +103,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         #region Rotation
         public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform, IDeltaTimeProvider deltaTimeProvider)
         {
-            return new PvPRotationMovementController(_rotationHelper, new TransformBC(transform), deltaTimeProvider, rotateSpeedInDegreesPerS);
+            return new RotationMovementController(_rotationHelper, new TransformBC(transform), deltaTimeProvider, rotateSpeedInDegreesPerS);
         }
 
         public IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)
         {
-            return new PvPDummyRotationMovementController(isOnTarget);
+            return new DummyRotationMovementController(isOnTarget);
         }
 
         public IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform)
         {
-            return new PvPConstantRotationController(rotateSpeedInDegreesPerS, transform);
+            return new ConstantRotationController(rotateSpeedInDegreesPerS, transform);
         }
 
         public IConstantRotationController CreateDummyConstantRotationController()
         {
-            return new PvPDummyConstantRotationController();
+            return new DummyConstantRotationController();
         }
         #endregion Rotation
 
