@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -135,7 +134,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         EnemyCruiser,
                         SoundKeys.Firing.BigCannon);
 
-                _barrelController.InitialiseAsync(args);
+                _ = _barrelController.InitialiseAsync(args);
 
                 SetupTargetDetection();
 

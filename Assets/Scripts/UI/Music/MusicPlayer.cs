@@ -25,37 +25,37 @@ namespace BattleCruisers.UI.Music
 
         public void PlayScreensSceneMusic()
         {
-            PlayMusic(SoundKeys.Music.MainTheme);
+            _ = PlayMusic(SoundKeys.Music.MainTheme);
         }
 
         public void PlayVictoryMusic()
         {
-            PlayMusic(SoundKeys.Music.Victory, loop: false);
+            _ = PlayMusic(SoundKeys.Music.Victory, loop: false);
         }
 
         public void PlayDefeatMusic()
         {
-            PlayMusic(SoundKeys.Music.Defeat, loop: false);
+            _ = PlayMusic(SoundKeys.Music.Defeat, loop: false);
         }
 
         public void PlayTrashMusic()
         {
-            PlayMusic(SoundKeys.Music.TrashTalk, loop: false);
+            _ = PlayMusic(SoundKeys.Music.TrashTalk, loop: false);
         }
 
         public void PlayCutsceneMusic()
         {
-            PlayMusic(SoundKeys.Music.Cutscene, loop: false);
+            _ = PlayMusic(SoundKeys.Music.Cutscene, loop: false);
         }
 
         public void PlayCreditsMusic()
         {
-            PlayMusic(SoundKeys.Music.Credits, loop: false);
+            _ = PlayMusic(SoundKeys.Music.Credits, loop: false);
         }
 
         public void PlayAdsMusic()
         {
-            PlayMusic(SoundKeys.Music.Advertisements, loop: false);
+            _ = PlayMusic(SoundKeys.Music.Advertisements, loop: false);
         }
 
         private async Task PlayMusic(ISoundKey soundKeyToPlay, bool loop = true)

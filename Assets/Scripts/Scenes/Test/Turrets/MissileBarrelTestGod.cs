@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets
 {
-    public class MissileBarrelTestGod : TestGodBase 
+    public class MissileBarrelTestGod : TestGodBase
     {
         private AirFactory _target;
         private MissileBarrelController _missileBarrel;
@@ -37,16 +37,16 @@ namespace BattleCruisers.Scenes.Test.Turrets
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(Faction.Reds, targetTypes);
 
             _missileBarrel.StaticInitialise();
-			_missileBarrel.Target = _target;
+            _missileBarrel.Target = _target;
 
             IBarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
-                    _missileBarrel, 
+                    _missileBarrel,
                     _updaterProvider.PerFrameUpdater,
                     targetFilter: targetFilter,
                     angleCalculator: new StaticAngleCalculator(new AngleHelper(), desiredAngleInDegrees: 90));
 
-            _missileBarrel.InitialiseAsync(barrelControllerArgs);
-	    }
-	}
+            _ = _missileBarrel.InitialiseAsync(barrelControllerArgs);
+        }
+    }
 }

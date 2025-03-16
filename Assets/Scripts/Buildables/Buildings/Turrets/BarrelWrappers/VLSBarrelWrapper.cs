@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 return;
             }
 
-            AsyncHelper.FireAndForget(() => barrelController.InitialiseAsync(args));
+            _ = barrelController.InitialiseAsync(args);
         }
     }
 }

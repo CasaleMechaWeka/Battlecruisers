@@ -27,7 +27,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -261,13 +260,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by Server
         protected virtual void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
         {
-            AsyncHelper.FireAndForget(() => barrel.InitialiseAsync(args));
+            _ = barrel.InitialiseAsync(args);
         }
 
         // should be called by Client
         protected virtual void InitialiseBarrelController_PvPClient(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
         {
-            AsyncHelper.FireAndForget(() => barrel.InitialiseAsync_PvPClient(args));
+            _ = barrel.InitialiseAsync_PvPClient(args);
         }
 
         protected virtual ITargetFilter CreateTargetFilter()

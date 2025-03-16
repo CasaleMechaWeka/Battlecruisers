@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return;
             }
 
-            barrelController.InitialiseAsync(args);
+            _ = barrelController.InitialiseAsync(args);
         }
     }
 }

@@ -122,7 +122,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     EnemyCruiser,
                     SoundKeys.Firing.BigCannon);
 
-            _barrelController.InitialiseAsync(args);
+            _ = _barrelController.InitialiseAsync(args);
 
             SetupTargetDetection();
 

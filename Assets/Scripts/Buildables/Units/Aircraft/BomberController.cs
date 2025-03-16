@@ -102,7 +102,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             // apply variant stats
             ApplyVariantStats();
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
-            _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
+            _ = _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
 
         private void ApplyVariantStats()

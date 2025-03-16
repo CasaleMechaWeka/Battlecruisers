@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
         {
             PvPRocketBarrelController rocketBarrel = barrel.Parse<PvPRocketBarrelController>();
-            rocketBarrel.InitialiseAsync(args);
+            _ = rocketBarrel.InitialiseAsync(args);
         }
     }
 }

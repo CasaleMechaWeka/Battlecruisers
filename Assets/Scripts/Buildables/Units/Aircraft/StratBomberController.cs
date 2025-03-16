@@ -22,7 +22,7 @@ using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class StratBomberController : AircraftController, ITargetConsumer  
+    public class StratBomberController : AircraftController, ITargetConsumer
     {
         private BombSpawner _bombSpawner;
         private IProjectileStats _bombStats;
@@ -105,7 +105,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             // apply variant stats
             ApplyVariantStats();
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
-            _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
+            _ = _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
 
         private void ApplyVariantStats()
