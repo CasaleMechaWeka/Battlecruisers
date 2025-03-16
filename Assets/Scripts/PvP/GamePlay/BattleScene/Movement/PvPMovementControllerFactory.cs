@@ -2,11 +2,11 @@ using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Homing;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Helpers;
@@ -39,22 +39,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             ITargetProvider targetProvider,
             ITargetPositionPredictorFactory targetPositionPredictorFactory)
         {
-            return new PvPMissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
+            return new MissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
         }
 
         public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, Rectangle safeZone)
         {
-            return new PvPFighterMovementController(rigidBody, maxVelocityProvider, targetProvider, safeZone);
+            return new FighterMovementController(rigidBody, maxVelocityProvider, targetProvider, safeZone);
         }
 
         public IMovementController CreateRocketMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, float cruisingAltitudeInM, IFlightPointsProvider flightPointsProvider)
         {
-            return new PvPRocketMovementController(rigidBody, maxVelocityProvider, targetProvider, cruisingAltitudeInM, flightPointsProvider);
+            return new RocketMovementController(rigidBody, maxVelocityProvider, targetProvider, cruisingAltitudeInM, flightPointsProvider);
         }
 
         public IMovementController CreateHomingMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider)
         {
-            return new PvPHomingMovementController(rigidBody, maxVelocityProvider, targetProvider);
+            return new HomingMovementController(rigidBody, maxVelocityProvider, targetProvider);
         }
         #endregion Homing
 
