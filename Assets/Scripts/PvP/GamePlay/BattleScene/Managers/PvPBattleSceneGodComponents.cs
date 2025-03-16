@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Sound.Wind;
@@ -89,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             LifetimeEvents = lifetimeEvents;
             targetIndicator.Initialise();
 
-            Deferrer = GetComponent<PvPTimeScaleDeferrer>();
+            Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
 
             RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
