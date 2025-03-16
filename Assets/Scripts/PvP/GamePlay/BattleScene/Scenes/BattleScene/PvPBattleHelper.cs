@@ -1,4 +1,3 @@
-using BattleCruisers.AI;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
@@ -16,8 +15,6 @@ using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils.Timers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -86,11 +83,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return DataProvider.GameModel.PlayerLoadout;
         }
 
-        public override IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
-        {
-            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedLevel);
-        }
-
         public override IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator()
         {
             return _calculatorFactory.CreatePlayerACruiserCalculator();
@@ -143,14 +135,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager);
         }
 
-        public override IArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum)
-        {
-            IPvPLevelInfo levelInfo = new PvPLevelInfo(aiCruiser, playerCruiser, PvPBattleSceneGodServer.Instance._battleSceneGodTunnel, _prefabFactory);
-            IPvPStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
-            IPvPAIManager aiManager = new PvPAIManager(_prefabFactory, DataProvider, PvPBattleSceneGodServer.Instance._battleSceneGodTunnel, _deferrer, playerCruiser, strategyFactory);
-            return aiManager.CreateAI(levelInfo, FindDifficulty() /* should be modified in production*/);
-        }
-
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
@@ -170,12 +154,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
-
-        protected virtual IPvPStrategyFactory CreateStrategyFactory(int currentLevelNum)
-        {
-            return new PvPDefaultStrategyFactory(PvPBattleSceneGodServer.Instance.dataProvider.StaticData.PvPStrategies, currentLevelNum);
-        }
-
     }
 }
 

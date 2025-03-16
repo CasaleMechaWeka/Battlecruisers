@@ -24,7 +24,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     {
         IPrefabKey PlayerACruiser { get; }
         IPrefabKey PlayerBCruiser { get; }
-        IPrefabKey AIBotCruiser { get; }
         string[] PvPHullNames { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
@@ -32,7 +31,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IFilter<IPvPSlot> CreateHighlightableSlotFilter();
         IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();
-        IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
         IPvPUIManager CreateUIManager();
         void InitialiseUIManager(PvPManagerArgs args);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
@@ -48,7 +46,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator
                                 );
-        IArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
         IManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer);
         Task<IPrefabContainer<PvPBackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
     }

@@ -16,9 +16,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine.Assertions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
-using System;
 
 namespace BattleCruisers.Data.Static
 {
@@ -658,13 +656,11 @@ namespace BattleCruisers.Data.Static
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
         public ILevelStrategies SideQuestStrategies { get; }
-        public IPvPLevelStrategies PvPStrategies { get; }
 
         public StaticData()
         {
             Strategies = new LevelStrategies();
             SideQuestStrategies = new SideQuestStrategies();
-            PvPStrategies = new PvPLevelStrategies();
 
             InitialGameModel = CreateInitialGameModel();
             //Assert.IsTrue(Levels.Count == NUM_OF_LEVELS,

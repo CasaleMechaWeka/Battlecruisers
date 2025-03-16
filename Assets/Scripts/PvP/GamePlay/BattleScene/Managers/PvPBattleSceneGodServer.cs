@@ -1,4 +1,3 @@
-using BattleCruisers.AI;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
@@ -268,83 +267,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Debug.Log("====> All initialized");
         }
 
-        public async Task RunPvP_AIMode()
-        {
-            applicationModel = ApplicationModelProvider.ApplicationModel;
-            dataProvider = applicationModel.DataProvider;
-
-
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
-            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
-            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-
-            components = GetComponent<PvPBattleSceneGodComponents>();
-            _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-            GetComponent<PvPBattleSceneGodClient>().SetAIBotMode();
-            Assert.IsNotNull(components);
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
-            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
-            // AIBot
-            SynchedServerData.Instance.playerBPrefabName.Value = pvpBattleHelper.PvPHullNames[UnityEngine.Random.Range(0, pvpBattleHelper.PvPHullNames.Length)]; ;
-            SynchedServerData.Instance.captainBPrefabName.Value = "CaptainExo0" + UnityEngine.Random.Range(0, 41).ToString("00");
-            SynchedServerData.Instance.playerBName.Value = nameGenerator.GenerateName();
-            SynchedServerData.Instance.playerBScore.Value = dataProvider.GameModel.LifetimeDestructionScore;
-            SynchedServerData.Instance.playerBRating.Value = UnityEngine.Random.Range(dataProvider.GameModel.BattleWinScore, dataProvider.GameModel.BattleWinScore + 100f);
-
-            SynchedServerData.Instance.playerAPrefabName.Value = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
-            SynchedServerData.Instance.playerAName.Value = dataProvider.GameModel.PlayerName;
-            SynchedServerData.Instance.playerAScore.Value = dataProvider.GameModel.LifetimeDestructionScore;
-            SynchedServerData.Instance.playerARating.Value = dataProvider.GameModel.BattleWinScore;
-
-            playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
-            playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
-                playerACruiserUserChosenTargetManager);
-
-            playerBCruiserUserChosenTargetManager = new UserChosenTargetManager();
-            playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
-                playerBCruiserUserChosenTargetManager);
-
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
-            factoryProvider.Initialise();
-            await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
-
-            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            //await Task.Delay(500);
-            playerACruiser = cruiserFactory.CreatePlayerACruiser(Team.LEFT);
-            //await Task.Delay(500);
-            playerBCruiser = cruiserFactory.CreateAIBotCruiser(Team.RIGHT);
-            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
-            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
-
-            enemyCruiserSprite = playerACruiser.Sprite;
-            enemyCruiserName = playerACruiser.stringKeyBase;
-
-            playerBCruiserSprite = playerBCruiser.Sprite;
-            playerBCruiserName = playerBCruiser.stringKeyBase;
-
-            droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
-            droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
-            droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
-            droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
-            droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
-
-            droneManagerMonitorB = new DroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
-            droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
-            droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
-            droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
-
-            ITime time = TimeBC.Instance;
-            _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
-            _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
-            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
-            //    _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
-            RegisteredAllBuildalbesToServer();
-        }
 
         private void RegisteredAllBuildalbesToServer()
         {
@@ -447,18 +369,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 deadBuildables_right?[type]?.AddPlayedTime(dt);
             }
         }
-        public void RegisterAIOfLeftPlayer()
-        {
-            IArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, UnityEngine.Random.Range(0, 40));
-            //     IArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 current level num);
-            _gameEndMonitor.RegisterAIOfLeftPlayer(ai_LeftPlayer);
-        }
 
-        public void RegisterAIOfRightPlayer()
-        {
-            IArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, UnityEngine.Random.Range(20, 40));
-            _gameEndMonitor.RegisterAIOfRightPlayer(ai_RightPlayer);
-        }
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)
         {
             return
