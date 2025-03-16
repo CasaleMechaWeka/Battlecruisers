@@ -3,7 +3,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
@@ -16,7 +16,7 @@ using BattleCruisers.UI.Sound;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
     public class PvPNukeController :
-        PvPProjectileWithTrail<PvPTargetProviderActivationArgs<INukeStats>, INukeStats>,
+        PvPProjectileWithTrail<TargetProviderActivationArgs<INukeStats>, INukeStats>,
         ITargetProvider
     {
         private INukeStats _nukeStats;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public ITarget Target { get; private set; }
 
-        public override void Activate(PvPTargetProviderActivationArgs<INukeStats> activationArgs)
+        public override void Activate(TargetProviderActivationArgs<INukeStats> activationArgs)
         {
             base.Activate(activationArgs);
             _nukeStats = activationArgs.ProjectileStats;

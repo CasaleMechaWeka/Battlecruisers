@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats)
         {
-            return new PvPSingleDamageApplier(damageStats.Damage);
+            return new SingleDamageApplier(damageStats.Damage);
         }
 
         /// <summary>

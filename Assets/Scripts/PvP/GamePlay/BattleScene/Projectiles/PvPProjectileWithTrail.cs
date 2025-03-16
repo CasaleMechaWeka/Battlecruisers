@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Trails;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public abstract class PvPProjectileWithTrail<TPvPActivationArgs, TPvPStats> : PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats>,
         IRemovable,
         IPoolable<TPvPActivationArgs>
-            where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
+            where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>
             where TPvPStats : IProjectileStats
     {
         private Collider2D _collider;

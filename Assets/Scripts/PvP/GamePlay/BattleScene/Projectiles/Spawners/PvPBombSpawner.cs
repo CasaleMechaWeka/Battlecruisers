@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPBombSpawner : PvPProjectileSpawner<PvPBombController, PvPProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class PvPBombSpawner : PvPProjectileSpawner<PvPBombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         protected ITargetFilter _targetFilter;
 
@@ -22,8 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public void SpawnShell(float currentXVelocityInMPers)
         {
             Vector2 shellVelocity = new Vector2(currentXVelocityInMPers, 0);
-            PvPProjectileActivationArgs<IProjectileStats> activationArgs
-                = new PvPProjectileActivationArgs<IProjectileStats>(
+            ProjectileActivationArgs<IProjectileStats> activationArgs
+                = new ProjectileActivationArgs<IProjectileStats>(
                     transform.position,
                     _projectileStats,
                     shellVelocity,

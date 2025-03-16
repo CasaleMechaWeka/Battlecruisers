@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public abstract class PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats> : PvPProjectile,
         IRemovable,
         IPoolable<TPvPActivationArgs>
-            where TPvPActivationArgs : PvPProjectileActivationArgs<TPvPStats>
+            where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>
             where TPvPStats : IProjectileStats
     {
         private ITargetFilter _targetFilter;

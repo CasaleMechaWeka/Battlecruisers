@@ -1,15 +1,16 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
-using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs
 {
-    public class PvPSmartMissileActivationArgs<TPvPStats> : PvPProjectileActivationArgs<TPvPStats> where TPvPStats : IProjectileStats
+    public class PvPSmartMissileActivationArgs<TPvPStats> : ProjectileActivationArgs<TPvPStats> where TPvPStats : IProjectileStats
     {
         public IPvPCruiserTargetFactoriesProvider TargetFactories { get; }
         public IPvPCruiser EnempCruiser { get; }

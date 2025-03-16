@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPRocketSpawner : PvPProjectileSpawner<PvPRocketController, PvPTargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
+    public class PvPRocketSpawner : PvPProjectileSpawner<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
     {
         private ICruisingProjectileStats _rocketStats;
 
@@ -29,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             // Logging.Log(Tags.PROJECTILE_SPAWNER, $"spawn position: {transform.position}");
 
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            PvPTargetProviderActivationArgs<ICruisingProjectileStats> activationArgs
-                = new PvPTargetProviderActivationArgs<ICruisingProjectileStats>(
+            TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs
+                = new TargetProviderActivationArgs<ICruisingProjectileStats>(
                     transform.position,
                     _rocketStats,
                     rocketVelocity,
