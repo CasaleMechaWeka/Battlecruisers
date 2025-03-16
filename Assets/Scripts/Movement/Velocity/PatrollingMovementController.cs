@@ -6,16 +6,16 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity
 {
-    public class PatrollingMovementController : MovementController
+	public class PatrollingMovementController : MovementController
 	{
 		private readonly Rigidbody2D _rigidBody;
 		private readonly IList<IPatrolPoint> _patrolPoints;
-        private readonly float _positionEqualityMarginInM;
+		private readonly float _positionEqualityMarginInM;
 
 		private Vector2 _patrollingVelocity;
 		private IPatrolPoint _targetPatrolPoint;
 
-        private const float MIN_POSITION_EQUALITY_MARGIN_IN_M = 0.1f;
+		private const float MIN_POSITION_EQUALITY_MARGIN_IN_M = 0.1f;
 		private const float DEFAULT_SMOOTH_TIME_IN_S = 1;
 		private const float MIN_NUM_OF_PATROL_POINTS = 2;
 
@@ -25,56 +25,59 @@ namespace BattleCruisers.Movement.Velocity
 			set { _patrollingVelocity = value; }
 		}
 
-        public PatrollingMovementController(
-            Rigidbody2D rigidBody,
-            IVelocityProvider maxVelocityProvider,
-            IList<IPatrolPoint> patrolPoints,
-            float positionEqualityMarginInM)
-            : base(maxVelocityProvider)
+		public PatrollingMovementController(
+			Rigidbody2D rigidBody,
+			IVelocityProvider maxVelocityProvider,
+			IList<IPatrolPoint> patrolPoints,
+			float positionEqualityMarginInM)
+			: base(maxVelocityProvider)
 		{
 			Assert.IsNotNull(rigidBody);
 			Assert.IsTrue(patrolPoints.Count >= MIN_NUM_OF_PATROL_POINTS);
-            Assert.IsTrue(positionEqualityMarginInM >= MIN_POSITION_EQUALITY_MARGIN_IN_M);
+			Assert.IsTrue(positionEqualityMarginInM >= MIN_POSITION_EQUALITY_MARGIN_IN_M);
 
 			_rigidBody = rigidBody;
 			_patrolPoints = patrolPoints;
-            _positionEqualityMarginInM = positionEqualityMarginInM;
+			_positionEqualityMarginInM = positionEqualityMarginInM;
 
 			_targetPatrolPoint = patrolPoints[0];
 		}
 
 		public override void AdjustVelocity()
 		{
-            Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity, 
-                "Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P)");
+			Assert.AreEqual(new Vector2(0, 0), _rigidBody.velocity,
+				"Patrolling directly manipulates the game object's position.  If the rigidbody has a non-zero veolcity this seriously messes with things (as I found out :P)");
 
-            bool isInPosition = Vector2.Distance(_rigidBody.position, _targetPatrolPoint.Position) <= _positionEqualityMarginInM;
+			if (_rigidBody.velocity != Vector2.zero)
+				_rigidBody.velocity = Vector2.zero;
+
+			bool isInPosition = Vector2.Distance(_rigidBody.position, _targetPatrolPoint.Position) <= _positionEqualityMarginInM;
 			if (!isInPosition)
 			{
 				Vector2 oldPatrollingVelocity = _patrollingVelocity;
 
-                Vector2 moveToPosition 
-                    = Vector2.SmoothDamp(
-                        _rigidBody.position, 
-                        _targetPatrolPoint.Position, 
-                        ref _patrollingVelocity, 
-                        DEFAULT_SMOOTH_TIME_IN_S, 
-                        _maxVelocityProvider.VelocityInMPerS, 
-                        _time.DeltaTime);
+				Vector2 moveToPosition
+					= Vector2.SmoothDamp(
+						_rigidBody.position,
+						_targetPatrolPoint.Position,
+						ref _patrollingVelocity,
+						DEFAULT_SMOOTH_TIME_IN_S,
+						_maxVelocityProvider.VelocityInMPerS,
+						_time.DeltaTime);
 
-                // NOTE:  Am not using _rigidBody.MovePosition(), because that reacts weirdly
-                // for fighters when the fighter's rigidBody.rotation is being
-                // explicitly set (to get the fighter pointing the direction it's travelling).
-                _rigidBody.position = moveToPosition;
+				// NOTE:  Am not using _rigidBody.MovePosition(), because that reacts weirdly
+				// for fighters when the fighter's rigidBody.rotation is being
+				// explicitly set (to get the fighter pointing the direction it's travelling).
+				_rigidBody.position = moveToPosition;
 
-                // Have this inline so it will be stripped out when logs are excluded.
-                Logging.Verbose(
-                    Tags.MOVEMENT,
+				// Have this inline so it will be stripped out when logs are excluded.
+				Logging.Verbose(
+					Tags.MOVEMENT,
 					$"GameObject id: {_rigidBody.gameObject.GetInstanceID()}  " +
-                    $"currentPosition:D {_rigidBody.position}  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint.Position}  " +
-                    $"_patrollingVelocity: {_patrollingVelocity}  _patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  " +
-                    $"PatrollingVelocity: {_maxVelocityProvider.VelocityInMPerS}  _patrollingSmoothTime: {DEFAULT_SMOOTH_TIME_IN_S}  " +
-                    $"_time.DeltaTime: {_time.DeltaTime}  _rigidBody.rotation: {_rigidBody.rotation}");
+					$"currentPosition:D {_rigidBody.position}  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint.Position}  " +
+					$"_patrollingVelocity: {_patrollingVelocity}  _patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  " +
+					$"PatrollingVelocity: {_maxVelocityProvider.VelocityInMPerS}  _patrollingSmoothTime: {DEFAULT_SMOOTH_TIME_IN_S}  " +
+					$"_time.DeltaTime: {_time.DeltaTime}  _rigidBody.rotation: {_rigidBody.rotation}");
 
 				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);
 			}
@@ -108,12 +111,12 @@ namespace BattleCruisers.Movement.Velocity
 			return _patrolPoints[nextIndex];
 		}
 
-        public override void Activate()
-        {
+		public override void Activate()
+		{
 			// Patrolling directly manipulates the game object's position.  If the rigidbody has a 
-            // non-zero veolcity this seriously messes with things.  Hence, ensure the rigidbody has
-            // a zero velocity :)
+			// non-zero veolcity this seriously messes with things.  Hence, ensure the rigidbody has
+			// a zero velocity :)
 			_rigidBody.velocity = new Vector2(0, 0);
-        }
+		}
 	}
 }

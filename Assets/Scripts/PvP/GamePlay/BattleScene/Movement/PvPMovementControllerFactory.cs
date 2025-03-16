@@ -6,8 +6,6 @@ using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
@@ -61,17 +59,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         #region Providers
         public IVelocityProvider CreateStaticVelocityProvider(float velocityInMPerS)
         {
-            return new PvPStaticVelocityProvider(velocityInMPerS);
+            return new StaticVelocityProvider(velocityInMPerS);
         }
 
         public IVelocityProvider CreateMultiplyingVelocityProvider(IVelocityProvider providerToWrap, float multiplier)
         {
-            return new PvPMultiplyingVelocityProvider(providerToWrap, multiplier);
+            return new MultiplyingVelocityProvider(providerToWrap, multiplier);
         }
 
         public IVelocityProvider CreatePatrollingVelocityProvider(IPatrollingVelocityProvider patrollingAircraft)
         {
-            return new PvPPatrollingVelocityProvider(patrollingAircraft);
+            return new PatrollingVelocityProvider(patrollingAircraft);
         }
         #endregion Providers
 
@@ -81,12 +79,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             IList<IPatrolPoint> patrolPoints,
             float positionEqualityMarginInM = DEFAULT_POSITION_EQUALITY_MARGIN_IN_M)
         {
-            return new PvPPatrollingMovementController(rigidBody, maxVelocityProvider, patrolPoints, positionEqualityMarginInM);
+            return new PatrollingMovementController(rigidBody, maxVelocityProvider, patrolPoints, positionEqualityMarginInM);
         }
 
         public IBomberMovementController CreateBomberMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
         {
-            return new PvPBomberMovementController(rigidBody, maxVelocityProvider);
+            return new BomberMovementController(rigidBody, maxVelocityProvider);
         }
 
         public FollowingXAxisMovementController CreateFollowingXAxisMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider)
@@ -96,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public IMovementController CreateDummyMovementController()
         {
-            return new PvPDummyMovementController();
+            return new DummyMovementController();
         }
         #endregion Velocity
 

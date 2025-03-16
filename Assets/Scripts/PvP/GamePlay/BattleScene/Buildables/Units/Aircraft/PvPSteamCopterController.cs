@@ -5,7 +5,6 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -178,12 +177,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(1)
             {
 
-                new PvPPatrolPoint(patrolPositions[1], removeOnceReached: true)
+                new PatrolPoint(patrolPositions[1], removeOnceReached: true)
             };
 
             for (int i = 2; i < patrolPositions.Count; ++i)
             {
-                patrolPoints.Add(new PvPPatrolPoint(patrolPositions[i]));
+                patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
             }
 
             return patrolPoints;

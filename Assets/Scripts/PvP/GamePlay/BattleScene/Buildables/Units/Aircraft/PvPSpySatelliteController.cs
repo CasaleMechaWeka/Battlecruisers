@@ -4,7 +4,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using BattleCruisers.Utils;
 using Unity.Netcode;
 using UnityEngine;
@@ -21,12 +20,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count)
             {
-                new PvPPatrolPoint(patrolPositions[0], removeOnceReached: true)
+                new PatrolPoint(patrolPositions[0], removeOnceReached: true)
             };
 
             for (int i = 1; i < patrolPositions.Count; ++i)
             {
-                patrolPoints.Add(new PvPPatrolPoint(patrolPositions[i]));
+                patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
             }
 
             return patrolPoints;

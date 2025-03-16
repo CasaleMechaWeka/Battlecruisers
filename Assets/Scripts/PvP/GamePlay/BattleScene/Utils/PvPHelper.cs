@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Velocity;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -23,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public static List<IPatrolPoint> ConvertVectorsToPatrolPoints(IList<Vector2> positions)
         {
             return positions
-                .Select(position => new PvPPatrolPoint(position) as IPatrolPoint)
+                .Select(position => new PatrolPoint(position) as IPatrolPoint)
                 .ToList();
         }
 
