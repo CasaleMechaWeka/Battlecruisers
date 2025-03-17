@@ -23,6 +23,7 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -320,7 +321,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IInput input = InputBC.Instance;
             IPinchTracker pinchTracker = new PvPPinchTracker(input, updater);
 
-            float zoomScale = SystemInfoBC.Instance.IsHandheld ? PvPZoomScale.SWIPE : PvPZoomScale.SCROLL_WHEEL;
+            float zoomScale = SystemInfoBC.Instance.IsHandheld ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
             float zoomSettingsMultiplier = new PvPZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
 
             PvPZoomCalculator zoomCalculator

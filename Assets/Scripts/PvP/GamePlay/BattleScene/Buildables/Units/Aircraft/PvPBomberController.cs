@@ -300,7 +300,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private float FindTimeBombWillTravel(float verticalDistanceInM)
         {
-            return Mathf.Sqrt(2 * verticalDistanceInM / (_bombStats.GravityScale * PvPConstants.GRAVITY));
+            return Mathf.Sqrt(2 * verticalDistanceInM / (_bombStats.GravityScale * Constants.GRAVITY));
         }
 
         protected override void OnBoostChanged()

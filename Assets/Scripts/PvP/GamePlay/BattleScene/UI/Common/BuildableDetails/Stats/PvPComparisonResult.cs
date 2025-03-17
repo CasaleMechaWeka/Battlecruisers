@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
     public abstract class PvPComparisonResult : IPvPComparisonResult
     {
-        protected class PvPAlpha
+        protected class Alpha
         {
             public const float NEUTRAL = 1;
             public const float BETTER = 1;
@@ -36,17 +36,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
     public class PvPNeutralResult : PvPComparisonResult
     {
-        public PvPNeutralResult() : base(PvPAlpha.NEUTRAL, PvPHue.NEUTRAL) { }
+        public PvPNeutralResult() : base(Alpha.NEUTRAL, PvPHue.NEUTRAL) { }
     }
 
     public class PvPBetterResult : PvPComparisonResult
     {
-        public PvPBetterResult() : base(PvPAlpha.BETTER, PvPHue.BETTER) { }
+        public PvPBetterResult() : base(Alpha.BETTER, PvPHue.BETTER) { }
     }
 
     public class PvPWorseResult : PvPComparisonResult
     {
-        public PvPWorseResult() : base(PvPAlpha.WORSE, PvPHue.WORSE) { }
+        public PvPWorseResult() : base(Alpha.WORSE, PvPHue.WORSE) { }
     }
 }
 

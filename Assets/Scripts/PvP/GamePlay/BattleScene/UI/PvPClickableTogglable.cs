@@ -1,5 +1,5 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine.EventSystems;
 
@@ -99,12 +99,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 
         protected virtual void ShowClickedState()
         {
-            SetAlpha(PvPAlpha.PRESSED);
+            SetAlpha(Alpha.PRESSED);
         }
 
         protected virtual void ShowHoverState()
         {
-            SetAlpha(PvPAlpha.HOVER);
+            SetAlpha(Alpha.HOVER);
         }
 
         protected void Reset()

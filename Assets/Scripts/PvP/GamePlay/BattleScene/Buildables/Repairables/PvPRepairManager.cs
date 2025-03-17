@@ -102,7 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     {
                         return;
                     }
-                    float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS * PvPBuildSpeedMultipliers.DEFAULT;
+                    float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS * BuildSpeedMultipliers.DEFAULT;
                     repairable.RepairCommand.Execute(healthGained);
                 }
             }

@@ -1,5 +1,5 @@
 using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void CheckIfPopulationReached()
         {
-            _isPopulationLimitReached.Value = _unitMonitor.AliveUnits.Count >= PvPConstants.POPULATION_LIMIT;
+            _isPopulationLimitReached.Value = _unitMonitor.AliveUnits.Count >= Constants.POPULATION_LIMIT;
         }
     }
 }

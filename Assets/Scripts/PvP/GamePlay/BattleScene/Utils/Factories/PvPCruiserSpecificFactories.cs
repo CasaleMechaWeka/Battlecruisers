@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, PvPConstants.WATER_LINE),
+                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
                     faction);
         }
 
@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, PvPConstants.WATER_LINE),
+                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
                     faction);
         }
     }

@@ -47,6 +47,7 @@ using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Wind;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Buildables.Colours;
@@ -875,7 +876,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             yield return new WaitForSeconds(5f); // to show matchmaking animation 
             MatchmakingScreenController.Instance.animator.SetBool("Completed", false);
             MatchmakingScreenController.Instance.DisableAllAnimatedGameObjects();
-            sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
+            sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
             PlayCountDownAnimation();
             if (SynchedServerData.Instance != null)
             {

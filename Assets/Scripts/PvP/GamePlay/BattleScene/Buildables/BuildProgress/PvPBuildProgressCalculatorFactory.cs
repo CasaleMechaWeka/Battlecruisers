@@ -1,5 +1,5 @@
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
@@ -22,21 +22,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPBuildProgressCalculator CreatePlayerACruiserCalculator()
         {
 #if ENABLE_CHEATS
-            PvPCompositeCalculator calculator = CreateCompositeCalculator(PvPBuildSpeedMultipliers.DEFAULT);
+            PvPCompositeCalculator calculator = CreateCompositeCalculator(BuildSpeedMultipliers.DEFAULT);
             playerABuildSpeed = calculator;
             return calculator;
 #endif
-            return new PvPLinearCalculator(PvPBuildSpeedMultipliers.DEFAULT);
+            return new PvPLinearCalculator(BuildSpeedMultipliers.DEFAULT);
         }
 
         public IPvPBuildProgressCalculator CreatePlayerBCruiserCalculator()
         {
 #if ENABLE_CHEATS
-            PvPCompositeCalculator calculator = CreateCompositeCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/PvPBuildSpeedMultipliers.DEFAULT);
+            PvPCompositeCalculator calculator = CreateCompositeCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/BuildSpeedMultipliers.DEFAULT);
             playerBBuildSpeed = calculator;
             return calculator;
 #endif
-            return new PvPLinearCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/PvPBuildSpeedMultipliers.DEFAULT);
+            return new PvPLinearCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/BuildSpeedMultipliers.DEFAULT);
         }
 
         public IPvPBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)
@@ -54,8 +54,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPCompositeCalculator calculator
                 = new PvPCompositeCalculator(
                     new PvPLinearCalculator(defaultBuildSpeedMultiplier),
-                    new PvPLinearCalculator(PvPBuildSpeedMultipliers.FAST),
-                    new PvPLinearCalculator(PvPBuildSpeedMultipliers.VERY_FAST))
+                    new PvPLinearCalculator(BuildSpeedMultipliers.FAST),
+                    new PvPLinearCalculator(BuildSpeedMultipliers.VERY_FAST))
                 {
                     BuildSpeed = PvPBuildSpeed.InfinitelySlow
                 };

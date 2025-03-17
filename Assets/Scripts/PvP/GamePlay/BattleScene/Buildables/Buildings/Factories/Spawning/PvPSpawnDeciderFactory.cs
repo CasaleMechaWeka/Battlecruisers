@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         spawnPositionFinder),
                     new PvPPopulationLimitSpawnDecider(
                         factory.ParentCruiser.UnitMonitor,
-                        PvPConstants.POPULATION_LIMIT));
+                        Constants.POPULATION_LIMIT));
         }
     }
 }

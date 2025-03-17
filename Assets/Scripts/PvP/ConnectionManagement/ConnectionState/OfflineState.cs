@@ -7,7 +7,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine;
 using BattleCruisers.Scenes;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
                 if (GameObject.Find("NetworkManager") != null)
                     GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
-                LandingSceneGod.SceneNavigator.GoToScene(PvPSceneNames.SCREENS_SCENE, true);
+                LandingSceneGod.SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
 

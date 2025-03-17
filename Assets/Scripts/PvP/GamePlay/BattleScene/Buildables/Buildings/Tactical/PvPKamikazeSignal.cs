@@ -4,8 +4,8 @@ using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Unity.Netcode;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
 
-                GameObject[] aircraftGameObjects = GameObject.FindGameObjectsWithTag(PvPGameObjectTags.AIRCRAFT);
+                GameObject[] aircraftGameObjects = GameObject.FindGameObjectsWithTag(GameObjectTags.AIRCRAFT);
 
                 foreach (GameObject aircraftGameObject in aircraftGameObjects)
                 {

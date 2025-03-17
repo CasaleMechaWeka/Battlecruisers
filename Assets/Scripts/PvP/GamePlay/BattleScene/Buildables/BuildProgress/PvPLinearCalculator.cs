@@ -1,5 +1,5 @@
 using BattleCruisers.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private readonly float _buildMultiplier;
 
-        public PvPLinearCalculator(float buildSpeedMultiplier = PvPBuildSpeedMultipliers.DEFAULT)
+        public PvPLinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.DEFAULT)
         {
             // Logging.Log(Tags.BUILD_PROGRESS, $"build speed multiplier: {buildSpeedMultiplier}");
 

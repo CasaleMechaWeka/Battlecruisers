@@ -11,6 +11,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.Utils;
 using Unity.Services.Leaderboards;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 
@@ -107,13 +108,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 if (PvPBattleSceneGodClient.Instance.wasOpponentDisconnected)
                 {
-                    GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE);
+                    GoToScene(SceneNames.PvP_DESTRUCTION_SCENE);
                 }
                 else
-                    GoToScene(PvPSceneNames.SCREENS_SCENE);
+                    GoToScene(SceneNames.SCREENS_SCENE);
             }
             else
-                GoToScene(PvPSceneNames.SCREENS_SCENE);
+                GoToScene(SceneNames.SCREENS_SCENE);
         }
 
         bool isTriggtered = false;
@@ -233,7 +234,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (NetworkManager.Singleton != null)
                 NetworkManager.Singleton.Shutdown(true);
             DestroyAllNetworkObjects();
-            _sceneNavigator.GoToScene(PvPSceneNames.PvP_DESTRUCTION_SCENE, true);
+            _sceneNavigator.GoToScene(SceneNames.PvP_DESTRUCTION_SCENE, true);
         }
 
         public async void DestroyAllNetworkObjects()

@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI;
 using BattleCruisers.Utils;
@@ -57,12 +56,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 
         protected virtual void ShowEnabledState()
         {
-            SetAlpha(PvPAlpha.ENABLED);
+            SetAlpha(Alpha.ENABLED);
         }
 
         protected virtual void ShowDisabledState()
         {
-            SetAlpha(PvPAlpha.DISABLED);
+            SetAlpha(Alpha.DISABLED);
         }
 
         protected void SetAlpha(float alpha)
