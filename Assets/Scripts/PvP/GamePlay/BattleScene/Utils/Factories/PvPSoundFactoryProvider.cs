@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.Pools;
@@ -36,10 +35,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             LoadAudioSourcePool();
             UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
-            DummySoundPlayer = new PvPDummySoundPlayer();
+            DummySoundPlayer = new DummySoundPlayer();
 
             PrioritisedSoundPlayer
-                = new PvPPrioritisedSoundPlayer(
+                = new PrioritisedSoundPlayer(
                     new SingleSoundPlayer(
                         SoundFetcher,
                         components.PrioritisedSoundPlayerAudioSource));
@@ -48,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private void LoadAudioSourcePool()
         {
             _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
-            SoundPlayer = new PvPSoundPlayer(SoundFetcher, _audioSourcePool/*, poolProviders.AudioSourcePool*/);
+            SoundPlayer = new SoundPlayer(SoundFetcher, _audioSourcePool/*, poolProviders.AudioSourcePool*/);
         }
     }
 }

@@ -3,7 +3,6 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
-
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     /// <summary>

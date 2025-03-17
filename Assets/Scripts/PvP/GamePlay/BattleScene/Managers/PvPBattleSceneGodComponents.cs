@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.UI;
@@ -18,6 +17,7 @@ using BattleCruisers.Utils.BattleScene.Update;
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.Sound.AudioSources;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -72,11 +72,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(settingsManager);
 
             PrioritisedSoundPlayerAudioSource
-                = new PvPEffectVolumeAudioSource(
+                = new EffectVolumeAudioSource(
                     new AudioSourceBC(prioritisedSoundPlayerAudioSource),
                     settingsManager, 0);
             UISoundsAudioSource
-                = new PvPEffectVolumeAudioSource(
+                = new EffectVolumeAudioSource(
                     new AudioSourceBC(uiSoundsAudioSource),
                     settingsManager, 1);
 

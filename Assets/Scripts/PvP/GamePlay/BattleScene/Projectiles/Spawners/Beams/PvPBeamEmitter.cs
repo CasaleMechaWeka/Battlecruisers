@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,6 +9,7 @@ using System;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Projectiles.Spawners.Beams;
+using BattleCruisers.UI.Sound.AudioSources;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
 {
@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             if (IsClient)
                 _audioSource
-                    = new PvPEffectVolumeAudioSource(
+                    = new EffectVolumeAudioSource(
                         new AudioSourceBC(_platformAudioSource),
                         PvPBattleSceneGodClient.Instance.dataProvider.SettingsManager);
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _parent = parent;
             /*            _audioSource
-                            = new PvPEffectVolumeAudioSource(
+                            = new EffectVolumeAudioSource(
                                 new PvPAudioSourceBC(_platformAudioSource),
                                 settingsManager);*/
 

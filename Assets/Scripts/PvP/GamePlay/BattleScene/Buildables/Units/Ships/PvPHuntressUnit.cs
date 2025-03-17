@@ -5,9 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -20,6 +18,7 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -30,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPHuntressUnit : PvPShipController
     {
         private IBroadcastingAnimation _unfurlAnimation;
-        private PvPAudioSourceGroup _unfurlAudioGroup;
+        private AudioSourceGroup _unfurlAudioGroup;
         public AudioSource[] audioSources;
         public PvPBarrelWrapper minigun, _samSite;
         public PvPProjectileStats minigunStats;
@@ -81,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 sources[i] = new AudioSourceBC(audioSources[i]);
             }
             // _unfurlAudioGroup
-            //     = new PvPAudioSourceGroup(
+            //     = new AudioSourceGroup(
             //         factoryProvider.SettingsManager,
             //         sources);
         }

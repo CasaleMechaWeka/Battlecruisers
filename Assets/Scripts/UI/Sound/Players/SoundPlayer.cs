@@ -32,6 +32,7 @@ namespace BattleCruisers.UI.Sound.Players
 
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
         {
+            Assert.IsNotNull(sound);
             AudioSourceActivationArgs activationArgs = new AudioSourceActivationArgs(sound, position);
             _audioSourcePool.GetItem(activationArgs);
         }

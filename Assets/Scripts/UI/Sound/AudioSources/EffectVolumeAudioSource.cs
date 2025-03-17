@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Settings;
+﻿
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.UI.Sound.AudioSources
@@ -6,7 +7,7 @@ namespace BattleCruisers.UI.Sound.AudioSources
     public class EffectVolumeAudioSource : VolumeAwareAudioSource
     {
         private int _type = -1;
-        public EffectVolumeAudioSource(IAudioSource audioSource, ISettingsManager settingsManager, int type) 
+        public EffectVolumeAudioSource(IAudioSource audioSource, ISettingsManager settingsManager, int type)
             : base(audioSource, settingsManager)
         {
             _type = type;
@@ -20,26 +21,29 @@ namespace BattleCruisers.UI.Sound.AudioSources
 
         protected override float GetVolume(ISettingsManager settingsManager)
         {
+            if (settingsManager == null)
+                return 0f;
             if (_type == 0)
             {
-                return settingsManager.AlertVolume*settingsManager.MasterVolume;
+                return settingsManager.AlertVolume * settingsManager.MasterVolume;
             }
             else if (_type == 1)
             {
-                return settingsManager.InterfaceVolume*settingsManager.MasterVolume;
+                return settingsManager.InterfaceVolume * settingsManager.MasterVolume;
             }
             else if (_type == 2)
             {
-                return settingsManager.AmbientVolume*settingsManager.MasterVolume;
+                return settingsManager.AmbientVolume * settingsManager.MasterVolume;
             }
             else if (_type == 3)
             {
-                return settingsManager.MusicVolume*settingsManager.MasterVolume;
+                return settingsManager.MusicVolume * settingsManager.MasterVolume;
             }
-            else{
-                return settingsManager.EffectVolume*settingsManager.MasterVolume;
+            else
+            {
+                return settingsManager.EffectVolume * settingsManager.MasterVolume;
             }
-            
+
         }
     }
 }

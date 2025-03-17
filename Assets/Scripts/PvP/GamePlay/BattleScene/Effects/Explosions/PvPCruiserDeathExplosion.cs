@@ -1,5 +1,5 @@
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPCruiserDeathExplosion : PvPExplosionController
     {
-        private PvPAudioSourceGroup _audioSources;
+        private AudioSourceGroup _audioSources;
         public PvPBodykitWreck[] wrecks;
         public SpriteRenderer[] wreckRenders;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                     .Select(audioSource => (IAudioSource)new AudioSourceBC(audioSource))
                     .ToList();
 
-            _audioSources = new PvPAudioSourceGroup(settingsManager, audioSources);
+            _audioSources = new AudioSourceGroup(settingsManager, audioSources);
 
             return explosion;
         }

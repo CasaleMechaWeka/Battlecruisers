@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
@@ -18,13 +17,14 @@ using BattleCruisers.Data;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.UI.Sound.AudioSources;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units
 {
     public abstract class PvPUnit : PvPBuildable<PvPBuildableActivationArgs>, IPvPUnit
     {
         private IAudioSource _coreEngineAudioSource;
-        private PvPVolumeAwareAudioSource _engineAudioSource;
+        private VolumeAwareAudioSource _engineAudioSource;
 
         [Header("Other")]
         public UnitCategory category;
@@ -110,13 +110,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Initialise(factoryProvider);
 
-            // _engineAudioSource = new PvPEffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
+            // _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
         }
 
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            _engineAudioSource = new PvPEffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
+            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)

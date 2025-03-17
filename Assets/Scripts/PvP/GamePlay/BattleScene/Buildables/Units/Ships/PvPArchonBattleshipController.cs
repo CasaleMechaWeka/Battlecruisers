@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils;
@@ -17,6 +16,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPArchonBattleshipController : PvPShipController
     {
         private IBroadcastingAnimation _unfurlAnimation;
-        private PvPAudioSourceGroup _unfurlAudioGroup;
+        private AudioSourceGroup _unfurlAudioGroup;
 
         public PvPBarrelWrapper laser;
         public GameObject bones;

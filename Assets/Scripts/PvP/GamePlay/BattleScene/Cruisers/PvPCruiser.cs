@@ -31,7 +31,6 @@ using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
@@ -44,6 +43,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
 using BattleCruisers.UI.Common.Click;
+using BattleCruisers.UI.Sound.AudioSources;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -719,7 +719,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (droneSoundFeedbackInitialiser == null)
                 return;
             AudioSource audioSource = droneSoundFeedbackInitialiser.gameObject.GetComponentInChildren<AudioSource>();
-            IAudioSource _audioSource = new PvPEffectVolumeAudioSource(
+            IAudioSource _audioSource = new EffectVolumeAudioSource(
                         new AudioSourceBC(audioSource),
                         PvPBattleSceneGodClient.Instance.factoryProvider.SettingsManager, 2);
             _audioSource?.Play(isSpatial: true);
