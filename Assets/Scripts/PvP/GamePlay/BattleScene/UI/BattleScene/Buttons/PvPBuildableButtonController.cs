@@ -4,9 +4,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Presentables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public abstract class PvPBuildableButtonController : PvPClickablePresentableController, IPvPBuildableButton, IBroadcastingFilter
     {
         private IBroadcastingFilter<IPvPBuildable> _shouldBeEnabledFilter;
-        private PvPFilterToggler _isEnabledToggler;
+        private FilterToggler _isEnabledToggler;
 
         public Image buildableImage;
 
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
-            _isEnabledToggler = new PvPFilterToggler(this, this);
+            _isEnabledToggler = new FilterToggler(this, this);
         }
 
         public async void ApplyVariantIfExist(IPvPBuilding building)

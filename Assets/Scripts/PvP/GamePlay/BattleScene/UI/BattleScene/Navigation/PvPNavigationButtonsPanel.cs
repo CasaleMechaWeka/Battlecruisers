@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPNavigationButtonsPanel : Highlightable
     {
-        private PvPFilterToggler _enabledToggler;
+        private FilterToggler _enabledToggler;
 
         public PvPCanvasGroupButton overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton;
         public PvPCanvasGroupButton leftCaptainButton, rightCaptainButton;
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             leftCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftCruiser);
             rightCaptainButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightCruiser);
 
-            _enabledToggler = new PvPFilterToggler(enabledFilter, overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton, leftCaptainButton, rightCaptainButton, heckleButton/*, mainMenuButton*/);
+            _enabledToggler = new FilterToggler(enabledFilter, overviewButton, leftPlayerCruiserButton, rightPlayerCruiserButton, leftCaptainButton, rightCaptainButton, heckleButton/*, mainMenuButton*/);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 {
-    public abstract class PvPClickableTogglable : PvPTogglable,
+    public abstract class PvPClickableTogglable : Togglable,
         IPointerClickHandler,
         IPointerDownHandler,
         IPointerUpHandler,

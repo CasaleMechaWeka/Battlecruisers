@@ -59,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
             _uiManager = uiManager;
             _buttonVisibilityFilter = buttonVisibilityFilter;
-            _longPressIdentifier = new PvPLongPressIdentifier(this, TimeBC.Instance, updater, lightUpIntervalS);
+            _longPressIdentifier = new LongPressIdentifier(this, TimeBC.Instance, updater, lightUpIntervalS);
 
             _longPressIdentifier.LongPressStart += _longPressIdentifier_LongPressStart;
             _longPressIdentifier.LongPressEnd += _longPressIdentifier_LongPressEnd;

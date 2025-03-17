@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine.Assertions;
@@ -11,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPGameSpeedButton : PvPCanvasGroupButton, IGameSpeedButton
     {
         private ITime _time;
-        private PvPFilterToggler _isEnabledToggler;
+        private FilterToggler _isEnabledToggler;
 
         private const float DEFAULT_TIME_SCALE = 1;
 
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _time = time;
             IsSelected = false;
-            _isEnabledToggler = new PvPFilterToggler(shouldBeEnabledFilter, this);
+            _isEnabledToggler = new FilterToggler(shouldBeEnabledFilter, this);
         }
 
         public void TriggerClick()

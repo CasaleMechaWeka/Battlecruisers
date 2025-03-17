@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public abstract class PvPDismissPanelButtonController : PvPElementWithClickSound
     {
-        private PvPFilterToggler _isEnabledToggler;
+        private FilterToggler _isEnabledToggler;
         protected IPvPUIManager _uiManager;
 
         private Image _closeImage;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
 
             _uiManager = uiManager;
-            _isEnabledToggler = new PvPFilterToggler(shouldBeEnabledFilter, this);
+            _isEnabledToggler = new FilterToggler(shouldBeEnabledFilter, this);
 
             _closeImage = transform.FindNamedComponent<Image>("CloseImage");
         }

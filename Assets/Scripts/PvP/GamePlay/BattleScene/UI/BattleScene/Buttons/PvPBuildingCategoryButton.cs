@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
@@ -14,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private IPvPUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
-        private PvPFilterToggler _filterToggler;
+        private FilterToggler _filterToggler;
 
         public Image activeFeedback;
         protected override MaskableGraphic Graphic => activeFeedback;
@@ -46,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _uiManager = uiManager;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
 
-            _filterToggler = new PvPFilterToggler(this, this);
+            _filterToggler = new FilterToggler(this, this);
         }
 
         private void OnDestroy()
