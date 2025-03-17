@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
-    public class PvPEdgeScrollingCameraTargetProvider : PvPUserInputCameraTargetProvider
+    public class PvPEdgeScrollingCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IUpdater _updater;
         private readonly IEdgeScrollCalculator _scrollCalculator;

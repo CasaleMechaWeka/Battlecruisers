@@ -3,7 +3,7 @@ using BattleCruisers.UI.Cameras.Targets.Providers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
-    public class PvPStaticCameraTargetProvider : PvPUserInputCameraTargetProvider, IStaticCameraTargetProvider
+    public class PvPStaticCameraTargetProvider : UserInputCameraTargetProvider, IStaticCameraTargetProvider
     {
         public override int Priority { get; }
 

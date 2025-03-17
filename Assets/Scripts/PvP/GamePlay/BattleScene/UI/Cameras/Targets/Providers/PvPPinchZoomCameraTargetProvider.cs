@@ -2,11 +2,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
-    public class PvPPinchZoomCameraTargetProvider : PvPUserInputCameraTargetProvider
+    public class PvPPinchZoomCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IZoomCalculator _zoomCalculator;
         private readonly IDirectionalZoom _directionalZoom;

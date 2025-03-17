@@ -1,8 +1,8 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
-    public class PvPSwipeCameraTargetProvider : PvPUserInputCameraTargetProvider
+    public class PvPSwipeCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IDragTracker _dragTracker;
         private readonly IScrollCalculator _scrollCalculator;

@@ -1,13 +1,14 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers
 {
-    public class PvPScrollWheelCameraTargetProvider : PvPUserInputCameraTargetProvider
+    public class PvPScrollWheelCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IInput _input;
         private readonly IUpdater _updater;
