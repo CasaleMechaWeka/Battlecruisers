@@ -2,8 +2,8 @@ using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPCruiserHealthBarInitialiser : MonoBehaviour
     {
         public Image _lowHealthFeedback;
-        public PvPDamageTakenIndicator damageTakenIndicator;
+        public DamageTakenIndicator damageTakenIndicator;
         private IHealthStateMonitor _cruiserHealthMonitor;
 
         public IHighlightable Initialise(PvPCruiser cruiser)
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsNotNull(platformFillableImage);
             IFillableImage fillableImage = new FillableImage(platformFillableImage);
 
-            IFilter<PvPTarget> visibilityFilter = new PvPStaticFilter<PvPTarget>(isMatch: true);
+            IFilter<PvPTarget> visibilityFilter = new StaticFilter<PvPTarget>(isMatch: true);
 
             IPvPHealthDial healthDial = new PvPHealthDial(fillableImage, visibilityFilter, damageTakenIndicator);
             healthDial.Damagable = cruiser;

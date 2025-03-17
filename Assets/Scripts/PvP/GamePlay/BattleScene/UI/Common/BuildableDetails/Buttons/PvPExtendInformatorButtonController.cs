@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;

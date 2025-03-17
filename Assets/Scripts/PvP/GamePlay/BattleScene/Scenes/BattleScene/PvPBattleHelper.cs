@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Models;
@@ -107,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPChooseTargetButtonVisibilityFilter(),
                     new PvPDeleteButtonVisibilityFilter(),
                     new BroadcastingFilter(isMatch: true),
-                    new PvPStaticBroadcastingFilter(isMatch: true));
+                    new StaticBroadcastingFilter(isMatch: true));
         }
 
         public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser)
@@ -119,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPChooseTargetButtonVisibilityFilter(),
                     new PvPDeleteButtonVisibilityFilter(),
                     new BroadcastingFilter(isMatch: true),
-                    new PvPStaticBroadcastingFilter(isMatch: true));
+                    new StaticBroadcastingFilter(isMatch: true));
         }
 
         public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser)

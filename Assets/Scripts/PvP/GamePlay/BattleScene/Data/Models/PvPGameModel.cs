@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         private int _selectedLevel;
 
         [SerializeField]
-        private PvPSkirmishModel _skirmish;
+        private SkirmishModel _skirmish;
 
         [SerializeField]
         private HotkeysModel _hotkeys;
@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             }
         }
 
-        public PvPSkirmishModel Skirmish
+        public SkirmishModel Skirmish
         {
             get { return _skirmish; }
             set { _skirmish = value; }

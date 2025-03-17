@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+﻿
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 
 namespace BattleCruisers.UI.Filters
@@ -34,6 +35,7 @@ namespace BattleCruisers.UI.Filters
         {
             return _isMatch;
         }
+
         public bool IsMatch(TElement element, VariantPrefab variant)
         {
             return _isMatch;

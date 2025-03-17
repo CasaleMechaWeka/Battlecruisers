@@ -1,8 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
@@ -15,14 +15,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPCloudInitialiser : MonoBehaviour
     {
-        private PvPCloudTeleporter _cloudTeleporter;
+        private CloudTeleporter _cloudTeleporter;
 
-        public PvPCloudController leftCloud, rightCloud;
+        public CloudController leftCloud, rightCloud;
         public PvPMistController mist;
-        public PvPMoonController moon;
-        public PvPFogController fog;
+        public MoonController moon;
+        public FogController fog;
         public PvPSkyStatsGroup skyStatsGroup;
-        public PvPBackgroundImageController background;
+        public BackgroundImageController background;
 
         public SpriteRenderer underwaterGlowSprite;
         public Image seaShadeCanvas;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             string skyMaterialName,
             IUpdater updater,
             float cameraAspectRatio,
-            IPrefabContainer<PvPBackgroundImageStats> backgroundStats)
+            IPrefabContainer<BackgroundImageStats> backgroundStats)
         {
             PvPHelper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, background);
             PvPHelper.AssertIsNotNull(leftCloud, rightCloud, mist, backgroundStats);
@@ -46,15 +46,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             rightCloud.Initialise(skyStats);
 
             ICloudRandomiser cloudRandomiser
-                = new PvPCloudRandomiser(
+                = new CloudRandomiser(
                     RandomGenerator.Instance,
                     rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
             _cloudTeleporter
-                = new PvPCloudTeleporter(
+                = new CloudTeleporter(
                     updater,
-                    new PvPTeleporterHelper(),
+                    new TeleporterHelper(),
                     leftCloud,
                     rightCloud);
 

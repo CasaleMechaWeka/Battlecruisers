@@ -2,16 +2,17 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Categorisation;
 using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats
 {
-    public abstract class PvPBuildableStatsController<TItem> : PvPStatsController<TItem> where TItem : class, IPvPBuildable
+    public abstract class PvPBuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IPvPBuildable
     {
-        public PvPNumberStatValue drones, buildTime;
-        public PvPStarsStatValue health, cruiserDamage, shipDamage, airDamage;
+        public NumberStatValue drones, buildTime;
+        public StarsStatValue health, cruiserDamage, shipDamage, airDamage;
 
         public override void Initialise()
         {
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         }
 
 
-        private void ShowDamageStat(PvPStarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
+        private void ShowDamageStat(StarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
         {
             bool shouldShowRow = damagePerS > 0;
             damageStatsRow.gameObject.SetActive(shouldShowRow);

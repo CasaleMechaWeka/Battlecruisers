@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }
         HotkeysModel Hotkeys { get; }
-        PvPSkirmishModel Skirmish { get; set; }
+        SkirmishModel Skirmish { get; set; }
 
         ReadOnlyCollection<PvPHullKey> UnlockedHulls { get; }
         ReadOnlyCollection<PvPBuildingKey> UnlockedBuildings { get; }

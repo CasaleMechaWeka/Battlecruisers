@@ -1,4 +1,3 @@
-using BattleCruisers.AI;
 using BattleCruisers.Data;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.Localisation;
@@ -10,7 +9,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -21,6 +19,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -29,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         protected readonly IApplicationModel _appModel;
         protected readonly IPvPBuildProgressCalculatorFactory _calculatorFactory;
 
-        protected readonly IPvPBackgroundStatsProvider _backgroundStatsProvider;
+        protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
         private readonly IPrefabFetcher _prefabFetcher;
         private readonly ILocTable _storyStrings;
         public virtual IPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerAPrefabName.Value) ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
@@ -80,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             _appModel = appModel;
             _prefabFetcher = prefabFetcher;
             _storyStrings = storyString;
-            _backgroundStatsProvider = new PvPBackgroundStatsProvider(_prefabFetcher);
+            _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
             // _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabPat
             // PlayerACruiser = new PvPHullKey("PvPYeti");
             // PlayerBCruiser = new PvPHullKey("PvPRaptor");
@@ -99,9 +98,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // return _appModel.DataProvider.GetPvPLevel();
         }
 
-        public virtual async Task<IPrefabContainer<PvPBackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsync(levelNum);
+            return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
         }
     }
 }

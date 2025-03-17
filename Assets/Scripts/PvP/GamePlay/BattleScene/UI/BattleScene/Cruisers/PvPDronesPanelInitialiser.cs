@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IGameObject highlightGameObject = new GameObjectBC(highlight.gameObject);
 
-            PvPNumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<PvPNumOfDronesPanelInitialiser>();
+            NumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<NumOfDronesPanelInitialiser>();
             INumberDisplay twoDigitDisplayer = numOfDronesPanel.CreateTwoDigitDisplay();
 
             _dronesDisplayer = new PvPDronesDisplayer(droneManager, droneManagerMonitor, twoDigitDisplayer, highlightGameObject);
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IGameObject highlightGameObject = new GameObjectBC(highlight.gameObject);
 
-            PvPNumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<PvPNumOfDronesPanelInitialiser>();
+            NumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<NumOfDronesPanelInitialiser>();
             INumberDisplay twoDigitDisplayer = numOfDronesPanel.CreateTwoDigitDisplay();
 
             _dronesDisplayer = new PvPDronesDisplayer(playerCruiser, twoDigitDisplayer, highlightGameObject);

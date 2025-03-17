@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.Filters
         {
             return _isMatch;
         }
+
         public bool IsMatch(TElement element, VariantPrefab variant)
         {
             return _isMatch;

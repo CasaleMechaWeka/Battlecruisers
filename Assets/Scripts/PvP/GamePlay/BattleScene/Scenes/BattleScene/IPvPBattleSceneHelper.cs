@@ -1,4 +1,3 @@
-using BattleCruisers.AI;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -6,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -17,6 +15,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -47,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             ITargetIndicator targetIndicator
                                 );
         IManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer);
-        Task<IPrefabContainer<PvPBackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
+        Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
     }
 }
 

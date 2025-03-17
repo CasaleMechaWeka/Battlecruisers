@@ -1,12 +1,10 @@
+using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using UnityEngine;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.ScreensScene.SettingsScreen;
-
 
 public class PvPToolTipActivator : MonoBehaviour
 {
 
-
-    public PvPToggleController toggleController;
+    public ToggleController toggleController;
     public GameObject toolTipTextDisplay;
     private bool started;
 

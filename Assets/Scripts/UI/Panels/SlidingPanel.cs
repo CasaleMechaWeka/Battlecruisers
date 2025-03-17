@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Panels
 
     public class SlidingPanel : Panel, ISlidingPanel
     {
-		private Vector2 _slidePositionVelocity, _sliderScaleVelocity;
+        private Vector2 _slidePositionVelocity, _sliderScaleVelocity;
         private bool _isInitialised = false;
         private Vector2 _hiddenPosition, _shownPosition, _hiddenScale;
         private bool _positionDone, _scaleDone;
@@ -100,15 +100,15 @@ namespace BattleCruisers.UI.Panels
             if (_positionDone && _scaleDone)
             {
                 _state.Value = TargetState;
-                if (blocker!=null)
-                blocker.SetActive(false);
+                if (blocker != null)
+                    blocker.SetActive(false);
                 return;
             }
 
             if (!_positionDone)
             {
-                if (blocker!=null)
-                blocker.SetActive(true);
+                if (blocker != null)
+                    blocker.SetActive(true);
             }
 
             _positionDone = AdjustPosition();
@@ -135,7 +135,7 @@ namespace BattleCruisers.UI.Panels
         }
 
         private bool AdjustScale()
-        { 
+        {
             if (!changeScale
                 || _scaleDone
                 || Vector2.Distance(transform.localScale, _targetScale) <= scaleEqualityMargin)

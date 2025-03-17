@@ -32,7 +32,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             float deltaX_16to9_to_24to10 = RATIO_24_TO_10 - RATIO_16_TO_9;
             float gradient_16to9_to_24to10 = deltaY_16to9_to_24to10 / deltaX_16to9_to_24to10;
 
-            if (cameraAspectRatio > RATIO_16_TO_9 && cameraAspectRatio <= RATIO_24_TO_10) {
+            if (cameraAspectRatio > RATIO_16_TO_9 && cameraAspectRatio <= RATIO_24_TO_10)
+            {
                 float constant_16to9_to_24to10 = stats.YPositionAt16to9 - (gradient_16to9_to_24to10 * RATIO_16_TO_9);
                 float yAdjustedPosition_16to9_to_24to10 = gradient_16to9_to_24to10 * cameraAspectRatio + constant_16to9_to_24to10;
                 return new Vector3(

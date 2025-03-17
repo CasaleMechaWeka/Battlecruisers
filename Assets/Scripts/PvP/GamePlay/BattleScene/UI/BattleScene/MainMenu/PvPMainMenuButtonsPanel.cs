@@ -1,11 +1,11 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
-    public class PvPMainMenuButtonsPanel : PvPPanel
+    public class PvPMainMenuButtonsPanel : Panel
     {
         public PvPCanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton;
 

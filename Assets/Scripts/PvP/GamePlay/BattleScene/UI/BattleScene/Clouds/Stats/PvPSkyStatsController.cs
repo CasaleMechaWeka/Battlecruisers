@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public void Initialise()
         {
-            MoonStats = GetComponentInChildren<PvPMoonStatsController>();
+            MoonStats = GetComponentInChildren<MoonStatsController>();
             Assert.IsNotNull(MoonStats);
         }
     }

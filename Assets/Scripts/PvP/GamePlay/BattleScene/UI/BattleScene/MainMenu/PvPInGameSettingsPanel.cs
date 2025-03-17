@@ -1,9 +1,8 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.DataStrctures;
@@ -11,15 +10,15 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
 {
-    public class PvPInGameSettingsPanel : PvPPanel
+    public class PvPInGameSettingsPanel : Panel
     {
         private ISettingsManager _settingsManager;
 
         public PvPInGameSaveButton saveButton;
         public PvPCanvasGroupButton cancelButton;
-        public PvPFloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
+        public FloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
         public ToggleController showToolTipsToggle;
-        public PvPSliderController zoomSlider, scrollSlider;
+        public SliderController zoomSlider, scrollSlider;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,

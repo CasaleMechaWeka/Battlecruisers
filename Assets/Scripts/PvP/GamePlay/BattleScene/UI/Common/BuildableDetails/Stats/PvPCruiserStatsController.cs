@@ -1,14 +1,15 @@
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats
 {
-    public class PvPCruiserStatsController : PvPStatsController<IPvPCruiser>
+    public class PvPCruiserStatsController : StatsController<IPvPCruiser>
     {
-        public PvPStarsStatValue health;
-        public PvPNumberStatValue platformSlots, deckSlots, utilitySlots, mastSlots;
+        public StarsStatValue health;
+        public NumberStatValue platformSlots, deckSlots, utilitySlots, mastSlots;
 
         public override void Initialise()
         {

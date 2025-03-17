@@ -1,6 +1,5 @@
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -14,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         public PvPCanvasGroupButton hecklesButton;
         public Sprite closed, opened;
-        public PvPSlidingPanel hecklePanel;
+        public SlidingPanel hecklePanel;
 
         public PvPHeckleButton heckleButtonPrefab;
         public Transform hecklesParent;

@@ -5,11 +5,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -17,7 +16,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
-    public class PvPInformatorPanelController : PvPSlidingPanel, IPvPInformatorPanel
+    public class PvPInformatorPanelController : SlidingPanel, IPvPInformatorPanel
     {
         public PvPDismissInformatorButtonController dismissButton;
 
@@ -30,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public PvPCruiserDetailsController cruiserDetails;
         public IPvPComparableItemDetails<IPvPCruiser> CruiserDetails => cruiserDetails;
 
-        public PvPSlidingPanel informatorPanelExtended;
+        public SlidingPanel informatorPanelExtended;
         public ISlidingPanel ExtendedPanel => informatorPanelExtended;
 
         public PvPInformatorButtons buttons;
@@ -63,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             buildingDetails.Initialise();
             unitDetails.Initialise();
             cruiserDetails.Initialise();
-            dismissButton.Initialise(soundPlayer, uiManager, new PvPStaticBroadcastingFilter(isMatch: true));
+            dismissButton.Initialise(soundPlayer, uiManager, new StaticBroadcastingFilter(isMatch: true));
         }
 
         public override void Hide()

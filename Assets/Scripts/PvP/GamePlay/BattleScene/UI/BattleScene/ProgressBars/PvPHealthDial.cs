@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private readonly IFillableImage _healthDialImage;
         private readonly IFilter<PvPTarget> _visibilityFilter;
-        private PvPDamageTakenIndicator _damageTakenIndicator;
+        private DamageTakenIndicator _damageTakenIndicator;
 
         private float previousHealthProportion;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public PvPHealthDial(IFillableImage healthDialImage, IFilter<PvPTarget> visibilityFilter, PvPDamageTakenIndicator damageTakenIndicator)
+        public PvPHealthDial(IFillableImage healthDialImage, IFilter<PvPTarget> visibilityFilter, DamageTakenIndicator damageTakenIndicator)
         {
             PvPHelper.AssertIsNotNull(healthDialImage, visibilityFilter);
 
@@ -46,7 +46,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _healthDialImage.IsVisible = false;
 
             _damageTakenIndicator = damageTakenIndicator;
-            _damageTakenIndicator.initialise();
             previousHealthProportion = 1.0f;
         }
 
@@ -70,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _healthDialImage.FillAmount = proportionOfMaxHealth;
             if (proportionOfMaxHealth < previousHealthProportion && _damageTakenIndicator != null)
             {
-                _damageTakenIndicator.updateDamageTakenIndicator();
+                _damageTakenIndicator.UpdateDamageTakenIndicator();
             }
             previousHealthProportion = proportionOfMaxHealth;
         }
@@ -82,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _healthDialImage.FillAmount = proportionOfMaxHealth;
             if (proportionOfMaxHealth < previousHealthProportion && _damageTakenIndicator != null)
             {
-                _damageTakenIndicator.updateDamageTakenIndicator();
+                _damageTakenIndicator.UpdateDamageTakenIndicator();
             }
             previousHealthProportion = proportionOfMaxHealth;
         }

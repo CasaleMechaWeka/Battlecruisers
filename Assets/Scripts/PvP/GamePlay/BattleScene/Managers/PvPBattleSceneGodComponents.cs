@@ -1,10 +1,8 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.UI;
@@ -18,6 +16,7 @@ using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.UI.Music;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -30,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public AudioSource uiSoundsAudioSource;
         public IAudioSource UISoundsAudioSource { get; private set; }
 
-        public PvPLayeredMusicPlayerInitialiser musicPlayerInitialiser;
-        public PvPLayeredMusicPlayerInitialiser MusicPlayerInitialiser => musicPlayerInitialiser;
+        public LayeredMusicPlayerInitialiser musicPlayerInitialiser;
+        public LayeredMusicPlayerInitialiser MusicPlayerInitialiser => musicPlayerInitialiser;
 
         public WindInitialiser windInitialiser;
         public WindInitialiser WindInitialiser => windInitialiser;
@@ -43,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPClickableEmitter backgroundClickableEmitter;
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
-        public PvPTargetIndicatorController targetIndicator;
+        public TargetIndicatorController targetIndicator;
         public ITargetIndicator TargetIndicator => targetIndicator;
 
         public PvPHotkeyInitialiser hotkeyInitialiser;

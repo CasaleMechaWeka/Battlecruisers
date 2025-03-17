@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         public Text itemName, itemDescription;
         public Image itemImage;
-        private PvPStatsController<TItem> _statsController;
+        private StatsController<TItem> _statsController;
 
         protected TItem _item;
 
@@ -31,9 +31,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _statsController.Initialise();
         }
 
-        protected abstract PvPStatsController<TItem> GetStatsController();
-        public virtual PvPBuildingVariantDetailController GetBuildingVariantDetailController() { return null; }
-        public virtual PvPUnitVariantDetailController GetUnitVariantDetailController() { return null; }
+        protected abstract StatsController<TItem> GetStatsController();
+        public virtual BuildingVariantDetailController GetBuildingVariantDetailController() { return null; }
+        public virtual UnitVariantDetailController GetUnitVariantDetailController() { return null; }
 
         public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default)
         {

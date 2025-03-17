@@ -36,6 +36,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
             InternalShowStats(item, itemToCompareTo);
         }
+
         public void ShowStatsOfVariant(T item, VariantPrefab variant, T itemToCompareTo = null)
         {
             if (itemToCompareTo == null)
@@ -44,7 +45,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             }
             InternalShowStatsOfVariant(item, variant, itemToCompareTo);
         }
+
         protected abstract void InternalShowStats(T item, T itemToCompareTo);
+
         protected abstract void InternalShowStatsOfVariant(T item, VariantPrefab variant, T itemToCompareTo);
     }
 }
