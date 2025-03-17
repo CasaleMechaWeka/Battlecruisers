@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
@@ -59,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                 // Logging.Log(Tags.SWIPE_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Position.x}");
 
                 Target
-                    = new PvPCameraTarget(
+                    = new CameraTarget(
                         new Vector3(targetXPosition, _camera.Position.y, _camera.Position.z),
                         _camera.OrthographicSize);
             }

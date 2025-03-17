@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Position.y}");
 
             return
-                new PvPCameraTarget(
+                new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
         }
@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Position.y}");
 
             return
-                new PvPCameraTarget(
+                new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
         }

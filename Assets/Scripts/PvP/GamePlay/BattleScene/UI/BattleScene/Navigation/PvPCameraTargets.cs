@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Overview
             Vector3 overviewPosition = camera.Position;
             overviewPosition.y = cameraCalculator.FindCameraYPosition(cameraCalculatorSettings.ValidOrthographicSizes.Max);
-            OverviewTarget = new PvPCameraTarget(overviewPosition, cameraCalculatorSettings.ValidOrthographicSizes.Max);
+            OverviewTarget = new CameraTarget(overviewPosition, cameraCalculatorSettings.ValidOrthographicSizes.Max);
 
             IRange<float> midXPositions = cameraCalculator.FindValidCameraXPositions(MID_ORTHOGRAPHIC_SIZE);
             MidLeftTarget = CreateTarget(camera, cameraCalculator, MID_ORTHOGRAPHIC_SIZE, midXPositions.Min);
@@ -90,14 +90,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser) + 0.75f;
             Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
-            return new PvPCameraTarget(targetPosition, targetOrthographicSize);
+            return new CameraTarget(targetPosition, targetOrthographicSize);
         }
 
         private ICameraTarget CreateTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, float orthographicSize, float xPosition)
         {
             float yPosition = cameraCalculator.FindCameraYPosition(orthographicSize);
             Vector3 position = new Vector3(xPosition, yPosition, camera.Position.z);
-            return new PvPCameraTarget(position, orthographicSize);
+            return new CameraTarget(position, orthographicSize);
         }
     }
 }
