@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -54,7 +53,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
-            AngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
@@ -90,7 +88,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 = CreateFactoryProvider(
                     helper.PrefabFactory,
                     movementControllerFactory ?? new MovementControllerFactory(),
-                    angleCalculatorFactory ?? new AngleCalculatorFactory(),
                     targetPositionPredictorFactory ?? new TargetPositionPredictorFactory(),
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
@@ -137,7 +134,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private IFactoryProvider CreateFactoryProvider(
             IPrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
-            AngleCalculatorFactory angleCalculatorFactory,
             ITargetPositionPredictorFactory targetPositionControllerFactory,
             IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
@@ -172,7 +168,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             // Turrets
             ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();
-            turretFactoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
             turretFactoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
             turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.Turrets.Returns(turretFactoryProvider);

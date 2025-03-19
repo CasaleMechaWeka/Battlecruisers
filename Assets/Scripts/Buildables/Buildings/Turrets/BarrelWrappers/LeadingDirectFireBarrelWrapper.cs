@@ -9,15 +9,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     /// Units:  Gunships
     /// </summary>
 	public abstract class LeadingDirectFireBarrelWrapper : BarrelWrapper
-	{
+    {
         protected override ITargetPositionPredictor CreateTargetPositionPredictor()
         {
             return _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor();
         }
 
-		protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
-		{
-			return _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator();
-		}
-	}
+        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        {
+            return new AngleCalculator();
+        }
+    }
 }

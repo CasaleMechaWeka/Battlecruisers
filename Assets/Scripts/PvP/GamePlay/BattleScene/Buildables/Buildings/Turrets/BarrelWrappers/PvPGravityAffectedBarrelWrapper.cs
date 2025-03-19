@@ -20,14 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
         {
-            if (useLowerArc)
-            {
-                return _factoryProvider.Turrets.AngleCalculatorFactory.CreateArtilleryAngleCalculator(projectileStats);
-            }
-            else
-            {
-                return _factoryProvider.Turrets.AngleCalculatorFactory.CreateMortarAngleCalculator(projectileStats);
-            }
+            return new GravityAffectedAngleCalculator(new AngleConverter(), projectileStats, !useLowerArc);
         }
 
         protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)

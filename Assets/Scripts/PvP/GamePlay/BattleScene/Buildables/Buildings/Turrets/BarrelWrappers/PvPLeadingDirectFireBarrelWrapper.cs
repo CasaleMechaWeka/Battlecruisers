@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
         {
-            return _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator();
+            return new AngleCalculator();
         }
     }
 }
