@@ -73,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
 
-            Turrets = new PvPTurretFactoryProvider();
+            Turrets = new TurretFactoryProvider();
         }
         // Not in constructor because of circular dependency
         public void Initialise( /* IPvPUIManager uiManager */)
