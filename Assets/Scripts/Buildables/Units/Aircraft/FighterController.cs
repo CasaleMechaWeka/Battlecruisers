@@ -20,6 +20,7 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -110,7 +111,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
                     _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
                     _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
-                    _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
+                    new DummyAccuracyAdjuster(),
                     _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                     _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
                     _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),

@@ -307,7 +307,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             // Default to 100% accuracy
-            return _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster();
+            return new DummyAccuracyAdjuster();
         }
 
         protected virtual ITargetPositionValidator CreatePositionValidator()

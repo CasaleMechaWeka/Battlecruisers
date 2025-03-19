@@ -2,7 +2,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -70,13 +69,11 @@ namespace BattleCruisers.Scenes.Test.Offensive
                         TargetType.Cruiser
                     });
             ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject, targetFilter: targetFilter);
-            AccuracyAdjusterFactory accuracyAdjusterFactory = useRealAccuracy ? new AccuracyAdjusterFactory() : null;
 
             helper.InitialiseBuilding(
                 _turret,
                 Faction.Reds,
-                targetFactories: targetFactories,
-                accuracyAdjusterFactory: accuracyAdjusterFactory);
+                targetFactories: targetFactories);
             _turret.StartConstruction();
         }
     }

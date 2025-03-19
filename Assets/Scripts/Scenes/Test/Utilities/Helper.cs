@@ -130,7 +130,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
-            AccuracyAdjusterFactory accuracyAdjusterFactory = null,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null)
         {
@@ -151,7 +150,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
-                    accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
                     deferrer: Deferrer,
                     updaterProvider: UpdaterProvider,
@@ -194,7 +192,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            AccuracyAdjusterFactory accuracyAdjusterFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null,
             bool showDroneFeedback = false)
         {
@@ -215,7 +212,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
-                    accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager,
                     deferrer: Deferrer,
                     updaterProvider: UpdaterProvider,
@@ -491,19 +487,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new TransformBC(barrel.transform),
                     updater,
                     barrel.TurretStats.TurretRotateSpeedInDegrees);
-        }
-
-        public AccuracyAdjusterFactory CreateDummyAccuracyAdjuster()
-        {
-            AccuracyAdjusterFactory factory = Substitute.For<AccuracyAdjusterFactory>();
-
-            IAccuracyAdjuster dummyAccuracyAdjuster = new DummyAccuracyAdjuster();
-
-            factory.CreateVerticalImpactProjectileAdjuster(null, null).ReturnsForAnyArgs(dummyAccuracyAdjuster);
-            factory.CreateHorizontalImpactProjectileAdjuster(null, null).ReturnsForAnyArgs(dummyAccuracyAdjuster);
-            factory.CreateDummyAdjuster().ReturnsForAnyArgs(dummyAccuracyAdjuster);
-
-            return factory;
         }
 
         public static IGlobalBoostProviders CreateGlobalBoostProviders()

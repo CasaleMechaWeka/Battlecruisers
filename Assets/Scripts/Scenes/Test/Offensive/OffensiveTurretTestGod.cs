@@ -70,13 +70,11 @@ namespace BattleCruisers.Scenes.Test.Offensive
                         TargetType.Cruiser
                     });
             ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject, targetFilter: targetFilter);
-            AccuracyAdjusterFactory accuracyAdjusterFactory = useRealAccuracy ? new AccuracyAdjusterFactory() : null;
 
             helper.InitialiseBuilding(
                 _turret,
                 Faction.Reds,
-                targetFactories: targetFactories,
-                accuracyAdjusterFactory: accuracyAdjusterFactory);
+                targetFactories: targetFactories);
             _turret.StartConstruction();
         }
     }

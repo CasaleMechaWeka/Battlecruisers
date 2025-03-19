@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
@@ -63,7 +62,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            AccuracyAdjusterFactory accuracyAdjusterFactory = null,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IAngleLimiterFactory angleLimiterFactory = null,
             ISoundFetcher soundFetcher = null,
@@ -100,7 +98,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory,
                     damageApplierFactory ?? new DamageApplierFactory(targetFactoriesProvider.FilterFactory),
-                    accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
                     soundFetcher,
@@ -149,7 +146,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IFlightPointsProviderFactory flightPointsProviderFactory,
             IBoostFactory boostFactory,
             IDamageApplierFactory damageApplierFactory,
-            AccuracyAdjusterFactory accuracyAdjusterFactory,
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
             IAngleLimiterFactory angleLimiterFactory,
             ISoundFetcher soundFetcher,
@@ -180,7 +176,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             // Turrets
             ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();
-            turretFactoryProvider.AccuracyAdjusterFactory.Returns(accuracyAdjusterFactory);
             turretFactoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
             turretFactoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
             turretFactoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
