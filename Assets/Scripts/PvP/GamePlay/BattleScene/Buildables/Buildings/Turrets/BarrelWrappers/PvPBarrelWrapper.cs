@@ -299,7 +299,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual ITargetPositionValidator CreatePositionValidator()
         {
             // Default to all positions being valid
-            return _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator();
+            return new DummyPositionValidator();
         }
 
         protected virtual IAngleLimiter CreateAngleLimiter()

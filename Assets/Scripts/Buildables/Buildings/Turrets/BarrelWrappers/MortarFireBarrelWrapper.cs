@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Movement.Predictors;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Movement.Predictors;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -11,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override PositionValidators.ITargetPositionValidator CreatePositionValidator()
         {
-            return _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateFacingMinRangeValidator(_minRangeInM);
+            return new FacingMinRangePositionValidator(_minRangeInM);
         }
     }
 }

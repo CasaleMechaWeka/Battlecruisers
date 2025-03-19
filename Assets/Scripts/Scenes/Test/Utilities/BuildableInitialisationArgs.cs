@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
@@ -56,7 +55,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             ISoundFetcher soundFetcher = null,
             ISpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
@@ -89,7 +87,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory,
                     damageApplierFactory ?? new DamageApplierFactory(targetFactoriesProvider.FilterFactory),
-                    targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     soundFetcher,
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
@@ -133,7 +130,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IFlightPointsProviderFactory flightPointsProviderFactory,
             IBoostFactory boostFactory,
             IDamageApplierFactory damageApplierFactory,
-            ITargetPositionValidatorFactory targetPositionValidatorFactory,
             ISoundFetcher soundFetcher,
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
@@ -157,11 +153,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
             factoryProvider.SettingsManager.Returns(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
-
-            // Turrets
-            TurretFactoryProvider turretFactoryProvider = Substitute.For<TurretFactoryProvider>();
-            turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
-            factoryProvider.Turrets.Returns(turretFactoryProvider);
 
             // Pools
             IPoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);

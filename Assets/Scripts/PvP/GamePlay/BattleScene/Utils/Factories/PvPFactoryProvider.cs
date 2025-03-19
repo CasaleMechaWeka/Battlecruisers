@@ -35,7 +35,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         public IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
-        public TurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public ISettingsManager SettingsManager { get; }
 
@@ -69,8 +68,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
-
-            Turrets = new TurretFactoryProvider();
         }
         // Not in constructor because of circular dependency
         public void Initialise( /* IPvPUIManager uiManager */)

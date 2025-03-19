@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override ITargetPositionValidator CreatePositionValidator()
         {
-            return _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateFacingMinRangeValidator(_minRangeInM);
+            return new FacingMinRangePositionValidator(_minRangeInM);
         }
     }
 }

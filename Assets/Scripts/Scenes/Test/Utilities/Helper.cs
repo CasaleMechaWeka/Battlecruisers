@@ -128,7 +128,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
-            ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null)
         {
             BuildableInitialisationArgs args
@@ -146,7 +145,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
-                    targetPositionValidatorFactory,
                     deferrer: Deferrer,
                     updaterProvider: UpdaterProvider,
                     userChosenTargetManager: userChosenTargetManager);

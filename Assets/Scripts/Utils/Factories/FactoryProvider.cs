@@ -31,7 +31,6 @@ namespace BattleCruisers.Utils.Factories
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public ISpriteChooserFactory SpriteChooserFactory { get; }
         public ITargetFactoriesProvider Targets { get; }
-        public TurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public ISettingsManager SettingsManager { get; }
 
@@ -62,8 +61,6 @@ namespace BattleCruisers.Utils.Factories
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
-
-            Turrets = new TurretFactoryProvider();
         }
 
         // Not in constructor because of circular dependency

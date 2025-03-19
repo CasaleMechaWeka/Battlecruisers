@@ -29,6 +29,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Movement.Predictors;
+using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -125,7 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         new DummyPositionFinder(),
                         new DummyAccuracyAdjuster(),
                         _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
-                        _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
+                        new DummyPositionValidator(),
                         new AngleLimiter(-30, 30),
                         _factoryProvider,
                         _cruiserSpecificFactories,

@@ -240,7 +240,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected virtual ITargetPositionValidator CreatePositionValidator()
         {
             // Default to all positions being valid
-            return _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator();
+            return new DummyPositionValidator();
         }
 
         protected virtual IAngleLimiter CreateAngleLimiter()
