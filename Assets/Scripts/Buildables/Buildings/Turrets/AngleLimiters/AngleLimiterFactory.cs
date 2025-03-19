@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
 {
-    public class AngleLimiterFactory : IAngleLimiterFactory
+    public class AngleLimiterFactory
     {
         public IAngleLimiter CreateDummyLimiter()
         {
@@ -9,31 +9,27 @@
 
         public IAngleLimiter CreateFacingLimiter()
         {
-            return new FacingTurretAngleLimiter();
+            return new AngleLimiter(-30, 90);
         }
 
         public IAngleLimiter CreateAntiAirLimiter()
         {
-            return new AntiAirAngleLimiter();
+            return new AngleLimiter(30, 150);
         }
 
         public IAngleLimiter CreateFighterLimiter()
         {
-            return new FighterAngleLimiter();
-        }
-        public IAngleLimiter CreateMissileFighterLimiter()
-        {
-            return new MissileFighterAngleLimiter();
+            return new AngleLimiter(-30, 30);
         }
 
         public IAngleLimiter CreateGravityAffectedLimiter()
         {
-            return new GravityAffectedTurretAngleLimiter();
+            return new AngleLimiter(-20, 85);
         }
 
         public IAngleLimiter CreateCIWSLimiter()
         {
-            return new CIWSAngleLimiter();
+            return new AngleLimiter(-30, 180);
         }
     }
 }

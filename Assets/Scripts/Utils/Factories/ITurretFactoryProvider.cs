@@ -8,7 +8,7 @@ namespace BattleCruisers.Utils.Factories
     public interface ITurretFactoryProvider
     {
         IAngleCalculatorFactory AngleCalculatorFactory { get; }
-        IAngleLimiterFactory AngleLimiterFactory { get; }
+        AngleLimiterFactory AngleLimiterFactory { get; }
         IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
     }

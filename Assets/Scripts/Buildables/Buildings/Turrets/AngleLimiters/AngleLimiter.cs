@@ -37,26 +37,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
         /// </summary>
         public float LimitAngle(float desiredAngleInDegrees)
         {
-            // Don't create string messages to reduce memory usage
-            Assert.IsTrue(desiredAngleInDegrees >= MIN_DESIRED_ANGLE_IN_DEGREES);  //, desiredAngleInDegrees + " should be >= " + MIN_DESIRED_ANGLE_IN_DEGREES);
-            Assert.IsTrue(desiredAngleInDegrees <= MAX_DESIRED_ANGLE_IN_DEGREES);  //, desiredAngleInDegrees + " should be <= " + MAX_DESIRED_ANGLE_IN_DEGREES);
+            Assert.IsTrue(desiredAngleInDegrees >= MIN_DESIRED_ANGLE_IN_DEGREES);
+            Assert.IsTrue(desiredAngleInDegrees <= MAX_DESIRED_ANGLE_IN_DEGREES);
 
-            // Convert from 0 > 360 to -180 to 180
-            bool shouldConvert = desiredAngleInDegrees > 180;
-            if (shouldConvert)
-            {
-                desiredAngleInDegrees -= 360;
-            }
-
-            float clampedAngle = Mathf.Clamp(desiredAngleInDegrees, _minAngle, _maxAngle);
-
-            // Convert from -180 to 180 to 0 > 360
-            if (shouldConvert)
-            {
-                clampedAngle += 360;
-            }
-
-            return clampedAngle;
+            float adjustedAngle = desiredAngleInDegrees > 180 ? desiredAngleInDegrees - 360 : desiredAngleInDegrees;
+            return (adjustedAngle = Mathf.Clamp(adjustedAngle, _minAngle, _maxAngle)) < 0 ? adjustedAngle + 360 : adjustedAngle;
         }
     }
 }

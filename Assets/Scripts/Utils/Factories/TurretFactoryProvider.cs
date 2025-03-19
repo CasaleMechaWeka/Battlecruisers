@@ -8,7 +8,7 @@ namespace BattleCruisers.Utils.Factories
     public class TurretFactoryProvider : ITurretFactoryProvider
     {
         public IAngleCalculatorFactory AngleCalculatorFactory { get; }
-        public IAngleLimiterFactory AngleLimiterFactory { get; }
+        public AngleLimiterFactory AngleLimiterFactory { get; }
         public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
 

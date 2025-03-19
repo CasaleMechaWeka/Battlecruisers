@@ -1,7 +1,7 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using System;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,7 +18,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         private (float x, float y) _targetMargins;
 
         public AccuracyAdjuster(
-            //TargetBoundsFinder boundsFinder,
             (float x, float y) targetMargins,
             IAngleCalculator angleCalculator,
             IRandomGenerator random,
@@ -36,39 +35,30 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         public float FindAngleInDegrees(float idealFireAngle, Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
         {
             Assert.IsTrue(sourcePosition.x != targetPosition.x);
-            Vector2 minPosition, maxPosition;
 
-            if (sourcePosition.x < targetPosition.x)
-            {
-                // Firing left to right
-                minPosition = new Vector2(targetPosition.x - _targetMargins.x, targetPosition.y - _targetMargins.y);
-                maxPosition = new Vector2(targetPosition.x + _targetMargins.x, targetPosition.y + _targetMargins.y);
-            }
-            else
-            {
-                // Firing right to left
-                minPosition = new Vector2(targetPosition.x + _targetMargins.x, targetPosition.y - _targetMargins.y);
-                maxPosition = new Vector2(targetPosition.x - _targetMargins.x, targetPosition.y + _targetMargins.y);
-            }
+            // Calculate the direction sign (-1 for left, +1 for right)
+            int direction = Math.Sign(targetPosition.x - sourcePosition.x);
 
-            IRange<Vector2> onTargetBounds = new Range<Vector2>(minPosition, maxPosition);
+            // Compute min and max target positions using direction sign
+            Vector2 minPosition = new Vector2(targetPosition.x - direction * _targetMargins.x, targetPosition.y - _targetMargins.y);
+            Vector2 maxPosition = new Vector2(targetPosition.x + direction * _targetMargins.x, targetPosition.y + _targetMargins.y);
 
-            float angleForCloserTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Min, isSourceMirrored);
-            float angleForFurtherTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Max, isSourceMirrored);
+            // Calculate firing angles for min/max positions
+            float minAngle = _angleCalculator.FindDesiredAngle(sourcePosition, minPosition, isSourceMirrored);
+            float maxAngle = _angleCalculator.FindDesiredAngle(sourcePosition, maxPosition, isSourceMirrored);
 
-            Logging.Log(Tags.ACCURACY_ADJUSTERS, $"angleForCloserTarget: {angleForCloserTarget}  angleForFurtherTarget: {angleForFurtherTarget}");
+            Logging.Log(Tags.ACCURACY_ADJUSTERS, $"MinAngle: {minAngle}  MaxAngle: {maxAngle}");
 
-            IRange<float> onTargetAngleRange = new OrderedRange(angleForCloserTarget, angleForFurtherTarget);
+            // Compute fire angle range with accuracy adjustment
+            float errorMarginEachSide = ((maxAngle - minAngle) / _turretStats.Accuracy - (maxAngle - minAngle)) * 0.5f;
 
-            float onTargetRangeSize = onTargetAngleRange.Max - onTargetAngleRange.Min;
-            float errorMarginEachSide = (onTargetRangeSize / _turretStats.Accuracy - onTargetRangeSize) * 0.5f;
+            float fireMin = minAngle - errorMarginEachSide;
+            float fireMax = maxAngle + errorMarginEachSide;
 
-            IRange<float> fireAngleRange = new Range<float>(onTargetAngleRange.Min - errorMarginEachSide,
-                                                            onTargetAngleRange.Max + errorMarginEachSide);
+            Logging.Log(Tags.ACCURACY_ADJUSTERS, $"FireAngleRange: {fireMin} - {fireMax}");
 
-            Logging.Log(Tags.ACCURACY_ADJUSTERS, $"fireAngleRange: {fireAngleRange.Min} - {fireAngleRange.Max}");
-
-            return _random.Range(fireAngleRange.Min, fireAngleRange.Max);
+            // Return a randomized angle within the computed range
+            return _random.Range(fireMin, fireMax);
         }
     }
 }
