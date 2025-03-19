@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.Test
                     _doubleBarrel,
                     _updaterProvider.PerFrameUpdater,
                     targetFilter: new ExactMatchTargetFilter() { Target = _target },
-                    angleCalculator: new GravityAffectedAngleCalculator(new AngleConverter(), _doubleBarrel.ProjectileStats, false));
+                    angleCalculator: new GravityAffectedAngleCalculator(_doubleBarrel.ProjectileStats, false));
 
             await _doubleBarrel.InitialiseAsync(barrelControllerArgs);
         }

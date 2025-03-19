@@ -11,19 +11,17 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 	public class ArtilleryAngleCalculatorTests
 	{
 		private IAngleCalculator _angleCalculator;
-		private IAngleConverter _angleConverter;
 		private IProjectileFlightStats _projectileFlightStats;
 		private Vector2 _targetPosition;
 
 		[SetUp]
 		public void TestSetup()
 		{
-			_angleConverter = Substitute.For<IAngleConverter>();
 			_projectileFlightStats = Substitute.For<IProjectileFlightStats>();
 			_projectileFlightStats.GravityScale.Returns(1);
-			_angleCalculator = new GravityAffectedAngleCalculator(_angleConverter, _projectileFlightStats, false);
+			_angleCalculator = new GravityAffectedAngleCalculator(_projectileFlightStats, false);
 
-			_angleConverter
+			AngleConverter
 				.ConvertToUnsigned(Arg.Any<float>())
 				.Returns(args => (float)args[0]);
 
@@ -64,7 +62,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 			Vector2 source = new Vector2(maxRange, 0);
 			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true);
 
-			_angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
 			Assert.AreEqual(45, Mathf.Round(angleInDegrees));
 		}
 
@@ -78,7 +75,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 			Vector2 source = new Vector2(maxRange, 0);
 			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true);
 
-			_angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
 			Assert.IsTrue(angleInDegrees < 45);
 		}
 	}

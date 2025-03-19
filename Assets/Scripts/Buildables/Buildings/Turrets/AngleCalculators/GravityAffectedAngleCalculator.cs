@@ -13,20 +13,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// </summary>
     public class GravityAffectedAngleCalculator : AngleCalculator
     {
-        private readonly IAngleConverter _angleConverter;
         private readonly IProjectileFlightStats _projectileFlightStats;
         private readonly float _adjustedGravity;
         private float previousAngle;
 
         private bool _useLargerAngle { get; }
 
-        public GravityAffectedAngleCalculator(IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats, bool useLargerAngle)
+        public GravityAffectedAngleCalculator(IProjectileFlightStats projectileFlightStats, bool useLargerAngle)
             : base()
         {
-            Helper.AssertIsNotNull(angleConverter, projectileFlightStats);
+            Helper.AssertIsNotNull(projectileFlightStats);
             Assert.IsTrue(projectileFlightStats.GravityScale > 0);
 
-            _angleConverter = angleConverter;
             _projectileFlightStats = projectileFlightStats;
             _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
             _useLargerAngle = useLargerAngle;
@@ -59,7 +57,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             float angleInRadians = _useLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
             float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-            angleInDegrees = _angleConverter.ConvertToUnsigned(angleInDegrees);
+            angleInDegrees = AngleConverter.ConvertToUnsigned(angleInDegrees);
             previousAngle = angleInDegrees;
             Logging.Verbose(
                 Tags.ANGLE_CALCULATORS,

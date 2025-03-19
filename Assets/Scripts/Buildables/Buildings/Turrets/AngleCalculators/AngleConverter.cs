@@ -2,14 +2,14 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-    public class AngleConverter : IAngleConverter
+    public static class AngleConverter
     {
         private const float MIN_UNSIGNED_ANGLE_IN_DEGREES = 0;
         private const float MAX_UNSIGNED_ANGLE_IN_DEGREES = 360;
         private const float MIN_SIGNED_ANGLE_IN_DEGREES = -180;
         private const float MAX_SIGNED_ANGLE_IN_DEGREES = 180;
 
-        public float ConvertToSigned(float unsignedAngleInDegrees)
+        public static float ConvertToSigned(float unsignedAngleInDegrees)
         {
             Assert.IsTrue(unsignedAngleInDegrees >= MIN_UNSIGNED_ANGLE_IN_DEGREES);
             Assert.IsTrue(unsignedAngleInDegrees <= MAX_UNSIGNED_ANGLE_IN_DEGREES);
@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             return unsignedAngleInDegrees;
         }
 
-        public float ConvertToUnsigned(float signedAngleInDegrees)
+        public static float ConvertToUnsigned(float signedAngleInDegrees)
         {
             Assert.IsTrue(signedAngleInDegrees >= MIN_SIGNED_ANGLE_IN_DEGREES);
             Assert.IsTrue(signedAngleInDegrees <= MAX_SIGNED_ANGLE_IN_DEGREES);

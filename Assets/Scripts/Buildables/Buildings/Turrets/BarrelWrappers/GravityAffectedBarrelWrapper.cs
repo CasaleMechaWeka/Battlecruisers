@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
         {
-            return new GravityAffectedAngleCalculator(new AngleConverter(), projectileStats, !useLowerArc);
+            return new GravityAffectedAngleCalculator(projectileStats, !useLowerArc);
         }
 
         protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
