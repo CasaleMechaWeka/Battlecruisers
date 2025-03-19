@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 
 namespace BattleCruisers.Utils.Factories
 {
-    public class TurretFactoryProvider : ITurretFactoryProvider
+    public class TurretFactoryProvider
     {
         public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }

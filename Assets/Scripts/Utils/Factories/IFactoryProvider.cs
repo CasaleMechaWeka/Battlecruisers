@@ -32,7 +32,7 @@ namespace BattleCruisers.Utils.Factories
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         ITargetFactoriesProvider Targets { get; }
-        ITurretFactoryProvider Turrets { get; }
+        TurretFactoryProvider Turrets { get; }
         IUpdaterProvider UpdaterProvider { get; }
         ISettingsManager SettingsManager { get; }
 

@@ -33,7 +33,7 @@ namespace BattleCruisers.Utils.Factories
         public ISpriteChooserFactory SpriteChooserFactory { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public ITargetFactoriesProvider Targets { get; }
-        public ITurretFactoryProvider Turrets { get; }
+        public TurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public ISettingsManager SettingsManager { get; }
 
@@ -43,19 +43,19 @@ namespace BattleCruisers.Utils.Factories
 
         public FactoryProvider(
             IBattleSceneGodComponents components,
-            IPrefabFactory prefabFactory, 
+            IPrefabFactory prefabFactory,
             ISpriteProvider spriteProvider,
             ISettingsManager settingsManager)
-		{
+        {
             Helper.AssertIsNotNull(components, prefabFactory, spriteProvider, settingsManager);
 
             _components = components;
-			PrefabFactory = prefabFactory;
+            PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new TargetFactoriesProvider();
-			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
-			MovementControllerFactory = new MovementControllerFactory();
-			FlightPointsProviderFactory = new FlightPointsProviderFactory();
+            TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
+            MovementControllerFactory = new MovementControllerFactory();
+            FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostFactory = new BoostFactory();
             DamageApplierFactory = new DamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
@@ -83,5 +83,5 @@ namespace BattleCruisers.Utils.Factories
 
             Sound = new SoundFactoryProvider(_components, poolProviders);
         }
-	}
+    }
 }
