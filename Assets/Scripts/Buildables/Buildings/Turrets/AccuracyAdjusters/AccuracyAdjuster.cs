@@ -13,7 +13,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
     public class AccuracyAdjuster : IAccuracyAdjuster
     {
         private readonly IAngleCalculator _angleCalculator;
-        private readonly LinearRangeFinder _angleRangeFinder;
         private readonly IRandomGenerator _random;
         private readonly ITurretStats _turretStats;
         private (float x, float y) _targetMargins;
@@ -22,16 +21,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
             //TargetBoundsFinder boundsFinder,
             (float x, float y) targetMargins,
             IAngleCalculator angleCalculator,
-            LinearRangeFinder angleRangeFinder,
             IRandomGenerator random,
             ITurretStats turretStats)
         {
-            Helper.AssertIsNotNull(/*boundsFinder,*/ angleCalculator, angleRangeFinder, random, turretStats);
+            Helper.AssertIsNotNull(angleCalculator, random, turretStats);
 
             //_boundsFinder = boundsFinder;
             _targetMargins = targetMargins;
             _angleCalculator = angleCalculator;
-            _angleRangeFinder = angleRangeFinder;
             _random = random;
             _turretStats = turretStats;
         }
@@ -62,7 +59,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
             Logging.Log(Tags.ACCURACY_ADJUSTERS, $"angleForCloserTarget: {angleForCloserTarget}  angleForFurtherTarget: {angleForFurtherTarget}");
 
             IRange<float> onTargetAngleRange = new OrderedRange(angleForCloserTarget, angleForFurtherTarget);
-            IRange<float> fireAngleRange = _angleRangeFinder.FindFireAngleRange(onTargetAngleRange, _turretStats.Accuracy);
+
+            float onTargetRangeSize = onTargetAngleRange.Max - onTargetAngleRange.Min;
+            float errorMarginEachSide = (onTargetRangeSize / _turretStats.Accuracy - onTargetRangeSize) * 0.5f;
+
+            IRange<float> fireAngleRange = new Range<float>(onTargetAngleRange.Min - errorMarginEachSide,
+                                                            onTargetAngleRange.Max + errorMarginEachSide);
 
             Logging.Log(Tags.ACCURACY_ADJUSTERS, $"fireAngleRange: {fireAngleRange.Min} - {fireAngleRange.Max}");
 

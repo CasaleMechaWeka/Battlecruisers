@@ -41,7 +41,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
                 new AccuracyAdjuster(
                     targetMargins,
                     angleCalculator,
-                    new LinearRangeFinder(),
                     RandomGenerator.Instance,
                     turretStats);
         }
