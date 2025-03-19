@@ -130,7 +130,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
-            IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
+            AccuracyAdjusterFactory accuracyAdjusterFactory = null,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null)
         {
@@ -194,7 +194,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
+            AccuracyAdjusterFactory accuracyAdjusterFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null,
             bool showDroneFeedback = false)
         {
@@ -493,9 +493,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     barrel.TurretStats.TurretRotateSpeedInDegrees);
         }
 
-        public IAccuracyAdjusterFactory CreateDummyAccuracyAdjuster()
+        public AccuracyAdjusterFactory CreateDummyAccuracyAdjuster()
         {
-            IAccuracyAdjusterFactory factory = Substitute.For<IAccuracyAdjusterFactory>();
+            AccuracyAdjusterFactory factory = Substitute.For<AccuracyAdjusterFactory>();
 
             IAccuracyAdjuster dummyAccuracyAdjuster = new DummyAccuracyAdjuster();
 

@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
             // Setup target
             helper.InitialiseBuilding(_target, Faction.Blues);
-			_target.StartConstruction();
+            _target.StartConstruction();
 
             // Setup cruiser (optional)
             TestTarget fakeCruiser = FindObjectOfType<TestTarget>();
@@ -70,14 +70,14 @@ namespace BattleCruisers.Scenes.Test.Offensive
                         TargetType.Cruiser
                     });
             ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject, targetFilter: targetFilter);
-            IAccuracyAdjusterFactory accuracyAdjusterFactory = useRealAccuracy ? new AccuracyAdjusterFactory() : null;
+            AccuracyAdjusterFactory accuracyAdjusterFactory = useRealAccuracy ? new AccuracyAdjusterFactory() : null;
 
             helper.InitialiseBuilding(
-                _turret, 
-                Faction.Reds, 
+                _turret,
+                Faction.Reds,
                 targetFactories: targetFactories,
                 accuracyAdjusterFactory: accuracyAdjusterFactory);
-			_turret.StartConstruction();
-		}
-	}
+            _turret.StartConstruction();
+        }
+    }
 }

@@ -1,11 +1,10 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
-    public class AccuracyAdjusterFactory : IAccuracyAdjusterFactory
+    public class AccuracyAdjusterFactory
     {
         private const float TARGET_X_MARGIN_IN_M = 0.75f;
         private const float TARGET_Y_MARGIN_IN_M = 0.75f;
@@ -17,11 +16,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 
         public IAccuracyAdjuster CreateHorizontalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
         {
-            return 
+            return
                 CreateAccuracyAdjuster(
-                    angleCalculator, 
-                    turretStats, 
-                    new HorizontalTargetBoundsFinder(TARGET_X_MARGIN_IN_M));
+                    angleCalculator,
+                    turretStats,
+                    (TARGET_X_MARGIN_IN_M, 0f));
         }
 
         public IAccuracyAdjuster CreateVerticalImpactProjectileAdjuster(IAngleCalculator angleCalculator, ITurretStats turretStats)
@@ -30,17 +29,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
                 CreateAccuracyAdjuster(
                     angleCalculator,
                     turretStats,
-                    new VerticalTargetBoundsFinder(TARGET_Y_MARGIN_IN_M));
+                    (0f, TARGET_Y_MARGIN_IN_M));
         }
 
         private IAccuracyAdjuster CreateAccuracyAdjuster(
-            IAngleCalculator angleCalculator, 
+            IAngleCalculator angleCalculator,
             ITurretStats turretStats,
-            ITargetBoundsFinder targetBoundsFinder)
+            (float x, float y) targetMargins)
         {
             return
                 new AccuracyAdjuster(
-                    targetBoundsFinder,
+                    targetMargins,
                     angleCalculator,
                     new LinearRangeFinder(),
                     RandomGenerator.Instance,
