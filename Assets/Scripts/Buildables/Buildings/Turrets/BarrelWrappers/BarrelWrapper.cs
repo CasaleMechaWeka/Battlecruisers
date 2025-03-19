@@ -232,7 +232,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
             else
             {
-                return _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder;
+                return new DummyPositionFinder();
             }
         }
 

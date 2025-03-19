@@ -291,7 +291,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             else
             {
-                return _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder;
+                return new DummyPositionFinder();
             }
         }
 

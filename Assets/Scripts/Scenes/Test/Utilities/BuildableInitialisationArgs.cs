@@ -101,7 +101,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                             new SpriteProvider(new SpriteFetcher())),
                     new SoundPlayerFactory(soundFetcher, deferrer),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
-                    new AttackablePositionFinderFactory(),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
                     targetFactoriesProvider,
                     new SpawnDeciderFactory(),
@@ -144,7 +143,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
             ITurretStatsFactory turretStatsFactory,
-            AttackablePositionFinderFactory attackablePositionFinderFactory,
             IDeferrerProvider deferrerProvider,
             ITargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
@@ -168,7 +166,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             // Turrets
             TurretFactoryProvider turretFactoryProvider = Substitute.For<TurretFactoryProvider>();
-            turretFactoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
             turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.Turrets.Returns(turretFactoryProvider);
 
