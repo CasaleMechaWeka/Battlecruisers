@@ -2,13 +2,13 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-    public class StaticAngleCalculator : AngleCalculator
+	public class StaticAngleCalculator : AngleCalculator
 	{
 		private readonly float _desiredAngleInDegrees;
 
-        public StaticAngleCalculator(IAngleHelper angleHelper, float desiredAngleInDegrees)
-            : base(angleHelper)
-		{ 
+		public StaticAngleCalculator(AngleHelper angleHelper, float desiredAngleInDegrees)
+			: base(angleHelper)
+		{
 			_desiredAngleInDegrees = desiredAngleInDegrees;
 		}
 

@@ -72,7 +72,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 && !target.IsDestroyed
                 && _targetFilter.IsMatch(target)
                 && !_parentAircraft.IsDestroyed
-                && _targetToDamage == null)
+                && _targetToDamage == null
+                && target.Health > 0f)
             {
                 _targetToDamage = target;
             }

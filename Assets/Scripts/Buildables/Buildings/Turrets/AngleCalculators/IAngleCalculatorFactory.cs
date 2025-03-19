@@ -2,9 +2,9 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-    public interface IAngleCalculatorFactory
+	public interface IAngleCalculatorFactory
 	{
-        IAngleHelper CreateAngleHelper();
+		AngleHelper CreateAngleHelper();
 		IAngleCalculator CreateAngleCalculator();
 		IAngleCalculator CreateArtilleryAngleCalculator(IProjectileFlightStats projectileFlightStats);
 		IAngleCalculator CreateMortarAngleCalculator(IProjectileFlightStats projectileFlightStats);

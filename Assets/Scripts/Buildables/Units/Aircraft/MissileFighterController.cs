@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IExactMatchTargetFilter _exactMatchTargetFilter;
         private IMovementController _fighterMovementController;
         private BarrelController _barrelController;
-        private IAngleHelper _angleHelper;
+        private AngleHelper _angleHelper;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
 
         public float enemyFollowDetectionRangeInM;

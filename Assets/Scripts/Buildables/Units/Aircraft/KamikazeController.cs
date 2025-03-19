@@ -70,18 +70,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 && !target.IsDestroyed
                 && _targetFilter.IsMatch(target)
                 && !_parentAircraft.IsDestroyed
-                && _targetToDamage == null)
+                && _targetToDamage == null
+                && target.Health > 0f)
             {
-                if (target.Health != 0f)
-                    _targetToDamage = target;
+                _targetToDamage = target;
             }
         }
 
         private void FixedUpdate()
         {
             if (_targetToDamage != null
-                && !_parentAircraft.IsDestroyed
-                && !(_targetToDamage.Health == 0f))
+                && !_parentAircraft.IsDestroyed)
             {
                 float prevTargetHP = _targetToDamage.Health;
                 Debug.Log(_targetToDamage.Health);

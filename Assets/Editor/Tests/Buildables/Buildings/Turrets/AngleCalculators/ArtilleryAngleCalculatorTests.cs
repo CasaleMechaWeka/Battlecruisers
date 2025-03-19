@@ -8,35 +8,35 @@ using UnityEngine;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 {
-    public class ArtilleryAngleCalculatorTests
+	public class ArtilleryAngleCalculatorTests
 	{
 		private IAngleCalculator _angleCalculator;
-        private IAngleHelper _angleHelper;
-        private IAngleConverter _angleConverter;
-        private IProjectileFlightStats _projectileFlightStats;
-        private Vector2 _targetPosition;
+		private AngleHelper _angleHelper;
+		private IAngleConverter _angleConverter;
+		private IProjectileFlightStats _projectileFlightStats;
+		private Vector2 _targetPosition;
 
 		[SetUp]
 		public void TestSetup()
 		{
-            _angleHelper = Substitute.For<IAngleHelper>();
-            _angleConverter = Substitute.For<IAngleConverter>();
-            _projectileFlightStats = Substitute.For<IProjectileFlightStats>();
-            _projectileFlightStats.GravityScale.Returns(1);
-            _angleCalculator = new ArtilleryAngleCalculator(_angleHelper, _angleConverter, _projectileFlightStats);
+			_angleHelper = Substitute.For<AngleHelper>();
+			_angleConverter = Substitute.For<IAngleConverter>();
+			_projectileFlightStats = Substitute.For<IProjectileFlightStats>();
+			_projectileFlightStats.GravityScale.Returns(1);
+			_angleCalculator = new ArtilleryAngleCalculator(_angleHelper, _angleConverter, _projectileFlightStats);
 
-            _angleConverter
-                .ConvertToUnsigned(Arg.Any<float>())
-                .Returns(args => (float)args[0]);
+			_angleConverter
+				.ConvertToUnsigned(Arg.Any<float>())
+				.Returns(args => (float)args[0]);
 
-            _targetPosition = new Vector2(0, 0);
+			_targetPosition = new Vector2(0, 0);
 		}
 
 		[Test]
 		public void OutOfRange_Throws()
 		{
 			Vector2 source = new Vector2(-20, 0);
-            _projectileFlightStats.MaxVelocityInMPerS.Returns(2);
+			_projectileFlightStats.MaxVelocityInMPerS.Returns(2);
 			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: false));
 		}
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 		public void SourceNotMirrored_ButTargetToLeft_Throws()
 		{
 			Vector2 source = new Vector2(2, 0);
-            _projectileFlightStats.MaxVelocityInMPerS.Returns(45);
+			_projectileFlightStats.MaxVelocityInMPerS.Returns(45);
 			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: false));
 		}
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 		public void SourceMirrored_ButTargetToRight_Throws()
 		{
 			Vector2 source = new Vector2(-2, 0);
-            _projectileFlightStats.MaxVelocityInMPerS.Returns(45);
+			_projectileFlightStats.MaxVelocityInMPerS.Returns(45);
 			Assert.Throws<ArgumentException>(() => _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true));
 		}
 
@@ -61,12 +61,12 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 		{
 			float velocityInMPerS = 25;
 			float maxRange = (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
-            _projectileFlightStats.MaxVelocityInMPerS.Returns(velocityInMPerS);
+			_projectileFlightStats.MaxVelocityInMPerS.Returns(velocityInMPerS);
 
-            Vector2 source = new Vector2(maxRange, 0);
+			Vector2 source = new Vector2(maxRange, 0);
 			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true);
 
-            _angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
+			_angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
 			Assert.AreEqual(45, Mathf.Round(angleInDegrees));
 		}
 
@@ -75,13 +75,13 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 		{
 			float velocityInMPerS = 25;
 			float maxRange = (velocityInMPerS * velocityInMPerS) / Constants.GRAVITY;
-            _projectileFlightStats.MaxVelocityInMPerS.Returns(velocityInMPerS + 1);
+			_projectileFlightStats.MaxVelocityInMPerS.Returns(velocityInMPerS + 1);
 
-            Vector2 source = new Vector2(maxRange, 0);
+			Vector2 source = new Vector2(maxRange, 0);
 			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true);
 
-            _angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
+			_angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
 			Assert.IsTrue(angleInDegrees < 45);
-        }
+		}
 	}
 }

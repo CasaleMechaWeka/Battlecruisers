@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IExactMatchTargetFilter _exactMatchTargetFilter;
         private IMovementController _fighterMovementController;
         private PvPBarrelController _barrelController;
-        private IAngleHelper _angleHelper;
+        private AngleHelper _angleHelper;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
 
         public float enemyFollowDetectionRangeInM;

@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-    public class AngleHelper : IAngleHelper
+    public class AngleHelper
     {
         public float FindAngle(Vector2 velocity, bool isSourceMirrored)
         {
