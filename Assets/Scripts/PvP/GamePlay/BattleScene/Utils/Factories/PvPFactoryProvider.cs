@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
@@ -35,7 +34,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPPrefabFactory PrefabFactory { get; }
         public IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         public IPvPSpriteChooserFactory SpriteChooserFactory { get; }
-        public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public TurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
@@ -60,7 +58,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new PvPTargetFactoriesProvider();
-            TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostFactory = new BoostFactory();

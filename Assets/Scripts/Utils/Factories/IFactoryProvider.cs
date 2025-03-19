@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
@@ -30,7 +29,6 @@ namespace BattleCruisers.Utils.Factories
         ISoundFactoryProvider Sound { get; }
         ISpawnDeciderFactory SpawnDeciderFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
-        ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         ITargetFactoriesProvider Targets { get; }
         TurretFactoryProvider Turrets { get; }
         IUpdaterProvider UpdaterProvider { get; }

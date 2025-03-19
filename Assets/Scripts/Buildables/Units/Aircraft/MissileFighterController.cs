@@ -23,6 +23,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
+using BattleCruisers.Movement.Predictors;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -107,7 +108,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IBarrelControllerArgs args = new BarrelControllerArgs(
                 updater,
                 _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
-                _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
+                new LinearTargetPositionPredictor(),
                 new AngleCalculator(),
                 new DummyPositionFinder(),
                 new DummyAccuracyAdjuster(),

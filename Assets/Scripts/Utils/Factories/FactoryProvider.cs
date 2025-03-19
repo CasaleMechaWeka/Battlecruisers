@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Scenes.BattleScene;
@@ -31,7 +30,6 @@ namespace BattleCruisers.Utils.Factories
         public IPrefabFactory PrefabFactory { get; }
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public ISpriteChooserFactory SpriteChooserFactory { get; }
-        public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public ITargetFactoriesProvider Targets { get; }
         public TurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
@@ -53,7 +51,6 @@ namespace BattleCruisers.Utils.Factories
             PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new TargetFactoriesProvider();
-            TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
             MovementControllerFactory = new MovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostFactory = new BoostFactory();

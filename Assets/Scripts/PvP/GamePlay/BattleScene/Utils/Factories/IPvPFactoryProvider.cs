@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
@@ -31,7 +30,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         ISoundFactoryProvider Sound { get; }
         IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         IPvPSpriteChooserFactory SpriteChooserFactory { get; }
-        ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IPvPTargetFactoriesProvider Targets { get; }
         TurretFactoryProvider Turrets { get; }
         IUpdaterProvider UpdaterProvider { get; }

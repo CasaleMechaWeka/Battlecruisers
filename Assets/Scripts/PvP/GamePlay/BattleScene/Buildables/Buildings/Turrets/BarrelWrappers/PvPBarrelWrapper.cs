@@ -148,7 +148,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
-            IAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
+            IAttackablePositionFinder attackablePositionFinder = new ClosestPositionFinder();
 
             foreach (PvPBarrelController barrel in _barrels)
             {
@@ -276,24 +276,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()
         {
-            return _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor();
+            return new DummyTargetPositionPredictor();
         }
 
         protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
-
-        private IAttackablePositionFinder CreateAttackablePositionFinder()
-        {
-            IAttackablePositionFinderWrapper positionFinderWrapper = GetComponent<IAttackablePositionFinderWrapper>();
-
-            if (positionFinderWrapper != null)
-            {
-                return positionFinderWrapper.CreatePositionFinder();
-            }
-            else
-            {
-                return new DummyPositionFinder();
-            }
-        }
 
         protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {

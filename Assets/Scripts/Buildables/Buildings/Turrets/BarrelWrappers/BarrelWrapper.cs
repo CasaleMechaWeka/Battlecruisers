@@ -138,7 +138,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
-            IAttackablePositionFinder attackablePositionFinder = CreateAttackablePositionFinder();
+            IAttackablePositionFinder attackablePositionFinder = new ClosestPositionFinder();
 
             foreach (BarrelController barrel in _barrels)
             {
@@ -217,24 +217,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()
         {
-            return _factoryProvider.TargetPositionPredictorFactory.CreateDummyPredictor();
+            return new DummyTargetPositionPredictor();
         }
 
         protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
-
-        private IAttackablePositionFinder CreateAttackablePositionFinder()
-        {
-            IAttackablePositionFinderWrapper positionFinderWrapper = GetComponent<IAttackablePositionFinderWrapper>();
-
-            if (positionFinderWrapper != null)
-            {
-                return positionFinderWrapper.CreatePositionFinder();
-            }
-            else
-            {
-                return new DummyPositionFinder();
-            }
-        }
 
         protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {

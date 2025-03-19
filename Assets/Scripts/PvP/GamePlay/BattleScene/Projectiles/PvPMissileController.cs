@@ -75,8 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
                     _rigidBody,
                     maxVelocityProvider,
-                    targetProvider,
-                    _factoryProvider.TargetPositionPredictorFactory);
+                    targetProvider);
 
             //Debug.Log("[PvPMissileController] Movement controller created. Missile sprite enabled: " + missile.enabled);
 
@@ -252,8 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                         = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
                             _rigidBody,
                             maxVelocityProvider,
-                            targetProvider,
-                            _factoryProvider.TargetPositionPredictorFactory);
+                            targetProvider);
 
                     _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
                 }

@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
@@ -12,7 +11,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data;
 using BattleCruisers.Movement;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
@@ -53,7 +51,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
-            ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
@@ -88,7 +85,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 = CreateFactoryProvider(
                     helper.PrefabFactory,
                     movementControllerFactory ?? new MovementControllerFactory(),
-                    targetPositionPredictorFactory ?? new TargetPositionPredictorFactory(),
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory,
@@ -133,7 +129,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private IFactoryProvider CreateFactoryProvider(
             IPrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
-            ITargetPositionPredictorFactory targetPositionControllerFactory,
             IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
             IBoostFactory boostFactory,
@@ -160,7 +155,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SpawnDeciderFactory.Returns(spawnDeciderFactory);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.Targets.Returns(targetFactories);
-            factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
             factoryProvider.SettingsManager.Returns(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
 

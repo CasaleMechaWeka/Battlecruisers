@@ -59,8 +59,7 @@ namespace BattleCruisers.Projectiles
                 = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
                     _rigidBody,
                     maxVelocityProvider,
-                    targetProvider,
-                    _factoryProvider.TargetPositionPredictorFactory);
+                    targetProvider);
 
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
             missile.enabled = true;

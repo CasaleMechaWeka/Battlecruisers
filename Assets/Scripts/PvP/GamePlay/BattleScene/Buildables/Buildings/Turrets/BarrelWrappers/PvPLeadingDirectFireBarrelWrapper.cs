@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override ITargetPositionPredictor CreateTargetPositionPredictor()
         {
-            return _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor();
+            return new LinearTargetPositionPredictor();
         }
 
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)

@@ -1,5 +1,4 @@
 using BattleCruisers.Movement.Deciders;
-using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
@@ -34,10 +33,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         public IMovementController CreateMissileMovementController(
             Rigidbody2D rigidBody,
             IVelocityProvider maxVelocityProvider,
-            ITargetProvider targetProvider,
-            ITargetPositionPredictorFactory targetPositionPredictorFactory)
+            ITargetProvider targetProvider)
         {
-            return new MissileMovementController(rigidBody, maxVelocityProvider, targetProvider, targetPositionPredictorFactory);
+            return new MissileMovementController(rigidBody, maxVelocityProvider, targetProvider);
         }
 
         public IMovementController CreateFighterMovementController(Rigidbody2D rigidBody, IVelocityProvider maxVelocityProvider, ITargetProvider targetProvider, Rectangle safeZone)

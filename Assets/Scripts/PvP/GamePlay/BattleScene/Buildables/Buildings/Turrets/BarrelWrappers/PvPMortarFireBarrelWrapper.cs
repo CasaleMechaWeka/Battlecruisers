@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override ITargetPositionPredictor CreateTargetPositionPredictor()
         {
-            return _factoryProvider.TargetPositionPredictorFactory.CreateMortarPredictor();
+            return new MortarTargetPositionPredictor();
         }
 
         protected override ITargetPositionValidator CreatePositionValidator()
