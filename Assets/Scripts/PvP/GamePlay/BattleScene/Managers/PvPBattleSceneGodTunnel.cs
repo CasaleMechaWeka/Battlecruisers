@@ -168,7 +168,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public override void OnNetworkSpawn()
         {
-            BattleCompleted.Value = Tunnel_BattleCompletedState.None;
+            if (IsServer)
+                BattleCompleted.Value = Tunnel_BattleCompletedState.None;
             IsRegisteredBuildablesLeftPlayer = false;
             IsRegisteredBuildablesRightPlayer = false;
         }
