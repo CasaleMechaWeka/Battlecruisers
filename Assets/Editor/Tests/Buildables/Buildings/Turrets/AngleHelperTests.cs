@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
 {
     public class AngleHelperTests
     {
-        private IAngleHelper _angleHelper;
+        private AngleHelper _angleHelper;
         private Vector2 _targetPosition;
 
         [SetUp]
