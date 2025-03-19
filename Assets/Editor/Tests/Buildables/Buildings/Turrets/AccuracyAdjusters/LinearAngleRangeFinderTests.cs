@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
     public class LinearAngleRangeFinderTests
     {
-        private IAngleRangeFinder _rangeFinder;
+        private LinearRangeFinder _rangeFinder;
 
         [SetUp]
         public void SetuUp()

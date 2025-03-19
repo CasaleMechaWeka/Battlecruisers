@@ -2,7 +2,7 @@ using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
-    public class LinearRangeFinder : IAngleRangeFinder
+    public class LinearRangeFinder
     {
         /// <returns>
         /// The possible range of fire angles.  Includes the given on target range,
@@ -10,23 +10,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         /// </returns>
         public IRange<float> FindFireAngleRange(IRange<float> onTargetRange, float accuracy)
         {
-            var t2 = onTargetRange.Min;
-            var t1 = onTargetRange.Max;
-
-            //Assert.IsTrue(onTargetRange.Max > onTargetRange.Min);
-
             float onTargetRangeSize = onTargetRange.Max - onTargetRange.Min;
+            float errorMarginEachSide = (onTargetRangeSize / accuracy - onTargetRangeSize) * 0.5f;
 
-            float fireAngleRangeSize = onTargetRangeSize / accuracy;
-            //Assert.IsTrue(fireAngleRangeSize >= onTargetRangeSize);
-
-            float totalErrorMargin = fireAngleRangeSize - onTargetRangeSize;
-            float errorMarginEachSide = totalErrorMargin / 2;
-
-            float minFireAngle = onTargetRange.Min - errorMarginEachSide;
-            float maxFireAngle = onTargetRange.Max + errorMarginEachSide;
-
-            return new Range<float>(minFireAngle, maxFireAngle);
+            return new Range<float>(onTargetRange.Min - errorMarginEachSide, onTargetRange.Max + errorMarginEachSide);
         }
     }
 }

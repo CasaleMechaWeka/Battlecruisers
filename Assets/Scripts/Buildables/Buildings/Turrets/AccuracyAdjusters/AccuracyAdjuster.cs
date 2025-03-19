@@ -14,14 +14,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
     {
         private readonly ITargetBoundsFinder _boundsFinder;
         private readonly IAngleCalculator _angleCalculator;
-        private readonly IAngleRangeFinder _angleRangeFinder;
+        private readonly LinearRangeFinder _angleRangeFinder;
         private readonly IRandomGenerator _random;
         private readonly ITurretStats _turretStats;
 
         public AccuracyAdjuster(
             ITargetBoundsFinder boundsFinder,
             IAngleCalculator angleCalculator,
-            IAngleRangeFinder angleRangeFinder,
+            LinearRangeFinder angleRangeFinder,
             IRandomGenerator random,
             ITurretStats turretStats)
         {
@@ -52,4 +52,3 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
         }
     }
 }
-   

@@ -17,14 +17,14 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
         // Constructor parameters
         private ITargetBoundsFinder _boundsFinder;
         private IAngleCalculator _angleCalculator;
-        private IAngleRangeFinder _angleRangeFinder;
+        private LinearRangeFinder _angleRangeFinder;
         private IRandomGenerator _random;
         private ITurretStats _turretStats;
 
         // FindAngelInDegrees() parameters
         private float _idealFireAngleInDegrees;
         private Vector2 _sourcePosition, _targetPosition;
-		private bool _isMirrored;
+        private bool _isMirrored;
 
         // Other
         private IRange<Vector2> _onTargetBounds;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
         {
             _boundsFinder = Substitute.For<ITargetBoundsFinder>();
             _angleCalculator = Substitute.For<IAngleCalculator>();
-            _angleRangeFinder = Substitute.For<IAngleRangeFinder>();
+            _angleRangeFinder = Substitute.For<LinearRangeFinder>();
             _random = Substitute.For<IRandomGenerator>();
             _turretStats = Substitute.For<ITurretStats>();
             _turretStats.Accuracy.Returns(0.5f);
