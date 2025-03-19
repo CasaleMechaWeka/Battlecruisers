@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
-    public class AttackablePositionFinderFactory : IAttackablePositionFinderFactory
+    public class AttackablePositionFinderFactory
     {
         public IAttackablePositionFinder DummyPositionFinder { get; }
 

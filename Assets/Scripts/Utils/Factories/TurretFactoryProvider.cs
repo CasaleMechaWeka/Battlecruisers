@@ -5,7 +5,7 @@ namespace BattleCruisers.Utils.Factories
 {
     public class TurretFactoryProvider
     {
-        public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
+        public AttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
 
         public TurretFactoryProvider()
