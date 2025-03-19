@@ -13,7 +13,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Scenes.Test
 {
     public class BroadsidesBarrelTestGod : TestGodBase
-	{
+    {
         private Factory _target;
         private BarrelController _doubleBarrel;
 
@@ -43,17 +43,17 @@ namespace BattleCruisers.Scenes.Test
             helper.InitialiseBuilding(_target);
 
             // Initialise double barrel
-			_doubleBarrel.StaticInitialise();
-			_doubleBarrel.Target = _target;
+            _doubleBarrel.StaticInitialise();
+            _doubleBarrel.Target = _target;
 
             IBarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
                     _doubleBarrel,
                     _updaterProvider.PerFrameUpdater,
                     targetFilter: new ExactMatchTargetFilter() { Target = _target },
-                    angleCalculator: new ArtilleryAngleCalculator(new AngleHelper(), new AngleConverter(), _doubleBarrel.ProjectileStats));
+                    angleCalculator: new ArtilleryAngleCalculator(new AngleConverter(), _doubleBarrel.ProjectileStats));
 
             await _doubleBarrel.InitialiseAsync(barrelControllerArgs);
-		}
-	}
+        }
+    }
 }

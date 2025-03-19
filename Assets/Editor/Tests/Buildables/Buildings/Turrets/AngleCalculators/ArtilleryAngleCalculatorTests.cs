@@ -11,7 +11,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 	public class ArtilleryAngleCalculatorTests
 	{
 		private IAngleCalculator _angleCalculator;
-		private AngleHelper _angleHelper;
 		private IAngleConverter _angleConverter;
 		private IProjectileFlightStats _projectileFlightStats;
 		private Vector2 _targetPosition;
@@ -19,11 +18,10 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 		[SetUp]
 		public void TestSetup()
 		{
-			_angleHelper = Substitute.For<AngleHelper>();
 			_angleConverter = Substitute.For<IAngleConverter>();
 			_projectileFlightStats = Substitute.For<IProjectileFlightStats>();
 			_projectileFlightStats.GravityScale.Returns(1);
-			_angleCalculator = new ArtilleryAngleCalculator(_angleHelper, _angleConverter, _projectileFlightStats);
+			_angleCalculator = new ArtilleryAngleCalculator(_angleConverter, _projectileFlightStats);
 
 			_angleConverter
 				.ConvertToUnsigned(Arg.Any<float>())

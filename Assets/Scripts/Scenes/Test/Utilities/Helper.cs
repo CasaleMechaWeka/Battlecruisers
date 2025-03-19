@@ -464,7 +464,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     updater,
                     targetFilter ?? Substitute.For<ITargetFilter>(),
                     targetPositionPredictor ?? new DummyTargetPositionPredictor(),
-                    angleCalculator ?? new AngleCalculator(new AngleHelper()),
+                    angleCalculator ?? new AngleCalculator(),
                     attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
                     rotationMovementController ?? CreateRotationMovementController(barrel, updater),

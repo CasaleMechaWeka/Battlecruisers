@@ -4,10 +4,10 @@ using BattleCruisers.Projectiles.Stats;
 namespace BattleCruisers.Scenes.Test
 {
     public class ArtilleryBarrelControllerTests : BarrelControllerTestGod
-	{
+    {
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
         {
-            return new ArtilleryAngleCalculator(new AngleHelper(), new AngleConverter(), projectileStats);
+            return new ArtilleryAngleCalculator(new AngleConverter(), projectileStats);
         }
     }
 }

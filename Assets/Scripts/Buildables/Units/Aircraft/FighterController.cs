@@ -32,7 +32,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IExactMatchTargetFilter _exactMatchTargetFilter;
         private IMovementController _figherMovementController;
         private BarrelController _barrelController;
-        private AngleHelper _angleHelper;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
 
         public float enemyFollowDetectionRangeInM;
@@ -76,7 +75,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
-            _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
@@ -195,7 +193,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             if (Velocity != Vector2.zero)
             {
-                float zRotationInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
+                float angle = Mathf.Atan2(Velocity.y, Velocity.x) * Mathf.Rad2Deg;
+                float zRotationInDegrees = transform.IsMirrored() ? 180 - angle : (angle + 360) % 360;
+
                 Quaternion rotation = rigidBody.transform.rotation;
                 rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, zRotationInDegrees);
                 transform.rotation = rotation;

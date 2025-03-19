@@ -20,8 +20,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
         protected abstract bool UseLargerAngle { get; }
 
-        public GravityAffectedAngleCalculator(AngleHelper angleHelper, IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats)
-            : base(angleHelper)
+        public GravityAffectedAngleCalculator(IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats)
+            : base()
         {
             Helper.AssertIsNotNull(angleConverter, projectileFlightStats);
             Assert.IsTrue(projectileFlightStats.GravityScale > 0);
