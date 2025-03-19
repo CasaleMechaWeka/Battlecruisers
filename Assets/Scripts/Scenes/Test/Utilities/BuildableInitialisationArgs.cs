@@ -54,7 +54,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
-            IAngleCalculatorFactory angleCalculatorFactory = null,
+            AngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IBoostFactory boostFactory = null,
@@ -137,7 +137,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private IFactoryProvider CreateFactoryProvider(
             IPrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
-            IAngleCalculatorFactory angleCalculatorFactory,
+            AngleCalculatorFactory angleCalculatorFactory,
             ITargetPositionPredictorFactory targetPositionControllerFactory,
             IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,

@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPTurretFactoryProvider : ITurretFactoryProvider
     {
-        public IAngleCalculatorFactory AngleCalculatorFactory { get; }
+        public AngleCalculatorFactory AngleCalculatorFactory { get; }
         public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
 
