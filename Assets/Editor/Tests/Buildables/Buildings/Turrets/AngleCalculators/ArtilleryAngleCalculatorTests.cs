@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 			_angleConverter = Substitute.For<IAngleConverter>();
 			_projectileFlightStats = Substitute.For<IProjectileFlightStats>();
 			_projectileFlightStats.GravityScale.Returns(1);
-			_angleCalculator = new ArtilleryAngleCalculator(_angleConverter, _projectileFlightStats);
+			_angleCalculator = new GravityAffectedAngleCalculator(_angleConverter, _projectileFlightStats, false);
 
 			_angleConverter
 				.ConvertToUnsigned(Arg.Any<float>())

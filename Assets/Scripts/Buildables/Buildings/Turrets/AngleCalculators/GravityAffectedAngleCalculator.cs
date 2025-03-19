@@ -11,16 +11,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// 1. Shells ARE affected by gravity
     /// 2. Target is in facing direction of source
     /// </summary>
-    public abstract class GravityAffectedAngleCalculator : AngleCalculator
+    public class GravityAffectedAngleCalculator : AngleCalculator
     {
         private readonly IAngleConverter _angleConverter;
         private readonly IProjectileFlightStats _projectileFlightStats;
         private readonly float _adjustedGravity;
         private float previousAngle;
 
-        protected abstract bool UseLargerAngle { get; }
+        private bool _useLargerAngle { get; }
 
-        public GravityAffectedAngleCalculator(IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats)
+        public GravityAffectedAngleCalculator(IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats, bool useLargerAngle)
             : base()
         {
             Helper.AssertIsNotNull(angleConverter, projectileFlightStats);
@@ -29,6 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             _angleConverter = angleConverter;
             _projectileFlightStats = projectileFlightStats;
             _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
+            _useLargerAngle = useLargerAngle;
         }
 
         public override float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
@@ -55,14 +56,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             float firstAngleInRadians = Mathf.Atan((velocitySquared + Mathf.Sqrt(squareRootArg)) / denominator);
             float secondAngleInRadians = Mathf.Atan((velocitySquared - Mathf.Sqrt(squareRootArg)) / denominator);
 
-            float angleInRadians = UseLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
+            float angleInRadians = _useLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
             float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
             angleInDegrees = _angleConverter.ConvertToUnsigned(angleInDegrees);
             previousAngle = angleInDegrees;
             Logging.Verbose(
                 Tags.ANGLE_CALCULATORS,
-                $"source: {sourcePosition}  target: {targetPosition}  isSourceMirrored: {isSourceMirrored}  UseLargerAngle: {UseLargerAngle}  " +
+                $"source: {sourcePosition}  target: {targetPosition}  isSourceMirrored: {isSourceMirrored}  UseLargerAngle: {_useLargerAngle}  " +
                 $"firstAngleInRadians: {firstAngleInRadians}  secondAngleInRadians: {secondAngleInRadians}  angleInDegrees: {angleInDegrees}*");
 
             return angleInDegrees;

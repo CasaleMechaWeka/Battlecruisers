@@ -7,7 +7,7 @@ namespace BattleCruisers.Scenes.Test
     {
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
         {
-            return new ArtilleryAngleCalculator(new AngleConverter(), projectileStats);
+            return new GravityAffectedAngleCalculator(new AngleConverter(), projectileStats, false);
         }
     }
 }
