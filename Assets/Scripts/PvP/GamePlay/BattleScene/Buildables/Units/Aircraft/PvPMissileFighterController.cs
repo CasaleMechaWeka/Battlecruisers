@@ -26,6 +26,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -126,7 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         new DummyAccuracyAdjuster(),
                         _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                         _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
-                        _factoryProvider.Turrets.AngleLimiterFactory.CreateDummyLimiter(),
+                        new DummyAngleLimiter(),
                         _factoryProvider,
                         _cruiserSpecificFactories,
                         parent,

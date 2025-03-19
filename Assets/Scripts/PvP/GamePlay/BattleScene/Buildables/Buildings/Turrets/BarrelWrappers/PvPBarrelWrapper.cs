@@ -318,7 +318,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual IAngleLimiter CreateAngleLimiter()
         {
-            return _factoryProvider.Turrets.AngleLimiterFactory.CreateFacingLimiter();
+            return new AngleLimiter(-30, 90);
         }
 
         protected virtual IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)

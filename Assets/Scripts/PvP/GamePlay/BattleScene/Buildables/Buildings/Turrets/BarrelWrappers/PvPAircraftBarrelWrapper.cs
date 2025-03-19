@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IAngleLimiter CreateAngleLimiter()
         {
-            return _factoryProvider.Turrets.AngleLimiterFactory.CreateDummyLimiter();
+            return new DummyAngleLimiter();
         }
     }
 }

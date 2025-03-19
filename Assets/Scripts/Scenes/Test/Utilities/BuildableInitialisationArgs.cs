@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -63,7 +62,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
-            AngleLimiterFactory angleLimiterFactory = null,
             ISoundFetcher soundFetcher = null,
             ISpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
@@ -99,7 +97,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     boostFactory,
                     damageApplierFactory ?? new DamageApplierFactory(targetFactoriesProvider.FilterFactory),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
-                    angleLimiterFactory ?? new AngleLimiterFactory(),
                     soundFetcher,
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
@@ -147,7 +144,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IBoostFactory boostFactory,
             IDamageApplierFactory damageApplierFactory,
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
-            AngleLimiterFactory angleLimiterFactory,
             ISoundFetcher soundFetcher,
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
@@ -177,7 +173,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             // Turrets
             ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();
             turretFactoryProvider.AngleCalculatorFactory.Returns(angleCalculatorFactory);
-            turretFactoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
             turretFactoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
             turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.Turrets.Returns(turretFactoryProvider);
