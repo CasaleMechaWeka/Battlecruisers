@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Threading
 {
-    public class ConstantDeferrer : IConstantDeferrer
+    public class ConstantDeferrer
     {
         private readonly IDeferrer _deferrer;
         private readonly float _delayInS;

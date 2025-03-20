@@ -6,9 +6,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
     public class DeferredBarrelFirer : IBarrelFirer
     {
         private readonly IBarrelFirer _coreFirer;
-        private readonly IConstantDeferrer _deferrer;
+        private readonly ConstantDeferrer _deferrer;
 
-        public DeferredBarrelFirer(IBarrelFirer coreFirer, IConstantDeferrer deferrer)
+        public DeferredBarrelFirer(IBarrelFirer coreFirer, ConstantDeferrer deferrer)
         {
             Helper.AssertIsNotNull(coreFirer, deferrer);
 

@@ -7,9 +7,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPDeferredBarrelFirer : IBarrelFirer
     {
         private readonly IBarrelFirer _coreFirer;
-        private readonly IConstantDeferrer _deferrer;
+        private readonly ConstantDeferrer _deferrer;
 
-        public PvPDeferredBarrelFirer(IBarrelFirer coreFirer, IConstantDeferrer deferrer)
+        public PvPDeferredBarrelFirer(IBarrelFirer coreFirer, ConstantDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(coreFirer, deferrer);
 

@@ -9,13 +9,13 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
     public class DeferredBarrelFirerTests
     {
         private IBarrelFirer _deferredFirer, _coreFirer;
-        private IConstantDeferrer _deferrer;
+        private ConstantDeferrer _deferrer;
 
         [SetUp]
         public void TestSetup()
         {
             _coreFirer = Substitute.For<IBarrelFirer>();
-            _deferrer = Substitute.For<IConstantDeferrer>();
+            _deferrer = Substitute.For<ConstantDeferrer>();
 
             _deferredFirer = new DeferredBarrelFirer(_coreFirer, _deferrer);
 
