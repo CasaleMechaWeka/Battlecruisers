@@ -254,7 +254,6 @@ namespace BattleCruisers.UI.Cameras
                         cameraCalculator,
                         new EdgeDetector(
                             input,
-                            new ScreenBC(),
                             edgeRegionWidthInPixels),
                         new Clamper()));
             }

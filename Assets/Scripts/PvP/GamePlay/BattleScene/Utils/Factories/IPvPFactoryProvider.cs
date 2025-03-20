@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
-        IDeferrerProvider DeferrerProvider { get; }
+        DeferrerProvider DeferrerProvider { get; }
         IDroneMonitor DroneMonitor { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IPvPMovementControllerFactory MovementControllerFactory { get; }

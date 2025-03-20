@@ -23,7 +23,7 @@ namespace BattleCruisers.Utils.Factories
 
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
-        public IDeferrerProvider DeferrerProvider { get; }
+        public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }

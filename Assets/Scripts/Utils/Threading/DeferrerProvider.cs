@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Utils.Threading
 {
-    public class DeferrerProvider : IDeferrerProvider
+    public class DeferrerProvider
     {
         public IDeferrer Deferrer { get; }
         public IDeferrer RealTimeDeferrer { get; }

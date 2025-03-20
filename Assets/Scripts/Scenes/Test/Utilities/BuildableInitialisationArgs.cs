@@ -134,7 +134,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
             ITurretStatsFactory turretStatsFactory,
-            IDeferrerProvider deferrerProvider,
+            DeferrerProvider deferrerProvider,
             ITargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
             IUpdaterProvider updaterProvider,
