@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return new MortarTargetPositionPredictor();
         }
 
-        protected override PositionValidators.ITargetPositionValidator CreatePositionValidator()
+        protected override PositionValidators.FacingMinRangePositionValidator CreatePositionValidator()
         {
             return new FacingMinRangePositionValidator(_minRangeInM);
         }

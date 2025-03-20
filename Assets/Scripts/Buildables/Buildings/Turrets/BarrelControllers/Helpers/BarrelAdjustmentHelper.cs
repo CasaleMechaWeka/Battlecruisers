@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
     {
         private readonly IBarrelController _barrelController;
         private readonly ITargetPositionPredictor _targetPositionPredictor;
-        private readonly ITargetPositionValidator _targetPositionValidator;
+        private readonly FacingMinRangePositionValidator _targetPositionValidator;
         private readonly IAngleCalculator _angleCalculator;
         private readonly IRotationMovementController _rotationMovementController;
         private readonly AngleLimiter _angleLimiter;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         public BarrelAdjustmentHelper(
             IBarrelController barrelController,
             ITargetPositionPredictor targetPositionPredictor,
-            ITargetPositionValidator targetPositionValidator,
+            FacingMinRangePositionValidator targetPositionValidator,
             IAngleCalculator angleCalculator,
             IRotationMovementController rotationMovementController,
             AngleLimiter angleLimiter,

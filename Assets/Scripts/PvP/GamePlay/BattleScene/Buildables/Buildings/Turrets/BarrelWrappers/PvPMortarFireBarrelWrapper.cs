@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new MortarTargetPositionPredictor();
         }
 
-        protected override ITargetPositionValidator CreatePositionValidator()
+        protected override FacingMinRangePositionValidator CreatePositionValidator()
         {
             return new FacingMinRangePositionValidator(_minRangeInM);
         }

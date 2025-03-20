@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
 
         private IBarrelController _barrelController;
         private ITargetPositionPredictor _targetPositionPredictor;
-        private ITargetPositionValidator _targetPositionValidator;
+        private FacingMinRangePositionValidator _targetPositionValidator;
         private IAngleCalculator _angleCalculator;
         private IRotationMovementController _rotationMovementController;
         private AngleLimiter _angleLimiter;
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         {
             _barrelController = Substitute.For<IBarrelController>();
             _targetPositionPredictor = Substitute.For<ITargetPositionPredictor>();
-            _targetPositionValidator = Substitute.For<ITargetPositionValidator>();
+            _targetPositionValidator = Substitute.For<FacingMinRangePositionValidator>();
             _angleCalculator = Substitute.For<IAngleCalculator>();
             _rotationMovementController = Substitute.For<IRotationMovementController>();
             _angleLimiter = Substitute.For<AngleLimiter>();

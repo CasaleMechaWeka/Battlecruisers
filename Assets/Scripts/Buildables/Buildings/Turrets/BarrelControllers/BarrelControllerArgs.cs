@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public IRotationMovementController RotationMovementController { get; }
         public IFactoryProvider FactoryProvider { get; }
         public ICruiserSpecificFactories CruiserSpecificFactories { get; }
-        public ITargetPositionValidator TargetPositionValidator { get; }
+        public FacingMinRangePositionValidator TargetPositionValidator { get; }
         public AngleLimiter AngleLimiter { get; }
         public ITarget Parent { get; }
         public ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
@@ -45,7 +45,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IAttackablePositionFinder attackablePositionFinder,
             AccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
-            ITargetPositionValidator targetPositionValidator,
+            FacingMinRangePositionValidator targetPositionValidator,
             AngleLimiter angleLimiter,
             IFactoryProvider factoryProvider,
             ICruiserSpecificFactories cruiserSpecificFactories,

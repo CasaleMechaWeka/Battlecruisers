@@ -237,10 +237,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return new AccuracyAdjuster((0, 0));
         }
 
-        protected virtual ITargetPositionValidator CreatePositionValidator()
+        protected virtual FacingMinRangePositionValidator CreatePositionValidator()
         {
             // Default to all positions being valid
-            return new DummyPositionValidator();
+            return new FacingMinRangePositionValidator(float.NaN);
         }
 
         protected virtual AngleLimiter CreateAngleLimiter()
