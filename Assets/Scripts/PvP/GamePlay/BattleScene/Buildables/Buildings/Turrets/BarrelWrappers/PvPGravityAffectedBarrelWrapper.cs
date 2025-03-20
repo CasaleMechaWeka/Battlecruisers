@@ -23,11 +23,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new GravityAffectedAngleCalculator(projectileStats, !useLowerArc);
         }
 
-        protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
+        protected override AccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             if (barrel.TurretStats.Accuracy >= Constants.MAX_ACCURACY)
             {
-                return new DummyAccuracyAdjuster();
+                return new AccuracyAdjuster((0, 0));
             }
             else
             {

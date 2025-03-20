@@ -8,7 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
     public class BarrelFiringHelper : IBarrelFiringHelper
     {
         private readonly IBarrelController _barrelController;
-        private readonly IAccuracyAdjuster _accuracyAdjuster;
+        private readonly AccuracyAdjuster _accuracyAdjuster;
         private readonly IFireIntervalManager _fireIntervalManager;
         private readonly IBarrelFirer _barrelFirer;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public BarrelFiringHelper(
             IBarrelController barrelController,
-            IAccuracyAdjuster accuracyAdjuster,
+            AccuracyAdjuster accuracyAdjuster,
             IFireIntervalManager fireIntervalManager,
             IBarrelFirer barrelFirer,
             bool doDebug)

@@ -10,20 +10,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
     /// <summary>
     /// NOTE:  All angles are in degrees.
     /// </summary>
-    public class AccuracyAdjuster : IAccuracyAdjuster
+    public class AccuracyAdjuster
     {
         private readonly IAngleCalculator _angleCalculator;
         private readonly IRandomGenerator _random;
         private readonly ITurretStats _turretStats;
-        private (float x, float y) _targetMargins;
+        private readonly (float x, float y) _targetMargins;
 
         public AccuracyAdjuster(
             (float x, float y) targetMargins,
-            IAngleCalculator angleCalculator,
-            IRandomGenerator random,
-            ITurretStats turretStats)
+            IAngleCalculator angleCalculator = null,
+            IRandomGenerator random = null,
+            ITurretStats turretStats = null)
         {
-            Helper.AssertIsNotNull(angleCalculator, random, turretStats);
+            if (targetMargins != (0, 0))
+                Helper.AssertIsNotNull(angleCalculator, random, turretStats);
 
             //_boundsFinder = boundsFinder;
             _targetMargins = targetMargins;
@@ -34,6 +35,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 
         public float FindAngleInDegrees(float idealFireAngle, Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
         {
+            if (_targetMargins == (0, 0))
+                return idealFireAngle;
+
             Assert.IsTrue(sourcePosition.x != targetPosition.x);
 
             // Calculate the direction sign (-1 for left, +1 for right)

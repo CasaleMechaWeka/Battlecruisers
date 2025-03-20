@@ -113,7 +113,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     new LinearTargetPositionPredictor(),
                     new AngleCalculator(),
                     new DummyPositionFinder(),
-                    new DummyAccuracyAdjuster(),
+                    new AccuracyAdjuster((0, 0)),
                     _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                     new DummyPositionValidator(),
                     new AngleLimiter(-30, 30),

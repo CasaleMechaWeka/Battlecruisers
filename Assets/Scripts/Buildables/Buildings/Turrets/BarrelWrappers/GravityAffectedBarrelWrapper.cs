@@ -23,10 +23,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return new GravityAffectedAngleCalculator(projectileStats, !useLowerArc);
         }
 
-        protected override IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
+        protected override AccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             if (barrel.TurretStats.Accuracy >= Constants.MAX_ACCURACY)
-                return new DummyAccuracyAdjuster();
+                return new AccuracyAdjuster((0, 0));
             else
                 return new AccuracyAdjuster((X_MARGIN, 0f), angleCalculator, RandomGenerator.Instance, barrel.TurretStats);
         }

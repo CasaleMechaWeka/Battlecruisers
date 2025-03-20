@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ITargetPositionPredictor TargetPositionPredictor { get; }
         IAngleCalculator AngleCalculator { get; }
         IAttackablePositionFinder AttackablePositionFinder { get; }
-        IAccuracyAdjuster AccuracyAdjuster { get; }
+        AccuracyAdjuster AccuracyAdjuster { get; }
         IRotationMovementController RotationMovementController { get; }
         ITargetPositionValidator TargetPositionValidator { get; }
         AngleLimiter AngleLimiter { get; }

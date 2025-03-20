@@ -231,10 +231,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     deltaTimeProvider);
         }
 
-        protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
+        protected virtual AccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)
         {
             // Default to 100% accuracy
-            return new DummyAccuracyAdjuster();
+            return new AccuracyAdjuster((0, 0));
         }
 
         protected virtual ITargetPositionValidator CreatePositionValidator()

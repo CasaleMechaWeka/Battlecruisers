@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         private IBarrelFiringHelper _helper;
 
         private IBarrelController _barrelController;
-        private IAccuracyAdjuster _accuracyAdjuster;
+        private AccuracyAdjuster _accuracyAdjuster;
         private IFireIntervalManager _fireIntervalManager;
         private IBarrelFirer _barrelFirer;
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         public void TestSetup()
         {
             _barrelController = Substitute.For<IBarrelController>();
-            _accuracyAdjuster = Substitute.For<IAccuracyAdjuster>();
+            _accuracyAdjuster = Substitute.For<AccuracyAdjuster>();
             _fireIntervalManager = Substitute.For<IFireIntervalManager>();
             _barrelFirer = Substitute.For<IBarrelFirer>();
 
