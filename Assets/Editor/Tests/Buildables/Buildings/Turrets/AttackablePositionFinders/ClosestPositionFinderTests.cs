@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AttackablePositionFi
             _cutoffWidthInM = 5;
             _bufferInM = 0.5f;
 
-            _positionFinder = new ClosestPositionFinder(_cutoffWidthInM, _bufferInM);
+            _positionFinder = new ClosestPositionFinder();
 
             _sourcePosition = new Vector2(0, 0);
 
