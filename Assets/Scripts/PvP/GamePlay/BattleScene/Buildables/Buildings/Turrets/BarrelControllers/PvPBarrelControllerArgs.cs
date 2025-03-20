@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public ITargetPositionValidator TargetPositionValidator { get; }
-        public IAngleLimiter AngleLimiter { get; }
+        public AngleLimiter AngleLimiter { get; }
         public ITarget Parent { get; }
         public ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
         public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IAccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
             ITargetPositionValidator targetPositionValidator,
-            IAngleLimiter angleLimiter,
+            AngleLimiter angleLimiter,
             IPvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ITarget parent,

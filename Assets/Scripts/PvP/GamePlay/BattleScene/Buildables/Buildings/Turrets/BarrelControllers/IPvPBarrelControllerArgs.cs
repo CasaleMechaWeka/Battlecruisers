@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         IAccuracyAdjuster AccuracyAdjuster { get; }
         IRotationMovementController RotationMovementController { get; }
         ITargetPositionValidator TargetPositionValidator { get; }
-        IAngleLimiter AngleLimiter { get; }
+        AngleLimiter AngleLimiter { get; }
         IPvPFactoryProvider FactoryProvider { get; }
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         ITarget Parent { get; }

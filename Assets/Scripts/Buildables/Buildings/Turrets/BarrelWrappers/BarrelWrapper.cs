@@ -243,7 +243,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return new DummyPositionValidator();
         }
 
-        protected virtual IAngleLimiter CreateAngleLimiter()
+        protected virtual AngleLimiter CreateAngleLimiter()
         {
             return new AngleLimiter(-30, 90);
         }

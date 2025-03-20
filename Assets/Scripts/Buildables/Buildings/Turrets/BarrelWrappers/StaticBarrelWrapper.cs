@@ -13,9 +13,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return new StaticAngleCalculator(DesiredAngleInDegrees);
         }
 
-        protected override IAngleLimiter CreateAngleLimiter()
+        protected override AngleLimiter CreateAngleLimiter()
         {
-            return new DummyAngleLimiter();
+            return new AngleLimiter(-180, 180);
         }
     }
 }

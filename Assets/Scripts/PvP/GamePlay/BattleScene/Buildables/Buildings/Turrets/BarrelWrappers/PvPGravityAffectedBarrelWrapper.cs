@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected override IAngleLimiter CreateAngleLimiter()
+        protected override AngleLimiter CreateAngleLimiter()
         {
             return new AngleLimiter(-20, 85);
         }

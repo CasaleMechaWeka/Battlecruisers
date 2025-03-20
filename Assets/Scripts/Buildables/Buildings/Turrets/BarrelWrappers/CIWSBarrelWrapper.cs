@@ -4,7 +4,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public class CIWSBarrelWrapper : LeadingDirectFireBarrelWrapper
     {
-        protected override IAngleLimiter CreateAngleLimiter()
+        protected override AngleLimiter CreateAngleLimiter()
         {
             return new AngleLimiter(-30, 180);
         }

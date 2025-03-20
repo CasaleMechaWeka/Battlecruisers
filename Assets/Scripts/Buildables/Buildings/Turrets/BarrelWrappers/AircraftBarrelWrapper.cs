@@ -9,9 +9,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public string firingSoundKey; // This field can be set through Unity inspector
 
 
-        protected override IAngleLimiter CreateAngleLimiter()
+        protected override AngleLimiter CreateAngleLimiter()
         {
-            return new DummyAngleLimiter();
+            return new AngleLimiter(-180, 180);
         }
     }
 }

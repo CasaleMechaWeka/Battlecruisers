@@ -115,7 +115,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 new DummyAccuracyAdjuster(),
                 _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                 new DummyPositionValidator(),
-                new DummyAngleLimiter(),
+                new AngleLimiter(-180, 180),
                 _factoryProvider,
                 _cruiserSpecificFactories,
                 parent,

@@ -302,7 +302,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new DummyPositionValidator();
         }
 
-        protected virtual IAngleLimiter CreateAngleLimiter()
+        protected virtual AngleLimiter CreateAngleLimiter()
         {
             return new AngleLimiter(-30, 90);
         }

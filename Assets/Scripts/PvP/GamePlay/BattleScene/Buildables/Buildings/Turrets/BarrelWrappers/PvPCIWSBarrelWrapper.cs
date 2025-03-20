@@ -4,7 +4,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPCIWSBarrelWrapper : PvPLeadingDirectFireBarrelWrapper
     {
-        protected override IAngleLimiter CreateAngleLimiter()
+        protected override AngleLimiter CreateAngleLimiter()
         {
             return new AngleLimiter(-30, 180);
         }

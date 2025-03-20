@@ -16,9 +16,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
         }
 
-        protected override IAngleLimiter CreateAngleLimiter()
+        protected override AngleLimiter CreateAngleLimiter()
         {
-            return new DummyAngleLimiter();
+            return new AngleLimiter(-180, 180);
         }
     }
 }

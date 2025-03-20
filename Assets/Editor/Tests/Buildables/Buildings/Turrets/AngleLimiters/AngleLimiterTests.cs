@@ -6,7 +6,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleLimiters
 {
     public class AngleLimiterTests
     {
-        private IAngleLimiter _limiter;
+        private AngleLimiter _limiter;
         private float _minNonNegativeAngle, _maxAngleInDegrees;
 
         [SetUp]

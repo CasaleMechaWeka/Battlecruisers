@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
 {
-    public class AngleLimiter : IAngleLimiter
+    public class AngleLimiter
     {
         private readonly float _minAngle;
         private readonly float _maxAngle;

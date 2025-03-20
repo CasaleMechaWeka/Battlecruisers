@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly ITargetPositionValidator _targetPositionValidator;
         private readonly IAngleCalculator _angleCalculator;
         private readonly IRotationMovementController _rotationMovementController;
-        private readonly IAngleLimiter _angleLimiter;
+        private readonly AngleLimiter _angleLimiter;
         private readonly IAttackablePositionFinder _attackablePositionFinder;
 
         public PvPBarrelAdjustmentHelper(
@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetPositionValidator targetPositionValidator,
             IAngleCalculator angleCalculator,
             IRotationMovementController rotationMovementController,
-            IAngleLimiter angleLimiter,
+            AngleLimiter angleLimiter,
             IAttackablePositionFinder attackablePositionFinder)
         {
             PvPHelper.AssertIsNotNull(barrelController, targetPositionPredictor, targetPositionValidator, angleCalculator, rotationMovementController, angleLimiter, attackablePositionFinder);

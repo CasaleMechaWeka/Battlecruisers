@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         IAccuracyAdjuster AccuracyAdjuster { get; }
         IRotationMovementController RotationMovementController { get; }
         ITargetPositionValidator TargetPositionValidator { get; }
-        IAngleLimiter AngleLimiter { get; }
+        AngleLimiter AngleLimiter { get; }
         IFactoryProvider FactoryProvider { get; }
         ICruiserSpecificFactories CruiserSpecificFactories { get; }
         ITarget Parent { get; }

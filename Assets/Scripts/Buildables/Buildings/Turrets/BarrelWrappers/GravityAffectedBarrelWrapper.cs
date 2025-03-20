@@ -31,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 return new AccuracyAdjuster((X_MARGIN, 0f), angleCalculator, RandomGenerator.Instance, barrel.TurretStats);
         }
 
-        protected override IAngleLimiter CreateAngleLimiter()
+        protected override AngleLimiter CreateAngleLimiter()
         {
             return new AngleLimiter(-20, 85);
         }
