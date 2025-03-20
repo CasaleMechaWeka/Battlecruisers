@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Vector2 initialVelocityInMPerS,
             ITargetFilter targetFilter,
             ITarget parent,
-            IAudioClipWrapper impactSound,
+            AudioClipWrapper impactSound,
             IPvPCruiserTargetFactoriesProvider targetFactories,
             IPvPCruiser enemyCruiser)
             : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent, impactSound)

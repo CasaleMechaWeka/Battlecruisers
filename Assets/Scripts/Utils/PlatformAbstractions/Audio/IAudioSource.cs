@@ -5,7 +5,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
     public interface IAudioSource
     {
         bool IsPlaying { get; }
-        IAudioClipWrapper AudioClip { set; }
+        AudioClipWrapper AudioClip { set; }
         float Volume { get; set; }
         Vector2 Position { get; set; }
         bool IsActive { get; set; }

@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.UI.Sound.Pools
         private int _deactivatedCount;
         private float _soundLengthInS = 3.14f;
         private Action _deferredAction;
-        private IAudioClipWrapper _sound;
+        private AudioClipWrapper _sound;
 
         [SetUp]
         public void TestSetup()
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.UI.Sound.Pools
 
             _poolable = new AudioSourcePoolable(_source, _realTimeDeferrer);
 
-            _sound = Substitute.For<IAudioClipWrapper>();
+            _sound = Substitute.For<AudioClipWrapper>();
             _sound.Length.Returns(_soundLengthInS);
 
             _realTimeDeferrer.Defer(Arg.Do<Action>(action => _deferredAction = action), _soundLengthInS);

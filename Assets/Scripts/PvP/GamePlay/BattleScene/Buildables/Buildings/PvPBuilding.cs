@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
         protected IPvPSlot _parentSlot;
 
-        private IAudioClipWrapper _placementSound;
+        private AudioClipWrapper _placementSound;
         public AudioClip placementSound;
 
         [Header("Slots")]

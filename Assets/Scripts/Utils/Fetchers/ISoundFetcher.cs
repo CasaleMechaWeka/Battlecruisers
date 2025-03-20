@@ -6,6 +6,6 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public interface ISoundFetcher
     {
-        Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey);
+        Task<AudioClipWrapper> GetSoundAsync(ISoundKey soundKey);
     }
 }

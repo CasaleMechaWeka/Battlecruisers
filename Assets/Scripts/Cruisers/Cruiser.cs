@@ -45,7 +45,7 @@ namespace BattleCruisers.Cruisers
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
-        private IAudioClipWrapper _selectedSound;
+        private AudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;

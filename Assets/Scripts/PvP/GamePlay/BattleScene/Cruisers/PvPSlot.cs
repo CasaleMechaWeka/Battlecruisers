@@ -302,7 +302,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _outline = _parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab);
                     SetSlotBuildingOutline(_outline);
                     controlBuildingPlacementFeedback(true);
-                    IAudioClipWrapper _placementSound = new AudioClipWrapper(_outline.placementSound);
+                    AudioClipWrapper _placementSound = new AudioClipWrapper(_outline.placementSound);
                     _parentCruiser.FactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
 
                     //  ServerRpc call

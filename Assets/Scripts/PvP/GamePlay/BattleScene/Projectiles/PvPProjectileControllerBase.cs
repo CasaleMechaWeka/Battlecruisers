@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IDamageApplier _damageApplier;
         private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
-        private IAudioClipWrapper _impactSound;
+        private AudioClipWrapper _impactSound;
         private IPool<IPoolable<Vector3>, Vector3> _explosionPool;
 
         protected bool _isActiveAndAlive;

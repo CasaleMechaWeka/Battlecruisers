@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public int numOfDronesRequired;
         public float buildTimeInS;
 
-        private IAudioClipWrapper _deathSound;
+        private AudioClipWrapper _deathSound;
         [Header("Sounds")]
         public AudioClip deathSound;
 

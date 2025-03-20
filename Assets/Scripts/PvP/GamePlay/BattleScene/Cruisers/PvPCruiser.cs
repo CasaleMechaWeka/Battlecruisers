@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
-        private IAudioClipWrapper _selectedSound;
+        private AudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;

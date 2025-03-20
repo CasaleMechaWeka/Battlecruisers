@@ -20,7 +20,7 @@ namespace BattleCruisers.Projectiles.ActivationArgs
             Vector2 initialVelocityInMPerS,
             ITargetFilter targetFilter,
             ITarget parent,
-            IAudioClipWrapper impactSound,
+            AudioClipWrapper impactSound,
             ICruiserTargetFactoriesProvider targetFactories,
             ICruiser enemyCruiser)
             : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent, impactSound)

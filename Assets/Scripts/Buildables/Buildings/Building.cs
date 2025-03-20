@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings
         private IDoubleClickHandler<IBuilding> _doubleClickHandler;
         protected ISlot _parentSlot;
 
-        private IAudioClipWrapper _placementSound;
+        private AudioClipWrapper _placementSound;
         public AudioClip placementSound;
 
         [Header("Slots")]

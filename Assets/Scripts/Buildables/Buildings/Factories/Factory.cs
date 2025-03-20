@@ -98,10 +98,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         }
 
         public AudioClip selectedSound;
-        public IAudioClipWrapper SelectedSound { get; private set; }
+        public AudioClipWrapper SelectedSound { get; private set; }
 
         public AudioClip unitSelectedSound;
-        public IAudioClipWrapper UnitSelectedSound { get; private set; }
+        public AudioClipWrapper UnitSelectedSound { get; private set; }
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)

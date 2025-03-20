@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Sound.AudioSources
         private readonly ISettingsManager _settingsManager;
 
         public bool IsPlaying => _audioSource.IsPlaying;
-        public IAudioClipWrapper AudioClip { set => _audioSource.AudioClip = value; }
+        public AudioClipWrapper AudioClip { set => _audioSource.AudioClip = value; }
         public float Volume { get => _audioSource.Volume; set => _audioSource.Volume = value; }
         public Vector2 Position { get => _audioSource.Position; set => _audioSource.Position = value; }
         public bool IsActive { get => _audioSource.IsActive; set => _audioSource.IsActive = value; }

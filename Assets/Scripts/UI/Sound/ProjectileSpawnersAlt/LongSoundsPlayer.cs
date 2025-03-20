@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         private const int MIN_BURST_SIZE = 2;
 
         public LongSoundPlayer(
-            IAudioClipWrapper audioClip,
+            AudioClipWrapper audioClip,
             IAudioSource audioSource,
             IDeferrer deferrer,
             int burstSize,

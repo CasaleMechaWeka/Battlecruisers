@@ -13,14 +13,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPBuildingClickHandler : PvPBuildableClickHandler, IPvPBuildingClickHandler
     {
         private readonly IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
-        private readonly IAudioClipWrapper _buildingSelectedSound;
+        private readonly AudioClipWrapper _buildingSelectedSound;
 
         public PvPBuildingClickHandler(
             IPvPUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IAudioClipWrapper buildingSelectedSound)
+            AudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(playerCruiserFocusHelper, buildingSelectedSound);

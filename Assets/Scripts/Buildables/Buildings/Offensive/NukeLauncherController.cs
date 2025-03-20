@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
         public SiloHalfController leftSiloHalf, rightSiloHalf;
         public NukeController nukeMissilePrefab;
 
-        private IAudioClipWrapper _nukeImpactSound;
+        private AudioClipWrapper _nukeImpactSound;
         public AudioClip nukeImpactSound;
 
         private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;

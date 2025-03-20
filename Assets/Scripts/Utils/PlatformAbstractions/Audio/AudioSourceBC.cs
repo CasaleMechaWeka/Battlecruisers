@@ -11,8 +11,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
         private const float MAX_BLEND = 1;
         private const float MIN_BLEND = 0;
 
-        private IAudioClipWrapper _audioClip;
-        public IAudioClipWrapper AudioClip
+        private AudioClipWrapper _audioClip;
+        public AudioClipWrapper AudioClip
         {
             set
             {

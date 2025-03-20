@@ -30,7 +30,7 @@ namespace BattleCruisers.Projectiles.Spawners
         protected ICruiserSpecificFactories _cruiserSpecificFactories;
         protected ICruiser _enemyCruiser;
 
-        protected IAudioClipWrapper _impactSound;
+        protected AudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
         public List<TargetType> AttackCapabilities { get; set; }

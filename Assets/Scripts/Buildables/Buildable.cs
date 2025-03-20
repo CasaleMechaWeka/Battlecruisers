@@ -63,7 +63,7 @@ namespace BattleCruisers.Buildables
         public string keyName { get; set; }
         public int numOfDronesRequired;
         public float buildTimeInS;
-        private IAudioClipWrapper _deathSound;
+        private AudioClipWrapper _deathSound;
         [Header("Sounds")]
         public AudioClip deathSound;
 
