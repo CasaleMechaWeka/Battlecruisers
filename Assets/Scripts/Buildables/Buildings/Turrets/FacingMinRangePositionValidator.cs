@@ -7,16 +7,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.PositionValidators
     public class FacingMinRangePositionValidator
     {
         private readonly float _minRangeInM;
+        private readonly bool _isDummy;
 
-        public FacingMinRangePositionValidator(float minRangeInM)
+        public FacingMinRangePositionValidator(float minRangeInM, bool isDummy = false)
         {
-            Assert.IsTrue(minRangeInM > 0 || minRangeInM == float.NaN);
+            Assert.IsTrue(minRangeInM > 0);
             _minRangeInM = minRangeInM;
+            _isDummy = isDummy;
         }
 
         public bool IsValid(Vector2 targetPosition, Vector2 sourcePosition, bool isSourceMirrored)
         {
-            if (_minRangeInM == float.NaN)
+            if (_isDummy)
                 return true;
 
             float distanceInM = Vector2.Distance(targetPosition, sourcePosition);

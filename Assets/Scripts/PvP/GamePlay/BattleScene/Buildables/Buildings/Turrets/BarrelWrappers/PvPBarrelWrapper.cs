@@ -299,7 +299,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual FacingMinRangePositionValidator CreatePositionValidator()
         {
             // Default to all positions being valid
-            return new FacingMinRangePositionValidator(float.NaN);
+            return new FacingMinRangePositionValidator(0, true);
         }
 
         protected virtual AngleLimiter CreateAngleLimiter()

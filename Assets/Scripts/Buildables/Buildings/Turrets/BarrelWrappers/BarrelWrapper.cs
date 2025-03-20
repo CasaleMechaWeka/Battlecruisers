@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
@@ -240,7 +240,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected virtual FacingMinRangePositionValidator CreatePositionValidator()
         {
             // Default to all positions being valid
-            return new FacingMinRangePositionValidator(float.NaN);
+            return new FacingMinRangePositionValidator(0, true);
         }
 
         protected virtual AngleLimiter CreateAngleLimiter()

@@ -126,7 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         new DummyPositionFinder(),
                         new AccuracyAdjuster((0, 0)),
                         _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
-                        new FacingMinRangePositionValidator(float.NaN),
+                        new FacingMinRangePositionValidator(0, true),
                         new AngleLimiter(-180, 180),
                         _factoryProvider,
                         _cruiserSpecificFactories,

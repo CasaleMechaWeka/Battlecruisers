@@ -458,7 +458,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new AccuracyAdjuster((0, 0)),
                     rotationMovementController ?? CreateRotationMovementController(barrel, updater),
-                    targetPositionValidator ?? new FacingMinRangePositionValidator(float.NaN),
+                    targetPositionValidator ?? new FacingMinRangePositionValidator(0, true),
                     angleLimiter ?? new AngleLimiter(-180, 180),
                     factoryProvider ?? initialisationArgs.FactoryProvider,
                     cruiserSpecificFactories ?? initialisationArgs.CruiserSpecificFactories,
