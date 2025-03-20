@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -25,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public Quaternion Rotation { get; set; }
         public float HealthGainPerDroneS { get; set; }
         public IRepairCommand RepairCommand { get; set; }
-        public ITextMesh NumOfRepairDronesText { get; set; }
+        public TextMesh NumOfRepairDronesText { get; set; }
         public bool IsDestroyed { get; set; }
         public float Health { get; set; }
         public float MaxHealth { get; set; }

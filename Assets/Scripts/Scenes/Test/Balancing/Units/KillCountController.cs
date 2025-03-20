@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
@@ -7,7 +6,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     public class KillCountController : MonoBehaviour, IKillCountController
     {
         private int _targetCostInDroneS;
-        private ITextMesh _killCountText, _costText;
+        private TextMesh _killCountText, _costText;
 
         private const string KILL_COUNT_PREFIX = "Kill count: ";
         private const string KILL_COST_PREFIX = "Kill cost: ";
@@ -20,10 +19,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             {
                 _killCount = value;
 
-                _killCountText.Text = KILL_COUNT_PREFIX + _killCount;
+                _killCountText.text = KILL_COUNT_PREFIX + _killCount;
 
                 int costOfKilledTargets = _killCount * _targetCostInDroneS;
-                _costText.Text = KILL_COST_PREFIX + costOfKilledTargets;
+                _costText.text = KILL_COST_PREFIX + costOfKilledTargets;
             }
         }
 
@@ -32,10 +31,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _targetCostInDroneS = targetCostInDroneS;
 
             TextMesh killCountText = transform.FindNamedComponent<TextMesh>("KillCountText");
-            _killCountText = new TextMeshWrapper(killCountText);
+            _killCountText = killCountText;
 
             TextMesh costText = transform.FindNamedComponent<TextMesh>("CostText");
-            _costText = new TextMeshWrapper(costText);
+            _costText = costText;
 
             KillCount = 0;
         }

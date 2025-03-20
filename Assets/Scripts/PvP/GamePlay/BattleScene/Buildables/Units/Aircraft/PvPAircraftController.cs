@@ -178,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         private void OnSpriteChanged(int oldSprite, int newSprite)
         {
-            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(newSprite).Sprite;
+            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(newSprite);
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -211,7 +211,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (_spriteChooser != null)
             {
                 var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
-                _spriteRenderer.sprite = spriteOfAircraft.Item1.Sprite;
+                _spriteRenderer.sprite = spriteOfAircraft.Item1;
                 pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;
             }
         }

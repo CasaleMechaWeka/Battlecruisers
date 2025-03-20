@@ -1,8 +1,8 @@
 using System;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using UnityEngine;
 
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
@@ -29,7 +29,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         }
 
 
-        public async Task<ISpriteWrapper> GetSpriteAsync(Map map)
+        public async Task<Sprite> GetSpriteAsync(Map map)
         {
             string spritePath = GetSpritePath(map);
             return await _spriteFetcher.GetSpriteAsync(spritePath);

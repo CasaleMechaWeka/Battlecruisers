@@ -1,4 +1,3 @@
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 
 using UnityEngine.Assertions;
@@ -7,19 +6,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPDummySpriteChooser : IPvPSpriteChooser
     {
-        private ISpriteWrapper _sprite;
+        private Sprite _sprite;
 
         public PvPDummySpriteChooser(Sprite sprite)
         {
             Assert.IsNotNull(sprite);
-            _sprite = new SpriteWrapper(sprite);
+            _sprite = sprite;
         }
 
-        public (ISpriteWrapper, int) ChooseSprite(Vector2 velocity)
+        public (Sprite, int) ChooseSprite(Vector2 velocity)
         {
             return (_sprite, 0);
         }
-        public ISpriteWrapper ChooseSprite(int index)
+        public Sprite ChooseSprite(int index)
         {
             return _sprite;
         }

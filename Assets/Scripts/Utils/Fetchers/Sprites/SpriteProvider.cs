@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
@@ -24,7 +24,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         /// (side on view, no wings showing) and the last sprite being the most
         /// turned (top view, both wings fully showing).
         /// </returns>
-        public async Task<IList<ISpriteWrapper>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName)
+        public async Task<IList<Sprite>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName)
         {
             (string, int) spriteData = prefabKeyName switch
             {
@@ -38,7 +38,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
                 _ => throw new ArgumentException("PrefabKeyName '" + prefabKeyName + "' is not an Aircraft!")
             };
 
-            IList<ISpriteWrapper> aircraftSprites = await _spriteFetcher.GetMultiSpritesAsync(
+            IList<Sprite> aircraftSprites = await _spriteFetcher.GetMultiSpritesAsync(
                 UNIT_SPRITES_PATH + spriteData.Item1 + SPRITES_FILE_EXTENSION);
             Assert.AreEqual(spriteData.Item2, aircraftSprites.Count);
 

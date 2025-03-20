@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     {
         private KamikazeController _kamikazeController;
         private Collider2D _collider;
-		private SpriteRenderer _spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
         private IBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
         private TrailRenderer _aircraftTrail;
@@ -41,10 +41,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
         public override TargetType TargetType => TargetType.Aircraft;
-		public override Vector2 Velocity => ActiveMovementController.Velocity;
+        public override Vector2 Velocity => ActiveMovementController.Velocity;
         protected virtual float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS;
         protected float EffectiveMaxVelocityInMPerS => _velocityBoostable.BoostMultiplier * _fuzziedMaxVelocityInMPerS;
-		public float PatrollingVelocityInMPerS => MaxPatrollingVelocity;
+        public float PatrollingVelocityInMPerS => MaxPatrollingVelocity;
         public float VelocityInMPerS => EffectiveMaxVelocityInMPerS;
         protected virtual float PositionEqualityMarginInM => 0.5f;
         protected override bool ShowSmokeWhenDestroyed => true;
@@ -118,10 +118,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _localBoosterBoostableGroup.AddBoostable(_velocityBoostable);
             _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.AircraftBoostProviders);
             _localBoosterBoostableGroup.BoostChanged += _boostableGroup_BoostChanged;
-			
-            PatrollingMovementController 
+
+            PatrollingMovementController
                 = _movementControllerFactory.CreatePatrollingMovementController(
-                    rigidBody, 
+                    rigidBody,
                     maxVelocityProvider: _movementControllerFactory.CreatePatrollingVelocityProvider(this),
                     patrolPoints: GetPatrolPoints(),
                     positionEqualityMarginInM: PositionEqualityMarginInM);
@@ -136,13 +136,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
 
         protected override void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
+        {
+            base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
         }
 
         protected override void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders, 
+            IGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
@@ -151,26 +151,26 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected abstract IList<IPatrolPoint> GetPatrolPoints();
 
-		private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
-		{
-			FacingDirection = e.NewDirection;
-		}
+        private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
+        {
+            FacingDirection = e.NewDirection;
+        }
 
-		protected override void OnFixedUpdate()
-		{
-			base.OnFixedUpdate();
+        protected override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
 
             Logging.Verbose(Tags.AIRCRAFT, $"{GetInstanceID()}  Adjusting velocity");
 
             Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
-			ActiveMovementController.AdjustVelocity();
+            ActiveMovementController.AdjustVelocity();
             //compare sprite number choses to sprite name
-            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
+            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity);
         }
 
         public void Kamikaze(ITarget kamikazeTarget)
         {
-			Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
+            Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
             Assert.AreEqual(BuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
 
             if (IsInKamikazeMode)
@@ -189,7 +189,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void UpdateFaction(ITarget kamikazeTarget)
         {
-			Faction = Helper.GetOppositeFaction(kamikazeTarget.Faction);
+            Faction = Helper.GetOppositeFaction(kamikazeTarget.Faction);
 
             // Make our collider be lost and refound by all target detectors.
             // Means target detectors that we are already in range of can 
@@ -198,21 +198,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _collider.enabled = true;
 
             _kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
-			_kamikazeController.gameObject.SetActive(true);
+            _kamikazeController.gameObject.SetActive(true);
         }
 
         protected IList<IPatrolPoint> ProcessPatrolPoints(IList<Vector2> patrolPositions, Action onFirstPatrolPointReached)
         {
-			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
+            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
 
-			patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: onFirstPatrolPointReached));
+            patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: onFirstPatrolPointReached));
 
             for (int i = 1; i < patrolPositions.Count; ++i)
             {
                 patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
-			}
+            }
 
-			return patrolPoints;
+            return patrolPoints;
         }
 
         private void _boostableGroup_BoostChanged(object sender, EventArgs e)

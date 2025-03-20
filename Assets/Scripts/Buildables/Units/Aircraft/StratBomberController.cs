@@ -18,7 +18,6 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -126,7 +125,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
         }
 
-        protected async override void OnBuildableCompleted()
+        protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 
@@ -135,10 +134,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
             _targetProcessor.AddTargetConsumer(this);
 
-            List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+            List<Sprite> allSpriteWrappers = new List<Sprite>();
             foreach (Sprite sprite in allSprites)
             {
-                allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                allSpriteWrappers.Add(sprite);
             }
             //create Sprite Chooser
             _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);

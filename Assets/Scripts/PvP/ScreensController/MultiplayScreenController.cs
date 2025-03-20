@@ -10,7 +10,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using Map = BattleCruisers.Network.Multiplay.Matchplay.Shared.Map;
 
 
@@ -70,8 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             for (int i = 0; i < (int)Enum.GetValues(typeof(Map)).Cast<Map>().Last() + 1; i++)
             {
                 Map map = (Map)i;
-                ISpriteWrapper pvpArenaSprite = await arenaSpritesProvider.GetSpriteAsync(map);
-                _maps.Add(map, pvpArenaSprite.Sprite);
+                _maps.Add(map, await arenaSpritesProvider.GetSpriteAsync(map));
             }
         }
 

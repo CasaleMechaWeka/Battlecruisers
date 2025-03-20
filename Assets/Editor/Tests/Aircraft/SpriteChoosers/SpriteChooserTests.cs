@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -14,8 +13,8 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         private ISpriteChooser _chooser;
         private IAssignerFactory _assignerFactory;
         private IAssigner _assigner;
-        private IList<ISpriteWrapper> _sprites;
-        private ISpriteWrapper _sprite;
+        private IList<Sprite> _sprites;
+        private Sprite _sprite;
         private IVelocityProvider _maxVelocityProvider;
 
         [SetUp]
@@ -24,12 +23,12 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
             _assigner = Substitute.For<IAssigner>();
             _assignerFactory = Substitute.For<IAssignerFactory>();
 
-			_sprite = Substitute.For<ISpriteWrapper>();
-            _sprites = new List<ISpriteWrapper>()
-			{
-				_sprite
-			};
-   
+            _sprite = Substitute.For<Sprite>();
+            _sprites = new List<Sprite>()
+            {
+                _sprite
+            };
+
             _assignerFactory.CreateAssigner(_sprites.Count).Returns(_assigner);
 
             _maxVelocityProvider = Substitute.For<IVelocityProvider>();
@@ -62,7 +61,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
 
             _assigner.Assign(proportion).Returns(validIndex);
 
-            ISpriteWrapper spriteReturned = _chooser.ChooseSprite(velocity);
+            Sprite spriteReturned = _chooser.ChooseSprite(velocity);
             Assert.AreSame(_sprite, spriteReturned);
         }
 
@@ -76,7 +75,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
 
             _assigner.Assign(proportion).Returns(validIndex);
 
-            ISpriteWrapper spriteReturned = _chooser.ChooseSprite(velocity);
+            Sprite spriteReturned = _chooser.ChooseSprite(velocity);
             Assert.AreSame(_sprite, spriteReturned);
         }
     }

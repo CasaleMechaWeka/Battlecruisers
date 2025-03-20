@@ -3,7 +3,6 @@ using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -29,7 +28,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         {
             Image platformFillableImage = GetComponent<Image>();
             Assert.IsNotNull(platformFillableImage);
-            IFillableImage fillableImage = new FillableImage(platformFillableImage);
+            Image fillableImage = platformFillableImage;
 
             IFilter<ICruiser> visibilityFilter = new StaticFilter<ICruiser>(isMatch: true);
 

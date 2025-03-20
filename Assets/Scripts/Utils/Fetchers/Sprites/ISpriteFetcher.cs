@@ -1,12 +1,12 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public interface ISpriteFetcher
-	{
-        Task<ISpriteWrapper> GetSpriteAsync(string spritePath);
-        Task<IList<ISpriteWrapper>> GetMultiSpritesAsync(string spritePath);
-	}
+    {
+        Task<Sprite> GetSpriteAsync(string spritePath);
+        Task<IList<Sprite>> GetMultiSpritesAsync(string spritePath);
+    }
 }

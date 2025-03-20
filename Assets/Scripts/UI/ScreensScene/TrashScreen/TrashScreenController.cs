@@ -7,7 +7,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -153,11 +152,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky
-            ISpriteWrapper skySprite = await _spriteFetcher.GetSpriteAsync(skyPath);
-            sky.sprite = skySprite.Sprite;
+            sky.sprite = await _spriteFetcher.GetSpriteAsync(skyPath);
 
             _musicPlayer.PlayTrashMusic();
-            
+
             // Play taunt animation on captains
             PlayTauntAnimationOnCaptains();
         }

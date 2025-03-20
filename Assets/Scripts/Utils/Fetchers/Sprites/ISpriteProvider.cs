@@ -1,11 +1,11 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public interface ISpriteProvider
     {
-        Task<IList<ISpriteWrapper>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName);
+        Task<IList<Sprite>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName);
     }
 }

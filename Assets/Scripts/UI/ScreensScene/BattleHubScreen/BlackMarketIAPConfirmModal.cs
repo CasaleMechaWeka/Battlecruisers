@@ -9,7 +9,6 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using UnityEngine.Purchasing;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Scenes;
 using Unity.Services.Authentication;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
@@ -131,8 +130,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
 #endif
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
-            ISpriteWrapper spriteWrapper = await spriteFetcher.GetSpriteAsync(spritePath);
-            coinPack.sprite = spriteWrapper.Sprite;
+            coinPack.sprite = await spriteFetcher.GetSpriteAsync(spritePath);
         }
     }
 

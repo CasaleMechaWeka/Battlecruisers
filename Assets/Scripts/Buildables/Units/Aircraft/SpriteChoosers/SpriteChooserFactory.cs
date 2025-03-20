@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -23,7 +22,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 
         public async Task<ISpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IVelocityProvider maxVelocityProvider)
         {
-            IList<ISpriteWrapper> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
+            IList<Sprite> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
             return new SpriteChooser(_assignerFactory, aircraftSprites, maxVelocityProvider);
         }
 

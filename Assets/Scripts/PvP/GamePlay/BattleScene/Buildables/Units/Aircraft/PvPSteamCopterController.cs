@@ -21,7 +21,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
@@ -114,10 +113,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnBuildableCompleted();
                 SetupTargetDetection();
                 _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.PneumaticSlug);
-                List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+                List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {
-                    allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                    allSpriteWrappers.Add(sprite);
                 }
                 //create Sprite Chooser
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
@@ -127,10 +126,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
             {
                 OnBuildableCompleted_PvPClient();
-                List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+                List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {
-                    allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                    allSpriteWrappers.Add(sprite);
                 }
                 _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
                 _barrelWrapper.ApplyVariantStats(this);

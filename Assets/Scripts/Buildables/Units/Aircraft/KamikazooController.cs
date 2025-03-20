@@ -16,7 +16,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -120,10 +119,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, soundKey);
                 barrelWrapper.ApplyVariantStats(this);
             }
-            List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+            List<Sprite> allSpriteWrappers = new List<Sprite>();
             foreach (Sprite sprite in allSprites)
             {
-                allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                allSpriteWrappers.Add(sprite);
             }
             //create Sprite Chooser
             _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
