@@ -22,7 +22,6 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 
@@ -111,7 +110,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                 new LinearTargetPositionPredictor(),
                 new AngleCalculator(),
-                new ClosestPositionFinder(),
                 new AccuracyAdjuster((0, 0)),
                 _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                 new FacingMinRangePositionValidator(0, true),

@@ -27,7 +27,6 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 
@@ -123,7 +122,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                         new LinearTargetPositionPredictor(),
                         new AngleCalculator(),
-                        new ClosestPositionFinder(),
                         new AccuracyAdjuster((0, 0)),
                         _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                         new FacingMinRangePositionValidator(0, true),

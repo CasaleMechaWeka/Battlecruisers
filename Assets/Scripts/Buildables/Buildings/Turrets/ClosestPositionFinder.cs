@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
-    public class ClosestPositionFinder
+    public static class ClosestPositionFinder
     {
         private const float TARGET_CUTOFF_WIDTH_IN_M = 3;
         private const float TARGET_BUFFER_IN_M = 1;
 
-        public Vector2 FindClosestAttackablePosition(Vector2 sourcePosition, ITarget target)
+        public static Vector2 FindClosestAttackablePosition(Vector2 sourcePosition, ITarget target)
         {
             if (target.Size.x <= TARGET_CUTOFF_WIDTH_IN_M)
                 return target.Position; // Small target, no adjustment needed.

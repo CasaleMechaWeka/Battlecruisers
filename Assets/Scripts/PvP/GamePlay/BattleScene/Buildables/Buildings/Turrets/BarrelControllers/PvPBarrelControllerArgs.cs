@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
@@ -24,7 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ITargetFilter TargetFilter { get; }
         public ITargetPositionPredictor TargetPositionPredictor { get; }
         public IAngleCalculator AngleCalculator { get; }
-        public ClosestPositionFinder AttackablePositionFinder { get; }
         public AccuracyAdjuster AccuracyAdjuster { get; }
         public IRotationMovementController RotationMovementController { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
@@ -44,7 +42,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetFilter targetFilter,
             ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator,
-            ClosestPositionFinder attackablePositionFinder,
             AccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
             FacingMinRangePositionValidator targetPositionValidator,
@@ -63,7 +60,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 targetFilter,
                 targetPositionPredictor,
                 angleCalculator,
-                attackablePositionFinder,
                 accuracyAdjuster,
                 rotationMovementController,
                 targetPositionValidator,
@@ -79,7 +75,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             TargetFilter = targetFilter;
             TargetPositionPredictor = targetPositionPredictor;
             AngleCalculator = angleCalculator;
-            AttackablePositionFinder = attackablePositionFinder;
             AccuracyAdjuster = accuracyAdjuster;
             RotationMovementController = rotationMovementController;
             FactoryProvider = factoryProvider;

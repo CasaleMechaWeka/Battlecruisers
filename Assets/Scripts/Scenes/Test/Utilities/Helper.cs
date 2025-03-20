@@ -444,8 +444,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITarget parent = null,
             ICruiser enemyCruiser = null,
             ISoundKey firingSound = null,
-            ObservableCollection<IBoostProvider> localBoostProviders = null,
-            ClosestPositionFinder attackablePositionFinder = null)
+            ObservableCollection<IBoostProvider> localBoostProviders = null)
         {
             BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: Deferrer);
 
@@ -455,7 +454,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetFilter ?? Substitute.For<ITargetFilter>(),
                     targetPositionPredictor ?? new DummyTargetPositionPredictor(),
                     angleCalculator ?? new AngleCalculator(),
-                    attackablePositionFinder ?? new ClosestPositionFinder(),
                     accuracyAdjuster ?? new AccuracyAdjuster((0, 0)),
                     rotationMovementController ?? CreateRotationMovementController(barrel, updater),
                     targetPositionValidator ?? new FacingMinRangePositionValidator(0, true),

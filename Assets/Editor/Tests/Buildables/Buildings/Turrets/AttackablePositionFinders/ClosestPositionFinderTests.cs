@@ -8,7 +8,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AttackablePositionFi
 {
     public class ClosestPositionFinderTests
     {
-        private ClosestPositionFinder _positionFinder;
         private float _cutoffWidthInM, _bufferInM;
         private ITarget _target;
         private Vector2 _sourcePosition;
@@ -19,7 +18,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AttackablePositionFi
             _cutoffWidthInM = 5;
             _bufferInM = 0.5f;
 
-            _positionFinder = new ClosestPositionFinder();
 
             _sourcePosition = new Vector2(0, 0);
 
@@ -32,7 +30,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AttackablePositionFi
             _target.Size.Returns(new Vector2(_cutoffWidthInM, 121));
             _target.Position.Returns(new Vector2(17, 71));
 
-            Assert.AreEqual(_target.Position, _positionFinder.FindClosestAttackablePosition(_sourcePosition, _target));
+            Assert.AreEqual(_target.Position, ClosestPositionFinder.FindClosestAttackablePosition(_sourcePosition, _target));
         }
 
         [Test]
@@ -44,7 +42,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AttackablePositionFi
             float expectedXPosition = _target.Position.x - (_target.Size.x / 2) + _bufferInM;
             Vector2 expectedPosition = new Vector2(expectedXPosition, _target.Position.y);
 
-            Assert.AreEqual(expectedPosition, _positionFinder.FindClosestAttackablePosition(_sourcePosition, _target));
+            Assert.AreEqual(expectedPosition, ClosestPositionFinder.FindClosestAttackablePosition(_sourcePosition, _target));
         }
 
         [Test]
@@ -56,7 +54,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AttackablePositionFi
             float expectedXPosition = _target.Position.x + (_target.Size.x / 2) - _bufferInM;
             Vector2 expectedPosition = new Vector2(expectedXPosition, _target.Position.y);
 
-            Assert.AreEqual(expectedPosition, _positionFinder.FindClosestAttackablePosition(_sourcePosition, _target));
+            Assert.AreEqual(expectedPosition, ClosestPositionFinder.FindClosestAttackablePosition(_sourcePosition, _target));
         }
     }
 }

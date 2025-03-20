@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -138,7 +137,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
-            ClosestPositionFinder attackablePositionFinder = new ClosestPositionFinder();
 
             foreach (BarrelController barrel in _barrels)
             {
@@ -148,7 +146,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         parent,
                         targetFilter,
                         angleCalculator,
-                        attackablePositionFinder,
                         firingSound,
                         localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
@@ -177,7 +174,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            ClosestPositionFinder attackablePositionFinder,
             ISoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
@@ -190,7 +186,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 targetFilter,
                 CreateTargetPositionPredictor(),
                 angleCalculator,
-                attackablePositionFinder,
                 CreateAccuracyAdjuster(angleCalculator, barrel),
                 CreateRotationMovementController(barrel, updater),
                 CreatePositionValidator(),

@@ -19,7 +19,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IAngleCalculator _angleCalculator;
         private readonly IRotationMovementController _rotationMovementController;
         private readonly AngleLimiter _angleLimiter;
-        private readonly ClosestPositionFinder _attackablePositionFinder;
 
         public PvPBarrelAdjustmentHelper(
             IBarrelController barrelController,
@@ -27,10 +26,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             FacingMinRangePositionValidator targetPositionValidator,
             IAngleCalculator angleCalculator,
             IRotationMovementController rotationMovementController,
-            AngleLimiter angleLimiter,
-            ClosestPositionFinder attackablePositionFinder)
+            AngleLimiter angleLimiter)
         {
-            PvPHelper.AssertIsNotNull(barrelController, targetPositionPredictor, targetPositionValidator, angleCalculator, rotationMovementController, angleLimiter, attackablePositionFinder);
+            PvPHelper.AssertIsNotNull(barrelController, targetPositionPredictor, targetPositionValidator, angleCalculator, rotationMovementController, angleLimiter);
 
             _barrelController = barrelController;
             _targetPositionPredictor = targetPositionPredictor;
@@ -38,7 +36,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _angleCalculator = angleCalculator;
             _rotationMovementController = rotationMovementController;
             _angleLimiter = angleLimiter;
-            _attackablePositionFinder = attackablePositionFinder;
         }
 
         public BarrelAdjustmentResult AdjustTurretBarrel()
@@ -51,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
-            Vector2 targetPositionToAttack = _attackablePositionFinder.FindClosestAttackablePosition(_barrelController.ProjectileSpawnerPosition, _barrelController.CurrentTarget);
+            Vector2 targetPositionToAttack = ClosestPositionFinder.FindClosestAttackablePosition(_barrelController.ProjectileSpawnerPosition, _barrelController.CurrentTarget);
             float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
 
             Vector2 predictedTargetPosition
