@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AttackablePositionFi
 {
     public class ClosestPositionFinderTests
     {
-        private IAttackablePositionFinder _positionFinder;
+        private ClosestPositionFinder _positionFinder;
         private float _cutoffWidthInM, _bufferInM;
         private ITarget _target;
         private Vector2 _sourcePosition;

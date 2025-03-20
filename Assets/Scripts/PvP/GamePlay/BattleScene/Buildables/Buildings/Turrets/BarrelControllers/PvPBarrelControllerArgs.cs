@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ITargetFilter TargetFilter { get; }
         public ITargetPositionPredictor TargetPositionPredictor { get; }
         public IAngleCalculator AngleCalculator { get; }
-        public IAttackablePositionFinder AttackablePositionFinder { get; }
+        public ClosestPositionFinder AttackablePositionFinder { get; }
         public AccuracyAdjuster AccuracyAdjuster { get; }
         public IRotationMovementController RotationMovementController { get; }
         public IPvPFactoryProvider FactoryProvider { get; }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetFilter targetFilter,
             ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator,
-            IAttackablePositionFinder attackablePositionFinder,
+            ClosestPositionFinder attackablePositionFinder,
             AccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
             FacingMinRangePositionValidator targetPositionValidator,

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
 {
-    public class ClosestPositionFinder : IAttackablePositionFinder
+    public class ClosestPositionFinder
     {
         private const float TARGET_CUTOFF_WIDTH_IN_M = 3;
         private const float TARGET_BUFFER_IN_M = 1;

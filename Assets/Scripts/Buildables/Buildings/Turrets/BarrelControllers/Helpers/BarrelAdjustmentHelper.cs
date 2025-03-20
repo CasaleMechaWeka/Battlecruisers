@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         private readonly IAngleCalculator _angleCalculator;
         private readonly IRotationMovementController _rotationMovementController;
         private readonly AngleLimiter _angleLimiter;
-        private readonly IAttackablePositionFinder _attackablePositionFinder;
+        private readonly ClosestPositionFinder _attackablePositionFinder;
 
         public BarrelAdjustmentHelper(
             IBarrelController barrelController,
@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             IAngleCalculator angleCalculator,
             IRotationMovementController rotationMovementController,
             AngleLimiter angleLimiter,
-            IAttackablePositionFinder attackablePositionFinder)
+            ClosestPositionFinder attackablePositionFinder)
         {
             Helper.AssertIsNotNull(barrelController, targetPositionPredictor, targetPositionValidator, angleCalculator, rotationMovementController, angleLimiter, attackablePositionFinder);
 

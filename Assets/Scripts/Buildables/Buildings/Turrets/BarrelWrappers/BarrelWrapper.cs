@@ -138,7 +138,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
-            IAttackablePositionFinder attackablePositionFinder = new ClosestPositionFinder();
+            ClosestPositionFinder attackablePositionFinder = new ClosestPositionFinder();
 
             foreach (BarrelController barrel in _barrels)
             {
@@ -177,7 +177,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            IAttackablePositionFinder attackablePositionFinder,
+            ClosestPositionFinder attackablePositionFinder,
             ISoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,

@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITargetFilter TargetFilter { get; }
         public ITargetPositionPredictor TargetPositionPredictor { get; }
         public IAngleCalculator AngleCalculator { get; }
-        public IAttackablePositionFinder AttackablePositionFinder { get; }
+        public ClosestPositionFinder AttackablePositionFinder { get; }
         public AccuracyAdjuster AccuracyAdjuster { get; }
         public IRotationMovementController RotationMovementController { get; }
         public IFactoryProvider FactoryProvider { get; }
@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ITargetFilter targetFilter,
             ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator,
-            IAttackablePositionFinder attackablePositionFinder,
+            ClosestPositionFinder attackablePositionFinder,
             AccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
             FacingMinRangePositionValidator targetPositionValidator,

@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ITargetFilter TargetFilter { get; }
         ITargetPositionPredictor TargetPositionPredictor { get; }
         IAngleCalculator AngleCalculator { get; }
-        IAttackablePositionFinder AttackablePositionFinder { get; }
+        ClosestPositionFinder AttackablePositionFinder { get; }
         AccuracyAdjuster AccuracyAdjuster { get; }
         IRotationMovementController RotationMovementController { get; }
         FacingMinRangePositionValidator TargetPositionValidator { get; }

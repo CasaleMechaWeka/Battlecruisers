@@ -148,7 +148,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
-            IAttackablePositionFinder attackablePositionFinder = new ClosestPositionFinder();
+            ClosestPositionFinder attackablePositionFinder = new ClosestPositionFinder();
 
             foreach (PvPBarrelController barrel in _barrels)
             {
@@ -215,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            IAttackablePositionFinder attackablePositionFinder,
+            ClosestPositionFinder attackablePositionFinder,
             ISoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
