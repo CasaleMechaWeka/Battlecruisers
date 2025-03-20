@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.PositionValidators
 
         public FacingMinRangePositionValidator(float minRangeInM, bool isDummy = false)
         {
-            Assert.IsTrue(minRangeInM > 0);
+            Assert.IsTrue(minRangeInM > 0 || isDummy);
             _minRangeInM = minRangeInM;
             _isDummy = isDummy;
         }
