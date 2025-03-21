@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
 {
     public class BarrelAdjustmentHelperTests
     {
-        private IBarrelAdjustmentHelper _helper;
+        private BarrelAdjustmentHelper _helper;
 
         private IBarrelController _barrelController;
         private ITargetPositionPredictor _targetPositionPredictor;

@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public abstract class BarrelController : MonoBehaviour, IBarrelController
     {
         [SerializeField] protected bool disableAnimator = false;
-        private IBarrelAdjustmentHelper _adjustmentHelper;
+        private BarrelAdjustmentHelper _adjustmentHelper;
         private IBarrelFiringHelper _firingHelper;
         private IUpdater _updater;
         private IParticleSystemGroup _muzzleFlash;
