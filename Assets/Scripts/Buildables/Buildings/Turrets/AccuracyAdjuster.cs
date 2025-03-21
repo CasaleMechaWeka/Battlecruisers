@@ -5,7 +5,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
+namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     /// <summary>
     /// NOTE:  All angles are in degrees.

@@ -161,7 +161,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.GlobalFireRateBoostProviders);
 
             _adjustmentHelper
-                = new PvPBarrelAdjustmentHelper(
+                = new BarrelAdjustmentHelper(
                     this,
                     args.TargetPositionPredictor,
                     args.TargetPositionValidator,
