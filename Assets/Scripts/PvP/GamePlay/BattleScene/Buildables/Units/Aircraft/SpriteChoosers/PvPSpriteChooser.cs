@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _sprites = sprites;
             _maxVelocityProvider = maxVelocityProvider;
 
-            _assigner = AssignerFactory.CreateAssigner(sprites.Count);
+            _assigner = new LinearProportionAssigner(sprites.Count);
         }
 
         public (Sprite, int) ChooseSprite(Vector2 velocity)
