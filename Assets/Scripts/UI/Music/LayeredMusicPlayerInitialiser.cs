@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Music
     public class LayeredMusicPlayerInitialiser : MonoBehaviour
     {
         public async Task<ILayeredMusicPlayer> CreatePlayerAsync(
-            ISoundFetcher soundFetcher,
+            SoundFetcher soundFetcher,
             SoundKeyPair soundKeys,
             ISettingsManager settingsManager)
         {

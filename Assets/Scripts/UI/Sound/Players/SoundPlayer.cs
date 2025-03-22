@@ -11,10 +11,10 @@ namespace BattleCruisers.UI.Sound.Players
 {
     public class SoundPlayer : ISoundPlayer
     {
-        private readonly ISoundFetcher _soundFetcher;
+        private readonly SoundFetcher _soundFetcher;
         private readonly IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
 
-        public SoundPlayer(ISoundFetcher soundFetcher, IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourcePool)
+        public SoundPlayer(SoundFetcher soundFetcher, IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourcePool)
         {
             Helper.AssertIsNotNull(soundFetcher, audioSourcePool);
 

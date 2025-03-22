@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.Sound
     public class SoundPlayerTests
     {
         private ISoundPlayer _soundPlayer;
-        private ISoundFetcher _soundFetcher;
+        private SoundFetcher _soundFetcher;
         private IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
         private IPoolable<AudioSourceActivationArgs> _audioSource;
         private AudioClipWrapper _sound;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.UI.Sound
         [SetUp]
         public void SetuUp()
         {
-            _soundFetcher = Substitute.For<ISoundFetcher>();
+            _soundFetcher = Substitute.For<SoundFetcher>();
             _audioSourcePool = Substitute.For<IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>>();
 
             _soundPlayer = new SoundPlayer(_soundFetcher, _audioSourcePool);

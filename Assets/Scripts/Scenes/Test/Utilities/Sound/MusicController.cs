@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private Text _title;
         private LayeredMusicPlayerInitialiser _musicInitialiser;
         private ILayeredMusicPlayer _musicPlayer;
-        private ISoundFetcher _soundFetcher;
+        private SoundFetcher _soundFetcher;
         private ICircularList<SoundKeyPair> _songs;
 
         [Tooltip("0-5")]

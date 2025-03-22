@@ -15,12 +15,12 @@ namespace BattleCruisers.UI.Sound.Players
     /// </summary>
     public class SingleSoundPlayer : ISingleSoundPlayer
     {
-        private readonly ISoundFetcher _soundFetcher;
+        private readonly SoundFetcher _soundFetcher;
         private readonly IAudioSource _audioSource;
 
         public bool IsPlayingSound => _audioSource.IsPlaying;
 
-        public SingleSoundPlayer(ISoundFetcher soundFetcher, IAudioSource audioSource)
+        public SingleSoundPlayer(SoundFetcher soundFetcher, IAudioSource audioSource)
         {
             Helper.AssertIsNotNull(soundFetcher, audioSource);
 

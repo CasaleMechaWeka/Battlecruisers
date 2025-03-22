@@ -163,7 +163,7 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = DisconnectedState;
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
 
-            ISoundFetcher soundFetcher = new SoundFetcher();
+            SoundFetcher soundFetcher = new SoundFetcher();
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource

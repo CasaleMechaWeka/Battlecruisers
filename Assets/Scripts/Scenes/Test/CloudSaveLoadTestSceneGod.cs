@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
-            ISoundFetcher soundFetcher = new SoundFetcher();
+            SoundFetcher soundFetcher = new SoundFetcher();
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource

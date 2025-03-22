@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    public class SoundFetcher : ISoundFetcher
+    public class SoundFetcher
     {
         private const string SOUND_ROOT_DIR = "Assets/Resources_moved/Sounds";
         private const char PATH_SEPARATOR = '/';
