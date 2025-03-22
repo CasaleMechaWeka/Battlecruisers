@@ -24,7 +24,7 @@ using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    public class PrefabFactory : IPrefabFactory
+    public class PrefabFactory
     {
         private readonly PrefabCache _prefabCache;
         private readonly ISettingsManager _settingsManager;

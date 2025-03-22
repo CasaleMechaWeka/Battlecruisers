@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IGameModel gameModel)
         {
             Cruiser cruiserPrefab = prefabFactory.GetCruiserPrefab(HullKey);

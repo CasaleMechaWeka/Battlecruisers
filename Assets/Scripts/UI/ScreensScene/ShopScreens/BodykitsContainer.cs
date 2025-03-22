@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene
         public CanvasGroupButton premiumButton;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         public GameObject content;
         private ILocTable screensSceneTable;
         public GameObject bodykitMessagePanel;
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene
         public Animator seaAnimator;
         public GameObject previewCanvas;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
             bodykitDataChanged += BodykitDataChanged;

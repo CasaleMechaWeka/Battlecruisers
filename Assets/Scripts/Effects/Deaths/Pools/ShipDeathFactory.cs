@@ -8,10 +8,10 @@ namespace BattleCruisers.Effects.Deaths.Pools
 {
     public class ShipDeathFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly ShipDeathKey _shipDeathKey;
 
-        public ShipDeathFactory(IPrefabFactory prefabFactory, ShipDeathKey shipDeathKey)
+        public ShipDeathFactory(PrefabFactory prefabFactory, ShipDeathKey shipDeathKey)
         {
             Helper.AssertIsNotNull(prefabFactory, shipDeathKey);
 

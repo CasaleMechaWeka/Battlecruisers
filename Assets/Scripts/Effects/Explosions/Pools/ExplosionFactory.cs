@@ -8,10 +8,10 @@ namespace BattleCruisers.Effects.Explosions.Pools
 {
     public class ExplosionFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly ExplosionKey _explosionKey;
 
-        public ExplosionFactory(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        public ExplosionFactory(PrefabFactory prefabFactory, ExplosionKey explosionKey)
         {
             Helper.AssertIsNotNull(prefabFactory, explosionKey);
 

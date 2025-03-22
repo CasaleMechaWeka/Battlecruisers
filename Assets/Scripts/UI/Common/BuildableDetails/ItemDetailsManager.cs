@@ -18,14 +18,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private readonly IComparableItemDetails<IBuilding> _buildingDetails;
         private readonly IComparableItemDetails<IUnit> _unitDetails;
         private readonly IComparableItemDetails<ICruiser> _cruiserDetails;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
         private readonly ILocTable _commonString;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public ItemDetailsManager(IInformatorPanel informator, IDataProvider dataProvider, IPrefabFactory prefabFactory, ILocTable commonString)
+        public ItemDetailsManager(IInformatorPanel informator, IDataProvider dataProvider, PrefabFactory prefabFactory, ILocTable commonString)
         {
             Helper.AssertIsNotNull(informator, dataProvider, prefabFactory, commonString);
 

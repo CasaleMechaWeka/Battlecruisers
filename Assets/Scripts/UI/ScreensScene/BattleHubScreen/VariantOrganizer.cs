@@ -12,9 +12,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     public class VariantOrganizer
     {
         private readonly IDataProvider _dataProvider;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
 
-        public VariantOrganizer(IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public VariantOrganizer(IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
@@ -23,27 +23,27 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public List<int> GetOrganizedVariants()
         {
             var variants = new List<int>();
-            
+
             // First add Building variants
             // Factory buildings
             AddVariantsForBuildingCategory(variants, BuildingCategory.Factory);
-            
+
             // Tactical buildings
             AddVariantsForBuildingCategory(variants, BuildingCategory.Tactical);
-            
+
             // Defence buildings
             AddVariantsForBuildingCategory(variants, BuildingCategory.Defence);
-            
+
             // Offence buildings
             AddVariantsForBuildingCategory(variants, BuildingCategory.Offence);
-            
+
             // Ultra buildings
             AddVariantsForBuildingCategory(variants, BuildingCategory.Ultra);
-            
+
             // Then add Unit variants
             // Aircraft units
             AddVariantsForUnitCategory(variants, UnitCategory.Aircraft);
-            
+
             // Naval units
             AddVariantsForUnitCategory(variants, UnitCategory.Naval);
 
@@ -83,7 +83,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private List<int> GetVariantsForBuilding(BuildingKey building)
         {
             return _dataProvider.StaticData.Variants
-                .Where(v => {
+                .Where(v =>
+                {
                     var variant = _prefabFactory.GetVariant(
                         StaticPrefabKeys.Variants.GetVariantKey(v.Index));
                     return variant.parent.ToString() == building.PrefabName;
@@ -95,7 +96,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private List<int> GetVariantsForUnit(UnitKey unit)
         {
             return _dataProvider.StaticData.Variants
-                .Where(v => {
+                .Where(v =>
+                {
                     var variant = _prefabFactory.GetVariant(
                         StaticPrefabKeys.Variants.GetVariantKey(v.Index));
                     return variant.parent.ToString() == unit.PrefabName;

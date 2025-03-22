@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes
 {
     public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
     {
-        public IPrefabFactory _prefabFactory;
+        public PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;

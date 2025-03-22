@@ -18,14 +18,14 @@ namespace BattleCruisers.AI.TaskProducers
         private int _targetNumOfSlotsToUse;
         private int _numOfTasksCompleted;
         private IPrioritisedTask _currentTask;
-		
+
         public AntiThreatTaskProducer(
-            ITaskList tasks, 
-            ICruiserController cruiser, 
-            IPrefabFactory prefabFactory, 
-            ITaskFactory taskFactory, 
-            IDynamicBuildOrder antiThreatBuildOrder, 
-            IThreatMonitor threatMonitor, 
+            ITaskList tasks,
+            ICruiserController cruiser,
+            PrefabFactory prefabFactory,
+            ITaskFactory taskFactory,
+            IDynamicBuildOrder antiThreatBuildOrder,
+            IThreatMonitor threatMonitor,
             ISlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory, prefabFactory)
         {
@@ -48,7 +48,7 @@ namespace BattleCruisers.AI.TaskProducers
             CreateNextTask();
         }
 
-		private void CreateNextTask()
+        private void CreateNextTask()
         {
             if (_currentTask == null
                 && _targetNumOfSlotsToUse > _numOfTasksCompleted

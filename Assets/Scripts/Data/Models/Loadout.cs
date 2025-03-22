@@ -103,7 +103,7 @@ namespace BattleCruisers.Data.Models
             return _builds == null;
         }
 
-        public VariantPrefab GetSelectedUnitVariant(IPrefabFactory prefabFactory, IUnit unit)
+        public VariantPrefab GetSelectedUnitVariant(PrefabFactory prefabFactory, IUnit unit)
         {
             foreach (int index in _selectedVariants)
             {
@@ -120,7 +120,7 @@ namespace BattleCruisers.Data.Models
             return null;
         }
 
-        public int GetSelectedUnitVariantIndex(IPrefabFactory prefabFactory, IUnit unit)
+        public int GetSelectedUnitVariantIndex(PrefabFactory prefabFactory, IUnit unit)
         {
             foreach (int index in _selectedVariants)
             {
@@ -154,7 +154,7 @@ namespace BattleCruisers.Data.Models
             return -1;
         }
 
-        public VariantPrefab GetSelectedBuildingVariant(IPrefabFactory prefabFactory, IBuilding building)
+        public VariantPrefab GetSelectedBuildingVariant(PrefabFactory prefabFactory, IBuilding building)
         {
             foreach (int index in _selectedVariants)
             {
@@ -171,7 +171,7 @@ namespace BattleCruisers.Data.Models
             return null;
         }
 
-        public int GetSelectedBuildingVariantIndex(IPrefabFactory prefabFactory, IBuilding building)
+        public int GetSelectedBuildingVariantIndex(PrefabFactory prefabFactory, IBuilding building)
         {
             foreach (int index in _selectedVariants)
             {

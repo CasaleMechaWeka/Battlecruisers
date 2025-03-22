@@ -7,11 +7,11 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public class DroneFactory : IDroneFactory
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
 
         public event EventHandler<DroneCreatedEventArgs> DroneCreated;
 
-        public DroneFactory(IPrefabFactory prefabFactory)
+        public DroneFactory(PrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
             _prefabFactory = prefabFactory;

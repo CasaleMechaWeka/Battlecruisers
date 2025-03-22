@@ -12,14 +12,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         private readonly IConstructBuildingStepsFactory _constructBuildingStepsFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
 
         public ConstructDroneStationStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             ILocTable tutorialStrings,
             IConstructBuildingStepsFactory constructBuildingStepsFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
             : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory, prefabFactory);

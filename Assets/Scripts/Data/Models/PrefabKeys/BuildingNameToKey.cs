@@ -11,7 +11,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys
     {
         private readonly IDictionary<string, BuildingKey> _buildingNameToKey;
 
-        public BuildingNameToKey(IList<BuildingKey> keys, IPrefabFactory prefabFactory)
+        public BuildingNameToKey(IList<BuildingKey> keys, PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(keys, prefabFactory);
 

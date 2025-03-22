@@ -42,7 +42,7 @@ namespace BattleCruisers.AI.TaskProducers
         public ReplaceDestroyedBuildingsTaskProducer(
             ITaskList tasks,
             ICruiserController cruiser,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             IList<BuildingKey> buildingKeys)
             : base(tasks, cruiser, taskFactory, prefabFactory)

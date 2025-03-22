@@ -10,18 +10,18 @@ using System.Collections.Generic;
 namespace BattleCruisers.AI
 {
     public class LevelInfo : ILevelInfo
-	{
-		private readonly IGameModel _gameModel;
-		private readonly IPrefabFactory _prefabFactory;
-        
-		public ICruiserController AICruiser { get; }
-		public ICruiserController PlayerCruiser { get; }
+    {
+        private readonly IGameModel _gameModel;
+        private readonly PrefabFactory _prefabFactory;
+
+        public ICruiserController AICruiser { get; }
+        public ICruiserController PlayerCruiser { get; }
 
         public LevelInfo(
             ICruiserController aiCruiser,
             ICruiserController playerCruiser,
             IGameModel gameModel,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(aiCruiser, playerCruiser, gameModel, prefabFactory);
 
@@ -32,13 +32,13 @@ namespace BattleCruisers.AI
         }
 
         public bool CanConstructBuilding(BuildingKey buildingKey)
-		{
-			IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
+        {
+            IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
 
-			return
+            return
                 _gameModel.IsBuildingUnlocked(buildingKey)
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
-		}
+        }
 
         // TODO: Add test
         public bool HasMastOffensive()
@@ -67,8 +67,8 @@ namespace BattleCruisers.AI
         }
 
         public IList<BuildingKey> GetAvailableBuildings(BuildingCategory category)
-		{
-			return _gameModel.GetUnlockedBuildings(category);
-		}
+        {
+            return _gameModel.GetUnlockedBuildings(category);
+        }
     }
 }

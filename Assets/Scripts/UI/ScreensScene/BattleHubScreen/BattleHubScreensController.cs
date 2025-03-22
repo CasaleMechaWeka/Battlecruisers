@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         private BattleResult _lastBattleResult;
         private ScreenController _currentScreen;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IApplicationModel _applicationModel;
@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider,
             IApplicationModel applicationModel)
         {

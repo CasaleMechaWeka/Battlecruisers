@@ -32,12 +32,12 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public VariantType variantType => _variantType;
         public StatVariant statVariant;
 
-        public string GetParentName(IPrefabFactory prefabFactory)
+        public string GetParentName(PrefabFactory prefabFactory)
         {
             return IsUnit() ? GetUnit(prefabFactory).Name : GetBuilding(prefabFactory).Name;
         }
 
-        public IBuilding GetBuilding(IPrefabFactory prefabFactory)
+        public IBuilding GetBuilding(PrefabFactory prefabFactory)
         {
             if (prefabFactory == null)
             {
@@ -89,7 +89,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         }
 
 
-        public IUnit GetUnit(IPrefabFactory prefabFactory)
+        public IUnit GetUnit(PrefabFactory prefabFactory)
         {
             IUnit unit = null;
             if (prefabFactory != null)

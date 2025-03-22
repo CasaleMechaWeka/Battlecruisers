@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
 
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private ILocTable _commonStrings;
         private Dictionary<IBuilding, List<int>> _unlockedVariants;
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public Text variantParentName;
         public StatsController<IBuilding> variantStats;
 
-        public void Initialize(IDataProvider dataProvider, IPrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer, ILocTable commonString)
+        public void Initialize(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer, ILocTable commonString)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
             Helper.AssertIsNotNull(leftNav, rightNav);

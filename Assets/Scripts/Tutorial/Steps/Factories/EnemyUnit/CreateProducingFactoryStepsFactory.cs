@@ -17,7 +17,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
     {
         private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiser _aiCruiser;
 
         public CreateProducingFactoryStepsFactory(
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             ILocTable tutorialStrings,
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             ITutorialProvider tutorialProvider,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             ICruiser aiCruiser)
             : base(argsFactory, tutorialStrings)
         {

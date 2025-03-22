@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public BodykitsContainer bodykitsContainer;
         public VariantsContainer variantsContainer;
         public GameObject hecklesMessage;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         public Transform captainCamContainer;
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider,
             bool hasInternetonnection = false)
         {

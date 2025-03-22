@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
     {
         protected ITaskList _tasks;
         protected ICruiserController _cruiser;
-        protected IPrefabFactory _prefabFactory;
+        protected PrefabFactory _prefabFactory;
         protected ITaskFactory _taskFactory;
 
         [SetUp]
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         {
             _tasks = Substitute.For<ITaskList>();
             _cruiser = Substitute.For<ICruiserController>();
-            _prefabFactory = Substitute.For<IPrefabFactory>();
+            _prefabFactory = Substitute.For<PrefabFactory>();
             _taskFactory = Substitute.For<ITaskFactory>();
         }
     }

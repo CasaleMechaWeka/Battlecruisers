@@ -10,13 +10,13 @@ namespace BattleCruisers.Buildables.Pools
 {
     public class UnitFactory : IPoolableFactory<Unit, BuildableActivationArgs>
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IPrefabKey _unitKey;
         private readonly IUIManager _uiManager;
         private readonly FactoryProvider _factoryProvider;
         private readonly IBuildableWrapper<IUnit> _unitPrefab;
 
-        public UnitFactory(IPrefabFactory prefabFactory, IPrefabKey unitKey, IUIManager uiManager, FactoryProvider factoryProvider)
+        public UnitFactory(PrefabFactory prefabFactory, IPrefabKey unitKey, IUIManager uiManager, FactoryProvider factoryProvider)
         {
             Helper.AssertIsNotNull(prefabFactory, unitKey, uiManager, factoryProvider);
 

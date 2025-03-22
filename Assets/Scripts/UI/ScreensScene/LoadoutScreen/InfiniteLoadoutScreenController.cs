@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     public class InfiniteLoadoutScreenController : ScreenController, ILoadoutScreenController, IManagedDisposable
     {
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private LoadoutScreen.ItemDetails.IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourControllerV2 _loadoutItemColourController;
@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
         {
             _soundPlayer = soundPlayer;
             _screensSceneGod = screensSceneGod;

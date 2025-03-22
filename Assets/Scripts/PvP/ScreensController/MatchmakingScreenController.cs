@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
     public class MatchmakingScreenController : ScreenController
     {
         private ISceneNavigator _sceneNavigator;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
         private IGameModel _gameModel;

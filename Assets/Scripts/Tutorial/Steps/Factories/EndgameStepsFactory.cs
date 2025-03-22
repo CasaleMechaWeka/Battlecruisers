@@ -19,17 +19,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
 
         public EndgameStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             ILocTable tutorialStrings,
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
+            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             IAutoNavigationStepFactory autoNavigationStepFactory,
-            ITutorialProvider tutorialProvider, 
-            ICruiser playerCruiser, 
+            ITutorialProvider tutorialProvider,
+            ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
             : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser, prefabFactory);

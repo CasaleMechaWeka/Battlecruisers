@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             ISingleSoundPlayer soundPlayer,
             ILocTable commonStrings,
             ILocTable screensSceneStrings,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
@@ -117,7 +117,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             strategyDropdown.Initialise(strategyStrings, initialValue);
         }
 
-        private void InitialiseCruiserDropdown(StringDropdown dropdown, IPrefabFactory prefabFactory, string defaultCruiser)
+        private void InitialiseCruiserDropdown(StringDropdown dropdown, PrefabFactory prefabFactory, string defaultCruiser)
         {
             IList<string> hullNames = new List<string>();
 
@@ -132,7 +132,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             dropdown.Initialise(hullNames, defaultCruiser);
         }
 
-        private string FindDefaultPlayerCruiser(IPrefabFactory prefabFactory)
+        private string FindDefaultPlayerCruiser(PrefabFactory prefabFactory)
         {
             if (Skirmish != null
                 && !Skirmish.WasRandomPlayerCruiser)
@@ -146,7 +146,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        private string FindDefaultAICruiser(IPrefabFactory prefabFactory)
+        private string FindDefaultAICruiser(PrefabFactory prefabFactory)
         {
             if (Skirmish != null
                 && !Skirmish.WasRandomAICruiser)

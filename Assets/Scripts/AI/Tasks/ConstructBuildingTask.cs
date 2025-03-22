@@ -13,14 +13,14 @@ namespace BattleCruisers.AI.Tasks
     public class ConstructBuildingTask : ITask
     {
         private readonly IPrefabKey _buildingToConstruct;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiserController _parentCruiser;
 
         private IBuildable _building;
-		
-		public event EventHandler Completed;
 
-        public ConstructBuildingTask(IPrefabKey buildingToconstruct, IPrefabFactory prefabFactory, ICruiserController parentCruiser) 
+        public event EventHandler Completed;
+
+        public ConstructBuildingTask(IPrefabKey buildingToconstruct, PrefabFactory prefabFactory, ICruiserController parentCruiser)
         {
             Helper.AssertIsNotNull(buildingToconstruct, prefabFactory, parentCruiser);
 
@@ -40,10 +40,10 @@ namespace BattleCruisers.AI.Tasks
                 && buildingWrapperPrefab.Buildable.NumOfDronesRequired <= _parentCruiser.DroneManager.NumOfDrones)
             {
                 ISlot slot = _parentCruiser.SlotAccessor.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);
-				Assert.IsNotNull(slot);
-				
+                Assert.IsNotNull(slot);
+
                 _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
-				_building.CompletedBuildable += _building_CompletedBuildable;
+                _building.CompletedBuildable += _building_CompletedBuildable;
                 _building.Destroyed += _building_Destroyed;
 
                 haveStartedTask = true;
@@ -57,12 +57,12 @@ namespace BattleCruisers.AI.Tasks
             // Empty
         }
 
-		public void Resume()
-		{
-			// Emtpy
-		}
+        public void Resume()
+        {
+            // Emtpy
+        }
 
-		private void _building_CompletedBuildable(object sender, EventArgs e)
+        private void _building_CompletedBuildable(object sender, EventArgs e)
         {
             TaskCompleted();
         }

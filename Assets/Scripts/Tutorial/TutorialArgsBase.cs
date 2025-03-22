@@ -16,7 +16,7 @@ namespace BattleCruisers.Tutorial
         public ICruiser PlayerCruiser { get; }
         public ICruiser AICruiser { get; }
         public ITutorialProvider TutorialProvider { get; }
-        public IPrefabFactory PrefabFactory { get; }
+        public PrefabFactory PrefabFactory { get; }
         public IBattleSceneGodComponents Components { get; }
         public ICameraComponents CameraComponents { get; }
         public TopPanelComponents TopPanelComponents { get; }
@@ -43,10 +43,10 @@ namespace BattleCruisers.Tutorial
 
         public TutorialArgsBase(
             IApplicationModel appModel,
-            ICruiser playerCruiser, 
-            ICruiser aiCruiser, 
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
             ITutorialProvider tutorialProvider,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IBattleSceneGodComponents battleSceneGodComponents,
             ICameraComponents cameraComponents,
             TopPanelComponents topPanelComponents,
@@ -57,13 +57,13 @@ namespace BattleCruisers.Tutorial
         {
             Helper.AssertIsNotNull(
                 appModel,
-                playerCruiser, 
-                aiCruiser, 
-                prefabFactory, 
-                battleSceneGodComponents, 
-                cameraComponents, 
+                playerCruiser,
+                aiCruiser,
+                prefabFactory,
+                battleSceneGodComponents,
+                cameraComponents,
                 topPanelComponents,
-                leftPanelComponents, 
+                leftPanelComponents,
                 rightPanelComponents,
                 uiManager,
                 gameEndMonitor);

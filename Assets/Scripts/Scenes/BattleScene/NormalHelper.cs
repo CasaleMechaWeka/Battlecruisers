@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class NormalHelper : BattleSceneHelper
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer)
             : base(appModel, prefabFetcher, storyStrings)
         {

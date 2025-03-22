@@ -31,7 +31,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             ILocTable tutorialStrings,
             EnemyUnitArgs enemyUnitArgs,
             ISingleBuildableProvider unitBuiltProvider,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
             : base(argsFactory, tutorialStrings, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(unitBuiltProvider);

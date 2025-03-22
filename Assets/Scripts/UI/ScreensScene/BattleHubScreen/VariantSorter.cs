@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     public class VariantSorter
     {
         private readonly IDataProvider _dataProvider;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly Dictionary<int, string> _variantParentCache;
         private readonly object _cacheLock = new object();
 
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {"Refined", 8}
         };
 
-        public VariantSorter(IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public VariantSorter(IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
             _dataProvider = dataProvider ?? throw new System.ArgumentNullException(nameof(dataProvider));
             _prefabFactory = prefabFactory ?? throw new System.ArgumentNullException(nameof(prefabFactory));
@@ -58,15 +58,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     return new List<int>();
                 }
 
-                #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 LogExampleVariant(allVariants[0]);
-                #endif
+#endif
 
                 CacheVariantParents(allVariants);
-                
+
                 // Log how many variants we found before categorizing
                 Debug.Log($"[VariantSorter] Found {allVariants.Count} total variants");
-                
+
                 var uncachedVariants = allVariants.Where(v => !_variantParentCache.ContainsKey(v.Index)).ToList();
                 if (uncachedVariants.Any())
                 {
@@ -80,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     .Concat(navalVariants)
                     .ToList();
 
-                #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 // Debug logging only - this block is completely removed in production
                 var parentCounts = result.GroupBy(v => _variantParentCache[v])
                     .OrderBy(g => g.Key)
@@ -88,13 +88,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                 // Get all possible parent groups from StaticPrefabKeys
                 var allParentGroups = new HashSet<string>();
-                
+
                 // Add Buildings
                 foreach (var building in StaticPrefabKeys.Buildings.AllKeys)
                 {
                     allParentGroups.Add(building.PrefabName.ToLowerInvariant());
                 }
-                
+
                 // Add Units
                 foreach (var unit in StaticPrefabKeys.Units.AllKeys)
                 {
@@ -104,22 +104,22 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 var sb = new StringBuilder();
                 sb.AppendLine($"[VariantSorter] Returning {result.Count} organized variants:");
                 sb.AppendLine("Parent groups:");
-                
+
                 // First list groups with variants
                 foreach (var kvp in parentCounts.OrderBy(kvp => kvp.Key))
                 {
                     sb.AppendLine($"  {kvp.Key}: {kvp.Value} variants");
                     allParentGroups.Remove(kvp.Key); // Remove from all groups as we've handled it
                 }
-                
+
                 // Then list groups with 0 variants
                 foreach (var group in allParentGroups.OrderBy(g => g))
                 {
                     sb.AppendLine($"  {group}: 0 variants");
                 }
-                
+
                 Debug.Log(sb.ToString());
-                #endif
+#endif
 
                 // If we lost variants in the process, log a warning
                 if (result.Count < allVariants.Count - uncachedVariants.Count)
@@ -152,7 +152,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     {
                         var prefab = _prefabFactory.GetVariant(
                             StaticPrefabKeys.Variants.GetVariantKey(variant.Index));
-                        
+
                         if (prefab == null)
                         {
                             Debug.LogWarning($"[VariantSorter] Null prefab for variant {variant.Index}");
@@ -187,7 +187,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             var navalVariants = new List<int>();
             var processedVariants = new HashSet<int>();
 
-            try 
+            try
             {
                 // Group variants by parent and category
                 var variantGroups = allVariants
@@ -222,7 +222,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                 // Then sort each category according to StaticPrefabKeys order
                 buildingVariants = ReorderVariantsByPrefabKeys(
-                    buildingVariants, 
+                    buildingVariants,
                     StaticPrefabKeys.Buildings.AllKeys.OfType<BuildingKey>());
 
                 aircraftVariants = ReorderVariantsByPrefabKeys(
@@ -237,14 +237,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         .OfType<UnitKey>()
                         .Where(k => k.UnitCategory == UnitCategory.Naval));
 
-                #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[VariantSorter] Processed variants by category:" +
                          $"\n  Buildings: {buildingVariants.Count}" +
                          $"\n  Aircraft: {aircraftVariants.Count}" +
                          $"\n  Naval: {navalVariants.Count}" +
                          $"\n  Total processed: {processedVariants.Count}" +
                          $"\n  Input variants: {allVariants.Count}");
-                #endif
+#endif
 
                 if (processedVariants.Count != allVariants.Count)
                 {
@@ -260,7 +260,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             return (buildingVariants, aircraftVariants, navalVariants);
         }
 
-        private List<int> ReorderVariantsByPrefabKeys<T>(List<int> variants, IEnumerable<T> orderedKeys) 
+        private List<int> ReorderVariantsByPrefabKeys<T>(List<int> variants, IEnumerable<T> orderedKeys)
             where T : IPrefabKey
         {
             try
@@ -271,7 +271,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
                 return variants
                     .GroupBy(v => _variantParentCache[v])
-                    .OrderBy(g => {
+                    .OrderBy(g =>
+                    {
                         var parentName = g.Key.ToLowerInvariant();
                         var index = parentOrder.FindIndex(p => parentName.Contains(p));
                         return index >= 0 ? index : int.MaxValue;
@@ -305,7 +306,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
         }
 
-        #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void LogExampleVariant(VariantData variant)
         {
             Debug.Log($"[VariantSorter] Example variant {variant.Index}:" +
@@ -314,13 +315,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                      $"\n  Coins: {variant.VariantCoins}" +
                      $"\n  NameKey: {variant.VariantNameStringKeyBase}");
         }
-        #endif
+#endif
 
         // Helper methods for category detection
-        private bool IsAircraftVariant(int variantIndex) => 
+        private bool IsAircraftVariant(int variantIndex) =>
             IsVariantOfCategory(variantIndex, UnitCategory.Aircraft);
 
-        private bool IsNavalVariant(int variantIndex) => 
+        private bool IsNavalVariant(int variantIndex) =>
             IsVariantOfCategory(variantIndex, UnitCategory.Naval);
 
         private bool IsVariantOfCategory(int variantIndex, UnitCategory category) =>
@@ -333,11 +334,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             var sb = new System.Text.StringBuilder();
             sb.AppendLine($"=== Unit {unit.PrefabName} Properties ===");
-            
+
             // Known properties
             sb.AppendLine($"PrefabName: {unit.PrefabName}");
             sb.AppendLine($"UnitCategory: {unit.UnitCategory}");
-            
+
             // Dynamic properties
             var properties = unit.GetType().GetProperties();
             foreach (var prop in properties)
@@ -353,7 +354,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
             }
             sb.AppendLine("=== End Unit Properties ===");
-            
+
             // Log everything at once
             Debug.Log(sb.ToString());
         }
@@ -362,10 +363,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             var sb = new System.Text.StringBuilder();
             sb.AppendLine($"=== Variant {variant.Index} Properties ===");
-            
+
             // Known properties
             sb.AppendLine($"Index: {variant.Index}");
-            
+
             // Dynamic properties
             var properties = variant.GetType().GetProperties();
             foreach (var prop in properties)
@@ -381,7 +382,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
             }
             sb.AppendLine("=== End Variant Properties ===");
-            
+
             // Log everything at once with LogWarning
             Debug.LogWarning(sb.ToString());
         }

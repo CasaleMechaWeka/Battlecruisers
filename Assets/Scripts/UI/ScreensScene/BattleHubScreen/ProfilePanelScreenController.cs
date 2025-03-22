@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public static ProfilePanelScreenController Instance { get; private set; }
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
 
         public CanvasGroupButton captainEditButton;
         public CanvasGroupButton playerNameEditButton;
@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);

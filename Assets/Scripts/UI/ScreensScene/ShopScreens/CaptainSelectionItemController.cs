@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene
         public int _index;
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
-            /*IPrefabFactory prefabFactory,*/
+            /*PrefabFactory prefabFactory,*/
             Sprite spriteCaptain,
             ICaptainData captainData,
             CaptainSelectorPanel captainSelectorPanel,

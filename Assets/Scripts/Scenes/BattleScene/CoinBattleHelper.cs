@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer)
             : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
         {

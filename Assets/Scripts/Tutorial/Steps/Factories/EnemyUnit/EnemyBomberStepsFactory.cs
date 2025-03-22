@@ -42,8 +42,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             ICruiser aiCruiser,
             IDeferrer deferrer,
             ISingleBuildableProvider unitBuiltProvider,
-            IPrefabFactory prefabFactory)
-            : base(argsFactory, tutorialStrings , enemyUnitArgs)
+            PrefabFactory prefabFactory)
+            : base(argsFactory, tutorialStrings, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(aiCruiser, deferrer, unitBuiltProvider, prefabFactory);
 
@@ -56,7 +56,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
             string airTurretName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiAirTurret).Buildable.Name;
             _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, airTurretName);
-            
+
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true);
         }
 

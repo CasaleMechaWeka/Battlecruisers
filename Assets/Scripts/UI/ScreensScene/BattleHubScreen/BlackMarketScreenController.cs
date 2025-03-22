@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene
     public class BlackMarketScreenController : ScreenController
     {
         public CanvasGroupButton backButton, buyButton;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         public Transform iapContainer;
@@ -79,7 +79,7 @@ namespace BattleCruisers.UI.ScreensScene
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);

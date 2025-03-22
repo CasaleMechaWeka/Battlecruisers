@@ -39,14 +39,14 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private VariantPrefab currentVariant;
         public GameObject content;
         public GameObject variantMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_variantsMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
             commonStrings = LandingSceneGod.Instance.commonStrings;
             screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;

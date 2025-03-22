@@ -47,15 +47,15 @@ namespace BattleCruisers.Scenes.BattleScene
         public ISingleBuildableProvider SingleShipProvider { get; }
         public ISingleBuildableProvider SingleOffensiveProvider { get; }
 
-		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
+        public IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
         public TutorialHelper(
-            IApplicationModel appModel, 
+            IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             ILocTable storyStrings,
-            IPrefabFactory prefabFactory, 
+            PrefabFactory prefabFactory,
             NavigationPermitters navigationPermitters)
             : base(appModel, prefabFetcher, storyStrings)
         {
@@ -72,7 +72,7 @@ namespace BattleCruisers.Scenes.BattleScene
             SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
             _speedButtonsFilter = new BroadcastingFilter(isMatch: false);
 
-			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
+            IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
             IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT_TUTORIAL);
             IBuildProgressCalculator fastCalculator = new LinearCalculator(BuildSpeedMultipliers.FAST);
 
@@ -84,22 +84,22 @@ namespace BattleCruisers.Scenes.BattleScene
             _aiBuildProgressCalculator = aiCruiserBuildSpeedCalculator;
             AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
         }
-        
+
         public override ILoadout GetPlayerLoadout()
         {
             return DataProvider.StaticData.InitialGameModel.PlayerLoadout;
         }
-		
+
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
-		{
+        {
             // There is no AI for the tutorial :)
             return new DummyArtificialIntelligence();
-		}
-		
-		public override ISlotFilter CreateHighlightableSlotFilter()
-		{
+        }
+
+        public override ISlotFilter CreateHighlightableSlotFilter()
+        {
             return _slotFilter;
-		}
+        }
 
         public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
@@ -155,7 +155,7 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
-            IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator)
         {

@@ -23,14 +23,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private IScreensSceneGod _screenSceneGod;
         private ISingleSoundPlayer _soundPlayer;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private IDataProvider _dataProvider;
         private CaptainExoKey loadedCaptain;
 
         public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        IPrefabFactory prefabFactory,
+        PrefabFactory prefabFactory,
         IDataProvider dataProvider)
         {
             Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider);

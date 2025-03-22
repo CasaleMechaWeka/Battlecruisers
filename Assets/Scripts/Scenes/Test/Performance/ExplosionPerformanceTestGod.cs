@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 {
     public class ExplosionPerformanceTestGod : TestGodBase
     {
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private BCUtils.IRandomGenerator _random;
 
         public float spawnRadiusXInM = 8;

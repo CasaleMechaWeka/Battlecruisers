@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IDataProvider _dataProvider;
         private IBroadcastingProperty<HullKey> _selectedHull;
         private ISingleSoundPlayer _soundPlayer;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         // Heckle Logic
 
         private HeckleButtonV2 _currentHeckleButton;
@@ -70,7 +70,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IDataProvider dataProvider,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, dataProvider, selectedHull, prefabFactory);
 

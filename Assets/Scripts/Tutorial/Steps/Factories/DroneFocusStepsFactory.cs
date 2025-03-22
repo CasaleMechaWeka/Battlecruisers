@@ -24,21 +24,21 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly RightPanelComponents _rightPanelComponents;
         private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly ILocTable _commonStrings;
 
         public DroneFocusStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             ILocTable tutorialStrings,
-            IAutoNavigationStepFactory autoNavigationStepFactory, 
-            IExplanationDismissableStepFactory explanationDismissableStepFactory, 
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
-            IConstructBuildingStepsFactory constructBuildingStepsFactory, 
-            ITutorialProvider tutorialProvider, 
-            ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider, 
+            IAutoNavigationStepFactory autoNavigationStepFactory,
+            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
+            IConstructBuildingStepsFactory constructBuildingStepsFactory,
+            ITutorialProvider tutorialProvider,
+            ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             RightPanelComponents rightPanelComponents,
             ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             ILocTable commonStrings)
             : base(argsFactory, tutorialStrings)
         {
@@ -82,7 +82,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Infinitely slow build speed
             steps.Add(
                 _changeCruiserBuildSpeedStepFactory.CreateStep(
-                    _tutorialProvider.PlayerCruiserBuildSpeedController, 
+                    _tutorialProvider.PlayerCruiserBuildSpeedController,
                     BuildSpeed.InfinitelySlow));
 
             // Start 2 buildings

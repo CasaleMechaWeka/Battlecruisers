@@ -19,7 +19,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
         public IPool<IPoolable<Vector3>, Vector3> GunBoatPool { get; }
         public IPool<IPoolable<Vector3>, Vector3> TurtlePool { get; }
 
-        public ShipDeathPoolProvider(IPrefabFactory prefabFactory)
+        public ShipDeathPoolProvider(PrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
 
@@ -34,7 +34,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
             TurtlePool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Turtle);
         }
 
-        private IPool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(IPrefabFactory prefabFactory, ShipDeathKey shipDeathKey)
+        private IPool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(PrefabFactory prefabFactory, ShipDeathKey shipDeathKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(

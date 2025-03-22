@@ -29,10 +29,10 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ILocTable screensSceneTable;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
             hecklesStrings = LandingSceneGod.Instance.hecklesStrings;
             heckleDataChanged += HeckleDataChanged;

@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes
 {
     public class TempScreensSceneGod : MonoBehaviour, IScreensSceneGod
     {
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;

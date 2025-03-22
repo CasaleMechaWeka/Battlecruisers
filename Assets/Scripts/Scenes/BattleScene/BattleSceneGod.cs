@@ -159,7 +159,7 @@ namespace BattleCruisers.Scenes.BattleScene
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
             IPrefabFetcher prefabFetcher = new PrefabFetcher();
             PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
+            PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
@@ -507,7 +507,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private IBattleSceneHelper CreateHelper(
             IApplicationModel applicationModel,
             IPrefabFetcher prefabFetcher,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters,
             ILocTable storyStrings)

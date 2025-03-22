@@ -24,7 +24,7 @@ namespace BattleCruisers.Utils.Factories
         public IDroneMonitor DroneMonitor { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
-        public IPrefabFactory PrefabFactory { get; }
+        public PrefabFactory PrefabFactory { get; }
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public SpriteChooserFactory SpriteChooserFactory { get; }
         public TargetFactoriesProvider Targets { get; }
@@ -37,7 +37,7 @@ namespace BattleCruisers.Utils.Factories
 
         public FactoryProvider(
             IBattleSceneGodComponents components,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             ISettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(components, prefabFactory, settingsManager);

@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
     public class TrashScreenController : ScreenController
     {
         private IApplicationModel _appModel;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
         private ILocTable _commonStrings;
@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IApplicationModel appModel,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
             IMusicPlayer musicPlayer,

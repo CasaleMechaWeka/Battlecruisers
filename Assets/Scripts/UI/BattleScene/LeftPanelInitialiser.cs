@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.BattleScene
             IDroneManagerMonitor droneManagerMonitor,
             IUIManager uiManager,
             ILoadout playerLoadout,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.BattleScene
         private IBuildMenu SetupBuildMenuController(
             IUIManager uiManager,
             ILoadout playerLoadout,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,

@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IApplicationModel applicationModel,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashTalkList,
@@ -237,7 +237,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ShowDifficultySymbolIfNeeded(postBattleState, difficultyIndicators);
         }
 
-        private ILootManager CreateLootManager(IPrefabFactory prefabFactory)
+        private ILootManager CreateLootManager(PrefabFactory prefabFactory)
         {
             IItemDetailsGroup middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
             IItemDetailsGroup leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");

@@ -117,7 +117,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         private FactoryProvider CreateFactoryProvider(
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
             IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
