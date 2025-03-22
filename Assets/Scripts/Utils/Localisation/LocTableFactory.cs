@@ -10,10 +10,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
 {
-    public class LocTableFactory : ILocTableFactory
+    public class LocTableFactory
     {
-        private static ILocTableFactory _instance;
-        public static ILocTableFactory Instance
+        private static LocTableFactory _instance;
+        public static LocTableFactory Instance
         {
             get
             {
