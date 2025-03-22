@@ -2,6 +2,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
             ITargetFilter friendFilter = targetsFactories.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
-            _friendFinder = targetsFactories.FinderFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
+            _friendFinder = new RangedTargetFinder(friendDetector, friendFilter);
 
             _friendFinder.TargetFound += OnFriendFound;
             _friendFinder.TargetLost += OnFriendLost;

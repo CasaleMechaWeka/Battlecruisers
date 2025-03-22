@@ -28,6 +28,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -198,7 +199,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     enemyHoverRangeInM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
-            _inRangeTargetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
+            _inRangeTargetFinder = new RangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
         }

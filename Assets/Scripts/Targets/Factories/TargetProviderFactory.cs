@@ -9,10 +9,10 @@ namespace BattleCruisers.Targets.Factories
 {
     public class TargetProviderFactory : ITargetProviderFactory
     {
-        private readonly ITargetFactoriesProvider _targetFactoriesProvider;
+        private readonly TargetFactoriesProvider _targetFactoriesProvider;
         private readonly ICruiserSpecificFactories _cruiserSpecificFactories;
 
-        public TargetProviderFactory(ICruiserSpecificFactories cruiserSpecificFactories, ITargetFactoriesProvider targetFactoriesProvider)
+        public TargetProviderFactory(ICruiserSpecificFactories cruiserSpecificFactories, TargetFactoriesProvider targetFactoriesProvider)
         {
             Helper.AssertIsNotNull(cruiserSpecificFactories, targetFactoriesProvider);
 
@@ -21,9 +21,9 @@ namespace BattleCruisers.Targets.Factories
         }
 
         public ITargetProvider CreateStaticTargetProvider(ITarget target)
-		{
+        {
             return new StaticTargetProvider(target);
-		}
+        }
 
         public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
         {

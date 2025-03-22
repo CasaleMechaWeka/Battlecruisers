@@ -30,7 +30,7 @@ namespace BattleCruisers.Utils.Factories
         public IPrefabFactory PrefabFactory { get; }
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public ISpriteChooserFactory SpriteChooserFactory { get; }
-        public ITargetFactoriesProvider Targets { get; }
+        public TargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public ISettingsManager SettingsManager { get; }
 

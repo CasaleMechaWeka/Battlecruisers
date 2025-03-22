@@ -72,7 +72,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
-            ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
+            TargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
             soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
             realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
@@ -135,7 +135,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISoundPlayerFactory soundPlayerFactory,
             ITurretStatsFactory turretStatsFactory,
             DeferrerProvider deferrerProvider,
-            ITargetFactoriesProvider targetFactories,
+            TargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
             IUpdaterProvider updaterProvider,
             IUIManager uiManager)
@@ -176,7 +176,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITurretStatsFactory turretStatsFactory,
             ITargetProcessorFactory targetProcessorFactory,
             ITargetTrackerFactory targetTrackerFactory,
-            ITargetDetectorFactory targetDetectorFactory,
+            TargetDetectorFactory targetDetectorFactory,
             ITargetProviderFactory targetProviderFactory,
             IDroneFeedbackFactory droneFeedbackFactory)
         {

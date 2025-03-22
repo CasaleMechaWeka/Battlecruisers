@@ -41,8 +41,8 @@ namespace BattleCruisers.Targets.TargetProviders
 
         public ShipBlockingEnemyProvider(
             ICruiserSpecificFactories cruiserSpecificFactories,
-            ITargetFactoriesProvider targetsFactories, 
-            ITargetDetector enemyDetector, 
+            TargetFactoriesProvider targetsFactories,
+            ITargetDetector enemyDetector,
             IUnit parentUnit)
         {
             Helper.AssertIsNotNull(cruiserSpecificFactories, targetsFactories, enemyDetector, parentUnit);
@@ -52,7 +52,7 @@ namespace BattleCruisers.Targets.TargetProviders
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = Helper.GetOppositeFaction(parentUnit.Faction);
             ITargetFilter enemyDetectionFilter = targetsFactories.FilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
-            ITargetFinder enemyFinder = targetsFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+            ITargetFinder enemyFinder = new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             ITargetRanker targetRanker = targetsFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker targetTracker = cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(enemyFinder, targetRanker);

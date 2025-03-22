@@ -29,6 +29,7 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -173,7 +174,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
             IList<TargetType> targetTypesToFollow = new List<TargetType>() { TargetType.Aircraft };
             ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
-            _followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);
+            _followableTargetFinder = new RangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);
 
             ITargetRanker followableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker followableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
@@ -189,7 +190,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     Transform,
                     _barrelController.TurretStats.RangeInM,
                     _targetFactories.RangeCalculatorProvider.BasicCalculator);
-            _shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_shootableEnemeyDetectorProvider.TargetDetector, _exactMatchTargetFilter);
+            _shootableTargetFinder = new RangedTargetFinder(_shootableEnemeyDetectorProvider.TargetDetector, _exactMatchTargetFilter);
 
             ITargetRanker shootableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker shootableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);

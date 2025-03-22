@@ -24,8 +24,8 @@ namespace BattleCruisers.Targets.TargetProviders
         private readonly ITargetFilter _isInFrontFilter;
 
         public ShipBlockingFriendlyProvider(
-            ITargetFactoriesProvider targetsFactories, 
-            ITargetDetector friendDetector, 
+            TargetFactoriesProvider targetsFactories,
+            ITargetDetector friendDetector,
             IUnit parentUnit)
         {
             Helper.AssertIsNotNull(targetsFactories, friendDetector, parentUnit);
@@ -34,7 +34,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
             ITargetFilter friendFilter = targetsFactories.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
-            _friendFinder = targetsFactories.FinderFactory.CreateRangedTargetFinder(friendDetector, friendFilter);
+            _friendFinder = new RangedTargetFinder(friendDetector, friendFilter);
 
             _friendFinder.TargetFound += OnFriendFound;
             _friendFinder.TargetLost += OnFriendLost;

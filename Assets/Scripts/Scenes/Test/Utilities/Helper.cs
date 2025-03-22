@@ -274,7 +274,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
             ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
             ITargetFactories targetFactories = Substitute.For<ITargetFactories>();
-            ITargetFactoriesProvider targetFactoriesProvider = Substitute.For<ITargetFactoriesProvider>();
+            TargetFactoriesProvider targetFactoriesProvider = Substitute.For<TargetFactoriesProvider>();
             targetFactories.TargetFactoriesProvider.Returns(targetFactoriesProvider);
             targetFinder.EmitCruiserAsGlobalTarget();
             ITargetProcessor staticTargetProcessor = new StaticTargetProcessor(dummyEnemyCruiser);
@@ -290,16 +290,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetFactories.TargetProcessorFactory.StaticTargetProcessor.Returns(staticTargetProcessor);
             targetFactories.TargetProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
 
-            // Finders
-            targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
-
             // Trackers
             targetFactories.TargetTrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
 
             // Detector
             if (updaterProvider != null)
             {
-                ITargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
+                TargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
                 targetFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
             }
 
@@ -321,7 +318,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         // Copy real filter factory behaviour
-        private void SetupCreateTargetFilter(ITargetFilterFactory filterFactory)
+        private void SetupCreateTargetFilter(TargetFilterFactory filterFactory)
         {
             filterFactory
                 .CreateTargetFilter(default, null)

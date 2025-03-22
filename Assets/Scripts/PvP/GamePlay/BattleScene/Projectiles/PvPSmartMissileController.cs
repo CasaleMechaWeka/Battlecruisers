@@ -20,6 +20,7 @@ using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
+using BattleCruisers.Targets.Factories;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
@@ -144,7 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     _transform,
                     activationArgs.ProjectileStats.DetectionRangeM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            _targetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
+            _targetFinder = new RangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
 
             ITargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);

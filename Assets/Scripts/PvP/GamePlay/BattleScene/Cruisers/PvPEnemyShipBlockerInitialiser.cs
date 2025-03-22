@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             };
 
             ITargetFinder targetFinder
-                = targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(
+                = new RangedTargetFinder(
                     targetDetectorController,
                     targetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
 

@@ -34,13 +34,13 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             ITargetFinder enemyFinder = Substitute.For<ITargetFinder>();
             ITargetRanker enemyRanker = Substitute.For<ITargetRanker>();
             IRankedTargetTracker targetTracker = Substitute.For<IRankedTargetTracker>();
-			ITargetProcessor targetProcessor = Substitute.For<ITargetProcessor>();
+            ITargetProcessor targetProcessor = Substitute.For<ITargetProcessor>();
             IUnit parentUnit = Substitute.For<IUnit>();
 
-            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
+            TargetFactoriesProvider targetFactories = Substitute.For<TargetFactoriesProvider>();
             targetFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
             targetFactories.FilterFactory.CreateTargetFilter(default, targetTypes: null).ReturnsForAnyArgs(enemyFilter);
-            targetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
+            new RangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
             targetFactories.RankerFactory.EqualTargetRanker.Returns(enemyRanker);
 
             ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();

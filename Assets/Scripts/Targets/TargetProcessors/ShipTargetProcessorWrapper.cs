@@ -3,6 +3,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers;
 using UnityEngine.Assertions;
+using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -23,15 +24,15 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             // Attacking targets
             ITargetFilter attackingTargetFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-            ITargetFinder attackingTargetFinder = args.TargetFactories.FinderFactory.CreateAttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
+            ITargetFinder attackingTargetFinder = new AttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
             ITargetRanker baseRanker = args.TargetFactories.RankerFactory.ShipTargetRanker;
             ITargetRanker attackingTargetRanker = args.TargetFactories.RankerFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);
             IRankedTargetTracker attackingTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(attackingTargetFinder, attackingTargetRanker);
 
-            IRankedTargetTracker compositeTracker 
+            IRankedTargetTracker compositeTracker
                 = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateCompositeTracker(
-                    inRangeTargetTracker, 
-                    attackingTargetTracker, 
+                    inRangeTargetTracker,
+                    attackingTargetTracker,
                     args.CruiserSpecificFactories.Targets.TrackerFactory.UserChosenTargetTracker);
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(compositeTracker);
         }

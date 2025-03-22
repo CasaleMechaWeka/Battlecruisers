@@ -13,7 +13,7 @@ namespace BattleCruisers.Cruisers
     public class EnemyShipBlockerInitialiser : MonoBehaviour
     {
         public ITargetTracker Initialise(
-            ITargetFactoriesProvider targetFactoriesProvider, 
+            TargetFactoriesProvider targetFactoriesProvider,
             ITargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)
         {
@@ -28,7 +28,7 @@ namespace BattleCruisers.Cruisers
             };
 
             ITargetFinder targetFinder
-                = targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(
+                = new RangedTargetFinder(
                     targetDetectorController,
                     targetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
 

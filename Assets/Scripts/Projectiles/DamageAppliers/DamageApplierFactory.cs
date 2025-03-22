@@ -8,25 +8,25 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 {
     public class DamageApplierFactory : IDamageApplierFactory
     {
-        private readonly ITargetFilterFactory _filterFacotry;
+        private readonly TargetFilterFactory _filterFacotry;
 
-        public DamageApplierFactory(ITargetFilterFactory filterFactory)
+        public DamageApplierFactory(TargetFilterFactory filterFactory)
         {
             Assert.IsNotNull(filterFactory);
             _filterFacotry = filterFactory;
         }
-		
-		public IDamageStats CreateDamageStats(float damage, float damageRadiusInM)
-		{
+
+        public IDamageStats CreateDamageStats(float damage, float damageRadiusInM)
+        {
             return new DamageStats(damage, damageRadiusInM);
-		}
+        }
 
         public IDamageApplier CreateSingleDamageApplier(IDamageStats damageStats)
         {
             return new SingleDamageApplier(damageStats.Damage);
         }
 
-		/// <summary>
+        /// <summary>
         /// All ITargets are susceptible to area of effect damage, 
         /// regardless of faction (ie, friendly fire is on :) ).
         /// </summary>

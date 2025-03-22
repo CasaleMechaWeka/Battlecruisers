@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables
 
         protected IUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
-        protected ITargetFactoriesProvider _targetFactories;
+        protected TargetFactoriesProvider _targetFactories;
         protected IMovementControllerFactory _movementControllerFactory;
         protected IAircraftProvider _aircraftProvider;
         protected IFactoryProvider _factoryProvider;

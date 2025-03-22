@@ -29,7 +29,7 @@ namespace BattleCruisers.Utils.Factories
         ISoundFactoryProvider Sound { get; }
         ISpawnDeciderFactory SpawnDeciderFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
-        ITargetFactoriesProvider Targets { get; }
+        TargetFactoriesProvider Targets { get; }
         IUpdaterProvider UpdaterProvider { get; }
         ISettingsManager SettingsManager { get; }
 

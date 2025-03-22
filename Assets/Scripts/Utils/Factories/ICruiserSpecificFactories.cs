@@ -17,6 +17,6 @@ namespace BattleCruisers.Utils.Factories
         IDroneFeedbackFactory DroneFeedbackFactory { get; }
         IGlobalBoostProviders GlobalBoostProviders { get; }
         ITurretStatsFactory TurretStatsFactory { get; }
-        ICruiserTargetFactoriesProvider Targets { get; }
+        CruiserTargetFactoriesProvider Targets { get; }
     }
 }

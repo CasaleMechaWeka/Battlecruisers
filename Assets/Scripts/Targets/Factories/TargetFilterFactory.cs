@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetFilterFactory : ITargetFilterFactory
+    public class TargetFilterFactory
     {
         public ITargetFilter CreateTargetFilter(Faction faction)
         {

@@ -18,14 +18,14 @@ namespace BattleCruisers.Utils.Factories
         public IDroneFeedbackFactory DroneFeedbackFactory { get; }
         public IGlobalBoostProviders GlobalBoostProviders { get; }
         public ITurretStatsFactory TurretStatsFactory { get; }
-        public ICruiserTargetFactoriesProvider Targets { get; }
+        public CruiserTargetFactoriesProvider Targets { get; }
 
         public CruiserSpecificFactories(
             IFactoryProvider factoryProvider,
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IRankedTargetTracker userChosenTargetTracker, 
-            IUpdaterProvider updaterProvider, 
+            ICruiser parentCruiser,
+            ICruiser enemyCruiser,
+            IRankedTargetTracker userChosenTargetTracker,
+            IUpdaterProvider updaterProvider,
             Faction faction,
             bool isTutorial)
         {

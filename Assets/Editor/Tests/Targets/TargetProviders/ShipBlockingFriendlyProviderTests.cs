@@ -25,14 +25,14 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             _target = Substitute.For<ITarget>();
             _target2 = Substitute.For<ITarget>();
 
-            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
+            TargetFactoriesProvider targetFactories = Substitute.For<TargetFactoriesProvider>();
             ITargetDetector friendDetector = Substitute.For<ITargetDetector>();
             ITargetFilter friendFilter = Substitute.For<ITargetFilter>();
             IUnit parentUnit = Substitute.For<IUnit>();
 
             targetFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
             targetFactories.FilterFactory.CreateTargetFilter(default, targetTypes: null).ReturnsForAnyArgs(friendFilter);
-            targetFactories.FinderFactory.CreateRangedTargetFinder(friendDetector, friendFilter).Returns(_friendFinder);
+            new RangedTargetFinder(friendDetector, friendFilter).Returns(_friendFinder);
 
             _targetProvider = new ShipBlockingFriendlyProvider(targetFactories, friendDetector, parentUnit);
         }

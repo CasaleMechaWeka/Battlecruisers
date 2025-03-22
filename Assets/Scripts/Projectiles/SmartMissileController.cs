@@ -4,6 +4,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -136,7 +137,7 @@ namespace BattleCruisers.Projectiles
                     _transform,
                     activationArgs.ProjectileStats.DetectionRangeM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            _targetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
+            _targetFinder = new RangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
 
             ITargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);

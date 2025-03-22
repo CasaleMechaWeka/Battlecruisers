@@ -11,14 +11,14 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Targets.TargetProcessors
 {
     public class ProximityTargetProcessorWrapper : TargetProcessorWrapper, IManagedDisposable
-	{
-		private ITargetFinder _targetFinder;
+    {
+        private ITargetFinder _targetFinder;
         private IRankedTargetTracker _targetTracker;
 
         public bool considerUserChosenTarget;
 
         protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
-		{
+        {
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
             _targetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
@@ -43,13 +43,13 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
-			CircleTargetDetectorController enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetectorController>();
-			Assert.IsNotNull(enemyDetector);
-			enemyDetector.Initialise(args.MaxRangeInM);
+            CircleTargetDetectorController enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetectorController>();
+            Assert.IsNotNull(enemyDetector);
+            enemyDetector.Initialise(args.MaxRangeInM);
 
-			// Create target finder
-			ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-			return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+            // Create target finder
+            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
 
         public override void DisposeManagedState()
