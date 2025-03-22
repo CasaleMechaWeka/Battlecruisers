@@ -314,7 +314,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            PrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            PrefabFetcher prefabFetcher = new PrefabFetcher();
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -344,7 +344,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            PrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            PrefabFetcher prefabFetcher = new PrefabFetcher();
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
