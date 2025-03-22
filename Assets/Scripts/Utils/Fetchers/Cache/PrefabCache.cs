@@ -14,28 +14,28 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 {
     public class PrefabCache : IPrefabCache
     {
-        private readonly IMultiCache<BuildableWrapper<IBuilding>> _buildings;
-        private readonly IMultiCache<BuildableWrapper<IUnit>> _units;
-        private readonly IMultiCache<Cruiser> _cruisers;
-        private readonly IMultiCache<ExplosionController> _explosions;
-        private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
-        private readonly IMultiCache<CaptainExo> _captains;
-        private readonly IMultiCache<Bodykit> _bodykits;
-        private readonly IMultiCache<VariantPrefab> _variants;
+        private readonly MultiCache<BuildableWrapper<IBuilding>> _buildings;
+        private readonly MultiCache<BuildableWrapper<IUnit>> _units;
+        private readonly MultiCache<Cruiser> _cruisers;
+        private readonly MultiCache<ExplosionController> _explosions;
+        private readonly MultiCache<ShipDeathInitialiser> _shipDeaths;
+        private readonly MultiCache<CaptainExo> _captains;
+        private readonly MultiCache<Bodykit> _bodykits;
+        private readonly MultiCache<VariantPrefab> _variants;
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
         public DroneController Drone { get; }
         public AudioSourceInitialiser AudioSource { get; }
 
         public PrefabCache(
-            IMultiCache<BuildableWrapper<IBuilding>> buildings,
-            IMultiCache<BuildableWrapper<IUnit>> units,
-            IMultiCache<Cruiser> cruisers,
-            IMultiCache<ExplosionController> explosions,
-            IMultiCache<ShipDeathInitialiser> shipDeaths,
-            IMultiCache<CaptainExo> captains,
-            IMultiCache<Bodykit> bodykits,
-            IMultiCache<VariantPrefab> variants,
+            MultiCache<BuildableWrapper<IBuilding>> buildings,
+            MultiCache<BuildableWrapper<IUnit>> units,
+            MultiCache<Cruiser> cruisers,
+            MultiCache<ExplosionController> explosions,
+            MultiCache<ShipDeathInitialiser> shipDeaths,
+            MultiCache<CaptainExo> captains,
+            MultiCache<Bodykit> bodykits,
+            MultiCache<VariantPrefab> variants,
             IUntypedMultiCache<Projectile> projectiles,
             DroneController drone,
             AudioSourceInitialiser audioSource)
