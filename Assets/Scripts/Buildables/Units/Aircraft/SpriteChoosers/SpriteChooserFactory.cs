@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
-    public class SpriteChooserFactory : ISpriteChooserFactory
+    public class SpriteChooserFactory
     {
         private readonly ISpriteProvider _spriteProvider;
 
