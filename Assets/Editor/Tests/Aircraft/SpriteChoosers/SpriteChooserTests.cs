@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
     public class SpriteChooserTests
     {
         private ISpriteChooser _chooser;
-        private IAssignerFactory _assignerFactory;
+        private AssignerFactory _assignerFactory;
         private IAssigner _assigner;
         private IList<Sprite> _sprites;
         private Sprite _sprite;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         public void SetuUp()
         {
             _assigner = Substitute.For<IAssigner>();
-            _assignerFactory = Substitute.For<IAssignerFactory>();
+            _assignerFactory = Substitute.For<AssignerFactory>();
 
             _sprite = Substitute.For<Sprite>();
             _sprites = new List<Sprite>()

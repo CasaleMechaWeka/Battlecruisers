@@ -9,10 +9,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
     public class SpriteChooserFactory : ISpriteChooserFactory
     {
-        private readonly IAssignerFactory _assignerFactory;
+        private readonly AssignerFactory _assignerFactory;
         private readonly ISpriteProvider _spriteProvider;
 
-        public SpriteChooserFactory(IAssignerFactory assignerFactory, ISpriteProvider spriteProvider)
+        public SpriteChooserFactory(AssignerFactory assignerFactory, ISpriteProvider spriteProvider)
         {
             Helper.AssertIsNotNull(assignerFactory, spriteProvider);
 

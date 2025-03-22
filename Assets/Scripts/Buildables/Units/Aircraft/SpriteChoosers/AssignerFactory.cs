@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
-    public class AssignerFactory : IAssignerFactory
+    public class AssignerFactory
     {
         public IAssigner CreateAssigner(int numOfOptions)
         {

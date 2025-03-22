@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IVelocityProvider _maxVelocityProvider;
 
         public PvPSpriteChooser(
-            IAssignerFactory assignerFactory,
+            AssignerFactory assignerFactory,
             IList<Sprite> sprites,
             IVelocityProvider maxVelocityProvider)
         {
