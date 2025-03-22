@@ -41,7 +41,7 @@ namespace BattleCruisers.Utils.Factories
         public FactoryProvider(
             IBattleSceneGodComponents components,
             IPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             ISettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(components, prefabFactory, spriteProvider, settingsManager);

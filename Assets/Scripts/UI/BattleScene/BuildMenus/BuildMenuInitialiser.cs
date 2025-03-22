@@ -18,21 +18,21 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildMenuInitialiser : MonoBehaviour
-	{
+    {
         public AudioClip buildingButtonSelectedSound, selectorOpeningSound;
 
         public IBuildMenu Initialise(
-			IUIManager uiManager,
-            IList<IBuildingGroup> buildingGroups, 
+            IUIManager uiManager,
+            IList<IBuildingGroup> buildingGroups,
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
             IBuildableSorterFactory sorterFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
-		{
+        {
             Helper.AssertIsNotNull(
                 uiManager,
                 buildingGroups,
@@ -61,9 +61,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            IBuildingClickHandler buildingClickHandler 
+            IBuildingClickHandler buildingClickHandler
                 = new BuildingClickHandler(
-                    uiManager, 
+                    uiManager,
                     eventSoundPlayer,
                     uiSoundPlayer,
                     playerCruiserFocusHelper,
@@ -95,7 +95,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)
         {
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>>();
-            
+
             foreach (IBuildingGroup group in buildingGroups)
             {
                 categoryToBuildings.Add(group.BuildingCategory, group.Buildings);

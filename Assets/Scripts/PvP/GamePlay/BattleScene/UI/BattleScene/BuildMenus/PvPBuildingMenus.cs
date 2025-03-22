@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBuildingMenus : PvPBuildableMenus<IPvPBuilding, BuildingCategory, PvPBuildingsMenuController>
     {
-        private ISpriteProvider _spriteProvider;
+        private SpriteProvider _spriteProvider;
         private IPvPBuildingClickHandler _clickHandler;
         private bool _flipClickAndDragIcon;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<IPvPBuilding> buildingSorter,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             ISingleSoundPlayer soundPlayer,
             IPvPBuildingClickHandler clickHandler,
             bool flipClickAndDragIcon)

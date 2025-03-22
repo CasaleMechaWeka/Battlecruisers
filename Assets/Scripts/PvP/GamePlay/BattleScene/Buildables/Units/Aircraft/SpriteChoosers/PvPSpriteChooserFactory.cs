@@ -10,9 +10,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSpriteChooserFactory : IPvPSpriteChooserFactory
     {
-        private readonly ISpriteProvider _spriteProvider;
+        private readonly SpriteProvider _spriteProvider;
 
-        public PvPSpriteChooserFactory(ISpriteProvider spriteProvider)
+        public PvPSpriteChooserFactory(SpriteProvider spriteProvider)
         {
             PvPHelper.AssertIsNotNull(spriteProvider);
 

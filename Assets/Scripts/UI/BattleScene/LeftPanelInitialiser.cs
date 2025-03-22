@@ -37,15 +37,15 @@ namespace BattleCruisers.UI.BattleScene
         public GameObject popLimitReachedFeedback;
 
 
-        
+
 
         public LeftPanelComponents Initialise(
-            IDroneManager droneManager, 
+            IDroneManager droneManager,
             IDroneManagerMonitor droneManagerMonitor,
             IUIManager uiManager,
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -55,8 +55,8 @@ namespace BattleCruisers.UI.BattleScene
             ILocTable commonString)
         {
             Helper.AssertIsNotNull(
-                droneManager, 
-                droneManagerMonitor, 
+                droneManager,
+                droneManagerMonitor,
                 uiManager,
                 playerLoadout,
                 prefabFactory,
@@ -70,16 +70,16 @@ namespace BattleCruisers.UI.BattleScene
             Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
-            IBuildMenu buildMenu 
+            IBuildMenu buildMenu
                 = SetupBuildMenuController(
-                    uiManager, 
-                    playerLoadout, 
-                    prefabFactory, 
-                    spriteProvider, 
-                    buttonVisibilityFilters, 
-                    playerCruiserFocusHelper, 
-                    eventSoundPlayer, 
-                    uiSoundPlayer, 
+                    uiManager,
+                    playerLoadout,
+                    prefabFactory,
+                    spriteProvider,
+                    buttonVisibilityFilters,
+                    playerCruiserFocusHelper,
+                    eventSoundPlayer,
+                    uiSoundPlayer,
                     populationLimitMonitor,
                     staticData,
                     commonString);
@@ -97,7 +97,7 @@ namespace BattleCruisers.UI.BattleScene
             IUIManager uiManager,
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -110,7 +110,7 @@ namespace BattleCruisers.UI.BattleScene
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory, commonString);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
-            IBuildableSorterFactory sorterFactory 
+            IBuildableSorterFactory sorterFactory
                 = new BuildableSorterFactory(
                     staticData,
                     new BuildableKeyFactory());

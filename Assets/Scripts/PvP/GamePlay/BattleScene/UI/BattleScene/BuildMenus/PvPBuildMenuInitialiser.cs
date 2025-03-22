@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
             IPvPBuildableSorterFactory sorterFactory,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,

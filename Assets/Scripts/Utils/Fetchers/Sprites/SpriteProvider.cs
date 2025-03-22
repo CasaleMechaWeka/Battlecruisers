@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
-    public class SpriteProvider : ISpriteProvider
+    public class SpriteProvider
     {
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";

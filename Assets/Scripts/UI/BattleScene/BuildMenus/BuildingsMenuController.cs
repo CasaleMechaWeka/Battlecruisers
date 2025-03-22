@@ -12,9 +12,9 @@ using System.Collections.Generic;
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildingsMenuController : BuildablesMenuController<BuildingButtonController, IBuilding>
-	{
+    {
         private ISingleSoundPlayer _soundPlayer;
-        private ISpriteProvider _spriteProvider;
+        private SpriteProvider _spriteProvider;
         private IBuildingClickHandler _clickHandler;
 
         public BuildingCategoryButton buildingCategoryButton;
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildings,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             IBuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P

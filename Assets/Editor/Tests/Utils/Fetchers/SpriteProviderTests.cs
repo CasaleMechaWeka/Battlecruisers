@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
 {
     public class SpriteProviderTests
     {
-        private ISpriteProvider _provider;
+        private SpriteProvider _provider;
         private IList<Sprite> _bomberSprites, _fighterSprites;
 
         private const int NUM_OF_BOMBER_SPRITES = 8;

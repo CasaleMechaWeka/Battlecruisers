@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildingMenus : BuildableMenus<IBuilding, BuildingCategory, BuildingsMenuController>
     {
-        private ISpriteProvider _spriteProvider;
+        private SpriteProvider _spriteProvider;
         private IBuildingClickHandler _clickHandler;
 
         public void Initialise(
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IBuilding> buildingSorter,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             ISingleSoundPlayer soundPlayer,
             IBuildingClickHandler clickHandler)
         {
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         protected override void InitialiseMenu(
             ISingleSoundPlayer soundPlayer,
-            BuildingsMenuController menu, 
+            BuildingsMenuController menu,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildables)

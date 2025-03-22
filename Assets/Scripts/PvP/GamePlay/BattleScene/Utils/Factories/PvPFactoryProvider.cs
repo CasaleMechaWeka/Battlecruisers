@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
             IPvPPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
+SpriteProvider spriteProvider,
             ISettingsManager settingsManager
             )
         {

@@ -161,7 +161,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IPrefabFetcher prefabFetcher = new PrefabFetcher();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
-            ISpriteProvider spriteProvider = new SpriteProvider();
+            SpriteProvider spriteProvider = new SpriteProvider();
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
