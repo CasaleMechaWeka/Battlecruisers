@@ -4,7 +4,7 @@
     {
         public TargetFilterFactory FilterFactory { get; }
         public ITargetRankerFactory RankerFactory { get; }
-        public ITargetHelperFactory HelperFactory { get; }
+        public TargetHelperFactory HelperFactory { get; }
         public RangeCalculatorProvider RangeCalculatorProvider { get; }
 
         public TargetFactoriesProvider()
