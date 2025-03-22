@@ -8,10 +8,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public class TurretStatsFactory : ITurretStatsFactory
     {
-        private readonly IBoostFactory _boostFactory;
+        private readonly BoostFactory _boostFactory;
         private readonly IGlobalBoostProviders _globalBoostProviders;
 
-        public TurretStatsFactory(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
+        public TurretStatsFactory(BoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
         {
             Helper.AssertIsNotNull(boostFactory, globalBoostProviders);
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         }
 
         public ITurretStats CreateBoostedTurretStats(
-            ITurretStats baseTurretStats, 
+            ITurretStats baseTurretStats,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {

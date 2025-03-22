@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
     public abstract class BoostedTurretStatsTestsBase<TStats> where TStats : class, IBasicTurretStats
     {
         protected TStats _baseStats;
-        protected IBoostFactory _boostFactory;
+        protected BoostFactory _boostFactory;
         protected IGlobalBoostProviders _globalBoostProviders;
         protected ObservableCollection<IBoostProvider> _localBoostProviders;
         protected IBoostable _boostable;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
             _baseStats.MinRangeInM.Returns(0.5f);
             _baseStats.RangeInM.Returns(0.6f);
 
-            _boostFactory = Substitute.For<IBoostFactory>();
+            _boostFactory = Substitute.For<BoostFactory>();
 
             _boostable = Substitute.For<IBoostable>();
             _boostable.BoostMultiplier.Returns(3.3f);

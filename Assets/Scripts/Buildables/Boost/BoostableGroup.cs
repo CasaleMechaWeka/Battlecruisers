@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Boost
 
         public event EventHandler BoostChanged;
 
-        public BoostableGroup(IBoostFactory boostFactory)
+        public BoostableGroup(BoostFactory boostFactory)
         {
             Assert.IsNotNull(boostFactory);
 

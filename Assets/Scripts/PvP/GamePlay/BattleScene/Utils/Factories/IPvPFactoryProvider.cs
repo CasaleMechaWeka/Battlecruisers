@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public interface IPvPFactoryProvider
     {
-        IBoostFactory BoostFactory { get; }
+        BoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         DeferrerProvider DeferrerProvider { get; }
         IDroneMonitor DroneMonitor { get; }

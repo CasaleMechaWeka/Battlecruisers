@@ -323,7 +323,7 @@ namespace BattleCruisers.Buildables
         public void Activate(TActivationArgs activationArgs, Faction faction)
         {
         }
-        private IBoostableGroup CreateHealthBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
+        private IBoostableGroup CreateHealthBoostableGroup(BoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
         {
             IBoostableGroup healthBoostableGroup = boostFactory.CreateBoostableGroup();
             healthBoostableGroup.AddBoostable(healthBoostable);
@@ -339,7 +339,7 @@ namespace BattleCruisers.Buildables
             return healthBoostableGroup;
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(BoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
             IBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);

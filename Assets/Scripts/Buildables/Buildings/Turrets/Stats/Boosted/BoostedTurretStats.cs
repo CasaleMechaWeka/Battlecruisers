@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
 
         public BoostedTurretStats(
             ITurretStats baseStats,
-            IBoostFactory boostFactory,
+            BoostFactory boostFactory,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders,
             IGlobalBoostProviders globalBoostProviders)

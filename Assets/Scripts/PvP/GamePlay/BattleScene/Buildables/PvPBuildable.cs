@@ -448,7 +448,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(BoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
             IBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);

@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public PvPBoostedBasicTurretStats(
             TStats baseStats,
-            IBoostFactory boostFactory,
+            BoostFactory boostFactory,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {

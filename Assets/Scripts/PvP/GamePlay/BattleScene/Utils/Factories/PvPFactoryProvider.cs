@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         // private readonly IPvPBattleSceneGodComponentsServer _components;
         private readonly IPvPBattleSceneGodComponents _components;
 
-        public IBoostFactory BoostFactory { get; }
+        public BoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }

@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Buildables.Boost
 {
-    public class BoostFactory : IBoostFactory
+    public class BoostFactory
     {
         private const float DEFAULT_BOOST_MULTIPLIER = 1;
 

@@ -20,7 +20,7 @@ namespace BattleCruisers.Utils.Factories
     {
         private readonly IBattleSceneGodComponents _components;
 
-        public IBoostFactory BoostFactory { get; }
+        public BoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
