@@ -330,7 +330,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             prefabFactory = PvPBattleSceneGodServer.Instance.prefabFactory;
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
+            ISpriteProvider spriteProvider = new SpriteProvider();
             navigationPermitters = new NavigationPermitters();
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
@@ -365,7 +365,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
 
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
+            ISpriteProvider spriteProvider = new SpriteProvider();
             navigationPermitters = new NavigationPermitters();
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);

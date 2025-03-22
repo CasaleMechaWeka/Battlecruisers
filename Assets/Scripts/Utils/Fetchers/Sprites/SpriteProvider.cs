@@ -9,15 +9,8 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public class SpriteProvider : ISpriteProvider
     {
-        private readonly SpriteFetcher _spriteFetcher;
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";
-
-        public SpriteProvider(SpriteFetcher spriteFetcher)
-        {
-            Assert.IsNotNull(spriteFetcher);
-            _spriteFetcher = spriteFetcher;
-        }
 
         /// <returns>
         /// A list of aircraft sprites, with the first sprite being the least turned
@@ -38,7 +31,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
                 _ => throw new ArgumentException("PrefabKeyName '" + prefabKeyName + "' is not an Aircraft!")
             };
 
-            IList<Sprite> aircraftSprites = await _spriteFetcher.GetMultiSpritesAsync(
+            IList<Sprite> aircraftSprites = await SpriteFetcher.GetMultiSpritesAsync(
                 UNIT_SPRITES_PATH + spriteData.Item1 + SPRITES_FILE_EXTENSION);
             Assert.AreEqual(spriteData.Item2, aircraftSprites.Count);
 

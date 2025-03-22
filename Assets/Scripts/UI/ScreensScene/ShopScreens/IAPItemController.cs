@@ -29,8 +29,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             //    _iapImage.sprite = iapIcon;
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-            _iapImage.sprite = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + _iapData.IAPIconName + ".png");
+            _iapImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + _iapData.IAPIconName + ".png");
             // _clickedFeedback.SetActive(false);
 
             clickingArea.Initialise(_soundPlayer, OnClicked);

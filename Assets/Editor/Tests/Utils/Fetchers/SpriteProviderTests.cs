@@ -12,7 +12,6 @@ namespace BattleCruisers.Tests.Utils.Fetchers
     public class SpriteProviderTests
     {
         private ISpriteProvider _provider;
-        private SpriteFetcher _fetcher;
         private IList<Sprite> _bomberSprites, _fighterSprites;
 
         private const int NUM_OF_BOMBER_SPRITES = 8;
@@ -21,9 +20,6 @@ namespace BattleCruisers.Tests.Utils.Fetchers
         [SetUp]
         public void SetuUp()
         {
-            _fetcher = Substitute.For<SpriteFetcher>();
-            _provider = new SpriteProvider(_fetcher);
-
             _bomberSprites = CreateSprites(NUM_OF_BOMBER_SPRITES);
             _fighterSprites = CreateSprites(NUM_OF_FIGHTER_SPRITES);
         }
@@ -44,7 +40,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
         public void GetBomberSprites_ReversesList()
         {
             string bomberSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/bomber.png";
-            _fetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
+            SpriteFetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
 
             IList<Sprite> expectedSprites = _bomberSprites.Reverse().ToList();
             IList<Sprite> bomberSprites = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
@@ -57,7 +53,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
         {
             string bomberSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/bomber.png";
             _bomberSprites.RemoveAt(0);
-            _fetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
+            SpriteFetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
 
             Assert.Throws<AggregateException>(() =>
             {
@@ -69,7 +65,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
         public void GetFighterSprites_ReversesList()
         {
             string fighterSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/fighter.png";
-            _fetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
+            SpriteFetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
 
             IList<Sprite> expectedSprites = _fighterSprites.Reverse().ToList();
             IList<Sprite> fighterSprites = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
@@ -82,7 +78,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
         {
             string fighterSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/fighter.png";
             _fighterSprites.RemoveAt(0);
-            _fetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
+            SpriteFetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
 
             Assert.Throws<AggregateException>(() =>
             {

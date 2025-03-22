@@ -3,7 +3,6 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using NSubstitute;
 using UnityEngine;
 
@@ -31,7 +30,6 @@ namespace BattleCruisers.Scenes.Test.UI
                     Substitute.For<ISingleSoundPlayer>(),
                     ApplicationModelProvider.ApplicationModel,
                     helper.PrefabFactory,
-                    new SpriteFetcher(),
                     trashDataList,
                     trashDataList,
                     Substitute.For<IMusicPlayer>(),

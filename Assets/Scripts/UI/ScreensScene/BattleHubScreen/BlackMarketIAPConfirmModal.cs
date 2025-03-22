@@ -129,8 +129,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
             }
 #endif
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-            coinPack.sprite = await spriteFetcher.GetSpriteAsync(spritePath);
+            coinPack.sprite = await SpriteFetcher.GetSpriteAsync(spritePath);
         }
     }
 

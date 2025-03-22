@@ -8,9 +8,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
-    public class SpriteFetcher
+    public static class SpriteFetcher
     {
-        public async Task<Sprite> GetSpriteAsync(string spritePath)
+        public static async Task<Sprite> GetSpriteAsync(string spritePath)
         {
             AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(spritePath);
             await handle.Task;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
             return handle.Result;
         }
 
-        public async Task<IList<Sprite>> GetMultiSpritesAsync(string spritePath)
+        public static async Task<IList<Sprite>> GetMultiSpritesAsync(string spritePath)
         {
             AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(spritePath);
             await handle.Task;

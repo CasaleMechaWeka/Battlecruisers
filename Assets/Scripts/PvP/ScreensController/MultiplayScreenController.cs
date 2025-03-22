@@ -12,8 +12,6 @@ using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using Map = BattleCruisers.Network.Multiplay.Matchplay.Shared.Map;
 
-
-
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
     public class MultiplayScreenController : ScreenController
@@ -55,8 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             battleButton.Initialise(soundPlayer, StartBattle);
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-            arenaSpritesProvider = new PvPArenaBackgroundSpriteProvider(spriteFetcher);
+            arenaSpritesProvider = new PvPArenaBackgroundSpriteProvider();
 
 #pragma warning disable 4014
             LoadPvPBackground();

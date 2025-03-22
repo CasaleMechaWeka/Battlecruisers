@@ -112,8 +112,7 @@ namespace BattleCruisers.UI.ScreensScene
             currenIAPData = args.iapData;
             ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("select");
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-            iapIcon.sprite = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + args.iapData.IAPIconName + ".png");
+            iapIcon.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + args.iapData.IAPIconName + ".png");
             iapName.text = screenSceneStrings.GetString(args.iapData.IAPNameKeyBase);
             iapDescription.text = screenSceneStrings.GetString(args.iapData.IAPDescriptionKeyBase);
             DisplayPrice();
@@ -173,8 +172,7 @@ namespace BattleCruisers.UI.ScreensScene
                     iapItem.GetComponent<IAPItemController>()._clickedFeedback.SetActive(true);
                     _currentItem = iapItem.GetComponent<IAPItemController>();
                     currenIAPData = iapData;
-                    SpriteFetcher spriteFetcher = new SpriteFetcher();
-                    iapIcon.sprite = await spriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + iapData.IAPIconName + ".png");
+                    iapIcon.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + iapData.IAPIconName + ".png");
                     iapName.text = screenSceneStrings.GetString(iapData.IAPNameKeyBase);
                     iapDescription.text = screenSceneStrings.GetString(iapData.IAPDescriptionKeyBase);
                     DisplayPrice();

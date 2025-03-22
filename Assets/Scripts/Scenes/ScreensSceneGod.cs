@@ -19,7 +19,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
@@ -294,8 +293,6 @@ namespace BattleCruisers.Scenes
             levelTrashDataList.Initialise(storyStrings);
             sideQuestTrashDataList.Initialise(storyStrings);
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-
             homeScreen.Initialise(this, _soundPlayer, _dataProvider);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
@@ -348,7 +345,7 @@ namespace BattleCruisers.Scenes
             ShowCharlieOnMainMenu();
 
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
             Camera captainsCamera = cameraOfCaptains.GetComponent<Camera>();
             if (captainsCamera != null)
             {

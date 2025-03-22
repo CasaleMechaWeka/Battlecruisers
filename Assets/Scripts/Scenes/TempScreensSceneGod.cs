@@ -142,11 +142,10 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
             homeScreen.Initialise(this, _soundPlayer, _dataProvider);
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider);

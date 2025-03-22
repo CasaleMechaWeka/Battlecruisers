@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
     {
         private IApplicationModel _appModel;
         private IPrefabFactory _prefabFactory;
-        private SpriteFetcher _spriteFetcher;
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
         private ILocTable _commonStrings;
@@ -47,7 +46,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ISingleSoundPlayer soundPlayer,
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
-            SpriteFetcher spriteFetcher,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
             IMusicPlayer musicPlayer,
@@ -57,11 +55,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, levelTrashDataList, homeButton);
-            Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, levelTrashDataList, musicPlayer, commonStrings);
+            Helper.AssertIsNotNull(appModel, prefabFactory, levelTrashDataList, musicPlayer, commonStrings);
 
             _appModel = appModel;
             _prefabFactory = prefabFactory;
-            _spriteFetcher = spriteFetcher;
             _levelTrashDataList = levelTrashDataList;
             _sideQuestTrashDataList = sideQuestTrashDataList;
             _musicPlayer = musicPlayer;
@@ -152,7 +149,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky
-            sky.sprite = await _spriteFetcher.GetSpriteAsync(skyPath);
+            sky.sprite = await SpriteFetcher.GetSpriteAsync(skyPath);
 
             _musicPlayer.PlayTrashMusic();
 
