@@ -143,7 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
 
-            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            ILocTable commonString = await LocTableFactory.LoadCommonTableAsync();
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
             {
@@ -175,7 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
-            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            ILocTable commonString = await LocTableFactory.LoadCommonTableAsync();
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)
             {

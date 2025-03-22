@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             //_detailsManager.ShowDetails(buildingWrapper.Buildable);
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             bool wasAnySlotHighlighted = _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
-            ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
+            ILocTable _commonStrings = await LocTableFactory.LoadTutorialTableAsync();
             if (_explanationPanel != null)
             {
                 if (_hintDisplayer == null)

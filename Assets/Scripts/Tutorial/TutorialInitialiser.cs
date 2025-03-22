@@ -21,8 +21,8 @@ namespace BattleCruisers.Tutorial
         public MainMenuButtonController modalMainMenuButton;
 
         public async Task InitialiseAsync(
-            ITutorialArgsBase baseArgs, 
-            bool showInGameHints, 
+            ITutorialArgsBase baseArgs,
+            bool showInGameHints,
             ICruiserDamageMonitor playerCruiserDamageMonitor,
             ILocTable commonStrings)
         {
@@ -47,7 +47,7 @@ namespace BattleCruisers.Tutorial
                 baseArgs.AppModel.DataProvider.GameModel.HasAttemptedTutorial = true;
                 baseArgs.AppModel.DataProvider.SaveGame();
 
-                ILocTable tutorialStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
+                ILocTable tutorialStrings = await LocTableFactory.LoadTutorialTableAsync();
 
                 ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton, tutorialStrings, commonStrings);
                 tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);

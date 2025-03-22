@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
-            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            commonStrings = await LocTableFactory.LoadCommonTableAsync();
             million = commonStrings.GetString("Million");
             billion = commonStrings.GetString("Billion");
             trillion = commonStrings.GetString("Trillion");

@@ -143,7 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // ServerRpc call`  
             //    _playerCruiser.PvP_HighlightAvailableSlotsServerRpc(buildingWrapper.Buildable.SlotSpecification.SlotType, buildingWrapper.Buildable.SlotSpecification.BuildingFunction, buildingWrapper.Buildable.SlotSpecification.PreferFromFront);
 
-            // ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
+            // ILocTable _commonStrings = await LocTableFactory.LoadTutorialTableAsync();
 
             // if (_explanationPanel != null)
             // {

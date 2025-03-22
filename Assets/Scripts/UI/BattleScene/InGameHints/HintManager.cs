@@ -22,12 +22,12 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             IHintDisplayer hintDisplayer)
         {
             Helper.AssertIsNotNull(
-                enemyBuildingMonitor, 
-                friendlyBuildingMonitor, 
-                friendlyFactoryMonitor, 
-                playerCruiserDamageMonitor, 
+                enemyBuildingMonitor,
+                friendlyBuildingMonitor,
+                friendlyFactoryMonitor,
+                playerCruiserDamageMonitor,
                 playerCruiserDroneFocuser,
-                gameEndMonitor, 
+                gameEndMonitor,
                 hintDisplayer);
 
             _hintDisplayer = hintDisplayer;
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
 
             enemyBuildingMonitor.OffensiveStarted += buildingMonitor_OffensiveStarted;
             friendlyBuildingMonitor.ShieldStarted += friendlyBuildingMonitor_ShieldStarted;
-            
+
             friendlyFactoryMonitor.FactoryCompleted += friendlyFactoryMonitor_FactoryCompleted;
             friendlyFactoryMonitor.UnitChosen += friendlyFactoryMonitor_UnitChosen;
 
@@ -52,8 +52,9 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             loadCommonStringsTable();
         }
 
-        async private void loadCommonStringsTable() {
-            _commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+        async private void loadCommonStringsTable()
+        {
+            _commonStrings = await LocTableFactory.LoadCommonTableAsync();
         }
 
         private void buildingMonitor_AirFactoryStarted(object sender, EventArgs e)
@@ -70,7 +71,7 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         {
             _hintDisplayer.ShowHint(_commonStrings.GetString(Hints.NAVAL_FACTORY_RESPONSE_HINT));
         }
-        
+
         private void friendlyBuildingMonitor_ShipDefensiveStarted(object sender, EventArgs e)
         {
             _hintDisplayer.HideHint(_commonStrings.GetString(Hints.NAVAL_FACTORY_RESPONSE_HINT));

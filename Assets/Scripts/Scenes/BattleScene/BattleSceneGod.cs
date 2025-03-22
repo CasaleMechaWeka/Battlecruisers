@@ -154,8 +154,8 @@ namespace BattleCruisers.Scenes.BattleScene
             waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
 
             // Common setup
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
+            ILocTable commonStrings = await LocTableFactory.LoadCommonTableAsync();
+            ILocTable storyStrings = await LocTableFactory.LoadStoryTableAsync();
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
             PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);

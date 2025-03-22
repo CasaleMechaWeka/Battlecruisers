@@ -137,7 +137,7 @@ namespace BattleCruisers.Scenes
             Task<bool> checkInternetConnection = LandingSceneGod.CheckForInternetConnection();
             ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
             ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
-            Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
+            Task<ILocTable> loadStoryStrings = LocTableFactory.LoadStoryTableAsync();
 
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
 

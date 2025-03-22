@@ -10,21 +10,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
 {
-    public class LocTableFactory
+    public static class LocTableFactory
     {
-        private static LocTableFactory _instance;
-        public static LocTableFactory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new LocTableFactory();
-                }
-                return _instance;
-            }
-        }
-
         private static Locale _locale;
 
         public class TableName
@@ -40,11 +27,9 @@ namespace BattleCruisers.Utils.Localisation
 
         }
 
-        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable, _hecklesTable, _fonts, _advertisingTable;
+        private static ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable, _hecklesTable, _fonts, _advertisingTable;
 
-        private LocTableFactory() { }
-
-        public async Task<ILocTable> LoadFontsTableAsync()
+        public static async Task<ILocTable> LoadFontsTableAsync()
         {
             if (_fonts == null)
             {
@@ -55,7 +40,7 @@ namespace BattleCruisers.Utils.Localisation
             return _fonts;
         }
 
-        public async Task<ILocTable> LoadBattleSceneTableAsync()
+        public static async Task<ILocTable> LoadBattleSceneTableAsync()
         {
             if (_battleSceneTable == null)
             {
@@ -66,7 +51,7 @@ namespace BattleCruisers.Utils.Localisation
             return _battleSceneTable;
         }
 
-        public async Task<ILocTable> LoadScreensSceneTableAsync()
+        public static async Task<ILocTable> LoadScreensSceneTableAsync()
         {
             if (_screensSceneTable == null)
             {
@@ -77,7 +62,7 @@ namespace BattleCruisers.Utils.Localisation
             return _screensSceneTable;
         }
 
-        public async Task<ILocTable> LoadCommonTableAsync()
+        public static async Task<ILocTable> LoadCommonTableAsync()
         {
             if (_commonTable == null)
             {
@@ -88,7 +73,7 @@ namespace BattleCruisers.Utils.Localisation
             return _commonTable;
         }
 
-        public async Task<ILocTable> LoadStoryTableAsync()
+        public static async Task<ILocTable> LoadStoryTableAsync()
         {
             //Debug.Log("Loaded story");
             if (_storyTable == null)
@@ -100,7 +85,7 @@ namespace BattleCruisers.Utils.Localisation
             return _storyTable;
         }
 
-        public async Task<ILocTable> LoadTutorialTableAsync()
+        public static async Task<ILocTable> LoadTutorialTableAsync()
         {
             if (_tutorialTable == null)
             {
@@ -111,7 +96,7 @@ namespace BattleCruisers.Utils.Localisation
             return _tutorialTable;
         }
 
-        public async Task<ILocTable> LoadAdvertisingTableAsync()
+        public static async Task<ILocTable> LoadAdvertisingTableAsync()
         {
             if (_advertisingTable == null)
             {
@@ -123,7 +108,7 @@ namespace BattleCruisers.Utils.Localisation
         }
 
 
-        public async Task<ILocTable> LoadHecklesTableAsync()
+        public static async Task<ILocTable> LoadHecklesTableAsync()
         {
             if (_hecklesTable == null)
             {
@@ -135,7 +120,7 @@ namespace BattleCruisers.Utils.Localisation
         }
 
 
-        private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
+        private static async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
             Locale localeToUse = await GetLocaleAsync();
             //Debug.Log(localeToUse.name + " selected");
@@ -153,7 +138,7 @@ namespace BattleCruisers.Utils.Localisation
         //basically just need to make a string selection in settings menu and make it so that on load it uses the string in the code below
         //also need to setup drop down selector for this functionality
         //won't work until the game is fully translated
-        private async Task<Locale> GetLocaleAsync()
+        private static async Task<Locale> GetLocaleAsync()
         {
             if (_locale != null)
             {
@@ -214,7 +199,7 @@ namespace BattleCruisers.Utils.Localisation
             return localeToUse;
         }
 
-        public void ReleaseFontsTable()
+        public static void ReleaseFontsTable()
         {
             if (_fonts != null)
             {
@@ -223,7 +208,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        public void ReleaseBattleSceneTable()
+        public static void ReleaseBattleSceneTable()
         {
             if (_battleSceneTable != null)
             {
@@ -232,7 +217,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        public void ReleaseScreensSceneTable()
+        public static void ReleaseScreensSceneTable()
         {
             if (_screensSceneTable != null)
             {
@@ -241,7 +226,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        public void ReleaseCommonTable()
+        public static void ReleaseCommonTable()
         {
             if (_commonTable != null)
             {
@@ -250,7 +235,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        public void ReleaseStoryTable()
+        public static void ReleaseStoryTable()
         {
             if (_storyTable != null)
             {
@@ -259,7 +244,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        public void ReleaseTutorialTable()
+        public static void ReleaseTutorialTable()
         {
             if (_tutorialTable != null)
             {
@@ -268,7 +253,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        public void ReleaseAdvertisingTable()
+        public static void ReleaseAdvertisingTable()
         {
             if (_advertisingTable != null)
             {
@@ -277,7 +262,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        public void ReleaseHecklesTable()
+        public static void ReleaseHecklesTable()
         {
             if (_hecklesTable != null)
             {
