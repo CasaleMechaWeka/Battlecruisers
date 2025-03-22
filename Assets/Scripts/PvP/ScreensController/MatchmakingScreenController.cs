@@ -190,7 +190,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(_commonStrings);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, _commonStrings);
             //    leftCruiserName.text = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = dataProvider.GameModel.PlayerName;

@@ -24,7 +24,6 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
-        private readonly PrefabFetcher _prefabFetcher;
         private readonly ILocTable _storyStrings;
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
         protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
@@ -37,18 +36,17 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public virtual IPrefabKey PlayerCruiser => _appModel.DataProvider.GameModel.PlayerLoadout.Hull;
 
-        protected BattleSceneHelper(IApplicationModel appModel, PrefabFetcher prefabFetcher, ILocTable storyStrings)
+        protected BattleSceneHelper(IApplicationModel appModel, ILocTable storyStrings)
         {
-            Helper.AssertIsNotNull(appModel, prefabFetcher, storyStrings);
+            Helper.AssertIsNotNull(appModel, storyStrings);
 
             _appModel = appModel;
-            _prefabFetcher = prefabFetcher;
             _storyStrings = storyStrings;
-            _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
+            _backgroundStatsProvider = new BackgroundStatsProvider();
             _calculatorFactory
                 = new BuildProgressCalculatorFactory(
                     new BuildSpeedCalculator());
-            _trashTalkProvider = new TrashTalkProvider(_prefabFetcher, _storyStrings);
+            _trashTalkProvider = new TrashTalkProvider(_storyStrings);
         }
 
         public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);

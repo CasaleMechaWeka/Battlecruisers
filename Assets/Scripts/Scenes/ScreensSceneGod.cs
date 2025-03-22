@@ -140,10 +140,9 @@ namespace BattleCruisers.Scenes
             Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
 
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
-            PrefabFetcher prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            Task<PrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            Task<PrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             premiumEditionButton.gameObject.SetActive(false);

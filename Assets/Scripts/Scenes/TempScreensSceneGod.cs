@@ -18,7 +18,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
@@ -107,7 +106,7 @@ namespace BattleCruisers.Scenes
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;

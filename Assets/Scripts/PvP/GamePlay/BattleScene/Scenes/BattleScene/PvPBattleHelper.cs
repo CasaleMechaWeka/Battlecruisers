@@ -16,7 +16,6 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -42,11 +41,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public PvPBattleHelper(
             IApplicationModel appModel,
-            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer
-        ) : base(appModel, prefabFetcher, storyStrings)
+        ) : base(appModel, storyStrings)
         {
             // _appModel = appModel;
             _prefabFactory = prefabFactory;

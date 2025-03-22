@@ -53,11 +53,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public TutorialHelper(
             IApplicationModel appModel,
-            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             NavigationPermitters navigationPermitters)
-            : base(appModel, prefabFetcher, storyStrings)
+            : base(appModel, storyStrings)
         {
             Assert.IsNotNull(prefabFactory);
 

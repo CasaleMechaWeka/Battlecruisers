@@ -16,7 +16,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -162,8 +161,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
-            PrefabFetcher prefabFetcher = new PrefabFetcher();
-            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
+            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
 
             components = GetComponent<PvPBattleSceneGodComponents>();
@@ -171,7 +169,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
+            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, components.Deferrer, storyStrings);
 
             playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
@@ -406,14 +404,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
-            PrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer,
             // PvPNavigationPermitters navigationPermitters,
             ILocTable storyStrings
         )
         {
-            return new PvPBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+            return new PvPBattleHelper(applicationModel, storyStrings, prefabFactory, deferrer);
         }
     }
 }

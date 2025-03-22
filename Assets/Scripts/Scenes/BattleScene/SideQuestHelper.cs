@@ -42,11 +42,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SideQuestHelper(
             IApplicationModel appModel,
-            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher, storyStrings)
+            : base(appModel, storyStrings)
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 

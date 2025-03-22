@@ -37,38 +37,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _commonStrings = commonStrings;
         }
 
-        public async Task<IPvPPrefabCache> CreatePrefabCacheAsync(PrefabFetcher prefabFetcher)
+        public async Task<IPvPPrefabCache> CreatePrefabCacheAsync()
         {
-            Assert.IsNotNull(prefabFetcher);
-
             IList<Task> retrievePrefabsTasks = new List<Task>();
 
             IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>> keyToBuilding = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPBuildings.AllKeys, keyToBuilding));
+            retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPBuildings.AllKeys, keyToBuilding));
 
             IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>> keyToUnit = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPUnits.AllKeys, keyToUnit));
+            retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPUnits.AllKeys, keyToUnit));
 
             IDictionary<IPrefabKey, PvPCruiser> keyToCruiser = new ConcurrentDictionary<IPrefabKey, PvPCruiser>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPHulls.AllKeys, keyToCruiser));
+            retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPHulls.AllKeys, keyToCruiser));
 
             IDictionary<IPrefabKey, PvPExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, PvPExplosionController>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPExplosions.AllKeys, keyToExplosion));
+            retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPExplosions.AllKeys, keyToExplosion));
 
             IDictionary<IPrefabKey, PvPShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, PvPShipDeathInitialiser>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPShipDeaths.AllKeys, keyToDeath));
+            retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPShipDeaths.AllKeys, keyToDeath));
 
             IDictionary<IPrefabKey, PvPProjectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, PvPProjectile>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPProjectiles.AllKeys, keyToProjectile));
+            retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPProjectiles.AllKeys, keyToProjectile));
 
             Container<PvPDroneController> droneContainer = new Container<PvPDroneController>();
-            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone, droneContainer));
+            retrievePrefabsTasks.Add(GetPrefab(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone, droneContainer));
 
             Container<PvPAudioSourceInitialiser> audioSourceContainer = new Container<PvPAudioSourceInitialiser>();
-            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, PvPStaticPrefabKeys.AudioSource, audioSourceContainer));
+            retrievePrefabsTasks.Add(GetPrefab(PvPStaticPrefabKeys.AudioSource, audioSourceContainer));
 
             IDictionary<IPrefabKey, PvPBuildableOutlineController> keyToOutline = new ConcurrentDictionary<IPrefabKey, PvPBuildableOutlineController>();
-            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, PvPStaticPrefabKeys.PvPBuildableOutlines.AllKeys, keyToOutline));
+            retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPBuildableOutlines.AllKeys, keyToOutline));
 
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
@@ -88,36 +86,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         private async Task GetPrefabs<TPrefab>(
-            PrefabFetcher prefabFetcher,
             IList<IPrefabKey> prefabKeys,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab)
                 where TPrefab : class, IPrefab
         {
-            IEnumerable<Task> prefabTasks = prefabKeys.Select(prefabKey => GetPrefab(prefabFetcher, keyToPrefab, prefabKey));
+            IEnumerable<Task> prefabTasks = prefabKeys.Select(prefabKey => GetPrefab(keyToPrefab, prefabKey));
             await Task.WhenAll(prefabTasks);
         }
 
         private async Task GetPrefab<TPrefab>(
-            PrefabFetcher prefabFetcher,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab,
             IPrefabKey prefabKey)
                 where TPrefab : class, IPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
-            PrefabContainer<TPrefab> prefabContainer = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            PrefabContainer<TPrefab> prefabContainer = await PrefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
             prefabContainer.Prefab.StaticInitialise(_commonStrings);
             keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
 
         private async Task GetPrefab<TPrefab>(
-            PrefabFetcher prefabFetcher,
             IPrefabKey prefabKey,
             Container<TPrefab> prefabContainer)
                 where TPrefab : class, IPrefab
         {
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
-            PrefabContainer<TPrefab> result = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            PrefabContainer<TPrefab> result = await PrefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             prefabContainer.Value = result.Prefab;
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 

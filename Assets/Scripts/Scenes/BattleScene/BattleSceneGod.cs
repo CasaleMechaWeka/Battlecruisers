@@ -157,12 +157,11 @@ namespace BattleCruisers.Scenes.BattleScene
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
-            PrefabFetcher prefabFetcher = new PrefabFetcher();
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -504,7 +503,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private IBattleSceneHelper CreateHelper(
             IApplicationModel applicationModel,
-            PrefabFetcher prefabFetcher,
             PrefabFactory prefabFactory,
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters,
@@ -513,21 +511,21 @@ namespace BattleCruisers.Scenes.BattleScene
             switch (applicationModel.Mode)
             {
                 case GameMode.Tutorial:
-                    TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, navigationPermitters);
+                    TutorialHelper helper = new TutorialHelper(applicationModel, storyStrings, prefabFactory, navigationPermitters);
                     _tutorialProvider = helper;
                     return helper;
 
                 case GameMode.Campaign:
-                    return new NormalHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new NormalHelper(applicationModel, storyStrings, prefabFactory, deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new SkirmishHelper(applicationModel, storyStrings, prefabFactory, deferrer);
 
                 case GameMode.CoinBattle:
-                    return new CoinBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new CoinBattleHelper(applicationModel, storyStrings, prefabFactory, deferrer);
 
                 case GameMode.SideQuest:
-                    return new SideQuestHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new SideQuestHelper(applicationModel, storyStrings, prefabFactory, deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");

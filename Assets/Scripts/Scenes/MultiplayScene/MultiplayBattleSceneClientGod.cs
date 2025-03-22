@@ -165,12 +165,11 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
-            PrefabFetcher prefabFetcher = new PrefabFetcher();
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -432,7 +431,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
         private IBattleSceneHelper CreateHelper(
            IApplicationModel applicationModel,
-           PrefabFetcher prefabFetcher,
            PrefabFactory prefabFactory,
            IDeferrer deferrer,
            NavigationPermitters navigationPermitters,
@@ -446,10 +444,10 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                 //     return helper;
 
                 case GameMode.Campaign:
-                    return new NormalHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new NormalHelper(applicationModel, storyStrings, prefabFactory, deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new SkirmishHelper(applicationModel, storyStrings, prefabFactory, deferrer);
                 // case GameMode.PvP_1VS1:
                 //     return;
 

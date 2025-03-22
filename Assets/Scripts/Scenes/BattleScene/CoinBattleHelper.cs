@@ -13,11 +13,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public CoinBattleHelper(
             IApplicationModel appModel,
-            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
+            : base(appModel, storyStrings, prefabFactory, deferrer)
         {
             _coinBattle = DataProvider.GameModel.CoinBattle;
             Assert.IsNotNull(_coinBattle);

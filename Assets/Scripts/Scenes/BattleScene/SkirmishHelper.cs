@@ -25,11 +25,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SkirmishHelper(
             IApplicationModel appModel,
-            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
+            : base(appModel, storyStrings, prefabFactory, deferrer)
         {
             _skirmish = DataProvider.GameModel.Skirmish;
             Assert.IsNotNull(_skirmish);
