@@ -7,9 +7,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundStatsProvider : IBackgroundStatsProvider
     {
-        private readonly IPrefabFetcher _prefabFetcher;
+        private readonly PrefabFetcher _prefabFetcher;
 
-        public BackgroundStatsProvider(IPrefabFetcher prefabFetcher)
+        public BackgroundStatsProvider(PrefabFetcher prefabFetcher)
         {
             Assert.IsNotNull(prefabFetcher);
             _prefabFetcher = prefabFetcher;

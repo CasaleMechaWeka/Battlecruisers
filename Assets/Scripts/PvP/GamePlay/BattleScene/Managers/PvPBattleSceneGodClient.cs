@@ -314,7 +314,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            PrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -344,7 +344,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
             commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            PrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -543,7 +543,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 return;
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+                PrefabFetcher prefabFetcher = new PrefabFetcher();
 
                 IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultA.Prefab.StaticInitialise(commonStrings);
@@ -577,7 +577,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
             else
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+                PrefabFetcher prefabFetcher = new PrefabFetcher();
 
                 IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultB.Prefab.StaticInitialise(commonStrings);
@@ -628,7 +628,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (newVal.ToString() != string.Empty)
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+                PrefabFetcher prefabFetcher = new PrefabFetcher();
 
                 IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
                 resultA.Prefab.StaticInitialise(commonStrings);
@@ -650,7 +650,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (newVal.ToString() != string.Empty)
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
+                PrefabFetcher prefabFetcher = new PrefabFetcher();
 
                 IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
                 resultB.Prefab.StaticInitialise(commonStrings);
@@ -910,7 +910,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters,

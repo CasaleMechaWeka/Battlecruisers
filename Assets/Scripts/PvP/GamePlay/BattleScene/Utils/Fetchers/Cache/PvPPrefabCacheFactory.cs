@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _commonStrings = commonStrings;
         }
 
-        public async Task<IPvPPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
+        public async Task<IPvPPrefabCache> CreatePrefabCacheAsync(PrefabFetcher prefabFetcher)
         {
             Assert.IsNotNull(prefabFetcher);
 
@@ -88,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         private async Task GetPrefabs<TPrefab>(
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IList<IPrefabKey> prefabKeys,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab)
                 where TPrefab : class, IPrefab
@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         private async Task GetPrefab<TPrefab>(
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab,
             IPrefabKey prefabKey)
                 where TPrefab : class, IPrefab
@@ -111,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         private async Task GetPrefab<TPrefab>(
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IPrefabKey prefabKey,
             Container<TPrefab> prefabContainer)
                 where TPrefab : class, IPrefab

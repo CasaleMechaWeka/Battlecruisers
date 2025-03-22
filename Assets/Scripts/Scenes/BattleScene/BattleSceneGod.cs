@@ -157,7 +157,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
-            IPrefabFetcher prefabFetcher = new PrefabFetcher();
+            PrefabFetcher prefabFetcher = new PrefabFetcher();
             PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             navigationPermitters = new NavigationPermitters();
@@ -506,7 +506,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private IBattleSceneHelper CreateHelper(
             IApplicationModel applicationModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             PrefabFactory prefabFactory,
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters,

@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public TutorialHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             NavigationPermitters navigationPermitters)

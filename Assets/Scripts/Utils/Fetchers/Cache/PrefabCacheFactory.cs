@@ -36,7 +36,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             _commonStrings = commonStrings;
         }
 
-        public async Task<PrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
+        public async Task<PrefabCache> CreatePrefabCacheAsync(PrefabFetcher prefabFetcher)
         {
             Assert.IsNotNull(prefabFetcher);
 
@@ -96,7 +96,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
 
         private async Task GetPrefabs<TPrefab>(
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IList<IPrefabKey> prefabKeys,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab)
                 where TPrefab : class, IPrefab
@@ -106,7 +106,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         }
 
         private async Task GetPrefab<TPrefab>(
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab,
             IPrefabKey prefabKey)
                 where TPrefab : class, IPrefab
@@ -121,7 +121,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         }
 
         private async Task GetPrefab<TPrefab>(
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IPrefabKey prefabKey,
             Container<TPrefab> prefabContainer)
                 where TPrefab : class, IPrefab

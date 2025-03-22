@@ -162,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
-            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
+            PrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
 
@@ -406,7 +406,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer,
             // PvPNavigationPermitters navigationPermitters,

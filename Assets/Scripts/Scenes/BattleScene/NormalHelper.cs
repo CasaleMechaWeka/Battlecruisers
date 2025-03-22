@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public NormalHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)

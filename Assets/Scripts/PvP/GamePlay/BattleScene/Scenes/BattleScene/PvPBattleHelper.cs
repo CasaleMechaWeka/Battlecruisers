@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public PvPBattleHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer

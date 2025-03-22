@@ -7,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    public class PrefabFetcher : IPrefabFetcher
+    public class PrefabFetcher
     {
         private const string PREFAB_ROOT_DIR = "Assets/Resources_moved/";
         private const string PREFAB_FILE_EXTENSION = ".prefab";

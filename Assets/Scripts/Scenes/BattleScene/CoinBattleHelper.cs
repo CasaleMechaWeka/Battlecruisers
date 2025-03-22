@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public CoinBattleHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)

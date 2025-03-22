@@ -10,6 +10,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public interface IPvPPrefabCacheFactory
     {
-        Task<IPvPPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher);
+        Task<IPvPPrefabCache> CreatePrefabCacheAsync(PrefabFetcher prefabFetcher);
     }
 }

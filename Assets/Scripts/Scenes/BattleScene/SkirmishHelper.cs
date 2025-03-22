@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SkirmishHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)

@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
-        private readonly IPrefabFetcher _prefabFetcher;
+        private readonly PrefabFetcher _prefabFetcher;
         private readonly ILocTable _storyStrings;
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
         protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public virtual IPrefabKey PlayerCruiser => _appModel.DataProvider.GameModel.PlayerLoadout.Hull;
 
-        protected BattleSceneHelper(IApplicationModel appModel, IPrefabFetcher prefabFetcher, ILocTable storyStrings)
+        protected BattleSceneHelper(IApplicationModel appModel, PrefabFetcher prefabFetcher, ILocTable storyStrings)
         {
             Helper.AssertIsNotNull(appModel, prefabFetcher, storyStrings);
 
@@ -77,35 +77,35 @@ namespace BattleCruisers.Scenes.BattleScene
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
             ITrashTalkData levelTrashTalkData;
-            
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[BattleSceneHelper] Getting enemy name for level {levelNum}, Mode: {_appModel.Mode}");
-            #endif
+#endif
 
             if (_appModel.Mode == GameMode.SideQuest)
             {
-                #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[BattleSceneHelper] Getting side quest trash talk for level {levelNum}");
-                #endif
+#endif
                 levelTrashTalkData = await _trashTalkProvider.GetTrashTalkAsync(levelNum, true);
             }
             else
             {
-                #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[BattleSceneHelper] Getting campaign trash talk for level {levelNum}");
-                #endif
+#endif
                 levelTrashTalkData = await _trashTalkProvider.GetTrashTalkAsync(levelNum);
             }
 
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[BattleSceneHelper] Full trash talk data for {(_appModel.Mode == GameMode.SideQuest ? "side quest" : "level")} {levelNum}:\n" +
                      $"  Enemy Name: {levelTrashTalkData.EnemyName}\n" +
                      $"  Player Text: {levelTrashTalkData.PlayerText}\n" +
                      $"  Enemy Text: {levelTrashTalkData.EnemyText}\n" +
                      $"  Player Talks First: {levelTrashTalkData.PlayerTalksFirst}\n" +
                      $"  String Key Base: {levelTrashTalkData.StringKeyBase}");
-            #endif
-            
+#endif
+
             return levelTrashTalkData.EnemyName;
         }
 

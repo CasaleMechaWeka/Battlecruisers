@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SideQuestHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
+            PrefabFetcher prefabFetcher,
             ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)

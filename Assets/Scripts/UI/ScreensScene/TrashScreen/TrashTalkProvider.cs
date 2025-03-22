@@ -8,10 +8,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashTalkProvider : ITrashTalkProvider
     {
-        private readonly IPrefabFetcher _prefabFetcher;
+        private readonly PrefabFetcher _prefabFetcher;
         private readonly ILocTable _storyStrings;
 
-        public TrashTalkProvider(IPrefabFetcher prefabFetcher, ILocTable storyStrings)
+        public TrashTalkProvider(PrefabFetcher prefabFetcher, ILocTable storyStrings)
         {
             Helper.AssertIsNotNull(prefabFetcher, storyStrings);
 
