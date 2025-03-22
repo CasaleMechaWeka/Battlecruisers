@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public PvPTargetFactoriesProvider()
         {
             FilterFactory = new PvPTargetFilterFactory();
-            RankerFactory = new PvPTargetRankerFactory();
+            RankerFactory = new TargetRankerFactory();
             HelperFactory = new PvPTargetHelperFactory();
             RangeCalculatorProvider = new RangeCalculatorProvider();
         }
