@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             PvPHelper.AssertIsNotNull(skybox, level);
 
-            IMaterialFetcher materialFetcher = new PvPMaterialFetcher();
+            IMaterialFetcher materialFetcher = new MaterialFetcher();
             skybox.material = await materialFetcher.GetMaterialAsync(level.SkyMaterialName);
         }
     }
