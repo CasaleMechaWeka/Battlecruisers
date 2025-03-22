@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
@@ -11,21 +10,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSpriteChooserFactory : IPvPSpriteChooserFactory
     {
-        private readonly AssignerFactory _assignerFactory;
         private readonly ISpriteProvider _spriteProvider;
 
-        public PvPSpriteChooserFactory(AssignerFactory assignerFactory, ISpriteProvider spriteProvider)
+        public PvPSpriteChooserFactory(ISpriteProvider spriteProvider)
         {
-            PvPHelper.AssertIsNotNull(assignerFactory, spriteProvider);
+            PvPHelper.AssertIsNotNull(spriteProvider);
 
-            _assignerFactory = assignerFactory;
             _spriteProvider = spriteProvider;
         }
 
         public async Task<IPvPSpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IVelocityProvider maxVelocityProvider)
         {
             IList<Sprite> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
-            return new PvPSpriteChooser(_assignerFactory, aircraftSprites, maxVelocityProvider);
+            return new PvPSpriteChooser(aircraftSprites, maxVelocityProvider);
         }
 
         public IPvPSpriteChooser CreateDummySpriteChooser(Sprite sprite)

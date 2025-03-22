@@ -90,7 +90,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     soundFetcher,
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
-                            new AssignerFactory(),
                             new SpriteProvider(new SpriteFetcher())),
                     new SoundPlayerFactory(soundFetcher, deferrer),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),

@@ -11,7 +11,6 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
     public class SpriteChooserTests
     {
         private ISpriteChooser _chooser;
-        private AssignerFactory _assignerFactory;
         private IAssigner _assigner;
         private IList<Sprite> _sprites;
         private Sprite _sprite;
@@ -21,7 +20,6 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         public void SetuUp()
         {
             _assigner = Substitute.For<IAssigner>();
-            _assignerFactory = Substitute.For<AssignerFactory>();
 
             _sprite = Substitute.For<Sprite>();
             _sprites = new List<Sprite>()
@@ -29,13 +27,13 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
                 _sprite
             };
 
-            _assignerFactory.CreateAssigner(_sprites.Count).Returns(_assigner);
+            AssignerFactory.CreateAssigner(_sprites.Count).Returns(_assigner);
 
             _maxVelocityProvider = Substitute.For<IVelocityProvider>();
             _maxVelocityProvider.VelocityInMPerS.Returns(5);
 
-            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider);
-            _assignerFactory.Received().CreateAssigner(_sprites.Count);
+            _chooser = new SpriteChooser(_sprites, _maxVelocityProvider);
+            AssignerFactory.CreateAssigner(_sprites.Count);
         }
 
         [Test]

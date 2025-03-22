@@ -13,17 +13,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         private readonly IVelocityProvider _maxVelocityProvider;
 
         public SpriteChooser(
-            AssignerFactory assignerFactory,
             IList<Sprite> sprites,
             IVelocityProvider maxVelocityProvider)
         {
-            Helper.AssertIsNotNull(assignerFactory, sprites, maxVelocityProvider);
+            Helper.AssertIsNotNull(sprites, maxVelocityProvider);
             Assert.IsTrue(sprites.Count > 0);
 
             _sprites = sprites;
             _maxVelocityProvider = maxVelocityProvider;
 
-            _assigner = assignerFactory.CreateAssigner(sprites.Count);
+            _assigner = AssignerFactory.CreateAssigner(sprites.Count);
         }
 
         public Sprite ChooseSprite(Vector2 velocity)

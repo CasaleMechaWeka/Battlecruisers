@@ -56,7 +56,6 @@ namespace BattleCruisers.Utils.Factories
             DamageApplierFactory = new DamageApplierFactory();
             SpriteChooserFactory
                 = new SpriteChooserFactory(
-                    new AssignerFactory(),
                     spriteProvider);
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new SpawnDeciderFactory();

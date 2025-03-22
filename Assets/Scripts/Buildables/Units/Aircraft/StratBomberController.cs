@@ -140,7 +140,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 allSpriteWrappers.Add(sprite);
             }
             //create Sprite Chooser
-            _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
+            _spriteChooser = new SpriteChooser(allSpriteWrappers, this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

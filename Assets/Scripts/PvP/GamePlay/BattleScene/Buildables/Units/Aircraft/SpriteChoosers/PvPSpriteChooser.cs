@@ -14,17 +14,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IVelocityProvider _maxVelocityProvider;
 
         public PvPSpriteChooser(
-            AssignerFactory assignerFactory,
             IList<Sprite> sprites,
             IVelocityProvider maxVelocityProvider)
         {
-            PvPHelper.AssertIsNotNull(assignerFactory, sprites, maxVelocityProvider);
+            PvPHelper.AssertIsNotNull(sprites, maxVelocityProvider);
             Assert.IsTrue(sprites.Count > 0);
 
             _sprites = sprites;
             _maxVelocityProvider = maxVelocityProvider;
 
-            _assigner = assignerFactory.CreateAssigner(sprites.Count);
+            _assigner = AssignerFactory.CreateAssigner(sprites.Count);
         }
 
         public (Sprite, int) ChooseSprite(Vector2 velocity)
