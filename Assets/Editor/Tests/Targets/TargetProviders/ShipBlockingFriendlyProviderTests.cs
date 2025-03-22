@@ -30,8 +30,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             ITargetFilter friendFilter = Substitute.For<ITargetFilter>();
             IUnit parentUnit = Substitute.For<IUnit>();
 
-            TargetFilterFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
-            TargetFilterFactory.CreateTargetFilter(default, targetTypes: null).ReturnsForAnyArgs(friendFilter);
+            new TargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
             new RangedTargetFinder(friendDetector, friendFilter).Returns(_friendFinder);
 
             _targetProvider = new ShipBlockingFriendlyProvider(targetFactories, friendDetector, parentUnit);

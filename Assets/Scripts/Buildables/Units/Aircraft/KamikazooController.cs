@@ -5,7 +5,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -150,7 +149,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     Transform,
                     enemyHoverRangeInM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = TargetFilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(EnemyCruiser.Faction, AttackCapabilities);
             _inRangeTargetFinder = new RangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;

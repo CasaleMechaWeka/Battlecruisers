@@ -38,8 +38,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             IUnit parentUnit = Substitute.For<IUnit>();
 
             TargetFactoriesProvider targetFactories = Substitute.For<TargetFactoriesProvider>();
-            TargetFilterFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
-            TargetFilterFactory.CreateTargetFilter(default, targetTypes: null).ReturnsForAnyArgs(enemyFilter);
+            new TargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
             new RangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
             targetFactories.RankerFactory.EqualTargetRanker.Returns(enemyRanker);
 

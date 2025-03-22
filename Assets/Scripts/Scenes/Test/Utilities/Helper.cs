@@ -300,29 +300,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 targetFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
             }
 
-            // Filters
-            TargetFilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-            TargetFilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
-            TargetFilterFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
-
-            if (targetFilter != null)
-            {
-                TargetFilterFactory.CreateTargetFilter(default, null).ReturnsForAnyArgs(targetFilter);
-            }
-            else
-            {
-                SetupCreateTargetFilter();
-            }
+            new DummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
 
             return targetFactories;
-        }
-
-        // Copy real filter factory behaviour
-        private void SetupCreateTargetFilter()
-        {
-            TargetFilterFactory
-                .CreateTargetFilter(default, null)
-                .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
         }
 
         public IAircraftProvider CreateAircraftProvider(

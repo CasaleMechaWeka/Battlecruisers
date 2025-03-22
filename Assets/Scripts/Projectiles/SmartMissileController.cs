@@ -4,7 +4,6 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -129,7 +128,7 @@ namespace BattleCruisers.Projectiles
         private void SetupTargetProcessor(SmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             ITargetFilter targetFilter
-                = TargetFilterFactory.CreateTargetFilter(
+                = new FactionAndTargetTypeFilter(
                     activationArgs.EnemyCruiser.Faction,
                     activationArgs.ProjectileStats.AttackCapabilities);
             _enemyDetectorProvider

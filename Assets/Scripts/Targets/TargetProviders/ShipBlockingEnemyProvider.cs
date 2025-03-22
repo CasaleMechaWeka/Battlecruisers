@@ -47,11 +47,11 @@ namespace BattleCruisers.Targets.TargetProviders
         {
             Helper.AssertIsNotNull(cruiserSpecificFactories, targetsFactories, enemyDetector, parentUnit);
 
-            _isInFrontFilter = TargetFilterFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = new TargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = Helper.GetOppositeFaction(parentUnit.Faction);
-            ITargetFilter enemyDetectionFilter = TargetFilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(enemyFaction, blockingEnemyTypes);
             ITargetFinder enemyFinder = new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             ITargetRanker targetRanker = targetsFactories.RankerFactory.EqualTargetRanker;

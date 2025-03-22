@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Targets.Factories;
-using BattleCruisers.Targets.TargetDetectors;
+﻿using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
@@ -19,7 +18,7 @@ namespace BattleCruisers.Targets.TargetProcessors
                     args.ParentTarget.Transform,
                     args.MaxRangeInM,
                     args.TargetFactories.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = TargetFilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
         }
 

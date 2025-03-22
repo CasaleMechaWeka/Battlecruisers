@@ -2,6 +2,7 @@
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace BattleCruisers.Cruisers
             ITargetFinder targetFinder
                 = new RangedTargetFinder(
                     targetDetectorController,
-                    TargetFilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
+                    new FactionAndTargetTypeFilter(enemyFaction, targetTypesToFind));
 
             return targetTrackerFactory.CreateTargetTracker(targetFinder);
         }

@@ -1,4 +1,3 @@
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             TargetDetectorController enemyDetector = GetComponentInChildren<TargetDetectorController>();
             Assert.IsNotNull(enemyDetector);
 
-            ITargetFilter enemyDetectionFilter = TargetFilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
     }

@@ -3,7 +3,6 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers;
 using UnityEngine.Assertions;
-using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -23,7 +22,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             IRankedTargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets
-            ITargetFilter attackingTargetFilter = TargetFilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter attackingTargetFilter = new FactionAndTargetTypeFilter(args.EnemyFaction, args.AttackCapabilities);
             ITargetFinder attackingTargetFinder = new AttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
             ITargetRanker baseRanker = args.TargetFactories.RankerFactory.ShipTargetRanker;
             ITargetRanker attackingTargetRanker = args.TargetFactories.RankerFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);

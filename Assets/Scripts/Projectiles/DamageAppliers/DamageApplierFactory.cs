@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 
 namespace BattleCruisers.Projectiles.DamageAppliers
@@ -23,7 +22,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         /// </summary>
         public IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats)
         {
-            ITargetFilter damageTargetFilter = TargetFilterFactory.CreateDummyTargetFilter(isMatchResult: true);
+            ITargetFilter damageTargetFilter = new DummyTargetFilter(isMatchResult: true);
             return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
 
@@ -33,7 +32,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         /// </summary>
         public IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IDamageStats damageStats, Faction enemyFaction)
         {
-            ITargetFilter damageTargetFilter = TargetFilterFactory.CreateTargetFilter(enemyFaction);
+            ITargetFilter damageTargetFilter = new FactionTargetFilter(enemyFaction);
             return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
     }

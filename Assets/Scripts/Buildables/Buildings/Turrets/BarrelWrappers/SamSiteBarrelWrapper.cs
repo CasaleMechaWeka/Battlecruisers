@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 
@@ -17,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override ITargetFilter CreateTargetFilter()
         {
-            return TargetFilterFactory.CreateExactMatchTargetFilter();
+            return new ExactMatchTargetFilter();
         }
 
         protected override AngleLimiter CreateAngleLimiter()

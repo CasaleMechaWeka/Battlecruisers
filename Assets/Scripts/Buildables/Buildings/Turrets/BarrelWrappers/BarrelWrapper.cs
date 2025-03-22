@@ -21,7 +21,6 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -207,7 +206,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return TargetFilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
+            return new FactionAndTargetTypeFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()
