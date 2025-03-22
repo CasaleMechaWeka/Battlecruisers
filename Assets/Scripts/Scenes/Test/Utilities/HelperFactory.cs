@@ -22,8 +22,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, ApplicationModelProvider.ApplicationModel.DataProvider);
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             IPrefabFactory prefabFactory
                 = new PrefabFactory(
                     prefabCache,

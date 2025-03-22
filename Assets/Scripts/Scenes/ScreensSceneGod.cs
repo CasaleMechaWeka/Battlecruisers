@@ -113,7 +113,7 @@ namespace BattleCruisers.Scenes
         public bool serverStatus;
         public string requiredVer; // App version from Cloud;
         private static bool IsFirstTimeLoad = true;
-        IPrefabCache _prefabCache;
+        PrefabCache _prefabCache;
         [SerializeField]
         private Sprite[] difficultyIndicators;
 
@@ -139,11 +139,11 @@ namespace BattleCruisers.Scenes
             ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
             Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
 
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
             IPrefabFetcher prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            Task<IPrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            Task<PrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             premiumEditionButton.gameObject.SetActive(false);

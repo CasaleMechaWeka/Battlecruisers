@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Deaths;
@@ -27,20 +26,17 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     /// consuming code can remain synchronous.  Loading all prefabs takes about 1 seconds.
     /// </summary>
     /// PERF:  Only load prefabs required for level (ie, only 2 hulls, only unlocked buildables)
-    public class PrefabCacheFactory : IPrefabCacheFactory
+    public class PrefabCacheFactory
     {
         private readonly ILocTable _commonStrings;
-        private readonly IDataProvider _dataProvider;
 
-        public PrefabCacheFactory(ILocTable commonStrings, IDataProvider dataProvider)
+        public PrefabCacheFactory(ILocTable commonStrings)
         {
             Assert.IsNotNull(commonStrings);
-            Assert.IsNotNull(dataProvider);
             _commonStrings = commonStrings;
-            _dataProvider = dataProvider;
         }
 
-        public async Task<IPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
+        public async Task<PrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
         {
             Assert.IsNotNull(prefabFetcher);
 

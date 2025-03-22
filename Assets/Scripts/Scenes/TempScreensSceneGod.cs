@@ -104,10 +104,10 @@ namespace BattleCruisers.Scenes
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, ApplicationModelProvider.ApplicationModel.DataProvider);
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;

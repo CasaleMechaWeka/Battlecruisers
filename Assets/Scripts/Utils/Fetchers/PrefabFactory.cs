@@ -26,11 +26,11 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public class PrefabFactory : IPrefabFactory
     {
-        private readonly IPrefabCache _prefabCache;
+        private readonly PrefabCache _prefabCache;
         private readonly ISettingsManager _settingsManager;
         private readonly ILocTable _commonStrings;
 
-        public PrefabFactory(IPrefabCache prefabCache, ISettingsManager settingsManager, ILocTable commonStrings)
+        public PrefabFactory(PrefabCache prefabCache, ISettingsManager settingsManager, ILocTable commonStrings)
         {
             Helper.AssertIsNotNull(prefabCache, settingsManager, commonStrings);
 

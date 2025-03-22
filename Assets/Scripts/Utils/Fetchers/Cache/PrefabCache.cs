@@ -12,7 +12,7 @@ using BattleCruisers.UI.Sound.Pools;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
 {
-    public class PrefabCache : IPrefabCache
+    public class PrefabCache
     {
         private readonly MultiCache<BuildableWrapper<IBuilding>> _buildings;
         private readonly MultiCache<BuildableWrapper<IUnit>> _units;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly MultiCache<CaptainExo> _captains;
         private readonly MultiCache<Bodykit> _bodykits;
         private readonly MultiCache<VariantPrefab> _variants;
-        private readonly IUntypedMultiCache<Projectile> _projectiles;
+        private readonly UntypedMultiCache<Projectile> _projectiles;
 
         public DroneController Drone { get; }
         public AudioSourceInitialiser AudioSource { get; }
@@ -36,7 +36,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             MultiCache<CaptainExo> captains,
             MultiCache<Bodykit> bodykits,
             MultiCache<VariantPrefab> variants,
-            IUntypedMultiCache<Projectile> projectiles,
+            UntypedMultiCache<Projectile> projectiles,
             DroneController drone,
             AudioSourceInitialiser audioSource)
         {

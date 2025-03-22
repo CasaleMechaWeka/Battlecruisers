@@ -164,9 +164,9 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             // Common setup
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, dataProvider);
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
             IPrefabFetcher prefabFetcher = new PrefabFetcher();
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             navigationPermitters = new NavigationPermitters();
 
