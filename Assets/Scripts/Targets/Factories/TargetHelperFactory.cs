@@ -3,9 +3,9 @@ using BattleCruisers.Targets.Helpers;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetHelperFactory
+    public static class TargetHelperFactory
     {
-        public ITargetRangeHelper CreateShipRangeHelper(IShip ship)
+        public static ITargetRangeHelper CreateShipRangeHelper(IShip ship)
         {
             return new ShipRangeHelper(ship);
         }
