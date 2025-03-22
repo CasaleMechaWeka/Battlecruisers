@@ -129,7 +129,7 @@ namespace BattleCruisers.Projectiles
         private void SetupTargetProcessor(SmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             ITargetFilter targetFilter
-                = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(
+                = TargetFilterFactory.CreateTargetFilter(
                     activationArgs.EnemyCruiser.Faction,
                     activationArgs.ProjectileStats.AttackCapabilities);
             _enemyDetectorProvider

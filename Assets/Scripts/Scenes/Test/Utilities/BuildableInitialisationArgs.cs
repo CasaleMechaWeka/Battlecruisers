@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory,
-                    damageApplierFactory ?? new DamageApplierFactory(targetFactoriesProvider.FilterFactory),
+                    damageApplierFactory ?? new DamageApplierFactory(),
                     soundFetcher,
                     spriteChooserFactory ??
                         new SpriteChooserFactory(

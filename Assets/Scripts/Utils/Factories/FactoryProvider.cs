@@ -53,7 +53,7 @@ namespace BattleCruisers.Utils.Factories
             MovementControllerFactory = new MovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostFactory = new BoostFactory();
-            DamageApplierFactory = new DamageApplierFactory(Targets.FilterFactory);
+            DamageApplierFactory = new DamageApplierFactory();
             SpriteChooserFactory
                 = new SpriteChooserFactory(
                     new AssignerFactory(),

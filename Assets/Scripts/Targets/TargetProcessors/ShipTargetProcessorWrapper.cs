@@ -23,7 +23,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             IRankedTargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets
-            ITargetFilter attackingTargetFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter attackingTargetFilter = TargetFilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             ITargetFinder attackingTargetFinder = new AttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
             ITargetRanker baseRanker = args.TargetFactories.RankerFactory.ShipTargetRanker;
             ITargetRanker attackingTargetRanker = args.TargetFactories.RankerFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);

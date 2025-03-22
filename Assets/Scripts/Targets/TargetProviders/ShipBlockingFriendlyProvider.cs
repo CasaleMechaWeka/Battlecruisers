@@ -30,10 +30,10 @@ namespace BattleCruisers.Targets.TargetProviders
         {
             Helper.AssertIsNotNull(targetsFactories, friendDetector, parentUnit);
 
-            _isInFrontFilter = targetsFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = TargetFilterFactory.CreateTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
-            ITargetFilter friendFilter = targetsFactories.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
+            ITargetFilter friendFilter = TargetFilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
             _friendFinder = new RangedTargetFinder(friendDetector, friendFilter);
 
             _friendFinder.TargetFound += OnFriendFound;

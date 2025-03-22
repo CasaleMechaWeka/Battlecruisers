@@ -5,6 +5,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -100,7 +101,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
         {
             _launchedNuke = Instantiate(nukeMissilePrefab);
 
-            ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
+            ITargetFilter targetFilter = TargetFilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
             _launchedNuke.Initialise(_commonStrings, _factoryProvider);
             _launchedNuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(

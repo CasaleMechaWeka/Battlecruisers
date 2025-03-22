@@ -13,7 +13,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             TargetDetectorController enemyDetector = GetComponentInChildren<TargetDetectorController>();
             Assert.IsNotNull(enemyDetector);
 
-            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = TargetFilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
     }

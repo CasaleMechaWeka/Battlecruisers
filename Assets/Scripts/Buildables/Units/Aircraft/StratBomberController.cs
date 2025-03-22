@@ -18,6 +18,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -99,7 +100,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _isAtCruisingHeight = false;
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            ITargetFilter targetFilter = TargetFilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();

@@ -301,26 +301,26 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
 
             // Filters
-            targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-            targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
-            targetFactoriesProvider.FilterFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
+            TargetFilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+            TargetFilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+            TargetFilterFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
 
             if (targetFilter != null)
             {
-                targetFactoriesProvider.FilterFactory.CreateTargetFilter(default, null).ReturnsForAnyArgs(targetFilter);
+                TargetFilterFactory.CreateTargetFilter(default, null).ReturnsForAnyArgs(targetFilter);
             }
             else
             {
-                SetupCreateTargetFilter(targetFactoriesProvider.FilterFactory);
+                SetupCreateTargetFilter();
             }
 
             return targetFactories;
         }
 
         // Copy real filter factory behaviour
-        private void SetupCreateTargetFilter(TargetFilterFactory filterFactory)
+        private void SetupCreateTargetFilter()
         {
-            filterFactory
+            TargetFilterFactory
                 .CreateTargetFilter(default, null)
                 .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
         }

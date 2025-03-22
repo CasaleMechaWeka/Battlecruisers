@@ -48,7 +48,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             enemyDetector.Initialise(args.MaxRangeInM);
 
             // Create target finder
-            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = TargetFilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
 

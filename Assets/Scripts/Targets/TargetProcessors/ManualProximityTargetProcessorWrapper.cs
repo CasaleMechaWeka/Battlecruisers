@@ -19,7 +19,7 @@ namespace BattleCruisers.Targets.TargetProcessors
                     args.ParentTarget.Transform,
                     args.MaxRangeInM,
                     args.TargetFactories.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = TargetFilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
         }
 

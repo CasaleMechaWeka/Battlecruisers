@@ -108,7 +108,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             IBarrelControllerArgs args = new BarrelControllerArgs(
                 updater,
-                _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
+                TargetFilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                 new LinearTargetPositionPredictor(),
                 new AngleCalculator(),
                 new AccuracyAdjuster((0, 0)),
@@ -149,7 +149,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 Transform, enemyFollowDetectionRangeInM, _targetFactories.RangeCalculatorProvider.BasicCalculator);
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             IList<TargetType> targetTypesToFollow = new List<TargetType>() { TargetType.Aircraft, TargetType.Ships };
-            ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
+            ITargetFilter targetFilter = TargetFilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
             _followableTargetFinder = new RangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);
 
             ITargetRanker followableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
@@ -158,7 +158,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _followableTargetProcessor.AddTargetConsumer(this);
 
             // Detect shootable enemies
-            _exactMatchTargetFilter = _targetFactories.FilterFactory.CreateMulitpleExactMatchTargetFilter();
+            _exactMatchTargetFilter = TargetFilterFactory.CreateMulitpleExactMatchTargetFilter();
             _followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 
             _shootableEnemeyDetectorProvider = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(

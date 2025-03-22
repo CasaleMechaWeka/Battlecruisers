@@ -30,7 +30,7 @@ namespace BattleCruisers.Cruisers
             ITargetFinder targetFinder
                 = new RangedTargetFinder(
                     targetDetectorController,
-                    targetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
+                    TargetFilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
 
             return targetTrackerFactory.CreateTargetTracker(targetFinder);
         }

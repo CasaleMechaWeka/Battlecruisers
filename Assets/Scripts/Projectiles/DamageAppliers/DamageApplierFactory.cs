@@ -2,20 +2,11 @@
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.DamageAppliers
 {
     public class DamageApplierFactory : IDamageApplierFactory
     {
-        private readonly TargetFilterFactory _filterFacotry;
-
-        public DamageApplierFactory(TargetFilterFactory filterFactory)
-        {
-            Assert.IsNotNull(filterFactory);
-            _filterFacotry = filterFactory;
-        }
-
         public IDamageStats CreateDamageStats(float damage, float damageRadiusInM)
         {
             return new DamageStats(damage, damageRadiusInM);
@@ -32,7 +23,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         /// </summary>
         public IDamageApplier CreateAreaOfDamageApplier(IDamageStats damageStats)
         {
-            ITargetFilter damageTargetFilter = _filterFacotry.CreateDummyTargetFilter(isMatchResult: true);
+            ITargetFilter damageTargetFilter = TargetFilterFactory.CreateDummyTargetFilter(isMatchResult: true);
             return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
 
@@ -42,7 +33,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         /// </summary>
         public IDamageApplier CreateFactionSpecificAreaOfDamageApplier(IDamageStats damageStats, Faction enemyFaction)
         {
-            ITargetFilter damageTargetFilter = _filterFacotry.CreateTargetFilter(enemyFaction);
+            ITargetFilter damageTargetFilter = TargetFilterFactory.CreateTargetFilter(enemyFaction);
             return new AreaOfEffectDamageApplier(damageStats, damageTargetFilter);
         }
     }

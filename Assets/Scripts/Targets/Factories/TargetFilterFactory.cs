@@ -5,24 +5,24 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetFilterFactory
+    public static class TargetFilterFactory
     {
-        public ITargetFilter CreateTargetFilter(Faction faction)
+        public static ITargetFilter CreateTargetFilter(Faction faction)
         {
             return new FactionTargetFilter(faction);
         }
 
-        public ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
+        public static ITargetFilter CreateTargetFilter(Faction faction, IList<TargetType> targetTypes)
         {
             return new FactionAndTargetTypeFilter(faction, targetTypes);
         }
 
-        public IExactMatchTargetFilter CreateExactMatchTargetFilter()
+        public static IExactMatchTargetFilter CreateExactMatchTargetFilter()
         {
             return new ExactMatchTargetFilter();
         }
 
-        public IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch)
+        public static IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch)
         {
             return new ExactMatchTargetFilter()
             {
@@ -30,17 +30,17 @@ namespace BattleCruisers.Targets.Factories
             };
         }
 
-        public IExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter()
+        public static IExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter()
         {
             return new MultipleExactMatchesTargetFilter();
         }
 
-        public ITargetFilter CreateDummyTargetFilter(bool isMatchResult)
+        public static ITargetFilter CreateDummyTargetFilter(bool isMatchResult)
         {
             return new DummyTargetFilter(isMatchResult);
         }
 
-        public ITargetFilter CreateTargetInFrontFilter(IUnit source)
+        public static ITargetFilter CreateTargetInFrontFilter(IUnit source)
         {
             return new TargetInFrontFilter(source);
         }

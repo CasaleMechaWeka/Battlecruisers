@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -40,7 +41,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             remainingPotentialDamage = parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER;
 
             List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
-            _targetFilter = factoryProvider.Targets.FilterFactory.CreateTargetFilter(_initialTarget.Faction, targetTypes);
+            _targetFilter = TargetFilterFactory.CreateTargetFilter(_initialTarget.Faction, targetTypes);
 
             kamikazeDamageStats
                 = factoryProvider.DamageApplierFactory.CreateDamageStats(
