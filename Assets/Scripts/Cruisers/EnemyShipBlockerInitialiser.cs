@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers
     {
         public ITargetTracker Initialise(
             TargetFactoriesProvider targetFactoriesProvider,
-            ITargetTrackerFactory targetTrackerFactory,
+            TargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)
         {
             Helper.AssertIsNotNull(targetFactoriesProvider, targetTrackerFactory);

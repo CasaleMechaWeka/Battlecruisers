@@ -175,7 +175,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders,
             ITurretStatsFactory turretStatsFactory,
             ITargetProcessorFactory targetProcessorFactory,
-            ITargetTrackerFactory targetTrackerFactory,
+            TargetTrackerFactory targetTrackerFactory,
             TargetDetectorFactory targetDetectorFactory,
             TargetProviderFactory targetProviderFactory,
             IDroneFeedbackFactory droneFeedbackFactory)

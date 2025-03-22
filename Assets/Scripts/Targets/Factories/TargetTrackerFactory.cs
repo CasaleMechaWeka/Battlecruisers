@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetTrackerFactory : ITargetTrackerFactory
+    public class TargetTrackerFactory
     {
         public IRankedTargetTracker UserChosenTargetTracker { get; }
 
