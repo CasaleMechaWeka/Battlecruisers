@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 throw new ArgumentException($"Prefab does not contain a component of type: {typeof(TPrefab)}.  Addressable key: {addressableKey}");
             }
-            return new PvPPrefabContainer<TPrefab>(handle, prefabObject);
+            return new PrefabContainer<TPrefab>(handle, prefabObject);
         }
     }
 }
