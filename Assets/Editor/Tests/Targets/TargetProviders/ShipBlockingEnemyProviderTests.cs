@@ -42,7 +42,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             new RangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
             targetFactories.RankerFactory.EqualTargetRanker.Returns(enemyRanker);
 
-            ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+            CruiserSpecificFactories cruiserSpecificFactories = Substitute.For<CruiserSpecificFactories>();
             cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
             cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
 

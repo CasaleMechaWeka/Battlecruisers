@@ -27,7 +27,7 @@ namespace BattleCruisers.Cruisers
         int NumOfDrones { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
         IFactoryProvider FactoryProvider { get; }
-        ICruiserSpecificFactories CruiserSpecificFactories { get; }
+        CruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
         CruiserDeathExplosion DeathPrefab { get; }
 

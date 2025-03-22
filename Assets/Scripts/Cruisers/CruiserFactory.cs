@@ -157,7 +157,7 @@ namespace BattleCruisers.Cruisers
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
             bool isPlayerCruiser)
         {
-            ICruiserSpecificFactories cruiserSpecificFactories
+            CruiserSpecificFactories cruiserSpecificFactories
                 = new CruiserSpecificFactories(
                     _factoryProvider,
                     cruiser,

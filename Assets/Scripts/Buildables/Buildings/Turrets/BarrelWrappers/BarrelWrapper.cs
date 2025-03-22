@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         private TargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
         protected IFactoryProvider _factoryProvider;
-        protected ICruiserSpecificFactories _cruiserSpecificFactories;
+        protected CruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
         private IBuildable _parent;
@@ -120,7 +120,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public void Initialise(
             IBuildable parent,
             IFactoryProvider factoryProvider,
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            CruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,

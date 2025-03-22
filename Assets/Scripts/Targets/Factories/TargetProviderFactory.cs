@@ -10,9 +10,9 @@ namespace BattleCruisers.Targets.Factories
     public class TargetProviderFactory
     {
         private readonly TargetFactoriesProvider _targetFactoriesProvider;
-        private readonly ICruiserSpecificFactories _cruiserSpecificFactories;
+        private readonly CruiserSpecificFactories _cruiserSpecificFactories;
 
-        public TargetProviderFactory(ICruiserSpecificFactories cruiserSpecificFactories, TargetFactoriesProvider targetFactoriesProvider)
+        public TargetProviderFactory(CruiserSpecificFactories cruiserSpecificFactories, TargetFactoriesProvider targetFactoriesProvider)
         {
             Helper.AssertIsNotNull(cruiserSpecificFactories, targetFactoriesProvider);
 

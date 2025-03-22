@@ -80,7 +80,7 @@ namespace BattleCruisers.Cruisers
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
         public IFactoryProvider FactoryProvider { get; private set; }
-        public ICruiserSpecificFactories CruiserSpecificFactories { get; private set; }
+        public CruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private FogOfWar _fog;
         public IGameObject Fog => _fog;
         public IRepairManager RepairManager { get; private set; }

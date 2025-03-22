@@ -9,7 +9,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public class TargetProcessorArgs : ITargetProcessorArgs
     {
-        public ICruiserSpecificFactories CruiserSpecificFactories { get; }
+        public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public TargetFactoriesProvider TargetFactories { get; }
         public Faction EnemyFaction { get; }
         public IList<TargetType> AttackCapabilities { get; }
@@ -18,7 +18,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         public ITarget ParentTarget { get; }
 
         public TargetProcessorArgs(
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            CruiserSpecificFactories cruiserSpecificFactories,
             TargetFactoriesProvider targetFactories,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,

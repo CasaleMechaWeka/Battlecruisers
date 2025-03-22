@@ -85,7 +85,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     sources);
         }
 
-        public override void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
+        public override void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, CruiserSpecificFactories cruiserSpecificFactories)
         {
             base.Activate(parentCruiser, enemyCruiser, cruiserSpecificFactories);
         }

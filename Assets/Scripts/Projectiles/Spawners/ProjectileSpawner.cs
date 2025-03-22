@@ -27,7 +27,7 @@ namespace BattleCruisers.Projectiles.Spawners
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
         protected IFactoryProvider _factoryProvider;
-        protected ICruiserSpecificFactories _cruiserSpecificFactories;
+        protected CruiserSpecificFactories _cruiserSpecificFactories;
         protected ICruiser _enemyCruiser;
 
         protected AudioClipWrapper _impactSound;

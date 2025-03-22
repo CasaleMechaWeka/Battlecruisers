@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
         public IFactoryProvider FactoryProvider { get; }
-        public ICruiserSpecificFactories CruiserSpecificFactories { get; }
+        public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction ParentCruiserFacingDirection { get; }
 
         public BuildableInitialisationArgs(
@@ -110,7 +110,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                         faction);
             }
 
-            CruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+            CruiserSpecificFactories = Substitute.For<CruiserSpecificFactories>();
             SetupCruiserSpecificFactories(
                 CruiserSpecificFactories,
                 aircraftProvider ?? helper.CreateAircraftProvider(),
@@ -170,7 +170,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         private void SetupCruiserSpecificFactories(
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            CruiserSpecificFactories cruiserSpecificFactories,
             IAircraftProvider aircraftProvider,
             IGlobalBoostProviders globalBoostProviders,
             ITurretStatsFactory turretStatsFactory,

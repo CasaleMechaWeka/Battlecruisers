@@ -40,7 +40,7 @@ namespace BattleCruisers.Targets.TargetProviders
         }
 
         public ShipBlockingEnemyProvider(
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            CruiserSpecificFactories cruiserSpecificFactories,
             TargetFactoriesProvider targetsFactories,
             ITargetDetector enemyDetector,
             IUnit parentUnit)

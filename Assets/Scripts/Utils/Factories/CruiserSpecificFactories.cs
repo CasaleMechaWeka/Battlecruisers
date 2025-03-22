@@ -11,7 +11,7 @@ using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Utils.Factories
 {
-    public class CruiserSpecificFactories : ICruiserSpecificFactories
+    public class CruiserSpecificFactories
     {
         public IAircraftProvider AircraftProvider { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }

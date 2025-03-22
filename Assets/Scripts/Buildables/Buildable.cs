@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables
         protected IMovementControllerFactory _movementControllerFactory;
         protected IAircraftProvider _aircraftProvider;
         protected IFactoryProvider _factoryProvider;
-        protected ICruiserSpecificFactories _cruiserSpecificFactories;
+        protected CruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
         protected IBoostableGroup _healthBoostableGroup;
@@ -268,7 +268,7 @@ namespace BattleCruisers.Buildables
             _parent.SetActive(false);
         }
 
-        public virtual void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
+        public virtual void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, CruiserSpecificFactories cruiserSpecificFactories)
         {
             _parent.SetActive(true);
             ParentCruiser = parentCruiser;

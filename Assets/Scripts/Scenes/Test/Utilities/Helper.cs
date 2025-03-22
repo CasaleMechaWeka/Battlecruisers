@@ -416,7 +416,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             FacingMinRangePositionValidator targetPositionValidator = null,
             AngleLimiter angleLimiter = null,
             IFactoryProvider factoryProvider = null,
-            ICruiserSpecificFactories cruiserSpecificFactories = null,
+            CruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
             ICruiser enemyCruiser = null,
             ISoundKey firingSound = null,
@@ -494,7 +494,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public void SetupCruiser(Cruiser cruiser)
         {
-            ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+            CruiserSpecificFactories cruiserSpecificFactories = Substitute.For<CruiserSpecificFactories>();
             GlobalBoostProviders globalBoostProviders = new GlobalBoostProviders();
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
             TurretStatsFactory turretStatsFactory
