@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
     public class SpriteChooserTests
     {
         private ISpriteChooser _chooser;
-        private IAssigner _assigner;
+        private LinearProportionAssigner _assigner;
         private IList<Sprite> _sprites;
         private Sprite _sprite;
         private IVelocityProvider _maxVelocityProvider;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         [SetUp]
         public void SetuUp()
         {
-            _assigner = Substitute.For<IAssigner>();
+            _assigner = Substitute.For<LinearProportionAssigner>();
 
             _sprite = Substitute.For<Sprite>();
             _sprites = new List<Sprite>()

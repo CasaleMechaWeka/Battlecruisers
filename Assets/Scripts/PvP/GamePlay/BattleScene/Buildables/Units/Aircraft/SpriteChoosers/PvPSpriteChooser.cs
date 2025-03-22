@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSpriteChooser : IPvPSpriteChooser
     {
-        private readonly IAssigner _assigner;
+        private readonly LinearProportionAssigner _assigner;
         private readonly IList<Sprite> _sprites;
         private readonly IVelocityProvider _maxVelocityProvider;
 

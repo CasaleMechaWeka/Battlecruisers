@@ -2,11 +2,11 @@
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
-    public class LinearProportionAssigner : IAssigner
+    public class LinearProportionAssigner
     {
         private readonly int _numOfOptions;
 
-		private const int MIN_NUM_OF_OPTIONS = 1;
+        private const int MIN_NUM_OF_OPTIONS = 1;
         private const int MIN_PROPORTION = 0;
         private const int MAX_PROPORTION = 1;
 
