@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions;
-using UnityEngine;
 
 namespace BattleCruisers.Targets.Helpers
 {
@@ -8,7 +7,7 @@ namespace BattleCruisers.Targets.Helpers
     {
         public bool IsInRange(ITransform parentTransform, ITarget target, float rangeInM)
         {
-            return Vector2.Distance(target.Transform.Position, parentTransform.Position) <= rangeInM;
+            return (target.Transform.Position - parentTransform.Position).sqrMagnitude <= rangeInM * rangeInM;
         }
     }
 }
