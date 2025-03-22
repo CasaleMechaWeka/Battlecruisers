@@ -35,7 +35,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         HideIAPButton();
 
-        _advertisingTable = await LocTableFactory.LoadTableAsync(TableName.ADVERTISING);
+        _advertisingTable = await LocTableFactory.LoadAdvertisingTableAsync();
 
         _soundPlayer
                 = new SingleSoundPlayer(

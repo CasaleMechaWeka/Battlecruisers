@@ -159,8 +159,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Connection_Quality = ConnectionQuality.HIGH;
             LoadingBarParent.SetActive(false);
             _sceneNavigator = LandingSceneGod.SceneNavigator;
-            _commonStrings = await LocTableFactory.LoadTableAsync(TableName.COMMON);
-            screensSceneStrings = await LocTableFactory.LoadTableAsync(TableName.SCREENS_SCENE);
+            _commonStrings = await LocTableFactory.LoadCommonTableAsync();
+            screensSceneStrings = await LocTableFactory.LoadScreensSceneTableAsync();
             dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             sprites.Add("BlackRig", BlackRig);
             sprites.Add("Bullshark", Bullshark);

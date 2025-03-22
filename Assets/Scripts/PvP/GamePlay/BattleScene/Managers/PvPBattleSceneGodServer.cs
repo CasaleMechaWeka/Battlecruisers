@@ -158,8 +158,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
 
-            ILocTable commonStrings = await LocTableFactory.LoadTableAsync(TableName.COMMON);
-            ILocTable storyStrings = await LocTableFactory.LoadTableAsync(TableName.STORY);
+            ILocTable commonStrings = await LocTableFactory.LoadCommonTableAsync();
+            ILocTable storyStrings = await LocTableFactory.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
