@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
     {
         private IApplicationModel _appModel;
         private IPrefabFactory _prefabFactory;
-        private ISpriteFetcher _spriteFetcher;
+        private SpriteFetcher _spriteFetcher;
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
         private ILocTable _commonStrings;
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ISingleSoundPlayer soundPlayer,
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
-            ISpriteFetcher spriteFetcher,
+            SpriteFetcher spriteFetcher,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
             IMusicPlayer musicPlayer,

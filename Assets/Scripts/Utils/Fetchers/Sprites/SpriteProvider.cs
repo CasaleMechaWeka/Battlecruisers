@@ -9,11 +9,11 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public class SpriteProvider : ISpriteProvider
     {
-        private readonly ISpriteFetcher _spriteFetcher;
+        private readonly SpriteFetcher _spriteFetcher;
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";
 
-        public SpriteProvider(ISpriteFetcher spriteFetcher)
+        public SpriteProvider(SpriteFetcher spriteFetcher)
         {
             Assert.IsNotNull(spriteFetcher);
             _spriteFetcher = spriteFetcher;

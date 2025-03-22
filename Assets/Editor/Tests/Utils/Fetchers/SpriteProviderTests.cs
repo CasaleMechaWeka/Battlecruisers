@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
     public class SpriteProviderTests
     {
         private ISpriteProvider _provider;
-        private ISpriteFetcher _fetcher;
+        private SpriteFetcher _fetcher;
         private IList<Sprite> _bomberSprites, _fighterSprites;
 
         private const int NUM_OF_BOMBER_SPRITES = 8;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
         [SetUp]
         public void SetuUp()
         {
-            _fetcher = Substitute.For<ISpriteFetcher>();
+            _fetcher = Substitute.For<SpriteFetcher>();
             _provider = new SpriteProvider(_fetcher);
 
             _bomberSprites = CreateSprites(NUM_OF_BOMBER_SPRITES);

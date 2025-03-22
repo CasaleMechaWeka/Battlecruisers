@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
-    public class SpriteFetcher : ISpriteFetcher
+    public class SpriteFetcher
     {
         public async Task<Sprite> GetSpriteAsync(string spritePath)
         {

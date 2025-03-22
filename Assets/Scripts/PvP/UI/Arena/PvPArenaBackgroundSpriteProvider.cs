@@ -9,7 +9,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public class PvPArenaBackgroundSpriteProvider : IPvPArenaBackgroundSpriteProvider
     {
-        private readonly ISpriteFetcher _spriteFetcher;
+        private readonly SpriteFetcher _spriteFetcher;
         private const string SPRITES_PATH = "Assets/Resources_moved/Sprites/Skies/Backgrounds/";
         private const string PRACTICEWRECKYARDS_SPRITE = "PvPBackgroundWreckyards.png";
         private const string OZPENITENTIARY_SPRITE = "PvPBackgroundOz.png";
@@ -22,7 +22,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         private const string MERCENARY_SPRITE = "PvPBackgroundMercenaryOne.png";
 
 
-        public PvPArenaBackgroundSpriteProvider(ISpriteFetcher spriteFetcher)
+        public PvPArenaBackgroundSpriteProvider(SpriteFetcher spriteFetcher)
         {
             Assert.IsNotNull(spriteFetcher);
             _spriteFetcher = spriteFetcher;
