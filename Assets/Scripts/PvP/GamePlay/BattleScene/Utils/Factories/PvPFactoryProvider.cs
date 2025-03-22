@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
@@ -63,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DamageApplierFactory = new PvPDamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
                 = new PvPSpriteChooserFactory(
-                    new PvPAssignerFactory(),
+                    new AssignerFactory(),
                     spriteProvider);
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();

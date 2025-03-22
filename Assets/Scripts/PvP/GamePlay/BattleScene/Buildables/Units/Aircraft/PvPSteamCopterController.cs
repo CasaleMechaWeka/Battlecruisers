@@ -24,7 +24,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.Factories;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -120,7 +120,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     allSpriteWrappers.Add(sprite);
                 }
                 //create Sprite Chooser
-                _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+                _spriteChooser = new PvPSpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
                 _barrelWrapper.ApplyVariantStats(this);
                 OnBuildableCompletedClientRpc();
             }
@@ -132,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 {
                     allSpriteWrappers.Add(sprite);
                 }
-                _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+                _spriteChooser = new PvPSpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
                 _barrelWrapper.ApplyVariantStats(this);
             }
         }
