@@ -5,7 +5,7 @@ namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
 {
     public class ShipTargetRankerWrapper : MonoBehaviour, ITargetRankerWrapper
     {
-        public ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
+        public ITargetRanker CreateTargetRanker(TargetRankerFactory rankerFactory)
         {
             return rankerFactory.ShipTargetRanker;
         }

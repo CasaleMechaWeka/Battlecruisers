@@ -2,14 +2,14 @@
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetRankerFactory : ITargetRankerFactory
+    public class TargetRankerFactory
     {
         public TargetRankerFactory()
-		{
+        {
             EqualTargetRanker = new EqualTargetRanker();
             ShipTargetRanker = new ShipTargetRanker();
             OffensiveBuildableTargetRanker = new OffensiveBuildableTargetRanker();
-		}
+        }
 
         public ITargetRanker EqualTargetRanker { get; }
         public ITargetRanker ShipTargetRanker { get; }

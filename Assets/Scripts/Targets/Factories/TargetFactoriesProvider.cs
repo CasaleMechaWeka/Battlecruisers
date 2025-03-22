@@ -3,7 +3,7 @@
     public class TargetFactoriesProvider
     {
         public TargetFilterFactory FilterFactory { get; }
-        public ITargetRankerFactory RankerFactory { get; }
+        public TargetRankerFactory RankerFactory { get; }
         public RangeCalculatorProvider RangeCalculatorProvider { get; }
 
         public TargetFactoriesProvider()
