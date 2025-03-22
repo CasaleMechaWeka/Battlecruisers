@@ -8,16 +8,14 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     public class SoundPlayerFactory : ISoundPlayerFactory
     {
-        private readonly SoundFetcher _soundFetcher;
         private readonly IDeferrer _deferrer;
 
         public IProjectileSpawnerSoundPlayer DummyPlayer { get; }
 
-        public SoundPlayerFactory(SoundFetcher soundFetcher, IDeferrer deferrer)
+        public SoundPlayerFactory(IDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(soundFetcher, deferrer);
+            Helper.AssertIsNotNull(deferrer);
 
-            _soundFetcher = soundFetcher;
             _deferrer = deferrer;
 
             DummyPlayer = new DummyProjectileSpawnerSoundPlayer();
@@ -25,13 +23,13 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 
         public async Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource)
         {
-            AudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
+            AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(firingSound);
             return new ShortSoundPlayer(sound, audioSource);
         }
 
         public async Task<IProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS)
         {
-            AudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
+            AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(firingSound);
             return new LongSoundPlayer(sound, audioSource, _deferrer, burstSize, burstEndDelayInS);
         }
     }

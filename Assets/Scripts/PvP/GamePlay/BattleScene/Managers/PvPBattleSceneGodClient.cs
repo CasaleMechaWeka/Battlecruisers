@@ -466,7 +466,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             // Audio
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new PvPCruiserDamageMonitor(playerCruiser);

@@ -323,12 +323,10 @@ namespace BattleCruisers.Scenes.BattleScene
             ILayeredMusicPlayer layeredMusicPlayer;
             if (applicationModel.Mode == GameMode.SideQuest)
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
                     currentSideQuest.MusicBackgroundKey,
                     dataProvider.SettingsManager);
             else
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new CruiserDamageMonitor(playerCruiser);

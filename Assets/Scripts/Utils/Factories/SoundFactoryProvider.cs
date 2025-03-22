@@ -7,7 +7,6 @@ namespace BattleCruisers.Utils.Factories
 {
     public class SoundFactoryProvider : ISoundFactoryProvider
     {
-        public SoundFetcher SoundFetcher { get; }
         public ISoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
@@ -18,16 +17,14 @@ namespace BattleCruisers.Utils.Factories
         {
             Helper.AssertIsNotNull(components, poolProviders);
 
-            SoundFetcher = new SoundFetcher();
-            SoundPlayer = new SoundPlayer(SoundFetcher, poolProviders.AudioSourcePool);
-            UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
-            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
+            SoundPlayer = new SoundPlayer(poolProviders.AudioSourcePool);
+            UISoundPlayer = new SingleSoundPlayer(components.UISoundsAudioSource);
+            SoundPlayerFactory = new SoundPlayerFactory(components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();
 
             PrioritisedSoundPlayer
                 = new PrioritisedSoundPlayer(
                     new SingleSoundPlayer(
-                        SoundFetcher,
                         components.PrioritisedSoundPlayerAudioSource));
         }
     }

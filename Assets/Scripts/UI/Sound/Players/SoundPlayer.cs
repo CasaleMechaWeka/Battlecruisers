@@ -11,14 +11,12 @@ namespace BattleCruisers.UI.Sound.Players
 {
     public class SoundPlayer : ISoundPlayer
     {
-        private readonly SoundFetcher _soundFetcher;
         private readonly IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
 
-        public SoundPlayer(SoundFetcher soundFetcher, IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourcePool)
+        public SoundPlayer(IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourcePool)
         {
-            Helper.AssertIsNotNull(soundFetcher, audioSourcePool);
+            Helper.AssertIsNotNull(audioSourcePool);
 
-            _soundFetcher = soundFetcher;
             _audioSourcePool = audioSourcePool;
             _audioSourcePool.SetMaxLimit(10);
         }
@@ -26,7 +24,7 @@ namespace BattleCruisers.UI.Sound.Players
         public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
-            AudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
+            AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(soundKey);
             PlaySound(sound, position);
         }
 

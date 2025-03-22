@@ -11,7 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPSoundFactoryProvider : ISoundFactoryProvider
     {
-        public SoundFetcher SoundFetcher { get; }
         public ISoundPlayer SoundPlayer { get; set; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
@@ -27,27 +26,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPHelper.AssertIsNotNull(components /*, poolProviders*/);
             IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
-            SoundFetcher = new SoundFetcher();
             /*            _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
                         SoundFetcher = new PvPSoundFetcher();
                         SoundPlayer = new PvPSoundPlayer(SoundFetcher , _audioSourcePool*//*, poolProviders.AudioSourcePool*//*);*/
 
             LoadAudioSourcePool();
-            UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
-            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
+            UISoundPlayer = new SingleSoundPlayer(components.UISoundsAudioSource);
+            SoundPlayerFactory = new SoundPlayerFactory(components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();
 
             PrioritisedSoundPlayer
                 = new PrioritisedSoundPlayer(
                     new SingleSoundPlayer(
-                        SoundFetcher,
                         components.PrioritisedSoundPlayerAudioSource));
         }
 
         private void LoadAudioSourcePool()
         {
             _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
-            SoundPlayer = new SoundPlayer(SoundFetcher, _audioSourcePool/*, poolProviders.AudioSourcePool*/);
+            SoundPlayer = new SoundPlayer(_audioSourcePool/*, poolProviders.AudioSourcePool*/);
         }
     }
 }

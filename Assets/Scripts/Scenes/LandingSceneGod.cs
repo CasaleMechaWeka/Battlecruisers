@@ -5,7 +5,6 @@ using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
@@ -163,7 +162,6 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = DisconnectedState;
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
 
-            SoundFetcher soundFetcher = new SoundFetcher();
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource
@@ -171,10 +169,7 @@ namespace BattleCruisers.Scenes
                     new AudioSourceBC(platformAudioSource),
                     applicationModel.DataProvider.SettingsManager);
 
-            soundPlayer = new SingleSoundPlayer(
-                new SoundFetcher(),
-                audioSource
-                );
+            soundPlayer = new SingleSoundPlayer(audioSource);
 
             try
             {
@@ -747,9 +742,7 @@ namespace BattleCruisers.Scenes
 
             return
                 new MusicPlayer(
-                    new SingleSoundPlayer(
-                        new SoundFetcher(),
-                        audioSource));
+                    new SingleSoundPlayer(audioSource));
         }
 
         public void GoToScene(string sceneName, bool stopMusic)

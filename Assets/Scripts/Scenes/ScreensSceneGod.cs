@@ -283,7 +283,6 @@ namespace BattleCruisers.Scenes
             _uiAudioSource = GetComponent<AudioSource>();
             _soundPlayer
                 = new SingleSoundPlayer(
-                    new SoundFetcher(),
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));

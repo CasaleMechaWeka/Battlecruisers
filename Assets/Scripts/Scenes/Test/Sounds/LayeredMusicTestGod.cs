@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Music;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Sounds
@@ -15,7 +14,6 @@ namespace BattleCruisers.Scenes.Test.Sounds
             LayeredMusicPlayerInitialiser initialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             _musicPlayer
                 = await initialiser.CreatePlayerAsync(
-                    new SoundFetcher(),
                     //SoundKeys.Music.Background.Sleeper
                     //SoundKeys.Music.Background.Nothing
                     //SoundKeys.Music.Background.Experimental

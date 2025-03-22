@@ -117,7 +117,6 @@ namespace BattleCruisers.Scenes
             _musicPlayer = LandingSceneGod.MusicPlayer;
             _soundPlayer
                 = new SingleSoundPlayer(
-                    new SoundFetcher(),
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));

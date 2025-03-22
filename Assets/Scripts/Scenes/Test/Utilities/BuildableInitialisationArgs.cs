@@ -52,7 +52,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            SoundFetcher soundFetcher = null,
             SpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
             IDeferrer realTimeDeferrer = null,
@@ -70,7 +69,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
             TargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
-            soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
             realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
@@ -79,14 +77,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 = CreateFactoryProvider(
                     helper.PrefabFactory,
                     movementControllerFactory ?? new MovementControllerFactory(),
-                    aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     damageApplierFactory ?? new DamageApplierFactory(),
-                    soundFetcher,
                     spriteChooserFactory ??
-                        new SpriteChooserFactory(),
-                    new SoundPlayerFactory(soundFetcher, deferrer),
-                    new TurretStatsFactory(globalBoostProviders),
+                    new SpriteChooserFactory(),
+                    new SoundPlayerFactory(deferrer),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
                     targetFactoriesProvider,
                     new SpawnDeciderFactory(),
@@ -119,13 +114,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private FactoryProvider CreateFactoryProvider(
             PrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
-            IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
             IDamageApplierFactory damageApplierFactory,
-            SoundFetcher soundFetcher,
             SpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
-            ITurretStatsFactory turretStatsFactory,
             DeferrerProvider deferrerProvider,
             TargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
@@ -151,8 +143,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             // Sound
             ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
-            soundFactoryProvider.SoundFetcher.Returns(soundFetcher);
-            ISoundPlayer soundPlayer = new SoundPlayer(soundFetcher, poolProviders.AudioSourcePool);
+            ISoundPlayer soundPlayer = new SoundPlayer(poolProviders.AudioSourcePool);
             soundFactoryProvider.SoundPlayer.Returns(soundPlayer);
             soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
             factoryProvider.Sound.Returns(soundFactoryProvider);

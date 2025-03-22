@@ -2,7 +2,6 @@ using BattleCruisers.Data;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -40,7 +39,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         _soundPlayer
                 = new SingleSoundPlayer(
-                    new SoundFetcher(),
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
@@ -101,7 +99,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 #if UNITY_STANDALONE || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
         gameObject.SetActive(false);
 
-/*#elif UNITY_ANDROID && FREE_EDITION*/
+        /*#elif UNITY_ANDROID && FREE_EDITION*/
 #elif UNITY_ANDROID
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
@@ -128,7 +126,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     void Update()
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-       
+
 
         if (IAPManager.instance != null)
         {

@@ -44,6 +44,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -221,7 +222,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 
             ISoundKey selectedSoundKey = IsPlayerCruiser ? SoundKeys.UI.Selected.FriendlyCruiser : SoundKeys.UI.Selected.EnemyCruiser;
-            _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
+            _selectedSound = await SoundFetcher.GetSoundAsync(selectedSoundKey);
             if (IsClient && IsOwner)
             {
                 BuildingMonitor = new PvPCruiserBuildingMonitor(this);
