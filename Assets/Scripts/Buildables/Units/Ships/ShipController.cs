@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Movement.Deciders;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
@@ -198,7 +197,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
                     EnemyCruiser.BlockedShipsTracker,
-                    TargetHelperFactory.CreateShipRangeHelper(this));
+                    new ShipRangeHelper(this));
         }
 
         public void StartMoving()
