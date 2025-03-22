@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         void StaticInitialise();
         void Initialise(
             IBuildable parent,
-            IFactoryProvider factoryProvider,
+            FactoryProvider factoryProvider,
             CruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,

@@ -415,7 +415,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IRotationMovementController rotationMovementController = null,
             FacingMinRangePositionValidator targetPositionValidator = null,
             AngleLimiter angleLimiter = null,
-            IFactoryProvider factoryProvider = null,
+            FactoryProvider factoryProvider = null,
             CruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
             ICruiser enemyCruiser = null,

@@ -13,7 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class DeathstarController : SatelliteController
+	public class DeathstarController : SatelliteController
 	{
 		private IBarrelWrapper _barrelWrapper;
 
@@ -23,27 +23,27 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private const float RIGHT_WING_TARGET_ANGLE_IN_DEGREES = 90;
 		private const float WING_ROTATE_SPEED_IN_M_DEGREES_S = 45;
 
-        public override TargetType TargetType => TargetType.Satellite;
+		public override TargetType TargetType => TargetType.Satellite;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+		public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
 		{
-            base.StaticInitialise(parent, healthBar, commonStrings);
+			base.StaticInitialise(parent, healthBar, commonStrings);
 
-            Helper.AssertIsNotNull(leftWing, rightWing);
+			Helper.AssertIsNotNull(leftWing, rightWing);
 
-            _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
-            Assert.IsNotNull(_barrelWrapper);
-            _barrelWrapper.StaticInitialise();
-            AddDamageStats(_barrelWrapper.DamageCapability);
+			_barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
+			Assert.IsNotNull(_barrelWrapper);
+			_barrelWrapper.StaticInitialise();
+			AddDamageStats(_barrelWrapper.DamageCapability);
 		}
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
-        {
-            base.Initialise(uiManager, factoryProvider);
+		public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+		{
+			base.Initialise(uiManager, factoryProvider);
 
-            leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
+			leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
 			rightWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
-        }
+		}
 
 		protected override void OnBuildableCompleted()
 		{
@@ -51,31 +51,31 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
-            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
+			_barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
 			IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 
-            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count)
-            {
-                new PatrolPoint(patrolPositions[0], removeOnceReached: true, actionOnReached: OnClearingLaunchStation),
-                new PatrolPoint(patrolPositions[1], removeOnceReached: true)
-            };
+			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count)
+			{
+				new PatrolPoint(patrolPositions[0], removeOnceReached: true, actionOnReached: OnClearingLaunchStation),
+				new PatrolPoint(patrolPositions[1], removeOnceReached: true)
+			};
 
-            for (int i = 2; i < patrolPositions.Count; ++i)
-            {
+			for (int i = 2; i < patrolPositions.Count; ++i)
+			{
 				patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
-            }
+			}
 
 			return patrolPoints;
 		}
 
 		private void OnClearingLaunchStation()
 		{
-            // Stop moving
-            ActiveMovementController = DummyMovementController;
+			// Stop moving
+			ActiveMovementController = DummyMovementController;
 
 			UnfoldWings();
 		}
@@ -92,19 +92,19 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			leftWing.ReachedDesiredAngle -= Wing_ReachedDesiredAngle;
 
-            ActiveMovementController = PatrollingMovementController;
+			ActiveMovementController = PatrollingMovementController;
 		}
 
-        protected override void OnDirectionChange()
-        {
-            // Do not switch direction, as this flips the invisible turret barrel 
-            // angle and means the laser doesn't work as well as it should :P
-        }
+		protected override void OnDirectionChange()
+		{
+			// Do not switch direction, as this flips the invisible turret barrel 
+			// angle and means the laser doesn't work as well as it should :P
+		}
 
-        protected override void OnDestroyed()
+		protected override void OnDestroyed()
 		{
 			base.OnDestroyed();
-            _barrelWrapper.DisposeManagedState();
+			_barrelWrapper.DisposeManagedState();
 		}
 	}
 }

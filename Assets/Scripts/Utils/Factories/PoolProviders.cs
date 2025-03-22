@@ -37,7 +37,7 @@ namespace BattleCruisers.Utils.Factories
         private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
         public PoolProviders(
-            IFactoryProvider factoryProvider,
+            FactoryProvider factoryProvider,
             IUIManager uiManager,
             IDroneFactory droneFactory)
         {

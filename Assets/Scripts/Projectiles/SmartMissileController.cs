@@ -83,7 +83,7 @@ namespace BattleCruisers.Projectiles
             }
         }
 
-        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public override void Initialise(ILocTable commonStrings, FactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
 

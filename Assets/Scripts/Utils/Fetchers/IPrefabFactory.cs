@@ -21,10 +21,10 @@ namespace BattleCruisers.Utils.Fetchers
     public interface IPrefabFactory
     {
         IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey);
-        IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab, IUIManager uiManager, IFactoryProvider factoryProvider);
+        IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab, IUIManager uiManager, FactoryProvider factoryProvider);
 
         IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey);
-        IUnit CreateUnit(IBuildableWrapper<IUnit> unitWrapperPrefab, IUIManager uiManager, IFactoryProvider factoryProvider);
+        IUnit CreateUnit(IBuildableWrapper<IUnit> unitWrapperPrefab, IUIManager uiManager, FactoryProvider factoryProvider);
 
         Cruiser GetCruiserPrefab(IPrefabKey hullKey);
         Cruiser CreateCruiser(Cruiser cruiserPrefab);
@@ -35,7 +35,7 @@ namespace BattleCruisers.Utils.Fetchers
         IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey);
         IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey);
 
-        TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+        TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, FactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats;

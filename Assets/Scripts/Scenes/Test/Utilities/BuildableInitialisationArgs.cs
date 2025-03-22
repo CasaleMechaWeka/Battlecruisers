@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public IUIManager UiManager { get; }
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
-        public IFactoryProvider FactoryProvider { get; }
+        public FactoryProvider FactoryProvider { get; }
         public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction ParentCruiserFacingDirection { get; }
 
@@ -123,7 +123,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 droneFeedbackFactory);
         }
 
-        private IFactoryProvider CreateFactoryProvider(
+        private FactoryProvider CreateFactoryProvider(
             IPrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
             IAircraftProvider aircraftProvider,
@@ -140,7 +140,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUpdaterProvider updaterProvider,
             IUIManager uiManager)
         {
-            IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
+            FactoryProvider factoryProvider = Substitute.For<FactoryProvider>();
 
             factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
@@ -190,7 +190,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.DroneFeedbackFactory.Returns(droneFeedbackFactory);
         }
 
-        private static IPoolProviders GetPoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager)
+        private static IPoolProviders GetPoolProviders(FactoryProvider factoryProvider, IUIManager uiManager)
         {
             if (_poolProviders == null)
             {

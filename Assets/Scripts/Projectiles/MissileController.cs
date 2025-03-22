@@ -32,7 +32,7 @@ namespace BattleCruisers.Projectiles
 
         private TargetProviderActivationArgs<IProjectileStats> _activationArgs;
 
-        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public override void Initialise(ILocTable commonStrings, FactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
 

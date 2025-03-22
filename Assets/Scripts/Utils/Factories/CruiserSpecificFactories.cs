@@ -21,7 +21,7 @@ namespace BattleCruisers.Utils.Factories
         public CruiserTargetFactoriesProvider Targets { get; }
 
         public CruiserSpecificFactories(
-            IFactoryProvider factoryProvider,
+            FactoryProvider factoryProvider,
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker,

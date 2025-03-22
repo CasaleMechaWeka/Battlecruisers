@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
         public float boostMultiplier;
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 

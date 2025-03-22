@@ -29,7 +29,7 @@ namespace BattleCruisers.Projectiles
 
         protected virtual float TrailLifetimeInS { get => 10; }
 
-        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public override void Initialise(ILocTable commonStrings, FactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
 

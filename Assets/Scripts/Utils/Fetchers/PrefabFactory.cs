@@ -47,7 +47,7 @@ namespace BattleCruisers.Utils.Fetchers
         public IBuilding CreateBuilding(
             IBuildableWrapper<IBuilding> buildingWrapperPrefab,
             IUIManager uiManager,
-            IFactoryProvider factoryProvider)
+            FactoryProvider factoryProvider)
         {
             return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager, factoryProvider);
         }
@@ -60,7 +60,7 @@ namespace BattleCruisers.Utils.Fetchers
         public IUnit CreateUnit(
             IBuildableWrapper<IUnit> unitWrapperPrefab,
             IUIManager uiManager,
-            IFactoryProvider factoryProvider)
+            FactoryProvider factoryProvider)
         {
             return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager, factoryProvider);
         }
@@ -68,7 +68,7 @@ namespace BattleCruisers.Utils.Fetchers
         private TBuildable CreateBuildable<TBuildable>(
             BuildableWrapper<TBuildable> buildableWrapperPrefab,
             IUIManager uiManager,
-            IFactoryProvider factoryProvider) where TBuildable : class, IBuildable
+            FactoryProvider factoryProvider) where TBuildable : class, IBuildable
         {
             Helper.AssertIsNotNull(buildableWrapperPrefab, uiManager, factoryProvider);
 
@@ -107,7 +107,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newShipDeath.CreateShipDeath();
         }
 
-        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, FactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats

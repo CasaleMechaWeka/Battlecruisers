@@ -49,7 +49,7 @@ namespace BattleCruisers.Buildables
         protected TargetFactoriesProvider _targetFactories;
         protected IMovementControllerFactory _movementControllerFactory;
         protected IAircraftProvider _aircraftProvider;
-        protected IFactoryProvider _factoryProvider;
+        protected FactoryProvider _factoryProvider;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
@@ -243,7 +243,7 @@ namespace BattleCruisers.Buildables
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        public virtual void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public virtual void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             Logging.Log(Tags.BUILDABLE, this);
 

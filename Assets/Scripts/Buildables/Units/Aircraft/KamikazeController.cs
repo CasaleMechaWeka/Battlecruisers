@@ -25,10 +25,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1;
         private IDamageStats kamikazeDamageStats;
-        private IFactoryProvider _factoryProvider;
+        private FactoryProvider _factoryProvider;
         private float remainingPotentialDamage;
 
-        public void Initialise(IUnit parentAircraft, IFactoryProvider factoryProvider, ITarget target)
+        public void Initialise(IUnit parentAircraft, FactoryProvider factoryProvider, ITarget target)
         {
             Helper.AssertIsNotNull(parentAircraft, factoryProvider);
 

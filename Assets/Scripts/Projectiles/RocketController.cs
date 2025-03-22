@@ -19,15 +19,15 @@ namespace BattleCruisers.Projectiles
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
     public class RocketController :
-        ProjectileWithTrail<TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>, 
+        ProjectileWithTrail<TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>,
         ITargetProvider
-	{
+    {
         private RocketTarget _rocketTarget;
         public GameObject rocketSprite; //for making more complicated rocket sprites disappear on detonation
 
-		public ITarget Target { get; private set; }
+        public ITarget Target { get; private set; }
 
-        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public override void Initialise(ILocTable commonStrings, FactoryProvider factoryProvider)
         {
             base.Initialise(commonStrings, factoryProvider);
 

@@ -32,7 +32,7 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         public IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
 
-        public ProjectilePoolProvider(IFactoryProvider factoryProvider)
+        public ProjectilePoolProvider(FactoryProvider factoryProvider)
         {
             Assert.IsNotNull(factoryProvider);
 
@@ -153,7 +153,7 @@ namespace BattleCruisers.Projectiles.Pools
 
         }
 
-        private IPool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(IFactoryProvider factoryProvider, ProjectileKey projectileKey, int initialCapacity)
+        private IPool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(FactoryProvider factoryProvider, ProjectileKey projectileKey, int initialCapacity)
             where TArgs : ProjectileActivationArgs<TStats>
             where TProjectile : ProjectileControllerBase<TArgs, TStats>
             where TStats : IProjectileStats

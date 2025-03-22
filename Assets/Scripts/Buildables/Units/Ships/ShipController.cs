@@ -113,7 +113,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     .ToList();
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 

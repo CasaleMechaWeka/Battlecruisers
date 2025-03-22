@@ -17,7 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
-    public class FactoryProvider : IFactoryProvider
+    public class FactoryProvider
     {
         private readonly IBattleSceneGodComponents _components;
 

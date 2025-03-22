@@ -85,7 +85,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));*/
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);

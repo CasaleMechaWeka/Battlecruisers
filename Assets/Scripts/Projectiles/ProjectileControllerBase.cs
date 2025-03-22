@@ -33,7 +33,7 @@ namespace BattleCruisers.Projectiles
         private IPool<IPoolable<Vector3>, Vector3> _explosionPool;
 
         private bool _isActiveAndAlive;
-        protected IFactoryProvider _factoryProvider;
+        protected FactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -72,7 +72,7 @@ namespace BattleCruisers.Projectiles
 
         public Vector3 Position => transform.position;
 
-        public virtual void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public virtual void Initialise(ILocTable commonStrings, FactoryProvider factoryProvider)
         {
             Logging.LogMethod(Tags.SHELLS);
             Helper.AssertIsNotNull(commonStrings, factoryProvider);

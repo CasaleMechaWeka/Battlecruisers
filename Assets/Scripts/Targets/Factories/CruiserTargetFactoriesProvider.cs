@@ -13,7 +13,7 @@ namespace BattleCruisers.Targets.Factories
         public TargetProviderFactory ProviderFactory { get; }
 
         public CruiserTargetFactoriesProvider(
-            IFactoryProvider factoryProvider,
+            FactoryProvider factoryProvider,
             CruiserSpecificFactories cruiserSpecificFactories,
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
