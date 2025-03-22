@@ -7,7 +7,7 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetProviderFactory : ITargetProviderFactory
+    public class TargetProviderFactory
     {
         private readonly TargetFactoriesProvider _targetFactoriesProvider;
         private readonly ICruiserSpecificFactories _cruiserSpecificFactories;

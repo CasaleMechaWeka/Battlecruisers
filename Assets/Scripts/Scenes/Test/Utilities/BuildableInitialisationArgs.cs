@@ -177,7 +177,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetProcessorFactory targetProcessorFactory,
             ITargetTrackerFactory targetTrackerFactory,
             TargetDetectorFactory targetDetectorFactory,
-            ITargetProviderFactory targetProviderFactory,
+            TargetProviderFactory targetProviderFactory,
             IDroneFeedbackFactory droneFeedbackFactory)
         {
             cruiserSpecificFactories.AircraftProvider.Returns(aircraftProvider);

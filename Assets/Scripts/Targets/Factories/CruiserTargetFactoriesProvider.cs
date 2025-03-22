@@ -10,7 +10,7 @@ namespace BattleCruisers.Targets.Factories
         public ITargetProcessorFactory ProcessorFactory { get; }
         public ITargetTrackerFactory TrackerFactory { get; }
         public TargetDetectorFactory DetectorFactory { get; }
-        public ITargetProviderFactory ProviderFactory { get; }
+        public TargetProviderFactory ProviderFactory { get; }
 
         public CruiserTargetFactoriesProvider(
             IFactoryProvider factoryProvider,
