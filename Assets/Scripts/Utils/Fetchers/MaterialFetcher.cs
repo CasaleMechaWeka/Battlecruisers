@@ -6,13 +6,13 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    public class MaterialFetcher : IMaterialFetcher
+    public static class MaterialFetcher
     {
-        public async Task<Material> GetMaterialAsync(string materialName)
+        public static async Task<Material> GetMaterialAsync(string materialName)
         {
             AsyncOperationHandle<Material> handle = Addressables.LoadAssetAsync<Material>(materialName);
             await handle.Task;
-            
+
             if (handle.Status != AsyncOperationStatus.Succeeded
                 || handle.Result == null)
             {

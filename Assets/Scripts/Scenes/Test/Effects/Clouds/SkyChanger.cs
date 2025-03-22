@@ -41,11 +41,10 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             };
 
             IList<Material> skyMaterials = new List<Material>();
-            IMaterialFetcher materialFetcher = new MaterialFetcher();
 
             foreach (string skyName in skyNames)
             {
-                skyMaterials.Add(await materialFetcher.GetMaterialAsync(skyName));
+                skyMaterials.Add(await MaterialFetcher.GetMaterialAsync(skyName));
             }
 
             return new CircularList<Material>(skyMaterials);
