@@ -312,8 +312,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
-            commonStrings = await LocTableFactory.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.LoadStoryTableAsync();
+            commonStrings = await LocTableFactory.LoadTableAsync(TableName.COMMON);
+            ILocTable storyStrings = await LocTableFactory.LoadTableAsync(TableName.STORY);
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -341,8 +341,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
-            commonStrings = await LocTableFactory.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.LoadStoryTableAsync();
+            commonStrings = await LocTableFactory.LoadTableAsync(TableName.COMMON);
+            ILocTable storyStrings = await LocTableFactory.LoadTableAsync(TableName.STORY);
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();

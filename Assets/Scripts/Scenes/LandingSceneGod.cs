@@ -148,9 +148,9 @@ namespace BattleCruisers.Scenes
 
             //loading loc tables in parallel is about 40-100% faster
             //Starting these tasks here saves ~100 ms avg
-            Task<ILocTable> loadCommonStrings = LocTableFactory.LoadCommonTableAsync();
-            Task<ILocTable> loadHeckesStrings = LocTableFactory.LoadHecklesTableAsync();
-            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.LoadScreensSceneTableAsync();
+            Task<ILocTable> loadCommonStrings = LocTableFactory.LoadTableAsync(TableName.COMMON);
+            Task<ILocTable> loadHeckesStrings = LocTableFactory.LoadTableAsync(TableName.HECKLES);
+            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.LoadTableAsync(TableName.SCREENS_SCENE);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 

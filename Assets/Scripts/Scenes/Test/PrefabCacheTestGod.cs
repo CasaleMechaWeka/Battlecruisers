@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test
         {
             Debug.Log("About to load the world :D");
 
-            ILocTable commonLocTable = await LocTableFactory.LoadCommonTableAsync();
+            ILocTable commonLocTable = await LocTableFactory.LoadTableAsync(TableName.COMMON);
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonLocTable);
             PrefabCache cache = await prefabCacheFactory.CreatePrefabCacheAsync();
 

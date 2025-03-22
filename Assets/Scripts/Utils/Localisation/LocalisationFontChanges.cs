@@ -58,7 +58,7 @@ namespace BattleCruisers.Utils.Localisation
                 _rtlSettings.IsRtl = false;
                 _rtlSettings.RtlCorrectedText = "";
 
-                ILocTable fontSettings = await LocTableFactory.LoadFontsTableAsync();
+                ILocTable fontSettings = await LocTableFactory.LoadTableAsync(TableName.ADVERTISING);
 
                 //get the string we need
                 string newFontName = fontSettings.GetString("FontName");

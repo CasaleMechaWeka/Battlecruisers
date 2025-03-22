@@ -10,115 +10,35 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
 {
+
+    public static class TableName
+    {
+        public const string BATTLE_SCENE = "BattleScene";
+        public const string COMMON = "Common";
+        public const string SCREENS_SCENE = "ScreensScene";
+        public const string STORY = "StoryTable";
+        public const string TUTORIAL = "Tutorial";
+        public const string FONTS = "Fonts";
+        public const string ADVERTISING = "Advertising";
+        public const string HECKLES = "Heckles";
+    }
+
     public static class LocTableFactory
     {
         private static Locale _locale;
 
-        public class TableName
-        {
-            public const string BATTLE_SCENE = "BattleScene";
-            public const string COMMON = "Common";
-            public const string SCREENS_SCENE = "ScreensScene";
-            public const string STORY = "StoryTable";
-            public const string TUTORIAL = "Tutorial";
-            public const string FONTS = "Fonts";
-            public const string ADVERTISING = "Advertising";
-            public const string HECKLES = "Heckles";
-
-        }
-
         private static ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable, _hecklesTable, _fonts, _advertisingTable;
 
-        public static async Task<ILocTable> LoadFontsTableAsync()
+        public static async Task<ILocTable> LoadTableAsync(string tableName)
         {
             if (_fonts == null)
             {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.FONTS);
+                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(tableName);
                 _fonts = new LocTable(tableHandle);
             }
 
             return _fonts;
         }
-
-        public static async Task<ILocTable> LoadBattleSceneTableAsync()
-        {
-            if (_battleSceneTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.BATTLE_SCENE);
-                _battleSceneTable = new LocTable(tableHandle);
-            }
-
-            return _battleSceneTable;
-        }
-
-        public static async Task<ILocTable> LoadScreensSceneTableAsync()
-        {
-            if (_screensSceneTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.SCREENS_SCENE);
-                _screensSceneTable = new LocTable(tableHandle);
-            }
-
-            return _screensSceneTable;
-        }
-
-        public static async Task<ILocTable> LoadCommonTableAsync()
-        {
-            if (_commonTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.COMMON);
-                _commonTable = new LocTable(tableHandle);
-            }
-
-            return _commonTable;
-        }
-
-        public static async Task<ILocTable> LoadStoryTableAsync()
-        {
-            //Debug.Log("Loaded story");
-            if (_storyTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.STORY);
-                _storyTable = new LocTable(tableHandle);
-            }
-
-            return _storyTable;
-        }
-
-        public static async Task<ILocTable> LoadTutorialTableAsync()
-        {
-            if (_tutorialTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.TUTORIAL);
-                _tutorialTable = new LocTable(tableHandle);
-            }
-
-            return _tutorialTable;
-        }
-
-        public static async Task<ILocTable> LoadAdvertisingTableAsync()
-        {
-            if (_advertisingTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.ADVERTISING);
-                _advertisingTable = new LocTable(tableHandle);
-            }
-
-            return _advertisingTable;
-        }
-
-
-        public static async Task<ILocTable> LoadHecklesTableAsync()
-        {
-            if (_hecklesTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.HECKLES);
-                _hecklesTable = new LocTable(tableHandle);
-            }
-
-            return _hecklesTable;
-        }
-
 
         private static async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {

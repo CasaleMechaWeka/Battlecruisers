@@ -155,7 +155,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            ILocTable commonString = await LocTableFactory.LoadCommonTableAsync();
+            ILocTable commonString = await LocTableFactory.LoadTableAsync(TableName.COMMON);
             int index = dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
             {
@@ -186,7 +186,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            ILocTable commonString = await LocTableFactory.LoadCommonTableAsync();
+            ILocTable commonString = await LocTableFactory.LoadTableAsync(TableName.COMMON);
             int index = dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)
             {

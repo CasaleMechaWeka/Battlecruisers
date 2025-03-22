@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             Helper.AssertIsNotNull(dataProvider, soundPlayer);
             _dataProvider = dataProvider;
             _soundPlayer = soundPlayer;
-            heckleStrings = await LocTableFactory.LoadHecklesTableAsync();
+            heckleStrings = await LocTableFactory.LoadTableAsync(TableName.HECKLES);
             messageFrame = GetComponent<RectTransform>();
         }
 

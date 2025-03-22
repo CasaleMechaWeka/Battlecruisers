@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
 
         async private void loadCommonStringsTable()
         {
-            _commonStrings = await LocTableFactory.LoadCommonTableAsync();
+            _commonStrings = await LocTableFactory.LoadTableAsync(TableName.COMMON);
         }
 
         private void buildingMonitor_AirFactoryStarted(object sender, EventArgs e)

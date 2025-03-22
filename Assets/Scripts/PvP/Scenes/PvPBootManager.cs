@@ -587,8 +587,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
-            ILocTable commonStrings = await LocTableFactory.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.LoadStoryTableAsync();
+            ILocTable commonStrings = await LocTableFactory.LoadTableAsync(TableName.COMMON);
+            ILocTable storyStrings = await LocTableFactory.LoadTableAsync(TableName.STORY);
 
             trashDataList.Initialise(storyStrings);
             ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
