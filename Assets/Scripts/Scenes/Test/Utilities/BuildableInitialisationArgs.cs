@@ -21,7 +21,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine.Assertions;
@@ -89,8 +88,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     damageApplierFactory ?? new DamageApplierFactory(),
                     soundFetcher,
                     spriteChooserFactory ??
-                        new SpriteChooserFactory(
-                            new SpriteProvider()),
+                        new SpriteChooserFactory(),
                     new SoundPlayerFactory(soundFetcher, deferrer),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new DeferrerProvider(deferrer, realTimeDeferrer),

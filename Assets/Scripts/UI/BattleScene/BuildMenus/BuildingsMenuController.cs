@@ -6,7 +6,6 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
@@ -14,7 +13,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     public class BuildingsMenuController : BuildablesMenuController<BuildingButtonController, IBuilding>
     {
         private ISingleSoundPlayer _soundPlayer;
-        private SpriteProvider _spriteProvider;
         private IBuildingClickHandler _clickHandler;
 
         public BuildingCategoryButton buildingCategoryButton;
@@ -24,14 +22,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildings,
-SpriteProvider spriteProvider,
             IBuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
-            Helper.AssertIsNotNull(soundPlayer, buildingCategoryButton, spriteProvider, clickHandler);
+            Helper.AssertIsNotNull(soundPlayer, buildingCategoryButton, clickHandler);
 
             _soundPlayer = soundPlayer;
-            _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
 
             base.Initialise(uiManager, buttonVisibilityFilters, buildings);

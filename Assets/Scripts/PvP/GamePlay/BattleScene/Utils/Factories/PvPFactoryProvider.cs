@@ -14,7 +14,6 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -47,11 +46,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
             IPvPPrefabFactory prefabFactory,
-SpriteProvider spriteProvider,
             ISettingsManager settingsManager
             )
         {
-            PvPHelper.AssertIsNotNull(components, prefabFactory, spriteProvider, settingsManager);
+            PvPHelper.AssertIsNotNull(components, prefabFactory, settingsManager);
 
             _components = components;
             PrefabFactory = prefabFactory;
@@ -62,8 +60,7 @@ SpriteProvider spriteProvider,
             BoostFactory = new BoostFactory();
             DamageApplierFactory = new PvPDamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
-                = new PvPSpriteChooserFactory(
-                    spriteProvider);
+                = new PvPSpriteChooserFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;

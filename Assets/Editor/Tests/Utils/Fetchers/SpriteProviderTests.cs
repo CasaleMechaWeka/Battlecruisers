@@ -11,7 +11,6 @@ namespace BattleCruisers.Tests.Utils.Fetchers
 {
     public class SpriteProviderTests
     {
-        private SpriteProvider _provider;
         private IList<Sprite> _bomberSprites, _fighterSprites;
 
         private const int NUM_OF_BOMBER_SPRITES = 8;
@@ -43,7 +42,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
             SpriteFetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
 
             IList<Sprite> expectedSprites = _bomberSprites.Reverse().ToList();
-            IList<Sprite> bomberSprites = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
+            IList<Sprite> bomberSprites = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
 
             Assert.IsTrue(Enumerable.SequenceEqual(expectedSprites, bomberSprites));
         }
@@ -57,7 +56,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
 
             Assert.Throws<AggregateException>(() =>
             {
-                var result = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
+                var result = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
             });
         }
 
@@ -68,7 +67,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
             SpriteFetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
 
             IList<Sprite> expectedSprites = _fighterSprites.Reverse().ToList();
-            IList<Sprite> fighterSprites = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
+            IList<Sprite> fighterSprites = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
 
             Assert.IsTrue(Enumerable.SequenceEqual(expectedSprites, fighterSprites));
         }
@@ -82,7 +81,7 @@ namespace BattleCruisers.Tests.Utils.Fetchers
 
             Assert.Throws<AggregateException>(() =>
             {
-                var result = _provider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
+                var result = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
             });
         }
     }

@@ -8,7 +8,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
@@ -27,7 +26,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
             IBuildableSorterFactory sorterFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
-SpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
@@ -39,7 +37,6 @@ SpriteProvider spriteProvider,
                 units,
                 sorterFactory,
                 buttonVisibilityFilters,
-                spriteProvider,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
                 uiSoundPlayer,
@@ -68,7 +65,7 @@ SpriteProvider spriteProvider,
                     uiSoundPlayer,
                     playerCruiserFocusHelper,
                     new AudioClipWrapper(buildingButtonSelectedSound));
-            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, uiSoundPlayer, buildingClickHandler);
+            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, uiSoundPlayer, buildingClickHandler);
 
             // Unit menus
             IUnitClickHandler unitClickHandler

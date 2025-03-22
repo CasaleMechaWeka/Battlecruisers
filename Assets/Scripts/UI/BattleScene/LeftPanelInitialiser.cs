@@ -15,7 +15,6 @@ using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Sorting;
@@ -45,7 +44,6 @@ namespace BattleCruisers.UI.BattleScene
             IUIManager uiManager,
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
-SpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -60,7 +58,6 @@ SpriteProvider spriteProvider,
                 uiManager,
                 playerLoadout,
                 prefabFactory,
-                spriteProvider,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
@@ -75,7 +72,6 @@ SpriteProvider spriteProvider,
                     uiManager,
                     playerLoadout,
                     prefabFactory,
-                    spriteProvider,
                     buttonVisibilityFilters,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
@@ -97,7 +93,6 @@ SpriteProvider spriteProvider,
             IUIManager uiManager,
             ILoadout playerLoadout,
             IPrefabFactory prefabFactory,
-SpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -122,7 +117,6 @@ SpriteProvider spriteProvider,
                     units,
                     sorterFactory,
                     buttonVisibilityFilters,
-                    spriteProvider,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
                     uiSoundPlayer,

@@ -17,7 +17,6 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -167,8 +166,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
 
-            SpriteProvider spriteProvider = new SpriteProvider();
-
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             Assert.IsNotNull(components);
@@ -184,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise();
             await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             _Initialise_Rest();

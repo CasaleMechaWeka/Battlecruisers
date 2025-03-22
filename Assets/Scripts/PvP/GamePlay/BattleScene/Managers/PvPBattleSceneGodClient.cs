@@ -40,7 +40,6 @@ using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -65,7 +64,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private IApplicationModel applicationModel;
         private NavigationPermitters navigationPermitters;
-        private SpriteProvider spriteProvider;
         private IPvPCameraComponents cameraComponents;
 
         public PvPCameraInitialiser cameraInitialiser;
@@ -330,11 +328,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             prefabFactory = PvPBattleSceneGodServer.Instance.prefabFactory;
-            SpriteProvider spriteProvider = new SpriteProvider();
             navigationPermitters = new NavigationPermitters();
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
@@ -365,12 +362,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
 
-            SpriteProvider spriteProvider = new SpriteProvider();
             navigationPermitters = new NavigationPermitters();
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
@@ -417,7 +413,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     uiManager,
                     pvpBattleHelper.GetPlayerLoadout(),
                     prefabFactory,
-                    spriteProvider,
                     buttonVisibilityFilters,
                     new PvPPlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
                     factoryProvider.Sound.PrioritisedSoundPlayer,

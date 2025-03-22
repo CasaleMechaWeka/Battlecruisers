@@ -5,7 +5,6 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
 
@@ -13,7 +12,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildingMenus : BuildableMenus<IBuilding, BuildingCategory, BuildingsMenuController>
     {
-        private SpriteProvider _spriteProvider;
         private IBuildingClickHandler _clickHandler;
 
         public void Initialise(
@@ -21,14 +19,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IBuilding> buildingSorter,
-SpriteProvider spriteProvider,
             ISingleSoundPlayer soundPlayer,
             IBuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
-            Helper.AssertIsNotNull(spriteProvider, clickHandler);
+            Helper.AssertIsNotNull(clickHandler);
 
-            _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
 
             base.Initialise(buildings, uiManager, buttonVisibilityFilters, buildingSorter, soundPlayer);
@@ -41,7 +37,7 @@ SpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildables)
         {
-            menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _spriteProvider, _clickHandler);
+            menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _clickHandler);
         }
     }
 }

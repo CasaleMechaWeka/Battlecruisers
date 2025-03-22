@@ -11,7 +11,6 @@ using BattleCruisers.Targets.Factories;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -41,10 +40,9 @@ namespace BattleCruisers.Utils.Factories
         public FactoryProvider(
             IBattleSceneGodComponents components,
             IPrefabFactory prefabFactory,
-SpriteProvider spriteProvider,
             ISettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(components, prefabFactory, spriteProvider, settingsManager);
+            Helper.AssertIsNotNull(components, prefabFactory, settingsManager);
 
             _components = components;
             PrefabFactory = prefabFactory;
@@ -55,8 +53,7 @@ SpriteProvider spriteProvider,
             BoostFactory = new BoostFactory();
             DamageApplierFactory = new DamageApplierFactory();
             SpriteChooserFactory
-                = new SpriteChooserFactory(
-                    spriteProvider);
+                = new SpriteChooserFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;

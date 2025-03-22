@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
-    public class SpriteProvider
+    public static class SpriteProvider
     {
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";
@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         /// (side on view, no wings showing) and the last sprite being the most
         /// turned (top view, both wings fully showing).
         /// </returns>
-        public async Task<IList<Sprite>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName)
+        public static async Task<IList<Sprite>> GetAircraftSpritesAsync(PrefabKeyName prefabKeyName)
         {
             (string, int) spriteData = prefabKeyName switch
             {

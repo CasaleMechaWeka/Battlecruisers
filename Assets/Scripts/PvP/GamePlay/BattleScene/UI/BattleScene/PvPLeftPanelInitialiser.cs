@@ -18,7 +18,6 @@ using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Cruisers.Drones;
@@ -93,7 +92,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
-SpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -107,7 +105,6 @@ SpriteProvider spriteProvider,
                 uiManager,
                 playerLoadout,
                 prefabFactory,
-                spriteProvider,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
@@ -123,7 +120,6 @@ SpriteProvider spriteProvider,
                     uiManager,
                     playerLoadout,
                     prefabFactory,
-                    spriteProvider,
                     buttonVisibilityFilters,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
@@ -152,7 +148,6 @@ SpriteProvider spriteProvider,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
-SpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -178,7 +173,6 @@ SpriteProvider spriteProvider,
                     units,
                     sorterFactory,
                     buttonVisibilityFilters,
-                    spriteProvider,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
                     uiSoundPlayer,

@@ -26,7 +26,6 @@ using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -169,7 +168,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             IPrefabFetcher prefabFetcher = new PrefabFetcher();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
-            SpriteProvider spriteProvider = new SpriteProvider();
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
@@ -181,7 +179,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new FactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
@@ -234,7 +232,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     uiManager,
                     helper.GetPlayerLoadout(),
                     prefabFactory,
-                    spriteProvider,
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),

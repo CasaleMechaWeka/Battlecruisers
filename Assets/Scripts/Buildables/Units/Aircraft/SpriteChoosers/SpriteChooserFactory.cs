@@ -9,18 +9,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
     public class SpriteChooserFactory
     {
-        private readonly SpriteProvider _spriteProvider;
-
-        public SpriteChooserFactory(SpriteProvider spriteProvider)
-        {
-            Helper.AssertIsNotNull(spriteProvider);
-
-            _spriteProvider = spriteProvider;
-        }
-
         public async Task<ISpriteChooser> CreateAircraftSpriteChooserAsync(PrefabKeyName prefabKeyName, IVelocityProvider maxVelocityProvider)
         {
-            IList<Sprite> aircraftSprites = await _spriteProvider.GetAircraftSpritesAsync(prefabKeyName);
+            IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(prefabKeyName);
             return new SpriteChooser(aircraftSprites, maxVelocityProvider);
         }
 
