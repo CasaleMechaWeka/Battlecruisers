@@ -60,7 +60,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return Task.FromResult("SIMULATRON");
         }
 
-        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncLevel(_skirmish.BackgroundLevelNum);
         }

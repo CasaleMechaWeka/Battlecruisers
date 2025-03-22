@@ -24,14 +24,14 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             if (isSideQuest)
             {
                 IPrefabKey key = new LevelTrashTalkKey(levelNum, true);
-                IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
+                PrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
                 prefabContainer.Prefab.Initialise(_storyStrings, true);
                 return prefabContainer.Prefab;
             }
             else
             {
                 IPrefabKey key = new LevelTrashTalkKey(levelNum);
-                IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
+                PrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
                 prefabContainer.Prefab.Initialise(_storyStrings);
                 return prefabContainer.Prefab;
             }

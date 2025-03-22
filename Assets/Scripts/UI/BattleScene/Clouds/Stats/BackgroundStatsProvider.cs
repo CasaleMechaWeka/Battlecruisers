@@ -15,13 +15,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             _prefabFetcher = prefabFetcher;
         }
 
-        public async Task<IPrefabContainer<BackgroundImageStats>> GetStatsAsyncLevel(int levelNum)
+        public async Task<PrefabContainer<BackgroundImageStats>> GetStatsAsyncLevel(int levelNum)
         {
             IPrefabKey key = new LevelBackgroundImageStatsKey(levelNum);
             return await _prefabFetcher.GetPrefabAsync<BackgroundImageStats>(key);
         }
 
-        public async Task<IPrefabContainer<BackgroundImageStats>> GetStatsAsyncSideQuest(int sideQuestID)
+        public async Task<PrefabContainer<BackgroundImageStats>> GetStatsAsyncSideQuest(int sideQuestID)
         {
             IPrefabKey key = new SideQuestBackgroundImageStatsKey(sideQuestID);
             return await _prefabFetcher.GetPrefabAsync<BackgroundImageStats>(key);

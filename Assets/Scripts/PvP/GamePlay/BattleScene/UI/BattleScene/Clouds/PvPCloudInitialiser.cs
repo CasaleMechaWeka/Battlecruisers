@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             string skyMaterialName,
             IUpdater updater,
             float cameraAspectRatio,
-            IPrefabContainer<BackgroundImageStats> backgroundStats)
+            PrefabContainer<BackgroundImageStats> backgroundStats)
         {
             PvPHelper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, background);
             PvPHelper.AssertIsNotNull(leftCloud, rightCloud, mist, backgroundStats);

@@ -400,7 +400,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);
             enemyCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);
             currentLevel = pvpBattleHelper.GetPvPLevel();
-            IPrefabContainer<BackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
+            PrefabContainer<BackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
 
@@ -545,7 +545,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 PrefabFetcher prefabFetcher = new PrefabFetcher();
 
-                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                PrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultA.Prefab.StaticInitialise(commonStrings);
                 if (leftCaptain == null)
                 {
@@ -556,7 +556,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
                 if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
                 {
-                    IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
+                    PrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
                     resultB.Prefab.StaticInitialise(commonStrings);
                     if (rightCaptain == null)
                     {
@@ -566,7 +566,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 else
                 {
-                    IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                    PrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                     resultB.Prefab.StaticInitialise(commonStrings);
                     if (rightCaptain == null)
                     {
@@ -579,7 +579,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 PrefabFetcher prefabFetcher = new PrefabFetcher();
 
-                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                PrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultB.Prefab.StaticInitialise(commonStrings);
                 if (rightCaptain == null)
                 {
@@ -591,7 +591,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 {
                     if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
                     {
-                        IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
+                        PrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
                         resultA.Prefab.StaticInitialise(commonStrings);
                         if (leftCaptain == null)
                         {
@@ -601,7 +601,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     }
                     else
                     {
-                        IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                        PrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                         resultA.Prefab.StaticInitialise(commonStrings);
                         if (leftCaptain == null)
                         {
@@ -613,7 +613,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 catch (Exception e)
                 {
                     Debug.LogError(e.Message);
-                    IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                    PrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                     resultA.Prefab.StaticInitialise(commonStrings);
                     if (leftCaptain == null)
                     {
@@ -630,7 +630,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 PrefabFetcher prefabFetcher = new PrefabFetcher();
 
-                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                PrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
                 resultA.Prefab.StaticInitialise(commonStrings);
 
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
@@ -652,7 +652,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 PrefabFetcher prefabFetcher = new PrefabFetcher();
 
-                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                PrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
                 resultB.Prefab.StaticInitialise(commonStrings);
 
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)

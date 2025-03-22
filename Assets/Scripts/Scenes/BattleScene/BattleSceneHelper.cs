@@ -109,7 +109,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return levelTrashTalkData.EnemyName;
         }
 
-        public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public virtual async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
         }

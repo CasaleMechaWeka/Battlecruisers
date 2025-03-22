@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // return _appModel.DataProvider.GetPvPLevel();
         }
 
-        public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public virtual async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
         }

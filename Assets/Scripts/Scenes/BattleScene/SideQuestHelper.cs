@@ -67,7 +67,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return DataProvider.GameModel.PlayerLoadout;
         }
 
-        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncSideQuest(_appModel.SelectedSideQuestID);
         }
@@ -145,7 +145,7 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         /*
-        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsync(_skirmish.BackgroundLevelNum);
         }
