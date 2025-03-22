@@ -20,10 +20,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsTrue(airFactoryBuildRateBoost > 0);
             Assert.IsTrue(aircarftBuildRateBoost > 0);
 
-            IBoostProvider factoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(airFactoryBuildRateBoost);
+            IBoostProvider factoryBoostProvider = new BoostProvider(airFactoryBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders.Add(factoryBoostProvider);
 
-            IBoostProvider aircraftBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(aircarftBuildRateBoost);
+            IBoostProvider aircraftBoostProvider = new BoostProvider(aircarftBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.AircraftProviders.Add(aircraftBoostProvider);
         }
 

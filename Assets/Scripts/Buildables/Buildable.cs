@@ -256,8 +256,8 @@ namespace BattleCruisers.Buildables
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
-            BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-            HealthBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            BuildProgressBoostable = new Boostable(1);
+            HealthBoostable = new Boostable(1);
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
@@ -277,9 +277,9 @@ namespace BattleCruisers.Buildables
 
             Faction = ParentCruiser.Faction;
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
-            _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-            _healthBoostableGroup = CreateHealthBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+            _localBoosterBoostableGroup = new BoostableGroup();
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
         }
 
         /// <summary>
@@ -306,9 +306,9 @@ namespace BattleCruisers.Buildables
             BuildableState = BuildableState.NotStarted;
             _cumulativeBuildProgressInDroneS = 0;
 
-            _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-            _healthBoostableGroup = CreateHealthBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+            _localBoosterBoostableGroup = new BoostableGroup();
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
             _healthBoostableGroup.BoostChanged += HealthBoostChanged;
             HealthBoostChanged(this, EventArgs.Empty);
         }
@@ -323,9 +323,9 @@ namespace BattleCruisers.Buildables
         public void Activate(TActivationArgs activationArgs, Faction faction)
         {
         }
-        private IBoostableGroup CreateHealthBoostableGroup(BoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
+        private IBoostableGroup CreateHealthBoostableGroup(IGlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
         {
-            IBoostableGroup healthBoostableGroup = boostFactory.CreateBoostableGroup();
+            IBoostableGroup healthBoostableGroup = new BoostableGroup();
             healthBoostableGroup.AddBoostable(healthBoostable);
 
             IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
@@ -339,9 +339,9 @@ namespace BattleCruisers.Buildables
             return healthBoostableGroup;
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(BoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
-            IBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
+            IBoostableGroup buildRateBoostableGroup = new BoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();

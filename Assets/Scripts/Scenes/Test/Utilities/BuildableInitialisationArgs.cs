@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -50,7 +49,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
-            BoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -76,7 +74,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
             realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
-            boostFactory = boostFactory ?? new BoostFactory();
 
             FactoryProvider
                 = CreateFactoryProvider(
@@ -84,13 +81,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     movementControllerFactory ?? new MovementControllerFactory(),
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
-                    boostFactory,
                     damageApplierFactory ?? new DamageApplierFactory(),
                     soundFetcher,
                     spriteChooserFactory ??
                         new SpriteChooserFactory(),
                     new SoundPlayerFactory(soundFetcher, deferrer),
-                    new TurretStatsFactory(boostFactory, globalBoostProviders),
+                    new TurretStatsFactory(globalBoostProviders),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
                     targetFactoriesProvider,
                     new SpawnDeciderFactory(),
@@ -112,7 +108,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 CruiserSpecificFactories,
                 aircraftProvider ?? helper.CreateAircraftProvider(),
                 globalBoostProviders,
-                turretStatsFactory ?? new TurretStatsFactory(boostFactory, globalBoostProviders),
+                turretStatsFactory ?? new TurretStatsFactory(globalBoostProviders),
                 targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(EnemyCruiser, userChosenTargetManager),
                 targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
                 targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider),
@@ -125,7 +121,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IMovementControllerFactory movementControllerFactory,
             IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
-            BoostFactory boostFactory,
             IDamageApplierFactory damageApplierFactory,
             ISoundFetcher soundFetcher,
             SpriteChooserFactory spriteChooserFactory,
@@ -139,7 +134,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             FactoryProvider factoryProvider = Substitute.For<FactoryProvider>();
 
-            factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);

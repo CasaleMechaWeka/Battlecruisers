@@ -28,10 +28,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(navalFactoryBuildRateBoost > 0);
             Assert.IsTrue(shipBuildRateBoost > 0);
 
-            IBoostProvider factoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(navalFactoryBuildRateBoost);
+            IBoostProvider factoryBoostProvider = new BoostProvider(navalFactoryBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.NavalFactoryProviders.Add(factoryBoostProvider);
 
-            IBoostProvider shipBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(shipBuildRateBoost);
+            IBoostProvider shipBoostProvider = new BoostProvider(shipBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.ShipProviders.Add(shipBoostProvider);
         }
     }

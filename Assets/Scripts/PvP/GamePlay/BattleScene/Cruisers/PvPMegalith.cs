@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             Assert.IsTrue(buildingHealthBoost > 0);
 
-            IBoostProvider buildingHealthBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingHealthBoost);
+            IBoostProvider buildingHealthBoostProvider = new BoostProvider(buildingHealthBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingHealth.AllBuildingsProviders.Add(buildingHealthBoostProvider);
         }
 

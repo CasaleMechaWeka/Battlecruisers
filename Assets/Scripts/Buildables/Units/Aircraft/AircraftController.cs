@@ -101,7 +101,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.Initialise(uiManager, factoryProvider);
 
-            _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }

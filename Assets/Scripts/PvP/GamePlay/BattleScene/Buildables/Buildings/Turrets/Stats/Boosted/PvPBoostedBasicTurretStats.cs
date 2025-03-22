@@ -24,16 +24,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public PvPBoostedBasicTurretStats(
             TStats baseStats,
-            BoostFactory boostFactory,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
-            PvPHelper.AssertIsNotNull(baseStats, boostFactory, localBoostProviders, globalFireRateBoostProviders);
+            PvPHelper.AssertIsNotNull(baseStats, localBoostProviders, globalFireRateBoostProviders);
 
             _baseStats = baseStats;
 
-            _fireRateBoostable = boostFactory.CreateBoostable();
-            _fireRateBoostabelGroup = boostFactory.CreateBoostableGroup();
+            _fireRateBoostable = new Boostable(1);
+            _fireRateBoostabelGroup = new BoostableGroup();
             _fireRateBoostabelGroup.AddBoostable(_fireRateBoostable);
             _fireRateBoostabelGroup.AddBoostProvidersList(globalFireRateBoostProviders);
             _fireRateBoostabelGroup.AddBoostProvidersList(localBoostProviders);

@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.Initialise(uiManager, factoryProvider);
 
-            _boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
+            _boostProvider = new BoostProvider(boostMultiplier);
 
             _boosterGlow = transform.FindNamedComponent<ParticleSystem>("LocalBoosterMasterGlow");
             _boosterGlow.gameObject.SetActive(false);

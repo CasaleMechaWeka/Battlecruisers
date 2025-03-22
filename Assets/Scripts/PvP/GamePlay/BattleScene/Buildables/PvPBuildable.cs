@@ -340,7 +340,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
-            BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            BuildProgressBoostable = new Boostable(1);
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
@@ -372,7 +372,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _uiManager = uiManager;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
-            BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            BuildProgressBoostable = new Boostable(1);
             if (!IsHost)
             {
                 _clickHandler.SingleClick += ClickHandler_SingleClick;
@@ -399,8 +399,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Faction = ParentCruiser.Faction;
             CallRpc_SyncFaction(Faction);
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
-            _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+            _localBoosterBoostableGroup = new BoostableGroup();
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
         }
 
         /// <summary>
@@ -434,8 +434,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             BuildableState = PvPBuildableState.NotStarted;
             _cumulativeBuildProgressInDroneS = 0;
 
-            _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+            _localBoosterBoostableGroup = new BoostableGroup();
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
         }
 
         public virtual void Activate_PvPClient()
@@ -448,9 +448,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(BoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
-            IBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
+            IBoostableGroup buildRateBoostableGroup = new BoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();

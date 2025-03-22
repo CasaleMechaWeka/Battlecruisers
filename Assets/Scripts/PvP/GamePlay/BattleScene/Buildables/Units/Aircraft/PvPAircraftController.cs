@@ -106,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise( /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
         {
             base.Initialise( /* uiManager, */ factoryProvider);
-            _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
@@ -114,7 +114,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }

@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 		public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
 		{
 			base.Initialise(uiManager, factoryProvider);
-			_boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
+			_boostProvider = new BoostProvider(boostMultiplier);
 		}
 
 		protected override void OnBuildableCompleted()

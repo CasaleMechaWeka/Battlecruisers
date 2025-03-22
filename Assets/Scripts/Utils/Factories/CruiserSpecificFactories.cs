@@ -33,7 +33,7 @@ namespace BattleCruisers.Utils.Factories
 
             AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
-            TurretStatsFactory = new TurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
+            TurretStatsFactory = new TurretStatsFactory(GlobalBoostProviders);
             BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             Targets = new CruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 

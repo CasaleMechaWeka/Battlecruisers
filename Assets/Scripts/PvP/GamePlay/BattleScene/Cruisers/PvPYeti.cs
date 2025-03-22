@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             Assert.IsTrue(buildRateBoost > 0);
 
-            IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildRateBoost);
+            IBoostProvider boostProvider = new BoostProvider(buildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DroneBuildingsProviders.Add(boostProvider);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders.Add(boostProvider);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.NavalFactoryProviders.Add(boostProvider);
@@ -26,10 +26,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.OffensivesProviders.Add(boostProvider);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders.Add(boostProvider);
 
-            IBoostProvider aircraftBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildRateBoost);
+            IBoostProvider aircraftBoostProvider = new BoostProvider(buildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.AircraftProviders.Add(aircraftBoostProvider);
 
-            IBoostProvider shipBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildRateBoost);
+            IBoostProvider shipBoostProvider = new BoostProvider(buildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.ShipProviders.Add(shipBoostProvider);
         }
         protected override void Start()

@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Initialise(factoryProvider);
 
-            _boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
+            _boostProvider = new BoostProvider(boostMultiplier);
 
             _boosterGlow = transform.FindNamedComponent<ParticleSystem>("LocalBoosterMasterGlow");
             _boosterGlow.gameObject.SetActive(false);

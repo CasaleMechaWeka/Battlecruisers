@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
@@ -20,7 +19,6 @@ namespace BattleCruisers.Utils.Factories
     {
         private readonly IBattleSceneGodComponents _components;
 
-        public BoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
@@ -50,7 +48,6 @@ namespace BattleCruisers.Utils.Factories
             Targets = new TargetFactoriesProvider();
             MovementControllerFactory = new MovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            BoostFactory = new BoostFactory();
             DamageApplierFactory = new DamageApplierFactory();
             SpriteChooserFactory
                 = new SpriteChooserFactory();

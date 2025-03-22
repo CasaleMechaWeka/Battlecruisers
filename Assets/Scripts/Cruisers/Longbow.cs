@@ -31,10 +31,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(airFactoryBuildRateBoost > 0);
             Assert.IsTrue(aircraftBuildRateBoost > 0);
 
-            IBoostProvider factoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(airFactoryBuildRateBoost);
+            IBoostProvider factoryBoostProvider = new BoostProvider(airFactoryBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders.Add(factoryBoostProvider);
 
-            IBoostProvider aircraftBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(aircraftBuildRateBoost);
+            IBoostProvider aircraftBoostProvider = new BoostProvider(aircraftBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.AircraftProviders.Add(aircraftBoostProvider);
         }
     }

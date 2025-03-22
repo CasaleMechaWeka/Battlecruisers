@@ -13,7 +13,6 @@ namespace BattleCruisers.Tests.Buildables.Boost
         private IBoostable _boostable1, _boostable2;
         private ObservableCollection<IBoostProvider> _providers1, _providers2;
         private IBoostProvider _provider1, _provider2;
-        private BoostFactory _factory;
 
         [SetUp]
         public void SetuUp()
@@ -21,10 +20,7 @@ namespace BattleCruisers.Tests.Buildables.Boost
             _consumer = Substitute.For<IBoostConsumer>();
             _consumer.CumulativeBoost.Returns(1.17f);
 
-            _factory = Substitute.For<BoostFactory>();
-            _factory.CreateBoostConsumer().Returns(_consumer);
-
-            _group = new BoostableGroup(_factory);
+            _group = new BoostableGroup();
 
             _boostable1 = Substitute.For<IBoostable>();
             _boostable2 = Substitute.For<IBoostable>();

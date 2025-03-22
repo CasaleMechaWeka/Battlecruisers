@@ -27,10 +27,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(fireRateRocketBonus > 0);
             Assert.IsTrue(buildSpeedForRocketBuildings > 0);
 
-            IBoostProvider rocketFireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(fireRateRocketBonus);
+            IBoostProvider rocketFireRateBoostProvider = new BoostProvider(fireRateRocketBonus);
             CruiserSpecificFactories.GlobalBoostProviders.RocketBuildingsFireRateBoostProviders.Add(rocketFireRateBoostProvider);
 
-            IBoostProvider buildSpeedForRocketProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildSpeedForRocketBuildings);
+            IBoostProvider buildSpeedForRocketProvider = new BoostProvider(buildSpeedForRocketBuildings);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.RocketBuildingsProviders.Add(buildSpeedForRocketProvider);
         }
     }

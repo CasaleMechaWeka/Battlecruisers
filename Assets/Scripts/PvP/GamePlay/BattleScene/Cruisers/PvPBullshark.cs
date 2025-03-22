@@ -22,13 +22,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsTrue(defensivesBuildRateBoost > 0);
             Assert.IsTrue(shieldBuildRateBoost > 0);
 
-            IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(defensivesFireRateBoost);
+            IBoostProvider fireRateBoostProvider = new BoostProvider(defensivesFireRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.Add(fireRateBoostProvider);
 
-            IBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(defensivesBuildRateBoost);
+            IBoostProvider buildRateBoostProvider = new BoostProvider(defensivesBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DefensivesProviders.Add(buildRateBoostProvider);
 
-            IBoostProvider shieldBuildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(shieldBuildRateBoost);
+            IBoostProvider shieldBuildRateBoostProvider = new BoostProvider(shieldBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders.Add(shieldBuildRateBoostProvider);
         }
 

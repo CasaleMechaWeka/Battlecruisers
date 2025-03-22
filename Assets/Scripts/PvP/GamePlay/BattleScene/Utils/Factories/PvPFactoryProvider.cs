@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
@@ -24,7 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         // private readonly IPvPBattleSceneGodComponentsServer _components;
         private readonly IPvPBattleSceneGodComponents _components;
 
-        public BoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
@@ -57,7 +55,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Targets = new PvPTargetFactoriesProvider();
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            BoostFactory = new BoostFactory();
             DamageApplierFactory = new PvPDamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
                 = new PvPSpriteChooserFactory();

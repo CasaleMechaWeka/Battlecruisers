@@ -122,7 +122,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
-            BoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -140,7 +139,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetFactories,
                     movementControllerFactory,
                     flightPointsProviderFactory,
-                    boostFactory,
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
@@ -179,7 +177,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
-            BoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -197,7 +194,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetFactories,
                     movementControllerFactory,
                     flightPointsProviderFactory,
-                    boostFactory,
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
@@ -499,7 +495,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
             TurretStatsFactory turretStatsFactory
                 = new TurretStatsFactory(
-                    new BoostFactory(),
                     globalBoostProviders);
             cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
 
