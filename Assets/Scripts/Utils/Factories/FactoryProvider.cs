@@ -35,7 +35,7 @@ namespace BattleCruisers.Utils.Factories
         public ISettingsManager SettingsManager { get; }
 
         // Circular dependencies :/
-        public IPoolProviders PoolProviders { get; private set; }
+        public PoolProviders PoolProviders { get; private set; }
         public ISoundFactoryProvider Sound { get; private set; }
 
         public FactoryProvider(

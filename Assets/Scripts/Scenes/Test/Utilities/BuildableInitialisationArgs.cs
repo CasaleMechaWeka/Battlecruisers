@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
     public class BuildableInitialisationArgs
     {
         // Singleton.  Want only one pool provider, especially for performance test scenes.
-        private static IPoolProviders _poolProviders;
+        private static PoolProviders _poolProviders;
 
         public IUIManager UiManager { get; }
         public ICruiser ParentCruiser { get; }
@@ -155,7 +155,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SettingsManager.Returns(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
 
             // Pools
-            IPoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);
+            PoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);
             factoryProvider.PoolProviders.Returns(poolProviders);
 
             // Sound
@@ -190,7 +190,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.DroneFeedbackFactory.Returns(droneFeedbackFactory);
         }
 
-        private static IPoolProviders GetPoolProviders(FactoryProvider factoryProvider, IUIManager uiManager)
+        private static PoolProviders GetPoolProviders(FactoryProvider factoryProvider, IUIManager uiManager)
         {
             if (_poolProviders == null)
             {

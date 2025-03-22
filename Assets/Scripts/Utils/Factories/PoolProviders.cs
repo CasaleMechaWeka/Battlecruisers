@@ -10,7 +10,7 @@ using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Utils.Factories
 {
-    public class PoolProviders : IPoolProviders
+    public class PoolProviders
     {
         private ExplosionPoolProvider _explosionPoolProvider;
         public IExplosionPoolProvider ExplosionPoolProvider => _explosionPoolProvider;

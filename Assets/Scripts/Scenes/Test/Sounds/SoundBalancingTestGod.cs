@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
             windButtonsPanelController.Initialise(_camera, _cameraCalculatorSettings);
         }
 
-        private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource, IPoolProviders poolProviders)
+        private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource, PoolProviders poolProviders)
         {
             SoundFetcher soundFetcher = new SoundFetcher();
 
