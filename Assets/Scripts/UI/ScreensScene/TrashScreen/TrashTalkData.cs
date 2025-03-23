@@ -35,10 +35,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             string droneTextKey = $"{stringKeyBase}/DroneText";
             string enemyNameKey = $"{stringKeyBase}/name";
 
-            PlayerText = LocTableFactory.StoryTable.GetString(playerTextKey);
-            EnemyText = LocTableFactory.StoryTable.GetString(enemyTextKey);
-            AppraisalDroneText = LocTableFactory.StoryTable.GetString(droneTextKey);
-            enemyName = LocTableFactory.StoryTable.GetString(enemyNameKey);
+            PlayerText = LocTableCache.StoryTable.GetString(playerTextKey);
+            EnemyText = LocTableCache.StoryTable.GetString(enemyTextKey);
+            AppraisalDroneText = LocTableCache.StoryTable.GetString(droneTextKey);
+            enemyName = LocTableCache.StoryTable.GetString(enemyNameKey);
         }
     }
 }

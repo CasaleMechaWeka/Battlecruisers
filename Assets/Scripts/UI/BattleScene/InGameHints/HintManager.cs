@@ -51,52 +51,52 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
 
         private void buildingMonitor_AirFactoryStarted(object sender, EventArgs e)
         {
-            _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString(Hints.AIR_FACTORY_RESPONSE_HINT));
+            _hintDisplayer.ShowHint(LocTableCache.CommonTable.GetString(Hints.AIR_FACTORY_RESPONSE_HINT));
         }
 
         private void friendlyBuildingMonitor_AirDefensiveStarted(object sender, EventArgs e)
         {
-            _hintDisplayer.HideHint(LocTableFactory.CommonTable.GetString(Hints.AIR_FACTORY_RESPONSE_HINT));
+            _hintDisplayer.HideHint(LocTableCache.CommonTable.GetString(Hints.AIR_FACTORY_RESPONSE_HINT));
         }
 
         private void buildingMonitor_NavalFactoryStarted(object sender, EventArgs e)
         {
-            _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString(Hints.NAVAL_FACTORY_RESPONSE_HINT));
+            _hintDisplayer.ShowHint(LocTableCache.CommonTable.GetString(Hints.NAVAL_FACTORY_RESPONSE_HINT));
         }
 
         private void friendlyBuildingMonitor_ShipDefensiveStarted(object sender, EventArgs e)
         {
-            _hintDisplayer.HideHint(LocTableFactory.CommonTable.GetString(Hints.NAVAL_FACTORY_RESPONSE_HINT));
+            _hintDisplayer.HideHint(LocTableCache.CommonTable.GetString(Hints.NAVAL_FACTORY_RESPONSE_HINT));
         }
 
         private void buildingMonitor_OffensiveStarted(object sender, EventArgs e)
         {
-            _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString(Hints.OFFENSIVE_RESPONSE_HINT));
+            _hintDisplayer.ShowHint(LocTableCache.CommonTable.GetString(Hints.OFFENSIVE_RESPONSE_HINT));
         }
 
         private void friendlyBuildingMonitor_ShieldStarted(object sender, EventArgs e)
         {
-            _hintDisplayer.HideHint(LocTableFactory.CommonTable.GetString(Hints.OFFENSIVE_RESPONSE_HINT));
+            _hintDisplayer.HideHint(LocTableCache.CommonTable.GetString(Hints.OFFENSIVE_RESPONSE_HINT));
         }
 
         private void friendlyFactoryMonitor_FactoryCompleted(object sender, EventArgs e)
         {
-            _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString(Hints.FACTORY_COMPLETED_HINT));
+            _hintDisplayer.ShowHint(LocTableCache.CommonTable.GetString(Hints.FACTORY_COMPLETED_HINT));
         }
 
         private void friendlyFactoryMonitor_UnitChosen(object sender, EventArgs e)
         {
-            _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString(Hints.UNIT_CHOSEN_HINT));
+            _hintDisplayer.ShowHint(LocTableCache.CommonTable.GetString(Hints.UNIT_CHOSEN_HINT));
         }
 
         private void PlayerCruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
         {
-            _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString(Hints.PLAYER_DAMAGED_HINT));
+            _hintDisplayer.ShowHint(LocTableCache.CommonTable.GetString(Hints.PLAYER_DAMAGED_HINT));
         }
 
         private void PlayerCruiserDroneFocuser_PlayerTriggeredRepair(object sender, EventArgs e)
         {
-            _hintDisplayer.HideHint(LocTableFactory.CommonTable.GetString(Hints.PLAYER_DAMAGED_HINT));
+            _hintDisplayer.HideHint(LocTableCache.CommonTable.GetString(Hints.PLAYER_DAMAGED_HINT));
         }
 
         private void GameEndMonitor_GameEnded(object sender, EventArgs e)

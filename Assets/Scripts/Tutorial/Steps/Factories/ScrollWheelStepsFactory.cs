@@ -36,7 +36,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/ScrollWheel"))));
+                        LocTableCache.TutorialTable.GetString("Steps/ScrollWheel"))));
 
             // Disable scroll wheel
             steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: false));

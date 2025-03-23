@@ -34,7 +34,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         HideIAPButton();
 
-        _ = LocTableFactory.LoadTableAsync(TableName.ADVERTISING);
+        _ = LocTableCache.LoadTableAsync(TableName.ADVERTISING);
 
         _soundPlayer
                 = new SingleSoundPlayer(
@@ -203,7 +203,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             _numberOfRandomAttempts = 0;
         }
 
-        _TextBox.text = LocTableFactory.AdvertisingTable.GetString("ScrollingAd/" + randomnumber);
+        _TextBox.text = LocTableCache.AdvertisingTable.GetString("ScrollingAd/" + randomnumber);
         _scrollAdjustment = (int)(_TextBox.text.Length * 13);
 
     }

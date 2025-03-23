@@ -29,14 +29,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             if (appModel.UserWonSkirmish)
             {
-                postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(VictoryState.VICTORY_TITLE_NO_LOOT_KEY);
+                postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VictoryState.VICTORY_TITLE_NO_LOOT_KEY);
                 postBattleScreen.title.color = Color.black;
                 postBattleScreen.victoryNoLootMessage.SetActive(true);
                 musicPlayer.PlayVictoryMusic();
             }
             else
             {
-                postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(DefeatState.LOSS_TITLE_KEY);
+                postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(DefeatState.LOSS_TITLE_KEY);
                 postBattleScreen.defeatMessage.SetActive(true);
                 musicPlayer.PlayDefeatMusic();
             }

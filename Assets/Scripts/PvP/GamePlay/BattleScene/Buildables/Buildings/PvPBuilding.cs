@@ -77,8 +77,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(placementSound);
             _placementSound = new AudioClipWrapper(placementSound);
 
-            Name = LocTableFactory.CommonTable.GetString($"Buildables/Buildings/{stringKeyName}Name");
-            Description = LocTableFactory.CommonTable.GetString($"Buildables/Buildings/{stringKeyName}Description");
+            Name = LocTableCache.CommonTable.GetString($"Buildables/Buildings/{stringKeyName}Name");
+            Description = LocTableCache.CommonTable.GetString($"Buildables/Buildings/{stringKeyName}Description");
 
             if (!IsHost)
             {
@@ -172,8 +172,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
-                    Name = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantNameStringKeyBase);
-                    Description = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantDescriptionStringKeyBase);
+                    Name = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantNameStringKeyBase);
+                    Description = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantDescriptionStringKeyBase);
                     ApplyVariantStats(variant.statVariant);
                 }
                 else

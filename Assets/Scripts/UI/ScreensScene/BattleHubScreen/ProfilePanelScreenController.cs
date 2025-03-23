@@ -65,10 +65,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
-            million = LocTableFactory.CommonTable.GetString("Million");
-            billion = LocTableFactory.CommonTable.GetString("Billion");
-            trillion = LocTableFactory.CommonTable.GetString("Trillion");
-            quadrillion = LocTableFactory.CommonTable.GetString("Quadrillion");
+            million = LocTableCache.CommonTable.GetString("Million");
+            billion = LocTableCache.CommonTable.GetString("Billion");
+            trillion = LocTableCache.CommonTable.GetString("Trillion");
+            quadrillion = LocTableCache.CommonTable.GetString("Quadrillion");
 
             captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
@@ -82,7 +82,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             playerName.text = _dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(_dataProvider.GameModel.LifetimeDestructionScore);
-            rankTitle.text = LocTableFactory.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
+            rankTitle.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
 
             int nextLevelXP;

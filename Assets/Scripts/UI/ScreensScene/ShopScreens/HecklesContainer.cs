@@ -64,14 +64,14 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            if (LocTableFactory.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
+                            if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                             {
                                 // For heckles with 10 or less characters!
-                                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableFactory.HecklesTable.GetString(currentHeckleData.StringKeyBase));
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase));
                             }
                             else
                             {
-                                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableFactory.HecklesTable.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                             }
                             ScreensSceneGod.Instance.loadoutScreen.AddHeckle(currentHeckleData);
                             priceLabel.SetActive(false);
@@ -86,13 +86,13 @@ namespace BattleCruisers.UI.ScreensScene
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                         }
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -108,14 +108,14 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        if (LocTableFactory.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
+                        if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                         {
                             // For heckles with 10 or less characters!
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableFactory.HecklesTable.GetString(currentHeckleData.StringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase));
                         }
                         else
                         {
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableFactory.HecklesTable.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                         }
                         priceLabel.SetActive(false);
 
@@ -136,7 +136,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -148,7 +148,7 @@ namespace BattleCruisers.UI.ScreensScene
                 // Check for Windows platform
 #if UNITY_STANDALONE_WIN
                 // Execute this line if it's a Windows build
-                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"), null, null);
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"), null, null);
 #else
                 // Execute the original line for non-Windows builds
                 ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, LocTableFactory.ScreensSceneTable.GetString("GetCoins"));
@@ -177,7 +177,7 @@ namespace BattleCruisers.UI.ScreensScene
                 ownFeedback.SetActive(false);
             }
 
-            t_heckleMessage.text = LocTableFactory.HecklesTable.GetString(e.heckleData.StringKeyBase);
+            t_heckleMessage.text = LocTableCache.HecklesTable.GetString(e.heckleData.StringKeyBase);
             hecklePrice.text = e.heckleData.HeckleCost.ToString();
             obj_heckleMessage.GetComponent<RectTransform>().localScale = Vector3.zero;
             obj_heckleMessage.GetComponent<RectTransform>().DOScale(Vector3.one, 0.2f);

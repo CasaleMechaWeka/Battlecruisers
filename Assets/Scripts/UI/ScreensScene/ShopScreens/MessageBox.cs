@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (closeButtonText == null || closeButtonText == "")
             {
                 if (closeButton != null)
-                    closeButton.text = LocTableFactory.ScreensSceneTable.GetString("UI/OkButton");
+                    closeButton.text = LocTableCache.ScreensSceneTable.GetString("UI/OkButton");
             }
             else
             {

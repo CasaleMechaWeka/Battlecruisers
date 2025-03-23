@@ -57,7 +57,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             // 3. Acknowledge the unit
             string nOrNothing = IndefiniteyArticleHelper.AddN(UnitToBuild.Name) ? "n" : "";
             string unitName = nOrNothing + " " + UnitToBuild.Name;
-            string textToDisplayBase = LocTableFactory.TutorialTable.GetString("Steps/UnitDefence/BuildingUnit");
+            string textToDisplayBase = LocTableCache.TutorialTable.GetString("Steps/UnitDefence/BuildingUnit");
             string textToDisplay = string.Format(textToDisplayBase, unitName);
             ITutorialStepArgs clickUnitArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, UnitBuiltProvider);
             enemyUnitDefenceSteps.Add(_explanationDismissableStepFactory.CreateStep(clickUnitArgs));
@@ -68,7 +68,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             // 5. Build defence turret
             nOrNothing = IndefiniteyArticleHelper.AddN(DefenceToBuild.Name) ? "n" : "";
             string defenceName = nOrNothing + " " + DefenceToBuild.Name;
-            textToDisplayBase = LocTableFactory.TutorialTable.GetString("Steps/UnitDefence/BuildingDefence");
+            textToDisplayBase = LocTableCache.TutorialTable.GetString("Steps/UnitDefence/BuildingDefence");
             textToDisplay = string.Format(textToDisplayBase, defenceName);
             IList<ITutorialStep> buildTurretSteps
                 = _constructBuildingStepsFactory.CreateSteps(
@@ -97,7 +97,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                     _argsFactory.CreateTutorialStepArgs(),
                     factoryStepsResult.FactoryProvider));
 
-            string unitComingText = string.Format(LocTableFactory.TutorialTable.GetString("Steps/UnitDefence/EnemyUnitComing"), UnitToBuild.Name);
+            string unitComingText = string.Format(LocTableCache.TutorialTable.GetString("Steps/UnitDefence/EnemyUnitComing"), UnitToBuild.Name);
 
             // 7.5  Optionally boost unit speed until just before it reaches the user's camera view
             enemyUnitDefenceSteps.AddRange(CreateSpeedBoostSteps(unitComingText));
@@ -112,7 +112,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             enemyUnitDefenceSteps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/UnitDefence/SuccessfulDefense"))));
+                        LocTableCache.TutorialTable.GetString("Steps/UnitDefence/SuccessfulDefense"))));
 
             return enemyUnitDefenceSteps;
         }

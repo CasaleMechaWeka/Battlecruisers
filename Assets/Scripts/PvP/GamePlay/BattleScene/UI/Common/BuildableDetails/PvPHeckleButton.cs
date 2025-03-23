@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             _heckleData = heckleData;
             _panelController = panelController;
             heckleButton.Initialise(_soundPlayer, SendHeckleMessage);
-            message.text = LocTableFactory.HecklesTable.GetString(heckleData.StringKeyBase);
+            message.text = LocTableCache.HecklesTable.GetString(heckleData.StringKeyBase);
         }
 
         public void SendHeckleMessage()

@@ -91,12 +91,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             coinBattleController.Initialise(screensSceneGod, _applicationModel);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
 
-            continueTitle.text = LocTableFactory.ScreensSceneTable.GetString("ContinueCampaign");
-            continueSubtitle.text = LocTableFactory.ScreensSceneTable.GetString("ContinueCampaignDescription");
-            levelsTitle.text = LocTableFactory.ScreensSceneTable.GetString("LevelSelect");
-            skirmishTitle.text = LocTableFactory.ScreensSceneTable.GetString("SkirmishMode");
-            offlineOnlyText.text = LocTableFactory.ScreensSceneTable.GetString("OfflineOnlySubtitle");
-            openingSoonText.text = LocTableFactory.ScreensSceneTable.GetString("ArenasOpenDecemberMessage");
+            continueTitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaign");
+            continueSubtitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaignDescription");
+            levelsTitle.text = LocTableCache.ScreensSceneTable.GetString("LevelSelect");
+            skirmishTitle.text = LocTableCache.ScreensSceneTable.GetString("SkirmishMode");
+            offlineOnlyText.text = LocTableCache.ScreensSceneTable.GetString("OfflineOnlySubtitle");
+            openingSoonText.text = LocTableCache.ScreensSceneTable.GetString("ArenasOpenDecemberMessage");
         }
 
         private void GoHome()

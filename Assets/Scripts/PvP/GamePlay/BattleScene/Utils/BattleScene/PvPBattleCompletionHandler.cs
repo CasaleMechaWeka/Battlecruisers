@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             TimeBC.Instance.TimeScale = 1;
             if (wasVictory)
             {
-                PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => PvPBattleSceneGodClient.Instance.messageBox.HideMessage());
+                PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => PvPBattleSceneGodClient.Instance.messageBox.HideMessage());
                 await Task.Delay(POST_GAME_WAIT_TIME_IN_S);
             }
             if (NetworkManager.Singleton.IsConnectedClient)

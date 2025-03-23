@@ -41,22 +41,22 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 case IAPManager.small_coin_pack:
                     _dataProvider.GameModel.Coins += 275;
-                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("CoinsPack100Purchased"));
+                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack100Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.medium_coin_pack:
                     _dataProvider.GameModel.Coins += 900;
-                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("CoinsPack500Purchased"));
+                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack500Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.large_coin_pack:
                     _dataProvider.GameModel.Coins += 3750;
-                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("CoinsPack1000Purchased"));
+                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack1000Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.extralarge_coin_pack:
                     _dataProvider.GameModel.Coins += 20000;
-                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("CoinsPack5000Purchased"));
+                    ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack5000Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
             }
@@ -109,8 +109,8 @@ namespace BattleCruisers.UI.ScreensScene
             ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("select");
 
             iapIcon.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + args.iapData.IAPIconName + ".png");
-            iapName.text = LocTableFactory.ScreensSceneTable.GetString(args.iapData.IAPNameKeyBase);
-            iapDescription.text = LocTableFactory.ScreensSceneTable.GetString(args.iapData.IAPDescriptionKeyBase);
+            iapName.text = LocTableCache.ScreensSceneTable.GetString(args.iapData.IAPNameKeyBase);
+            iapDescription.text = LocTableCache.ScreensSceneTable.GetString(args.iapData.IAPDescriptionKeyBase);
             DisplayPrice();
         }
 
@@ -169,8 +169,8 @@ namespace BattleCruisers.UI.ScreensScene
                     _currentItem = iapItem.GetComponent<IAPItemController>();
                     currenIAPData = iapData;
                     iapIcon.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + iapData.IAPIconName + ".png");
-                    iapName.text = LocTableFactory.ScreensSceneTable.GetString(iapData.IAPNameKeyBase);
-                    iapDescription.text = LocTableFactory.ScreensSceneTable.GetString(iapData.IAPDescriptionKeyBase);
+                    iapName.text = LocTableCache.ScreensSceneTable.GetString(iapData.IAPNameKeyBase);
+                    iapDescription.text = LocTableCache.ScreensSceneTable.GetString(iapData.IAPDescriptionKeyBase);
                     DisplayPrice();
                 }
                 ii++;

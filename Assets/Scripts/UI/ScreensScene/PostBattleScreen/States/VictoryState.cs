@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             BattleResult battleResult = _appModel.DataProvider.GameModel.LastBattleResult;
 
-            postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(VICTORY_TITLE_NO_LOOT_KEY);
+            postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_NO_LOOT_KEY);
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
             //musicPlayer.PlayVictoryMusic(); 
@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 (desiredBehaviour == PostBattleScreenBehaviour.Default &&
                  _lootManager.ShouldShowLevelLoot(battleResult.LevelNum))))
             {
-                postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(VICTORY_TITLE_LOOT_KEY);
+                postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_LOOT_KEY);
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                 postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                      (desiredBehaviour == PostBattleScreenBehaviour.Default &&
                       _lootManager.ShouldShowSideQuestLoot(_appModel.SelectedSideQuestID))))
             {
-                postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(VICTORY_TITLE_LOOT_KEY);
+                postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_LOOT_KEY);
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                 postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);

@@ -87,20 +87,20 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("BodykitPurchased") + " " + LocTableFactory.CommonTable.GetString(currentBodykitData.NameStringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("BodykitPurchased") + " " + LocTableCache.CommonTable.GetString(currentBodykitData.NameStringKeyBase));
                             priceLabel.SetActive(false);
                         }
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                         }
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                 }
                 else
@@ -115,7 +115,7 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("BodykitPurchased") + " " + LocTableFactory.CommonTable.GetString(currentBodykitData.NameStringKeyBase));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("BodykitPurchased") + " " + LocTableCache.CommonTable.GetString(currentBodykitData.NameStringKeyBase));
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
@@ -135,7 +135,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
 
@@ -148,7 +148,7 @@ namespace BattleCruisers.UI.ScreensScene
                 // Check for Windows platform
 #if UNITY_STANDALONE_WIN
                 // Execute this line if it's a Windows build
-                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"), null, null);
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"), null, null);
 #else
         // Execute the original line for non-Windows builds
         ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, LocTableFactory.ScreensSceneTable.GetString("GetCoins"));
@@ -230,8 +230,8 @@ namespace BattleCruisers.UI.ScreensScene
             bodykitPrice.text = e.bodykitData.BodykitCost.ToString();
             bodykitImage.sprite = e.bodykitImage;
             bodykitPreviewImage.sprite = e.bodykitImage;
-            bodykitName.text = LocTableFactory.CommonTable.GetString(e.bodykitData.NameStringKeyBase);
-            bodykitDescription.text = LocTableFactory.CommonTable.GetString(e.bodykitData.DescriptionKeyBase);
+            bodykitName.text = LocTableCache.CommonTable.GetString(e.bodykitData.NameStringKeyBase);
+            bodykitDescription.text = LocTableCache.CommonTable.GetString(e.bodykitData.DescriptionKeyBase);
         }
         private void OnDestroy()
         {

@@ -33,7 +33,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    LocTableFactory.TutorialTable.GetString("Steps/EnemyCruiser"),
+                    LocTableCache.TutorialTable.GetString("Steps/EnemyCruiser"),
                     _aiCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));

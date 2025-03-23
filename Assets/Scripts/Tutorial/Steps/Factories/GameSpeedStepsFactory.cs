@@ -60,14 +60,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/GameSpeed/Buttons"),
+                        LocTableCache.TutorialTable.GetString("Steps/GameSpeed/Buttons"),
                         _rightPanelComponents.SpeedComponents.SpeedButtonPanel))); ;
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/GameSpeed/TryButtons"))));
+                        LocTableCache.TutorialTable.GetString("Steps/GameSpeed/TryButtons"))));
 
             return steps;
         }

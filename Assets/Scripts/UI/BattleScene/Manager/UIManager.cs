@@ -137,7 +137,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
                 {
                     _hintDisplayer = new NonRepeatingHintDisplayer(new HintDisplayer(_explanationPanel));
                 }
-                _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString("Steps/Touchdrag"));
+                _hintDisplayer.ShowHint(LocTableCache.CommonTable.GetString("Steps/Touchdrag"));
             }
             if (!wasAnySlotHighlighted)
             {

@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             {
                 Difficulty difficulty = difficultiesNoEasy[i];
                 string enumStringKey = EnumKeyCreator.CreateKey(difficulty);
-                string localisedDifficulty = LocTableFactory.CommonTable.GetString(enumStringKey);
+                string localisedDifficulty = LocTableCache.CommonTable.GetString(enumStringKey);
 
                 options.Add(new Dropdown.OptionData(localisedDifficulty, difficultySymbols[i]));
                 _difficulties.Add(difficulty);

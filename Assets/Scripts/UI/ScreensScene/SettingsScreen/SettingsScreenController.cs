@@ -163,9 +163,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 accountHelpRow.transform.localScale = new Vector3(.85f, .85f, 1f);
 
             DisplayUserID();
-            iapRefreshButton.GetComponentInChildren<Text>().text = LocTableFactory.ScreensSceneTable.GetString("RefreshPurchasesButtonLabel");
-            deleteCloudDataButton.GetComponentInChildren<Text>().text = LocTableFactory.ScreensSceneTable.GetString("UI/SettingsScreen/DeleteCloudData");
-            cloudSaveLabel.GetComponentInChildren<Text>().text = LocTableFactory.ScreensSceneTable.GetString("UI/SettingsScreen/EnableCloudSave");
+            iapRefreshButton.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("RefreshPurchasesButtonLabel");
+            deleteCloudDataButton.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/SettingsScreen/DeleteCloudData");
+            cloudSaveLabel.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/SettingsScreen/EnableCloudSave");
 
             // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if THIRD_PARTY_PUBLISHER

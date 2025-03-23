@@ -39,7 +39,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/PinchZoom"))));
+                        LocTableCache.TutorialTable.GetString("Steps/PinchZoom"))));
 
             // Disable pinch zoom & swiping
             steps.Add(_featurePermitterStepFactory.CreateStep(_pinchZoomPermitter, enableFeature: false));

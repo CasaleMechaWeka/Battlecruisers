@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 Debug.Log("Error ---> connecting client, see following exception");
                 Debug.Log(e.Message);
-                LandingSceneGod.Instance.messagebox.ShowMessage(LocTableFactory.CommonTable.GetString("NetworkError"));
+                LandingSceneGod.Instance.messagebox.ShowMessage(LocTableCache.CommonTable.GetString("NetworkError"));
                 /*                switch (e.Message)
                                 {
                                     case "Latency":

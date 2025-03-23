@@ -145,9 +145,9 @@ namespace BattleCruisers.Scenes
 
             //loading loc tables in parallel is about 40-100% faster
             //Starting these tasks here saves ~100 ms avg
-            _ = LocTableFactory.LoadTableAsync(TableName.COMMON);
-            _ = LocTableFactory.LoadTableAsync(TableName.HECKLES);
-            _ = LocTableFactory.LoadTableAsync(TableName.SCREENS_SCENE);
+            _ = LocTableCache.LoadTableAsync(TableName.COMMON);
+            _ = LocTableCache.LoadTableAsync(TableName.HECKLES);
+            _ = LocTableCache.LoadTableAsync(TableName.SCREENS_SCENE);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
@@ -308,7 +308,7 @@ namespace BattleCruisers.Scenes
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
-            guestBtn.GetComponentInChildren<TMP_Text>().text = LocTableFactory.ScreensSceneTable.GetString("UI/HomeScreen/PlayButton");
+            guestBtn.GetComponentInChildren<TMP_Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/HomeScreen/PlayButton");
 
             if (CurrentInternetConnectivity.IsConnected)
             {

@@ -81,20 +81,20 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableFactory.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableCache.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
                             priceLabel.SetActive(false);
                         }
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                         }
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                 }
                 else
@@ -111,7 +111,7 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.AddVariant(currentVariantData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableFactory.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableCache.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -139,7 +139,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCredits"), null, null);
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"), null, null);
                 return;
             }
         }
@@ -192,8 +192,8 @@ namespace BattleCruisers.UI.ScreensScene
             VariantPrice.text = e.variantData.VariantCredits.ToString();
             ParentImage.sprite = e.parentSprite;
             variantIcon.sprite = e.variantSprite;
-            VariantName.text = LocTableFactory.CommonTable.GetString(e.variantData.VariantNameStringKeyBase);
-            variantDescription.text = LocTableFactory.CommonTable.GetString(e.variantData.VariantDescriptionStringKeyBase);
+            VariantName.text = LocTableCache.CommonTable.GetString(e.variantData.VariantNameStringKeyBase);
+            variantDescription.text = LocTableCache.CommonTable.GetString(e.variantData.VariantDescriptionStringKeyBase);
             ParentName.text = e.parentName;
         }
 

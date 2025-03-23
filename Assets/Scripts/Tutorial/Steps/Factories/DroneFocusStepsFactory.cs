@@ -73,7 +73,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/DroneFocus/IntroMessage"))));
+                        LocTableCache.TutorialTable.GetString("Steps/DroneFocus/IntroMessage"))));
 
             // Infinitely slow build speed
             steps.Add(
@@ -83,7 +83,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Start 2 buildings
             string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
-            string constructBuilderBayBase = LocTableFactory.TutorialTable.GetString("Steps/DroneFocus/ConstructBuilderBay");
+            string constructBuilderBayBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ConstructBuilderBay");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,
@@ -95,7 +95,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_slidingPanelWaitStepFactory.CreateSelectorHiddenWaitStep());
 
             string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
-            string constructArtilleryBase = LocTableFactory.TutorialTable.GetString("Steps/DroneFocus/ConstructArtillery");
+            string constructArtilleryBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ConstructArtillery");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Offence,
@@ -108,7 +108,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/DroneFocus/BuildSpeedExplanation"))));
+                        LocTableCache.TutorialTable.GetString("Steps/DroneFocus/BuildSpeedExplanation"))));
 
             // Show informator
             steps.Add(
@@ -120,7 +120,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.Add(
                 new ExplanationClickStep(
-                    _argsFactory.CreateTutorialStepArgs(LocTableFactory.TutorialTable.GetString("Steps/DroneFocus/ClickBuilding"), _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
+                    _argsFactory.CreateTutorialStepArgs(LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ClickBuilding"), _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
                     _lastPlayerIncompleteBuildingStartedProvider));
 
             steps.Add(_slidingPanelWaitStepFactory.CreateInformatorShownWaitStep());
@@ -131,7 +131,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             var entry = battleSceneTable.GetEntry("ToggleDronesButton");
             string buttonText = entry.GetLocalizedString();
 
-            string clickBuildersButtonBase = LocTableFactory.TutorialTable.GetString("Steps/DroneFocus/ClickBuildersButton");
+            string clickBuildersButtonBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ClickBuildersButton");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
@@ -139,7 +139,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                         _rightPanelComponents.InformatorPanel.Buttons.ToggleDronesButton)));
 
             // Encourage user to experiment
-            string switchBuildFocusBase = LocTableFactory.TutorialTable.GetString("Steps/DroneFocus/SwitchBuilderFocus");
+            string switchBuildFocusBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/SwitchBuilderFocus");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(

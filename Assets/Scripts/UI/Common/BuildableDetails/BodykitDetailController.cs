@@ -181,8 +181,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             if (index < 0)
                 return;
             Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
-            GetComponent<ComparableCruiserDetailsController>().itemName.text = LocTableFactory.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].NameStringKeyBase);
-            GetComponent<ComparableCruiserDetailsController>().itemDescription.text = LocTableFactory.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
+            GetComponent<ComparableCruiserDetailsController>().itemName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].NameStringKeyBase);
+            GetComponent<ComparableCruiserDetailsController>().itemDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
             GetComponent<ComparableCruiserDetailsController>().itemImage.sprite = bodykit.BodykitImage;
         }
 

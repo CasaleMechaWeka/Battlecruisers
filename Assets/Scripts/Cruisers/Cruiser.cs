@@ -136,8 +136,8 @@ namespace BattleCruisers.Cruisers
             ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
-            Name = LocTableFactory.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
-            Description = LocTableFactory.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
+            Name = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
+            Description = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
@@ -214,8 +214,8 @@ namespace BattleCruisers.Cruisers
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                         // should update Name and Description for Bodykit
-                        Name = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                        Description = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                        Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                        Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                         isUsingBodykit = true;
                     }
                 }
@@ -247,8 +247,8 @@ namespace BattleCruisers.Cruisers
                         if (bodykit.cruiserType == hullType)
                         {
                             GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                            Name = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                            Description = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                            Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                            Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                             isUsingBodykit = true;
                         }
                     }

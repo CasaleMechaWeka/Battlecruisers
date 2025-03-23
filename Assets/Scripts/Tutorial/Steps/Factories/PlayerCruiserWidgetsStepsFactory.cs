@@ -35,8 +35,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_autNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
             // Health dial
-            string healthBase = LocTableFactory.TutorialTable.GetString("Steps/PlayerCruiserWidgets/PlayerHealthBar");
-            string protagonistName = LocTableFactory.CommonTable.GetString("Names/Protagonist");
+            string healthBase = LocTableCache.TutorialTable.GetString("Steps/PlayerCruiserWidgets/PlayerHealthBar");
+            string protagonistName = LocTableCache.CommonTable.GetString("Names/Protagonist");
             ITutorialStepArgs healthDialArgs
                 = _argsFactory.CreateTutorialStepArgs(
                     string.Format(healthBase, protagonistName),
@@ -46,14 +46,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Drone number
             ITutorialStepArgs droneNumberArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    LocTableFactory.TutorialTable.GetString("Steps/PlayerCruiserWidgets/Builders"),
+                    LocTableCache.TutorialTable.GetString("Steps/PlayerCruiserWidgets/Builders"),
                     _numOfDrones);
             steps.Add(_explanationDismissableStepFactory.CreateStep(droneNumberArgs));
 
             // More drones is better
             ITutorialStepArgs moreDronesArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    LocTableFactory.TutorialTable.GetString("Steps/PlayerCruiserWidgets/MoreBuilders"),
+                    LocTableCache.TutorialTable.GetString("Steps/PlayerCruiserWidgets/MoreBuilders"),
                     _numOfDrones);
             steps.Add(_explanationDismissableStepFactory.CreateStep(moreDronesArgs));
 

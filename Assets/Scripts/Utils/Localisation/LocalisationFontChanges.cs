@@ -58,11 +58,11 @@ namespace BattleCruisers.Utils.Localisation
                 _rtlSettings.RtlCorrectedText = "";
 
                 //get the string we need
-                string newFontName = LocTableFactory.FontsTable.GetString("FontName");
+                string newFontName = LocTableCache.FontsTable.GetString("FontName");
                 _newFont = (Font)Resources.Load("Fonts/" + newFontName);
-                string bestFitScaleAdjustment = LocTableFactory.FontsTable.GetString("BestFitScaleAdjustment");
+                string bestFitScaleAdjustment = LocTableCache.FontsTable.GetString("BestFitScaleAdjustment");
                 _newFontScaleAdjustment = float.Parse(bestFitScaleAdjustment, CultureInfo.InvariantCulture.NumberFormat);
-                string boldNewFontBool = LocTableFactory.FontsTable.GetString("Bold");
+                string boldNewFontBool = LocTableCache.FontsTable.GetString("Bold");
                 Boolean.TryParse(boldNewFontBool, out _boldNewFont);
                 UpdateString();
             }

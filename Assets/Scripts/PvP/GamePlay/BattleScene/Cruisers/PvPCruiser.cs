@@ -205,8 +205,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                 // should update Name and Description for Bodykit
-                Name = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
-                Description = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
+                Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
+                Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
             }
         }
 
@@ -276,8 +276,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
 
-            Name = LocTableFactory.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
-            Description = LocTableFactory.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
+            Name = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
+            Description = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
 
 
 

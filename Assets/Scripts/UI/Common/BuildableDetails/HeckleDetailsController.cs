@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void ShowHeckle(IHeckleData heckleData)
         {
             _selectedItem.Value = heckleData;
-            heckleText.text = LocTableFactory.HecklesTable.GetString(heckleData.StringKeyBase);
+            heckleText.text = LocTableCache.HecklesTable.GetString(heckleData.StringKeyBase);
             heckleMessage.GetComponent<RectTransform>().localScale = Vector3.zero;
             heckleMessage.GetComponent<RectTransform>().DOScale(Vector3.one, 0.2f);
             gameObject.SetActive(true);

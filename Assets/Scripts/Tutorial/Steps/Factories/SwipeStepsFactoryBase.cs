@@ -37,7 +37,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString(_messageKey))));
+                        LocTableCache.TutorialTable.GetString(_messageKey))));
 
             DisableNavigation(steps);
 

@@ -41,17 +41,17 @@ namespace BattleCruisers.UI.Loading
             //if player NOT already paid then use Free title
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
             {
-                subTitle = LocTableFactory.CommonTable.GetString("GameNameFreeEdition").ToUpper();
+                subTitle = LocTableCache.CommonTable.GetString("GameNameFreeEdition").ToUpper();
             }
             else if (applicationModel.DataProvider.GameModel.PremiumEdition)
             {
-                subTitle = LocTableFactory.CommonTable.GetString("GameNameSubtitle").ToUpper();
+                subTitle = LocTableCache.CommonTable.GetString("GameNameSubtitle").ToUpper();
             }
 
             SubTitle.text = subTitle;
 
-            _defaultLoadingText = LocTableFactory.CommonTable.GetString("UI/LoadingScreen/DefaultLoadingText");
-            startingText = LocTableFactory.CommonTable.GetString("UI/LoadingScreen/StartingText");
+            _defaultLoadingText = LocTableCache.CommonTable.GetString("UI/LoadingScreen/DefaultLoadingText");
+            startingText = LocTableCache.CommonTable.GetString("UI/LoadingScreen/StartingText");
             loadingText.text = FindLoadingText();
             Instance = this;
 

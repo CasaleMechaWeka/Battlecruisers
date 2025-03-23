@@ -190,7 +190,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             //    leftCruiserName.text = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
-            leftPlayerRankName.text = LocTableFactory.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
+            leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
             // show bodykit of left player in MM if owned
             int id_bodykitA = _dataProvider.GameModel.PlayerLoadout.SelectedBodykit;
@@ -199,18 +199,18 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull.PrefabName))
                 {
-                    leftCruiserName.text = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
+                    leftCruiserName.text = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     leftCruiserImage.sprite = bodykit.BodykitImage;
                 }
             }
             else
             {
-                leftCruiserName.text = LocTableFactory.CommonTable.GetString("Cruisers/" + dataProvider.GameModel.PlayerLoadout.Hull.PrefabName + "Name");
+                leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + dataProvider.GameModel.PlayerLoadout.Hull.PrefabName + "Name");
                 leftCruiserImage.sprite = sprites[dataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
             }
 
-            LookingForOpponentsText.text = LocTableFactory.CommonTable.GetString("LookingForOpponents");
-            FoundOpponentText.text = LocTableFactory.CommonTable.GetString("FoundOpponent");
+            LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LookingForOpponents");
+            FoundOpponentText.text = LocTableCache.CommonTable.GetString("FoundOpponent");
 
 
             CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
@@ -221,31 +221,31 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             switch ((Map)dataProvider.GameModel.GameMap)
             {
                 case Map.PracticeWreckyards:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena01Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena01Name");
                     break;
                 case Map.OzPenitentiary:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena02Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena02Name");
                     break;
                 case Map.UACUltimate:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena08Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena08Name");
                     break;
                 case Map.RioBattlesport:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena07Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena07Name");
                     break;
                 case Map.NuclearDome:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena05Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena05Name");
                     break;
                 case Map.MercenaryOne:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena09Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena09Name");
                     break;
                 case Map.SanFranciscoFightClub:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena03Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena03Name");
                     break;
                 case Map.UACArena:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena06Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena06Name");
                     break;
                 case Map.UACBattleNight:
-                    vsTitile.text = LocTableFactory.ScreensSceneTable.GetString("Arena04Name");
+                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena04Name");
                     break;
             }
 
@@ -362,22 +362,22 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             switch (_status)
             {
                 case MMStatus.FINDING_LOBBY:
-                    LookingForOpponentsText.text = LocTableFactory.CommonTable.GetString("FindingLobby");
+                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("FindingLobby");
                     break;
                 case MMStatus.JOIN_LOBBY:
-                    LookingForOpponentsText.text = LocTableFactory.CommonTable.GetString("JoiningLobby");
+                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("JoiningLobby");
                     break;
                 case MMStatus.CONNECTING:
-                    LookingForOpponentsText.text = LocTableFactory.CommonTable.GetString("Connecting");
+                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("Connecting");
                     break;
                 case MMStatus.CREATING_LOBBY:
-                    LookingForOpponentsText.text = LocTableFactory.CommonTable.GetString("CreatingLobby");
+                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("CreatingLobby");
                     break;
                 case MMStatus.LOADING_ASSETS:
-                    LookingForOpponentsText.text = LocTableFactory.CommonTable.GetString("LoadingAssets");
+                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LoadingAssets");
                     break;
                 case MMStatus.LOOKING_VICTIM:
-                    LookingForOpponentsText.text = LocTableFactory.CommonTable.GetString("LookingVictim");
+                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LookingVictim");
                     break;
             }
         }
@@ -469,14 +469,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
             int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
             leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
-            leftPlayerRankName.text = LocTableFactory.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
+            leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
             //    leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
 
             rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
             //    rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
             int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
             rightPlayerRankeImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
-            rightPlayerRankeName.text = LocTableFactory.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
+            rightPlayerRankeName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
             //    rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
 
             // apply bodykit of right player
@@ -489,13 +489,13 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
                 {
-                    leftCruiserName.text = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
+                    leftCruiserName.text = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     leftCruiserImage.sprite = bodykit.bodykitImage;
                 }
             }
             else
             {
-                leftCruiserName.text = LocTableFactory.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerAPrefabName.Value + "Name");
+                leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerAPrefabName.Value + "Name");
                 leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
             }
 
@@ -505,13 +505,13 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerBPrefabName.Value))
                 {
-                    rightCruiserName.text = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Bodykits[id_bodykitB].NameStringKeyBase);
+                    rightCruiserName.text = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Bodykits[id_bodykitB].NameStringKeyBase);
                     rightCruiserImage.sprite = bodykit.bodykitImage;
                 }
             }
             else
             {
-                rightCruiserName.text = LocTableFactory.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerBPrefabName.Value + "Name");
+                rightCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerBPrefabName.Value + "Name");
                 rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
             }
 

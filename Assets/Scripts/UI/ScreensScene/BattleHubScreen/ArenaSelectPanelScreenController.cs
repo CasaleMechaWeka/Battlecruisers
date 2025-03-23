@@ -202,9 +202,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     else
                     {
                         if (_dataProvider.GameModel.Coins < _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcoins)
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"));
                         if (_dataProvider.GameModel.Credits < _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcredits)
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCredits"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"));
                         loadingSpinner.SetActive(false);
                         battleButton.gameObject.SetActive(true);
                         isClickedBattleButton = false;

@@ -20,10 +20,9 @@ namespace BattleCruisers.Utils.Localisation
         public const string HECKLES = "Heckles";
     }
 
-    public static class LocTableFactory
+    public static class LocTableCache
     {
         private static LocTable _common, _battleScene, _screensScene, _story, _tutorial, _fonts, _advertising, _heckles;
-
 
         public static LocTable CommonTable => _common ??= LoadTable(TableName.COMMON);
         public static LocTable BattleSceneTable => _battleScene ??= LoadTable(TableName.BATTLE_SCENE);

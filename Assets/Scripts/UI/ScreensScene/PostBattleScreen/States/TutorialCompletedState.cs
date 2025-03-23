@@ -22,12 +22,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             Assert.IsNotNull(soundPlayer);
 
             appModel.Mode = GameMode.Campaign;
-            postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(TUTORIAL_TITLE_KEY);
+            postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(TUTORIAL_TITLE_KEY);
 
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
 
-            string droneText = LocTableFactory.ScreensSceneTable.GetString(TUTORIAL_APPRAISAL_DRONE_TEXT);
+            string droneText = LocTableCache.ScreensSceneTable.GetString(TUTORIAL_APPRAISAL_DRONE_TEXT);
             postBattleScreen.appraisalSection.Initialise(droneText, soundPlayer);
             musicPlayer.PlayVictoryMusic();
             postBattleScreen.levelName.gameObject.SetActive(false);

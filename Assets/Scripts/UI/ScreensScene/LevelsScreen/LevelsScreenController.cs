@@ -94,7 +94,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }
-            secretLevelsHint.GetComponentInChildren<Text>(false).text = LocTableFactory.ScreensSceneTable.GetString("SecretLevelHintText");
+            secretLevelsHint.GetComponentInChildren<Text>(false).text = LocTableCache.ScreensSceneTable.GetString("SecretLevelHintText");
             if (numOfLevelsUnlocked < 31)
                 secretLevelsHint.SetActive(false);
             else

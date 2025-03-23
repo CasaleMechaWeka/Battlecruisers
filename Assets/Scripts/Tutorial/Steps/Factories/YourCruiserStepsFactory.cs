@@ -41,7 +41,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    LocTableFactory.TutorialTable.GetString("Steps/YourCruiser"),
+                    LocTableCache.TutorialTable.GetString("Steps/YourCruiser"),
                     _playerCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));

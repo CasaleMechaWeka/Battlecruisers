@@ -134,7 +134,7 @@ namespace BattleCruisers.Scenes
             _gameModel = _dataProvider.GameModel;
             //components = GetComponent<ScreensSceneGodCompoments>();
 
-            _ = LocTableFactory.LoadTableAsync(TableName.STORY);
+            _ = LocTableCache.LoadTableAsync(TableName.STORY);
 
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
 
@@ -317,7 +317,7 @@ namespace BattleCruisers.Scenes
             characterOfBlackmarket.SetActive(false);
             processingPanel.SetActive(false);
 
-            processingPanel.GetComponentInChildren<Text>().text = LocTableFactory.ScreensSceneTable.GetString("Processing");
+            processingPanel.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("Processing");
             Debug.Log(_applicationModel.Mode);
 
             _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
@@ -851,7 +851,7 @@ namespace BattleCruisers.Scenes
 
         public void ShowNewsPanel()
         {
-            messageBoxBig.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("UpdateTitle"), LocTableFactory.ScreensSceneTable.GetString("UpdateDescription"));
+            messageBoxBig.ShowMessage(LocTableCache.ScreensSceneTable.GetString("UpdateTitle"), LocTableCache.ScreensSceneTable.GetString("UpdateDescription"));
         }
 
         public void PlayAdvertisementMusic()

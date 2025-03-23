@@ -77,8 +77,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(engineAudioSource.clip);
             _coreEngineAudioSource = new AudioSourceBC(engineAudioSource);
 
-            Name = LocTableFactory.CommonTable.GetString($"Buildables/Units/{stringKeyName}Name");
-            Description = LocTableFactory.CommonTable.GetString($"Buildables/Units/{stringKeyName}Description");
+            Name = LocTableCache.CommonTable.GetString($"Buildables/Units/{stringKeyName}Name");
+            Description = LocTableCache.CommonTable.GetString($"Buildables/Units/{stringKeyName}Description");
         }
 
         private async void ApplyVariantIconOnClient(int oldVal, int newVal)
@@ -161,8 +161,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
-                    Name = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantNameStringKeyBase);
-                    Description = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantDescriptionStringKeyBase);
+                    Name = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantNameStringKeyBase);
+                    Description = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantDescriptionStringKeyBase);
                     ApplyVariantStats(variant.statVariant);
                 }
                 else

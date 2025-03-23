@@ -198,7 +198,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 1;
-                            messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
                             MatchmakingScreenController.Instance.isProcessing = false;
@@ -210,7 +210,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 1;
-                            messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5);
                             MatchmakingScreenController.Instance.isProcessing = false;
@@ -241,7 +241,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 2;
-                            messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
                             MatchmakingScreenController.Instance.isProcessing = false;
@@ -254,7 +254,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 2;
-                            messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5f);
                             MatchmakingScreenController.Instance.isProcessing = false;

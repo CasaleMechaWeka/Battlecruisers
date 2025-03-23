@@ -31,14 +31,14 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
                 rightBottom.gameObject.SetActive(false);
             }
 
-            string protagonistName = LocTableFactory.CommonTable.GetString("Names/Protagonist");
+            string protagonistName = LocTableCache.CommonTable.GetString("Names/Protagonist");
 
             playerBubble.Initialise(protagonistName, trashTalkData.PlayerText);
             playerBubble.gameObject.SetActive(true);
 
             string enemyNameKey = $"{trashTalkData.StringKeyBase}/name";
             Debug.Log($"EnemyName key: {enemyNameKey}");
-            string enemyName = LocTableFactory.StoryTable.GetString(enemyNameKey);
+            string enemyName = LocTableCache.StoryTable.GetString(enemyNameKey);
             Debug.Log($"Resolved EnemyName: {enemyName}");
 
             enemyBubble.Initialise(enemyName, trashTalkData.EnemyText);

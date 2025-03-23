@@ -31,8 +31,8 @@ namespace BattleCruisers.UI.Loading
             };
             IList<string> hints = GetStrings(keys);
 
-            string buildingsAreDeleteableBase = LocTableFactory.CommonTable.GetString("Hints/BuildingsAreDeletable");
-            string deleteButtonText = LocTableFactory.CommonTable.GetString("UI/Informator/DemolishButton");
+            string buildingsAreDeleteableBase = LocTableCache.CommonTable.GetString("Hints/BuildingsAreDeletable");
+            string deleteButtonText = LocTableCache.CommonTable.GetString("UI/Informator/DemolishButton");
             hints.Add(string.Format(buildingsAreDeleteableBase, deleteButtonText));
 
             return hints;
@@ -54,12 +54,12 @@ namespace BattleCruisers.UI.Loading
 
             IList<string> hints = GetStrings(keys);
 
-            string targetButtonBase = LocTableFactory.CommonTable.GetString("Hints/TargetButton");
-            string targetButtonText = LocTableFactory.CommonTable.GetString("UI/Informator/TargetButton");
+            string targetButtonBase = LocTableCache.CommonTable.GetString("Hints/TargetButton");
+            string targetButtonText = LocTableCache.CommonTable.GetString("UI/Informator/TargetButton");
             hints.Add(string.Format(targetButtonBase, targetButtonText));
 
-            string buildersButtonBase = LocTableFactory.CommonTable.GetString("Hints/BuildersButton");
-            string buildersButtonText = LocTableFactory.CommonTable.GetString("Common/Builders");
+            string buildersButtonBase = LocTableCache.CommonTable.GetString("Hints/BuildersButton");
+            string buildersButtonText = LocTableCache.CommonTable.GetString("Common/Builders");
             hints.Add(string.Format(buildersButtonBase, buildersButtonText));
 
             return hints;
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.Loading
         {
             return
                 keys
-                    .Select(key => LocTableFactory.CommonTable.GetString(key))
+                    .Select(key => LocTableCache.CommonTable.GetString(key))
                     .ToList();
         }
     }

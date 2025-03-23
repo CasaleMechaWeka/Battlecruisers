@@ -33,7 +33,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
             string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
-            string promptBase = LocTableFactory.TutorialTable.GetString("Steps/ConstructDroneStation/Prompt");
+            string promptBase = LocTableCache.TutorialTable.GetString("Steps/ConstructDroneStation/Prompt");
 
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
@@ -45,7 +45,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/ConstructDroneStation/CompletionMessage"))));
+                        LocTableCache.TutorialTable.GetString("Steps/ConstructDroneStation/CompletionMessage"))));
 
             return steps;
         }

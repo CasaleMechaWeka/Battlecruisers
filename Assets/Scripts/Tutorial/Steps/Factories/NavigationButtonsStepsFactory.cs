@@ -44,14 +44,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        LocTableFactory.TutorialTable.GetString("Steps/NavigationButtons/Buttons"),
+                        LocTableCache.TutorialTable.GetString("Steps/NavigationButtons/Buttons"),
                         _cameraComponents.NavigationButtonsPanel)));
 
             // Encourage user to experiment
             string text
                 = SystemInfoBC.Instance.IsHandheld ?
-                    LocTableFactory.TutorialTable.GetString("Steps/NavigationButtons/TouchInstructions") :
-                    LocTableFactory.TutorialTable.GetString("Steps/NavigationButtons/MouseInstructions");
+                    LocTableCache.TutorialTable.GetString("Steps/NavigationButtons/TouchInstructions") :
+                    LocTableCache.TutorialTable.GetString("Steps/NavigationButtons/MouseInstructions");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(text)));

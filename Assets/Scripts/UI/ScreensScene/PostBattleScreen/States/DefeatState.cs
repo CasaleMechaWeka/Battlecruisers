@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         {
             Helper.AssertIsNotNull(postBattleScreen, musicPlayer);
 
-            postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(LOSS_TITLE_KEY);
+            postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(LOSS_TITLE_KEY);
             postBattleScreen.defeatMessage.SetActive(true);
             musicPlayer.PlayDefeatMusic();
             if (appModel.Mode == GameMode.CoinBattle)

@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 _playableHulls.Add(StaticPrefabKeys.Hulls.FortressPrime);
 
             _random = RandomGenerator.Instance;
-            _randomDropdownEntry = LocTableFactory.ScreensSceneTable.GetString("UI/SkirmishScreen/RandomDropdownEntry");
+            _randomDropdownEntry = LocTableCache.ScreensSceneTable.GetString("UI/SkirmishScreen/RandomDropdownEntry");
 
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
@@ -100,7 +100,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             foreach (StrategyType strategy in _strategies)
             {
                 string key = EnumKeyCreator.CreateKey(strategy);
-                string strategyString = LocTableFactory.CommonTable.GetString(key);
+                string strategyString = LocTableCache.CommonTable.GetString(key);
                 strategyStrings.Add(strategyString);
 
                 if (Skirmish != null

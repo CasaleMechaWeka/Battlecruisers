@@ -56,7 +56,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Wait for artillery to complete
             string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
-            string waitForArtilleryBase = LocTableFactory.TutorialTable.GetString("Steps/Endgame/WaitForArtillery");
+            string waitForArtilleryBase = LocTableCache.TutorialTable.GetString("Steps/Endgame/WaitForArtillery");
             steps.Add(
                 new BuildableCompletedWaitStep(
                     _argsFactory.CreateTutorialStepArgs(
@@ -70,7 +70,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.Overview));
 
             // Wait for enemy cruiser to be destroyed
-            string waitForVictoryBase = LocTableFactory.TutorialTable.GetString("Steps/Endgame/WaitForVictory");
+            string waitForVictoryBase = LocTableCache.TutorialTable.GetString("Steps/Endgame/WaitForVictory");
             steps.Add(
                 new TargetDestroyedWaitStep(
                     _argsFactory.CreateTutorialStepArgs(

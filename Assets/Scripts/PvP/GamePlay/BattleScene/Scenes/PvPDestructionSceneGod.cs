@@ -305,7 +305,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     destructionCards[2].image.sprite = Yeti;
                     break;
             }
-            destructionCards[2].description.text = LocTableFactory.CommonTable.GetString("Cruisers/" + cruiserName + "Name");
+            destructionCards[2].description.text = LocTableCache.CommonTable.GetString("Cruisers/" + cruiserName + "Name");
 
             //### Screen Setup ###
 

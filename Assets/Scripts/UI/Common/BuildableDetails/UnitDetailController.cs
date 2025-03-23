@@ -137,10 +137,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             variantIcon.gameObject.SetActive(true);
             variantName.gameObject.SetActive(true);
             VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-            variantName.text = LocTableFactory.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
+            variantName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
             variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-            variantDescription.text = LocTableFactory.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
+            variantDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
             variantStats.ShowStatsOfVariant(_selectedUnit, variant);
         }
 

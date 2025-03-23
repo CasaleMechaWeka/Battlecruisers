@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             inputField.text = _dataProvider.GameModel.PlayerName;
             spinner.SetActive(false);
             btnLabel.SetActive(true);
-            btnLabel.GetComponent<Text>().text = LocTableFactory.CommonTable.GetString("UI/Buttons/SaveButton");
+            btnLabel.GetComponent<Text>().text = LocTableCache.CommonTable.GetString("UI/Buttons/SaveButton");
         }
 
         public void Update()
