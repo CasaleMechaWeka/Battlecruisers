@@ -17,7 +17,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
@@ -42,10 +41,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SideQuestHelper(
             IApplicationModel appModel,
-            ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, storyStrings)
+            : base(appModel)
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 

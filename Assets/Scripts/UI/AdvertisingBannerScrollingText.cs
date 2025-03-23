@@ -18,7 +18,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     private float _xPos;
-    private ILocTable _advertisingTable;
     private int _scrollAdjustment;
     private int[] _randomiserArray = new int[16];
     private int _numberOfRandomAttempts = 0;
@@ -35,7 +34,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         HideIAPButton();
 
-        _advertisingTable = await LocTableFactory.LoadAdvertisingTableAsync();
+        _ = LocTableFactory.LoadTableAsync(TableName.ADVERTISING);
 
         _soundPlayer
                 = new SingleSoundPlayer(
@@ -204,7 +203,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             _numberOfRandomAttempts = 0;
         }
 
-        _TextBox.text = _advertisingTable.GetString("ScrollingAd/" + randomnumber);
+        _TextBox.text = LocTableFactory.AdvertisingTable.GetString("ScrollingAd/" + randomnumber);
         _scrollAdjustment = (int)(_TextBox.text.Length * 13);
 
     }

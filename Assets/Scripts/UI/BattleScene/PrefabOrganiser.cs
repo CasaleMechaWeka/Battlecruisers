@@ -16,21 +16,19 @@ namespace BattleCruisers.UI.BattleScene
         private readonly ILoadout _playerLoadout;
         private readonly PrefabFactory _prefabFactory;
         private readonly IBuildingGroupFactory _buildingGroupFactory;
-        private readonly ILocTable _commonString;
 
         // User needs to be able to build at least one building
         private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
         // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
         private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
-        public PrefabOrganiser(ILoadout playerLoadout, PrefabFactory prefabFactory, IBuildingGroupFactory buildingGroupFactory, ILocTable commonString)
+        public PrefabOrganiser(ILoadout playerLoadout, PrefabFactory prefabFactory, IBuildingGroupFactory buildingGroupFactory)
         {
             Helper.AssertIsNotNull(playerLoadout, prefabFactory, buildingGroupFactory);
 
             _playerLoadout = playerLoadout;
             _prefabFactory = prefabFactory;
             _buildingGroupFactory = buildingGroupFactory;
-            _commonString = commonString;
         }
 
         public IList<IBuildingGroup> GetBuildingGroups()

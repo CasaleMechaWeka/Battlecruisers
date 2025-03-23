@@ -13,12 +13,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public PinchZoomStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter pinchZoomPermitter,
             IPermitter swipePermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory, tutorialStrings)
+            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, pinchZoomPermitter, swipePermitter, explanationDismissableStepFactory);
 
@@ -40,7 +39,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/PinchZoom"))));
+                        LocTableFactory.TutorialTable.GetString("Steps/PinchZoom"))));
 
             // Disable pinch zoom & swiping
             steps.Add(_featurePermitterStepFactory.CreateStep(_pinchZoomPermitter, enableFeature: false));

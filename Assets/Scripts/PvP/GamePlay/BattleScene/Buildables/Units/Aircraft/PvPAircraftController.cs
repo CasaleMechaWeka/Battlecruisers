@@ -85,9 +85,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _kamikazeController = GetComponentInChildren<PvPKamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);

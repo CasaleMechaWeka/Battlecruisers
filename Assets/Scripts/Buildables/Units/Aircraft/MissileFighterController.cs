@@ -64,9 +64,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR;
         protected override float PositionEqualityMarginInM => 2;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _barrelController = gameObject.GetComponentInChildren<MissileBarrelController>();
             Assert.IsNotNull(_barrelController);

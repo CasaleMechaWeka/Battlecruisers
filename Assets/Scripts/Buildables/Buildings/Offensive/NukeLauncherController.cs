@@ -48,9 +48,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 
@@ -101,7 +101,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             _launchedNuke = Instantiate(nukeMissilePrefab);
 
             ITargetFilter targetFilter = new ExactMatchTargetFilter { Target = EnemyCruiser };
-            _launchedNuke.Initialise(_commonStrings, _factoryProvider);
+            _launchedNuke.Initialise(_factoryProvider);
             _launchedNuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,

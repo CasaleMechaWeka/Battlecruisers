@@ -1,273 +1,102 @@
-using System.Linq;
 using System.Threading.Tasks;
-using BattleCruisers.Data;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
 {
+
+    public static class TableName
+    {
+        public const string BATTLE_SCENE = "BattleScene";
+        public const string COMMON = "Common";
+        public const string SCREENS_SCENE = "ScreensScene";
+        public const string STORY = "StoryTable";
+        public const string TUTORIAL = "Tutorial";
+        public const string FONTS = "Fonts";
+        public const string ADVERTISING = "Advertising";
+        public const string HECKLES = "Heckles";
+    }
+
     public static class LocTableFactory
     {
-        private static Locale _locale;
+        private static LocTable _common, _battleScene, _screensScene, _story, _tutorial, _fonts, _advertising, _heckles;
 
-        public class TableName
+
+        public static LocTable CommonTable => _common ??= LoadTable(TableName.COMMON);
+        public static LocTable BattleSceneTable => _battleScene ??= LoadTable(TableName.BATTLE_SCENE);
+        public static LocTable ScreensSceneTable => _screensScene ??= LoadTable(TableName.SCREENS_SCENE);
+        public static LocTable StoryTable => _story ??= LoadTable(TableName.STORY);
+        public static LocTable TutorialTable => _tutorial ??= LoadTable(TableName.TUTORIAL);
+        public static LocTable FontsTable => _fonts ??= LoadTable(TableName.FONTS);
+        public static LocTable AdvertisingTable => _advertising ??= LoadTable(TableName.ADVERTISING);
+        public static LocTable HecklesTable => _heckles ??= LoadTable(TableName.HECKLES);
+
+        public static async Task PreloadAllAsync()
         {
-            public const string BATTLE_SCENE = "BattleScene";
-            public const string COMMON = "Common";
-            public const string SCREENS_SCENE = "ScreensScene";
-            public const string STORY = "StoryTable";
-            public const string TUTORIAL = "Tutorial";
-            public const string FONTS = "Fonts";
-            public const string ADVERTISING = "Advertising";
-            public const string HECKLES = "Heckles";
-
+            await Task.WhenAll(
+                LoadTableAsync(TableName.COMMON, t => _common = t),
+                LoadTableAsync(TableName.BATTLE_SCENE, t => _battleScene = t),
+                LoadTableAsync(TableName.SCREENS_SCENE, t => _screensScene = t),
+                LoadTableAsync(TableName.STORY, t => _story = t),
+                LoadTableAsync(TableName.TUTORIAL, t => _tutorial = t),
+                LoadTableAsync(TableName.FONTS, t => _fonts = t),
+                LoadTableAsync(TableName.ADVERTISING, t => _advertising = t),
+                LoadTableAsync(TableName.HECKLES, t => _heckles = t)
+            );
         }
 
-        private static ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable, _hecklesTable, _fonts, _advertisingTable;
-
-        public static async Task<ILocTable> LoadFontsTableAsync()
+        private static LocTable LoadTable(string tableName)
         {
-            if (_fonts == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.FONTS);
-                _fonts = new LocTable(tableHandle);
-            }
+            if (!LocalizationSettings.InitializationOperation.IsDone)
+                LocalizationSettings.InitializationOperation.WaitForCompletion();
 
-            return _fonts;
+            Locale locale = LocalizationSettings.SelectedLocale;
+
+            var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, locale);
+            handle.WaitForCompletion();
+
+            Assert.IsTrue(handle.Status == AsyncOperationStatus.Succeeded);
+            Assert.IsNotNull(handle.Result);
+
+            return new LocTable(handle);
         }
 
-        public static async Task<ILocTable> LoadBattleSceneTableAsync()
+        public static async Task LoadTableAsync(string tableName, System.Action<LocTable> assign = null)
         {
-            if (_battleSceneTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.BATTLE_SCENE);
-                _battleSceneTable = new LocTable(tableHandle);
-            }
+            await LocalizationSettings.InitializationOperation.Task;
+            Locale locale = LocalizationSettings.SelectedLocale;
 
-            return _battleSceneTable;
-        }
-
-        public static async Task<ILocTable> LoadScreensSceneTableAsync()
-        {
-            if (_screensSceneTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.SCREENS_SCENE);
-                _screensSceneTable = new LocTable(tableHandle);
-            }
-
-            return _screensSceneTable;
-        }
-
-        public static async Task<ILocTable> LoadCommonTableAsync()
-        {
-            if (_commonTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.COMMON);
-                _commonTable = new LocTable(tableHandle);
-            }
-
-            return _commonTable;
-        }
-
-        public static async Task<ILocTable> LoadStoryTableAsync()
-        {
-            //Debug.Log("Loaded story");
-            if (_storyTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.STORY);
-                _storyTable = new LocTable(tableHandle);
-            }
-
-            return _storyTable;
-        }
-
-        public static async Task<ILocTable> LoadTutorialTableAsync()
-        {
-            if (_tutorialTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.TUTORIAL);
-                _tutorialTable = new LocTable(tableHandle);
-            }
-
-            return _tutorialTable;
-        }
-
-        public static async Task<ILocTable> LoadAdvertisingTableAsync()
-        {
-            if (_advertisingTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.ADVERTISING);
-                _advertisingTable = new LocTable(tableHandle);
-            }
-
-            return _advertisingTable;
-        }
-
-
-        public static async Task<ILocTable> LoadHecklesTableAsync()
-        {
-            if (_hecklesTable == null)
-            {
-                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.HECKLES);
-                _hecklesTable = new LocTable(tableHandle);
-            }
-
-            return _hecklesTable;
-        }
-
-
-        private static async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
-        {
-            Locale localeToUse = await GetLocaleAsync();
-            //Debug.Log(localeToUse.name + " selected");
-            AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, localeToUse);
-
-            // Load table, so getting any strings will be synchronous
+            var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, locale);
             await handle.Task;
 
             Assert.IsTrue(handle.Status == AsyncOperationStatus.Succeeded);
             Assert.IsNotNull(handle.Result);
 
-            return handle;
+            if (assign != null)
+                assign(new LocTable(handle));
         }
 
-        //basically just need to make a string selection in settings menu and make it so that on load it uses the string in the code below
-        //also need to setup drop down selector for this functionality
-        //won't work until the game is fully translated
-        private static async Task<Locale> GetLocaleAsync()
+        public static void ReleaseAll()
         {
-            if (_locale != null)
-            {
-                Logging.Log(Tags.LOCALISATION, $"Returning stored locale: {_locale}");
-                return _locale;
-            }
-
-            // Wait for locale preload to finish, otherwise accessing LocalizationSettings.AvailableLocales fails
-            Locale localeToUse = await LocalizationSettings.SelectedLocaleAsync.Task;
-            Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
-            Locale arabic = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Arabic");
-
-            //Debug.Log("Should be names below");
-            foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
-            {
-                //Debug.Log(locale.name);
-            }
-
-            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language != null)
-            {
-                foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
-                {
-                    //Debug.Log(locale.name);
-                    //replace below with the string saved in settings
-                    if (locale.name == ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language)
-                    {
-
-                        localeToUse = locale;
-                        LocalizationSettings.SelectedLocale = localeToUse;
-                        //ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = locale.name;
-                    }
-                }
-            }
-            else
-            {
-                ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = localeToUse.name;
-                LocalizationSettings.SelectedLocale = localeToUse;
-                //Debug.Log("Set the language to " + ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language);
-                //localeToUse = LocalizationSettings.SelectedLocale;
-                //Debug.Log(localeToUse);
-            }
-            //localeToUse = Locale.CreateLocale(LocaleIdentifier);
-
-            /*
-            #if PSEUDO_LOCALE
-                        Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
-                        Locale pseudoLocale = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Pseudo-Locale(pseudo)");
-                        Assert.IsNotNull(pseudoLocale);
-                        LocalizationSettings.SelectedLocale = pseudoLocale;
-                        localeToUse = pseudoLocale;
-            #endif
-            */
-
-
-
-            _locale = localeToUse;
-            //Debug.Log(_locale);
-            return localeToUse;
+            Release(ref _common);
+            Release(ref _battleScene);
+            Release(ref _screensScene);
+            Release(ref _story);
+            Release(ref _tutorial);
+            Release(ref _fonts);
+            Release(ref _advertising);
+            Release(ref _heckles);
         }
 
-        public static void ReleaseFontsTable()
+        private static void Release(ref LocTable table)
         {
-            if (_fonts != null)
+            if (table != null)
             {
-                Addressables.Release(_fonts.Handle);
-                _fonts = null;
-            }
-        }
-
-        public static void ReleaseBattleSceneTable()
-        {
-            if (_battleSceneTable != null)
-            {
-                Addressables.Release(_battleSceneTable.Handle);
-                _battleSceneTable = null;
-            }
-        }
-
-        public static void ReleaseScreensSceneTable()
-        {
-            if (_screensSceneTable != null)
-            {
-                Addressables.Release(_screensSceneTable.Handle);
-                _screensSceneTable = null;
-            }
-        }
-
-        public static void ReleaseCommonTable()
-        {
-            if (_commonTable != null)
-            {
-                Addressables.Release(_commonTable.Handle);
-                _commonTable = null;
-            }
-        }
-
-        public static void ReleaseStoryTable()
-        {
-            if (_storyTable != null)
-            {
-                Addressables.Release(_storyTable.Handle);
-                _storyTable = null;
-            }
-        }
-
-        public static void ReleaseTutorialTable()
-        {
-            if (_tutorialTable != null)
-            {
-                Addressables.Release(_tutorialTable.Handle);
-                _tutorialTable = null;
-            }
-        }
-
-        public static void ReleaseAdvertisingTable()
-        {
-            if (_advertisingTable != null)
-            {
-                Addressables.Release(_tutorialTable.Handle);
-                _advertisingTable = null;
-            }
-        }
-
-        public static void ReleaseHecklesTable()
-        {
-            if (_hecklesTable != null)
-            {
-                Addressables.Release(_hecklesTable.Handle);
-                _hecklesTable = null;
+                Addressables.Release(table.Handle);
+                table = null;
             }
         }
     }

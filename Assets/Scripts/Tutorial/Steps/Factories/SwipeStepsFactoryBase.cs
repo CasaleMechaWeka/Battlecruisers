@@ -14,12 +14,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         protected SwipeStepsFactoryBase(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            string messageKey) 
-            : base(argsFactory, tutorialStrings)
+            string messageKey)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, swipePermitter, explanationDismissableStepFactory);
 
@@ -38,7 +37,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString(_messageKey))));
+                        LocTableFactory.TutorialTable.GetString(_messageKey))));
 
             DisableNavigation(steps);
 

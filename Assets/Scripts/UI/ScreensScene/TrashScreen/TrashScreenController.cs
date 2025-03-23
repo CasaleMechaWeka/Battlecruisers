@@ -6,7 +6,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +17,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private PrefabFactory _prefabFactory;
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
-        private ILocTable _commonStrings;
-        private ILocTable _storyStrings;
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
@@ -48,22 +45,18 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             PrefabFactory prefabFactory,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
-            IMusicPlayer musicPlayer,
-            ILocTable commonStrings,
-            ILocTable storyStrings)
+            IMusicPlayer musicPlayer)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, levelTrashDataList, homeButton);
-            Helper.AssertIsNotNull(appModel, prefabFactory, levelTrashDataList, musicPlayer, commonStrings);
+            Helper.AssertIsNotNull(appModel, prefabFactory, levelTrashDataList, musicPlayer);
 
             _appModel = appModel;
             _prefabFactory = prefabFactory;
             _levelTrashDataList = levelTrashDataList;
             _sideQuestTrashDataList = sideQuestTrashDataList;
             _musicPlayer = musicPlayer;
-            _commonStrings = commonStrings;
-            _storyStrings = storyStrings;
 
             startBattleButton.Initialise(soundPlayer, StartBattle);
             homeButton.Initialise(soundPlayer, Cancel);
@@ -141,7 +134,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
                 trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
             }
 
-            trashTalkBubbles.Initialise(trashTalkData, _commonStrings, _storyStrings);
+            trashTalkBubbles.Initialise(trashTalkData);
             SetupEnemyCharacter(trashTalkData);
 
             // Cruisers

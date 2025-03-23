@@ -16,9 +16,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
         public override bool KeepDistanceFromEnemyCruiser => false;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 

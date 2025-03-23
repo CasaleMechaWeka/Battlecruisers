@@ -5,6 +5,7 @@ using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -93,7 +94,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }
-            secretLevelsHint.GetComponentInChildren<Text>(false).text = LandingSceneGod.Instance.screenSceneStrings.GetString("SecretLevelHintText");
+            secretLevelsHint.GetComponentInChildren<Text>(false).text = LocTableFactory.ScreensSceneTable.GetString("SecretLevelHintText");
             if (numOfLevelsUnlocked < 31)
                 secretLevelsHint.SetActive(false);
             else

@@ -49,7 +49,6 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -58,8 +57,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
 
-        public ILocTable CommonStrings { get; }
-        public ILocTable StoryStrings { get; }
         public IDeferrer Deferrer { get; }
         public IDeferrer RealTimeDeferrer { get; }
 
@@ -81,9 +78,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer deferrer,
             IDeferrer realTimeDeferrer,
             IUpdaterProvider updaterProvider,
-            PrefabFactory prefabFactory,
-            ILocTable commonStrings,
-            ILocTable storyStrings)
+            PrefabFactory prefabFactory)
         {
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
@@ -91,8 +86,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             RealTimeDeferrer = realTimeDeferrer;
             UpdaterProvider = updaterProvider;
             _prefabFactory = prefabFactory;
-            CommonStrings = commonStrings;
-            StoryStrings = storyStrings;
         }
 
         public Helper(
@@ -108,8 +101,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             Deferrer = deferrer ?? helper.Deferrer;
             UpdaterProvider = updaterProvider ?? helper.UpdaterProvider;
             _prefabFactory = prefabFactory ?? helper._prefabFactory;
-            CommonStrings = helper.CommonStrings;
-            StoryStrings = helper.StoryStrings;
         }
 
         public void InitialiseBuilding(
@@ -156,7 +147,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             BuildingWrapper buildingWrapper = building.GameObject.GetComponentInInactiveParent<BuildingWrapper>();
             HealthBarController healthBar = buildingWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            building.StaticInitialise(buildingWrapper.gameObject, healthBar, CommonStrings);
+            building.StaticInitialise(buildingWrapper.gameObject, healthBar);
             building.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             building.Activate(
                 new BuildingActivationArgs(
@@ -211,7 +202,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             UnitWrapper unitWrapper = unit.GameObject.GetComponentInInactiveParent<UnitWrapper>();
             HealthBarController healthBar = unitWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            unit.StaticInitialise(unitWrapper.gameObject, healthBar, CommonStrings);
+            unit.StaticInitialise(unitWrapper.gameObject, healthBar);
             unit.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             unit.Activate(
                 new BuildableActivationArgs(
@@ -521,7 +512,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     fogOfWarManager: Substitute.For<IManagedDisposable>(),
                     parentCruiserHasActiveDrones: Substitute.For<IBroadcastingProperty<bool>>());
 
-            cruiser.StaticInitialise(CommonStrings);
+            cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);
         }
 

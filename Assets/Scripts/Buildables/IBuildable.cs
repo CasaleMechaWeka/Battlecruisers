@@ -8,7 +8,6 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -56,7 +55,7 @@ namespace BattleCruisers.Buildables
         event EventHandler<BuildProgressEventArgs> BuildableProgress;
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-        void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings);
+        void StaticInitialise(GameObject parent, HealthBarController healthBar);
         void Initialise(IUIManager uiManager, FactoryProvider factoryProvider);
         void StartConstruction();
     }

@@ -62,9 +62,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         [SerializeField]
         private List<AircraftBarrelWrapper> barrelWrappers;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
 

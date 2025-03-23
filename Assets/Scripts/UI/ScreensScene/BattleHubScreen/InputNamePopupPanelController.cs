@@ -10,6 +10,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Services.Authentication;
 using System;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -47,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             inputField.text = _dataProvider.GameModel.PlayerName;
             spinner.SetActive(false);
             btnLabel.SetActive(true);
-            btnLabel.GetComponent<Text>().text = LandingSceneGod.Instance.commonStrings.GetString("UI/Buttons/SaveButton");
+            btnLabel.GetComponent<Text>().text = LocTableFactory.CommonTable.GetString("UI/Buttons/SaveButton");
         }
 
         public void Update()

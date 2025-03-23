@@ -12,8 +12,8 @@ using UnityEngine;
 namespace BattleCruisers.Buildables.Buildings.Offensive
 {
     public class DeathstarLauncherController : SatelliteLauncherController
-	{
-		protected override Vector3 SpawnPositionAdjustment => new Vector3(0.003f, 0.21f, 0);
+    {
+        protected override Vector3 SpawnPositionAdjustment => new Vector3(0.003f, 0.21f, 0);
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
         public override TargetValue TargetValue => TargetValue.High;
 
@@ -25,17 +25,17 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             // Need satellite to be initialised to be able to access damage capabilities.
-            satellitePrefab.StaticInitialise(commonStrings);
+            satellitePrefab.StaticInitialise();
 
             foreach (IDamageCapability damageCapability in satellitePrefab.Buildable.DamageCapabilities)
             {
                 AddDamageStats(damageCapability);
             }
         }
-	}
+    }
 }

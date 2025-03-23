@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial
 {
@@ -8,7 +7,5 @@ namespace BattleCruisers.Tutorial
     {
         ExplanationPanel ExplanationPanel { get; }
         IButton ModalMainMenuButton { get; }
-        ILocTable TutorialStrings { get; }
-        ILocTable CommonStrings { get; }
     }
 }

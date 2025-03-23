@@ -14,7 +14,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Scenes.Test
 {
     public class RocketMovementTestGod : TestGodBase
-	{
+    {
         private AirFactory _target;
         private RocketController _rocket;
 
@@ -22,8 +22,8 @@ namespace BattleCruisers.Scenes.Test
 
         protected override List<GameObject> GetGameObjects()
         {
-			_target = FindObjectOfType<AirFactory>();
-			_rocket = FindObjectOfType<RocketController>();
+            _target = FindObjectOfType<AirFactory>();
+            _rocket = FindObjectOfType<RocketController>();
 
             return new List<GameObject>()
             {
@@ -36,25 +36,25 @@ namespace BattleCruisers.Scenes.Test
         {
             Assert.IsNotNull(impactSound);
 
-			// Setup target
+            // Setup target
             helper.InitialiseBuilding(_target);
 
             // Setup rocket
             ICruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
-            
+
             Vector2 initialVelocity = new Vector2(0, 5);
 
-			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
-			{
-				Target = _target
-			};
-			
+            IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter()
+            {
+                Target = _target
+            };
+
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
             ITarget parent = Substitute.For<ITarget>();
             parent.Faction.Returns(Faction.Blues);
 
-            _rocket.Initialise(helper.CommonStrings, args.FactoryProvider);
+            _rocket.Initialise(args.FactoryProvider);
             _rocket.Activate(
                 new TargetProviderActivationArgs<ICruisingProjectileStats>(
                     _rocket.Position,
@@ -65,5 +65,5 @@ namespace BattleCruisers.Scenes.Test
                     new AudioClipWrapper(impactSound),
                     _target));
         }
-	}
+    }
 }

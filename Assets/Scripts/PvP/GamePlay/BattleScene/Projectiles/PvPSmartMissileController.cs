@@ -14,13 +14,11 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.Targets.Factories;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
@@ -88,9 +86,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             //---> CODE BY ANUJ
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
@@ -126,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             //---> CODE BY ANUJ
             _rocketTarget.GameObject.SetActive(true);
-            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
             //<---
 
             missile.enabled = true;

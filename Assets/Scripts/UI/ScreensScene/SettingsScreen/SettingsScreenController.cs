@@ -52,16 +52,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             ISettingsManager settingsManager,
-            IHotkeysModel hotkeysModel,
-            ILocTable commonLocTable,
-            ILocTable screensSceneTable)
+            IHotkeysModel hotkeysModel)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton, cloudSaveToggle);
             Helper.AssertIsNotNull(cloudSaveLabel, accountHelpRow);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
-            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable, screensSceneTable);
+            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel);
 
             _settingsManager = settingsManager;
 
@@ -73,9 +71,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 _settingsManager.Save();
             }
 
-            difficultyDropdown.Initialise(_settingsManager.AIDifficulty, commonLocTable);
-            languageDropdown.Initialise(_settingsManager.Language, commonLocTable);
-            resolutionDropdown.Initialise(_settingsManager.Resolution, commonLocTable);
+            difficultyDropdown.Initialise(_settingsManager.AIDifficulty);
+            languageDropdown.Initialise(_settingsManager.Language);
+            resolutionDropdown.Initialise(_settingsManager.Resolution);
 
 
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
@@ -165,9 +163,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 accountHelpRow.transform.localScale = new Vector3(.85f, .85f, 1f);
 
             DisplayUserID();
-            iapRefreshButton.GetComponentInChildren<Text>().text = screensSceneTable.GetString("RefreshPurchasesButtonLabel");
-            deleteCloudDataButton.GetComponentInChildren<Text>().text = screensSceneTable.GetString("UI/SettingsScreen/DeleteCloudData");
-            cloudSaveLabel.GetComponentInChildren<Text>().text = screensSceneTable.GetString("UI/SettingsScreen/EnableCloudSave");
+            iapRefreshButton.GetComponentInChildren<Text>().text = LocTableFactory.ScreensSceneTable.GetString("RefreshPurchasesButtonLabel");
+            deleteCloudDataButton.GetComponentInChildren<Text>().text = LocTableFactory.ScreensSceneTable.GetString("UI/SettingsScreen/DeleteCloudData");
+            cloudSaveLabel.GetComponentInChildren<Text>().text = LocTableFactory.ScreensSceneTable.GetString("UI/SettingsScreen/EnableCloudSave");
 
             // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if THIRD_PARTY_PUBLISHER

@@ -71,11 +71,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                         }*/
         }
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
             isPvPCruiser = false;
-            base.StaticInitialise(commonStrings);
-            unit.StaticInitialise(parentWrapper, healthBar, commonStrings);
+            base.StaticInitialise();
+            unit.StaticInitialise(parentWrapper, healthBar);
         }
 
         public override void AdjustStatsByDifficulty(Difficulty AIDifficulty)

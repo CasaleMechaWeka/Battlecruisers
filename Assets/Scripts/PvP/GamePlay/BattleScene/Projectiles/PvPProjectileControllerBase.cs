@@ -10,7 +10,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
@@ -78,12 +77,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
 
         // should be called by server
-        public virtual void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
+        public virtual void Initialise(IPvPFactoryProvider factoryProvider)
         {
             Logging.LogMethod(Tags.SHELLS);
-            Helper.AssertIsNotNull(commonStrings, factoryProvider);
+            Helper.AssertIsNotNull(factoryProvider);
 
-            _commonStrings = commonStrings;
             _factoryProvider = factoryProvider;
 
             //Debug.Log("[PvPProjectileControllerBase] Initialise() started.");

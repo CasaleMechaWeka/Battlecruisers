@@ -12,7 +12,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Turrets
 {
-    public abstract class SmartMissileTestGod : TestGodBase
+	public abstract class SmartMissileTestGod : TestGodBase
 	{
 		public SmartProjectileStats projectileStats;
 		public TestTarget enemyCruiserTarget;
@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
 			helper.InitialiseBuilding(enemyFactory, Faction.Reds);
 			enemyFactory.StartConstruction();
 
-			enemyCruiserTarget.Initialise(helper.CommonStrings, Faction.Reds);
+			enemyCruiserTarget.Initialise(Faction.Reds);
 
 			await InitialiseMissileAsync(helper, redCruiser);
 		}

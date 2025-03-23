@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.ActivationArgs;
@@ -10,7 +9,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
@@ -72,12 +70,11 @@ namespace BattleCruisers.Projectiles
 
         public Vector3 Position => transform.position;
 
-        public virtual void Initialise(ILocTable commonStrings, FactoryProvider factoryProvider)
+        public virtual void Initialise(FactoryProvider factoryProvider)
         {
             Logging.LogMethod(Tags.SHELLS);
-            Helper.AssertIsNotNull(commonStrings, factoryProvider);
+            Helper.AssertIsNotNull(factoryProvider);
 
-            _commonStrings = commonStrings;
             _factoryProvider = factoryProvider;
 
             _rigidBody = GetComponent<Rigidbody2D>();

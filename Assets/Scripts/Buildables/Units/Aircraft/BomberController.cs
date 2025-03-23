@@ -64,9 +64,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
         #endregion Properties
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
             Assert.IsNotNull(_bombSpawner);

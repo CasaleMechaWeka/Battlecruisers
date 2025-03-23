@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI.Cameras;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -10,10 +9,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ICameraComponents _cameraComponents;
 
         public CameraAdjustmentWaitStepFactory(
-            ITutorialStepArgsFactory argsFactory, 
-            ILocTable tutorialStrings,
+            ITutorialStepArgsFactory argsFactory,
             ICameraComponents cameraComponents)
-            : base(argsFactory, tutorialStrings)
+            : base(argsFactory)
         {
             Assert.IsNotNull(cameraComponents);
             _cameraComponents = cameraComponents;

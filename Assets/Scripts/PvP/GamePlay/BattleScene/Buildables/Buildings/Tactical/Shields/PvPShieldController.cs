@@ -39,9 +39,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override Vector2 Size => _size;
         private int shieldUpdateCnt = 0;
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
 
             PvPHelper.AssertIsNotNull(visuals, circleCollider, healthBar);
 

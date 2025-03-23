@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.UI
         {
             Helper.AssertIsNotNull(trashScreen, trashDataList, levelButtonsPanel);
 
-            trashDataList.Initialise(helper.StoryStrings);
+            trashDataList.Initialise();
 
             trashScreen
                 .Initialise(
@@ -32,9 +32,7 @@ namespace BattleCruisers.Scenes.Test.UI
                     helper.PrefabFactory,
                     trashDataList,
                     trashDataList,
-                    Substitute.For<IMusicPlayer>(),
-                    helper.CommonStrings,
-                    helper.StoryStrings);
+                    Substitute.For<IMusicPlayer>());
 
             levelButtonsPanel
                 .Initialise(

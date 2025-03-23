@@ -30,12 +30,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             // Need satellite to be initialised to be able to access damage capabilities.
-            satellitePrefab.StaticInitialise(commonStrings);
+            satellitePrefab.StaticInitialise();
 
             foreach (IDamageCapability damageCapability in satellitePrefab.Buildable.DamageCapabilities)
             {

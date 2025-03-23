@@ -19,9 +19,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private const float OPTIMAL_RANGE_BUFFER_IN_M = 1;
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 

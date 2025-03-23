@@ -29,13 +29,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _shieldController = GetComponentInChildren<ShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController);
-            _shieldController.StaticInitialise(commonStrings);
+            _shieldController.StaticInitialise();
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)

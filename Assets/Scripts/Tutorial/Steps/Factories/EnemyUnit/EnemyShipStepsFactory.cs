@@ -5,7 +5,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
@@ -28,11 +27,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public EnemyShipStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             EnemyUnitArgs enemyUnitArgs,
             ISingleBuildableProvider unitBuiltProvider,
             PrefabFactory prefabFactory)
-            : base(argsFactory, tutorialStrings, enemyUnitArgs)
+            : base(argsFactory, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(unitBuiltProvider);
 

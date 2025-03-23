@@ -21,7 +21,6 @@ namespace BattleCruisers.UI.ScreensScene
         public Text captainPrice;
         public EventHandler<CaptainDataEventArgs> captainDataChanged;
         public EventHandler<CaptainDataEventArgs> onCaptainItemClick;
-        private ILocTable commonStrings;
         public CaptainItemController currentItem;
         private ICaptainData currentCaptainData;
         public List<GameObject> visualOfCaptains = new List<GameObject>();
@@ -36,14 +35,12 @@ namespace BattleCruisers.UI.ScreensScene
         private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         public GameObject content;
-        private ILocTable screensSceneTable;
         public GameObject captainMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_captainMessage;
 
         public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
-            commonStrings = LandingSceneGod.Instance.commonStrings;
             captainDataChanged += CaptainDataChanged;
             onCaptainItemClick += OnCaptainItemClick;
             _soundPlayer = soundPlayer;
@@ -52,7 +49,6 @@ namespace BattleCruisers.UI.ScreensScene
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             firstNameString = captainName.text;
             firstDescrtiptionString = captainDescription.text;
-            screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
             priceLabel = captainPrice.transform.parent.gameObject;
             ShopBuyControls.SetActive(false);
         }
@@ -89,19 +85,19 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("CaptainExoPurchased") + " " + LocTableFactory.CommonTable.GetString(currentCaptainData.NameStringKeyBase));
                             priceLabel.SetActive(false);
                         }
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
                         }
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
 
@@ -124,7 +120,7 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.AddExo(currentCaptainData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("CaptainExoPurchased") + " " + commonStrings.GetString(currentCaptainData.NameStringKeyBase));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("CaptainExoPurchased") + " " + LocTableFactory.CommonTable.GetString(currentCaptainData.NameStringKeyBase));
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
@@ -144,7 +140,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -156,10 +152,10 @@ namespace BattleCruisers.UI.ScreensScene
                 // Check for Windows platform
 #if UNITY_STANDALONE_WIN
                 // Execute this line if it's a Windows build
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), null, null);
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"), null, null);
 #else
                 // Execute the original line for non-Windows builds
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, LocTableFactory.ScreensSceneTable.GetString("GetCoins"));
 #endif
             }
         }
@@ -196,8 +192,8 @@ namespace BattleCruisers.UI.ScreensScene
             }
 
             //    captainImage.sprite = e.captainImage;
-            captainName.text = commonStrings.GetString(e.captainData.NameStringKeyBase);
-            captainDescription.text = commonStrings.GetString(e.captainData.DescriptionKeyBase);
+            captainName.text = LocTableFactory.CommonTable.GetString(e.captainData.NameStringKeyBase);
+            captainDescription.text = LocTableFactory.CommonTable.GetString(e.captainData.DescriptionKeyBase);
             captainPrice.text = e.captainData.CaptainCost.ToString();
         }
 

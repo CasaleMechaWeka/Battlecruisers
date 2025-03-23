@@ -14,7 +14,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Scenes.Test
 {
     public class MissileTestsGod : TestGodBase
-	{
+    {
         private MissileController[] _missiles;
 
         public AudioClip impactSound;
@@ -29,23 +29,23 @@ namespace BattleCruisers.Scenes.Test
         }
 
         protected void SetupMissiles(Helper helper, ITarget target)
-		{
+        {
             Assert.IsNotNull(impactSound);
 
-			// Setup missiles
-			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
-			{
-				Target = target
-			};
+            // Setup missiles
+            IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter()
+            {
+                Target = target
+            };
 
             IProjectileStats missileStats = GetComponent<ProjectileStats>();
-			Vector2 initialVelocity = new Vector2(5, 5);
+            Vector2 initialVelocity = new Vector2(5, 5);
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
             ITarget parent = Substitute.For<ITarget>();
 
             foreach (MissileController missile in _missiles)
-			{
-                missile.Initialise(helper.CommonStrings, args.FactoryProvider);
+            {
+                missile.Initialise(args.FactoryProvider);
                 missile.Activate(
                     new TargetProviderActivationArgs<IProjectileStats>(
                         missile.Position,
@@ -56,6 +56,6 @@ namespace BattleCruisers.Scenes.Test
                         new AudioClipWrapper(impactSound),
                         target));
             }
-		}
-	}
+        }
+    }
 }

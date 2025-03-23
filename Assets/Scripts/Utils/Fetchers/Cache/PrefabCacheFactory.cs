@@ -11,12 +11,10 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
 {
@@ -28,14 +26,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     /// PERF:  Only load prefabs required for level (ie, only 2 hulls, only unlocked buildables)
     public class PrefabCacheFactory
     {
-        private readonly ILocTable _commonStrings;
-
-        public PrefabCacheFactory(ILocTable commonStrings)
-        {
-            Assert.IsNotNull(commonStrings);
-            _commonStrings = commonStrings;
-        }
-
         public async Task<PrefabCache> CreatePrefabCacheAsync()
         {
             IList<Task> retrievePrefabsTasks = new List<Task>();
@@ -111,7 +101,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             PrefabContainer<TPrefab> prefabContainer = await PrefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
-            prefabContainer.Prefab.StaticInitialise(_commonStrings);
+            prefabContainer.Prefab.StaticInitialise();
             if (!keyToPrefab.ContainsKey(prefabKey))
                 keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
@@ -126,7 +116,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             prefabContainer.Value = result.Prefab;
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
-            prefabContainer.Value.StaticInitialise(_commonStrings);
+            prefabContainer.Value.StaticInitialise();
         }
     }
 }

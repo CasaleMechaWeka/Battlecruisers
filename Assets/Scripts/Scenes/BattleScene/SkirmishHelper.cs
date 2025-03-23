@@ -11,7 +11,6 @@ using BattleCruisers.Utils.Threading;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -25,10 +24,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SkirmishHelper(
             IApplicationModel appModel,
-            ILocTable storyStrings,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, storyStrings, prefabFactory, deferrer)
+            : base(appModel, prefabFactory, deferrer)
         {
             _skirmish = DataProvider.GameModel.Skirmish;
             Assert.IsNotNull(_skirmish);

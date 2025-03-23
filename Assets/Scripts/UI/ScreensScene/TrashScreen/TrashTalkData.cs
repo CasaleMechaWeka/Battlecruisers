@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Utils.Localisation;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
@@ -28,19 +27,18 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public string StringKeyBase => stringKeyBase;
 
-        public void Initialise(ILocTable storyStrings, bool isSideQuest = false)
+        public void Initialise(bool isSideQuest = false)
         {
-            Assert.IsNotNull(storyStrings);
 
             string playerTextKey = $"{stringKeyBase}/PlayerText";
             string enemyTextKey = $"{stringKeyBase}/EnemyText";
             string droneTextKey = $"{stringKeyBase}/DroneText";
             string enemyNameKey = $"{stringKeyBase}/name";
 
-            PlayerText = storyStrings.GetString(playerTextKey);
-            EnemyText = storyStrings.GetString(enemyTextKey);
-            AppraisalDroneText = storyStrings.GetString(droneTextKey);
-            enemyName = storyStrings.GetString(enemyNameKey);
+            PlayerText = LocTableFactory.StoryTable.GetString(playerTextKey);
+            EnemyText = LocTableFactory.StoryTable.GetString(enemyTextKey);
+            AppraisalDroneText = LocTableFactory.StoryTable.GetString(droneTextKey);
+            enemyName = LocTableFactory.StoryTable.GetString(enemyNameKey);
         }
     }
 }

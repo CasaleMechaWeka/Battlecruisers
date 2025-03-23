@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
         protected override void Setup(Helper helper)
         {
             Assert.IsNotNull(unitPrefab);
-            unitPrefab.StaticInitialise(helper.CommonStrings);
+            unitPrefab.StaticInitialise();
 
             TimeScaleDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(deferrer);

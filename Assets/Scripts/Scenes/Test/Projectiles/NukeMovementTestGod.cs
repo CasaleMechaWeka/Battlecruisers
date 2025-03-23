@@ -14,7 +14,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Scenes.Test
 {
     public class NukeMovementTestGod : TestGodBase
-	{
+    {
         private AirFactory _target;
         private NukeController _nuke;
 
@@ -22,8 +22,8 @@ namespace BattleCruisers.Scenes.Test
 
         protected override List<GameObject> GetGameObjects()
         {
-			_target = FindObjectOfType<AirFactory>();
-			_nuke = FindObjectOfType<NukeController>();
+            _target = FindObjectOfType<AirFactory>();
+            _nuke = FindObjectOfType<NukeController>();
 
             return new List<GameObject>()
             {
@@ -39,19 +39,19 @@ namespace BattleCruisers.Scenes.Test
             // Setup target
             helper.InitialiseBuilding(_target);
 
-			// Setup nuke
-			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
-			{
-				Target = _target
-			};
+            // Setup nuke
+            IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter()
+            {
+                Target = _target
+            };
 
             INukeStats nukeStats = GetComponent<NukeProjectileStats>();
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
-			ITarget parent = Substitute.For<ITarget>();
+            ITarget parent = Substitute.For<ITarget>();
 
-            _nuke.Initialise(helper.CommonStrings, args.FactoryProvider);
+            _nuke.Initialise(args.FactoryProvider);
             _nuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
                     _nuke.Position,
@@ -62,6 +62,6 @@ namespace BattleCruisers.Scenes.Test
                     new AudioClipWrapper(impactSound),
                     _target));
             _nuke.Launch();
-		}
-	}
+        }
+    }
 }

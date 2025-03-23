@@ -15,10 +15,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public event EventHandler ResolutionChanged;
 
-        public void Initialise(Vector2 selectedResolution, ILocTable loc)
+        public void Initialise(Vector2 selectedResolution)
         {
-            Assert.IsNotNull(loc);
-
             _resolutionDropdown = GetComponent<Dropdown>();
             Assert.IsNotNull(_resolutionDropdown);
 

@@ -4,6 +4,6 @@ namespace BattleCruisers
 {
     public interface IPrefab
     {
-        void StaticInitialise(ILocTable commonStrings);
+        void StaticInitialise();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
 {
-    public class LocTable : ILocTable
+    public class LocTable
     {
         public AsyncOperationHandle<StringTable> Handle { get; }
 

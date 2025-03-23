@@ -15,10 +15,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public MainMenuStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IButton modalMainMenuButton,
-            IModalMenu mainMenu) 
-            : base(argsFactory, tutorialStrings)
+            IModalMenu mainMenu)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(mainMenu, modalMainMenuButton);
 
@@ -33,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Get user to open main menu
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    _tutorialStrings.GetString("Steps/MainMenu"),
+                    LocTableFactory.TutorialTable.GetString("Steps/MainMenu"),
                     _modalMainMenuButton);
             steps.Add(
                 new ExplanationClickStep(

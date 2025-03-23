@@ -23,9 +23,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public GameObject drone;
         private NetworkVariable<bool> pvp_IsDroneVisible = new NetworkVariable<bool>();
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
             Assert.IsNotNull(_animation);
         }
         public void Activate(DroneActivationArgs activationArgs)

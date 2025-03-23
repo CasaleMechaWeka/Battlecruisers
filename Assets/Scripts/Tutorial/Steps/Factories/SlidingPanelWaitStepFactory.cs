@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
@@ -11,10 +10,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public SlidingPanelWaitStepFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             ISlidingPanel selector,
             ISlidingPanel informator)
-            : base(argsFactory, tutorialStrings)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(selector, informator);
 

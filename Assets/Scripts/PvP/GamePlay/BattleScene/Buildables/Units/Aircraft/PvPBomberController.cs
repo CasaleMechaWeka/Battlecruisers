@@ -72,9 +72,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         #endregion Properties
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _bombSpawner = gameObject.GetComponentInChildren<PvPBombSpawner>();
             Assert.IsNotNull(_bombSpawner);

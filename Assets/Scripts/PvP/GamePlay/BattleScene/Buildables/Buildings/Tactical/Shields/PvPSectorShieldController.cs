@@ -2,7 +2,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Timers;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -37,9 +36,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override Vector2 Size => _size;
         private int shieldUpdateCnt = 0;
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
 
             PvPHelper.AssertIsNotNull(visuals, polygonCollider, healthBar);
 

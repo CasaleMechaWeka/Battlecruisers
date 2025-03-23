@@ -112,9 +112,9 @@ namespace BattleCruisers.Cruisers
         public bool isCruiser = true;
         public bool isUsingBodykit = false;
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
 
             Assert.IsNotNull(deathPrefab);
 
@@ -136,8 +136,8 @@ namespace BattleCruisers.Cruisers
             ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
-            Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
-            Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
+            Name = LocTableFactory.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
+            Description = LocTableFactory.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
@@ -214,8 +214,8 @@ namespace BattleCruisers.Cruisers
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                         // should update Name and Description for Bodykit
-                        Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                        Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                        Name = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                        Description = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                         isUsingBodykit = true;
                     }
                 }
@@ -247,8 +247,8 @@ namespace BattleCruisers.Cruisers
                         if (bodykit.cruiserType == hullType)
                         {
                             GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                            Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                            Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                            Name = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                            Description = LocTableFactory.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                             isUsingBodykit = true;
                         }
                     }

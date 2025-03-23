@@ -56,9 +56,9 @@ namespace BattleCruisers.Buildables.Units
         private bool isAppliedVariant = false;
         #endregion Properties
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             //Assert.IsTrue(maxVelocityInMPerS > 0);
 
@@ -67,8 +67,8 @@ namespace BattleCruisers.Buildables.Units
             Assert.IsNotNull(engineAudioSource.clip);
             _coreEngineAudioSource = new AudioSourceBC(engineAudioSource);
 
-            Name = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Name");
-            Description = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Description");
+            Name = LocTableFactory.CommonTable.GetString($"Buildables/Units/{stringKeyName}Name");
+            Description = LocTableFactory.CommonTable.GetString($"Buildables/Units/{stringKeyName}Description");
             variantIndex = -1;
         }
         public void OverwriteComparableItem(string name, string description)
@@ -127,8 +127,8 @@ namespace BattleCruisers.Buildables.Units
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     variantIndex = randomID;
-                    Name = _commonStrings.GetString(dataProvider.StaticData.Variants[randomID].VariantNameStringKeyBase);
-                    Description = _commonStrings.GetString(dataProvider.StaticData.Variants[randomID].VariantDescriptionStringKeyBase);
+                    Name = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[randomID].VariantNameStringKeyBase);
+                    Description = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[randomID].VariantDescriptionStringKeyBase);
 
                     // apply variant stats for building (maxhealth, numof drones required, build time)
                     ApplyVariantStats(variant.statVariant);
@@ -176,8 +176,8 @@ namespace BattleCruisers.Buildables.Units
                 HealthBar.variantIcon.enabled = true;
                 int index = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
                 variantIndex = index;
-                Name = _commonStrings.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
-                Description = _commonStrings.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
+                Name = LocTableFactory.CommonTable.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
+                Description = LocTableFactory.CommonTable.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
 
                 // apply max health, num of drone required, build time
                 ApplyVariantStats(variant.statVariant);

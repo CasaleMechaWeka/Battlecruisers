@@ -50,14 +50,12 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             IScreensSceneGod screensSceneGod,
             IApplicationModel applicationModel,
             ISingleSoundPlayer soundPlayer,
-            ILocTable commonStrings,
-            ILocTable screensSceneStrings,
             PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, playerCruiserDropdown, aiCruiserDropdown);
-            Helper.AssertIsNotNull(applicationModel, soundPlayer, commonStrings, screensSceneStrings, prefabFactory);
+            Helper.AssertIsNotNull(applicationModel, soundPlayer, prefabFactory);
 
             _applicationModel = applicationModel;
             _unlockedHulls = applicationModel.DataProvider.GameModel.UnlockedHulls.ToList();
@@ -71,12 +69,12 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 _playableHulls.Add(StaticPrefabKeys.Hulls.FortressPrime);
 
             _random = RandomGenerator.Instance;
-            _randomDropdownEntry = screensSceneStrings.GetString("UI/SkirmishScreen/RandomDropdownEntry");
+            _randomDropdownEntry = LocTableFactory.ScreensSceneTable.GetString("UI/SkirmishScreen/RandomDropdownEntry");
 
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
-            difficultyDropdown.Initialise(FindDefaultDifficulty(), commonStrings);
-            InitialiseStrategyDropdown(commonStrings);
+            difficultyDropdown.Initialise(FindDefaultDifficulty());
+            InitialiseStrategyDropdown();
             InitialiseCruiserDropdown(playerCruiserDropdown, prefabFactory, FindDefaultPlayerCruiser(prefabFactory));
             InitialiseCruiserDropdown(aiCruiserDropdown, prefabFactory, FindDefaultAICruiser(prefabFactory));
         }
@@ -93,7 +91,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        private void InitialiseStrategyDropdown(ILocTable commonStrings)
+        private void InitialiseStrategyDropdown()
         {
             _strategies = (StrategyType[])Enum.GetValues(typeof(StrategyType));
             string initialValue = _randomDropdownEntry;
@@ -102,7 +100,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             foreach (StrategyType strategy in _strategies)
             {
                 string key = EnumKeyCreator.CreateKey(strategy);
-                string strategyString = commonStrings.GetString(key);
+                string strategyString = LocTableFactory.CommonTable.GetString(key);
                 strategyStrings.Add(strategyString);
 
                 if (Skirmish != null

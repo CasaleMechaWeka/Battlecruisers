@@ -587,12 +587,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
-            ILocTable commonStrings = await LocTableFactory.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.LoadStoryTableAsync();
-
-            trashDataList.Initialise(storyStrings);
+            trashDataList.Initialise();
             ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
-            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData, commonStrings, storyStrings);
+            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData);
 
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();

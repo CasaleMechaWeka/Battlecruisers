@@ -151,7 +151,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             //     {
             //         _hintDisplayer = new PvPNonRepeatingHintDisplayer(new PvPHintDisplayer(_explanationPanel));
             //     }
-            //     _hintDisplayer.ShowHint(_commonStrings.GetString("Steps/Touchdrag"));
+            //     _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString("Steps/Touchdrag"));
             // }
 
 

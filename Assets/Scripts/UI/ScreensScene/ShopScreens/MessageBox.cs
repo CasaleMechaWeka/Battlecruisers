@@ -4,6 +4,7 @@ using BattleCruisers.Data;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -35,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (closeButtonText == null || closeButtonText == "")
             {
                 if (closeButton != null)
-                    closeButton.text = LandingSceneGod.Instance.screenSceneStrings.GetString("UI/OkButton");
+                    closeButton.text = LocTableFactory.ScreensSceneTable.GetString("UI/OkButton");
             }
             else
             {

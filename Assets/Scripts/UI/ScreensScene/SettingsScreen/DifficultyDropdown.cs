@@ -18,10 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public event EventHandler DifficultyChanged;
 
-        public void Initialise(Difficulty selectedDifficulty, ILocTable loc)
+        public void Initialise(Difficulty selectedDifficulty)
         {
-            Assert.IsNotNull(loc);
-
             _difficultyDropdown = GetComponent<Dropdown>();
             Assert.IsNotNull(_difficultyDropdown);
 
@@ -38,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             {
                 Difficulty difficulty = difficultiesNoEasy[i];
                 string enumStringKey = EnumKeyCreator.CreateKey(difficulty);
-                string localisedDifficulty = loc.GetString(enumStringKey);
+                string localisedDifficulty = LocTableFactory.CommonTable.GetString(enumStringKey);
 
                 options.Add(new Dropdown.OptionData(localisedDifficulty, difficultySymbols[i]));
                 _difficulties.Add(difficulty);

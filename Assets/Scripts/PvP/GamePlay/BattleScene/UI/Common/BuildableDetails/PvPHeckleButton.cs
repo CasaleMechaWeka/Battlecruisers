@@ -17,18 +17,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private IHeckleData _heckleData;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private ILocTable hecklesStrings;
         private PvPHecklePanelController _panelController;
-        public async void StaticInitialise(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IHeckleData heckleData, PvPHecklePanelController panelController)
+        public void StaticInitialise(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IHeckleData heckleData, PvPHecklePanelController panelController)
         {
             Helper.AssertIsNotNull(soundPlayer, dataProvider, heckleData, panelController);
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
             _heckleData = heckleData;
             _panelController = panelController;
-            hecklesStrings = await LocTableFactory.LoadHecklesTableAsync();
             heckleButton.Initialise(_soundPlayer, SendHeckleMessage);
-            message.text = hecklesStrings.GetString(heckleData.StringKeyBase);
+            message.text = LocTableFactory.HecklesTable.GetString(heckleData.StringKeyBase);
         }
 
         public void SendHeckleMessage()

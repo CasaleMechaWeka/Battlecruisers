@@ -14,7 +14,6 @@ using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -73,8 +72,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IMusicPlayer musicPlayer,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashTalkList,
-            ITrashTalkProvider sideQuestTrashTalkList,
-            ILocTable screensSceneStrings)
+            ITrashTalkProvider sideQuestTrashTalkList)
         {
             base.Initialise(screensSceneGod);
 
@@ -88,7 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 postSkirmishButtonsPanel, appraisalSection,
                 appraisalButtonsPanel, applicationModel,
                 prefabFactory, musicPlayer,
-                difficultyIndicators, screensSceneStrings);
+                difficultyIndicators);
 
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
@@ -131,7 +129,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         this,
                         _applicationModel,
                         musicPlayer,
-                        screensSceneStrings,
                         soundPlayer);
             }
             else if (_applicationModel.Mode == GameMode.Skirmish || _applicationModel.Mode == GameMode.CoinBattle)
@@ -163,7 +160,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         this,
                         _applicationModel,
                         musicPlayer,
-                        screensSceneStrings,
                         soundPlayer);
             }
             else
@@ -206,7 +202,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 unlockedItemSection.Initialise();
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat || !BattleResult.WasVictory)
                 {
-                    postBattleState = new DefeatState(this, _applicationModel, musicPlayer, screensSceneStrings);
+                    postBattleState = new DefeatState(this, _applicationModel, musicPlayer);
                     title.color = Color.white; // Set title text to white for defeat
                 }
                 else
@@ -216,7 +212,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             this,
                             _applicationModel,
                             musicPlayer,
-                            screensSceneStrings,
                             soundPlayer,
                             _lootManager,
                             trashTalkData,

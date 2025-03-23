@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -10,8 +9,7 @@ namespace BattleCruisers.Scenes.Test
         {
             Debug.Log("About to load the world :D");
 
-            ILocTable commonLocTable = await LocTableFactory.LoadCommonTableAsync();
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonLocTable);
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             PrefabCache cache = await prefabCacheFactory.CreatePrefabCacheAsync();
 
             Debug.Log("Finished loading the world :)");

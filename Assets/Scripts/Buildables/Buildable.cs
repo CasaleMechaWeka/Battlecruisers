@@ -19,7 +19,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -180,9 +179,9 @@ namespace BattleCruisers.Buildables
         public event EventHandler Clicked;
         public event EventHandler Deactivated;
 
-        public virtual void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public virtual void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
             keyName = stringKeyName;
             Helper.AssertIsNotNull(parent, healthBar);
 

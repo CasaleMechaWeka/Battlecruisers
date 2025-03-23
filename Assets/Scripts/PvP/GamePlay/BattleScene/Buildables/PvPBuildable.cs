@@ -233,9 +233,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
 
         }
-        public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
             keyName = stringKeyName;
             Helper.AssertIsNotNull(parent, healthBar);
 
@@ -259,37 +259,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_smokeInitialiser);
             Assert.IsNotNull(deathSound);
             _deathSound = new AudioClipWrapper(deathSound);
-            //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
-        }
-
-
-        public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
-        {
-
-            Helper.AssertIsNotNull(parent, healthBar);
-
-            _parent = parent;
-            _healthBar = healthBar;
-
-            _buildableProgress = gameObject.GetComponentInChildren<PvPBuildableProgressController>(includeInactive: true);
-            Assert.IsNotNull(_buildableProgress);
-            _buildableProgress.Initialise();
-
-            ToggleDroneConsumerFocusCommand = new Command(ToggleDroneConsumerFocusCommandExecute, () => IsServer ? IsDroneConsumerFocusable : IsDroneConsumerFocusable_PvPClient);
-
-            ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
-            Assert.IsNotNull(clickHandlerWrapper);
-            _clickHandler = clickHandlerWrapper.GetClickHandler();
-
-            _damageCapabilities = new List<IDamageCapability>();
-            this.DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
-
-            _smokeInitialiser = GetComponentInChildren<PvPSmokeInitialiser>(includeInactive: true);
-            Assert.IsNotNull(_smokeInitialiser);
-
-            Assert.IsNotNull(deathSound);
-            _deathSound = new AudioClipWrapper(deathSound);
-
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }
 

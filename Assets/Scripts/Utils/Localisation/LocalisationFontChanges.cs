@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Localization.Components;
@@ -58,14 +57,12 @@ namespace BattleCruisers.Utils.Localisation
                 _rtlSettings.IsRtl = false;
                 _rtlSettings.RtlCorrectedText = "";
 
-                ILocTable fontSettings = await LocTableFactory.LoadFontsTableAsync();
-
                 //get the string we need
-                string newFontName = fontSettings.GetString("FontName");
+                string newFontName = LocTableFactory.FontsTable.GetString("FontName");
                 _newFont = (Font)Resources.Load("Fonts/" + newFontName);
-                string bestFitScaleAdjustment = fontSettings.GetString("BestFitScaleAdjustment");
+                string bestFitScaleAdjustment = LocTableFactory.FontsTable.GetString("BestFitScaleAdjustment");
                 _newFontScaleAdjustment = float.Parse(bestFitScaleAdjustment, CultureInfo.InvariantCulture.NumberFormat);
-                string boldNewFontBool = fontSettings.GetString("Bold");
+                string boldNewFontBool = LocTableFactory.FontsTable.GetString("Bold");
                 Boolean.TryParse(boldNewFontBool, out _boldNewFont);
                 UpdateString();
             }

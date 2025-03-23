@@ -26,13 +26,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ConstructBuildingStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             LeftPanelComponents leftPanelComponents,
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
-            : base(argsFactory, tutorialStrings)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider, slidingPanelWaitStepFactory);
 
@@ -86,7 +85,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             if (waitForBuildingToComplete)
             {
                 // Wait for building to complete construction
-                string waitTextBase = _tutorialStrings.GetString("Steps/ConstructBuliding/WaitStep");
+                string waitTextBase = LocTableFactory.TutorialTable.GetString("Steps/ConstructBuliding/WaitStep");
                 string waitText = string.Format(waitTextBase, buildingToConstruct.Name);
                 constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
             }

@@ -79,9 +79,6 @@ namespace BattleCruisers.Scenes
         public GameObject labelRetry;
 
         public const string AuthProfileCommandLineArg = "-AuthProfile";
-        public ILocTable commonStrings;
-        public ILocTable hecklesStrings;
-        public ILocTable screenSceneStrings;
 
         public static LandingSceneGod Instance;
         public LoginType loginType = LoginType.None;
@@ -148,9 +145,9 @@ namespace BattleCruisers.Scenes
 
             //loading loc tables in parallel is about 40-100% faster
             //Starting these tasks here saves ~100 ms avg
-            Task<ILocTable> loadCommonStrings = LocTableFactory.LoadCommonTableAsync();
-            Task<ILocTable> loadHeckesStrings = LocTableFactory.LoadHecklesTableAsync();
-            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.LoadScreensSceneTableAsync();
+            _ = LocTableFactory.LoadTableAsync(TableName.COMMON);
+            _ = LocTableFactory.LoadTableAsync(TableName.HECKLES);
+            _ = LocTableFactory.LoadTableAsync(TableName.SCREENS_SCENE);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
@@ -217,13 +214,7 @@ namespace BattleCruisers.Scenes
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
 
-            await Task.WhenAll(loadCommonStrings, loadHeckesStrings, loadScreensSceneStrings);
-
-            commonStrings = loadCommonStrings.Result;
-            hecklesStrings = loadHeckesStrings.Result;
-            screenSceneStrings = loadScreensSceneStrings.Result;
-
-            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
+            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 
             try
@@ -317,7 +308,7 @@ namespace BattleCruisers.Scenes
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
-            guestBtn.GetComponentInChildren<TMP_Text>().text = screenSceneStrings.GetString("UI/HomeScreen/PlayButton");
+            guestBtn.GetComponentInChildren<TMP_Text>().text = LocTableFactory.ScreensSceneTable.GetString("UI/HomeScreen/PlayButton");
 
             if (CurrentInternetConnectivity.IsConnected)
             {

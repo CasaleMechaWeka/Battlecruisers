@@ -16,13 +16,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public YourCruiserStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             ICruiser playerCruiser,
             ITutorialStepFactory cameraAdjustmentWaitStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
-            IPermitter navigationPermitter) 
-            : base(argsFactory, tutorialStrings)
+            IPermitter navigationPermitter)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(playerCruiser, cameraAdjustmentWaitStepFactory, explanationDismissableStepFactory, featurePermitterStepFactory, navigationPermitter);
 
@@ -42,7 +41,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    _tutorialStrings.GetString("Steps/YourCruiser"),
+                    LocTableFactory.TutorialTable.GetString("Steps/YourCruiser"),
                     _playerCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));

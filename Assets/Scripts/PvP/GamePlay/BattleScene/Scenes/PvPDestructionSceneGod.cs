@@ -11,6 +11,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using BattleCruisers.Utils.Localisation;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
@@ -304,7 +305,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     destructionCards[2].image.sprite = Yeti;
                     break;
             }
-            destructionCards[2].description.text = LandingSceneGod.Instance.commonStrings.GetString("Cruisers/" + cruiserName + "Name");
+            destructionCards[2].description.text = LocTableFactory.CommonTable.GetString("Cruisers/" + cruiserName + "Name");
 
             //### Screen Setup ###
 

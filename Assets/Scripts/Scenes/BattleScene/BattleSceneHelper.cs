@@ -15,7 +15,6 @@ using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -24,7 +23,6 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
-        private readonly ILocTable _storyStrings;
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
         protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
         private ITrashTalkProvider _trashTalkProvider;
@@ -36,17 +34,16 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public virtual IPrefabKey PlayerCruiser => _appModel.DataProvider.GameModel.PlayerLoadout.Hull;
 
-        protected BattleSceneHelper(IApplicationModel appModel, ILocTable storyStrings)
+        protected BattleSceneHelper(IApplicationModel appModel)
         {
-            Helper.AssertIsNotNull(appModel, storyStrings);
+            Helper.AssertIsNotNull(appModel);
 
             _appModel = appModel;
-            _storyStrings = storyStrings;
             _backgroundStatsProvider = new BackgroundStatsProvider();
             _calculatorFactory
                 = new BuildProgressCalculatorFactory(
                     new BuildSpeedCalculator());
-            _trashTalkProvider = new TrashTalkProvider(_storyStrings);
+            _trashTalkProvider = new TrashTalkProvider();
         }
 
         public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);

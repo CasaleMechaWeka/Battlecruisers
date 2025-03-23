@@ -11,7 +11,6 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using Unity.Services.Core;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Loading
 {
@@ -32,29 +31,27 @@ namespace BattleCruisers.UI.Loading
         public AnimationClip idAnim;
         public TextMeshProUGUI idText;
 
-        async void Start()
+        void Start()
         {
-
             Helper.AssertIsNotNull(root, loadingText);
 
             applicationModel = ApplicationModelProvider.ApplicationModel;
-            ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
             string subTitle = String.Empty;
 
             //if player NOT already paid then use Free title
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
             {
-                subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+                subTitle = LocTableFactory.CommonTable.GetString("GameNameFreeEdition").ToUpper();
             }
             else if (applicationModel.DataProvider.GameModel.PremiumEdition)
             {
-                subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
+                subTitle = LocTableFactory.CommonTable.GetString("GameNameSubtitle").ToUpper();
             }
 
             SubTitle.text = subTitle;
 
-            _defaultLoadingText = commonStrings.GetString("UI/LoadingScreen/DefaultLoadingText");
-            startingText = commonStrings.GetString("UI/LoadingScreen/StartingText");
+            _defaultLoadingText = LocTableFactory.CommonTable.GetString("UI/LoadingScreen/DefaultLoadingText");
+            startingText = LocTableFactory.CommonTable.GetString("UI/LoadingScreen/StartingText");
             loadingText.text = FindLoadingText();
             Instance = this;
 

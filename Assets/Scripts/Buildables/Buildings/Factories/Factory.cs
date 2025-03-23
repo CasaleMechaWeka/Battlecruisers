@@ -9,7 +9,6 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.DataStrctures;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
@@ -104,9 +103,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public AudioClipWrapper UnitSelectedSound { get; private set; }
         #endregion Properties
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _isUnitPaused = new ObservableValue<bool>(false);
 

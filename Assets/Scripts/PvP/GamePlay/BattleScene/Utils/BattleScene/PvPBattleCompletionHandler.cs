@@ -14,6 +14,7 @@ using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Utils;
 using Unity.Services.Leaderboards;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -95,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             TimeBC.Instance.TimeScale = 1;
             if (wasVictory)
             {
-                PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(PvPBattleSceneGodClient.Instance.commonStrings.GetString("EnemyLeft"), () => PvPBattleSceneGodClient.Instance.messageBox.HideMessage());
+                PvPBattleSceneGodClient.Instance.messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => PvPBattleSceneGodClient.Instance.messageBox.HideMessage());
                 await Task.Delay(POST_GAME_WAIT_TIME_IN_S);
             }
             if (NetworkManager.Singleton.IsConnectedClient)

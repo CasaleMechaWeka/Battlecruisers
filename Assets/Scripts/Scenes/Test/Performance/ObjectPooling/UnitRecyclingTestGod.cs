@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
     public class UnitRecyclingTestGod : TestGodBase
     {
         private Factory _factory;
-        
+
         public UnitWrapper unitPrefab;
         public float timeToDieInS = 1;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
         protected override void Setup(Helper helper)
         {
             Assert.IsNotNull(unitPrefab);
-            unitPrefab.StaticInitialise(helper.CommonStrings);
+            unitPrefab.StaticInitialise();
 
             TimeScaleDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(deferrer);

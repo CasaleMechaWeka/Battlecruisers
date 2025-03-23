@@ -8,7 +8,6 @@ using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
@@ -22,12 +21,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public CreateProducingFactoryStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             ITutorialProvider tutorialProvider,
             PrefabFactory prefabFactory,
             ICruiser aiCruiser)
-            : base(argsFactory, tutorialStrings)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialProvider, prefabFactory, aiCruiser);
 

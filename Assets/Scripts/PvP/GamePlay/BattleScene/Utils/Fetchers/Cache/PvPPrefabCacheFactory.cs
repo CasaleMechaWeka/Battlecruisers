@@ -12,12 +12,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
 {
@@ -29,14 +27,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// PERF:  Only load prefabs required for level (ie, only 2 hulls, only unlocked buildables)
     public class PvPPrefabCacheFactory : IPvPPrefabCacheFactory
     {
-        private readonly ILocTable _commonStrings;
-
-        public PvPPrefabCacheFactory(ILocTable commonStrings)
-        {
-            Assert.IsNotNull(commonStrings);
-            _commonStrings = commonStrings;
-        }
-
         public async Task<IPvPPrefabCache> CreatePrefabCacheAsync()
         {
             IList<Task> retrievePrefabsTasks = new List<Task>();
@@ -102,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
             PrefabContainer<TPrefab> prefabContainer = await PrefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
-            prefabContainer.Prefab.StaticInitialise(_commonStrings);
+            prefabContainer.Prefab.StaticInitialise();
             keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
 
@@ -116,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             prefabContainer.Value = result.Prefab;
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
-            prefabContainer.Value.StaticInitialise(_commonStrings);
+            prefabContainer.Value.StaticInitialise();
         }
     }
 }

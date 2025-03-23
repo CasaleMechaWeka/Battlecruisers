@@ -13,9 +13,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private Vector2 _size;
         public override Vector2 Size => _size;
 
-        public void Initialise(ILocTable commonStrings, Faction faction)
+        public void Initialise(Faction faction)
         {
-            StaticInitialise(commonStrings);
+            StaticInitialise();
 
             Faction = faction;
 

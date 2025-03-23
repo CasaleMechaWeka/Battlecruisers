@@ -5,7 +5,6 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -27,9 +26,9 @@ namespace BattleCruisers.Projectiles
 
         public ITarget Target { get; private set; }
 
-        public override void Initialise(ILocTable commonStrings, FactoryProvider factoryProvider)
+        public override void Initialise(FactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -62,7 +61,7 @@ namespace BattleCruisers.Projectiles
                     flightPointsProvider);
 
             _rocketTarget.GameObject.SetActive(true);
-            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
 
             if (rocketSprite != null)
             {

@@ -13,12 +13,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         private bool _userWonSkirmish;
 
         public PostSkirmishState(
-            PostBattleScreenController postBattleScreen, 
-            IApplicationModel appModel, 
+            PostBattleScreenController postBattleScreen,
+            IApplicationModel appModel,
             IMusicPlayer musicPlayer,
-            ILocTable screensSceneStrings,
             ISingleSoundPlayer soundPlayer)
-            : base(postBattleScreen, appModel, musicPlayer, screensSceneStrings)
+            : base(postBattleScreen, appModel, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);
             Assert.IsNotNull(appModel.DataProvider.GameModel.Skirmish);
@@ -30,14 +29,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             if (appModel.UserWonSkirmish)
             {
-                postBattleScreen.title.text = _screensSceneStrings.GetString(VictoryState.VICTORY_TITLE_NO_LOOT_KEY);
+                postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(VictoryState.VICTORY_TITLE_NO_LOOT_KEY);
                 postBattleScreen.title.color = Color.black;
                 postBattleScreen.victoryNoLootMessage.SetActive(true);
                 musicPlayer.PlayVictoryMusic();
             }
             else
             {
-                postBattleScreen.title.text = _screensSceneStrings.GetString(DefeatState.LOSS_TITLE_KEY);
+                postBattleScreen.title.text = LocTableFactory.ScreensSceneTable.GetString(DefeatState.LOSS_TITLE_KEY);
                 postBattleScreen.defeatMessage.SetActive(true);
                 musicPlayer.PlayDefeatMusic();
             }

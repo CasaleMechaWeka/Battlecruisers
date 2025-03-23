@@ -44,11 +44,11 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
             isCruiser = false;
-            base.StaticInitialise(commonStrings);
-            unit.StaticInitialise(parentWrapper, healthBar, commonStrings);
+            base.StaticInitialise();
+            unit.StaticInitialise(parentWrapper, healthBar);
         }
 
         public override void AdjustStatsByDifficulty(Difficulty AIDifficulty)

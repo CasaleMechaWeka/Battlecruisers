@@ -158,18 +158,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
 
-            ILocTable commonStrings = await LocTableFactory.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.LoadStoryTableAsync();
-            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
+            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
-            prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
+            prefabFactory = new PvPPrefabFactory(prefabCache, null);
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, components.Deferrer, storyStrings);
+            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, components.Deferrer);
 
             playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
@@ -181,7 +179,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise();
-            await GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
+            GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             _Initialise_Rest();
         }
         public void _Initialise_Rest()
@@ -405,12 +403,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
             IPvPPrefabFactory prefabFactory,
-            IDeferrer deferrer,
-            // PvPNavigationPermitters navigationPermitters,
-            ILocTable storyStrings
-        )
+            IDeferrer deferrer)
         {
-            return new PvPBattleHelper(applicationModel, storyStrings, prefabFactory, deferrer);
+            return new PvPBattleHelper(applicationModel, prefabFactory, deferrer);
         }
     }
 }

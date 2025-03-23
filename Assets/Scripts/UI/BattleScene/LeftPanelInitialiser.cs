@@ -15,7 +15,6 @@ using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
@@ -35,9 +34,6 @@ namespace BattleCruisers.UI.BattleScene
         public BuildMenuInitialiser buildMenuInitialiser;
         public GameObject popLimitReachedFeedback;
 
-
-
-
         public LeftPanelComponents Initialise(
             IDroneManager droneManager,
             IDroneManagerMonitor droneManagerMonitor,
@@ -49,8 +45,7 @@ namespace BattleCruisers.UI.BattleScene
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData,
-            ILocTable commonString)
+            IStaticData staticData)
         {
             Helper.AssertIsNotNull(
                 droneManager,
@@ -77,8 +72,7 @@ namespace BattleCruisers.UI.BattleScene
                     eventSoundPlayer,
                     uiSoundPlayer,
                     populationLimitMonitor,
-                    staticData,
-                    commonString);
+                    staticData);
 
 
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
@@ -98,11 +92,10 @@ namespace BattleCruisers.UI.BattleScene
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData,
-            ILocTable commonString)
+            IStaticData staticData)
         {
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
-            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory, commonString);
+            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory
@@ -122,7 +115,5 @@ namespace BattleCruisers.UI.BattleScene
                     uiSoundPlayer,
                     populationLimitMonitor);
         }
-
-
     }
 }

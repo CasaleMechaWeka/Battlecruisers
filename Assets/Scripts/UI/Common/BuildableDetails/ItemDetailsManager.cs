@@ -20,21 +20,19 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private readonly IComparableItemDetails<ICruiser> _cruiserDetails;
         private readonly PrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
-        private readonly ILocTable _commonString;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public ItemDetailsManager(IInformatorPanel informator, IDataProvider dataProvider, PrefabFactory prefabFactory, ILocTable commonString)
+        public ItemDetailsManager(IInformatorPanel informator, IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(informator, dataProvider, prefabFactory, commonString);
+            Helper.AssertIsNotNull(informator, dataProvider, prefabFactory);
 
             _informatorPanel = informator;
             _buildingDetails = informator.BuildingDetails;
             _unitDetails = informator.UnitDetails;
             _cruiserDetails = informator.CruiserDetails;
 
-            _commonString = commonString;
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
 
@@ -63,7 +61,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                     _buildingDetails.ShowItemDetails(staticBuilding, variant);
-                    _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
+                    _buildingDetails.GetBuildingVariantDetailController().variantName.text
+                     = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                     + " " + LocTableFactory.CommonTable.GetString("Buildables/Buildings/" + building.keyName + "Name");
                     //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
@@ -84,7 +84,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                     _buildingDetails.ShowItemDetails(staticBuilding, variant);
-                    _buildingDetails.GetBuildingVariantDetailController().variantName.text = _commonString.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Buildings/" + building.keyName + "Name");
+                    _buildingDetails.GetBuildingVariantDetailController().variantName.text
+                     = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                      + " " + LocTableFactory.CommonTable.GetString("Buildables/Buildings/" + building.keyName + "Name");
                     //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
@@ -126,7 +128,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IUnit staticUnit = variant.GetUnit(_prefabFactory);
                     _unitDetails.ShowItemDetails(staticUnit, variant);
-                    _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
+                    _unitDetails.GetUnitVariantDetailController().variantName.text
+                     = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                      + " " + LocTableFactory.CommonTable.GetString("Buildables/Units/" + unit.keyName + "Name");
                     //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
@@ -147,7 +151,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IUnit staticUnit = variant.GetUnit(_prefabFactory);
                     _unitDetails.ShowItemDetails(staticUnit, variant);
-                    _unitDetails.GetUnitVariantDetailController().variantName.text = _commonString.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase) + " " + _commonString.GetString("Buildables/Units/" + unit.keyName + "Name");
+                    _unitDetails.GetUnitVariantDetailController().variantName.text
+                     = LocTableFactory.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                      + " " + LocTableFactory.CommonTable.GetString("Buildables/Units/" + unit.keyName + "Name");
                     //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;

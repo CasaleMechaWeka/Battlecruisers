@@ -8,7 +8,6 @@ using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
@@ -43,9 +42,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         [SerializeField]
         private Vector2 manualOffset = Vector2.zero; // Manual offset values
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
 
             Helper.AssertIsNotNull(visuals, circleCollider, healthBar);
 

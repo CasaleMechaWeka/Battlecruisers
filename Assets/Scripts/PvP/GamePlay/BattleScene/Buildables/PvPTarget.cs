@@ -125,9 +125,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
 
             _healthTracker = new PvPHealthTracker(this, maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;

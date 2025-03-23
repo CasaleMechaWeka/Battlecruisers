@@ -1,6 +1,5 @@
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -41,10 +40,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public PvPBattleHelper(
             IApplicationModel appModel,
-            ILocTable storyStrings,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer
-        ) : base(appModel, storyStrings)
+        ) : base(appModel)
         {
             // _appModel = appModel;
             _prefabFactory = prefabFactory;

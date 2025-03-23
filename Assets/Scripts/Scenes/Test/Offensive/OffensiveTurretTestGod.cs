@@ -56,7 +56,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
             TestTarget fakeCruiser = FindObjectOfType<TestTarget>();
             if (fakeCruiser != null)
             {
-                fakeCruiser.Initialise(helper.CommonStrings, Faction.Blues);
+                fakeCruiser.Initialise(Faction.Blues);
             }
 
             // Setup turret

@@ -7,14 +7,14 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Units.Ships
 {
     public abstract class AnimatedShipController : ShipController
-	{
+    {
         private IMovementEffect _movementEffects;
         public MovementEffectInitialiser movementEffectInitialiser;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
-            
+            base.StaticInitialise(parent, healthBar);
+
             Assert.IsNotNull(movementEffectInitialiser);
             _movementEffects = movementEffectInitialiser.CreateMovementEffects();
         }

@@ -31,8 +31,8 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         protected override void Setup(Helper helper)
         {
-            facingRightUnit.StaticInitialise(helper.CommonStrings);
-            facingLeftUnit.StaticInitialise(helper.CommonStrings);
+            facingRightUnit.StaticInitialise();
+            facingLeftUnit.StaticInitialise();
 
             ICruiser leftCruiser = helper.CreateCruiser(Direction.Right, FactoryFacingRightFaction);
             ICruiser rightCruiser = helper.CreateCruiser(Direction.Left, FactoryFacingLeftFaction);

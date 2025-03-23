@@ -12,6 +12,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using System.Linq;
 using Unity.Services.Authentication;
+using BattleCruisers.Utils.Localisation;
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class BattleHubScreensController : ScreenController
@@ -90,12 +91,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             coinBattleController.Initialise(screensSceneGod, _applicationModel);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
 
-            continueTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaign");
-            continueSubtitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaignDescription");
-            levelsTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("LevelSelect");
-            skirmishTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("SkirmishMode");
-            offlineOnlyText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineOnlySubtitle");
-            openingSoonText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ArenasOpenDecemberMessage");
+            continueTitle.text = LocTableFactory.ScreensSceneTable.GetString("ContinueCampaign");
+            continueSubtitle.text = LocTableFactory.ScreensSceneTable.GetString("ContinueCampaignDescription");
+            levelsTitle.text = LocTableFactory.ScreensSceneTable.GetString("LevelSelect");
+            skirmishTitle.text = LocTableFactory.ScreensSceneTable.GetString("SkirmishMode");
+            offlineOnlyText.text = LocTableFactory.ScreensSceneTable.GetString("OfflineOnlySubtitle");
+            openingSoonText.text = LocTableFactory.ScreensSceneTable.GetString("ArenasOpenDecemberMessage");
         }
 
         private void GoHome()
