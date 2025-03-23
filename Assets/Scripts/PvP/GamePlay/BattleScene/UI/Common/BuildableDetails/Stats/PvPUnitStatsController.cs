@@ -2,6 +2,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Categorisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Stats
@@ -22,12 +23,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             base.InternalShowStats(item, itemToCompareTo);
 
-            int starRating = _unitMovementSpeedConverter.ConvertValueToStars(item.MaxVelocityInMPerS);
+            int starRating = ValueToStarsConverter.ConvertValueToStars(item.MaxVelocityInMPerS, ValueType.MovementSpeed);
             if (starRating == 0)
             {
                 starRating = 1;
             }
-            ComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS, itemToCompareTo.MaxVelocityInMPerS);
+            ComparisonResult comparisonResult = HigherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS, itemToCompareTo.MaxVelocityInMPerS);
             speed.ShowResult(starRating, comparisonResult);
         }
 
@@ -35,12 +36,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         protected override void InternalShowStatsOfVariant(IPvPUnit item, VariantPrefab variant, IPvPUnit itemToCompareTo)
         {
             base.InternalShowStatsOfVariant(item, variant, itemToCompareTo);
-            int starRating = _unitMovementSpeedConverter.ConvertValueToStars(item.MaxVelocityInMPerS + variant.statVariant.max_velocity);
+            int starRating = ValueToStarsConverter.ConvertValueToStars(item.MaxVelocityInMPerS + variant.statVariant.max_velocity, ValueType.MovementSpeed);
             if (starRating == 0)
             {
                 starRating = 1;
             }
-            ComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS + variant.statVariant.max_velocity, itemToCompareTo.MaxVelocityInMPerS);
+            ComparisonResult comparisonResult = HigherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS + variant.statVariant.max_velocity, itemToCompareTo.MaxVelocityInMPerS);
             speed.ShowResult(starRating, comparisonResult);
         }
 

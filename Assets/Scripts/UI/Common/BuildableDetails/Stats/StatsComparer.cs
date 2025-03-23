@@ -1,38 +1,27 @@
 ﻿namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-    public interface IStatsComparer
+	public static class HigherIsBetterComparer
 	{
-		ComparisonResult CompareStats(float stat1, float stat2);
-	}
-
-	public class HigherIsBetterComparer : IStatsComparer
-	{
-		public ComparisonResult CompareStats(float stat1, float stat2)
+		public static ComparisonResult CompareStats(float stat1, float stat2)
 		{
 			if (stat1 == stat2)
-			{
 				return new NeutralResult();
-			}
 			else if (stat1 > stat2)
-			{
 				return new BetterResult();
-			}
+
 			return new WorseResult();
 		}
 	}
 
-	public class LowerIsBetterComparer : IStatsComparer
+	public static class LowerIsBetterComparer
 	{
-		public ComparisonResult CompareStats(float stat1, float stat2)
+		public static ComparisonResult CompareStats(float stat1, float stat2)
 		{
 			if (stat1 == stat2)
-			{
 				return new NeutralResult();
-			}
 			else if (stat1 < stat2)
-			{
 				return new BetterResult();
-			}
+
 			return new WorseResult();
 		}
 	}

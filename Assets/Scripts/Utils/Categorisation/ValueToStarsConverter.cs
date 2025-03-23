@@ -1,32 +1,35 @@
-﻿using UnityEngine.Assertions;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Utils.Categorisation
 {
-    public abstract class ValueToStarsConverter : IValueToStarsConverter
-	{
-        private readonly float[] _categoryThresholds;
+    public enum ValueType
+    {
+        MovementSpeed = 0,
+        BuildableHealth = 1,
+        CruiserHealth = 2,
+        AntiAir = 3,
+        AntiShip = 4,
+        AntiCruiser = 5
+    }
 
-		private const int MIN_NUM_OF_STARS = 0;
-		private const int MAX_NUM_OF_STARS = 5;
-
-        protected ValueToStarsConverter(float[] categoryThresholds)
+    public static class ValueToStarsConverter
+    {
+        private static readonly IReadOnlyList<float[]> Thresholds = new[]
         {
-            Assert.IsNotNull(categoryThresholds);
-            Assert.IsTrue(categoryThresholds.Length == MAX_NUM_OF_STARS);
+            new float[] { 1.5f, 2, 4, 6, 8 },           // UnitMovementSpeed
+            new float[] { 1, 200, 400, 600, 1000 },     // BuildableHealth
+            new float[] { 1, 2400, 3600, 4800, 6000 },  // CruiserHealth
+            new float[] { 1, 10, 23, 27, 50 },          // AntiAirDamage
+            new float[] { 1, 24, 50, 87, 119 },         // AntiShipDamage
+            new float[] { 1, 15, 30, 50, 70 }           // AntiCruiserDamage
+        };
 
-            _categoryThresholds = categoryThresholds;
-        }
-
-        public int ConvertValueToStars(float value)
+        public static int ConvertValueToStars(float value, ValueType valueType)
         {
-            for (int i = _categoryThresholds.Length - 1; i >= 0; --i)
-			{
-                if (value >= _categoryThresholds[i])
-				{
-					return i + 1;
-				}
-			}
-			return MIN_NUM_OF_STARS;
+            float[] thresholds = Thresholds[(int)valueType];
+            int index = Array.BinarySearch(thresholds, value);
+            return index >= 0 ? index + 1 : ~index;
         }
     }
 }
