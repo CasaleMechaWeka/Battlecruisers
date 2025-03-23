@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
         public virtual void Initialise()
         {
-            IValueToStarsConverterFactory converterFactory = new ValueToStarsConverterFactory();
+            ValueToStarsConverterFactory converterFactory = new ValueToStarsConverterFactory();
 
             _unitMovementSpeedConverter = converterFactory.CreateUnitMovementSpeedConverter();
             _buildableHealthConverter = converterFactory.CreateBuildableHealthConverter();

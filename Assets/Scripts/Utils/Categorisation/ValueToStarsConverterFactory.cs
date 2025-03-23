@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Utils.Categorisation
 {
-    public class ValueToStarsConverterFactory : IValueToStarsConverterFactory
+    public class ValueToStarsConverterFactory
     {
         public IValueToStarsConverter CreateUnitMovementSpeedConverter()
         {
@@ -24,11 +24,11 @@
         {
             return new AntiAirDamageToStarsConverter();
         }
-		
-		public IValueToStarsConverter CreateAntiShipDamageConverter()
-		{
+
+        public IValueToStarsConverter CreateAntiShipDamageConverter()
+        {
             return new AntiShipDamageToStarsConverter();
-		}
+        }
 
         public IValueToStarsConverter CreateAntiCruiserDamageConverter()
         {
