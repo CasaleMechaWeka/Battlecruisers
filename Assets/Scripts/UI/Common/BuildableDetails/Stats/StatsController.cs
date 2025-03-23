@@ -14,14 +14,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
         public virtual void Initialise()
         {
-            ValueToStarsConverterFactory converterFactory = new ValueToStarsConverterFactory();
-
-            _unitMovementSpeedConverter = converterFactory.CreateUnitMovementSpeedConverter();
-            _buildableHealthConverter = converterFactory.CreateBuildableHealthConverter();
-            _cruiserHealthConverter = converterFactory.CreateCruiserHealthConverter();
-            _antiAirDamageConverter = converterFactory.CreateAntiAirDamageConverter();
-            _antiShipDamageConverter = converterFactory.CreateAntiShipDamageConverter();
-            _antiCruiserConverter = converterFactory.CreateAntiCruiserDamageConverter();
+            _unitMovementSpeedConverter = ValueToStarsConverterFactory.CreateUnitMovementSpeedConverter();
+            _buildableHealthConverter = ValueToStarsConverterFactory.CreateBuildableHealthConverter();
+            _cruiserHealthConverter = ValueToStarsConverterFactory.CreateCruiserHealthConverter();
+            _antiAirDamageConverter = ValueToStarsConverterFactory.CreateAntiAirDamageConverter();
+            _antiShipDamageConverter = ValueToStarsConverterFactory.CreateAntiShipDamageConverter();
+            _antiCruiserConverter = ValueToStarsConverterFactory.CreateAntiCruiserDamageConverter();
 
             _higherIsBetterComparer = new HigherIsBetterComparer();
             _lowerIsBetterComparer = new LowerIsBetterComparer();

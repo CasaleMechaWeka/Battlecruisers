@@ -1,36 +1,36 @@
 ﻿namespace BattleCruisers.Utils.Categorisation
 {
-    public class ValueToStarsConverterFactory
+    public static class ValueToStarsConverterFactory
     {
-        public IValueToStarsConverter CreateUnitMovementSpeedConverter()
+        public static IValueToStarsConverter CreateUnitMovementSpeedConverter()
         {
             return new UnitMovementSpeedToStarsConverter();
         }
 
         #region Health
-        public IValueToStarsConverter CreateBuildableHealthConverter()
+        public static IValueToStarsConverter CreateBuildableHealthConverter()
         {
             return new BuildableHealthToStarsConverter();
         }
 
-        public IValueToStarsConverter CreateCruiserHealthConverter()
+        public static IValueToStarsConverter CreateCruiserHealthConverter()
         {
             return new CruiserHealthToStarsConverter();
         }
         #endregion Health
 
         #region Damage
-        public IValueToStarsConverter CreateAntiAirDamageConverter()
+        public static IValueToStarsConverter CreateAntiAirDamageConverter()
         {
             return new AntiAirDamageToStarsConverter();
         }
 
-        public IValueToStarsConverter CreateAntiShipDamageConverter()
+        public static IValueToStarsConverter CreateAntiShipDamageConverter()
         {
             return new AntiShipDamageToStarsConverter();
         }
 
-        public IValueToStarsConverter CreateAntiCruiserDamageConverter()
+        public static IValueToStarsConverter CreateAntiCruiserDamageConverter()
         {
             return new AntiCruiserDamageToStarsConverter();
         }
