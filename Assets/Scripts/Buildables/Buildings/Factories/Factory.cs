@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     {
         private IUnitSpawnPositionFinder _unitSpawnPositionFinder;
         private IUnitSpawnDecider _unitSpawnDecider;
-        private IPool<Unit, BuildableActivationArgs> _unitPool;
+        private Pool<Unit, BuildableActivationArgs> _unitPool;
 
         public abstract UnitCategory UnitCategory { get; }
 

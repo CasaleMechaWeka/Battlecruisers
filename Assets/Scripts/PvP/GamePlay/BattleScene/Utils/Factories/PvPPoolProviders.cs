@@ -28,10 +28,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
 
         private Pool<IDroneController, DroneActivationArgs> _dronePool;
-        public IPool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
+        public Pool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
 
         private Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
-        public IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
+        public Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
 
         public IPvPUnitToPoolMap UnitToPoolMap { get; }
 

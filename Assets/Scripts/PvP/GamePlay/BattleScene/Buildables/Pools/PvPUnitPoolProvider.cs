@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private readonly IPvPUIManager _uiManager;
         private readonly IPvPFactoryProvider _factoryProvider;
-        private readonly IList<IPool<PvPUnit, PvPBuildableActivationArgs>> _pools;
+        private readonly IList<Pool<PvPUnit, PvPBuildableActivationArgs>> _pools;
 
         // Don't want more than 1 because unit may never be built.  Want at least 1
         // to force prefab to be loaded.  First time load is the slowest, because
@@ -21,27 +21,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const int INITIAL_UNIT_CAPACITY = 1;
 
         // Aircraft
-        public IPool<PvPUnit, PvPBuildableActivationArgs> BomberPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> FighterPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> GunshipPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> SteamCopterPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> BroadswordPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> StratBomberPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> SpyPlanePool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> MissileFighterPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> TestAircraftPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> BomberPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> FighterPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> GunshipPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> SteamCopterPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> BroadswordPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> StratBomberPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> SpyPlanePool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> MissileFighterPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> TestAircraftPool { get; }
 
         // Ships
-        public IPool<PvPUnit, PvPBuildableActivationArgs> AttackBoatPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> AttackRIBPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> FrigatePool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> DestroyerPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> SiegeDestroyerPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> ArchonPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> GlassCannoneerPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> GunBoatPool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> RocketTurtlePool { get; }
-        public IPool<PvPUnit, PvPBuildableActivationArgs> FlakTurtlePool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> AttackBoatPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> AttackRIBPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> FrigatePool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> DestroyerPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> SiegeDestroyerPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> ArchonPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> GlassCannoneerPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> GunBoatPool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> RocketTurtlePool { get; }
+        public Pool<PvPUnit, PvPBuildableActivationArgs> FlakTurtlePool { get; }
 
         public PvPUnitPoolProvider(IPvPFactoryProvider factoryProvider)
         {
@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             // _uiManager = uiManager;
             _factoryProvider = factoryProvider;
-            _pools = new List<IPool<PvPUnit, PvPBuildableActivationArgs>>();
+            _pools = new List<Pool<PvPUnit, PvPBuildableActivationArgs>>();
 
             // Aircraft
             BomberPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPBomber);
@@ -83,7 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _uiManager = uiManager;
             _factoryProvider = factoryProvider;
-            _pools = new List<IPool<PvPUnit, PvPBuildableActivationArgs>>();
+            _pools = new List<Pool<PvPUnit, PvPBuildableActivationArgs>>();
 
             // Aircraft
             BomberPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPBomber);
@@ -109,9 +109,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             FlakTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFlakTurtle);
         }
 
-        private IPool<PvPUnit, PvPBuildableActivationArgs> CreatePool(IPrefabKey unitKey)
+        private Pool<PvPUnit, PvPBuildableActivationArgs> CreatePool(IPrefabKey unitKey)
         {
-            IPool<PvPUnit, PvPBuildableActivationArgs> pool
+            Pool<PvPUnit, PvPBuildableActivationArgs> pool
                 = new Pool<PvPUnit, PvPBuildableActivationArgs>(
                     new PvPUnitFactory(
                         _factoryProvider.PrefabFactory,
@@ -124,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void SetInitialCapacity()
         {
-            foreach (IPool<PvPUnit, PvPBuildableActivationArgs> pool in _pools)
+            foreach (Pool<PvPUnit, PvPBuildableActivationArgs> pool in _pools)
                 pool.AddCapacity(INITIAL_UNIT_CAPACITY);
         }
     }

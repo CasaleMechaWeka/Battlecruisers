@@ -7,13 +7,13 @@ namespace BattleCruisers.Tests.UI.BattleScene
 {
     public abstract class ModalManagerTestsBase
     {
-        protected IPauseGameManager _pauseGameManager;
+        protected PauseGameManager _pauseGameManager;
         protected INavigationPermitterManager _navigationPermitterManager;
 
         [SetUp]
         public virtual void TestSetup()
         {
-            _pauseGameManager = Substitute.For<IPauseGameManager>();
+            _pauseGameManager = Substitute.For<PauseGameManager>();
             _navigationPermitterManager = Substitute.For<INavigationPermitterManager>();
         }
     }

@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public bool novaShell = false;
         public bool fiveShellCluster = false;
 
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (novaShell)

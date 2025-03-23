@@ -9,7 +9,7 @@ namespace BattleCruisers.Projectiles.Pools
     {
         public bool isSmall = false;
 
-        public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>>
+        public Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>>
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             if (isSmall)

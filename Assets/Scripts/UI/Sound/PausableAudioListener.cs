@@ -8,9 +8,9 @@ namespace BattleCruisers.UI.Sound
     public class PausableAudioListener
     {
         private readonly AudioListenerBC _audioListener;
-        private readonly IPauseGameManager _pauseGameManager;
+        private readonly PauseGameManager _pauseGameManager;
 
-        public PausableAudioListener(AudioListenerBC audioListener, IPauseGameManager pauseGameManager)
+        public PausableAudioListener(AudioListenerBC audioListener, PauseGameManager pauseGameManager)
         {
             Helper.AssertIsNotNull(audioListener, pauseGameManager);
 

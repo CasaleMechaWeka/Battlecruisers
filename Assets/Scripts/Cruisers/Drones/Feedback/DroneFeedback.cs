@@ -11,7 +11,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneFeedback : IDroneFeedback
     {
         private readonly IDroneConsumerInfo _droneConsumerInfo;
-        private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
+        private readonly Pool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
         private readonly IList<IDroneController> _drones;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         public DroneFeedback(
             IDroneConsumerInfo droneConsumerInfo,
-            IPool<IDroneController, DroneActivationArgs> dronePool,
+            Pool<IDroneController, DroneActivationArgs> dronePool,
             ISpawnPositionFinder spawnPositionFinder,
             Faction faction)
         {

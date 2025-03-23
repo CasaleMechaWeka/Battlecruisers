@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene.Pools
 {
-    public class Pool<TPoolable, TArgs> : IPool<TPoolable, TArgs> where TPoolable : class, IPoolable<TArgs>
+    public class Pool<TPoolable, TArgs> where TPoolable : class, IPoolable<TArgs>
     {
         private readonly Stack<TPoolable> _items;
         private readonly IPoolableFactory<TPoolable, TArgs> _itemFactory;

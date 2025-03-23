@@ -6,26 +6,26 @@ namespace BattleCruisers.Buildables.Pools
     public interface IUnitPoolProvider
     {
         // Aircraft
-        IPool<Unit, BuildableActivationArgs> BomberPool { get; }
-        IPool<Unit, BuildableActivationArgs> FighterPool { get; }
-        IPool<Unit, BuildableActivationArgs> GunshipPool { get; }
-        IPool<Unit, BuildableActivationArgs> SteamCopterPool { get; }
-        IPool<Unit, BuildableActivationArgs> BroadswordPool { get; }
-        IPool<Unit, BuildableActivationArgs> StratBomberPool { get; }
-        IPool<Unit, BuildableActivationArgs> SpyPlanePool { get; }
-        IPool<Unit, BuildableActivationArgs> TestAircraftPool { get; }
-        IPool<Unit, BuildableActivationArgs> MissileFighterPool { get; }
+        Pool<Unit, BuildableActivationArgs> BomberPool { get; }
+        Pool<Unit, BuildableActivationArgs> FighterPool { get; }
+        Pool<Unit, BuildableActivationArgs> GunshipPool { get; }
+        Pool<Unit, BuildableActivationArgs> SteamCopterPool { get; }
+        Pool<Unit, BuildableActivationArgs> BroadswordPool { get; }
+        Pool<Unit, BuildableActivationArgs> StratBomberPool { get; }
+        Pool<Unit, BuildableActivationArgs> SpyPlanePool { get; }
+        Pool<Unit, BuildableActivationArgs> TestAircraftPool { get; }
+        Pool<Unit, BuildableActivationArgs> MissileFighterPool { get; }
 
         // Ships
-        IPool<Unit, BuildableActivationArgs> AttackBoatPool { get; }
-        IPool<Unit, BuildableActivationArgs> AttackRIBPool { get; }
-        IPool<Unit, BuildableActivationArgs> FrigatePool { get; }
-        IPool<Unit, BuildableActivationArgs> DestroyerPool { get; }
-        IPool<Unit, BuildableActivationArgs> SiegeDestroyerPool { get; }
-        IPool<Unit, BuildableActivationArgs> ArchonPool { get; }
-        IPool<Unit, BuildableActivationArgs> GlassCannoneerPool { get; }
-        IPool<Unit, BuildableActivationArgs> GunBoatPool { get; }
-        IPool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
-        IPool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
+        Pool<Unit, BuildableActivationArgs> AttackBoatPool { get; }
+        Pool<Unit, BuildableActivationArgs> AttackRIBPool { get; }
+        Pool<Unit, BuildableActivationArgs> FrigatePool { get; }
+        Pool<Unit, BuildableActivationArgs> DestroyerPool { get; }
+        Pool<Unit, BuildableActivationArgs> SiegeDestroyerPool { get; }
+        Pool<Unit, BuildableActivationArgs> ArchonPool { get; }
+        Pool<Unit, BuildableActivationArgs> GlassCannoneerPool { get; }
+        Pool<Unit, BuildableActivationArgs> GunBoatPool { get; }
+        Pool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
+        Pool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
     }
 }

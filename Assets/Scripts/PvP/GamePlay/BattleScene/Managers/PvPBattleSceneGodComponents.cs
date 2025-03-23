@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public IDeferrer Deferrer { get; private set; }
         public IDeferrer RealTimeDeferrer { get; private set; }
 
-        public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
+        public LifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;

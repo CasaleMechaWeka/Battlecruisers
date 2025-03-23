@@ -23,11 +23,11 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 {
     public class GameEndHandlerTests
     {
-        private IGameEndHandler _gameEndHandler;
+        private GameEndHandler _gameEndHandler;
 
         private ICruiser _playerCruiser, _aiCruiser;
         private IArtificialIntelligence _ai;
-        private IBattleCompletionHandler _battleCompletionHandler;
+        private BattleCompletionHandler _battleCompletionHandler;
         private IDeferrer _deferrer;
         private ICruiserDeathCameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
@@ -51,7 +51,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _aiCruiser.IsPlayerCruiser.Returns(false);
 
             _ai = Substitute.For<IArtificialIntelligence>();
-            _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
+            _battleCompletionHandler = Substitute.For<BattleCompletionHandler>();
             _deferrer = Substitute.For<IDeferrer>();
             _cameraFocuser = Substitute.For<ICruiserDeathCameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);

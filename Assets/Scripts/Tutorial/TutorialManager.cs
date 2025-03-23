@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial
     {
         private ITutorialStepConsumer _consumer;
         private IExplanationPanel _explanationPanel;
-        private IGameEndMonitor _gameEndMonitor;
+        private GameEndMonitor _gameEndMonitor;
 
         public void Initialise(ITutorialArgs tutorialArgs, HighlighterInitialiser highlighterInitialiser)
         {
@@ -28,11 +28,11 @@ namespace BattleCruisers.Tutorial
                     coreHighlighter,
                     new HighlightArgsFactory(tutorialArgs.CameraComponents.MainCamera));
 
-            ITutorialStepsFactory stepsFactory 
+            ITutorialStepsFactory stepsFactory
                 = new MasterTutorialStepsFactory(
-                    highlighter, 
-                    _explanationPanel, 
-                    tutorialArgs.Components.Deferrer, 
+                    highlighter,
+                    _explanationPanel,
+                    tutorialArgs.Components.Deferrer,
                     tutorialArgs);
 
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>(stepsFactory.CreateSteps());

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
 {
-    public class PauseGameManager : IPauseGameManager
+    public class PauseGameManager
     {
         private readonly ITime _time;
         private float _prePauseTimeScale;

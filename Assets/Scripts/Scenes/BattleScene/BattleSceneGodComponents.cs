@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public CloudInitialiser CloudInitialiser => cloudInitialiser;
 
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
-        public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
+        public LifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
@@ -55,11 +55,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public void Initialise(ISettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(
-                backgroundClickableEmitter, 
-                targetIndicator, 
-                prioritisedSoundPlayerAudioSource, 
-                uiSoundsAudioSource, 
-                musicPlayerInitialiser, 
+                backgroundClickableEmitter,
+                targetIndicator,
+                prioritisedSoundPlayerAudioSource,
+                uiSoundsAudioSource,
+                musicPlayerInitialiser,
                 windInitialiser,
                 cloudInitialiser,
                 hotkeyInitialiser);

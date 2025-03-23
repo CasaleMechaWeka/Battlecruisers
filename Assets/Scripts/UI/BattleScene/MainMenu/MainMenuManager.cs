@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
     public class MainMenuManager : ModalManager, IMainMenuManager
     {
         private readonly IModalMenu _modalMenu;
-        private readonly IBattleCompletionHandler _battleCompletionHandler;
+        private readonly BattleCompletionHandler _battleCompletionHandler;
 
         public bool IsShown => _modalMenu.IsVisible.Value;
 
@@ -17,9 +17,9 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
         public MainMenuManager(
             INavigationPermitterManager navigationPermitterManager,
-            IPauseGameManager pauseGameManager,
+            PauseGameManager pauseGameManager,
             IModalMenu modalMenu,
-            IBattleCompletionHandler battleCompletionHandler)
+            BattleCompletionHandler battleCompletionHandler)
             : base(navigationPermitterManager, pauseGameManager)
         {
             Helper.AssertIsNotNull(modalMenu, battleCompletionHandler);

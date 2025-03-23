@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
     {
-        private static IGameEndMonitor _gameEndMonitor;
+        private static GameEndMonitor _gameEndMonitor;
         // Hold references to avoid garbage collection
         private AudioInitialiser _audioInitialiser;
         private ITutorialProvider _tutorialProvider;
@@ -162,7 +162,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
-            IPauseGameManager pauseGameManager = new PauseGameManager(time);
+            PauseGameManager pauseGameManager = new PauseGameManager(time);
             IUIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
@@ -230,7 +230,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             Debug.Log($"Enemy name before instantiating: {enemyName}");
 
-            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 

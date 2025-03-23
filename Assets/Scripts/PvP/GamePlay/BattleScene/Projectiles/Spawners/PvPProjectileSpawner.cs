@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         where TPvPStats : IProjectileStats
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
-        private IPool<TPvPProjectile, TPvPProjectileArgs> _projectilePool;
+        private Pool<TPvPProjectile, TPvPProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;

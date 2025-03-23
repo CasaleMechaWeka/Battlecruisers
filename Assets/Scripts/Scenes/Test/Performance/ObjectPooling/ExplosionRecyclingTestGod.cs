@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
 {
     public class ExplosionRecyclingTestGod : TestGodBase
     {
-        private IPool<IPoolable<Vector3>, Vector3> _pool;
+        private Pool<IPoolable<Vector3>, Vector3> _pool;
 
         public float delayInS = 0.5f;
         public float xRadiusInM = 2.5f;

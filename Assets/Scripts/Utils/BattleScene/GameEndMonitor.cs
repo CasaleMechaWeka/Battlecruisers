@@ -11,17 +11,17 @@ namespace BattleCruisers.Utils.BattleScene
     /// 1. A cruiser is destroyed
     /// 2. The user quits
     /// </summary>
-    public class GameEndMonitor : IGameEndMonitor
+    public class GameEndMonitor
     {
         private readonly ICruiserDestroyedMonitor _cruiserDestroyedMonitor;
-        private readonly IBattleCompletionHandler _battleCompletionHandler;
-        private readonly IGameEndHandler _gameEndHandler;
+        private readonly BattleCompletionHandler _battleCompletionHandler;
+        private readonly GameEndHandler _gameEndHandler;
 
         public event EventHandler GameEnded;
         public GameEndMonitor(
-            ICruiserDestroyedMonitor cruiserDestroyedMonitor, 
-            IBattleCompletionHandler battleCompletionHandler,
-            IGameEndHandler gameEndHandler)
+            ICruiserDestroyedMonitor cruiserDestroyedMonitor,
+            BattleCompletionHandler battleCompletionHandler,
+            GameEndHandler gameEndHandler)
         {
             Helper.AssertIsNotNull(cruiserDestroyedMonitor, battleCompletionHandler, gameEndHandler);
 
@@ -59,7 +59,7 @@ namespace BattleCruisers.Utils.BattleScene
         {
             Dictionary<TargetType, DeadBuildableCounter> deadBuildables = BattleSceneGod.deadBuildables;
             long ds = 0;
-            foreach(KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
+            foreach (KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
             {
                 ds += kvp.Value.GetTotalDamageInCredits();
             }

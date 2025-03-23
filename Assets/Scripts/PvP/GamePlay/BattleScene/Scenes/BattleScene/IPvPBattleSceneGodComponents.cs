@@ -26,6 +26,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         IUpdaterProvider UpdaterProvider { get; }
 
-        ILifetimeEventBroadcaster LifetimeEvents { get; }
+        LifetimeEventBroadcaster LifetimeEvents { get; }
     }
 }

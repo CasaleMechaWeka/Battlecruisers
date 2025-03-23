@@ -10,20 +10,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPExplosionPoolProvider : IExplosionPoolProvider
     {
-        public IPool<IPoolable<Vector3>, Vector3> BulletImpactPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> HighCalibreBulletImpactPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> TinyBulletImpactPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> NovaShellImpactPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> RocketShellImpactPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> BombExplosionPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> FlakExplosionsPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> SmallExplosionsPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> MediumExplosionsPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> MFExplosionsPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> FirecrackerExplosionsPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> LargeExplosionsPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> HugeExplosionsPool { get; }
-        public IPool<IPoolable<Vector3>, Vector3> FiveShellClusterExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> BulletImpactPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> HighCalibreBulletImpactPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> TinyBulletImpactPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> NovaShellImpactPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> RocketShellImpactPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> BombExplosionPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> FlakExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> SmallExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> MediumExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> MFExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> FirecrackerExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> LargeExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> HugeExplosionsPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> FiveShellClusterExplosionsPool { get; }
 
         public PvPExplosionPoolProvider(IPvPPrefabFactory prefabFactory)
         {
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFiveShellCluster);
         }
 
-        private IPool<IPoolable<Vector3>, Vector3> CreateExplosionPool(IPvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
+        private Pool<IPoolable<Vector3>, Vector3> CreateExplosionPool(IPvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(

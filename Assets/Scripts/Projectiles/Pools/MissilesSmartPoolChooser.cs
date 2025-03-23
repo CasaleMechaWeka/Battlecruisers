@@ -7,7 +7,7 @@ namespace BattleCruisers.Projectiles.Pools
 {
     public class MissilesSmartPoolChooser : MonoBehaviour, IProjectilePoolChooser<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>
     {
-        public IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
+        public Pool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             return projectilePoolProvider.MissilesSmartPool;
         }

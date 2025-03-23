@@ -6,26 +6,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public interface IPvPUnitPoolProvider
     {
         // Aircraft
-        IPool<PvPUnit, PvPBuildableActivationArgs> BomberPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> FighterPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> GunshipPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> SteamCopterPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> BroadswordPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> StratBomberPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> SpyPlanePool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> MissileFighterPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> TestAircraftPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> BomberPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> FighterPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> GunshipPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> SteamCopterPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> BroadswordPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> StratBomberPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> SpyPlanePool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> MissileFighterPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> TestAircraftPool { get; }
 
         // Ships
-        IPool<PvPUnit, PvPBuildableActivationArgs> AttackBoatPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> AttackRIBPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> FrigatePool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> DestroyerPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> SiegeDestroyerPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> ArchonPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> GlassCannoneerPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> GunBoatPool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> RocketTurtlePool { get; }
-        IPool<PvPUnit, PvPBuildableActivationArgs> FlakTurtlePool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> AttackBoatPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> AttackRIBPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> FrigatePool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> DestroyerPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> SiegeDestroyerPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> ArchonPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> GlassCannoneerPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> GunBoatPool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> RocketTurtlePool { get; }
+        Pool<PvPUnit, PvPBuildableActivationArgs> FlakTurtlePool { get; }
     }
 }

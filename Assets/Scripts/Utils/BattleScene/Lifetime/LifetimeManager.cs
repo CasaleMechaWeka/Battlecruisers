@@ -6,10 +6,10 @@ namespace BattleCruisers.Utils.BattleScene.Lifetime
 {
     public class LifetimeManager
     {
-        private readonly ILifetimeEventBroadcaster _lifetimeEvents;
+        private readonly LifetimeEventBroadcaster _lifetimeEvents;
         private readonly IMainMenuManager _mainMenuManager;
 
-        public LifetimeManager(ILifetimeEventBroadcaster lifetimeEvents, IMainMenuManager mainMenuManager)
+        public LifetimeManager(LifetimeEventBroadcaster lifetimeEvents, IMainMenuManager mainMenuManager)
         {
             Helper.AssertIsNotNull(lifetimeEvents, mainMenuManager);
 

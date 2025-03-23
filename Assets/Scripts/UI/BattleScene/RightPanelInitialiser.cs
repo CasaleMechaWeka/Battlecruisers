@@ -35,8 +35,8 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            IPauseGameManager pauseGameManager,
-            IBattleCompletionHandler battleCompletionHandler,
+            PauseGameManager pauseGameManager,
+            BattleCompletionHandler battleCompletionHandler,
             ISingleSoundPlayer soundPlayer,
             INavigationPermitterManager navigationPermitterManager)
         {

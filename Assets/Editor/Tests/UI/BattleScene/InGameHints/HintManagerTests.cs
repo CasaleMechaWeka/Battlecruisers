@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         private IFactoryMonitor _friendlyFactoryMonitor;
         private ICruiserDamageMonitor _playerCruiserDamageMonitor;
         private IDroneFocuser _playerCruiserDroneFocuser;
-        private IGameEndMonitor _gameEndMonitor;
+        private GameEndMonitor _gameEndMonitor;
         private IHintDisplayer _hintDisplayer;
 
         [SetUp]
@@ -25,17 +25,17 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             _friendlyFactoryMonitor = Substitute.For<IFactoryMonitor>();
             _playerCruiserDamageMonitor = Substitute.For<ICruiserDamageMonitor>();
             _playerCruiserDroneFocuser = Substitute.For<IDroneFocuser>();
-            _gameEndMonitor = Substitute.For<IGameEndMonitor>();
+            _gameEndMonitor = Substitute.For<GameEndMonitor>();
             _hintDisplayer = Substitute.For<IHintDisplayer>();
 
-            _manager 
+            _manager
                 = new HintManager(
-                    _enemyBuildingMonitor, 
-                    _friendlyBuildingMonitor, 
-                    _friendlyFactoryMonitor, 
+                    _enemyBuildingMonitor,
+                    _friendlyBuildingMonitor,
+                    _friendlyFactoryMonitor,
                     _playerCruiserDamageMonitor,
                     _playerCruiserDroneFocuser,
-                    _gameEndMonitor, 
+                    _gameEndMonitor,
                     _hintDisplayer);
         }
 
@@ -49,7 +49,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         [Test]
         public void FriedndlyAirDefensiveStarted()
         {
-            _friendlyBuildingMonitor.AirDefensiveStarted+= Raise.Event();
+            _friendlyBuildingMonitor.AirDefensiveStarted += Raise.Event();
             _hintDisplayer.Received().HideHint(Hints.AIR_FACTORY_RESPONSE_HINT);
         }
 

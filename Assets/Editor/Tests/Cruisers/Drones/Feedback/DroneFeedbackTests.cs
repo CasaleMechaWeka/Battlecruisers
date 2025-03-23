@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
     {
         private IDroneFeedback _feedback;
         private IDroneConsumerInfo _droneConsumerInfo;
-        private IPool<IDroneController, DroneActivationArgs> _dronePool;
+        private Pool<IDroneController, DroneActivationArgs> _dronePool;
         private ISpawnPositionFinder _spawnPositionFinder;
         private IDroneController _drone1, _drone2;
         private IDroneConsumer _droneConsumer;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumerInfo = Substitute.For<IDroneConsumerInfo>();
             _droneConsumer = Substitute.For<IDroneConsumer>();
             _droneConsumerInfo.DroneConsumer.Returns(_droneConsumer);
-            _dronePool = Substitute.For<IPool<IDroneController, DroneActivationArgs>>();
+            _dronePool = Substitute.For<Pool<IDroneController, DroneActivationArgs>>();
             _spawnPositionFinder = Substitute.For<ISpawnPositionFinder>();
 
             _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, Faction.Reds);

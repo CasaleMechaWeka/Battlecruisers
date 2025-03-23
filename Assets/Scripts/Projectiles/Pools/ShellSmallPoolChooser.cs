@@ -9,10 +9,10 @@ namespace BattleCruisers.Projectiles.Pools
     {
         public bool rocketShell = false;
 
-        public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> 
+        public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
-             if (rocketShell)
+            if (rocketShell)
             {
                 return projectilePoolProvider.RocketShellPool;
             }

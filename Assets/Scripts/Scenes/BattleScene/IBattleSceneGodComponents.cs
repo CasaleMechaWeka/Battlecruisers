@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IAudioSource UISoundsAudioSource { get; }
         IUpdaterProvider UpdaterProvider { get; }
         LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; }
-        ILifetimeEventBroadcaster LifetimeEvents { get; }
+        LifetimeEventBroadcaster LifetimeEvents { get; }
         IClickableEmitter BackgroundClickableEmitter { get; }
         ITargetIndicator TargetIndicator { get; }
         WindInitialiser WindInitialiser { get; }

@@ -5,6 +5,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public interface IPvPUnitToPoolMap
     {
-        IPool<PvPUnit, PvPBuildableActivationArgs> GetPool(IPvPUnit unit);
+        Pool<PvPUnit, PvPBuildableActivationArgs> GetPool(IPvPUnit unit);
     }
 }

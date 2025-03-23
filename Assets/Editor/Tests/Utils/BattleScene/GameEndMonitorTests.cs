@@ -7,18 +7,18 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 {
     public class GameEndMonitorTests
     {
-        private IGameEndMonitor _gameEndMonitor;
+        private GameEndMonitor _gameEndMonitor;
         private ICruiserDestroyedMonitor _cruiserDestroyedMonitor;
-        private IBattleCompletionHandler _battleCompletionHandler;
-        private IGameEndHandler _gameEndHandler;
+        private BattleCompletionHandler _battleCompletionHandler;
+        private GameEndHandler _gameEndHandler;
         private int _gameEndedCount;
 
         [SetUp]
         public void TestSetup()
         {
             _cruiserDestroyedMonitor = Substitute.For<ICruiserDestroyedMonitor>();
-            _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
-            _gameEndHandler = Substitute.For<IGameEndHandler>();
+            _battleCompletionHandler = Substitute.For<BattleCompletionHandler>();
+            _gameEndHandler = Substitute.For<GameEndHandler>();
 
             _gameEndMonitor = new GameEndMonitor(_cruiserDestroyedMonitor, _battleCompletionHandler, _gameEndHandler);
 

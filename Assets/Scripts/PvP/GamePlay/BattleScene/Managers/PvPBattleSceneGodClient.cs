@@ -414,7 +414,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     dataProvider.StaticData,
                     SynchedServerData.Instance.GetTeam() == Team.RIGHT);
             time = TimeBC.Instance;
-            IPauseGameManager pauseGameManager = new PauseGameManager(time);
+            PauseGameManager pauseGameManager = new PauseGameManager(time);
             _debouncer = new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
             playerCruiser.pvp_popLimitReachedFeedback.OnValueChanged += IsPopulationLimitReached_ValueChanged;
             playerCruiser.pvp_DroneNumIncreased.OnValueChanged += DroneNumIncreased_ValueChanged;

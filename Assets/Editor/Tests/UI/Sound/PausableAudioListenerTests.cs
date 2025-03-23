@@ -10,13 +10,13 @@ namespace BattleCruisers.Tests.UI.Sound
     {
         private PausableAudioListener _pausableAudioListener;
         private AudioListenerBC _audioListener;
-        private IPauseGameManager _pauseGameManager;
+        private PauseGameManager _pauseGameManager;
 
         [SetUp]
         public void TestSetup()
         {
             _audioListener = Substitute.For<AudioListenerBC>();
-            _pauseGameManager = Substitute.For<IPauseGameManager>();
+            _pauseGameManager = Substitute.For<PauseGameManager>();
 
             _pausableAudioListener
                 = new PausableAudioListener(

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.MainMenu
     {
         private IMainMenuManager _mainMenuManager;
         private IModalMenu _modalMenu;
-        private IBattleCompletionHandler _battleCompletionHandler;
+        private BattleCompletionHandler _battleCompletionHandler;
         private int _dismissedCount;
 
         [SetUp]
@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.MainMenu
             base.TestSetup();
 
             _modalMenu = Substitute.For<IModalMenu>();
-            _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
+            _battleCompletionHandler = Substitute.For<BattleCompletionHandler>();
 
             _mainMenuManager = new MainMenuManager(_navigationPermitterManager, _pauseGameManager, _modalMenu, _battleCompletionHandler);
 

@@ -9,7 +9,7 @@ namespace BattleCruisers.Projectiles.Pools
     {
         public bool stratBomb = false;
 
-        public IPool<BombController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<BombController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
 

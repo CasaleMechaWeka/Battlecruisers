@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Pools
     {
         private readonly IUIManager _uiManager;
         private readonly FactoryProvider _factoryProvider;
-        private readonly IList<IPool<Unit, BuildableActivationArgs>> _pools;
+        private readonly IList<Pool<Unit, BuildableActivationArgs>> _pools;
 
         // Don't want more than 1 because unit may never be built.  Want at least 1
         // to force prefab to be loaded.  First time load is the slowest, because
@@ -21,27 +21,27 @@ namespace BattleCruisers.Buildables.Pools
         private const int INITIAL_UNIT_CAPACITY = 1;
 
         // Aircraft
-        public IPool<Unit, BuildableActivationArgs> BomberPool { get; }
-        public IPool<Unit, BuildableActivationArgs> FighterPool { get; }
-        public IPool<Unit, BuildableActivationArgs> GunshipPool { get; }
-        public IPool<Unit, BuildableActivationArgs> SteamCopterPool { get; }
-        public IPool<Unit, BuildableActivationArgs> BroadswordPool { get; }
-        public IPool<Unit, BuildableActivationArgs> StratBomberPool { get; }
-        public IPool<Unit, BuildableActivationArgs> SpyPlanePool { get; }
-        public IPool<Unit, BuildableActivationArgs> TestAircraftPool { get; }
-        public IPool<Unit, BuildableActivationArgs> MissileFighterPool { get; }
+        public Pool<Unit, BuildableActivationArgs> BomberPool { get; }
+        public Pool<Unit, BuildableActivationArgs> FighterPool { get; }
+        public Pool<Unit, BuildableActivationArgs> GunshipPool { get; }
+        public Pool<Unit, BuildableActivationArgs> SteamCopterPool { get; }
+        public Pool<Unit, BuildableActivationArgs> BroadswordPool { get; }
+        public Pool<Unit, BuildableActivationArgs> StratBomberPool { get; }
+        public Pool<Unit, BuildableActivationArgs> SpyPlanePool { get; }
+        public Pool<Unit, BuildableActivationArgs> TestAircraftPool { get; }
+        public Pool<Unit, BuildableActivationArgs> MissileFighterPool { get; }
 
         // Ships
-        public IPool<Unit, BuildableActivationArgs> AttackBoatPool { get; }
-        public IPool<Unit, BuildableActivationArgs> AttackRIBPool { get; }
-        public IPool<Unit, BuildableActivationArgs> FrigatePool { get; }
-        public IPool<Unit, BuildableActivationArgs> DestroyerPool { get; }
-        public IPool<Unit, BuildableActivationArgs> SiegeDestroyerPool { get; }
-        public IPool<Unit, BuildableActivationArgs> ArchonPool { get; }
-        public IPool<Unit, BuildableActivationArgs> GlassCannoneerPool { get; }
-        public IPool<Unit, BuildableActivationArgs> GunBoatPool { get; }
-        public IPool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
-        public IPool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
+        public Pool<Unit, BuildableActivationArgs> AttackBoatPool { get; }
+        public Pool<Unit, BuildableActivationArgs> AttackRIBPool { get; }
+        public Pool<Unit, BuildableActivationArgs> FrigatePool { get; }
+        public Pool<Unit, BuildableActivationArgs> DestroyerPool { get; }
+        public Pool<Unit, BuildableActivationArgs> SiegeDestroyerPool { get; }
+        public Pool<Unit, BuildableActivationArgs> ArchonPool { get; }
+        public Pool<Unit, BuildableActivationArgs> GlassCannoneerPool { get; }
+        public Pool<Unit, BuildableActivationArgs> GunBoatPool { get; }
+        public Pool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
+        public Pool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
 
         public UnitPoolProvider(IUIManager uiManager, FactoryProvider factoryProvider)
         {
@@ -49,7 +49,7 @@ namespace BattleCruisers.Buildables.Pools
 
             _uiManager = uiManager;
             _factoryProvider = factoryProvider;
-            _pools = new List<IPool<Unit, BuildableActivationArgs>>();
+            _pools = new List<Pool<Unit, BuildableActivationArgs>>();
 
             // Aircraft
             BomberPool = CreatePool(StaticPrefabKeys.Units.Bomber);
@@ -75,9 +75,9 @@ namespace BattleCruisers.Buildables.Pools
             FlakTurtlePool = CreatePool(StaticPrefabKeys.Units.FlakTurtle);
         }
 
-        private IPool<Unit, BuildableActivationArgs> CreatePool(IPrefabKey unitKey)
+        private Pool<Unit, BuildableActivationArgs> CreatePool(IPrefabKey unitKey)
         {
-            IPool<Unit, BuildableActivationArgs> pool
+            Pool<Unit, BuildableActivationArgs> pool
                 = new Pool<Unit, BuildableActivationArgs>(
                     new UnitFactory(
                         _factoryProvider.PrefabFactory,
@@ -90,7 +90,7 @@ namespace BattleCruisers.Buildables.Pools
 
         public void SetInitialCapacity()
         {
-            foreach (IPool<Unit, BuildableActivationArgs> pool in _pools)
+            foreach (Pool<Unit, BuildableActivationArgs> pool in _pools)
             {
                 pool.AddCapacity(INITIAL_UNIT_CAPACITY);
             }

@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPUnitSpawnPositionFinder _unitSpawnPositionFinder;
         private IPvPUnitSpawnDecider _unitSpawnDecider;
-        private IPool<PvPUnit, PvPBuildableActivationArgs> _unitPool;
+        private Pool<PvPUnit, PvPBuildableActivationArgs> _unitPool;
 
         public abstract UnitCategory UnitCategory { get; }
 

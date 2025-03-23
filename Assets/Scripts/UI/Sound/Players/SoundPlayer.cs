@@ -11,9 +11,9 @@ namespace BattleCruisers.UI.Sound.Players
 {
     public class SoundPlayer : ISoundPlayer
     {
-        private readonly IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
+        private readonly Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
 
-        public SoundPlayer(IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourcePool)
+        public SoundPlayer(Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourcePool)
         {
             Helper.AssertIsNotNull(audioSourcePool);
 

@@ -14,8 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IShipDeathPoolProvider ShipDeathPoolProvider { get; }
         IPvPProjectilePoolProvider ProjectilePoolProvider { get; }
         IPvPUnitPoolProvider UnitPoolProvider { get; }
-        IPool<IDroneController, DroneActivationArgs> DronePool { get; }
-        IPool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool { get; }
+        Pool<IDroneController, DroneActivationArgs> DronePool { get; }
+        Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool { get; }
         IPvPUnitToPoolMap UnitToPoolMap { get; }
     }
 }

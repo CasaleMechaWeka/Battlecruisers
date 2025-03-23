@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
         public IHelpLabelManager Initialise(
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
-            IPauseGameManager pauseGameManager,
+            PauseGameManager pauseGameManager,
             ISingleSoundPlayer soundPlayer,
             INavigationPermitterManager navigationPermitterManager)
         {

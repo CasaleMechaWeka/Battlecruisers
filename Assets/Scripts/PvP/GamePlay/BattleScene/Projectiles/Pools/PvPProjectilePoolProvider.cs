@@ -11,25 +11,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public class PvPProjectilePoolProvider : IPvPProjectilePoolProvider
     {
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> HighCalibreBulletsPool { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> FlakBulletsPool { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> FiveShellCluster { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
-        public IPool<PvPBombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
-        public IPool<PvPBombController, ProjectileActivationArgs<IProjectileStats>> StratBombsPool { get; }
-        public IPool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
-        public IPool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
-        public IPool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
-        public IPool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
-        public IPool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
-        public IPool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
-        public IPool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
-        public IPool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> HighCalibreBulletsPool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> FlakBulletsPool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> FiveShellCluster { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
+        public Pool<PvPBombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
+        public Pool<PvPBombController, ProjectileActivationArgs<IProjectileStats>> StratBombsPool { get; }
+        public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
+        public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
+        public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
+        public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
+        public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
+        public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
+        public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
+        public Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
 
         public PvPProjectilePoolProvider(IPvPFactoryProvider factoryProvider)
         {
@@ -154,7 +154,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         }
 
-        private IPool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(IPvPFactoryProvider factoryProvider, PvPProjectileKey projectileKey, int initialCapacity)
+        private Pool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(IPvPFactoryProvider factoryProvider, PvPProjectileKey projectileKey, int initialCapacity)
             where TArgs : ProjectileActivationArgs<TStats>
             where TProjectile : PvPProjectileControllerBase<TArgs, TStats>
             where TStats : IProjectileStats

@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 {
     public class PauseGameManagerTests
     {
-        private IPauseGameManager _manager;
+        private PauseGameManager _manager;
         private ITime _time;
         private int _pausedGameCount, _resumedGameCount;
         private float _prePauseTimeScale;

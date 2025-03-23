@@ -6,25 +6,25 @@ namespace BattleCruisers.Projectiles.Pools
 {
     public interface IProjectilePoolProvider
     {
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> HighCalibreBulletsPool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> FlakBulletsPool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> FiveShellCluster { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
-        IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
-        IPool<BombController, ProjectileActivationArgs<IProjectileStats>> StratBombsPool { get; }
-        IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
-        IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
-        IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
-        IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
-        IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
-        IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
-        IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
-        IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> HighCalibreBulletsPool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> FlakBulletsPool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> FiveShellCluster { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
+        Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
+        Pool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
+        Pool<BombController, ProjectileActivationArgs<IProjectileStats>> StratBombsPool { get; }
+        Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
+        Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
+        Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
+        Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
+        Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
+        Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
+        Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
+        Pool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
 
     }
 }

@@ -11,7 +11,7 @@ namespace BattleCruisers.Projectiles.Pools
         public bool novaShell = false;
         public bool FiveShellCluster = false;
 
-        public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             if (novaShell)

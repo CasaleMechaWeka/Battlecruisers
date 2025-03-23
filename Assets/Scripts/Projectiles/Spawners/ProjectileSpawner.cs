@@ -22,7 +22,7 @@ namespace BattleCruisers.Projectiles.Spawners
         where TStats : IProjectileStats
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
-        private IPool<TProjectile, TProjectileArgs> _projectilePool;
+        private Pool<TProjectile, TProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;

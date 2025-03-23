@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPMainMenuManager(
             INavigationPermitterManager navigationPermitterManager,
-            IPauseGameManager pauseGameManager,
+            PauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             IPvPBattleCompletionHandler battleCompletionHandler)
             : base(navigationPermitterManager, pauseGameManager)

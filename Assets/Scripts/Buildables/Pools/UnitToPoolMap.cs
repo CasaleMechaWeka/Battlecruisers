@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Pools
             _unitPoolProvider = unitPoolProvider;
         }
 
-        public IPool<Unit, BuildableActivationArgs> GetPool(IUnit unit)
+        public Pool<Unit, BuildableActivationArgs> GetPool(IUnit unit)
         {
             Assert.IsNotNull(unit);
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Pools
             };
         }
 
-        private IPool<Unit, BuildableActivationArgs> GetAircraftPool(IUnit aircraft)
+        private Pool<Unit, BuildableActivationArgs> GetAircraftPool(IUnit aircraft)
         {
             return aircraft.PrefabName switch
             {
@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables.Pools
             };
         }
 
-        private IPool<Unit, BuildableActivationArgs> GetShipPool(IUnit ship)
+        private Pool<Unit, BuildableActivationArgs> GetShipPool(IUnit ship)
         {
             return ship.PrefabName switch
             {

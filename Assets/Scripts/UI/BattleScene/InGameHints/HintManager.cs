@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             IFactoryMonitor friendlyFactoryMonitor,
             ICruiserDamageMonitor playerCruiserDamageMonitor,
             IDroneFocuser playerCruiserDroneFocuser,
-            IGameEndMonitor gameEndMonitor,
+            GameEndMonitor gameEndMonitor,
             IHintDisplayer hintDisplayer)
         {
             Helper.AssertIsNotNull(

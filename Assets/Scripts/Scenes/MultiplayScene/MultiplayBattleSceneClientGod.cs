@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
     public class MultiplayBattleSceneGod : GameStateBehaviour
     {
         public override GameState ActiveState { get { return GameState.MultiplayBattleScene; } }
-        private static IGameEndMonitor _gameEndMonitor;
+        private static GameEndMonitor _gameEndMonitor;
 
         private AudioInitialiser _audioInitialiser;
         // private ITutorialProvider _tutorialProvider;
@@ -170,7 +170,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
-            IPauseGameManager pauseGameManager = new PauseGameManager(time);
+            PauseGameManager pauseGameManager = new PauseGameManager(time);
             IUIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
@@ -218,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
             ILevel currentLevel = helper.GetLevel();
             string enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
-            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
             LeftPanelComponents leftPanelComponents

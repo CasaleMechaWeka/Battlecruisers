@@ -12,14 +12,14 @@ namespace BattleCruisers.Tests.UI.Music
 #pragma warning restore CS0414  // Variable is assigned but never used
         private ILayeredMusicPlayer _musicPlayer;
         private IDangerMonitorSummariser _dangerMonitorSummariser;
-        private IBattleCompletionHandler _battleCompletionHandler;
+        private BattleCompletionHandler _battleCompletionHandler;
 
         [SetUp]
         public void TestSetup()
         {
             _musicPlayer = Substitute.For<ILayeredMusicPlayer>();
             _dangerMonitorSummariser = Substitute.For<IDangerMonitorSummariser>();
-            _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
+            _battleCompletionHandler = Substitute.For<BattleCompletionHandler>();
 
             _levelMusicPlayer = new LevelMusicPlayer(_musicPlayer, _dangerMonitorSummariser, _battleCompletionHandler);
         }

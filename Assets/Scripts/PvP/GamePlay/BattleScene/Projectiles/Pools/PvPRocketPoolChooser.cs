@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     {
         public bool isSmall = false;
 
-        public IPool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>>
+        public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (isSmall)

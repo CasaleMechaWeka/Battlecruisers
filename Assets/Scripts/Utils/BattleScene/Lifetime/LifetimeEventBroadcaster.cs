@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils.BattleScene.Lifetime
 {
-    public class LifetimeEventBroadcaster : MonoBehaviour, ILifetimeEventBroadcaster
+    public class LifetimeEventBroadcaster : MonoBehaviour
     {
         private ISettableBroadcastingProperty<bool> _isPaused;
         public IBroadcastingProperty<bool> IsPaused { get; private set; }

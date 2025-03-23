@@ -7,13 +7,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public abstract class PvPModalManager
     {
         private readonly INavigationPermitterManager _navigationPermitterManager;
-        protected readonly IPauseGameManager _pauseGameManager;
+        protected readonly PauseGameManager _pauseGameManager;
 
         private NavigationPermittersState _stateOnShowMenu;
 
         protected PvPModalManager(
             INavigationPermitterManager navigationPermitterManager,
-            IPauseGameManager pauseGameManager)
+            PauseGameManager pauseGameManager)
         {
             PvPHelper.AssertIsNotNull(pauseGameManager, navigationPermitterManager);
 

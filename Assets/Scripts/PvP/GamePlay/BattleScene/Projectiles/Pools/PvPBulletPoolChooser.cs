@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public bool tinyBullet = false;
         public bool flakBullet = false;
 
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (highCalibre)

@@ -6,7 +6,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene.Pools
 {
     public class PoolTests
     {
-        private IPool<IPoolable<int>, int> _pool;
+        private Pool<IPoolable<int>, int> _pool;
         private IPoolableFactory<IPoolable<int>, int> _itemFactory;
         private IPoolable<int> _item1, _item2, _item3;
 

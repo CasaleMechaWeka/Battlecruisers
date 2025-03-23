@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils.BattleScene
 {
-    public class BattleCompletionHandler : IBattleCompletionHandler
+    public class BattleCompletionHandler
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;

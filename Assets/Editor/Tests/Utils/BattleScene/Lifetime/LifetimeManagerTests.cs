@@ -8,13 +8,13 @@ namespace BattleCruisers.Tests.Utils.BattleScene.Lifetime
     public class LifetimeManagerTests
     {
         private LifetimeManager _lifetimeManager;
-        private ILifetimeEventBroadcaster _lifetimeEvents;
+        private LifetimeEventBroadcaster _lifetimeEvents;
         private IMainMenuManager _mainMenuManager;
 
         [SetUp]
         public void TestSetup()
         {
-            _lifetimeEvents = Substitute.For<ILifetimeEventBroadcaster>();
+            _lifetimeEvents = Substitute.For<LifetimeEventBroadcaster>();
             _mainMenuManager = Substitute.For<IMainMenuManager>();
 
             _lifetimeManager = new LifetimeManager(_lifetimeEvents, _mainMenuManager);

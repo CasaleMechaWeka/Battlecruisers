@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 {
     public class BattleCompletionHandlerTests
     {
-        private IBattleCompletionHandler _battleCompletionHandler;
+        private BattleCompletionHandler _battleCompletionHandler;
         private IApplicationModel _applicationModel;
         private ISceneNavigator _sceneNavigator;
         private int _battleCompletedCount;

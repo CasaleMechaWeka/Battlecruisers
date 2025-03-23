@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     {
         public bool rocketShell = false;
 
-        public IPool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (rocketShell)

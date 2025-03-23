@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public bool stratBomb = false;
 
 
-        public IPool<PvPBombController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<PvPBombController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (stratBomb)

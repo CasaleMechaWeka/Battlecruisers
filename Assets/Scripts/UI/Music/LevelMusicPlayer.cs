@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Music
         public LevelMusicPlayer(
             ILayeredMusicPlayer musicPlayer,
             IDangerMonitorSummariser dangerMonitorSummariser,
-            IBattleCompletionHandler battleCompletionHandler)
+            BattleCompletionHandler battleCompletionHandler)
         {
             Helper.AssertIsNotNull(musicPlayer, dangerMonitorSummariser, battleCompletionHandler);
 

@@ -18,11 +18,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
 {
-    public class GameEndHandler : IGameEndHandler
+    public class GameEndHandler
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IArtificialIntelligence _ai;
-        private readonly IBattleCompletionHandler _battleCompletionHandler;
+        private readonly BattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
         private readonly ICruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPermitter _navigationPermitter;
@@ -37,12 +37,12 @@ namespace BattleCruisers.Utils.BattleScene
         private const float POST_GAME_WAIT_TIME_IN_S = 10;
 
         public GameEndHandler(
-            ICruiser playerCruiser, 
-            ICruiser aiCruiser, 
-            IArtificialIntelligence ai, 
-            IBattleCompletionHandler battleCompletionHandler, 
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IArtificialIntelligence ai,
+            BattleCompletionHandler battleCompletionHandler,
             IDeferrer deferrer,
-            ICruiserDeathCameraFocuser cameraFocuser, 
+            ICruiserDeathCameraFocuser cameraFocuser,
             IPermitter navigationPermitter,
             IUIManager uiManager,
             ITargetIndicator targetIndicator,
@@ -51,14 +51,14 @@ namespace BattleCruisers.Utils.BattleScene
             IToggleButtonGroup speedButtonGroup)
         {
             Helper.AssertIsNotNull(
-                playerCruiser, 
-                aiCruiser, 
-                ai, 
-                battleCompletionHandler, 
-                deferrer, 
-                cameraFocuser, 
-                navigationPermitter, 
-                uiManager, 
+                playerCruiser,
+                aiCruiser,
+                ai,
+                battleCompletionHandler,
+                deferrer,
+                cameraFocuser,
+                navigationPermitter,
+                uiManager,
                 targetIndicator,
                 windManager,
                 speedButtonGroup);

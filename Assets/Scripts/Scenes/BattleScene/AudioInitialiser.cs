@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser aiCruiser,
             IDeferrer deferrer,
             ITime time,
-            IBattleCompletionHandler battleCompletionHandler,
+            BattleCompletionHandler battleCompletionHandler,
             ICruiserDamageMonitor playerCruiserDamageMonitor,
             IGameObject popLimitReachedFeedback)
         {
@@ -48,9 +48,9 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IDeferrer deferrer,
-            IBattleCompletionHandler battleCompletionHandler)
+            BattleCompletionHandler battleCompletionHandler)
         {
-            IDangerMonitor dangerMonitor 
+            IDangerMonitor dangerMonitor
                 = new DangerMonitor(
                     deferrer,
                     playerCruiser,
@@ -65,7 +65,7 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         private CruiserEventMonitor CreateCruiserEventMonitor(
-            ICruiser playerCruiser, 
+            ICruiser playerCruiser,
             ITime time,
             ICruiserDamageMonitor playerCruiserDamageMonitor)
         {

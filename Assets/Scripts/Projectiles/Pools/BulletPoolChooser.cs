@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles.Pools
         public bool tinyBullet = false;
         public bool flakBullet = false;
 
-        public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
+        public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             if (highCalibre)
             {
