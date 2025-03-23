@@ -42,8 +42,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
                     _scrollCalculator,
                     _camera,
                     _cameraCalculator,
-                    _edgeDetector,
-                    _cameraXPositionClamper);
+                    _edgeDetector);
 
             _inputEndedCount = 0;
             _targetProvider.UserInputEnded += (sender, e) => _inputEndedCount++;
@@ -77,14 +76,14 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             // Arrange
             _edgeDetector.IsCursorAtLeftEdge().Returns(true);
             _edgeDetector.IsCursorAtRightEdge().Returns(false);
-         
+
             float directionMultiplier = -1;
 
             float targetXPosition = _camera.Position.x + (directionMultiplier * _cameraDeltaX);
 
             float clampedTargetXPosition = 32.1f;
             _cameraXPositionClamper.Clamp(targetXPosition, _validXPositions).Returns(clampedTargetXPosition);
-         
+
             // Act
             _updater.Updated += Raise.Event();
 

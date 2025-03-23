@@ -389,8 +389,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                         cameraCalculator,
                         new EdgeDetector(
                             input,
-                            edgeRegionWidthInPixels),
-                        new Clamper()));
+                            edgeRegionWidthInPixels)));
             }
 
             targetProviders.Add(
