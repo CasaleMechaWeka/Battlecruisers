@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Music;
-using BattleCruisers.Utils.Audio;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
@@ -11,14 +11,14 @@ namespace BattleCruisers.Tests.UI.Music
     public class LayeredMusicPlayerTest
     {
         private ILayeredMusicPlayer _musicPlayer;
-        private IAudioVolumeFade _audioVolumeFade;
+        private AudioVolumeFade _audioVolumeFade;
         private IAudioSource _primarySource, _secondarySource;
         private ISettingsManager _settingsManager;
 
         [SetUp]
         public void TestSetup()
         {
-            _audioVolumeFade = Substitute.For<IAudioVolumeFade>();
+            _audioVolumeFade = Substitute.For<AudioVolumeFade>();
             _primarySource = Substitute.For<IAudioSource>();
             _secondarySource = Substitute.For<IAudioSource>();
             _settingsManager = Substitute.For<ISettingsManager>();

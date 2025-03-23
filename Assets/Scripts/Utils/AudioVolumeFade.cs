@@ -5,9 +5,9 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Utils.Audio
+namespace BattleCruisers.Utils
 {
-    public class AudioVolumeFade : IAudioVolumeFade
+    public class AudioVolumeFade
     {
         private readonly CoroutineStarter _coroutineStarter;
         private readonly ITime _time;

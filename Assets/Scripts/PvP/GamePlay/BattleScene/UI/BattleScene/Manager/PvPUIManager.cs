@@ -153,9 +153,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             //     }
             //     _hintDisplayer.ShowHint(LocTableFactory.CommonTable.GetString("Steps/Touchdrag"));
             // }
-
-
-
         }
 
         public virtual void SelectBuilding(IPvPBuilding building)
