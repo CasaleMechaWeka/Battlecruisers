@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly ICameraCalculator _cameraCalculator;
         private readonly IDirectionalZoom _directionalZoom;
         private readonly IScrollRecogniser _scrollRecogniser;
-        private readonly IClamper _cameraXPositionClamper;
+        private readonly BufferClamper _cameraXPositionClamper;
 
         public override int Priority => 3;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             ICameraCalculator cameraCalculator,
             IDirectionalZoom directionalZoom,
             IScrollRecogniser scrollRecogniser,
-            IClamper cameraXPositionClamper)
+            BufferClamper cameraXPositionClamper)
         {
             Helper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser, cameraXPositionClamper);
 

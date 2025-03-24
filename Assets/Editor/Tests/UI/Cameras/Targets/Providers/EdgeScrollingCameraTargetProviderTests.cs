@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         private ICamera _camera;
         private ICameraCalculator _cameraCalculator;
         private IEdgeDetector _edgeDetector;
-        private IClamper _cameraXPositionClamper;
+        private BufferClamper _cameraXPositionClamper;
         private int _inputEndedCount;
         private IRange<float> _validXPositions;
         private float _cameraDeltaX;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _camera = Substitute.For<ICamera>();
             _cameraCalculator = Substitute.For<ICameraCalculator>();
             _edgeDetector = Substitute.For<IEdgeDetector>();
-            _cameraXPositionClamper = Substitute.For<IClamper>();
+            _cameraXPositionClamper = Substitute.For<BufferClamper>();
 
             _targetProvider
                 = new EdgeScrollingCameraTargetProvider(

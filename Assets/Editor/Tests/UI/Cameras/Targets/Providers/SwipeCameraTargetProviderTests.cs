@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Cameras.Helpers;
+﻿using System;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         private ICameraCalculator _cameraCalculator;
         private IDirectionalZoom _directionalZoom;
         private IScrollRecogniser _scrollRecogniser;
-        private IClamper _cameraXPositionClamper;
+        private BufferClamper _cameraXPositionClamper;
 
         private int _inputEndedCount;
         private IPointerEventData _pointerEventData;
@@ -38,7 +39,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _cameraCalculator = Substitute.For<ICameraCalculator>();
             _directionalZoom = Substitute.For<IDirectionalZoom>();
             _scrollRecogniser = Substitute.For<IScrollRecogniser>();
-            _cameraXPositionClamper = Substitute.For<IClamper>();
+            _cameraXPositionClamper = Substitute.For<BufferClamper>();
 
             _targetProvider
                 = new SwipeCameraTargetProvider(

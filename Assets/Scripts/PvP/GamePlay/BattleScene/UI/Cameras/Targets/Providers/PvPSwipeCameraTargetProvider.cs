@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly IPvPCameraCalculator _cameraCalculator;
         private readonly IDirectionalZoom _directionalZoom;
         private readonly IScrollRecogniser _scrollRecogniser;
-        private readonly IClamper _cameraXPositionClamper;
+        private readonly BufferClamper _cameraXPositionClamper;
 
         public override int Priority => 3;
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCameraCalculator cameraCalculator,
             IDirectionalZoom directionalZoom,
             IScrollRecogniser scrollRecogniser,
-            IClamper cameraXPositionClamper)
+            BufferClamper cameraXPositionClamper)
         {
             PvPHelper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser, cameraXPositionClamper);
 

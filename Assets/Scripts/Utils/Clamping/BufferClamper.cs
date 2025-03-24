@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Utils.Clamping
 {
-    public class BufferClamper : IClamper
+    public class BufferClamper
     {
         private readonly float _buffer;
 
